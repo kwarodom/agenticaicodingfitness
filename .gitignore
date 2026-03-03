@@ -3,3 +3,7 @@ __pycache__/
 *.pyc
 .env
 .DS_Store
+tapo_config.json
+update_config.py
+final_report.md
+research_report.md
