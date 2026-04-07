@@ -5,7 +5,10 @@ import anthropic
 
 load_dotenv()
 
-client = anthropic.Anthropic()
+client = anthropic.Anthropic(
+    base_url="https://api.poe.com",
+    api_key=os.environ.get("POE_API_KEY")
+)
 
 try:
     # Recent SDKs support this, or we might need to check handling
