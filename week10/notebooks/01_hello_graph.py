@@ -26,15 +26,19 @@ load_dotenv()
 # ## Model (Gemini 2.5 Flash — free tier)
 #
 # ```python
-# # ---- SWAP DEMO: uncomment below to use GLM-5.1 via OpenRouter ----
+# # ---- SWAP DEMO: same graph, different model via OpenRouter ----
+# # Pick one. All three have strong tool calling on free/cheap tiers.
 # from langchain_openai import ChatOpenAI
 # import os
 # llm = ChatOpenAI(
-#     model="z-ai/glm-5.1",
+#     model="z-ai/glm-5.1",                    # #1 SWE-Bench Pro (Apr 7, 2026)
+#     # model="qwen/qwen3-coder:free",         # MoE 480B, agentic-tool-use tuned
+#     # model="deepseek/deepseek-r1:free",     # reasoning-heavy, slower but precise
 #     base_url="https://openrouter.ai/api/v1",
 #     api_key=os.getenv("OPENROUTER_API_KEY"),
 #     temperature=0,
 # )
+# # OpenRouter free tier: 20 RPM, 50 RPD without credits (1000 RPD with $10 credit).
 # ```
 
 # %%

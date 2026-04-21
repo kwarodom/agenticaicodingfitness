@@ -22,10 +22,10 @@ LangGraph powers production agent systems at Uber, JPMorgan, BlackRock, Cisco, L
    python verify_setup.py
    ```
 3. API keys (put in `.env` or export in shell):
-   - `GOOGLE_API_KEY` — **required**. Free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). 500 req/day/user.
-   - `ANTHROPIC_API_KEY` — optional, only Ex 5. [console.anthropic.com](https://console.anthropic.com).
-   - `OPENROUTER_API_KEY` — optional, for GLM-5.1 swap demo. [openrouter.ai](https://openrouter.ai).
-   - `LANGSMITH_API_KEY` — optional, Ex 4. Free at [smith.langchain.com](https://smith.langchain.com).
+   - `GOOGLE_API_KEY`: **required**. Free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Gemini 2.5 Flash free tier is 10 RPM / 250 RPD per key (Apr 2026).
+   - `ANTHROPIC_API_KEY`: optional, only Ex 5. [console.anthropic.com](https://console.anthropic.com).
+   - `OPENROUTER_API_KEY`: optional, unlocks the swap demos (GLM-5.1, Qwen3 Coder 480B free, DeepSeek R1 free). [openrouter.ai](https://openrouter.ai). Free tier is 20 RPM / 50 RPD; purchase $10 credit to lift to 1000 RPD.
+   - `LANGSMITH_API_KEY`: optional, Ex 4. Free at [smith.langchain.com](https://smith.langchain.com).
 
 ## Notebooks
 
@@ -67,7 +67,10 @@ git checkout solution-ex1
 ## Models used
 
 - **Ex 1–4**: Gemini 2.5 Flash (free, Google AI Studio) — strong tool calling, 1M context.
-- **Swap demo (any Ex)**: GLM-5.1 via OpenRouter — #1 on SWE-Bench Pro (released April 7, 2026). Uncomment 3 lines in each notebook.
+- **Swap demo (any Ex)**: OpenRouter gives you three strong free/cheap options via one key, uncomment 3 lines in notebook 01 to switch:
+  - `z-ai/glm-5.1`: #1 on SWE-Bench Pro (released April 7, 2026), paid but cheap.
+  - `qwen/qwen3-coder:free`: 480B MoE, agentic-tool-use tuned, free.
+  - `deepseek/deepseek-r1:free`: reasoning-heavy, slower but precise, free.
 - **Ex 5 only**: Claude Sonnet 4.6 + Claude Agent SDK.
 
 ## After class

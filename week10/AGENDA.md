@@ -31,7 +31,7 @@ Print this or keep it on a second monitor during class.
 11. Break
 12. Ex 4 briefing — LangSmith: every run traced, diff'd, priced
 13. Ex 5 briefing — Claude Agent SDK + Skills + Subagent + Managed Agents (Apr 8 2026)
-14. Model hierarchy — Gemini 2.5 Flash · GLM-5.1 · Claude Sonnet 4.6
+14. Model hierarchy: Gemini 2.5 Flash (primary, free) · OpenRouter swap lane (GLM-5.1 / Qwen3 Coder 480B free / DeepSeek R1 free) · Claude Sonnet 4.6 (Ex 5)
 15. Show & Tell — 3 demos, 3 minutes each
 16. Homework
 17. W11 preview — Swarm intelligence

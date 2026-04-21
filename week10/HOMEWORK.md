@@ -19,7 +19,7 @@ For any of your graphs, render the mermaid with `app.get_graph().draw_mermaid_pn
 ## Stretch — pick 1, optional
 
 - Port Ex 5 to actual Claude Managed Agents (public beta, no waitlist).
-- Build a LangSmith eval dataset of 50 labeled tickets and measure classify accuracy across Gemini 2.5 Flash, GLM-5.1, and Claude Sonnet 4.6.
+- Build a LangSmith eval dataset of 50 labeled tickets and measure classify accuracy across Gemini 2.5 Flash, GLM-5.1, Qwen3 Coder 480B (free), DeepSeek R1 (free), and Claude Sonnet 4.6. Report accuracy, latency, and tokens per ticket.
 
 ## Submit
 

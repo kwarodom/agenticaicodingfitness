@@ -47,7 +47,7 @@ def check_keys() -> bool:
     langsmith = os.getenv("LANGSMITH_API_KEY")
     print(f"  {'[ok]  ' if google else '[FAIL]'} GOOGLE_API_KEY        (required)")
     print(f"  {'[ok]  ' if anthropic_k else '[skip]'} ANTHROPIC_API_KEY     (optional, Ex 5)")
-    print(f"  {'[ok]  ' if openrouter else '[skip]'} OPENROUTER_API_KEY    (optional, GLM-5.1 swap)")
+    print(f"  {'[ok]  ' if openrouter else '[skip]'} OPENROUTER_API_KEY    (optional, swap demos: GLM-5.1 / Qwen3 Coder / DeepSeek R1)")
     print(f"  {'[ok]  ' if langsmith else '[skip]'} LANGSMITH_API_KEY     (optional, Ex 4)")
     return bool(google)
 

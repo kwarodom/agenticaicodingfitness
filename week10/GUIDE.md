@@ -649,7 +649,7 @@ Canonical, current sources. Prefer these over third-party blog regurgitations.
 
 **Model tooling**
 - [Google AI Studio (Gemini free keys)](https://aistudio.google.com/apikey)
-- [OpenRouter (GLM-5.1 access)](https://openrouter.ai/z-ai/glm-5.1)
+- [OpenRouter](https://openrouter.ai/) — swap-demo lane: [GLM-5.1](https://openrouter.ai/z-ai/glm-5.1), [Qwen3 Coder 480B (free)](https://openrouter.ai/qwen/qwen3-coder), [DeepSeek R1 (free)](https://openrouter.ai/deepseek/deepseek-r1). Free tier is 20 RPM / 50 RPD; $10 credit lifts to 1000 RPD.
 - [Anthropic console (Claude keys)](https://console.anthropic.com)
 - [LangSmith (observability)](https://smith.langchain.com/)
 
