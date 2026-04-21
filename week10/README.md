@@ -68,10 +68,9 @@ git checkout solution-ex1
 
 - **Ex 1–4**: Qwen3 Coder 480B (free) via OpenRouter. 262K context, MoE architecture, agentic-tool-use tuned. Free tier: 20 RPM / 50 RPD per model. No credit card required.
 - **Swap demos (any Ex)**: OpenRouter gives you multiple free alternatives via the same `ChatOpenAI` client; edit the `model=` line in notebook 01:
-  - `deepseek/deepseek-r1:free`: reasoning-heavy, slower, precise.
+  - `deepseek/deepseek-r1-0528:free`: reasoning-heavy, slower, precise.
   - `z-ai/glm-4.6:free`: strong tool calling, GLM's latest free tier.
   - `meta-llama/llama-3.3-70b-instruct:free`: solid all-rounder.
-  - `deepseek/deepseek-r1:free`: reasoning-heavy, slower but precise, free.
 - **Ex 5 only**: Claude Sonnet 4.6 + Claude Agent SDK.
 
 ## After class

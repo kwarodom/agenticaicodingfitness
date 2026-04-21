@@ -33,7 +33,7 @@ load_dotenv()
 # Alternative free models you can swap in via the same `ChatOpenAI` client:
 #
 # ```python
-# # model="deepseek/deepseek-r1:free",   # reasoning-heavy, slower, precise
+# # model="deepseek/deepseek-r1-0528:free",   # reasoning-heavy, slower, precise
 # # model="z-ai/glm-4.6:free",           # strong tool calling
 # # model="meta-llama/llama-3.3-70b-instruct:free",  # solid all-rounder
 # ```
@@ -47,7 +47,10 @@ load_dotenv()
 
 # %%
 llm = ChatOpenAI(
-    model="qwen/qwen3-coder:free",
+    # model="qwen/qwen3-coder:free",
+    model="deepseek/deepseek-r1-0528:free",
+    # model="z-ai/glm-4.6:free",
+    # model="meta-llama/llama-3.3-70b-instruct:free",
     base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv("OPENROUTER_API_KEY"),
     temperature=0,
