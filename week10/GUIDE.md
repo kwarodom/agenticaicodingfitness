@@ -40,7 +40,7 @@ You need:
 
 1. **Python 3.11+**. Check with `python3 --version`.
 2. **[uv](https://docs.astral.sh/uv/)** for fast package installs: `curl -LsSf https://astral.sh/uv/install.sh | sh`
-3. **A free Google AI Studio API key** for Gemini 2.5 Flash-Lite. Get one at <https://aistudio.google.com/apikey>. Free tier (Apr 2026) = 1,000 requests/day, 15/minute. No credit card required. Regular Gemini 2.5 Flash is now only 20 RPD on the free tier after the Dec 2025 cuts, which is why we default to Flash-Lite for classroom use.
+3. **A free OpenRouter API key** for Qwen3 Coder 480B. Get one at <https://openrouter.ai/keys> with email signup only, no credit card. Free tier (Apr 2026) = 20 requests per minute, 50 per day per model. The class default is Qwen3 Coder because Google's Gemini free tier is now only 20 RPD per model after the Dec 2025 cuts, which breaks mid-class.
 4. *(Optional)* An Anthropic API key for Exercise 5. Sign up at <https://console.anthropic.com>.
 5. *(Optional)* A free LangSmith account for Exercise 4. <https://smith.langchain.com>.
 
@@ -54,13 +54,13 @@ uv venv && source .venv/bin/activate
 uv pip install -r requirements.txt
 
 cp .env.example .env
-# Edit .env and put your GOOGLE_API_KEY in it.
+# Edit .env and put your OPENROUTER_API_KEY in it.
 
 python verify_setup.py
-# Expected output: all imports green, GOOGLE_API_KEY found, Gemini smoke test passes
+# Expected output: all imports green, OPENROUTER_API_KEY found, Qwen3 smoke test passes
 ```
 
-If `verify_setup.py` returns anything red, fix before going further. Most common failure: `GOOGLE_API_KEY` not picked up because `.env` wasn't loaded in the shell. Either `source .env` first or `export GOOGLE_API_KEY=...` manually.
+If `verify_setup.py` returns anything red, fix before going further. Most common failure: `OPENROUTER_API_KEY` not picked up because `.env` wasn't loaded in the shell. Either `source .env` first or `export OPENROUTER_API_KEY=...` manually.
 
 ---
 
@@ -129,11 +129,17 @@ class SupportState(TypedDict):
 **The nodes.** Each node is a plain function. It receives state, does work, returns a dict containing only the fields it changed.
 
 ```python
-from langchain_google_genai import ChatGoogleGenerativeAI
+import os
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
+llm = ChatOpenAI(
+    model="qwen/qwen3-coder:free",
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    temperature=0,
+)
 
 def classify(state: SupportState) -> SupportState:
     prompt = (

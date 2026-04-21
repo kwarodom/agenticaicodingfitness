@@ -14,35 +14,44 @@
 # %%
 from __future__ import annotations
 
+import os
 from typing import Literal, TypedDict
 
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 
 load_dotenv()
 
 # %% [markdown]
-# ## Model (Gemini 2.5 Flash-Lite, free tier: 15 RPM / 1,000 RPD)
+# ## Model (Qwen3 Coder 480B via OpenRouter, free tier: 20 RPM / 50 RPD per model)
+#
+# Free email signup at [openrouter.ai](https://openrouter.ai/keys). No credit card.
+# Qwen3 Coder is a 480B MoE agentic-tool-use model that handles classification and
+# supervisor routing cleanly on the free tier.
+#
+# Alternative free models you can swap in via the same `ChatOpenAI` client:
 #
 # ```python
-# # ---- SWAP DEMO: same graph, different model via OpenRouter ----
-# # Pick one. All three have strong tool calling on free/cheap tiers.
-# from langchain_openai import ChatOpenAI
-# import os
-# llm = ChatOpenAI(
-#     model="z-ai/glm-5.1",                    # #1 SWE-Bench Pro (Apr 7, 2026)
-#     # model="qwen/qwen3-coder:free",         # MoE 480B, agentic-tool-use tuned
-#     # model="deepseek/deepseek-r1:free",     # reasoning-heavy, slower but precise
-#     base_url="https://openrouter.ai/api/v1",
-#     api_key=os.getenv("OPENROUTER_API_KEY"),
-#     temperature=0,
-# )
-# # OpenRouter free tier: 20 RPM, 50 RPD without credits (1000 RPD with $10 credit).
+# # model="deepseek/deepseek-r1:free",   # reasoning-heavy, slower, precise
+# # model="z-ai/glm-4.6:free",           # strong tool calling
+# # model="meta-llama/llama-3.3-70b-instruct:free",  # solid all-rounder
+# ```
+#
+# To use Gemini instead (requires paid tier for classroom reliability: free is 20 RPD):
+#
+# ```python
+# from langchain_google_genai import ChatGoogleGenerativeAI
+# llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
 # ```
 
 # %%
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
+llm = ChatOpenAI(
+    model="qwen/qwen3-coder:free",
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    temperature=0,
+)
 
 
 # %% [markdown]

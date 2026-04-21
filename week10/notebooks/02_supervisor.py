@@ -16,17 +16,25 @@
 from __future__ import annotations
 
 import operator
+import os
 from typing import Annotated, TypedDict
 
 from dotenv import load_dotenv
 from langchain_core.tools import tool
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 from langgraph.prebuilt import create_react_agent
 
 load_dotenv()
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
+# Qwen3 Coder 480B via OpenRouter (free tier: 20 RPM / 50 RPD per model).
+# See notebook 01 for the full model-swap comment and Gemini alternative.
+llm = ChatOpenAI(
+    model="qwen/qwen3-coder:free",
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    temperature=0,
+)
 
 
 # %% [markdown]
@@ -114,21 +122,12 @@ print(app.get_graph().draw_ascii())
 
 # %%
 if __name__ == "__main__":
-    import time
-
     samples = [
         "My dashboard won't load after the update.",
         "I was charged twice for last month's plan.",
         "Do you have a reference customer in retail?",
     ]
-    # Gemini 2.5 Flash-Lite free tier is 10 RPM (docs say 15; actual is 10).
-    # Each sample fires supervisor + specialist = 2 requests. Sleep between
-    # samples so 6 calls across 3 samples stay comfortably under 10 RPM.
-    # In production, wrap in retry-on-429 or upgrade to paid tier for throughput.
-    for i, s in enumerate(samples):
-        if i > 0:
-            print("(pausing 8s to respect the free-tier rate limit)")
-            time.sleep(8)
+    for s in samples:
         out = app.invoke({
             "ticket_body": s,
             "messages": [],

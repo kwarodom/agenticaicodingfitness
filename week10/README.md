@@ -22,9 +22,9 @@ LangGraph powers production agent systems at Uber, JPMorgan, BlackRock, Cisco, L
    python verify_setup.py
    ```
 3. API keys (put in `.env` or export in shell):
-   - `GOOGLE_API_KEY`: **required**. Free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Gemini 2.5 Flash-Lite free tier is 15 RPM / 1,000 RPD per key (Apr 2026, after the Dec 2025 quota cuts).
+   - `OPENROUTER_API_KEY`: **required**. Free email signup at [openrouter.ai/keys](https://openrouter.ai/keys). No credit card. Unlocks Qwen3 Coder 480B (free), DeepSeek R1 (free), GLM 4.6 (free). Free tier is 20 RPM / 50 RPD per model; adding $10 credit lifts to 1,000 RPD per model.
    - `ANTHROPIC_API_KEY`: optional, only Ex 5. [console.anthropic.com](https://console.anthropic.com).
-   - `OPENROUTER_API_KEY`: optional, unlocks the swap demos (GLM-5.1, Qwen3 Coder 480B free, DeepSeek R1 free). [openrouter.ai](https://openrouter.ai). Free tier is 20 RPM / 50 RPD; purchase $10 credit to lift to 1000 RPD.
+   - `GOOGLE_API_KEY`: optional, Gemini swap. Free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Note: Gemini free tier is only 20 RPD per model (Apr 2026 post-cuts), so Gemini is not the default here — use OpenRouter.
    - `LANGSMITH_API_KEY`: optional, Ex 4. Free at [smith.langchain.com](https://smith.langchain.com).
 
 ## Notebooks
@@ -66,10 +66,11 @@ git checkout solution-ex1
 
 ## Models used
 
-- **Ex 1–4**: Gemini 2.5 Flash-Lite (free, Google AI Studio). Strong tool calling, 1M context, 1,000 RPD on the free tier.
-- **Swap demo (any Ex)**: OpenRouter gives you three strong free/cheap options via one key, uncomment 3 lines in notebook 01 to switch:
-  - `z-ai/glm-5.1`: #1 on SWE-Bench Pro (released April 7, 2026), paid but cheap.
-  - `qwen/qwen3-coder:free`: 480B MoE, agentic-tool-use tuned, free.
+- **Ex 1–4**: Qwen3 Coder 480B (free) via OpenRouter. 262K context, MoE architecture, agentic-tool-use tuned. Free tier: 20 RPM / 50 RPD per model. No credit card required.
+- **Swap demos (any Ex)**: OpenRouter gives you multiple free alternatives via the same `ChatOpenAI` client; edit the `model=` line in notebook 01:
+  - `deepseek/deepseek-r1:free`: reasoning-heavy, slower, precise.
+  - `z-ai/glm-4.6:free`: strong tool calling, GLM's latest free tier.
+  - `meta-llama/llama-3.3-70b-instruct:free`: solid all-rounder.
   - `deepseek/deepseek-r1:free`: reasoning-heavy, slower but precise, free.
 - **Ex 5 only**: Claude Sonnet 4.6 + Claude Agent SDK.
 

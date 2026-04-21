@@ -16,7 +16,7 @@ import os
 from typing import TypedDict
 
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langgraph.graph import END, START, StateGraph
 
 load_dotenv()
@@ -39,7 +39,12 @@ else:
     os.environ["LANGSMITH_TRACING"] = "false"
     print("LangSmith tracing: OFF (no LANGSMITH_API_KEY)")
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
+llm = ChatOpenAI(
+    model="qwen/qwen3-coder:free",
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    temperature=0,
+)
 
 
 # %% [markdown]
