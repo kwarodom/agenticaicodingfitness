@@ -1,20 +1,7 @@
 #ex2_LangGraphSupportGraph.py
 import os
 from dotenv import load_dotenv
-from crewai import Agent, Task, Crew, Process, LLM
 load_dotenv()
-
-qwen_llm = LLM(
-    model="openrouter/qwen/qwen3.5-flash-02-23",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-)
-
-zai_llm = LLM(
-    model="openai/glm-5",
-    base_url="https://api.z.ai/api/paas/v4/",
-    api_key=os.getenv("ZAI_API_KEY"),
-    temperature=0
-)
 
 '''
 Architecture: Graph-Based Routing (Pattern B)
@@ -23,10 +10,8 @@ multi-agent planning with BDI-like deliberation — a router node examines state
 specialist agent (Wooldridge, 2002; Bellifemine et al., 2007).
 '''
 
-# defind states and nodes
-from typing import TypedDict, Literal
+from typing import TypedDict
 from langgraph.graph import StateGraph, END
-from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 
 class TicketState(TypedDict):
@@ -35,10 +20,9 @@ class TicketState(TypedDict):
     response: str
     confidence: float
 
-llm = ChatOpenAI(
-    model="glm-5",
-    api_key=os.getenv("ZAI_API_KEY"),
-    base_url="https://api.z.ai/api/paas/v4/",
+llm = ChatAnthropic(
+    model="claude-haiku-4-5-20251001",
+    api_key=os.getenv("ANTHROPIC_API_KEY"),
     temperature=0,
 )
 

@@ -5,20 +5,7 @@
 
 import os
 from dotenv import load_dotenv
-from crewai import Agent, Task, Crew, Process, LLM
 load_dotenv()
-
-qwen_llm = LLM(
-    model="openrouter/qwen/qwen3.5-flash-02-23",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-)
-
-zai_llm = LLM(
-    model="openai/glm-5",
-    base_url="https://api.z.ai/api/paas/v4/",
-    api_key=os.getenv("ZAI_API_KEY"),
-    temperature=0
-)
 
 #Step 1: Define the Specialist Agents
 import asyncio
