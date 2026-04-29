@@ -7,3 +7,9 @@ tapo_config.json
 update_config.py
 final_report.md
 research_report.md
+
+# Week 9 / Week 11 MAS exercise runtime outputs (LLM-generated, non-deterministic)
+ex*_output.md
+ex*_output.json
+ex*_brief_output.md
+ex*_audit_output.*
