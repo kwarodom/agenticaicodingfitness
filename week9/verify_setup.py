@@ -22,7 +22,7 @@ check('Python 3.10+',
       else (_ for _ in ()).throw(RuntimeError('Need 3.10+')))
 
 # Package imports
-for pkg in ['anthropic', 'crewai', 'langgraph', 'langchain_anthropic', 'autogen', 'dotenv']:
+for pkg in ['anthropic', 'crewai', 'langgraph', 'langchain_anthropic', 'autogen_agentchat', 'dotenv']:
     check(f'import {pkg}', lambda p=pkg: importlib.import_module(p))
 
 # ANTHROPIC_API_KEY present

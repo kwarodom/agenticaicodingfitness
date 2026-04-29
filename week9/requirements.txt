@@ -3,13 +3,13 @@
 anthropic>=0.89.0
 openai>=2.30.0
 # MAS Frameworks
-crewai>=1.13.0
-crewai-tools>=1.13.0
 langgraph>=1.1.6
 langchain-anthropic>=1.4.0
 langchain-openai>=1.1.12
 langchain-core>=1.2.26
 pyautogen>=0.10.0
+autogen-agentchat>=0.7.0
+autogen-ext[anthropic]>=0.7.0
 # Utilities
 python-dotenv>=1.1.1
 pydantic>=2.0.0
