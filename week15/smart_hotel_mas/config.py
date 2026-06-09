@@ -34,8 +34,11 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "hotel_mas_2024")
 NEO4J_AUTH = (NEO4J_USER, NEO4J_PASSWORD)
 
 # ── ChromaDB (L3) ───────────────────────────────────────────────────────────
+# Default host port is 8002 (not the upstream 8001): on this machine 8001 is
+# permanently held by the alto-cero backend, and the root .env is rewritten by
+# that stack so CHROMA_PORT can't live there. Override via env if needed.
 CHROMA_HOST = os.getenv("CHROMA_HOST", "localhost")
-CHROMA_PORT = int(os.getenv("CHROMA_PORT", "8001"))
+CHROMA_PORT = int(os.getenv("CHROMA_PORT", "8002"))
 
 # ── SQLite (L2) ─────────────────────────────────────────────────────────────
 EPISODIC_DB = os.getenv("EPISODIC_DB", "hotel_episodes.db")

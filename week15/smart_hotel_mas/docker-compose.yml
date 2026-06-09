@@ -21,7 +21,9 @@ services:
   chromadb:
     image: chromadb/chroma:latest
     ports:
-      - "8001:8000"
+      # Host port is configurable (default 8001). Override with CHROMA_PORT —
+      # e.g. CHROMA_PORT=8002 when 8001 is already taken. Container stays on 8000.
+      - "${CHROMA_PORT:-8001}:8000"
     volumes:
       - chroma_data:/chroma/chroma
 

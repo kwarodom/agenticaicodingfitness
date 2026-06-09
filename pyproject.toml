@@ -5,5 +5,19 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "anthropic>=0.40.0",
+    "chromadb>=0.5.0",
     "claude-agent-sdk>=0.1.50",
+    "langchain>=0.2.0",
+    "langchain-anthropic>=0.2.0",
+    "langchain-community>=0.2.0",
+    "langchain-core>=0.2.0",
+    "langchain-experimental>=0.0.60",
+    "langchain-neo4j>=0.1.0",
+    "langchain-openai>=0.1.0",
+    "langchain-text-splitters>=0.2.0",
+    "neo4j>=5.14.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "sentence-transformers>=2.2.0",
 ]
