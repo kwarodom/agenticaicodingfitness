@@ -15,6 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import view  # noqa: E402
+import curatorlab  # noqa: E402
 
 STAGES = [
     ("raw logs",       1_000_000, "everything the agent saw in production"),
@@ -37,10 +38,25 @@ dataset = pipe.run("s3://prod-logs/agent/*.jsonl")   # → curated, labeled, saf
 """
 
 
-def main() -> None:
-    view.banner("PART 2", "Curate — raw logs into training data", "INTERMEDIATE")
-    view.mode_line()
+def _real() -> None:
+    """REAL: run an actual NeMo Curator CPU pipeline via the py3.12 side-venv."""
+    print("Running a REAL NeMo Curator (CPU) pipeline on sample agent logs")
+    print("(read → unicode/newline clean → word-count + repeating-n-gram filters → write)…\n")
+    r = curatorlab.curate_via_sidevenv("/tmp/curatorlab_demo")
+    if not r:
+        _sim(note=False)
+        return
+    print(f"  INPUT rows: {r['in']}   KEPT rows: {r['kept']}   "
+          f"(dropped {r['in'] - r['kept']} low-signal/spam)\n")
+    print("  Kept (substantive) traces:")
+    for row in r["rows"]:
+        print(f"    · {row[:66]}")
+    print("\n  This is the same funnel as the SIM, run for real on this DGX — $0, data never")
+    print("  left the box. GPU-gated here (need RAPIDS cuda12): semantic/fuzzy dedup + the")
+    print("  DeBERTa quality/domain/safety classifiers. Add those on a cuda12 GPU.")
 
+
+def _sim(note: bool = True) -> None:
     print("The curation funnel (1M raw traces → a clean training set):\n")
     print(f"  {'stage':<20}{'rows':>12}   what it does")
     print("  " + "─" * 78)
@@ -50,14 +66,21 @@ def main() -> None:
         print(f"  {'':<20}{bar}")
     print()
     print(CODE)
-    print("Why each stage matters for a SOVEREIGN flywheel:")
-    print("  • Dedup — stops the model overfitting to your most common request.")
-    print("  • Quality filter — only successful, on-task traces become training signal.")
-    print("  • PII scrub — the model improves without ever memorizing sensitive data.")
-    print("  • LLM-judge labels — a big teacher cheaply grades what's worth learning.\n")
+    if note:
+        print("(Tip: create the py3.12 side-venv + `uv pip install nemo-curator[text-cpu]` to run")
+        print(" this funnel for REAL on the DGX — see week20/11_data_flywheel/curatorlab.py.)\n")
 
-    print("Takeaway: Curator is the quality gate of self-evolution — 1M messy logs become")
-    print("~62k clean, labeled, safe examples. Next: fine-tune a small model on them.")
+
+def main() -> None:
+    view.banner("PART 2", "Curate — raw logs into training data", "INTERMEDIATE")
+    view.mode_line()
+
+    if curatorlab.sidevenv_ready():
+        _real()
+    else:
+        _sim()
+    print("\nTakeaway: Curator is the quality gate of self-evolution — messy logs become")
+    print("clean, labeled, safe examples. Next: fine-tune a small model on them.")
 
 
 if __name__ == "__main__":
