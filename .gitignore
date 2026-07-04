@@ -1,4 +1,6 @@
 venv/
+.venv/
+.venv-curator/
 node_modules/
 __pycache__/
 *.pyc
