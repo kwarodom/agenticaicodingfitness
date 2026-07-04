@@ -18,6 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import config  # noqa: E402
 import view  # noqa: E402
+import relaylab  # noqa: E402
 
 EXPORT = """\
 # one instrumentation, many backends — the Relay fans OTel spans out
@@ -44,15 +45,32 @@ LOOP = [
 ]
 
 
+def _live_export() -> None:
+    """REAL: prove the OTLP export to Phoenix is live, with actual collected counts."""
+    stats = relaylab.trace_stats()
+    print(f"{relaylab.status_line()}\n")
+    print("Exporter fan-out (Phoenix is LIVE on this box; the others are where you'd add them):\n")
+    print(f"  NeMo Relay ──OTLP──▶ Phoenix ✓ LIVE   {stats['spans']} spans · "
+          f"{stats['traces']} traces · {stats['total_latency_ms']:.0f} ms observed  ({relaylab.PHOENIX_URL})")
+    print("  NeMo Relay ──OTLP──▶ Datadog          ops dashboards + alerts on latency / cost spikes")
+    print("  NeMo Relay ──OTLP──▶ LangSmith        LLM evals + golden datasets from real turns")
+    if stats["spans"] == 0:
+        print("\n  (No spans yet — run step01/step02/step03 first to populate the live trace store.)")
+
+
 def main() -> None:
     view.banner("PART 4", "Learn — export telemetry & close the loop", "ADVANCED")
     view.mode_line()
 
-    print("NeMo Relay exports OTel once; every observability backend reads it:\n")
-    print(EXPORT)
-    print("Exporter fan-out:\n")
-    for name, what in EXPORTERS:
-        print(f"  NeMo Relay ──OTLP──▶ {name:<10}  {what}")
+    if relaylab.ready():
+        _live_export()
+    else:
+        print("NeMo Relay exports OTel once; every observability backend reads it:\n")
+        print(EXPORT)
+        print("Exporter fan-out:\n")
+        for name, what in EXPORTERS:
+            print(f"  NeMo Relay ──OTLP──▶ {name:<10}  {what}")
+        print(f"\n(Tip: {relaylab.status_line()})")
 
     print("\nClosing the loop — observed traces feed the Data Flywheel (App 11):\n")
     for i, (stage, what) in enumerate(LOOP, 1):
