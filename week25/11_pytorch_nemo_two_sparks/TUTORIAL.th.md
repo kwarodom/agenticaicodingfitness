@@ -260,7 +260,7 @@ $ mkdir -p ~/w25/logs   [DRY]
     -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
     -v "${PWD}:/workspace" -w /workspace \
     nvcr.io/nvidia/pytorch:25.11-py3 \
-    bash -c 'pip install transformers peft datasets trl bitsandbytes && python Llama3_8B_LoRA_finetuning.py --dataset_size 100 --num_epochs 1 --batch_size 2' \
+    bash -c 'pip install "transformers>=4.57.1,<5" "trl>=0.25.1,<0.26" "peft<0.18" datasets "bitsandbytes>=0.48.2" && pip uninstall -y torchao && python Llama3_8B_LoRA_finetuning.py --dataset_size 100 --num_epochs 1 --batch_size 2' \
     > ~/w25/logs/m11_pytorch-lora-8b.log 2>&1 &
   echo "started w25-m11-pytorch-lora-8b → ~/w25/logs/m11_pytorch-lora-8b.log"
 ```

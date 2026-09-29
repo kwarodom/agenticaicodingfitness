@@ -136,7 +136,7 @@ if not APPLY:
     print(f"$ {launch}   [not run]")
     result(f"config and data ready. To train for real: SPARK_APPLY=1. Then lab 03 watches {log}.")
     sys.exit(0)
-busy = sh("docker ps --filter name=w25-unsloth --format '{{.Names}}'; pgrep -af 'llamafactory-cli train' || true",
+busy = sh("docker ps --filter name=w25-unsloth --format '{{.Names}}'; pgrep -af '[l]lamafactory-cli train' || true",
           example="")
 if busy.live and busy.out.strip():
     warn(f"another training job is running ({busy.out.strip()}). One at a time, or the timings are not comparable.")

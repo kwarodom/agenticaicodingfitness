@@ -78,7 +78,7 @@ state = sh("ls -d ~/factoryEnv ~/LLaMA-Factory 2>/dev/null; "
            f"test -f {LOG} && tail -1 {LOG} || true",
            example="CLI_MISSING")
 installed = state.live and "CLI_READY" in state.out
-running = sh("pgrep -af 'setup_factory.sh' || echo 'setup not running'", example="setup not running", quiet=True)
+running = sh("pgrep -af '[s]etup_factory.sh' || echo 'setup not running'", example="setup not running", quiet=True)
 in_progress = running.live and "setup not running" not in running.out
 if installed:
     note("~/factoryEnv/bin/llamafactory-cli exists — skipping the install, going straight to verification.")

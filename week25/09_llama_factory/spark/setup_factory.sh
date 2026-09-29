@@ -27,6 +27,9 @@ cd LLaMA-Factory
 
 echo "== Step 6 · install LLaMA Factory with metrics support"
 pip install -e ".[metrics]"
+# Course change: newer LLaMA Factory dropped the "metrics" extra (pip only warns) and moved jieba / nltk /
+# rouge-chinese to requirements/metrics.txt. Without them `--predict` (predict_with_generate) crashes.
+if [ -f requirements/metrics.txt ]; then pip install -r requirements/metrics.txt; fi
 
 llamafactory-cli version
 echo "SETUP_DONE"

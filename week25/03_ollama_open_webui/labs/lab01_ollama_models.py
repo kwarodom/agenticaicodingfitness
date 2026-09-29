@@ -62,7 +62,7 @@ sh("ollama list",
    example="NAME           ID              SIZE     MODIFIED\n"
            "gpt-oss:20b    <12-hex-id>     <size>   <when>")
 if PULL:
-    sh(f"mkdir -p ~/w25/logs && nohup ollama pull {FIRST_MODEL} > ~/w25/logs/ollama-pull.log 2>&1 < /dev/null & "
+    sh(f"mkdir -p ~/w25/logs && {{ nohup ollama pull {FIRST_MODEL} > ~/w25/logs/ollama-pull.log 2>&1 < /dev/null & }}; "
        f"echo started pull of {FIRST_MODEL}, pid $!",
        example=f"started pull of {FIRST_MODEL}, pid 12345")
     note("Follow it with:  ssh spark-a tail -f ~/w25/logs/ollama-pull.log   (Ctrl+C stops the tail, not the pull)")

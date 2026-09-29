@@ -23,6 +23,8 @@ Launch (auto-picks a free port if 8125 is taken):
 from __future__ import annotations
 
 import asyncio
+import base64
+import hmac
 import json
 import os
 import re
@@ -306,6 +308,29 @@ app = FastAPI(title="Spark Lab Runner — Week 25")
 _run_lock = asyncio.Lock()
 _LOCAL_HOSTS = ("127.0.0.1", "localhost", "[::1]", "::1")
 
+# Optional remote access through a local reverse proxy such as `tailscale serve`: set SPARK_GUIDE_PASSWORD
+# and list the proxy's hostnames in SPARK_GUIDE_HOSTS (comma-separated). Every request then needs HTTP Basic
+# auth with that password (any username). Extra hosts are ignored unless a password is set.
+_PASSWORD = sparkkit.cfg("SPARK_GUIDE_PASSWORD")
+_ALLOWED_HOSTS = _LOCAL_HOSTS + (tuple(h.strip().lower() for h in sparkkit.cfg("SPARK_GUIDE_HOSTS").split(",")
+                                       if h.strip()) if _PASSWORD else ())
+
+
+@app.middleware("http")
+async def _password_gate(request: Request, call_next):
+    if _PASSWORD:
+        given = ""
+        auth = request.headers.get("authorization", "")
+        if auth[:6].lower() == "basic ":
+            try:
+                given = base64.b64decode(auth[6:]).decode("utf-8").partition(":")[2]
+            except Exception:  # noqa: BLE001
+                given = ""
+        if not hmac.compare_digest(given.encode(), _PASSWORD.encode()):
+            return PlainTextResponse("password required", status_code=401,
+                                     headers={"WWW-Authenticate": 'Basic realm="Spark Lab Runner", charset="UTF-8"'})
+    return await call_next(request)
+
 
 def _local_only(request: Request) -> None:
     """Only this app, from this machine, may call state-changing endpoints.
@@ -313,14 +338,15 @@ def _local_only(request: Request) -> None:
     Host check → blocks DNS rebinding. Origin check → blocks any other website
     open in the same browser from POSTing to 127.0.0.1 (it would carry its own
     Origin). Scripts/curl on this machine send no Origin and are allowed.
+    With SPARK_GUIDE_PASSWORD set, the SPARK_GUIDE_HOSTS proxy names count as local too.
     """
     host = (request.headers.get("host") or "").rsplit(":", 1)[0].lower()
-    if host not in _LOCAL_HOSTS:
+    if host not in _ALLOWED_HOSTS:
         raise HTTPException(403, "available on localhost only")
     origin = request.headers.get("origin")
     if origin and origin != "null":
         o_host = re.sub(r"^https?://", "", origin.lower()).split("/")[0].rsplit(":", 1)[0]
-        if o_host not in _LOCAL_HOSTS:
+        if o_host not in _ALLOWED_HOSTS:
             raise HTTPException(403, "cross-site request refused")
 
 
@@ -797,6 +823,21 @@ if __name__ == "__main__":
                f"{sum(len(e['labs']) for e in parsed)} labs · {sum(len(e['exercises']) for e in parsed)} exercises"]
     if port != GUIDE_PORT:
         banner += [f"      ⚠ port {GUIDE_PORT} busy — using {port} (set SPARK_GUIDE_PORT)."]
+    if _PASSWORD:
+        banner += [f"      🔒 password required (SPARK_GUIDE_PASSWORD) · also served as: "
+                   f"{', '.join(_ALLOWED_HOSTS[len(_LOCAL_HOSTS):]) or '—'}"]
     banner += [f"      open  →  http://127.0.0.1:{port}", ""]
     print("\n".join(banner), flush=True)
-    uvicorn.run(app, host="127.0.0.1", port=port)
+    # SPARK_GUIDE_BIND (e.g. this machine's Tailscale IP) adds a second listening address — only with a password.
+    bind = sparkkit.cfg("SPARK_GUIDE_BIND") if _PASSWORD else ""
+    if not bind:
+        uvicorn.run(app, host="127.0.0.1", port=port)
+    else:
+        socks = []
+        for addr in ("127.0.0.1", bind):
+            s = socket.socket(socket.AF_INET6 if ":" in addr else socket.AF_INET)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind((addr, port))
+            socks.append(s)
+        print(f"      🌐 also listening on http://{bind}:{port}", flush=True)
+        uvicorn.Server(uvicorn.Config(app, port=port)).run(sockets=socks)

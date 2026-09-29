@@ -30,7 +30,7 @@ LOG = "~/w25/logs/nvfp4_quant.log"
 #   · `-e HF_TOKEN` passes the variable only if it is set; the model is public, and a gated model can use
 #     the token that `hf auth login` stored in ~/.cache/huggingface (mounted below)
 QUANT_CMD = f"""mkdir -p {WORK}/output_models ~/w25/logs && cd {WORK} && \\
-nohup docker run --rm --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 \\
+{{ nohup docker run --rm --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 \\
   -v "./output_models:/workspace/output_models" \\
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \\
   -e HF_TOKEN \\
@@ -44,7 +44,7 @@ nohup docker run --rm --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=6
     --quant nvfp4 \\
     --tp 1 \\
     --export_fmt hf
-  " > {LOG} 2>&1 &
+  " > {LOG} 2>&1 < /dev/null & }}
 echo "started quantization job (pid $!) → {LOG}\""""
 
 banner("Lab 07-2 · quantize to NVFP4 with Model Optimizer",

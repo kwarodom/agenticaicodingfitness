@@ -4,3 +4,5 @@ adapter_name_or_path: saves/qwen3-4b-hotel/lora/sft   # the LoRA adapter the tra
 template: qwen3_nothink
 infer_backend: huggingface       # choices: [huggingface, vllm, sglang, ktransformers]
 trust_remote_code: true
+# the exact system prompt every training record carries — without it the adapter answers in prose, not JSON
+default_system: 'You are the guest-request router for a hotel. Read the guest''s message and answer with one line of JSON: {"department": one of housekeeping|engineering|front_desk|food_beverage|concierge|security, "priority": normal|urgent, "reply": a short, polite reply to the guest in the guest''s language}. Do not promise a specific time.'
