@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alto_ops"
+version = "0.1.0"
+description = "Alto Ops Claw — NAT tools for chiller-plant analytics (Week 26 course package)"
+requires-python = ">=3.11"
+dependencies = ["nvidia-nat[langchain]>=1.8"]
+
+[project.entry-points.'nat.components']
+alto_ops = "alto_ops.register"
+
+[tool.setuptools.packages.find]
+where = ["src"]

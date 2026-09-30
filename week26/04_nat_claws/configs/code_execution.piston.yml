@@ -1,0 +1,19 @@
+# Lab 04-5 — the NAT 1.9 shape: code_execution talks to a Piston server (sandbox_type: piston is the only
+# value 1.9 accepts; its default uri is http://127.0.0.1:2000/api/v2/). Replace the uri with your Piston host.
+functions:
+  code_execution_tool:
+    _type: code_execution
+    sandbox_type: piston
+    uri: http://127.0.0.1:2000/api/v2/
+    timeout: 30
+    max_output_characters: 3000
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY
+    model_name: nemotron-3-nano:latest
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [code_execution_tool]

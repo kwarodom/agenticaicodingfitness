@@ -1,0 +1,53 @@
+# Lab 06-2 · Alto Ops Claw eval on THIS LAPTOP — NAT 1.9.0 + laptop Ollama (a stand-in for vLLM on the Spark).
+# = common/alto_ops/src/alto_ops/configs/workflow.laptop.yml + the research tutorial's Lab 5.2 `eval:` block,
+#   trimmed for a laptop: 4 questions, max_concurrency 2, and the cheap runtime evaluators instead of LLM judges.
+# Run from the repo root:  week26/.venv-nat/bin/nat eval --config_file week26/06_benchmarking/configs/eval_config.yml
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: week26/common/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY                  # required by validation even for keyless servers
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: false
+  handle_tool_errors: true
+eval:
+  general:
+    output_dir: week26/06_benchmarking/.runs/eval/alto_ops/
+    max_concurrency: 2
+    dataset:
+      _type: jsonl
+      file_path: week26/06_benchmarking/data/alto_ops_eval.jsonl
+    profiler:                       # every key below exists in NAT 1.9.0's ProfilerConfig
+      token_uniqueness_forecast: true
+      workflow_runtime_forecast: true
+      compute_llm_metrics: true
+      csv_exclude_io_text: true
+      prompt_caching_prefixes:
+        enable: true
+        min_frequency: 0.5
+      bottleneck_analysis:
+        enable_nested_stack: true
+      concurrency_spike_analysis:
+        enable: true
+        spike_threshold: 7
+  evaluators:                       # cheap: computed from the trace, no judge LLM calls
+    llm_latency:
+      _type: avg_llm_latency
+    llm_calls:
+      _type: avg_num_llm_calls
+    workflow_runtime:
+      _type: avg_workflow_runtime
+    tokens_per_call:
+      _type: avg_tokens_per_llm_end

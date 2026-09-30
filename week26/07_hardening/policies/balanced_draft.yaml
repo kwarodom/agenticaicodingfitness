@@ -1,0 +1,51 @@
+# COURSE-MADE "first draft" policy — NOT a file NemoClaw ships.
+# It is what a Balanced-tier claw often looks like after a week of "just make it work":
+# the pypi preset's shape (GET-only, pip + uv), the BMS entry still at L4 (host/port/binary, no MCP
+# inspection), the OTel entry still in audit mode, and landlock best_effort. Lab 07-1 attacks it and
+# the production policy (prod.yaml) side by side.
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/usr, /lib, /etc, /app]
+  read_write: [/tmp]
+landlock:
+  compatibility: best_effort
+process:
+  run_as_user: "1500"
+  run_as_group: "1500"
+
+network_policies:
+  pypi:
+    name: pypi
+    endpoints:
+      - host: pypi.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+      - host: files.pythonhosted.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+    binaries:
+      - { path: /usr/bin/pip }
+      - { path: /usr/local/bin/uv }
+  bms_mcp:
+    name: bms_mcp
+    endpoints:
+      - host: bms.alto.local
+        port: 8443
+        allowed_ips: ["10.20.0.15/32"]
+    binaries:
+      - { path: /usr/bin/python3.12 }
+  otel_collector:
+    name: otel_collector
+    endpoints:
+      - host: otel.alto.local
+        port: 4318
+        protocol: rest
+        rules:
+          - allow: { method: POST, path: /v1/traces }
+    binaries:
+      - { path: /usr/bin/python3.12 }

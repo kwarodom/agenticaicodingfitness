@@ -1,0 +1,1755 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reef Lab Runner — Week 26</title>
+<style>
+  :root{
+    /* Alto Reef design tokens (spec §7): navy surfaces, teal = OK/primary, amber = partial, magenta = failed */
+    --bg:#0a1729; --panel:#10213a; --panel2:#16304f; --line:rgba(120,200,255,.18);
+    --txt:#e3eefb; --dim:#8aa4c2; --accent:#3fd0c9; --green:#3fd0c9;
+    --amber:#f2b64c; --red:#ff5c8a; --violet:#b69cff; --cyan:#4aa3ff; --term:#06101e; --nv:#76b900;
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--txt);display:flex;flex-direction:column}
+  header{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line);
+         background:var(--panel);flex-wrap:wrap}
+  header h1{font-size:15px;margin:0;font-weight:650;white-space:nowrap}
+  header .sub{color:var(--dim);font-size:12px;flex:1 1 120px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .grow{flex:1}
+  .pill{font-size:11px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim);
+        display:inline-flex;align-items:center;gap:6px}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--dim)}
+  .pill.real .dot{background:var(--green)} .pill.sim .dot{background:var(--cyan)}
+  .pill.sim{color:var(--cyan)} .pill.real{color:var(--green)}
+  .tbtn{font:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;
+        border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+  .tbtn:hover:not(:disabled){border-color:var(--accent)} .tbtn:disabled{opacity:.4;cursor:not-allowed}
+  .progress{height:3px;background:var(--panel2)}
+  .progress > div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .5s}
+  .hdr-prog{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums}
+  /* ── path switch bar (sticky top strip) ── */
+  .pathbar{display:flex;gap:10px;align-items:center;padding:8px 20px;background:var(--panel);
+        border-bottom:1px solid var(--line);flex-wrap:wrap;font-size:12px;color:var(--dim)}
+  .pbtn{font:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;
+        border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+  .pbtn:hover{border-color:var(--accent)}
+  .pbtn.on{border-color:var(--accent);color:var(--green);background:rgba(63,185,80,.14)}
+  #pathfields{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  #pathfields input{font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);
+        background:var(--panel2);color:var(--txt);width:360px;max-width:70vw}
+  #pathfields input::placeholder{color:#566074}
+  #model-sel{font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);
+        background:var(--panel2);color:var(--txt);max-width:280px}
+  #model-sel:disabled{opacity:.5}
+  .pfhint{font-size:11px;color:var(--dim)}
+  /* visually hidden, still in the light DOM — the voice guide reads this */
+  .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+           clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+  /* ── main grid: sidebar + content ── */
+  .main{flex:1;display:grid;grid-template-columns:340px 1fr;min-height:0}
+  @media(max-width:900px){.main{grid-template-columns:1fr}}
+  .side{border-right:1px solid var(--line);overflow:auto;background:var(--panel);padding:6px 0 20px}
+  .fold{border-bottom:1px solid var(--line)}
+  /* .fhead / .sec are real <button>s (keyboard + screen-reader + AI-assistant reachable) — reset the chrome */
+  .fhead,.sec{width:100%;background:none;border:0;text-align:left;font-family:inherit;color:inherit}
+  .fhead{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;font-size:12.5px}
+  .fhead:hover{background:var(--panel2)} .fhead.cur .ft{color:var(--accent)}
+  .chev{color:var(--dim);width:10px;flex:0 0 10px}
+  .fnum{color:var(--dim);font-variant-numeric:tabular-nums;font-weight:700}
+  .ft{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ring{flex:0 0 16px}
+  .fct{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+  .fsecs{padding:2px 0 8px}
+  .sec{display:flex;gap:9px;align-items:center;padding:6px 14px 6px 32px;cursor:pointer;font-size:12.5px;
+       border-left:3px solid transparent;color:#cdd3df}
+  .sec:hover{background:var(--panel2)}
+  .sec.sel{background:var(--panel2);border-left-color:var(--accent);color:var(--txt)}
+  .sec.done .t{color:var(--green)}
+  .sec .ico{flex:0 0 18px;text-align:center;font-size:11px;color:var(--dim)}
+  .okico{color:var(--green);font-weight:700}
+  .sec .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* ── content column ── */
+  .content{overflow:auto;padding:24px 28px;min-width:0}
+  .crumb{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+  .content h2{font-size:21px;margin:6px 0 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .lv{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:6px}
+  .lv.beginner{background:rgba(63,185,80,.16);color:var(--green)}
+  .lv.intermediate{background:rgba(86,212,221,.16);color:var(--cyan)}
+  .lv.advanced{background:rgba(188,140,255,.16);color:var(--violet)}
+  .lv.all{background:rgba(210,153,34,.16);color:var(--amber)}
+  .metachips{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}
+  .chip{font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim);background:var(--panel)}
+  .pwarn{font-size:12px;color:var(--amber);border:1px solid rgba(210,153,34,.4);background:rgba(210,153,34,.08);
+        border-radius:8px;padding:8px 12px;margin:0 0 12px}
+  .waitmsg{margin:40px auto;max-width:520px;text-align:center;color:var(--amber);font-size:13px;
+        border:1px solid rgba(210,153,34,.4);background:rgba(210,153,34,.07);border-radius:10px;padding:18px 22px}
+  .navrow{display:flex;gap:12px;align-items:center;margin:26px 0 8px;border-top:1px solid var(--line);padding-top:16px}
+  .navlbl{font-size:11.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+  /* ── bespoke markdown ── */
+  .md{max-width:880px;color:#cdd3df}
+  .md p{margin:10px 0;line-height:1.6}
+  .md h3{color:var(--txt);font-size:16px;margin:20px 0 8px}
+  .md h4{color:var(--accent);font-size:13.5px;margin:16px 0 6px}
+  .md b{color:var(--txt)}
+  .md a{color:var(--accent)}
+  .md code{background:var(--panel2);border:1px solid var(--line);padding:1px 5px;border-radius:5px;font-size:12px;
+        font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .md table{border-collapse:collapse;font-size:12.5px;margin:10px 0;width:100%;max-width:860px}
+  .md td,.md th{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+  .md th{background:var(--panel2);color:var(--txt)}
+  .md blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid var(--accent);background:var(--panel);
+        color:var(--dim);border-radius:0 8px 8px 0;font-size:12.5px}
+  .md ul,.md ol{margin:8px 0 8px 4px;padding-left:22px}
+  .md li{margin:4px 0;line-height:1.55}
+  .md details{margin:8px 0;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--panel)}
+  .md summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:600}
+  .codewrap{position:relative;margin:10px 0;border:1px solid var(--line);border-radius:8px;background:var(--term);overflow:hidden}
+  .codewrap pre{margin:0;padding:11px 13px;overflow:auto;max-height:340px;
+        font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d5dae4}
+  .codewrap.expected{border-style:dashed}
+  .codewrap.expected pre{color:#8a93a6}
+  .codewrap.expected::before{content:"expected output";position:absolute;left:10px;top:4px;font-size:9.5px;
+        letter-spacing:.08em;text-transform:uppercase;color:#566074}
+  .codewrap.expected pre{padding-top:22px}
+  .copy{position:absolute;top:6px;right:6px;font:inherit;font-size:10.5px;padding:3px 8px;border-radius:6px;
+        cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--dim)}
+  .copy:hover{border-color:var(--accent);color:var(--txt)}
+  /* checkpoint card */
+  .ckpt{display:flex;gap:10px;align-items:flex-start;margin:14px 0;padding:11px 14px;cursor:pointer;
+        border:1px solid rgba(63,185,80,.45);border-radius:10px;background:rgba(63,185,80,.07)}
+  .ckpt input{margin-top:2px;accent-color:var(--green);width:15px;height:15px;cursor:pointer;flex:0 0 15px}
+  .ckpt .ckmark{color:var(--green);font-weight:700;font-size:12px;white-space:nowrap}
+  .ckpt .cktxt{flex:1;font-size:13px;line-height:1.5}
+  .ckpt.done{background:rgba(63,185,80,.16)}
+  .ckpt.done .cktxt{color:var(--green)}
+  /* ── lab cards + terminal ── */
+  .labsec{margin-top:18px}
+  .labshead{font-size:15px;margin:0 0 4px;color:var(--txt)}
+  .labcard{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:12px 0;overflow:hidden;max-width:880px}
+  .labtop{display:flex;gap:10px;align-items:center;padding:10px 14px;flex-wrap:wrap}
+  .labfile{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--accent);font-weight:650}
+  .labtitle{font-size:12.5px;color:var(--dim)}
+  .spark{display:inline-flex;align-items:center;gap:7px}
+  .spark svg{display:block}
+  .skline{fill:none;stroke:var(--line);stroke-width:1.4}
+  .sparknone{font-size:10.5px;color:#566074}
+  .sklast{font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .sklast.ok{color:var(--green)} .sklast.bad{color:var(--red)}
+  .run{font:inherit;font-size:13px;font-weight:650;padding:7px 16px;border-radius:9px;cursor:pointer;
+       border:1px solid var(--green);background:rgba(63,185,80,.16);color:var(--txt)}
+  .run:hover:not(:disabled){background:rgba(63,185,80,.30)} .run:disabled{opacity:.45;cursor:not-allowed}
+  pre.src{margin:0;max-height:0;overflow:auto;transition:max-height .25s;background:var(--term);
+          border-top:1px solid transparent;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+          font-size:12px;color:#cdd3df;padding:0 14px}
+  pre.src.open{max-height:420px;padding:12px 14px;border-top-color:var(--line)}
+  .term-wrap{border-top:1px solid var(--line);background:var(--term)}
+  .term-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;background:#0d1017;border-bottom:1px solid var(--line);
+            font-size:11px;color:var(--dim)}
+  .term-bar .d{width:11px;height:11px;border-radius:50%} .term-bar .clr{margin-left:auto;cursor:pointer}
+  .term-bar .clr:hover{color:var(--txt)}
+  .term{padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+        white-space:pre-wrap;word-break:break-word;min-height:60px;max-height:48vh;overflow:auto;color:#d5dae4}
+  .footer{padding:8px 14px;border-top:1px solid var(--line);font-size:12px;color:var(--dim);display:none}
+  .footer.show{display:block} .footer .pass{color:var(--green)} .footer .failc{color:var(--red)}
+  .sp{width:11px;height:11px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;
+      display:inline-block;animation:rot .7s linear infinite;vertical-align:-1px}
+  @keyframes rot{to{transform:rotate(360deg)}}
+  /* narration colors — house colorize contract */
+  .l-dgx{color:var(--green);font-weight:600}
+  .l-sim{color:var(--cyan);font-weight:600}
+  .l-prompt{color:var(--cyan)}
+  .l-reason{color:#7a8499;font-style:italic}
+  .l-answer{color:#d5dae4}
+  .l-metric{color:var(--cyan);font-weight:600}
+  .l-act{color:var(--amber);font-weight:600}
+  .l-observe{color:var(--green)}
+  .l-result{color:var(--violet);font-weight:600}
+  .l-pass{color:var(--green);font-weight:600}
+  .l-warn{color:var(--amber);font-weight:600}
+  .l-fail{color:var(--red);font-weight:600}
+  .l-banner{color:var(--accent)}
+  .l-cmd{color:#9fb8d4}
+  /* ── built-in terminal drawer ── */
+  .copy.torun{right:58px;color:var(--green);border-color:rgba(63,185,80,.5)}
+  .copy.torun:hover{border-color:var(--green);color:var(--txt);background:rgba(63,185,80,.15)}
+  .shdrawer{border-top:1px solid var(--line);background:var(--term);flex:0 0 auto}
+  .shbar{display:flex;align-items:center;gap:9px;padding:7px 16px;background:#0d1017;cursor:pointer;
+         font-size:11.5px;color:var(--dim);user-select:none}
+  .shbar:hover{color:var(--txt)}
+  .shbar .d{width:11px;height:11px;border-radius:50%}
+  .shbar b{color:var(--txt);font-weight:650}
+  .shbar .clr:hover{color:var(--red)}
+  .shstate{font-variant-numeric:tabular-nums}
+  .shstate.run{color:var(--amber)} .shstate.ok{color:var(--green)} .shstate.bad{color:var(--red)}
+  .shbody{display:none}
+  .shdrawer.open .shbody{display:block}
+  #sh-term{min-height:40px;max-height:34vh}
+  .shrow{display:flex;gap:8px;align-items:flex-start;padding:8px 12px;border-top:1px solid var(--line)}
+  .shps1{color:var(--green);font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}
+  #sh-in{flex:1;resize:none;font:12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--panel2);
+         color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-height:34px}
+  #sh-in:focus{outline:none;border-color:var(--accent)}
+  #sh-in::placeholder{color:#566074}
+  /* ── hero banners ── */
+  .herocard{max-width:880px;margin:0 0 14px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+  .herocard img{display:block;width:100%;max-height:180px;object-fit:cover}
+  header{position:relative}
+  header.hashero::after{content:"";position:absolute;top:0;right:0;bottom:0;left:45%;z-index:0;pointer-events:none;
+    background:var(--heroimg) right center/cover no-repeat;opacity:.26;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 70%);mask-image:linear-gradient(90deg,transparent,#000 70%)}
+  header.hashero>*{position:relative;z-index:1}
+  /* ── diagram cards (dark metric-card style) ── */
+  .diagwrap{max-width:980px}
+  .dcard{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px 16px;margin:14px 0;min-width:0}
+  .dcard .dtitle{margin:0 0 10px;font-size:14px;color:var(--txt);font-weight:650}
+  .dunit{font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-weight:500;
+    vertical-align:2px;margin-left:6px}
+  .dcard .dcap{margin:10px 0 0;font-size:12px;color:var(--dim);line-height:1.5}
+  .dcard svg{display:block;width:100%;height:auto}
+  .diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  .diag-grid .dcard{margin:0}
+  @media(max-width:900px){.diag-grid{grid-template-columns:1fr}}
+  .dlegend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--dim)}
+  .dlegend span{display:inline-flex;align-items:center;gap:6px}
+  .dlegend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  /* diagram svg typography */
+  .dcard svg text{font-family:inherit}
+  .dg-lane{fill:rgba(255,255,255,.015)} .dg-lane.alt{fill:rgba(63,185,80,.03)}
+  .dg-lanelbl{fill:var(--dim);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+  .dg-nlbl{fill:var(--txt);font-size:11px;font-weight:600}
+  .dg-nsub{fill:var(--dim);font-size:8.5px}
+  .dg-elbl{fill:var(--dim);font-size:9px;paint-order:stroke;stroke:var(--bg);stroke-width:3px}
+  .dg-actor{fill:var(--txt);font-size:11px;font-weight:600}
+  .dg-msg{fill:#cdd3df;font-size:9.5px;paint-order:stroke;stroke:var(--bg);stroke-width:3px}
+  .dg-msg.ret{fill:var(--dim)}
+  .dg-note{fill:var(--amber);font-size:9.5px;font-style:italic}
+  .dg-axis{fill:var(--dim);font-size:9px}
+  .dg-val{fill:var(--txt);font-size:9px;font-weight:600}
+  .dg-big{fill:var(--txt);font-size:22px;font-weight:700}
+  /* sequence arrows fade in, staggered */
+  .sqs{opacity:0;animation:sqIn .45s ease forwards}
+  @keyframes sqIn{to{opacity:1}}
+  /* chart grow animations — armed when .dchart gains .iv (IntersectionObserver) */
+  .dchart .cbar{transform:scaleY(0);transform-box:fill-box;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.2,.8,.25,1)}
+  .dchart .chbar{transform:scaleX(0);transform-box:fill-box;transform-origin:0 50%;transition:transform .7s cubic-bezier(.2,.8,.25,1)}
+  .dchart.iv .cbar,.dchart.iv .chbar{transform:none}
+  .dchart .cline{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s ease .1s}
+  .dchart.iv .cline{stroke-dashoffset:0}
+  .dchart .cdot,.dchart .cval{opacity:0;transition:opacity .4s ease}
+  .dchart.iv .cdot,.dchart.iv .cval{opacity:1}
+  .dchart .cseg{transition:stroke-dasharray .9s cubic-bezier(.2,.8,.25,1)}
+  @media (prefers-reduced-motion: reduce){
+    .sqs{animation:none;opacity:1}
+    .dchart .cbar,.dchart .chbar{transform:none;transition:none}
+    .dchart .cline{stroke-dashoffset:0;transition:none}
+    .dchart .cdot,.dchart .cval{opacity:1;transition:none}
+    .dchart .cseg{transition:none}
+  }
+  /* ── mode switch, exercise cards, inline Ask blocks ── */
+  .pbtn.on{border-color:var(--accent);color:var(--accent);background:rgba(118,185,0,.13)}
+  .pbtn:disabled{opacity:.4;cursor:not-allowed}
+  .tbtn.sm{font-size:11px;padding:4px 9px}
+  .labmode{font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:6px;vertical-align:2px;
+    background:rgba(86,212,221,.14);color:var(--cyan);margin-left:6px}
+  .labmode.live{background:rgba(118,185,0,.16);color:var(--accent)}
+  .ftag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap}
+  .ftag.ex{background:rgba(210,153,34,.16);color:var(--amber)} .ftag.sol{background:rgba(188,140,255,.14);color:var(--violet)}
+  .solcard{border-style:dashed;margin-top:-4px;background:transparent}
+  .jevblk{margin:14px 0;border:1px solid rgba(118,185,0,.45);border-radius:10px;background:var(--panel);overflow:hidden;max-width:880px}
+  .jevbar{display:flex;gap:8px;align-items:center;padding:7px 10px;background:rgba(118,185,0,.07);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .jevtag{font-size:11.5px;color:var(--accent);font-weight:650}
+  .run.jevask{border-color:var(--accent);background:rgba(118,185,0,.16);font-size:12.5px;padding:6px 14px}
+  .run.jevask:hover:not(:disabled){background:rgba(118,185,0,.3)}
+  .jevsrc{display:block;width:100%;border:0;resize:vertical;background:var(--term);color:#d5dae4;
+    font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;padding:11px 13px;outline:none;tab-size:2}
+  .jevsrc:focus{box-shadow:inset 0 0 0 1px var(--accent)}
+  .jevout{display:none;border-top:1px solid var(--line);padding:11px 14px 6px}
+  .jevout.show{display:block}
+  .jhead{font-size:11.5px;color:var(--dim);margin-bottom:8px;font-variant-numeric:tabular-nums}
+  .jhead b{color:var(--txt)}
+  .jsrc{font-size:9.5px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:5px;margin-right:4px}
+  .jsrc.live{background:rgba(118,185,0,.18);color:var(--accent)} .jsrc.rec{background:rgba(86,212,221,.16);color:var(--cyan)}
+  .jsrc.ph{background:rgba(210,153,34,.18);color:var(--amber)}
+  .jwarn{font-size:12px;color:var(--amber);border:1px solid rgba(210,153,34,.4);background:rgba(210,153,34,.08);border-radius:8px;padding:7px 11px;margin:6px 0 10px}
+  .jwarn.bad{color:var(--red);border-color:rgba(248,81,73,.45);background:rgba(248,81,73,.08)}
+  .jnote{font-size:11.5px;color:var(--cyan);margin:0 0 8px}
+  .jans{margin:8px 0 14px}
+  .jq{font-size:13px;margin-bottom:6px;color:#cdd3df}
+  .jq b{color:var(--txt)}
+  .jt{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 6px;border-radius:5px;margin:0 6px 0 7px;vertical-align:1px}
+  .jt.choice{background:rgba(86,212,221,.15);color:var(--cyan)} .jt.noul{background:rgba(118,185,0,.15);color:var(--accent)}
+  .jt.score{background:rgba(210,153,34,.16);color:var(--amber)}
+  .jc{font-size:11.5px;color:var(--dim);margin-left:6px}
+  .jrow{display:grid;grid-template-columns:minmax(90px,260px) 1fr 40px;gap:9px;align-items:center;font-size:12px;margin:3px 0}
+  .jlbl{color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .jrow.win .jlbl{color:var(--txt);font-weight:650}
+  .jtrack{height:9px;background:var(--panel2);border-radius:5px;overflow:hidden;display:block}
+  .jfill{display:block;height:100%;background:#4a5570;border-radius:5px;transition:width .55s cubic-bezier(.2,.8,.25,1)}
+  .jrow.win .jfill{background:var(--accent)}
+  .jval{text-align:right;font-variant-numeric:tabular-nums;color:var(--dim)}
+  .jscale{position:relative;height:6px;margin:2px 49px 8px 0;border-radius:3px;
+    background:linear-gradient(90deg,rgba(210,153,34,.15),rgba(210,153,34,.45))}
+  .jdot{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--amber);border:2px solid var(--bg);
+    transform:translate(-50%,-50%);transition:left .55s cubic-bezier(.2,.8,.25,1)}
+  .jraw{margin:6px 0 8px;font-size:11.5px}
+  .jraw summary{cursor:pointer;color:var(--dim)}
+  .jraw pre{max-height:260px;overflow:auto;background:var(--term);border:1px solid var(--line);border-radius:8px;padding:9px 11px;
+    font:11.5px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cdd3df}
+  @media(max-width:640px){.jrow{grid-template-columns:minmax(70px,120px) 1fr 36px}.content{padding:18px 14px}}
+  @media (prefers-reduced-motion: reduce){.jfill,.jdot{transition:none}}
+  /* ── language switch, LLM picker, keys dialog, ```llm blocks ── */
+  .lbtn{padding:5px 10px;font-size:11.5px}
+  #llm-sel,#llm-model{font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--txt);max-width:220px}
+  .llmblk{border-color:rgba(188,140,255,.5)}
+  .llmblk .jevbar{background:rgba(188,140,255,.08)}
+  .jevtag.llm{color:var(--violet)}
+  .run.llmask{border-color:var(--violet);background:rgba(188,140,255,.16)}
+  .run.llmask:hover:not(:disabled){background:rgba(188,140,255,.3)}
+  .llmtext{white-space:pre-wrap;font-size:13px;line-height:1.6;color:var(--txt);background:var(--term);border:1px solid var(--line);
+    border-radius:8px;padding:10px 12px;margin:6px 0 8px}
+  dialog#keysdlg{border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--txt);padding:0;
+    width:min(760px,94vw);max-height:86vh}
+  dialog#keysdlg::backdrop{background:rgba(0,0,0,.55)}
+  .khead{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .khead h3{margin:0;font-size:15px}
+  .kbody{padding:6px 16px 4px;overflow:auto;max-height:62vh}
+  .krow{padding:9px 0;border-bottom:1px solid var(--line)}
+  .kname{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:13px}
+  .kname code{font-size:11px;color:var(--dim)}
+  .krole{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+  .kb{font-size:10.5px;font-weight:650;padding:2px 7px;border-radius:6px}
+  .kb.ok{background:rgba(63,185,80,.14);color:var(--green)} .kb.no{background:rgba(248,81,73,.12);color:var(--red)}
+  .kin{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+  .kin input{font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);
+    color:var(--txt);width:340px;max-width:70vw}
+  .kfoot{padding:10px 16px;font-size:11.5px;color:var(--dim);border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  #keysmsg{color:var(--cyan)}
+  /* ── media: images, audio, video in tutorials and lab output ── */
+  .mediafig{margin:12px 0 14px;max-width:880px}
+  .mediafig img,.mediafig video{display:block;max-width:100%;max-height:420px;border-radius:10px;border:1px solid var(--line);background:var(--term)}
+  .mediafig audio{display:block;width:min(520px,100%)}
+  .mediafig figcaption{font-size:11.5px;color:var(--dim);margin-top:6px}
+  .termmedia{display:block;margin:6px 0 8px}
+  .termmedia img,.termmedia video{max-width:min(480px,100%);max-height:260px;border-radius:8px;border:1px solid var(--line)}
+  .termmedia audio{width:min(420px,100%)}
+  /* ── 🎙 live console ── */
+  .livebox{margin:14px 0;border:1px solid rgba(86,212,221,.5);border-radius:12px;background:var(--panel);max-width:980px;overflow:hidden}
+  .livehead{display:flex;gap:10px;align-items:center;padding:9px 12px;background:rgba(86,212,221,.08);border-bottom:1px solid var(--line)}
+  .livetag{font-size:12px;font-weight:650;color:var(--cyan)}
+  .lvstate{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--dim)}
+  .lvstate.ok{background:rgba(63,185,80,.16);color:var(--green)} .lvstate.warn{background:rgba(210,153,34,.18);color:var(--amber)}
+  .lvstate.bad{background:rgba(248,81,73,.18);color:var(--red)} .lvstate.run{color:var(--cyan)}
+  .lvclock{font-variant-numeric:tabular-nums;font-size:12px;color:var(--dim)}
+  .liveopts{padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--dim)}
+  .liveopts label{display:inline-flex;gap:5px;align-items:center;margin-right:12px}
+  .liveopts select{font:inherit;font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+  .lvrow{display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .lvmeter{display:inline-block;width:90px;height:8px;border-radius:4px;background:var(--panel2);overflow:hidden}
+  .lvmeter span{display:block;height:100%;width:0;background:var(--green);transition:width .1s}
+  .lvmeter span.muted{background:var(--dim)}
+  .livegrid{display:grid;grid-template-columns:minmax(220px,320px) 1fr;min-height:260px}
+  @media(max-width:760px){.livegrid{grid-template-columns:1fr}}
+  .lvleft{border-right:1px solid var(--line);padding:10px}
+  .lvleft video{display:none;width:100%;border-radius:8px;border:1px solid var(--line);background:#000;transform:scaleX(-1)}
+  .lvwatchc{margin-top:8px;font-size:11.5px;color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+  .lvwatchc.hot{border-color:rgba(248,81,73,.6);color:var(--red)}
+  .lvwatchc span{color:var(--txt)}
+  .lvtext input{width:100%;margin-top:8px;font:inherit;font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+  .lvright{padding:8px 12px;min-width:0}
+  .lvlog{max-height:380px;overflow:auto;font-size:12.5px;line-height:1.5}
+  .lvline{margin:4px 0;padding:4px 8px;border-radius:8px}
+  .lvline.you{background:rgba(86,212,221,.07)} .lvline.bot{background:rgba(188,140,255,.08)}
+  .lvline.jev{background:var(--panel2);font-size:11.5px;color:var(--dim)} .lvline.dim{color:var(--dim);font-size:11px}
+  .lvline.bad{color:var(--red)} .lvline.warn{color:var(--amber)}
+  .lvline b{color:var(--txt)} .lvs{margin-right:6px} .lvs.hot{color:var(--red);font-weight:700}
+  .lvst.bad{color:var(--red)} .lvst.warn{color:var(--amber)} .lvst.ok{color:var(--green)}
+  .lvact{margin-top:4px;color:var(--amber)} .lvfix{margin-top:4px;color:var(--cyan)}
+  .lvlang{display:inline-flex;gap:3px;align-items:center;margin-right:12px}
+  .lvlang .pbtn{padding:3px 9px;font-size:11.5px}
+  .lvline.bot.sys{opacity:.6;font-style:italic}
+  .lvfoot{padding:7px 12px;border-top:1px solid var(--line);font-size:11px;color:var(--dim)}
+  /* ── collapsible course outline: docked · hidden · pop-up (peek) ── */
+  #side-toggle{font-size:15px;line-height:1;padding:5px 10px}
+  .main.noside{grid-template-columns:1fr}
+  .main.noside .side{position:fixed;top:0;left:0;bottom:0;width:340px;max-width:88vw;z-index:60;
+    transform:translateX(-105%);transition:transform .22s ease;box-shadow:8px 0 30px rgba(0,0,0,.45);visibility:hidden}
+  .main.noside.peek .side{transform:none;visibility:visible}
+  #side-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55}
+  .main.noside.peek ~ #side-scrim{display:block}
+  #side-tab{display:none;position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:50;writing-mode:vertical-rl;
+    font:inherit;font-size:11.5px;font-weight:650;padding:12px 5px;border:1px solid var(--line);border-left:0;
+    border-radius:0 8px 8px 0;background:var(--panel2);color:var(--dim);cursor:pointer;letter-spacing:.04em}
+  #side-tab:hover{color:var(--txt);border-color:var(--accent)}
+  .main.noside ~ #side-tab{display:block}
+  .main.noside.peek ~ #side-tab{display:none}
+  .sidetop{display:flex;align-items:center;gap:8px;padding:8px 12px 8px 14px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:var(--panel);z-index:2;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+  .sidetop .tbtn{text-transform:none;letter-spacing:0}
+  @media (prefers-reduced-motion: reduce){.main.noside .side{transition:none}}
+  /* ── week26 additions: Spark chips, endpoint dots, Ask-the-Spark blocks ── */
+  .spchip{font-size:11.5px;padding:3px 9px;border:1px solid var(--line);border-radius:99px;color:var(--dim);white-space:nowrap}
+  .spchip.ok{border-color:var(--green);color:var(--green)} .spchip.bad{border-color:var(--amber);color:var(--amber)}
+  .epchips{display:inline-flex;gap:5px;flex-wrap:wrap}
+  .ep{font-size:10.5px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--dim)}
+  .ep.up{border-color:var(--green);color:var(--green)}
+  .lapt{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+  #sh-target{font-size:11px;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:2px 4px}
+  .jsrc.lap{background:rgba(210,153,34,.18);color:var(--amber)}
+  .askmeta{font-size:11.5px;color:var(--dim);margin:6px 0}
+  .askmeta b{color:var(--txt)}
+  .tc{font-family:var(--mono);font-size:12px;background:var(--panel2);border-radius:6px;padding:6px 9px;margin:5px 0}
+  /* ── week26: 🔓 apply toggle + 🪸 Reef dialog ── */
+  .apply.on{color:var(--amber);font-weight:600}
+  #reefdlg{width:min(980px,96vw);max-height:92vh;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--txt)}
+  #reefdlg::backdrop{background:rgba(3,10,20,.72)}
+  .rhead{display:flex;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:2}
+  .rhead h3{margin:0;font-size:15px}
+  .rbody{padding:14px 16px;overflow:auto;max-height:calc(92vh - 56px)}
+  .rsvg{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--line)}
+  .rlabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin:16px 0 8px}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  .rcard{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:12.5px}
+  .rcard b{font-size:13px} .rcard .u{font-family:var(--mono);font-size:11px;color:var(--dim);word-break:break-all}
+  .rchip{display:inline-block;font-size:10.5px;font-weight:650;letter-spacing:.05em;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--dim);margin-right:4px}
+  .rchip.ok{border-color:var(--green);color:var(--green)} .rchip.bad{border-color:var(--red);color:var(--red)}
+  .rchip.warn{border-color:var(--amber);color:var(--amber)} .rchip.nv{border-color:var(--nv);color:var(--nv)}
+  .rraw summary{cursor:pointer;font-family:var(--mono);font-size:12px;padding:4px 0}
+  .rraw pre{margin:4px 0 10px;background:var(--term);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:11.5px;white-space:pre-wrap;max-height:260px;overflow:auto}
+  .rnote{font-size:12px;color:var(--dim);margin:6px 0}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  .rbob{animation:bob 3.2s ease-in-out infinite}
+  @media (prefers-reduced-motion: reduce){.rbob{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <button class="tbtn" id="side-toggle" onclick="toggleSide()" aria-controls="side" aria-expanded="true"
+          title="Hide / show the course outline — shortcut [">☰</button>
+  <h1>🪸 Reef Lab Runner</h1>
+  <span class="sub">Week 26 · NemoClaw on DGX Spark — sandboxed claws · OpenShell policy · NAT · tracing · benchmarks · hardening</span>
+  <span class="grow"></span>
+  <span class="hdr-prog" id="course-prog"></span>
+  <span class="pill" id="pill-mode" title="mode from /api/status"><span class="dot"></span><span id="mode-txt">checking…</span></span>
+  <span style="width:1px;height:22px;background:var(--line);display:inline-block"></span>
+  <button class="tbtn" id="nav-prev" onclick="nav(-1)" aria-label="Previous section">◀</button>
+  <span id="nav-pos" aria-live="polite" style="font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums"></span>
+  <button class="tbtn" id="nav-next" onclick="nav(1)" aria-label="Next section">▶</button>
+  <button class="pbtn lbtn" data-l="en" onclick="setLang('en')" aria-label="English">EN</button>
+  <button class="pbtn lbtn" data-l="th" onclick="setLang('th')" aria-label="ภาษาไทย">ไทย</button>
+  <button class="tbtn" id="sh-toggle" onclick="termToggle()" aria-expanded="false" aria-controls="shdrawer" title="built-in terminal — run any command without leaving the app" data-i18n="terminal">⌨ Terminal</button>
+</header>
+<div class="progress"><div id="bar"></div></div>
+<div class="pathbar">
+  <span data-i18n="mode">Mode:</span>
+  <button class="pbtn mbtn" data-m="live" onclick="setMode('live')" data-i18n="live">⚡ Live</button>
+  <button class="pbtn mbtn" data-m="dry" onclick="setMode('dry')" data-i18n="dry">📄 Dry run</button>
+  <span style="width:1px;height:20px;background:var(--line);display:inline-block"></span>
+  <span class="spchip" id="chip-a" title="Spark A">Spark A: …</span>
+  <span class="spchip" id="chip-b" title="Spark B">Spark B: …</span>
+  <span class="epchips" id="epchips"></span>
+  <label class="pfhint lapt" title="When a Spark endpoint is down, ⚡ blocks and serving labs may use Ollama on this laptop — always labelled LAPTOP STAND-IN"><input type="checkbox" id="lapt" onchange="setLaptop(this.checked)"> <span data-i18n="laptop">💻 laptop stand-in</span></label>
+  <label class="pfhint lapt apply" id="apply-lbl" title="Off: labs print — but never run — commands that CHANGE the Spark (install, onboard, policy add/set, snapshot, create/delete). On: they run, for this browser session only."><input type="checkbox" id="apply" onchange="setApply(this.checked)"> <span data-i18n="apply">🔓 Allow changes</span></label>
+  <button class="tbtn sm" onclick="openReef()" data-i18n="reef" title="the claw stack at a glance — gateway, sandboxes, inference, NAT, Phoenix, OTel — every value with its command and probe time">🪸 Reef</button>
+  <button class="tbtn sm" onclick="openSetup()" data-i18n="setup">🖥 Spark setup</button>
+  <button class="tbtn sm" onclick="refreshStatus(true)" title="probe the Sparks and endpoints again">↻</button>
+  <span class="pfhint" id="modehint"></span>
+</div>
+
+<div class="main">
+  <nav class="side" id="side" aria-label="Course outline — Week 26 modules"></nav>
+  <main class="content" id="content" aria-label="Current section"><div class="waitmsg">loading the course…</div></main>
+</div>
+<div id="side-scrim" onclick="closePeek()" aria-hidden="true"></div>
+<button type="button" id="side-tab" onclick="openPeek()" aria-controls="side" title="Show the course outline — shortcut [">☰ Course</button>
+
+<dialog id="reefdlg" aria-label="Reef — the claw stack at a glance">
+  <div class="rhead"><h3>🪸 Reef</h3><span class="pfhint" id="reefsub">the claw stack at a glance</span><span class="grow"></span>
+    <button class="tbtn sm" onclick="loadReef(true)" id="reefre">↻ probe again</button>
+    <button class="tbtn sm" onclick="closeReef()">✕ close</button></div>
+  <div class="rbody" id="reefbody"><div class="rnote">probing…</div></div>
+</dialog>
+
+<dialog id="keysdlg" aria-label="Spark setup">
+  <div class="khead"><h3>🖥 Spark setup</h3><span class="pfhint">hosts are shown · tokens are write-only</span><span class="grow"></span>
+    <button class="tbtn sm" onclick="closeSetup()">✕ close</button></div>
+  <div class="kbody" id="keysbody"></div>
+  <div class="kfoot"><span>Saved to <code>week26/.env.local</code> on this machine (gitignored, mode 0600). Tokens are injected only into lab subprocesses and the ⌨ terminal — never sent to the browser. Test ssh first: <code>ssh -o BatchMode=yes $SPARK_HOST true</code>.</span>
+    <span id="keysmsg" aria-live="polite"></span></div>
+</dialog>
+
+<div class="shdrawer" id="shdrawer">
+  <div class="shbar" onclick="termToggle()">
+    <span class="d" style="background:#f85149"></span><span class="d" style="background:#d29922"></span>
+    <span class="d" style="background:#3fb950"></span>
+    <b>⌨ Terminal</b>
+    <select id="sh-target" onclick="event.stopPropagation()" onchange="SH_TARGET=this.value;shTargetHint()" aria-label="where commands run">
+      <option value="mac">💻 this Mac</option><option value="a">🟩 Spark A (ssh)</option><option value="b">🟩 Spark B (ssh)</option></select>
+    <span id="sh-where">— cwd agenticaicodingfitness · localhost only</span>
+    <span class="shstate" id="sh-state"></span>
+    <span class="grow"></span>
+    <span class="clr" onclick="event.stopPropagation();clearShTerm()">clear ✕</span>
+    <span id="sh-chev">▴</span>
+  </div>
+  <div class="shbody">
+    <div class="term" id="sh-term"></div>
+    <div class="shrow">
+      <span class="shps1">$</span>
+      <textarea id="sh-in" rows="1" spellcheck="false"
+        placeholder="any command — Enter runs · Shift+Enter newline · ↑/↓ history · or hit ▶ run on a tutorial code block"></textarea>
+      <button class="run" id="sh-run" onclick="runShell()">▶ Run</button>
+      <button class="tbtn" id="sh-stop" onclick="stopShell()" style="display:none">■ Stop</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ── Reef Lab Runner — one continuous Week 26 course ─────────────────────── */
+const $=id=>document.getElementById(id);
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+let COURSE=[],FLAT=[],cur=0,RUNNING=false,attempt=0;
+let CKS={}; try{CKS=JSON.parse(localStorage.getItem("rl.cks")||"{}")||{};}catch(e){CKS={};}
+const termCache={},footCache={},srcCache={},openSrc={},expanded=new Set();
+
+/* ── checkpoints ── */
+function scanCks(md){
+  let n=0,fence=false;
+  for(const raw of String(md).split("\n")){
+    const t=raw.trim();
+    if(t.startsWith("```")){fence=!fence;continue;}
+    if(!fence&&/^✓\s*Checkpoint/.test(t))n++;
+  }
+  return n;
+}
+function ckKey(fi,si,i){const c=COURSE[fi];return c.folder+"/"+c.sections[si].id+"/"+i;}
+function secTicked(fi,si){
+  const s=COURSE[fi].sections[si];let n=0;
+  for(let i=0;i<s.ckTotal;i++)if(CKS[ckKey(fi,si,i)])n++;
+  return n;
+}
+function foldCounts(fi){
+  let t=0,d=0;
+  COURSE[fi].sections.forEach((s,si)=>{t+=s.ckTotal;d+=secTicked(fi,si);});
+  return [d,t];
+}
+function courseCounts(){
+  let t=0,d=0;
+  COURSE.forEach((c,fi)=>{const r=foldCounts(fi);d+=r[0];t+=r[1];});
+  return [d,t];
+}
+function saveCksLocal(){try{localStorage.setItem("rl.cks",JSON.stringify(CKS));}catch(e){}}
+function tickCk(el){
+  const k=el.dataset.key;
+  if(el.checked)CKS[k]=true; else delete CKS[k];
+  saveCksLocal();                                   // offline fallback / instant
+  // write through to the server so progress survives a browser switch
+  fetch("/api/progress",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({key:k,done:el.checked})}).catch(()=>{});
+  const card=el.closest(".ckpt"); if(card)card.classList.toggle("done",el.checked);
+  renderSide();
+}
+async function loadServerProgress(){
+  // Server is the source of truth; merge any local-only ticks up to it once
+  // (first-run migration), so nobody loses progress made before this feature.
+  let server={};
+  try{server=(await(await fetch("/api/progress")).json()).checkpoints||{};}catch(e){return;}
+  const localOnly=Object.keys(CKS).filter(k=>!server[k]);
+  CKS=Object.assign({},CKS,server);                 // union: server ∪ local
+  saveCksLocal();
+  localOnly.forEach(k=>fetch("/api/progress",{method:"POST",
+    headers:{"Content-Type":"application/json"},body:JSON.stringify({key:k,done:true})}).catch(()=>{}));
+}
+
+function setCourse(data){
+  COURSE=data;
+  FLAT=[];
+  COURSE.forEach((c,fi)=>{
+    (c.sections||[]).forEach((s,si)=>{
+      s.ckTotal=scanCks(s.md||"");
+      FLAT.push({fi,si,key:c.folder+"/"+s.id});
+    });
+  });
+}
+async function loadCourse(){
+  try{const r=await fetch("/api/course?lang="+LANG);if(r.ok)setCourse(await r.json());}catch(e){}
+}
+/* ── boot: never blank — retry /api/course every 3s ── */
+async function boot(){
+  let data;
+  try{
+    const r=await fetch("/api/course?lang="+LANG);
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    data=await r.json();
+    if(!Array.isArray(data)||!data.length)throw new Error("empty course");
+  }catch(e){
+    attempt++;
+    $("content").innerHTML=`<div class="waitmsg">⚠ backend not reachable — ${esc(e.message||e)}<br>`+
+      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week26/00_reef_lab_runner/tutorial_server.py</code></div>`;
+    setTimeout(boot,3000);return;
+  }
+  setCourse(data);
+  const last=localStorage.getItem("rl.last");
+  const idx=FLAT.findIndex(f=>f.key===last);
+  cur=idx>=0?idx:0;
+  expanded.add(FLAT[cur].fi);
+  await Promise.all([loadHistory(),loadServerProgress()]);
+  renderSide();renderContent();
+  refreshStatus();setInterval(refreshStatus,30000);
+}
+
+/* ── LIVE / DRY switch + Spark status — the server holds hosts and tokens; the browser sees up/down only ── */
+let MODE="",RUNTMO=900,STATUS=null,LAPTOP=true;
+try{MODE=localStorage.getItem("rl.mode")||"";LAPTOP=localStorage.getItem("rl.laptop")!=="0";}catch(e){}
+function sparkUp(w){return !!(STATUS&&STATUS[w]&&STATUS[w].reachable);}
+function effMode(){
+  if(!STATUS)return MODE==="live"?"live":"dry";
+  if(!sparkUp("a"))return "dry";
+  return MODE==="live"||MODE==="dry"?MODE:STATUS.default_mode;
+}
+function setMode(m){MODE=m;try{localStorage.setItem("rl.mode",m);}catch(e){}renderMode();}
+function setLaptop(on){LAPTOP=!!on;try{localStorage.setItem("rl.laptop",on?"1":"0");}catch(e){}renderMode();}
+function renderMode(){
+  const m=effMode(),th=LANG==="th";
+  document.querySelectorAll(".mbtn").forEach(b=>{
+    const on=b.dataset.m===m;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");
+    if(b.dataset.m==="live"){b.disabled=!!(STATUS&&!sparkUp("a"));
+      b.title=b.disabled?(th?"ยังเชื่อมต่อ Spark A ไม่ได้ — ใช้ DRY ไปก่อน":"Spark A is not reachable — DRY only until it is"):(th?"รันคำสั่งจริงบน Spark":"run real commands on your Spark");}
+  });
+  for(const w of ["a","b"]){
+    const c=$("chip-"+w);if(!c)continue;
+    const r=STATUS&&STATUS[w]||{};
+    c.classList.toggle("ok",!!r.reachable);c.classList.toggle("bad",!!(r.host&&!r.reachable));
+    c.textContent=`Spark ${w.toUpperCase()}: `+(r.reachable?"● "+(r.host||"")+(r.gpu?" · "+r.gpu:""):r.host?"○ "+r.host:(th?"ยังไม่ตั้งค่า":"not set"));
+    c.title=r.detail||(r.host?"":(th?"เพิ่มโฮสต์ใน 🖥 Spark setup":"add a host in 🖥 Spark setup"));
+  }
+  const eps=(STATUS&&STATUS.endpoints)||{};
+  $("epchips").innerHTML=Object.keys(eps).filter(k=>eps[k].up).map(k=>`<span class="ep up" title="${esc(eps[k].url)} · ${esc((eps[k].models||[]).slice(0,6).join(", "))}">● ${esc(k)}</span>`).join("");
+  const lp=$("lapt");if(lp){lp.checked=LAPTOP;lp.parentElement.title=(STATUS&&STATUS.laptop_models&&STATUS.laptop_models.length)?`laptop Ollama: ${STATUS.laptop_models.slice(0,5).join(", ")}`:"no Ollama on this laptop (optional)";}
+  const hint=$("modehint");
+  if(hint){
+    hint.textContent=m==="live"
+      ?(th?"รันคำสั่งจริงบน Spark ผ่าน ssh · ผลลัพธ์เป็นของเครื่องคุณ":"real commands on your Spark over ssh · every output is your machine")
+      :(th?"ไม่รันอะไรจริง · แสดงคำสั่ง + ผลลัพธ์ RECORDED/REFERENCE (มีป้ายกำกับ)":"nothing runs · commands shown with RECORDED or REFERENCE output (labelled) · $0");
+  }
+  const p=$("pill-mode"),txt=$("mode-txt");
+  if(!STATUS){p.classList.remove("real","sim");txt.textContent="offline";p.title="/api/status unreachable";}
+  else{
+    p.classList.toggle("real",m==="live");p.classList.toggle("sim",m!=="live");
+    txt.textContent=m==="live"?`LIVE · ${STATUS.a.host||"Spark"}`:(sparkUp("a")?"DRY · by choice":"DRY · no Spark");
+    p.title=STATUS.detail||"";
+  }
+  document.querySelectorAll(".labmode").forEach(el=>{el.textContent=m.toUpperCase();el.classList.toggle("live",m==="live");});
+  if(typeof shTargetHint==="function")shTargetHint();
+  renderApply();
+}
+async function refreshStatus(force){
+  try{
+    STATUS=await(await fetch(force?"/api/status/refresh":"/api/status",force?{method:"POST"}:{})).json();
+    if(STATUS.run_timeout)RUNTMO=STATUS.run_timeout;
+  }catch(e){STATUS=null;}
+  renderMode();
+}
+function envFor(){const e={SPARK_MODE:effMode(),SPARK_ALLOW_LAPTOP:LAPTOP?"1":"0"};if(APPLY&&effMode()==="live")e.CLAW_APPLY="1";return e;}
+/* 🔓 Allow changes — per browser session (sessionStorage), never remembered across restarts */
+let APPLY=false; try{APPLY=sessionStorage.getItem("rl.apply")==="1";}catch(e){}
+function setApply(on){APPLY=!!on;try{sessionStorage.setItem("rl.apply",on?"1":"0");}catch(e){}renderApply();}
+function renderApply(){const a=$("apply"),l=$("apply-lbl");if(!a)return;const live=effMode()==="live";
+  a.checked=APPLY&&live;a.disabled=!live;l.classList.toggle("on",APPLY&&live);
+  l.style.opacity=live?"1":".45";}
+
+/* ── language: EN / ไทย (course text from TUTORIAL.th.md; UI chrome from this table) ── */
+let LANG="en"; try{LANG=localStorage.getItem("rl.lang")==="th"?"th":"en";}catch(e){}
+const UI={
+  en:{mode:"Mode:",live:"⚡ Live",dry:"📄 Dry run",laptop:"💻 laptop stand-in",setup:"🖥 Spark setup",terminal:"⌨ Terminal",apply:"🔓 Allow changes",reef:"🪸 Reef",
+      prev:"◀ prev",next:"next ▶",course:"one continuous course",checkpoint:"✓ Checkpoint",checkpoints:"checkpoints",
+      module:"Module",section:"section",run:"▶ Run",runSol:"▶ Run solution",running:"running",viewSrc:"view source ▸",
+      viewSol:"view solution ▸",hide:"hide ▾",noRuns:"no runs yet",labsHead:"🧪 Run the labs — the lab runs here and drives your Spark (ssh), output streamed live",
+      exHead:"✍️ Your exercise — open the file in your editor, fill the TODOs, save, then ▶ Run",exTag:"✍️ exercise",solTag:"💡 solution",
+      solTitle:"reference solution — peek after you have tried",notDone:"✕ not done yet · the checker found TODOs — fix the ✕ lines above, save, run again",
+      askSpark:"⚡ Ask the claw",asking:"asking",sparkTag:"⚡ Live request — edit the JSON (target · model · messages), then ask",format:"format",reset:"reset",curl:"copy as curl",
+      chips:{intro:"read",setup:"set up",step:"do it",labs:"run these",exercises:"stretch",diagrams:"visualize",troubleshooting:"fix it",next:"go on"},
+      thMissing:"",loading:"loading the course…"},
+  th:{mode:"โหมด:",live:"⚡ Live",dry:"📄 Dry run",laptop:"💻 ใช้แล็ปท็อปแทน",setup:"🖥 ตั้งค่า Spark",terminal:"⌨ เทอร์มินัล",apply:"🔓 อนุญาตให้แก้ไข",reef:"🪸 แนวปะการัง",
+      prev:"◀ ก่อนหน้า",next:"ถัดไป ▶",course:"คอร์สต่อเนื่อง",checkpoint:"✓ จุดตรวจ",checkpoints:"จุดตรวจ",
+      module:"บทที่",section:"หัวข้อ",run:"▶ รัน",runSol:"▶ รันเฉลย",running:"กำลังรัน",viewSrc:"ดูโค้ด ▸",
+      viewSol:"ดูเฉลย ▸",hide:"ซ่อน ▾",noRuns:"ยังไม่เคยรัน",labsHead:"🧪 รันแล็บ — สคริปต์รันที่นี่และสั่งงาน Spark ผ่าน ssh แสดงผลสดทีละบรรทัด",
+      exHead:"✍️ แบบฝึกหัดของคุณ — เปิดไฟล์ในเอดิเตอร์ เติม TODO บันทึก แล้วกด ▶ รัน",exTag:"✍️ แบบฝึกหัด",solTag:"💡 เฉลย",
+      solTitle:"เฉลยอ้างอิง — ลองทำเองก่อนแล้วค่อยดู",notDone:"✕ ยังไม่เสร็จ · ตัวตรวจพบ TODO — แก้บรรทัด ✕ ด้านบน บันทึก แล้วรันใหม่",
+      askSpark:"⚡ ถาม claw",asking:"กำลังถาม",sparkTag:"⚡ คำขอสด — แก้ JSON (target · model · messages) ได้ แล้วกดถาม",format:"จัดรูปแบบ",reset:"คืนค่าเดิม",curl:"คัดลอกเป็น curl",
+      chips:{intro:"อ่าน",setup:"เตรียม",step:"ลงมือ",labs:"รันแล็บ",exercises:"ฝึกเพิ่ม",diagrams:"ภาพรวม",troubleshooting:"แก้ปัญหา",next:"ไปต่อ"},
+      thMissing:"(ยังไม่มีฉบับภาษาไทย — แสดงภาษาอังกฤษ)",loading:"กำลังโหลดคอร์ส…"}};
+const tr=k=>(UI[LANG]&&UI[LANG][k]!==undefined?UI[LANG][k]:UI.en[k]);
+function applyChrome(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=tr(el.dataset.i18n);});
+  document.querySelectorAll(".lbtn").forEach(b=>{const on=b.dataset.l===LANG;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");});
+}
+async function setLang(l){
+  if(l===LANG)return;
+  LANG=l;try{localStorage.setItem("rl.lang",l);}catch(e){}
+  applyChrome();
+  const keep=FLAT[cur]&&FLAT[cur].key;
+  await loadCourse();
+  const idx=FLAT.findIndex(f=>f.key===keep);cur=idx>=0?idx:0;
+  renderSide();renderContent();
+}
+
+/* ── 🪸 Reef — /api/reef: read-only commands on the Spark + HTTP probes, each with provenance ── */
+const LANDMARK={vllm:["🗼","vLLM","reactor rock · :8000"],ollama:["🦙","Ollama",":11434"],nat:["🐚","NAT REST",":8001"],
+  nat_mcp:["🔌","NAT MCP",":9901"],phoenix:["🔥","Phoenix",":6006"],otel:["📡","OTel collector",":4318"],hermes:["🦀","Hermes API",":8642"]};
+function ago(ts){if(!ts)return "";const s=Math.max(0,Math.round(Date.now()/1000-ts));return s<60?s+"s ago":Math.round(s/60)+" min ago";}
+function phaseCls(ph){ph=(ph||"").toLowerCase();return /ready|running/.test(ph)?"ok":/error|fail/.test(ph)?"bad":ph?"warn":"";}
+function reefSVG(d){
+  const sp=d.spark||{},sbs=sp.sandboxes||[],eps=(d.endpoints||[]).filter(e=>e.where==="spark");
+  const W=720,H=260,cx=360,cy=150;
+  let g=`<svg class="rsvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="reef map: ${sbs.length} sandboxes">`+
+    `<defs><radialGradient id="rw" cx="50%" cy="55%" r="70%"><stop offset="0" stop-color="#15406b"/><stop offset="1" stop-color="#0a1729"/></radialGradient>`+
+    `<linearGradient id="rs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9d9a8"/><stop offset="1" stop-color="#c7b27a"/></linearGradient></defs>`+
+    `<rect width="${W}" height="${H}" fill="url(#rw)"/>`+
+    `<ellipse cx="${cx}" cy="${cy+10}" rx="300" ry="92" fill="#0f3a5e" opacity=".7"/>`+
+    `<ellipse cx="${cx}" cy="${cy}" rx="270" ry="78" fill="url(#rs)" opacity="${sp.probed?1:.35}"/>`;
+  // lighthouse = OpenShell gateway
+  const gok=sp.probed?(sp.gateway_ok?"#3fd0c9":"#ff5c8a"):"#8aa4c2";
+  g+=`<g transform="translate(${cx-18},${cy-86})"><title>OpenShell gateway — ${sp.probed?(sp.gateway_ok?"Connected":"not connected"):"not probed"}</title>`+
+     `<rect x="10" y="18" width="16" height="44" rx="3" fill="#dfe8f2"/><rect x="10" y="30" width="16" height="7" fill="${gok}"/>`+
+     `<polygon points="6,18 30,18 18,4" fill="${gok}"/><text x="18" y="76" text-anchor="middle" font-size="10" fill="#0a1729" font-weight="700">gateway</text></g>`;
+  // enclosures
+  const n=Math.max(sbs.length,1);
+  sbs.slice(0,10).forEach((b,i)=>{
+    const a=Math.PI*(0.15+0.7*(i+0.5)/Math.min(n,10)),x=cx-Math.cos(a)*200,y=cy+Math.sin(a)*38-6;
+    const col={ok:"#3fd0c9",bad:"#ff5c8a",warn:"#f2b64c"}[phaseCls(b.phase)]||"#8aa4c2";
+    g+=`<g class="rbob" style="animation-delay:${i*0.4}s"><title>${esc(b.name)} — ${esc(b.phase||"phase ?")}</title>`+
+       `<ellipse cx="${x}" cy="${y}" rx="34" ry="14" fill="rgba(200,235,255,.25)" stroke="${col}" stroke-width="3"/>`+
+       `<text x="${x}" y="${y+4}" text-anchor="middle" font-size="16">🦞</text>`+
+       `<text x="${x}" y="${y+28}" text-anchor="middle" font-size="10" fill="#0a1729" font-weight="700">${esc(b.name.slice(0,16))}</text></g>`;
+  });
+  if(!sbs.length)g+=`<text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="12" fill="#0a1729" opacity=".8">${esc(sp.probed?"no sandboxes yet — Module 02 onboards one":"not probed — "+(sp.why||"DRY"))}</text>`;
+  // landmarks on the water, left and right
+  eps.forEach((e,i)=>{
+    const L=LANDMARK[e.name]||["◆",e.name,""],x=i<4?40+i*0:680,y=i<4?40+i*58:40+(i-4)*58,xx=i<4?40:680;
+    const col=e.up===true?"#3fd0c9":e.up===false?"#ff5c8a":"#8aa4c2";
+    g+=`<g><title>${esc(L[1])} ${esc(e.url||"")} — ${e.up===true?"answering":e.up===false?"not answering":"not probed"}</title>`+
+       `<circle cx="${xx}" cy="${y}" r="17" fill="#10213a" stroke="${col}" stroke-width="2"/>`+
+       `<text x="${xx}" y="${y+5}" text-anchor="middle" font-size="15">${L[0]}</text>`+
+       `<text x="${xx+(i<4?24:-24)}" y="${y+4}" text-anchor="${i<4?"start":"end"}" font-size="10.5" fill="#e3eefb">${esc(L[1])}</text></g>`;
+  });
+  return g+"</svg>";
+}
+function reefHTML(d){
+  const th=LANG==="th",sp=d.spark||{},by={};(sp.cmds||[]).forEach(c=>by[c.key]=c);
+  let h=reefSVG(d);
+  h+=`<div class="rnote">${sp.probed?`✓ probed <b>${esc(sp.host||"this Spark")}</b> ${esc(ago(d.checked))} — every value below comes from the command shown with it.`
+       :`◈ ${esc(sp.why||"not probed")} · ${th?"ไม่มีการแสดงค่าที่เก่าหรือสมมติว่าเป็นค่าจริง":"nothing below is presented as live Spark state"}.`}</div>`;
+  if(sp.probed){
+    const inf=sp.inference||{};
+    h+=`<div class="rlabel">${th?"เกตเวย์และ inference":"Gateway and inference"}</div><div class="rgrid">`+
+       `<div class="rcard"><b>OpenShell gateway</b><br><span class="rchip ${sp.gateway_ok?"ok":"bad"}">${sp.gateway_ok?"CONNECTED":"NOT CONNECTED"}</span><div class="u">openshell status · exit ${by.gateway?by.gateway.code:"?"}</div></div>`+
+       `<div class="rcard"><b>Inference route</b><br>${inf.provider?`<span class="rchip nv">${esc(inf.provider)}</span>`:`<span class="rchip warn">NOT SET</span>`}<div class="u">${esc(inf.model||"")}</div><div class="u">openshell inference get · exit ${by.inference?by.inference.code:"?"}</div></div>`+
+       `<div class="rcard"><b>Versions</b><div class="u">${esc((by.openshell_version||{}).out||"openshell: ?")}</div><div class="u">${esc((by.nemoclaw_version||{}).out||"nemoclaw: ?")}</div></div></div>`;
+    h+=`<div class="rlabel">${th?"แซนด์บ็อกซ์":"Sandboxes"} (${(sp.sandboxes||[]).length})</div><div class="rgrid">`+
+       ((sp.sandboxes||[]).map(b=>`<div class="rcard"><b>🦞 ${esc(b.name)}</b><br><span class="rchip ${phaseCls(b.phase)}">${esc((b.phase||"PHASE ?").toUpperCase())}</span><div class="u">${esc(b.line)}</div></div>`).join("")||`<div class="rnote">${th?"ยังไม่มี":"none"}</div>`)+`</div>`;
+  }
+  const eps=d.endpoints||[];
+  for(const where of ["spark","laptop"]){
+    const rows=eps.filter(e=>e.where===where);if(!rows.length)continue;
+    h+=`<div class="rlabel">${where==="spark"?(th?"บริการบน Spark (HTTP)":"Services on the Spark (HTTP probe)"):(th?"บริการบนแล็ปท็อปนี้":"Services on this laptop")}</div><div class="rgrid">`+
+      rows.map(e=>{const L=LANDMARK[e.name]||["◆",e.name,""];
+        const st=e.up===true?`<span class="rchip ok">UP</span>`:e.up===false?`<span class="rchip bad">DOWN</span>`:`<span class="rchip">NOT PROBED</span>`;
+        return `<div class="rcard"><b>${L[0]} ${esc(L[1])}</b> ${st}<div class="u">${esc(e.url||"(no Spark host)")}</div><div class="u">${esc(e.up===null?"":ago(e.ts))}</div></div>`;}).join("")+`</div>`;
+  }
+  const lt=d.laptop||{};
+  h+=`<div class="rlabel">${th?"เครื่องมือบนแล็ปท็อป":"Laptop tools"}</div><div class="rgrid">`+
+     `<div class="rcard"><b>NAT CLI</b><div class="u">${esc(lt.nat||"✕ missing — week26/README.md")}</div></div>`+
+     `<div class="rcard"><b>OpenShell CLI (policy parser)</b><div class="u">${esc(lt.openshell||"✕ missing")}</div></div>`+
+     `<div class="rcard"><b>Ollama (stand-in)</b><div class="u">${esc((lt.ollama_models||[]).slice(0,5).join(", ")||"none")}</div></div></div>`;
+  if((sp.cmds||[]).length){
+    h+=`<div class="rlabel">${th?"ผลลัพธ์ดิบ — ความจริงอยู่ที่นี่":"Raw output — the truth"}</div>`+
+      sp.cmds.map(c=>`<details class="rraw"><summary>$ ${esc(c.cmd)} · exit ${c.code} · ${esc(ago(c.ts))}</summary><pre>${esc(c.out||"(no output)")}</pre></details>`).join("");
+  }
+  return h;
+}
+let REEF=null;
+async function loadReef(force){
+  const b=$("reefbody"),btn=$("reefre");btn.disabled=true;
+  if(!REEF)b.innerHTML=`<div class="rnote">probing the Spark and the laptop…</div>`;
+  try{
+    const q=(force?"refresh=1&":"")+(effMode()==="dry"?"mode=dry":"");
+    REEF=await(await fetch("/api/reef?"+q)).json();b.innerHTML=reefHTML(REEF);
+    $("reefsub").textContent=(REEF.spark&&REEF.spark.probed?"LIVE · ":"DRY · ")+"probed "+ago(REEF.checked);
+  }catch(e){b.innerHTML=`<div class="rnote">✕ /api/reef unreachable — ${esc(e.message||e)}</div>`;}
+  btn.disabled=false;
+}
+function openReef(){const d=$("reefdlg");if(typeof d.showModal==="function")d.showModal();else d.setAttribute("open","");loadReef(false);}
+function closeReef(){const d=$("reefdlg");if(d.close)d.close();else d.removeAttribute("open");}
+
+/* ── 🖥 Spark setup dialog — hosts shown, tokens write-only ── */
+async function openSetup(){
+  const dlg=$("keysdlg");let rows=[];
+  try{rows=(await(await fetch("/api/settings")).json()).settings||[];}catch(e){}
+  $("keysbody").innerHTML=rows.map(r=>`<div class="krow"><div class="kname"><b>${esc(r.label)}</b><code>${esc(r.name)}</code>`+
+    (r.set?`<span class="kb ok">✓ ${esc(r.source)}</span>`:`<span class="kb no">— not set</span>`)+`</div>`+
+    `<div class="kin"><input ${r.secret?'type="password"':'type="text"'} autocomplete="off" spellcheck="false" id="kv-${esc(r.name)}" `+
+    `placeholder="${esc(r.secret?(r.set?"replace (optional)":"paste token"):(r.hint||""))}" value="${esc(r.secret?"":r.value||"")}">`+
+    `<button class="tbtn sm" onclick="saveSetting('${esc(r.name)}')">save</button>`+
+    (r.source==="week26/.env.local"?`<button class="tbtn sm" onclick="saveSetting('${esc(r.name)}',true)">remove</button>`:"")+
+    `<span class="pfhint">${esc(r.hint||"")}</span></div></div>`).join("");
+  $("keysmsg").textContent="";
+  if(typeof dlg.showModal==="function")dlg.showModal();else dlg.setAttribute("open","");
+}
+async function saveSetting(name,remove){
+  const inp=$("kv-"+name),value=remove?"":(inp?inp.value.trim():"");
+  try{
+    const r=await fetch("/api/settings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,value})});
+    const d=await r.json();
+    $("keysmsg").textContent=r.ok?`${d.name}: ${d.set?"saved ✓ (week26/.env.local, gitignored)":"removed"}`:`✕ ${d.detail||r.status}`;
+  }catch(e){$("keysmsg").textContent="✕ could not reach the server";}
+  await refreshStatus(true);await openSetup();
+}
+function closeSetup(){const d=$("keysdlg");if(d.close)d.close();else d.removeAttribute("open");}
+
+/* ── inline ```spark blocks: {"target","model","messages","max_tokens","tools"?} → an endpoint on your Spark ── */
+let SB=[];const SB_EDIT={};
+function sbSize(ta){ta.rows=Math.min(28,Math.max(6,ta.value.split("\n").length+1));}
+function askBlockHTML(src,fi,si){
+  const n=SB.length,key=COURSE[fi].folder+"/"+COURSE[fi].sections[si].id+"/ask"+n;
+  SB.push({key,orig:src});
+  return `<div class="jevblk" id="sb-${n}">`+
+    `<div class="jevbar"><span class="jevtag">${esc(tr("sparkTag"))}</span><span class="grow"></span>`+
+    `<button class="tbtn sm" onclick="sbFormat(${n})">${esc(tr("format"))}</button>`+
+    `<button class="tbtn sm" onclick="sbReset(${n})">${esc(tr("reset"))}</button>`+
+    `<button class="tbtn sm" onclick="sbCurl(${n},this)" title="copy the equivalent curl for your Spark">${esc(tr("curl"))}</button>`+
+    `<button class="run jevask" id="sb-ask-${n}" onclick="askSpark(${n})">${esc(tr("askSpark"))}</button></div>`+
+    `<textarea class="jevsrc" id="sb-src-${n}" spellcheck="false" aria-label="Editable chat request JSON" oninput="sbEdited(${n})"></textarea>`+
+    `<div class="jevout" id="sb-out-${n}" aria-live="polite"></div></div>`;
+}
+function armAsk(){
+  SB.forEach((b,n)=>{
+    const ta=$(`sb-src-${n}`);if(!ta)return;
+    ta.value=SB_EDIT[b.key]!==undefined?SB_EDIT[b.key]:b.orig;sbSize(ta);
+    ta.addEventListener("keydown",e=>{
+      if((e.metaKey||e.ctrlKey)&&e.key==="Enter"){e.preventDefault();askSpark(n);}
+      else if(e.key==="Tab"){e.preventDefault();const s=ta.selectionStart;ta.setRangeText("  ",s,ta.selectionEnd,"end");sbEdited(n);}
+    });
+  });
+}
+function sbEdited(n){const ta=$(`sb-src-${n}`);SB_EDIT[SB[n].key]=ta.value;sbSize(ta);}
+function sbReset(n){const ta=$(`sb-src-${n}`);ta.value=SB[n].orig;delete SB_EDIT[SB[n].key];sbSize(ta);
+  const o=$(`sb-out-${n}`);o.innerHTML="";o.classList.remove("show");}
+function sbParse(n){
+  let spec;try{spec=JSON.parse($(`sb-src-${n}`).value);}catch(err){return {err:"Not valid JSON — "+(err.message||err)};}
+  if(!spec||!Array.isArray(spec.messages)||!spec.messages.length)return {err:"Needs \"messages\": [{\"role\":\"user\",\"content\":\"…\"}]"};
+  return {spec};
+}
+function sbShow(n,html){const o=$(`sb-out-${n}`);o.innerHTML=html;o.classList.add("show");}
+function sbFormat(n){const r=sbParse(n);if(r.err){sbShow(n,`<div class="jwarn bad">✕ ${esc(r.err)}</div>`);return;}
+  const ta=$(`sb-src-${n}`);ta.value=JSON.stringify(r.spec,null,2);sbEdited(n);}
+function sbCurl(n,btn){
+  const r=sbParse(n);if(r.err){sbShow(n,`<div class="jwarn bad">✕ ${esc(r.err)}</div>`);return;}
+  const sp=r.spec,t=sp.target||"ollama",port=(STATUS&&STATUS.ports||{})[t]||8000;
+  const host=(STATUS&&STATUS[sp.which==="b"?"b":"a"]&&STATUS[sp.which==="b"?"b":"a"].host)||"$SPARK";
+  const body={model:sp.model,messages:sp.messages,max_tokens:sp.max_tokens||256};if(sp.tools)body.tools=sp.tools;
+  const cmd=`curl -s http://${host.split("@").pop()}:${port}/v1/chat/completions \\\n  -H "Content-Type: application/json" \\\n  -d '${JSON.stringify(body).replace(/'/g,"'\\''")}'`;
+  navigator.clipboard&&navigator.clipboard.writeText(cmd);const o=btn.textContent;btn.textContent="copied ✓";setTimeout(()=>btn.textContent=o,1400);
+}
+async function askSpark(n){
+  const r=sbParse(n);if(r.err){sbShow(n,`<div class="jwarn bad">✕ ${esc(r.err)}</div>`);return;}
+  const sp=r.spec,btn=$(`sb-ask-${n}`),th=LANG==="th";
+  btn.disabled=true;btn.innerHTML=`<span class="sp"></span> ${esc(tr("asking"))}`;
+  try{
+    const resp=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({target:sp.target||"ollama",which:sp.which||"a",model:sp.model||"",messages:sp.messages,
+        max_tokens:sp.max_tokens||256,tools:sp.tools||null,mode:effMode(),allow_laptop:LAPTOP})});
+    const d=await resp.json().catch(()=>({detail:"HTTP "+resp.status}));
+    if(!resp.ok){sbShow(n,`<div class="jwarn bad">✕ ${esc(typeof d.detail==="string"?d.detail:JSON.stringify(d.detail))}</div>`);}
+    else{
+      const src=d.source;
+      const tag={spark:`<span class="jsrc live">LIVE · Spark ${esc((d.which||"a").toUpperCase())}</span>`,
+                 laptop:`<span class="jsrc lap">LAPTOP STAND-IN — not Spark numbers</span>`,
+                 recorded:`<span class="jsrc rec">RECORDED from a Spark</span>`,
+                 reference:`<span class="jsrc ph">DRY · REFERENCE</span>`}[src]||src;
+      let h=`<div class="jhead">${tag} <b>${esc(d.target)}</b> · ${esc(d.model||"")}</div>`;
+      if(d.total_ms)h+=`<div class="askmeta">TTFT <b>${Math.round(d.ttft_ms)} ms</b> · <b>${d.out_tokens}</b> ${th?"โทเคน":"tokens"}${d.usage_exact?"":" (≈)"} ${th?"ใน":"in"} <b>${(d.total_ms/1000).toFixed(2)} s</b> · <b>${d.tok_s} tok/s</b>${d.in_tokens?` · ${d.in_tokens} ${th?"โทเคนขาเข้า":"prompt tok"}`:""}</div>`;
+      if(d.reasoning)h+=`<details class="jraw"><summary>~ ${th?"การคิด (reasoning)":"reasoning"} · ${d.reasoning.length} chars</summary><pre>${esc(d.reasoning)}</pre></details>`;
+      (d.tool_calls||[]).forEach(tc=>{const f=tc.function||{};h+=`<div class="tc">→ tool_call <b>${esc(f.name||"")}</b>(${esc(f.arguments||"")})</div>`;});
+      h+=src==="reference"?`<div class="jwarn">◈ ${esc(d.text)}</div>`:`<div class="llmtext">${esc(d.text||"")}</div>`;
+      if(src==="laptop")h+=`<div class="jnote">◈ ${th?"Spark endpoint นี้ยังไม่ทำงาน จึงใช้ Ollama บนแล็ปท็อปแทน — ความเร็วนี้ไม่ใช่ของ Spark":"the Spark endpoint is down, so Ollama on this laptop answered — the speed is NOT a Spark number"}</div>`;
+      h+=`<details class="jraw"><summary>raw</summary><pre>${esc(JSON.stringify(d,null,2))}</pre></details>`;
+      sbShow(n,h);
+    }
+  }catch(e){sbShow(n,`<div class="jwarn bad">✕ could not reach the Lab Runner — ${esc(e.message||e)}</div>`);}
+  btn.disabled=false;btn.innerHTML=esc(tr("askSpark"));
+}
+
+/* ── sidebar: course tree with per-folder progress rings ── */
+function ring(d,t){
+  const f=t?d/t:0,C=43.98;
+  return `<svg class="ring" width="16" height="16" viewBox="0 0 18 18">`+
+    `<circle cx="9" cy="9" r="7" fill="none" stroke="var(--line)" stroke-width="2.5"/>`+
+    `<circle cx="9" cy="9" r="7" fill="none" stroke="${f>=1?"var(--green)":"var(--accent)"}" stroke-width="2.5" `+
+    `stroke-dasharray="${(C*f).toFixed(1)} ${C.toFixed(1)}" stroke-linecap="round" transform="rotate(-90 9 9)"/></svg>`;
+}
+function secIcon(s,done){
+  if(done)return `<span class="okico">✓</span>`;
+  if(s.kind==="intro")return "📖";
+  if(s.kind==="setup")return "🧰";
+  if(s.kind==="paths")return "🧭";
+  if(s.kind==="labs")return "🧪";
+  if(s.kind==="exercises")return "✍️";
+  if(s.kind==="diagrams")return "📊";
+  if(s.kind==="troubleshooting")return "🛠";
+  if(s.kind==="next")return "→";
+  const m=String(s.title||"").match(/^(\d+)/);
+  return m?m[1]:"·";
+}
+function toggleFold(fi){
+  if(expanded.has(fi))expanded.delete(fi);else expanded.add(fi);
+  renderSide();
+}
+function renderSide(){
+  if(!COURSE.length)return;
+  const curF=FLAT[cur];let h="";
+  COURSE.forEach((c,fi)=>{
+    const r=foldCounts(fi),open=expanded.has(fi);
+    const ftitle=c.title||c.folder;
+    h+=`<div class="fold">`+
+       `<button type="button" class="fhead${curF.fi===fi?" cur":""}" onclick="toggleFold(${fi})"`+
+       ` aria-expanded="${open?"true":"false"}" aria-controls="fsecs-${fi}"`+
+       ` aria-label="Module ${esc(c.num)} — ${esc(ftitle)} · ${r[0]} of ${r[1]} checkpoints done">`+
+       `<span class="chev">${open?"▾":"▸"}</span><span class="fnum">${esc(c.num)}</span>`+
+       `<span class="ft" title="${esc(ftitle)}">${esc(ftitle)}</span>`+
+       ring(r[0],r[1])+`<span class="fct">${r[0]}/${r[1]}</span></button>`;
+    if(open){
+      h+=`<div class="fsecs" id="fsecs-${fi}">`;
+      (c.sections||[]).forEach((s,si)=>{
+        const isCur=curF.fi===fi&&curF.si===si;
+        const done=s.ckTotal>0&&secTicked(fi,si)===s.ckTotal;
+        h+=`<button type="button" class="sec${isCur?" sel":""}${done?" done":""}" onclick="gotoSec(${fi},${si})"`+
+           `${isCur?' aria-current="page"':""}`+
+           ` aria-label="${esc(c.num)} · ${esc(s.title)}${done?" (complete)":""}">`+
+           `<span class="ico">${secIcon(s,done)}</span><span class="t" title="${esc(s.title)}">${esc(s.kind==="diagrams"?s.title.replace(/^📊\s*/,""):s.title)}</span></button>`;
+      });
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  });
+  const th=LANG==="th";
+  const top=`<div class="sidetop"><span>${th?"สารบัญคอร์ส":"Course outline"}</span><span class="grow"></span>`+
+    (SIDE==="hidden"?`<button class="tbtn sm" onclick="dockSide()" title="${th?"ปักไว้ด้านซ้ายตลอด":"keep the outline docked on the left"}">📌 ${th?"ปักไว้":"Keep open"}</button>`+
+                     `<button class="tbtn sm" onclick="closePeek()" aria-label="${th?"ปิด":"Close"}">✕</button>`
+                    :`<button class="tbtn sm" onclick="hideSide()" title="${th?"ซ่อนสารบัญ (ปุ่ม [)":"hide the outline (shortcut [)"}">⇤ ${th?"ซ่อน":"Hide"}</button>`)+`</div>`;
+  $("side").innerHTML=top+h;
+  updateProg();
+}
+function updateProg(){
+  const r=courseCounts();
+  $("bar").style.width=r[1]?(100*r[0]/r[1]).toFixed(1)+"%":"0%";
+  $("course-prog").textContent=r[1]?`${r[0]} / ${r[1]} ${tr("checkpoints")}`:"";
+}
+
+/* ── collapsible outline: "docked" (default) or "hidden"; when hidden, ☰ pops it up ── */
+let SIDE="docked";
+try{SIDE=localStorage.getItem("rl.side")||(window.innerWidth<900?"hidden":"docked");}catch(e){}
+if(SIDE!=="hidden")SIDE="docked";
+function sideApply(){
+  const m=document.querySelector(".main");if(!m)return;
+  m.classList.toggle("noside",SIDE==="hidden");
+  if(SIDE!=="hidden")m.classList.remove("peek");
+  const open=SIDE==="docked"||m.classList.contains("peek");
+  const b=$("side-toggle");if(b){b.setAttribute("aria-expanded",open?"true":"false");b.classList.toggle("on",open);}
+  const sd=$("side");if(sd)sd.setAttribute("aria-hidden",open?"false":"true");
+}
+function saveSide(){try{localStorage.setItem("rl.side",SIDE);}catch(e){}}
+function hideSide(){SIDE="hidden";saveSide();sideApply();renderSide();}
+function dockSide(){SIDE="docked";saveSide();sideApply();renderSide();}
+function openPeek(){if(SIDE!=="hidden")return;document.querySelector(".main").classList.add("peek");sideApply();
+  const cur=document.querySelector("#side .sec.sel");if(cur)cur.scrollIntoView({block:"center"});
+  const first=document.querySelector("#side .sidetop button");if(first)first.focus({preventScroll:true});}
+function closePeek(){const m=document.querySelector(".main");if(m&&m.classList.contains("peek")){m.classList.remove("peek");sideApply();}}
+function toggleSide(){
+  if(SIDE==="docked")hideSide();
+  else if(document.querySelector(".main").classList.contains("peek"))closePeek();
+  else openPeek();
+}
+/* ── navigation: one continuous course across every module ── */
+function gotoSec(fi,si){
+  closePeek();                                             // picking a section closes the pop-up outline
+  if(typeof LV!=="undefined"&&LV.active)liveStop();      // never keep the mic/camera open off-screen
+  const idx=FLAT.findIndex(f=>f.fi===fi&&f.si===si);
+  if(idx<0)return;
+  cur=idx;expanded.add(fi);
+  try{localStorage.setItem("rl.last",FLAT[cur].key);}catch(e){}
+  renderSide();renderContent();
+  $("content").scrollTop=0;
+}
+function nav(d){
+  const n=cur+d;
+  if(n<0||n>=FLAT.length)return;
+  gotoSec(FLAT[n].fi,FLAT[n].si);
+}
+window.addEventListener("keydown",e=>{
+  const tag=(e.target&&e.target.tagName||"").toLowerCase();
+  if(e.key==="Escape")closePeek();
+  if(tag==="input"||tag==="textarea"||tag==="select")return;
+  if(e.key==="["&&!e.metaKey&&!e.ctrlKey&&!e.altKey){toggleSide();e.preventDefault();return;}
+  if(e.key==="ArrowLeft"){nav(-1);e.preventDefault();}
+  else if(e.key==="ArrowRight"){nav(1);e.preventDefault();}
+});
+
+/* ── bespoke markdown renderer — exactly what the TUTORIAL.md template uses ── */
+function inline(s){
+  s=esc(s);
+  // ``code with `backticks` inside`` first (standard markdown), then plain `code`
+  s=s.replace(/``\s?(.+?)\s?``|`([^`]+)`/g,(m,a,b)=>`<code>${a!==undefined?a:b}</code>`);
+  s=s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,(m,t,u)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`);
+  s=s.replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");
+  s=s.replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<i>$2</i>");
+  return s;
+}
+function mdRender(md,fi,si){
+  const lines=String(md).split("\n"),out=[];
+  let i=0,ck=0,prevText="",para=[];
+  // skip a leading heading — it duplicates the section title shown above
+  while(i<lines.length&&!lines[i].trim())i++;
+  if(i<lines.length&&/^#{1,2}\s/.test(lines[i].trim()))i++;
+  SB=[];
+  const flushPara=()=>{
+    if(para.length){out.push(`<p>${para.map(inline).join(" ")}</p>`);prevText=para.join(" ");para=[];}
+  };
+  while(i<lines.length){
+    const raw=lines[i],t=raw.trim();
+    if(!t){flushPara();i++;continue;}
+    if(t.startsWith("```")){                                   // fenced code + copy button
+      flushPara();
+      const lang=t.slice(3).trim().toLowerCase();
+      const exp=/expected output/i.test(prevText);
+      i++;const buf=[];
+      while(i<lines.length&&!lines[i].trim().startsWith("```")){buf.push(lines[i]);i++;}
+      i++;
+      if(lang==="spark"){out.push(askBlockHTML(buf.join("\n"),fi,si));prevText="";continue;}
+      out.push(`<div class="codewrap${exp?" expected":""}">`+
+               (exp?"":`<button class="copy torun" onclick="sendToTerm(this)" title="load into the built-in terminal">▶ run</button>`)+
+               `<button class="copy" onclick="copyCode(this)">copy</button>`+
+               `<pre><code>${esc(buf.join("\n"))}</code></pre></div>`);
+      prevText="";continue;
+    }
+    const mm=t.match(/^!\[([^\]]*)\]\(([A-Za-z0-9_.\-\/]+)\)$/);
+    if(mm){                                                    // ![caption](media/x.png|wav|mp4) → media figure
+      flushPara();out.push(mediaFig(mm[2],mm[1],COURSE[fi].folder));prevText=t;i++;continue;
+    }
+    if(/^✓\s*Checkpoint/.test(t)){                             // ✓ checkpoint → tickable card
+      flushPara();
+      const key=ckKey(fi,si,ck);ck++;
+      const body=t.replace(/^✓\s*Checkpoint:?\s*/,"");
+      const on=!!CKS[key];
+      out.push(`<label class="ckpt${on?" done":""}"><input type="checkbox" data-key="${esc(key)}" ${on?"checked":""} `+
+               `onchange="tickCk(this)"><span class="ckmark">${esc(tr("checkpoint"))}</span><span class="cktxt">${inline(body)}</span></label>`);
+      prevText=t;i++;continue;
+    }
+    if(/^<\/?(details|summary)/i.test(t)){                     // <details><summary> passthrough
+      flushPara();out.push(raw);prevText="";i++;continue;
+    }
+    if(t.startsWith("###")){flushPara();out.push(`<h4>${inline(t.replace(/^#+\s*/,""))}</h4>`);prevText=t;i++;continue;}
+    if(t.startsWith("#")){flushPara();out.push(`<h3>${inline(t.replace(/^#+\s*/,""))}</h3>`);prevText=t;i++;continue;}
+    if(t.startsWith(">")){                                     // blockquote
+      flushPara();const buf=[];
+      while(i<lines.length&&lines[i].trim().startsWith(">")){buf.push(lines[i].trim().replace(/^>\s?/,""));i++;}
+      out.push(`<blockquote>${buf.map(inline).join("<br>")}</blockquote>`);prevText=buf.join(" ");continue;
+    }
+    if(t.startsWith("|")&&i+1<lines.length&&/^\|[\s:|-]+\|?$/.test(lines[i+1].trim())){  // table
+      flushPara();const rows=[];
+      while(i<lines.length&&lines[i].trim().startsWith("|")){rows.push(lines[i].trim());i++;}
+      const cells=r=>r.replace(/^\|/,"").replace(/\|$/,"").split("|").map(x=>x.trim());
+      let html=`<table><thead><tr>${cells(rows[0]).map(x=>`<th>${inline(x)}</th>`).join("")}</tr></thead><tbody>`;
+      for(let r=2;r<rows.length;r++)html+=`<tr>${cells(rows[r]).map(x=>`<td>${inline(x)}</td>`).join("")}</tr>`;
+      out.push(html+`</tbody></table>`);prevText="";continue;
+    }
+    if(/^[-*]\s+/.test(t)){                                    // unordered list
+      flushPara();const buf=[];
+      while(i<lines.length&&/^[-*]\s+/.test(lines[i].trim())){buf.push(lines[i].trim().replace(/^[-*]\s+/,""));i++;}
+      out.push(`<ul>${buf.map(x=>`<li>${inline(x)}</li>`).join("")}</ul>`);prevText=buf.join(" ");continue;
+    }
+    if(/^\d+\.\s+/.test(t)){                                   // ordered list
+      flushPara();const buf=[];const start=parseInt(t,10)||1;
+      while(i<lines.length&&/^\d+\.\s+/.test(lines[i].trim())){buf.push(lines[i].trim().replace(/^\d+\.\s+/,""));i++;}
+      out.push(`<ol start="${start}">${buf.map(x=>`<li>${inline(x)}</li>`).join("")}</ol>`);prevText=buf.join(" ");continue;
+    }
+    para.push(t);i++;
+  }
+  flushPara();
+  return out.join("\n");
+}
+function mediaSrc(folder,rel){
+  rel=rel.replace(/^\.\//,"");
+  if(!/^(media|\.runs)\//.test(rel)||rel.indexOf("..")>=0)return null;
+  return `/w26media/${encodeURIComponent(folder)}/${rel.split("/").map(encodeURIComponent).join("/")}`;
+}
+function mediaTag(src,alt){
+  const ext=(src.split("?")[0].split(".").pop()||"").toLowerCase();
+  if(["png","jpg","jpeg","webp","gif"].includes(ext))return `<img src="${src}" alt="${esc(alt)}" loading="lazy">`;
+  if(["wav","mp3","m4a","ogg"].includes(ext))return `<audio controls preload="none" src="${src}" aria-label="${esc(alt)}"></audio>`;
+  if(["mp4","webm"].includes(ext))return `<video controls preload="metadata" playsinline src="${src}" aria-label="${esc(alt)}"></video>`;
+  return "";
+}
+function mediaFig(rel,alt,folder){
+  const src=mediaSrc(folder,rel);
+  if(!src)return `<p>${inline("!["+alt+"]("+rel+")")}</p>`;
+  return `<figure class="mediafig">${mediaTag(src,alt)}${alt?`<figcaption>${inline(alt)}</figcaption>`:""}</figure>`;
+}
+function copyCode(btn){
+  const code=btn.parentElement.querySelector("code");
+  const done=()=>{btn.textContent="copied ✓";setTimeout(()=>{btn.textContent="copy";},1200);};
+  try{navigator.clipboard.writeText(code.textContent).then(done,()=>{btn.textContent="copy failed";});}
+  catch(e){btn.textContent="copy failed";}
+}
+
+/* ── section view ── */
+function kindChip(k){
+  const m={intro:["read","beginner"],setup:["set up","all"],step:["do it","intermediate"],
+           labs:["run these","advanced"],exercises:["stretch","advanced"],diagrams:["visualize","all"],
+           troubleshooting:["fix it","all"],next:["go on","beginner"]};
+  const c=m[k];return c?` <span class="lv ${c[1]}">${esc((tr("chips")||{})[k]||c[0])}</span>`:"";
+}
+function renderContent(){
+  if(!COURSE.length)return;
+  const f=FLAT[cur],c=COURSE[f.fi],s=c.sections[f.si];
+  let h=`<div class="crumb">${esc(tr("module"))} ${esc(c.num)} · week26/${esc(c.folder)} · ${esc(tr("section"))} ${f.si+1}/${c.sections.length}</div>`;
+  if(LANG==="th"&&!c.has_th)h+=`<div class="pwarn">${esc(tr("thMissing"))}</div>`;
+  h+=`<h2>${esc(s.title)}${kindChip(s.kind)}</h2>`;
+  if(s.kind==="intro"&&c.meta&&(c.meta.time||c.meta.difficulty)){
+    h+=`<div class="metachips">`+
+       (c.meta.time?`<span class="chip">⏱ ${esc(c.meta.time)}</span>`:"")+
+       (c.meta.difficulty?`<span class="chip">📶 ${esc(c.meta.difficulty)}</span>`:"")+
+       (c.meta.cost?`<span class="chip">🟩 ${esc(c.meta.cost)}</span>`:"")+`</div>`;
+  }
+  if(c.parse_warning)h+=`<div class="pwarn">⚠ this module's TUTORIAL.md did not parse cleanly. (${esc(c.parse_warning)})</div>`;
+  h+=`<div class="md">${mdRender(s.md||"",f.fi,f.si)}</div>`;
+  if(s.kind==="diagrams")h+=diagramsBlock(f.fi);
+  if(s.kind==="labs")h+=labCards(f.fi,"labs");
+  if(s.kind==="exercises")h+=labCards(f.fi,"exercises");
+  h+=`<div class="navrow"><button class="tbtn" onclick="nav(-1)" ${cur===0?"disabled":""}>${esc(tr("prev"))}</button>`+
+     `<span class="navlbl">${cur+1} / ${FLAT.length} — ${esc(tr("course"))}, 01 → ${esc(COURSE[COURSE.length-1].num)}</span>`+
+     `<button class="tbtn" onclick="nav(1)" ${cur===FLAT.length-1?"disabled":""}>${esc(tr("next"))}</button></div>`;
+  $("content").innerHTML=h;
+  $("nav-pos").textContent=`${cur+1}/${FLAT.length}`;
+  $("nav-prev").disabled=cur===0;
+  $("nav-next").disabled=cur===FLAT.length-1;
+  if(s.kind==="labs"||s.kind==="exercises")restoreLabUI(f.fi,s.kind);
+  if(s.kind==="diagrams")armCharts();
+  armAsk();
+}
+
+/* ── lab + exercise cards: view source · run · streamed terminal · run-history spark ── */
+function fileKey(fi,rel){return COURSE[fi].folder+"/"+rel;}
+function fid(fi,rel){return fi+"-"+rel.replace(/[^a-z0-9]/gi,"_");}
+let HIST={};
+async function loadHistory(){
+  try{HIST=await(await fetch("/api/history")).json()||{};}catch(e){}
+}
+function sparkHTML(key){
+  const runs=(HIST[key]||[]).slice(-20);
+  if(!runs.length)return `<span class="sparknone">${esc(tr("noRuns"))}</span>`;
+  const secs=runs.map(r=>+r.seconds||0),mx=Math.max(...secs,0.1);
+  const W=110,H=22,step=runs.length>1?W/(runs.length-1):0;
+  const pt=i=>[runs.length>1?(i*step).toFixed(1):W/2,(H-3-(secs[i]/mx)*(H-8)).toFixed(1)];
+  const line=runs.length>1?`<polyline points="${runs.map((r,i)=>pt(i).join(",")).join(" ")}" class="skline"/>`:"";
+  const dots=runs.map((r,i)=>{const p=pt(i);
+    const c=r.code===0?"var(--green)":r.code===124?"var(--amber)":"var(--red)";
+    return `<circle cx="${p[0]}" cy="${p[1]}" r="2.2" fill="${c}"><title>${new Date(r.ts*1000).toLocaleString()} · ${esc(r.mode||"")} · ${r.code===0?"✓":"✕ "+r.code} · ${r.seconds}s${r.cost?" · $"+(+r.cost).toFixed(6):""}</title></circle>`;}).join("");
+  const last=runs[runs.length-1];
+  const lbl=`${last.code===0?"✓":"✕"} ${last.seconds}s${last.cost?" · $"+(+last.cost).toFixed(5):""}`;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true">${line}${dots}</svg>`+
+         `<span class="sklast ${last.code===0?"ok":"bad"}">${esc(lbl)}</span>`;
+}
+function renderSpark(fi,rel){
+  const el=$(`spark-${fid(fi,rel)}`);
+  if(el)el.innerHTML=sparkHTML(fileKey(fi,rel));
+}
+function fileCard(fi,rel,title,kind){
+  const id=fid(fi,rel),short=rel.split("/").pop();
+  const tag=kind==="sol"?`<span class="ftag sol">${esc(tr("solTag"))}</span>`:kind==="ex"?`<span class="ftag ex">${esc(tr("exTag"))}</span>`:"";
+  return `<article class="labcard${kind==="sol"?" solcard":""}" aria-label="${esc(rel)}${title?" — "+esc(title):""}">`+
+     `<div class="labtop">${tag}<span class="labfile">${esc(short)}</span><span class="labtitle">${esc(title||"")}</span>`+
+     `<span class="grow"></span>`+
+     `<span class="spark" id="spark-${id}" title="last 20 runs — dot colour = exit code, height = duration">${sparkHTML(fileKey(fi,rel))}</span>`+
+     `<button class="tbtn" id="srcbtn-${id}" onclick="toggleSrc(${fi},'${esc(rel)}')" aria-expanded="false" aria-controls="src-${id}">${esc(kind==="sol"?tr("viewSol"):tr("viewSrc"))}</button>`+
+     `<button class="run" id="runbtn-${id}" onclick="runFile(${fi},'${esc(rel)}')" aria-label="Run ${esc(short)}">${esc(kind==="sol"?tr("runSol"):tr("run"))}</button></div>`+
+     `<pre class="src" id="src-${id}"></pre>`+
+     `<div class="term-wrap" id="tw-${id}" style="display:none">`+
+     `<div class="term-bar"><span class="d" style="background:#f85149"></span>`+
+     `<span class="d" style="background:#d29922"></span><span class="d" style="background:#3fb950"></span>`+
+     `<span>week26/${esc(COURSE[fi].folder)}/${esc(rel)}</span><span class="clr" onclick="clearFileTerm(${fi},'${esc(rel)}')">clear ✕</span></div>`+
+     `<div class="term" id="term-${id}"></div>`+
+     `<div class="footer" id="foot-${id}"></div></div></article>`;
+}
+function cardFiles(fi,which){
+  const c=COURSE[fi],out=[];
+  if(which==="exercises")(c.exercises||[]).forEach(E=>{out.push([E.file,E.title,"ex"]);if(E.solution)out.push([E.solution,tr("solTitle"),"sol"]);});
+  else (c.labs||[]).forEach(L=>out.push([L.file,L.title,"lab"]));
+  return out;
+}
+function labCards(fi,which){
+  const files=cardFiles(fi,which);
+  if(!files.length)return "";
+  const head=which==="exercises"?tr("exHead"):tr("labsHead");
+  let h=`<div class="labsec"><h3 class="labshead">${head} <span class="labmode">${esc(effMode().toUpperCase())}</span></h3>`;
+  files.forEach(([rel,title,kind])=>{h+=fileCard(fi,rel,title,kind);});
+  return h+`</div>`;
+}
+function restoreLabUI(fi,which){
+  cardFiles(fi,which).forEach(([rel])=>{
+    const k=fileKey(fi,rel),id=fid(fi,rel);
+    if(termCache[k]){
+      const tw=$(`tw-${id}`),t=$(`term-${id}`);
+      if(tw)tw.style.display="block";
+      if(t){t.innerHTML=termCache[k];t.scrollTop=t.scrollHeight;}
+    }
+    if(footCache[k]){const f=$(`foot-${id}`);if(f){f.innerHTML=footCache[k];f.classList.add("show");}}
+    if(openSrc[k]&&srcCache[k]!==undefined){
+      const el=$(`src-${id}`),b=$(`srcbtn-${id}`);
+      if(el){el.textContent=srcCache[k];el.classList.add("open");}
+      if(b)b.textContent=tr("hide");
+    }
+  });
+  setRunButtons(RUNNING);
+}
+async function toggleSrc(fi,rel){
+  const k=fileKey(fi,rel),id=fid(fi,rel),el=$(`src-${id}`),btn=$(`srcbtn-${id}`);
+  if(!el)return;
+  const label=rel.indexOf("/solutions/")>=0?tr("viewSol"):tr("viewSrc");
+  if(el.classList.contains("open")){
+    el.classList.remove("open");openSrc[k]=false;
+    if(btn){btn.textContent=label;btn.setAttribute("aria-expanded","false");}return;
+  }
+  // always re-fetch: exercise files change while the learner edits them
+  el.textContent="loading…";el.classList.add("open");
+  try{
+    const r=await fetch(`/api/source?folder=${encodeURIComponent(COURSE[fi].folder)}&file=${encodeURIComponent(rel)}`);
+    srcCache[k]=r.ok?await r.text():`(HTTP ${r.status} — could not load source)`;
+  }catch(e){srcCache[k]="(could not load source: "+(e.message||e)+")";}
+  el.textContent=srcCache[k];openSrc[k]=true;
+  if(btn){btn.textContent=tr("hide");btn.setAttribute("aria-expanded","true");}
+}
+function clearFileTerm(fi,rel){
+  const k=fileKey(fi,rel),id=fid(fi,rel);
+  termCache[k]="";footCache[k]="";
+  const tw=$(`tw-${id}`);if(tw)tw.style.display="none";
+  const t=$(`term-${id}`);if(t)t.innerHTML="";
+  const f=$(`foot-${id}`);if(f){f.innerHTML="";f.classList.remove("show");}
+}
+function setRunButtons(dis){
+  document.querySelectorAll(".labcard button.run").forEach(b=>{b.disabled=dis;});
+}
+
+/* house colorize: ▣/◈/✓/⚠/✕ + the rest of the glyph vocabulary */
+function colorize(text){
+  return esc(text).split("\n").map(line=>{
+    const out=colorLine(line);
+    const mm=line.match(/week26\/(\d\d_[a-z0-9_]+)\/(\.runs\/[A-Za-z0-9_.\-\/]+\.(?:wav|mp3|m4a|ogg|png|jpe?g|webp|mp4|webm))/);
+    if(!mm)return out;
+    const src=mediaSrc(mm[1],mm[2]);
+    return src?out+`<span class="termmedia">${mediaTag(src,mm[2])}</span>`:out;
+  }).join("\n");
+}
+function colorLine(line){
+  return [line].map(line=>{
+    const t=line.trimStart();
+    if(t.startsWith("▣"))return `<span class="l-dgx">${line}</span>`;
+    if(t.startsWith("◈"))return `<span class="l-sim">${line}</span>`;
+    if(t.startsWith("✓"))return `<span class="l-pass">${line}</span>`;
+    if(t.startsWith("⚠"))return `<span class="l-warn">${line}</span>`;
+    if(t.startsWith("✕")||t.startsWith("✗"))return `<span class="l-fail">${line}</span>`;
+    if(t.startsWith("»")||t.startsWith("│"))return `<span class="l-prompt">${line}</span>`;
+    if(t.startsWith("⏱"))return `<span class="l-warn">${line}</span>`;
+    if(t.startsWith("~ REASON"))return `<span class="l-reason">${line}</span>`;
+    if(t.startsWith("· ANSWER"))return `<span class="l-answer">${line}</span>`;
+    if(t.startsWith("◆"))return `<span class="l-metric">${line}</span>`;
+    if(t.startsWith("→"))return `<span class="l-act">${line}</span>`;
+    if(t.startsWith("←"))return `<span class="l-observe">${line}</span>`;
+    if(t.startsWith("═"))return `<span class="l-result">${line}</span>`;
+    if(t.startsWith("━")||t.startsWith("┌")||t.startsWith("└"))return `<span class="l-banner">${line}</span>`;
+    if(t.startsWith("$")||t.startsWith("docker")||t.startsWith("ollama")||t.startsWith("curl")||
+       t.startsWith("export")||t.startsWith("git")||t.startsWith("./")||t.startsWith(".venv/"))return `<span class="l-cmd">${line}</span>`;
+    return line;
+  })[0];
+}
+
+async function runFile(fi,rel){
+  if(RUNNING)return;                       // one run at a time, client-side too
+  RUNNING=true;setRunButtons(true);
+  const k=fileKey(fi,rel),id=fid(fi,rel);
+  const btn=$(`runbtn-${id}`),orig=btn?btn.innerHTML:"▶ Run";
+  if(btn)btn.innerHTML=`<span class="sp"></span> ${esc(tr("running"))}`;
+  const tw=$(`tw-${id}`);if(tw)tw.style.display="block";
+  const f0=$(`foot-${id}`);if(f0){f0.innerHTML="";f0.classList.remove("show");}
+  termCache[k]="";footCache[k]="";
+  let text="";const mode=effMode();
+  try{
+    const resp=await fetch("/api/run",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({folder:COURSE[fi].folder,file:rel,env:envFor()})});
+    if(!resp.ok||!resp.body)throw new Error("HTTP "+resp.status);
+    const reader=resp.body.getReader(),dec=new TextDecoder();
+    let code=null,dur=null;
+    while(true){
+      const {done,value}=await reader.read();
+      if(done)break;
+      text+=dec.decode(value,{stream:true});
+      const m=text.indexOf("__EXIT__");
+      const disp=m>=0?text.slice(0,m):text;
+      if(m>=0){
+        const r=text.slice(m).match(/__EXIT__ (\-?\d+) ([\d.]+)/);
+        if(r){code=parseInt(r[1]);dur=r[2];}
+      }
+      termCache[k]=colorize(disp);
+      const t=$(`term-${id}`);
+      if(t){t.innerHTML=termCache[k];t.scrollTop=t.scrollHeight;}
+    }
+    let fh;
+    const isEx=rel.indexOf("exercises/")===0&&rel.indexOf("/solutions/")<0;
+    if(code===null)fh=`<span class="pass">✓ stream ended</span>`;
+    else if(code===0)fh=`<span class="pass">✓ exit 0</span> · ${esc(dur)}s · ${esc(mode.toUpperCase())}`;
+    else if(code===124)fh=`<span class="failc">✕ timed out</span> · ${esc(dur)}s — hit the ${RUNTMO}s cap`;
+    else if(isEx)fh=`<span class="failc">${esc(tr("notDone"))}</span>`;
+    else fh=`<span class="failc">✕ exit ${code}</span> · ${esc(dur)}s — see output above`;
+    footCache[k]=fh;
+    const f=$(`foot-${id}`);
+    if(f){f.innerHTML=fh;f.classList.add("show");}
+  }catch(e){
+    termCache[k]=(termCache[k]||"")+`\n<span class="l-fail">client error: ${esc(e.message||e)}</span>`;
+    const t=$(`term-${id}`);if(t)t.innerHTML=termCache[k];
+  }
+  RUNNING=false;setRunButtons(false);
+  if(btn)btn.innerHTML=orig;
+  loadHistory().then(()=>renderSpark(fi,rel));
+}
+
+/* ── built-in terminal: POST /api/shell, streamed — never leave the app ── */
+let SH_RUNNING=false,SH_HIST=[],SH_HI=-1,SH_HTML="",SH_TARGET="mac";
+function shTargetHint(){
+  const el=$("sh-where");if(!el)return;const th=LANG==="th";
+  if(SH_TARGET==="mac"){el.textContent=th?"— รันบนเครื่องนี้ · cwd agenticaicodingfitness":"— runs on this machine · cwd agenticaicodingfitness · localhost only";return;}
+  const r=STATUS&&STATUS[SH_TARGET]||{};
+  el.textContent=r.reachable?`— ssh ${r.host} · cwd ~ · HF_TOKEN/NGC_API_KEY forwarded if set`:(th?"— ยังเชื่อมต่อ Spark นี้ไม่ได้ (ดู 🖥 Spark setup)":"— this Spark is not reachable yet (see 🖥 Spark setup)");
+}
+try{SH_HIST=JSON.parse(localStorage.getItem("rl.shhist")||"[]")||[];}catch(e){SH_HIST=[];}
+function termOpen(){$("shdrawer").classList.add("open");$("sh-chev").textContent="▾";}
+function termToggle(){
+  const d=$("shdrawer"),open=d.classList.toggle("open");
+  $("sh-chev").textContent=open?"▾":"▴";
+  $("sh-toggle").setAttribute("aria-expanded",open?"true":"false");
+  if(open)$("sh-in").focus();
+}
+function sendToTerm(btn){
+  const code=btn.parentElement.querySelector("code").textContent;
+  const m=code.match(/^\s*#\s*on:\s*(spark-b|spark b|spark|laptop|mac)\b/im);   // "# on: spark" picks the target
+  if(m){const v=m[1].toLowerCase();SH_TARGET=v.startsWith("spark")?(/b$/.test(v)?"b":"a"):"mac";const st=$("sh-target");if(st)st.value=SH_TARGET;shTargetHint();}
+  termOpen();
+  const inp=$("sh-in");
+  inp.value=code.trimEnd();
+  shGrow();inp.focus();
+  inp.scrollIntoView({block:"nearest"});
+}
+function shGrow(){
+  const inp=$("sh-in");
+  inp.rows=Math.min(8,Math.max(1,inp.value.split("\n").length));
+}
+function shAppend(html){
+  SH_HTML+=html;
+  const t=$("sh-term");t.innerHTML=SH_HTML;t.scrollTop=t.scrollHeight;
+}
+function clearShTerm(){SH_HTML="";$("sh-term").innerHTML="";$("sh-state").textContent="";}
+function shState(cls,txt){const s=$("sh-state");s.className="shstate "+cls;s.textContent=txt;}
+async function runShell(){
+  if(SH_RUNNING)return;
+  const inp=$("sh-in"),cmd=inp.value.trim();
+  if(!cmd)return;
+  SH_RUNNING=true;
+  SH_HIST.push(cmd);if(SH_HIST.length>200)SH_HIST=SH_HIST.slice(-200);SH_HI=SH_HIST.length;
+  try{localStorage.setItem("rl.shhist",JSON.stringify(SH_HIST));}catch(e){}
+  inp.value="";shGrow();
+  $("sh-run").innerHTML=`<span class="sp"></span>`;$("sh-run").disabled=true;
+  $("sh-stop").style.display="";
+  shState("run","running…");
+  shAppend((SH_HTML?"\n":"")+`<span class="l-cmd">${SH_TARGET==="mac"?"":"["+(SH_TARGET==="a"?"Spark A":"Spark B")+"] "}$ ${esc(cmd)}</span>\n`);
+  let text="",code=null,dur=null;
+  try{
+    const resp=await fetch("/api/shell",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({cmd:cmd,target:SH_TARGET,env:envFor()})});
+    if(!resp.ok||!resp.body)throw new Error("HTTP "+resp.status);
+    const reader=resp.body.getReader(),dec=new TextDecoder();
+    const base=SH_HTML;
+    while(true){
+      const {done,value}=await reader.read();
+      if(done)break;
+      text+=dec.decode(value,{stream:true});
+      const m=text.indexOf("__EXIT__");
+      const disp=m>=0?text.slice(0,m):text;
+      if(m>=0){
+        const r=text.slice(m).match(/__EXIT__ (\-?\d+) ([\d.]+)/);
+        if(r){code=parseInt(r[1]);dur=r[2];}
+      }
+      SH_HTML=base+colorize(disp);
+      const t=$("sh-term");t.innerHTML=SH_HTML;t.scrollTop=t.scrollHeight;
+    }
+    if(code===0)shState("ok",`✓ exit 0 · ${dur}s`);
+    else if(code===124)shState("bad",`✕ timed out · ${dur}s`);
+    else if(code!==null)shState("bad",`✕ exit ${code} · ${dur}s`);
+    else shState("ok","stream ended");
+  }catch(e){
+    shAppend(`<span class="l-fail">client error: ${esc(e.message||e)}</span>\n`);
+    shState("bad","✕ failed");
+  }
+  SH_RUNNING=false;
+  $("sh-run").innerHTML="▶ Run";$("sh-run").disabled=false;
+  $("sh-stop").style.display="none";
+  $("sh-in").focus();
+}
+async function stopShell(){
+  try{await fetch("/api/shell/stop",{method:"POST"});}catch(e){}
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  const inp=$("sh-in");
+  inp.addEventListener("input",shGrow);
+  inp.addEventListener("keydown",e=>{
+    if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();runShell();}
+    else if(e.key==="ArrowUp"&&inp.selectionStart===0&&SH_HIST.length){
+      e.preventDefault();SH_HI=Math.max(0,SH_HI-1);inp.value=SH_HIST[SH_HI]||"";shGrow();
+    }else if(e.key==="ArrowDown"&&inp.selectionStart>=inp.value.length&&SH_HIST.length){
+      e.preventDefault();SH_HI=Math.min(SH_HIST.length,SH_HI+1);inp.value=SH_HIST[SH_HI]||"";shGrow();
+    }else if(e.key==="Escape"){termToggle();}
+  });
+});
+
+/* ═══ SVG diagram toolkit — arch / sequence / charts, fully spec-driven ═══ */
+const REDUCED=!!(typeof window!=="undefined"&&window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+const DCOL={green:"var(--green)",cyan:"var(--cyan)",amber:"var(--amber)",violet:"var(--violet)",red:"var(--red)"};
+const DCYCLE=["green","cyan","amber","violet","red"];
+let DUID=0;
+const dcol=c=>DCOL[c]||DCOL.green;
+function fmtV(v){
+  const n=+v,a=Math.abs(n);
+  if(!isFinite(n))return "–";
+  if(a>=1000)return (n/1000).toFixed(1).replace(/\.0$/,"")+"k";
+  if(a>=100)return String(Math.round(n));
+  return String(+n.toFixed(1));
+}
+function wrapTxt(s,maxC,maxL){
+  const out=[];let cur="";
+  for(const w of String(s==null?"":s).split(/\s+/)){
+    if(!w)continue;
+    if(!cur)cur=w;
+    else if((cur+" "+w).length<=maxC)cur+=" "+w;
+    else{out.push(cur);cur=w;}
+  }
+  if(cur)out.push(cur);
+  if(!out.length)out.push("");
+  if(out.length>maxL){out.length=maxL;out[maxL-1]=out[maxL-1].slice(0,Math.max(1,maxC-1))+"…";}
+  return out;
+}
+function svgTxt(x,y,txt,attrs){return `<text x="${x}" y="${y}" ${attrs||""}>${esc(txt)}</text>`;}
+
+/* drawArch: horizontal lanes, auto column layout by edge topology, orthogonal edges,
+   SMIL pulse dots on animated edges (skipped under prefers-reduced-motion) */
+function drawArch(spec){
+  const uid="dg"+(++DUID);
+  const lanes=spec.lanes||[],nodes=spec.nodes||[];
+  const ids=new Set(nodes.map(n=>n.id));
+  const edges=(spec.edges||[]).filter(e=>ids.has(e.from)&&ids.has(e.to));
+  const NW=200,NH=58,CG=64,RG=16,GUT=118;
+  // longest-path column assignment over the DAG; back-edges (cycles) are
+  // dropped from the layout so a feedback loop can't inflate the canvas.
+  const col={},succ={},state={},topo=[];
+  nodes.forEach(n=>{col[n.id]=0;succ[n.id]=[];state[n.id]=0;});
+  edges.forEach(e=>succ[e.from].push(e.to));
+  const dfs=id=>{state[id]=1;succ[id].forEach(t=>{if(!state[t])dfs(t);});state[id]=2;topo.push(id);};
+  nodes.forEach(n=>{if(!state[n.id])dfs(n.id);});
+  topo.reverse();
+  const tix={};topo.forEach((id,i)=>{tix[id]=i;});
+  topo.forEach(id=>succ[id].forEach(t=>{
+    if(tix[t]>tix[id]&&col[id]+1>col[t])col[t]=col[id]+1;
+  }));
+  const maxCol=nodes.reduce((m,n)=>Math.max(m,col[n.id]),0);
+  const pos={},laneBand=[];let y=8;
+  lanes.forEach((l,li)=>{
+    const perCol={};let rows=1;
+    nodes.filter(n=>n.lane===l.id).forEach(n=>{
+      const c=col[n.id],r=perCol[c]||0;perCol[c]=r+1;rows=Math.max(rows,r+1);
+      pos[n.id]={x:GUT+c*(NW+CG),row:r};
+    });
+    const lh=rows*(NH+RG)+RG;
+    nodes.filter(n=>n.lane===l.id).forEach(n=>{pos[n.id].y=y+RG+pos[n.id].row*(NH+RG);});
+    laneBand.push({label:l.label,y:y,h:lh,alt:li%2===1});
+    y+=lh+6;
+  });
+  const W=GUT+(maxCol+1)*(NW+CG)-CG+14,H=y+2;
+  let g=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(spec.title||"architecture")}">`;
+  g+=`<defs><marker id="ar-${uid}" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" `+
+     `orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--dim)"/></marker></defs>`;
+  laneBand.forEach(b=>{
+    g+=`<rect x="0" y="${b.y}" width="${W}" height="${b.h}" rx="10" class="dg-lane${b.alt?" alt":""}"/>`;
+    const ls=wrapTxt(b.label,15,3);
+    ls.forEach((ln,i)=>{g+=svgTxt(12,b.y+b.h/2-(ls.length-1)*6+i*12+3,ln,`class="dg-lanelbl"`);});
+  });
+  let anim=0;
+  edges.forEach((e,ei)=>{
+    const a=pos[e.from],b=pos[e.to];if(!a||!b)return;
+    let d,lx,ly;
+    if(b.x>a.x){                                        // left → right elbow
+      const x1=a.x+NW,y1=a.y+NH/2,x2=b.x,y2=b.y+NH/2;
+      const mx=(x1+x2)/2+((ei%3)-1)*10;
+      d=`M ${x1} ${y1} L ${mx} ${y1} L ${mx} ${y2} L ${x2} ${y2}`;
+      lx=mx;ly=(y1===y2)?y1-6:(y1+y2)/2-6;
+    }else{                                              // same column / backward → vertical route
+      const x1=a.x+NW/2,y1=a.y+NH,x2=b.x+NW/2,y2=b.y;
+      const my=(y1+y2)/2;
+      d=`M ${x1} ${y1} L ${x1} ${my} L ${x2} ${my} L ${x2} ${y2}`;
+      lx=(x1+x2)/2;ly=my-6;
+    }
+    const pid=`${uid}-e${ei}`;
+    const st=e.animated?`stroke="rgba(63,185,80,.6)" stroke-width="1.6"`:`stroke="var(--line)" stroke-width="1.4"`;
+    g+=`<path id="${pid}" d="${d}" fill="none" ${st} marker-end="url(#ar-${uid})"/>`;
+    if(e.label)g+=svgTxt(lx,ly,e.label,`text-anchor="middle" class="dg-elbl"`);
+    if(e.animated&&!REDUCED){                           // house dataflow pulse — SMIL, gated on reduced motion
+      g+=`<circle r="3.4" fill="var(--accent)" opacity=".95" style="filter:drop-shadow(0 0 4px rgba(63,185,80,.9))">`+
+         `<animateMotion dur="3s" repeatCount="indefinite" begin="${(anim++)*1.1}s"><mpath href="#${pid}" xlink:href="#${pid}"/></animateMotion></circle>`;
+    }
+  });
+  nodes.forEach(n=>{
+    const p=pos[n.id];if(!p)return;
+    g+=`<g><title>${esc(n.label+(n.sub?" — "+n.sub:""))}</title>`+
+       `<rect x="${p.x}" y="${p.y}" width="${NW}" height="${NH}" rx="9" fill="var(--panel2)" stroke="var(--line)"/>`+
+       `<rect x="${p.x}" y="${p.y+9}" width="3" height="${NH-18}" rx="1.5" fill="${dcol(n.accent)}"/>`+
+       svgTxt(p.x+13,p.y+20,wrapTxt(n.label,31,1)[0],`class="dg-nlbl"`);
+    if(n.sub)wrapTxt(n.sub,42,2).forEach((ln,i)=>{g+=svgTxt(p.x+13,p.y+34+i*11,ln,`class="dg-nsub"`);});
+    g+=`</g>`;
+  });
+  return g+`</svg>`;
+}
+
+/* drawSeq: vertical lifelines, calls solid / returns dashed / notes as pills,
+   arrows fade in staggered (CSS, gated on reduced motion) */
+function drawSeq(spec){
+  const uid="sq"+(++DUID);
+  const actors=spec.actors||[];
+  const aids=new Set(actors.map(a=>a.id));
+  const steps=(spec.steps||[]).filter(s=>aids.has(s.from)&&aids.has(s.to));
+  const n=Math.max(actors.length,1);
+  const colW=Math.max(180,Math.round(940/n));
+  const W=n*colW,rowH=48,y0=66,H=y0+steps.length*rowH+16;
+  const ax={};actors.forEach((a,i)=>ax[a.id]=colW/2+i*colW);
+  let g=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(spec.title||"sequence")}">`;
+  g+=`<defs>`+
+     `<marker id="sc-${uid}" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>`+
+     `<marker id="sr-${uid}" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--dim)"/></marker>`+
+     `</defs>`;
+  actors.forEach(a=>{
+    const x=ax[a.id],bw=Math.min(colW-24,190);
+    g+=`<line x1="${x}" y1="44" x2="${x}" y2="${H-8}" stroke="var(--line)" stroke-dasharray="3 5"/>`+
+       `<rect x="${x-bw/2}" y="8" width="${bw}" height="32" rx="8" fill="var(--panel2)" stroke="var(--line)"/>`+
+       svgTxt(x,28,wrapTxt(a.label,Math.floor(bw/6),1)[0],`text-anchor="middle" class="dg-actor"`);
+  });
+  steps.forEach((s,i)=>{
+    const y=y0+i*rowH+18,x1=ax[s.from],x2=ax[s.to];
+    g+=`<g class="sqs" style="animation-delay:${i*100}ms">`;
+    if(s.kind==="note"){
+      const cx=(x1+x2)/2,lines=wrapTxt(s.label,52,2);
+      const w=Math.min(W-30,Math.max(...lines.map(l=>l.length))*5.6+28);
+      const ph=lines.length*13+10,top=y-ph+8;
+      g+=`<rect x="${cx-w/2}" y="${top}" width="${w}" height="${ph}" rx="${Math.min(12,ph/2)}" `+
+         `fill="rgba(210,153,34,.07)" stroke="rgba(210,153,34,.4)"/>`;
+      lines.forEach((ln,li)=>{g+=svgTxt(cx,top+14+li*13,ln,`text-anchor="middle" class="dg-note"`);});
+    }else{
+      const ret=s.kind==="return";
+      const st=ret?`stroke="var(--dim)" stroke-dasharray="6 4" marker-end="url(#sr-${uid})"`
+                  :`stroke="var(--accent)" marker-end="url(#sc-${uid})"`;
+      if(x1===x2){                                      // self message loop
+        g+=`<path d="M ${x1} ${y-6} h 46 v 12 h -46" fill="none" ${st} stroke-width="1.5"/>`;
+        wrapTxt(s.label,40,2).forEach((ln,li)=>{g+=svgTxt(x1+54,y+li*12,ln,`class="dg-msg${ret?" ret":""}"`);});
+      }else{
+        g+=`<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" ${st} stroke-width="1.5"/>`;
+        const cx=(x1+x2)/2,maxC=Math.max(16,Math.floor(Math.abs(x2-x1)/5.6)-2);
+        const lines=wrapTxt(s.label,maxC,2);
+        lines.forEach((ln,li)=>{g+=svgTxt(cx,y-8-(lines.length-1-li)*12,ln,`text-anchor="middle" class="dg-msg${ret?" ret":""}"`);});
+      }
+    }
+    g+=`</g>`;
+  });
+  return g+`</svg>`;
+}
+
+/* drawChart: bars / hbars / line / donut — grow/draw-in when scrolled into view */
+function drawChart(spec){
+  const t=spec.type;
+  if(t==="hbars")return chartHBars(spec);
+  if(t==="line")return chartLine(spec);
+  if(t==="donut")return chartDonut(spec);
+  return chartBars(spec);
+}
+function legendHTML(spec){
+  const items=(spec.series||[]).map((s,i)=>({c:dcol(s.color||DCYCLE[i%5]),t:s.name||("series "+(i+1))}));
+  if(!items.length)return "";
+  return `<div class="dlegend">`+items.map(it=>`<span><i style="background:${it.c}"></i>${esc(it.t)}</span>`).join("")+`</div>`;
+}
+function chartBars(spec){
+  const labels=spec.labels||[],series=spec.series||[];
+  const W=460,H=250,padL=12,padR=12,padT=24,padB=36;
+  const plotW=W-padL-padR,plotH=H-padT-padB,baseY=H-padB;
+  const max=Math.max(1e-9,...series.flatMap(s=>(s.values||[]).map(v=>+v||0)));
+  const gW=plotW/Math.max(labels.length,1),m=Math.max(series.length,1);
+  const bw=Math.max(8,Math.min(40,(gW-16-(m-1)*5)/m));
+  let g=`<svg viewBox="0 0 ${W} ${H}">`;
+  [0.5,1].forEach(f=>{
+    const yy=baseY-plotH*f;
+    g+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="var(--line)" stroke-dasharray="2 5" opacity=".6"/>`+
+       svgTxt(padL,yy-4,fmtV(max*f)+(spec.unit?" "+spec.unit:""),`class="dg-axis"`);
+  });
+  g+=`<line x1="${padL}" y1="${baseY}" x2="${W-padR}" y2="${baseY}" stroke="var(--line)"/>`;
+  labels.forEach((lb,li)=>{
+    const gx=padL+li*gW,off=(gW-(m*bw+(m-1)*5))/2;
+    series.forEach((s,si)=>{
+      const v=+((s.values||[])[li]||0),bh=Math.max(1,v/max*plotH);
+      const x=gx+off+si*(bw+5),yv=baseY-bh,c=dcol(s.color||DCYCLE[si%5]),dl=(li*m+si)*60;
+      g+=`<rect class="cbar" x="${x.toFixed(1)}" y="${yv.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="3" `+
+         `fill="${c}" fill-opacity=".85" style="transition-delay:${dl}ms">`+
+         `<title>${esc((s.name||"")+" · "+lb+": "+v+(spec.unit?" "+spec.unit:""))}</title></rect>`+
+         svgTxt(x+bw/2,yv-4,fmtV(v),`text-anchor="middle" class="dg-val cval" style="transition-delay:${dl+250}ms"`);
+    });
+    wrapTxt(lb,Math.floor(gW/6),2).forEach((ln,i)=>{g+=svgTxt(gx+gW/2,baseY+13+i*11,ln,`text-anchor="middle" class="dg-axis"`);});
+  });
+  return g+`</svg>`+legendHTML(spec);
+}
+function chartHBars(spec){
+  const labels=spec.labels||[],series=spec.series||[],m=Math.max(series.length,1);
+  const W=460,padL=118,padR=54,padT=8,rowH=16,gGap=14;
+  const H=padT+labels.length*(m*rowH+gGap)+8,plotW=W-padL-padR;
+  const max=Math.max(1e-9,...series.flatMap(s=>(s.values||[]).map(v=>+v||0)));
+  let g=`<svg viewBox="0 0 ${W} ${H}">`;
+  g+=`<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H-6}" stroke="var(--line)"/>`;
+  labels.forEach((lb,li)=>{
+    const gy=padT+li*(m*rowH+gGap),ls=wrapTxt(lb,20,2);
+    ls.forEach((ln,i)=>{g+=svgTxt(padL-8,gy+(m*rowH)/2+4-(ls.length-1)*5.5+i*11,ln,`text-anchor="end" class="dg-axis"`);});
+    series.forEach((s,si)=>{
+      const v=+((s.values||[])[li]||0),bwd=Math.max(1,v/max*plotW),yb=gy+si*rowH;
+      const c=dcol(s.color||DCYCLE[si%5]),dl=(li*m+si)*60;
+      g+=`<rect class="chbar" x="${padL}" y="${yb+2}" width="${bwd.toFixed(1)}" height="${rowH-5}" rx="3" `+
+         `fill="${c}" fill-opacity=".85" style="transition-delay:${dl}ms">`+
+         `<title>${esc((s.name||"")+" · "+lb+": "+v+(spec.unit?" "+spec.unit:""))}</title></rect>`+
+         svgTxt(padL+bwd+5,yb+rowH-4,fmtV(v)+(li===0&&si===0&&spec.unit?" "+spec.unit:""),
+                `class="dg-val cval" style="transition-delay:${dl+250}ms"`);
+    });
+  });
+  return g+`</svg>`+legendHTML(spec);
+}
+function chartLine(spec){
+  const labels=spec.labels||[],series=spec.series||[];
+  const W=460,H=240,padL=40,padR=46,padT=14,padB=30;
+  const plotW=W-padL-padR,plotH=H-padT-padB,baseY=H-padB;
+  const all=series.flatMap(s=>(s.values||[]).map(v=>+v||0));
+  const max=Math.max(1e-9,...all),min=Math.min(0,...all);
+  const n=Math.max(labels.length,2);
+  const X=i=>padL+i*(plotW/(n-1));
+  const Y=v=>baseY-((v-min)/((max-min)||1))*plotH;
+  let g=`<svg viewBox="0 0 ${W} ${H}">`;
+  [0,0.5,1].forEach(f=>{
+    const vv=min+(max-min)*f,yy=Y(vv);
+    g+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="var(--line)" stroke-dasharray="2 5" opacity=".6"/>`+
+       svgTxt(padL-5,yy+3,fmtV(vv),`text-anchor="end" class="dg-axis"`);
+  });
+  if(spec.unit)g+=svgTxt(padL-5,padT-2,spec.unit,`text-anchor="end" class="dg-axis"`);
+  const step=Math.max(1,Math.ceil(labels.length/8));
+  labels.forEach((lb,i)=>{
+    if(i%step===0||i===labels.length-1)g+=svgTxt(X(i),baseY+15,String(lb),`text-anchor="middle" class="dg-axis"`);
+  });
+  series.forEach((s,si)=>{
+    const c=dcol(s.color||DCYCLE[si%5]),vals=s.values||[];
+    const pts=vals.map((v,i)=>`${X(i).toFixed(1)},${Y(+v||0).toFixed(1)}`).join(" ");
+    g+=`<polyline class="cline" points="${pts}" fill="none" stroke="${c}" stroke-width="2" pathLength="1" `+
+       `style="transition-delay:${si*180}ms"/>`;
+    vals.forEach((v,i)=>{
+      g+=`<circle class="cdot" cx="${X(i).toFixed(1)}" cy="${Y(+v||0).toFixed(1)}" r="3" fill="${c}" `+
+         `style="transition-delay:${300+i*40+si*180}ms"><title>${esc(String(labels[i])+": "+v)}</title></circle>`;
+    });
+    const lv=+(vals[vals.length-1]||0);
+    g+=svgTxt(X(vals.length-1)+7,Y(lv)+3,fmtV(lv),`class="dg-val cval" style="transition-delay:${900+si*150}ms;fill:${c}"`);
+  });
+  return g+`</svg>`+legendHTML(spec);
+}
+function chartDonut(spec){
+  const labels=spec.labels||[],s0=(spec.series||[])[0]||{values:[]};
+  const vals=labels.map((_,i)=>+((s0.values||[])[i]||0));
+  const total=vals.reduce((a,b)=>a+b,0)||1e-9;
+  const W=460,H=230,cx=125,cy=115,r=76,sw=27;
+  let g=`<svg viewBox="0 0 ${W} ${H}">`;
+  g+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--panel2)" stroke-width="${sw}"/>`;
+  let acc=0;
+  vals.forEach((v,i)=>{
+    const pct=v/total*100,seg=Math.max(pct-1.2,0.4).toFixed(2);
+    const c=dcol((s0.color&&vals.length===1)?s0.color:DCYCLE[i%5]);
+    g+=`<circle class="cseg" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="${sw}" `+
+       `pathLength="100" stroke-dasharray="${seg} 100" data-d="${seg} 100" `+
+       `style="stroke-dasharray:0 100;transition-delay:${i*120}ms" stroke-dashoffset="${(-acc).toFixed(2)}" `+
+       `transform="rotate(-90 ${cx} ${cy})"><title>${esc(labels[i]+": "+v)}</title></circle>`;
+    acc+=pct;
+  });
+  g+=svgTxt(cx,cy-2,fmtV(total),`text-anchor="middle" class="dg-big"`);
+  if(spec.unit)g+=svgTxt(cx,cy+16,spec.unit,`text-anchor="middle" class="dg-axis"`);
+  labels.forEach((lb,i)=>{
+    const ly=44+i*22;
+    g+=`<circle cx="240" cy="${ly-4}" r="4" fill="${dcol(DCYCLE[i%5])}"/>`+
+       svgTxt(252,ly,`${lb} — ${fmtV(vals[i])}${spec.unit?" "+spec.unit:""} (${Math.round(vals[i]/total*100)}%)`,`class="dg-axis"`);
+  });
+  return g+`</svg>`;
+}
+
+/* the 'diagrams' section: arch + sequence full-width, charts in a 2-up metric grid */
+function dcardHTML(title,body,caption,unit){
+  return `<div class="dcard"><h3 class="dtitle">${esc(title||"")}${unit?`<span class="dunit">${esc(unit)}</span>`:""}</h3>`+
+         body+(caption?`<p class="dcap">${esc(caption)}</p>`:"")+`</div>`;
+}
+function diagramsBlock(fi){
+  const d=COURSE[fi]&&COURSE[fi].diagrams;
+  if(!d)return `<div class="pwarn">⚠ no diagrams.json for this lab yet — nothing to visualize.</div>`;
+  let h=`<div class="diagwrap">`;
+  try{if(d.architecture)h+=dcardHTML(d.architecture.title,drawArch(d.architecture),d.architecture.caption);}
+  catch(e){h+=`<div class="pwarn">⚠ architecture diagram failed: ${esc(e.message||e)}</div>`;}
+  try{if(d.sequence)h+=dcardHTML(d.sequence.title,drawSeq(d.sequence),d.sequence.caption);}
+  catch(e){h+=`<div class="pwarn">⚠ sequence diagram failed: ${esc(e.message||e)}</div>`;}
+  if(Array.isArray(d.charts)&&d.charts.length){
+    h+=`<div class="diag-grid">`;
+    d.charts.forEach(ch=>{
+      try{h+=dcardHTML(ch.title,`<div class="dchart">${drawChart(ch)}</div>`,ch.caption,ch.unit);}
+      catch(e){h+=`<div class="pwarn">⚠ chart failed: ${esc(e.message||e)}</div>`;}
+    });
+    h+=`</div>`;
+  }
+  return h+`</div>`;
+}
+/* arm chart animations on first scroll into view */
+let chartIO=null;
+function armCharts(){
+  const els=document.querySelectorAll(".dchart:not(.iv)");
+  if(!els.length)return;
+  const fire=el=>{
+    el.classList.add("iv");
+    el.querySelectorAll(".cseg").forEach(s=>{if(s.dataset.d)s.style.strokeDasharray=s.dataset.d;});
+  };
+  if(REDUCED||typeof IntersectionObserver==="undefined"){els.forEach(fire);return;}
+  if(chartIO)chartIO.disconnect();
+  chartIO=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting){fire(en.target);chartIO.unobserve(en.target);}});
+  },{root:$("content"),threshold:0.25});
+  els.forEach(el=>chartIO.observe(el));
+}
+/* ── go ── */
+applyChrome();
+sideApply();
+renderMode();
+boot();
+</script>
+
+</body>
+</html>

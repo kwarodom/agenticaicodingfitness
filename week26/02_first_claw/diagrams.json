@@ -1,0 +1,73 @@
+{
+  "architecture": {
+    "title": "Your first claw — from one install line to a local model",
+    "caption": "You paste the installer line into the ⌨ terminal on the Spark; the runner never runs it for you. nemoclaw.sh installs Node.js, OpenShell and the NemoClaw CLI, then `nemoclaw onboard` (or Express Install) creates the gateway, the provider and the sandbox `my-assistant`. Inside the sandbox the harness calls https://inference.local; the gateway forwards it to local vLLM (:8000) or Ollama (:11434) on the same Spark. A direct call to api.openai.com has no network_policies entry and is denied. (Research tutorial Part 1, citing the DGX Spark NemoClaw playbook, the NemoClaw quickstart and the OpenShell playbook.)",
+    "lanes": [
+      {"id": "laptop", "label": "This laptop"},
+      {"id": "host", "label": "Spark host"},
+      {"id": "box", "label": "Sandbox my-assistant"},
+      {"id": "out", "label": "Outside"}
+    ],
+    "nodes": [
+      {"id": "runner", "label": "Reef runner + labs", "lane": "laptop", "sub": "builds and checks lines · read-only ssh", "accent": "cyan"},
+      {"id": "term", "label": "⌨ terminal (# on: spark)", "lane": "laptop", "sub": "you paste curl … | bash here", "accent": "amber"},
+      {"id": "installer", "label": "nemoclaw.sh", "lane": "host", "sub": "Node.js · OpenShell · NemoClaw CLI", "accent": "violet"},
+      {"id": "onboard", "label": "nemoclaw onboard / Express", "lane": "host", "sub": "provider · tier · sandbox name", "accent": "violet"},
+      {"id": "gw", "label": "OpenShell gateway :8080", "lane": "host", "sub": "inference route · credentials", "accent": "green"},
+      {"id": "vllm", "label": "local vLLM :8000 / Ollama :11434", "lane": "host", "sub": "the model on the GB10", "accent": "green"},
+      {"id": "harness", "label": "OpenClaw (or Hermes / Deep Agents)", "lane": "box", "sub": "calls https://inference.local/v1", "accent": "cyan"},
+      {"id": "openai", "label": "api.openai.com", "lane": "out", "sub": "no network_policies entry", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "term", "to": "installer", "label": "curl -fsSL … | VARS bash"},
+      {"from": "installer", "to": "onboard", "label": "starts when preflight passes"},
+      {"from": "onboard", "to": "gw", "label": "creates provider + sandbox", "animated": true},
+      {"from": "runner", "to": "gw", "label": "status · inference get (read-only)"},
+      {"from": "harness", "to": "gw", "label": "inference.local", "animated": true},
+      {"from": "gw", "to": "vllm", "label": "forwards, adds credential", "animated": true},
+      {"from": "harness", "to": "openai", "label": "denied by the proxy"}
+    ]
+  },
+  "sequence": {
+    "title": "L1.5 — three pieces of evidence that inference is local",
+    "caption": "Evidence 1 comes from the host (`openshell inference get` names a local provider). Evidence 2 comes from inside the sandbox (`openshell sandbox exec -n my-assistant -- curl -s https://inference.local/v1/models` lists a model). Evidence 3 is a call that must fail (`curl https://api.openai.com/v1/models` from inside — Part 1, exercise 3); the denial shows in `openshell term` and `openshell logs my-assistant --source sandbox`. 1 + 2 are the Reef runner's pass criterion.",
+    "actors": [
+      {"id": "you", "label": "you / Lab 02-4"},
+      {"id": "gw", "label": "gateway"},
+      {"id": "sup", "label": "sandbox supervisor / proxy"},
+      {"id": "llm", "label": "local vLLM"}
+    ],
+    "steps": [
+      {"from": "you", "to": "gw", "label": "openshell inference get", "kind": "call"},
+      {"from": "gw", "to": "you", "label": "provider: local-vllm · model: <MODEL_HANDLE>", "kind": "return"},
+      {"from": "you", "to": "sup", "label": "sandbox exec … curl https://inference.local/v1/models", "kind": "call"},
+      {"from": "sup", "to": "gw", "label": "inspect_for_inference → route", "kind": "call"},
+      {"from": "gw", "to": "llm", "label": "GET /v1/models", "kind": "call"},
+      {"from": "llm", "to": "you", "label": "{\"object\":\"list\",\"data\":[…]}", "kind": "return"},
+      {"from": "you", "to": "sup", "label": "sandbox exec … curl https://api.openai.com/v1/models", "kind": "call"},
+      {"from": "sup", "to": "you", "label": "deny — no network_policies entry (logged)", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Where NEMOCLAW_PROVIDER sends your prompts",
+      "type": "donut",
+      "unit": "provider values",
+      "labels": ["on the Spark (vllm, install-vllm, ollama)", "cloud / hosted (build, routed, openrouter, openai, anthropic, gemini)", "wherever it points (custom, anthropicCompatible)", "Hermes only (hermes-provider)"],
+      "series": [
+        {"name": "provider values", "values": [3, 6, 2, 1], "color": "cyan"}
+      ],
+      "caption": "A count of the twelve documented NEMOCLAW_PROVIDER values listed in the research tutorial (§1.4, citing the NemoClaw quickstart) and the playbook's provider mapping. Only three keep inference on the device."
+    },
+    {
+      "title": "Lab 02-3 — the L1.4 verbs by how the course runs them",
+      "type": "hbars",
+      "unit": "rows",
+      "labels": ["read-only (a lab runs it)", "preview (--dry-run)", "change (behind 🔓)", "destroys + recreates", "interactive", "streaming", "secret"],
+      "series": [
+        {"name": "rows in the table", "values": [3, 1, 4, 1, 1, 1, 1], "color": "amber"}
+      ],
+      "caption": "Counted from the verb table that labs/lab02_3_lifecycle.py prints in step 3 (captured on this Mac). Only the first two kinds ever run without you: changes wait for the runner's 🔓 toggle, and the last four are typed by you in the ⌨ terminal."
+    }
+  ]
+}

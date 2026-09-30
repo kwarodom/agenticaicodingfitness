@@ -1,0 +1,52 @@
+# Alto Ops Claw v1 INSIDE the OpenShell sandbox (capstone deliverables 1-3). It becomes /app/workflow.yml in the image.
+# LLM: the managed route. The supervisor intercepts inference.local, so no provider key lives here (Lab 3.8).
+# Tools: chiller_kpi (Lab 3.4), request_setpoint_change (can only ask for a TICKET, §6.3 design note), and the
+#        BMS over MCP. The agent sees write_setpoint in tools/list, but the prod policy denies tools/call on it.
+#        That deny is what deliverable 2 proves.
+# Telemetry: Phoenix + OTel collector + a local file (Lab 4.1/4.2). Each network sink has its own entry in
+#            prod-policy.yaml. The file goes to /sandbox/data/out, the only writable data path.
+general:
+  telemetry:
+    logging:
+      console: { _type: console, level: WARN }
+    tracing:
+      phoenix:
+        _type: phoenix
+        endpoint: http://phoenix.alto.local:6006/v1/traces
+        project: alto-ops-claw
+      otelcollector:
+        _type: otelcollector
+        endpoint: http://otel.alto.local:4318/v1/traces
+        project: alto-ops-claw
+      file_backup:
+        _type: file
+        output_path: /sandbox/data/out/alto_ops_traces.jsonl
+        project: alto-ops-claw
+function_groups:
+  bms:
+    _type: mcp_client
+    server:
+      transport: streamable-http
+      url: http://bms.alto.local:8443/mcp
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: /sandbox/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  request_setpoint_change:
+    _type: request_setpoint_change
+  current_datetime:
+    _type: current_datetime
+llms:
+  routed:
+    _type: openai
+    base_url: https://inference.local/v1
+    api_key: EMPTY
+    model_name: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8   # = the MODEL_HANDLE set with `openshell inference set`
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: routed
+  tool_names: [chiller_kpi, request_setpoint_change, current_datetime, bms]
+  verbose: true
+  handle_tool_errors: true

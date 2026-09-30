@@ -1,0 +1,76 @@
+{
+  "architecture": {
+    "title": "Policy as code — where a policy is written, checked, stored and enforced",
+    "caption": "You write the YAML on the laptop and check it twice: policykit (the course's teaching model, semantic rules) and the real OpenShell 0.0.111 CLI as an offline parser (structure). On the Spark, the gateway validates and stores each change as a policy revision and pushes it to the sandbox. The network half (proxy + OPA) is hot-reloadable; the filesystem and process half (Landlock, seccomp) is locked at creation. NemoClaw adds presets on top, and the TUI turns an approved denial into a new revision. (Research tutorial Part 2, citing the OpenShell security best practices and sandbox-policies pages.)",
+    "lanes": [
+      {"id": "laptop", "label": "Your laptop"},
+      {"id": "host", "label": "Spark host"},
+      {"id": "box", "label": "OpenShell sandbox"}
+    ],
+    "nodes": [
+      {"id": "yaml", "label": "policy YAML", "lane": "laptop", "sub": "anatomy.yaml · alto-bms.yaml", "accent": "cyan"},
+      {"id": "pk", "label": "policykit", "lane": "laptop", "sub": "teaching model · validate · decide", "accent": "violet"},
+      {"id": "parser", "label": "openshell 0.0.111", "lane": "laptop", "sub": "offline parser · dead gateway", "accent": "amber"},
+      {"id": "nemo", "label": "nemoclaw CLI", "lane": "host", "sub": "policy add / remove · presets", "accent": "cyan"},
+      {"id": "gw", "label": "OpenShell gateway", "lane": "host", "sub": "validates · stores revisions", "accent": "green"},
+      {"id": "tui", "label": "openshell term", "lane": "host", "sub": "approve a denied request", "accent": "amber"},
+      {"id": "proxy", "label": "proxy + OPA", "lane": "box", "sub": "network · HOT (policy update / set)", "accent": "green"},
+      {"id": "lsm", "label": "Landlock + seccomp", "lane": "box", "sub": "filesystem · process · LOCKED", "accent": "red"},
+      {"id": "agent", "label": "agent binary", "lane": "box", "sub": "must match host + port + binary", "accent": "violet"}
+    ],
+    "edges": [
+      {"from": "yaml", "to": "pk", "label": "semantic check"},
+      {"from": "yaml", "to": "parser", "label": "structure check"},
+      {"from": "yaml", "to": "gw", "label": "policy set --wait", "animated": true},
+      {"from": "nemo", "to": "gw", "label": "preset merge"},
+      {"from": "tui", "to": "gw", "label": "approval → revision"},
+      {"from": "gw", "to": "proxy", "label": "push revision", "animated": true},
+      {"from": "agent", "to": "proxy", "label": "every connection"},
+      {"from": "lsm", "to": "agent", "label": "set at creation"}
+    ]
+  },
+  "sequence": {
+    "title": "The iterate loop: deny → observe → allow → verify",
+    "caption": "The agent's first call is denied because no network_policies entry matches. You read the denial in `openshell logs --source sandbox`, preview the fix with `--dry-run` (the gateway merges it into the live policy and sends nothing), then apply it with `--wait`. The gateway stores a new revision and the proxy loads it without restarting the sandbox. The commands are the research tutorial's Lab 2.3; the --dry-run and --wait behaviour was checked against the laptop CLI 0.0.111.",
+    "actors": [
+      {"id": "agent", "label": "agent (gh)"},
+      {"id": "proxy", "label": "sandbox proxy"},
+      {"id": "you", "label": "you (openshell CLI)"},
+      {"id": "gw", "label": "gateway"}
+    ],
+    "steps": [
+      {"from": "agent", "to": "proxy", "label": "CONNECT api.github.com:443", "kind": "call"},
+      {"from": "proxy", "to": "agent", "label": "deny — no matching entry", "kind": "return"},
+      {"from": "you", "to": "gw", "label": "openshell logs my-assistant --source sandbox", "kind": "call"},
+      {"from": "gw", "to": "you", "label": "deny dst=api.github.com:443 binary=/usr/bin/gh", "kind": "return"},
+      {"from": "you", "to": "gw", "label": "policy update --add-endpoint …:read-only:rest:enforce --dry-run", "kind": "call"},
+      {"from": "gw", "to": "you", "label": "merged preview — nothing sent", "kind": "return"},
+      {"from": "you", "to": "gw", "label": "same command with --wait", "kind": "call"},
+      {"from": "gw", "to": "proxy", "label": "new revision loaded (hot)", "kind": "call"},
+      {"from": "agent", "to": "proxy", "label": "GET /repos/nvidia/nemoclaw", "kind": "call"},
+      {"from": "proxy", "to": "agent", "label": "allow (read-only, enforced)", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Fourteen broken policies — who catches them on the laptop?",
+      "type": "bars",
+      "unit": "variants",
+      "labels": ["both catch it", "only policykit", "only the real parser"],
+      "series": [
+        {"name": "variants", "values": [5, 7, 2], "color": "cyan"}
+      ],
+      "caption": "Counted from lab 03-2 run on this Mac: policykit caught 12 of 14, the OpenShell 0.0.111 parser caught 7 of 14. The seven policykit-only cases are semantic (root, read_write [/], missing port, access typo, …) — on a Spark the gateway refuses those at push time. The two parser-only cases are rule-shape mistakes policykit does not model."
+    },
+    {
+      "title": "Sixteen --add-endpoint specs — CLI vs policykit",
+      "type": "hbars",
+      "unit": "specs",
+      "labels": ["both parse", "both reject", "CLI rejects, policykit parses", "CLI parses, policykit rejects"],
+      "series": [
+        {"name": "specs", "values": [5, 5, 4, 2], "color": "violet"}
+      ],
+      "caption": "Counted from lab 03-3 step 1 on this Mac. The two 'CLI parses' cases are `::rest` (the research tutorial says the gateway rejects it) and `::sql` (a protocol the 0.0.111 CLI knows and policykit does not). The four 'CLI rejects' cases are checks policykit lacks: mcp in a spec, enforcement without protocol, tcp with an access mode, an unknown option."
+    }
+  ]
+}

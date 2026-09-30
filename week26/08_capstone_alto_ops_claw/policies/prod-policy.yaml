@@ -1,0 +1,74 @@
+# Alto Ops Claw v1: production policy (capstone deliverable 2).
+# Base: the research tutorial's Lab 6.1 policy, unchanged. Capstone additions are marked "capstone:".
+#   1. a `phoenix` group, the second telemetry sink (deliverable 3). It has the same shape as otel_collector:
+#      POST /v1/traces only, one binary, enforce.
+#   2. allowed_ips pins for the two telemetry hosts. They are private hosts on the Spark's LAN, and the §6.2
+#      checklist asks for a narrow CIDR. 10.20.0.20 is a PLACEHOLDER: put your Spark's LAN IP here
+#      (`hostname -I`), the same way 10.20.0.15 stands in for the BMS in Lab 6.1.
+# Create the sandbox WITH this file (`sandbox create --policy`). filesystem_policy, landlock and process are
+# locked at creation. A later `openshell policy set --wait` changes only the network sections.
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/usr, /lib, /etc, /app]
+  read_write: [/tmp, /sandbox/data/out]
+landlock:
+  compatibility: hard_requirement
+process:
+  run_as_user: "1500"
+  run_as_group: "1500"
+
+network_policies:
+  bms_mcp:
+    name: bms_mcp
+    endpoints:
+      - host: bms.alto.local
+        port: 8443
+        path: /mcp
+        protocol: mcp
+        enforcement: enforce
+        allowed_ips: ["10.20.0.15/32"]
+        mcp: { max_body_bytes: 131072, strict_tool_names: true }
+        rules:
+          - allow: { method: initialize }
+          - allow: { method: notifications/initialized }
+          - allow: { method: tools/list }
+          - allow: { method: tools/call, tool: { any: [read_point, list_alarms, get_trend] } }
+        deny_rules:
+          - { method: tools/call, tool: { any: [write_setpoint, override_schedule] } }
+    binaries:
+      - { path: /usr/bin/python3.12 }
+  otel_collector:
+    name: otel_collector
+    endpoints:
+      - host: otel.alto.local
+        port: 4318
+        protocol: rest
+        enforcement: enforce
+        allowed_ips: ["10.20.0.20/32"]          # capstone: placeholder, your Spark's LAN IP
+        rules:
+          - allow: { method: POST, path: /v1/traces }
+    binaries:
+      - { path: /usr/bin/python3.12 }
+  phoenix:                                      # capstone: the second telemetry sink
+    name: phoenix
+    endpoints:
+      - host: phoenix.alto.local
+        port: 6006
+        protocol: rest
+        enforcement: enforce
+        allowed_ips: ["10.20.0.20/32"]          # capstone: placeholder, your Spark's LAN IP
+        rules:
+          - allow: { method: POST, path: /v1/traces }
+    binaries:
+      - { path: /usr/bin/python3.12 }
+
+network_middlewares:
+  redact-secrets:
+    name: Redact tokens in tool results
+    middleware: openshell/regex
+    order: 10
+    config: { mode: redact }
+    on_error: fail_closed
+    endpoints:
+      include: ["bms.alto.local"]

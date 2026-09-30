@@ -1,0 +1,22 @@
+# Lab 04-2 — Alto Ops Claw with the research tutorial's ORIGINAL chiller_kpi description (tools/chiller_v0.py).
+# Everything else is identical to week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml.
+functions:
+  chiller_kpi:
+    _type: chiller_kpi_v0
+    csv_path: week26/common/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: true
+  handle_tool_errors: true

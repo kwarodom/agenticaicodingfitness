@@ -1,0 +1,4 @@
+{"id": 1, "question": "What is the average plant kW/RT over the last 6 hours?", "answer": "0.901"}
+{"id": 2, "question": "Is the chiller plant efficiency in ALARM or OK over the last 6 hours?", "answer": "ALARM"}
+{"id": 3, "question": "What is the average plant kW/RT over the last 24 hours?", "answer": "0.703"}
+{"id": 4, "question": "What was the average cooling load in RT over the last 24 hours?", "answer": "629.2"}

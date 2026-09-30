@@ -1,0 +1,15 @@
+.env.local
+00_reef_lab_runner/progress.json
+00_reef_lab_runner/.run_history.json
+**/.runs/
+.venv-nat/
+.venv-openshell/
+**/__pycache__/
+*.egg-info/
+.DS_Store
+alto-reef/frontend/node_modules/
+alto-reef/frontend/dist/
+# booth-demo photos (third-party demo, kept out of this public repo) and the prebuilt M6 preview bundle
+alto-reef/docs/reference-screenshots/*.jpg
+alto-reef/docs/reef-map-m6-preview.jpg
+Alto Reef — Reef map (M6 preview)/

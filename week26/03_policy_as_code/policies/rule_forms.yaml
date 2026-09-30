@@ -1,0 +1,82 @@
+# Every rule form from the research tutorial's Lab 2.2 (REST, WebSocket, GraphQL, MCP, native TCP), each put
+# into its own network_policies group so the whole file is one policy that parses. Hosts ending in
+# example / example.com are placeholders (the tutorial's snippets name no host for them).
+# Lab 03-2 validates this file and asks policykit for decisions.
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/usr, /lib, /etc]
+  read_write: [/tmp]
+landlock:
+  compatibility: best_effort
+process:
+  run_as_user: "1500"
+  run_as_group: "1500"
+network_policies:
+  # REST: allow wraps matchers; deny_rules list matchers directly
+  github_rest:
+    endpoints:
+      - host: api.github.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: /repos/** }
+          - allow:
+              method: GET
+              path: /api/v1/download
+              query:
+                platform: { any: ["linux-*", "darwin-*"] }
+        deny_rules:
+          - { method: "*", path: "/repos/*/*/rulesets" }
+    binaries:
+      - path: /usr/bin/gh
+  # WebSocket
+  realtime:
+    endpoints:
+      - host: realtime.example.com
+        port: 443
+        protocol: websocket
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: /v1/realtime }
+          - allow: { method: WEBSOCKET_TEXT, path: /v1/realtime }
+        deny_rules:
+          - { method: WEBSOCKET_TEXT, path: /v1/admin/** }
+    binaries:
+      - path: /usr/bin/node
+  # GraphQL
+  github_graphql:
+    endpoints:
+      - host: graphql.example.com
+        port: 443
+        protocol: graphql
+        enforcement: enforce
+        rules:
+          - allow: { operation_type: query }
+          - allow: { operation_type: mutation, fields: [createIssue] }
+        deny_rules:
+          - { operation_type: mutation, fields: [deleteRepository] }
+    binaries:
+      - path: /usr/bin/node
+  # MCP (the research tutorial returns to this in Part 6)
+  tools_mcp:
+    endpoints:
+      - host: mcp.example.com
+        port: 443
+        protocol: mcp
+        enforcement: enforce
+        rules:
+          - allow: { method: initialize }
+          - allow: { method: notifications/initialized }
+          - allow: { method: tools/call, tool: { any: [search_web, list_issues] } }
+        deny_rules:
+          - { method: tools/call, tool: send_email }
+    binaries:
+      - path: /usr/bin/python3
+  # Native TCP (databases)
+  postgres:
+    endpoints:
+      - { host: db.internal.example, port: 5432, protocol: tcp }
+    binaries:
+      - { path: /usr/bin/psql }

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body, #root { height: 100%; }
+body { margin: 0; font-family: Inter, ui-sans-serif, system-ui; -webkit-font-smoothing: antialiased; }
+
+.label { @apply text-[11px] uppercase tracking-[0.12em] text-muted font-medium; }
+.panel { @apply bg-panel/90 border border-line rounded-lg backdrop-blur-sm; }
+.chip { @apply inline-flex items-center gap-1 rounded-md border px-2 py-[2px] text-[11px] font-medium leading-4 whitespace-nowrap; }
+.chip-teal { @apply border-teal/50 text-teal bg-teal/10; }
+.chip-blue { @apply border-blue/50 text-blue bg-blue/10; }
+.chip-amber { @apply border-amber/60 text-amber bg-amber/10; }
+.chip-magenta { @apply border-magenta/60 text-magenta bg-magenta/10; }
+.chip-grey { @apply border-muted/40 text-muted bg-muted/10; }
+.chip-nv { @apply border-nv/60 text-nv bg-nv/10; }
+.btn { @apply inline-flex items-center gap-1.5 rounded-md border border-line bg-panel2 px-3 py-1.5 text-[12px] font-medium text-ink hover:border-teal/60 hover:text-teal transition-colors duration-150 disabled:opacity-40 disabled:pointer-events-none; }
+.btn-primary { @apply border-teal/70 bg-teal/15 text-teal hover:bg-teal/25; }
+.btn-danger { @apply border-magenta/60 text-magenta hover:bg-magenta/10; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bob { animation: bob 2.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  .ring-pulse { animation: pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: .9; } 50% { opacity: .45; } }
+}

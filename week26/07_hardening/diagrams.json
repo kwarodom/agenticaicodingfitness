@@ -1,0 +1,85 @@
+{
+  "architecture": {
+    "title": "Alto Ops Claw, hardened — what can leave the sandbox",
+    "caption": "The production policy (research tutorial Lab 6.1) leaves three ways out of the sandbox: the BMS over MCP (read tools only, write tools denied), the on-prem OTel collector (POST /v1/traces only) and inference.local, which the supervisor intercepts and the gateway routes to the local model. Everything else — provider hosts, package registries, cloud metadata — is denied by default or always blocked. Writes go through the human-approved approvals service, which the claw can only ask (the exercise).",
+    "lanes": [
+      {"id": "box", "label": "OpenShell sandbox (alto-ops)"},
+      {"id": "edge", "label": "supervisor + policy proxy"},
+      {"id": "inside", "label": "inside the building"},
+      {"id": "outside", "label": "outside the building"}
+    ],
+    "nodes": [
+      {"id": "claw", "label": "NAT claw (python3.12, uid 1500)", "lane": "box", "sub": "Landlock hard_requirement · /sandbox/data/out writable", "accent": "violet"},
+      {"id": "proxy", "label": "egress proxy", "lane": "edge", "sub": "deny by default · enforce → 403 JSON", "accent": "amber"},
+      {"id": "bms", "label": "bms.alto.local:8443 /mcp", "lane": "inside", "sub": "read_point · list_alarms · get_trend", "accent": "green"},
+      {"id": "otel", "label": "otel.alto.local:4318", "lane": "inside", "sub": "POST /v1/traces only", "accent": "cyan"},
+      {"id": "approvals", "label": "approvals.alto.local:443", "lane": "inside", "sub": "create + read tickets; approve = human", "accent": "cyan"},
+      {"id": "llm", "label": "local vLLM / Ollama", "lane": "inside", "sub": "via inference.local", "accent": "green"},
+      {"id": "cloud", "label": "api.openai.com · pypi.org · 169.254.169.254", "lane": "outside", "sub": "denied / always blocked", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "claw", "to": "proxy", "label": "every connection"},
+      {"from": "proxy", "to": "bms", "label": "MCP allow-list", "animated": true},
+      {"from": "proxy", "to": "otel", "label": "traces"},
+      {"from": "proxy", "to": "approvals", "label": "tickets (exercise)"},
+      {"from": "proxy", "to": "llm", "label": "inspect_for_inference", "animated": true},
+      {"from": "proxy", "to": "cloud", "label": "✕ deny"}
+    ]
+  },
+  "sequence": {
+    "title": "A prompt-injected write, and the path a real write takes",
+    "caption": "A booby-trapped tool result tells the agent to change a setpoint. The MCP tools/call for write_setpoint hits a deny_rule and gets a 403 before it reaches the BMS (lab 07-2 shows the course gate doing the same against the real mock server). The legitimate path is a ticket to the approvals service: the claw can create and read it, a human approves it outside the sandbox.",
+    "actors": [
+      {"id": "agent", "label": "claw"},
+      {"id": "proxy", "label": "policy proxy"},
+      {"id": "bms", "label": "BMS (MCP)"},
+      {"id": "appr", "label": "approvals service"},
+      {"id": "human", "label": "engineer"}
+    ],
+    "steps": [
+      {"from": "agent", "to": "proxy", "label": "tools/call read_point", "kind": "call"},
+      {"from": "proxy", "to": "bms", "label": "allowed by rule", "kind": "call"},
+      {"from": "bms", "to": "agent", "label": "PLANT.KW_PER_RT=0.897 (+ injected text)", "kind": "return"},
+      {"from": "agent", "to": "proxy", "label": "tools/call write_setpoint", "kind": "call"},
+      {"from": "proxy", "to": "agent", "label": "403 — deny_rule (enforce)", "kind": "return"},
+      {"from": "agent", "to": "proxy", "label": "POST /api/v1/tickets", "kind": "call"},
+      {"from": "proxy", "to": "appr", "label": "allowed by rule", "kind": "call"},
+      {"from": "agent", "to": "proxy", "label": "POST /api/v1/tickets/42/approve", "kind": "call"},
+      {"from": "proxy", "to": "agent", "label": "403 — deny_rule", "kind": "return"},
+      {"from": "human", "to": "appr", "label": "approve ticket 42 (outside the sandbox)", "kind": "call"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Twelve attacker steps — how many worked",
+      "type": "bars",
+      "unit": "steps of 12",
+      "labels": ["first-draft Balanced policy", "production policy (Lab 6.1)"],
+      "series": [
+        {"name": "worked", "values": [6, 2], "color": "red"},
+        {"name": "stopped", "values": [6, 10], "color": "green"}
+      ],
+      "caption": "From lab 07-1, run on this Mac with the course's policykit teaching model (not OpenShell). The two steps that still work under prod are a read and a write inside /sandbox; prod leaves them no host to send data to."
+    },
+    {
+      "title": "Twelve weakened policies — which checker notices",
+      "type": "hbars",
+      "unit": "copies caught",
+      "labels": ["real OpenShell CLI 0.0.111 (parser)", "policykit.validate", "policykit.harden (course §6.2 lint)"],
+      "series": [
+        {"name": "caught", "values": [2, 2, 9], "color": "cyan"}
+      ],
+      "caption": "From lab 07-2 on this Mac. The parser catches field names (Version, an mcp typo); validate catches values (root, Version); only the lint sees the quiet weakenings that parse fine — audit, L4, access: full, wildcards, provider hosts, extra binaries, /usr, best_effort, tls: skip. One copy (Version) is caught by two checkers."
+    },
+    {
+      "title": "Eleven broken blueprints — the rule that caught each",
+      "type": "donut",
+      "unit": "copies",
+      "labels": ["bare HTTPS origin", "exact OpenShell release", "CA bundle (PEM, ≤ 1 MiB, regular file)", "absolute authentication path"],
+      "series": [
+        {"name": "copies", "values": [3, 2, 5, 1], "color": "amber"}
+      ],
+      "caption": "From lab 07-3 on this Mac: the course validator applies the rules the research tutorial lists for an external-gateway blueprint.yaml. The real checks run in nemoclaw-blueprint-runner on the Spark."
+    }
+  ]
+}

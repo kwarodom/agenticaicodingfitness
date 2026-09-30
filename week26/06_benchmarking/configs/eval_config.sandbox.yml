@@ -1,0 +1,40 @@
+# Lab 06-4 · the SANDBOX leg of the sandbox-tax measurement (research tutorial Lab 5.4), run INSIDE the
+# OpenShell sandbox from research tutorial Lab 3.8. Identical to eval_config.spark.yml except the path to the model:
+# the LLM calls https://inference.local/v1 (the supervisor intercepts it; the gateway forwards to vLLM) and the
+# files live under /sandbox. No provider key is here. Judges are left out so both legs time only the workflow.
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: /sandbox/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_vllm:
+    _type: openai
+    base_url: https://inference.local/v1
+    api_key: EMPTY
+    model_name: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8   # = the MODEL_HANDLE set with `openshell inference set`
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_vllm
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: true
+  handle_tool_errors: true
+eval:
+  general:
+    output_dir: /sandbox/.tmp/tax/sandbox_c1/
+    max_concurrency: 1
+    dataset:
+      _type: jsonl
+      file_path: /sandbox/data/alto_ops_eval.jsonl
+    profiler:
+      compute_llm_metrics: true
+      csv_exclude_io_text: true
+      workflow_runtime_forecast: true
+  evaluators:
+    workflow_runtime:
+      _type: avg_workflow_runtime
+    llm_calls:
+      _type: avg_num_llm_calls

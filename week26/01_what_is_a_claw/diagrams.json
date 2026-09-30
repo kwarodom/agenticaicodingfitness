@@ -1,0 +1,66 @@
+{
+  "architecture": {
+    "title": "A claw on one DGX Spark — who holds what",
+    "caption": "The NemoClaw CLI and the OpenShell gateway run on the Spark host. The gateway manages the sandbox, holds the provider credentials and the policy revisions. Inside the sandbox, the supervisor enforces Landlock, seccomp and a deny-by-default proxy around the harness. The harness calls https://inference.local; the supervisor intercepts it and the gateway forwards it, with the real credential, to local vLLM or Ollama. The agent never sees a provider key. (Research tutorial Part 0, citing the NemoClaw how-it-works page.)",
+    "lanes": [
+      {"id": "host", "label": "Spark host"},
+      {"id": "box", "label": "OpenShell sandbox (container)"},
+      {"id": "model", "label": "Inference provider"}
+    ],
+    "nodes": [
+      {"id": "cli", "label": "nemoclaw CLI", "lane": "host", "sub": "onboard · status · policy · snapshot", "accent": "cyan"},
+      {"id": "gw", "label": "OpenShell gateway :8080", "lane": "host", "sub": "credentials · policy revisions · routes", "accent": "green"},
+      {"id": "sup", "label": "supervisor + proxy", "lane": "box", "sub": "Landlock · seccomp · netns · deny by default", "accent": "amber"},
+      {"id": "harness", "label": "harness", "lane": "box", "sub": "OpenClaw · Hermes · Deep Agents · NAT", "accent": "violet"},
+      {"id": "vllm", "label": "vLLM :8000 / Ollama :11434", "lane": "model", "sub": "local model on the GB10", "accent": "green"}
+    ],
+    "edges": [
+      {"from": "cli", "to": "gw", "label": "lifecycle + policy"},
+      {"from": "gw", "to": "sup", "label": "creates · pushes policy", "animated": true},
+      {"from": "harness", "to": "sup", "label": "every connection"},
+      {"from": "sup", "to": "gw", "label": "inference.local"},
+      {"from": "gw", "to": "vllm", "label": "+ real credential", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "One model call from inside a claw",
+    "caption": "The agent asks inference.local for a completion. The supervisor intercepts it (the TUI shows inspect_for_inference), the gateway adds the credential and forwards it to the provider set with `openshell inference set`. A call straight to api.openai.com never gets that far: no network_policies entry matches, so the proxy denies it.",
+    "actors": [
+      {"id": "agent", "label": "harness (agent)"},
+      {"id": "sup", "label": "supervisor / proxy"},
+      {"id": "gw", "label": "gateway"},
+      {"id": "llm", "label": "local vLLM"}
+    ],
+    "steps": [
+      {"from": "agent", "to": "sup", "label": "POST https://inference.local/v1/chat/completions", "kind": "call"},
+      {"from": "sup", "to": "sup", "label": "inspect_for_inference", "kind": "note"},
+      {"from": "sup", "to": "gw", "label": "route request", "kind": "call"},
+      {"from": "gw", "to": "llm", "label": "+ credential → http://<spark-ip>:8000/v1", "kind": "call"},
+      {"from": "llm", "to": "agent", "label": "completion (streamed back)", "kind": "return"},
+      {"from": "agent", "to": "sup", "label": "curl https://api.openai.com/v1/models", "kind": "call"},
+      {"from": "sup", "to": "agent", "label": "deny — no network_policies entry", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Four OpenClaw CVEs — why the boundary sits outside the harness",
+      "type": "hbars",
+      "unit": "CVSS",
+      "labels": ["CVE-2026-44112 write escape", "CVE-2026-44115 env disclosure", "CVE-2026-44118 MCP loopback", "CVE-2026-44113 read escape"],
+      "series": [
+        {"name": "CVSS", "values": [9.6, 8.8, 7.8, 7.7], "color": "red"}
+      ],
+      "caption": "Scores as listed in the research tutorial, which cites Cyera's September 2026 disclosure. Three are exploitable from one prompt-injection foothold, so the fix is what the process can do afterwards, not a better prompt."
+    },
+    {
+      "title": "Five layers — which ones change on a running sandbox",
+      "type": "donut",
+      "unit": "layers",
+      "labels": ["hot-reloadable (network, inference)", "locked at creation (filesystem, process)", "outside the policy (gateway auth)"],
+      "series": [
+        {"name": "layers", "values": [2, 2, 1], "color": "cyan"}
+      ],
+      "caption": "From the DGX Spark NemoClaw playbook as quoted in the research tutorial: network and inference are hot-reloadable; filesystem and process are locked at sandbox creation."
+    }
+  ]
+}

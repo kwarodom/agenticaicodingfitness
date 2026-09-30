@@ -1,0 +1,43 @@
+# Alto Ops Claw + TWO exporters at once: Phoenix (only when something answers on :6006) and the file backup.
+# Module 05 lab 05-1 uses this file only if Phoenix is up; otherwise workflow.traced.yml.
+# = week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml + a `general.telemetry` block.
+# NAT 1.9.0: the `file` TRACING exporter needs `output_path` and `project` (the research tutorial's
+# `file_backup: {_type: file}` fails `nat validate` with "general: Field required").
+# Run from the repo root:
+#   week26/.venv-nat/bin/nat run --config_file week26/05_tracing/configs/workflow.phoenix.yml --input "Plant status last 6 hours?"
+general:
+  telemetry:
+    logging:
+      console: { _type: console, level: WARN }
+      file:    { _type: file, path: week26/05_tracing/.runs/alto_ops.log, level: DEBUG }
+    tracing:
+      phoenix:
+        _type: phoenix
+        endpoint: http://localhost:6006/v1/traces
+        project: alto-ops-claw
+        # api_key: ${PHOENIX_API_KEY}     # if Phoenix auth is enabled
+      file_backup:
+        _type: file
+        output_path: week26/05_tracing/.runs/traces/alto_ops_trace.jsonl
+        project: alto-ops-claw
+        mode: overwrite          # 1.9 default is append: one file would collect every run
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: week26/common/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY                  # required by validation even for keyless servers
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: true
+  handle_tool_errors: true

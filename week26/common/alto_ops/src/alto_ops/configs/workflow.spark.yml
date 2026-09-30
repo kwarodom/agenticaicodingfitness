@@ -1,0 +1,21 @@
+# Alto Ops Claw on the DGX Spark host — vLLM from Lab 3.2 (research tutorial Lab 3.4 config).
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: ./data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_vllm:
+    _type: openai
+    base_url: http://localhost:8000/v1
+    api_key: EMPTY
+    model_name: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_vllm
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: true
+  handle_tool_errors: true

@@ -1,0 +1,22 @@
+# Alto Ops Claw on THIS LAPTOP — NAT 1.9 + the laptop's Ollama (a stand-in for vLLM on the Spark).
+# Run from the repo root:  week26/.venv-nat/bin/nat run --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --input "…"
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: week26/common/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY                  # required by validation even for keyless servers
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: true
+  handle_tool_errors: true

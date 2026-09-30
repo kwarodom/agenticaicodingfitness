@@ -1,0 +1,21 @@
+# Lab 04-1 — the same workflow with ONE extra line: reasoning_effort: none.
+# nemotron-3-nano is a thinking model. On Ollama its thoughts go to a separate `reasoning` field, so a ReAct
+# agent (which parses "Thought: / Action:" out of the CONTENT) can receive an empty string. Turning thinking
+# off makes the model write the ReAct text into the content. NAT's openai LLM config allows extra keys and
+# passes them through to the server.
+functions:
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+    reasoning_effort: none
+workflow:
+  _type: react_agent
+  llm_name: local_llm
+  tool_names: [current_datetime]
+  verbose: true
