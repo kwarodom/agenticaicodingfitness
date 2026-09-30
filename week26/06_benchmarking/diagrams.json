@@ -1,0 +1,290 @@
+{
+  "architecture": {
+    "title": "Four layers of a claw, and the tool that measures each",
+    "caption": "Benchmark each layer on its own (research tutorial Part 5.1). The engine is measured with vLLM's built-in `vllm bench serve` (tok/s, TTFT, single stream and a concurrency sweep). The workflow and its quality are measured with `nat eval` and the NAT profiler (p50/p95 runtime, LLM calls and tokens per turn, evaluator scores). The sandbox tax is the p95 difference between the same eval on the host and inside OpenShell. Harnesses without a NAT profiler (Hermes, OpenClaw) are timed through their own API. `nat sizing calc` turns p95-vs-concurrency into a rough GPU (= Spark) count.",
+    "lanes": [
+      {
+        "id": "client",
+        "label": "who asks"
+      },
+      {
+        "id": "claw",
+        "label": "the claw (harness / NAT workflow)"
+      },
+      {
+        "id": "box",
+        "label": "OpenShell sandbox boundary"
+      },
+      {
+        "id": "engine",
+        "label": "inference engine on the GB10"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "users",
+        "label": "GMs + engineers",
+        "lane": "client",
+        "sub": "target users for sizing",
+        "accent": "cyan"
+      },
+      {
+        "id": "harness",
+        "label": "Hermes :8642 / OpenClaw",
+        "lane": "claw",
+        "sub": "lab 06-5 · time the API",
+        "accent": "violet"
+      },
+      {
+        "id": "nat",
+        "label": "NAT workflow (Alto Ops)",
+        "lane": "claw",
+        "sub": "lab 06-2 · nat eval + profiler",
+        "accent": "green"
+      },
+      {
+        "id": "proxy",
+        "label": "supervisor + proxy",
+        "lane": "box",
+        "sub": "lab 06-4 · the sandbox tax",
+        "accent": "amber"
+      },
+      {
+        "id": "vllm",
+        "label": "vLLM :8000 / Ollama :11434",
+        "lane": "engine",
+        "sub": "lab 06-1 · vllm bench serve",
+        "accent": "red"
+      }
+    ],
+    "edges": [
+      {
+        "from": "users",
+        "to": "harness",
+        "label": "identical tasks (p50/p95)"
+      },
+      {
+        "from": "users",
+        "to": "nat",
+        "label": "eval dataset (jsonl)"
+      },
+      {
+        "from": "harness",
+        "to": "proxy",
+        "label": "inference.local"
+      },
+      {
+        "from": "nat",
+        "to": "proxy",
+        "label": "inference.local (sandbox leg)",
+        "animated": true
+      },
+      {
+        "from": "nat",
+        "to": "vllm",
+        "label": "localhost:8000 (host leg)"
+      },
+      {
+        "from": "proxy",
+        "to": "vllm",
+        "label": "gateway route",
+        "animated": true
+      }
+    ]
+  },
+  "sequence": {
+    "title": "One `nat eval` run with the profiler on",
+    "caption": "NAT reads the jsonl dataset (question = input, answer = reference), runs the workflow for each row up to max_concurrency at a time, records every LLM and tool event, then writes the profiler files and the evaluator scores. On NAT 1.9.0 each evaluator writes <evaluator key>_output.json. `nat sizing calc` repeats this run once per concurrency value and fits p95 against concurrency.",
+    "actors": [
+      {
+        "id": "cli",
+        "label": "nat eval"
+      },
+      {
+        "id": "wf",
+        "label": "tool_calling_agent"
+      },
+      {
+        "id": "tool",
+        "label": "chiller_kpi"
+      },
+      {
+        "id": "llm",
+        "label": "LLM (vLLM / laptop Ollama)"
+      },
+      {
+        "id": "out",
+        "label": "output_dir"
+      }
+    ],
+    "steps": [
+      {
+        "from": "cli",
+        "to": "wf",
+        "label": "row 1..N (≤ max_concurrency at once)",
+        "kind": "call"
+      },
+      {
+        "from": "wf",
+        "to": "llm",
+        "label": "LLM call 1: choose a tool",
+        "kind": "call"
+      },
+      {
+        "from": "llm",
+        "to": "wf",
+        "label": "tool_call chiller_kpi(hours=6)",
+        "kind": "return"
+      },
+      {
+        "from": "wf",
+        "to": "tool",
+        "label": "run the tool",
+        "kind": "call"
+      },
+      {
+        "from": "tool",
+        "to": "wf",
+        "label": "kw_per_rt=0.901 status=ALARM",
+        "kind": "return"
+      },
+      {
+        "from": "wf",
+        "to": "llm",
+        "label": "LLM call 2: write the answer",
+        "kind": "call"
+      },
+      {
+        "from": "llm",
+        "to": "wf",
+        "label": "final answer",
+        "kind": "return"
+      },
+      {
+        "from": "wf",
+        "to": "cli",
+        "label": "generated_answer + intermediate steps",
+        "kind": "return"
+      },
+      {
+        "from": "cli",
+        "to": "out",
+        "label": "inference_optimization.json · standardized_data_all.csv · workflow_profiling_report.txt · <evaluator>_output.json",
+        "kind": "call"
+      }
+    ]
+  },
+  "charts": [
+    {
+      "title": "Spark single-stream decode — third-party figures",
+      "type": "hbars",
+      "unit": "tok/s",
+      "labels": [
+        "Nemotron 3 Nano W4A16 · vLLM (ai-muninn)",
+        "Nemotron 3 Nano NVFP4 · vLLM (NVIDIA forum, 65+)",
+        "nemotron-3-nano:30b · Ollama (Exxact)",
+        "gemma4:26b · Ollama (Exxact engines, ~64)",
+        "Nemotron 3 Nano W4A4 · vLLM (ai-muninn)",
+        "qwen3.5:35b-a3b · Ollama (Exxact)",
+        "gemma4:26b · vLLM (Exxact engines, ~30)",
+        "qwen3.5:122b-a10b · Ollama (Exxact)",
+        "nemotron-3-super:120b-a12b · Ollama (Exxact)"
+      ],
+      "series": [
+        {
+          "name": "tok/s",
+          "values": [
+            74.75,
+            65,
+            64.7,
+            64,
+            58.27,
+            48.2,
+            30,
+            20.1,
+            16.4
+          ],
+          "color": "green"
+        }
+      ],
+      "caption": "Third-party measurements quoted in the research tutorial (Part 5.2), each from one machine on one software version: ai-muninn, the NVIDIA developer forum, Exxact's agent benchmark and Exxact's engine comparison. They are reference points to reproduce on your Spark, not specifications, and not this course's measurements. Values marked ~ or + are shown at their stated figure."
+    },
+    {
+      "title": "Spark aggregate throughput under concurrency — third-party figures",
+      "type": "bars",
+      "unit": "tok/s",
+      "labels": [
+        "Nemotron 3 Nano W4A4 · vLLM · c=16",
+        "Nemotron 3 Nano W4A16 · vLLM",
+        "gemma4:26b · vLLM · 10+ concurrent (>300)",
+        "gemma4:26b · Ollama · NUM_PARALLEL=4"
+      ],
+      "series": [
+        {
+          "name": "aggregate tok/s",
+          "values": [
+            786,
+            400,
+            300,
+            122
+          ],
+          "color": "cyan"
+        }
+      ],
+      "caption": "Aggregate figures as quoted in the research tutorial: 786 and ~400 tok/s per ai-muninn, >300 (drawn at 300) and ~122 tok/s per Exxact's engine comparison. Exercise 06 divides 786 by 16 sessions: about 49 tok/s each, because batching raises the total, not each stream."
+    },
+    {
+      "title": "Naive single-stream ceiling for a 3B-active MoE at 273 GB/s",
+      "type": "bars",
+      "unit": "tok/s",
+      "labels": [
+        "BF16 (6.0 GB/token)",
+        "FP8 (3.0 GB/token)",
+        "NVFP4 (~1.7 GB/token)"
+      ],
+      "series": [
+        {
+          "name": "ceiling",
+          "values": [
+            46,
+            91,
+            162
+          ],
+          "color": "amber"
+        }
+      ],
+      "caption": "Arithmetic from lab 06-1 (clawkit.decode_ceiling_tok_s: bandwidth ÷ bytes of active weights per token, NVFP4 at ~4.5 bits with scales). It is an upper bound: KV-cache reads, non-expert layers and below-peak bandwidth pull real decode lower. ai-muninn, cited in the research tutorial, puts the practical ceiling for this model class in the low 80s tok/s."
+    },
+    {
+      "title": "LAPTOP STAND-IN — Ollama sweep on this Mac (gemma3:4b)",
+      "type": "bars",
+      "unit": "tok/s",
+      "labels": [
+        "c=1",
+        "c=2",
+        "c=4"
+      ],
+      "series": [
+        {
+          "name": "tok/s per request",
+          "values": [
+            75.8,
+            48.9,
+            47.5
+          ],
+          "color": "violet"
+        },
+        {
+          "name": "tok/s aggregate",
+          "values": [
+            63.9,
+            47.1,
+            45.9
+          ],
+          "color": "cyan"
+        }
+      ],
+      "caption": "Measured by lab 06-1 on this Mac (laptop Ollama, gemma3:4b, 96-token answers, 2/2/4 requests; TTFT p50 57 ms → 1120 ms → 3188 ms). The aggregate did not rise: this Ollama queued the requests, and other labs may have shared it. It shows the METHOD only and must not be compared with the Spark figures in the other charts."
+    }
+  ]
+}

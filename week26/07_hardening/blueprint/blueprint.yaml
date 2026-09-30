@@ -1,0 +1,13 @@
+# External-gateway blueprint, verbatim from the research tutorial Lab 6.3 (L6.3). Experimental.
+version: 1.0.0
+min_openshell_version: 0.0.116
+max_openshell_version: 0.0.116
+openshell_target:
+  endpoint: https://openshell.alto.local:8443
+  workspace: default
+  expected_release: 0.0.116
+  lifecycle: external
+  trust:
+    ca_file: /var/run/openshell-target/ca.pem
+  authentication:
+    credential_file: /var/run/openshell-target/authentication

@@ -1,0 +1,33 @@
+# Lab 04-4 (research tutorial L3.6) — NAT as an MCP CLIENT of the mock BMS (week26/common/bms_mcp_server.py).
+# The lab sets BMS_MCP_URL to the port it started the mock on; the default is the tutorial's port.
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: week26/common/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+function_groups:
+  bms_tools:
+    _type: mcp_client
+    server:
+      transport: streamable-http
+      url: ${BMS_MCP_URL:-http://localhost:8443/mcp}
+    include: [read_point, list_alarms]      # write_setpoint and get_trend never reach the agent
+    tool_call_timeout: 60
+    reconnect_enabled: true
+    reconnect_max_attempts: 3
+    tool_overrides:
+      read_point:
+        description: "Read the latest value of one BMS point. Valid points: PLANT.KW, PLANT.RT (refrigeration tons of cooling), PLANT.KW_PER_RT."
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [bms_tools, chiller_kpi]
+  verbose: true
+  handle_tool_errors: true

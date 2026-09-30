@@ -1,0 +1,100 @@
+{
+  "architecture": {
+    "title": "Three telemetry planes of one claw — who writes what, and where it goes",
+    "caption": "Agent plane: NAT's IntermediateStepManager publishes IntermediateStep events; exporters (file, Phoenix, OTel collector, Langfuse …) consume them off the hot path, several at once. Policy plane: the OpenShell supervisor and gateway log every egress decision (allow / deny / inspect_for_inference) and OCSF findings, read with `openshell logs` (bounded) and `openshell term`. Harness plane: `nemoclaw <sandbox> logs` and the harness's own gateway log. A sandboxed NAT reaches a collector only through a policy entry (rest, POST /v1/traces); Hermes reaches Langfuse through an OpenShell credential handle, so the sandbox holds placeholders, never keys. (Research tutorial Part 4.)",
+    "lanes": [
+      {"id": "box", "label": "OpenShell sandbox"},
+      {"id": "host", "label": "Spark host"},
+      {"id": "sink", "label": "Trace sinks"}
+    ],
+    "nodes": [
+      {"id": "nat", "label": "NAT workflow (Alto Ops Claw)", "lane": "box", "sub": "IntermediateStepManager → exporters", "accent": "violet"},
+      {"id": "hermes", "label": "Hermes harness", "lane": "box", "sub": "Langfuse plugin · placeholders only", "accent": "violet"},
+      {"id": "sup", "label": "supervisor + proxy", "lane": "box", "sub": "allow · deny · inspect_for_inference", "accent": "amber"},
+      {"id": "gw", "label": "OpenShell gateway", "lane": "host", "sub": "credential handles · policy · openshell logs / term", "accent": "green"},
+      {"id": "harnesslog", "label": "harness logs", "lane": "host", "sub": "nemoclaw <sandbox> logs · /tmp/gateway.log", "accent": "cyan"},
+      {"id": "file", "label": "file exporter", "lane": "sink", "sub": "raw IntermediateStep JSONL (always works)", "accent": "green"},
+      {"id": "otel", "label": "OTel collector :4318", "lane": "sink", "sub": "OTLP/HTTP POST /v1/traces → llm_spans.json", "accent": "cyan"},
+      {"id": "phoenix", "label": "Phoenix :6006", "lane": "sink", "sub": "native phoenix exporter · project alto-ops-claw", "accent": "cyan"},
+      {"id": "langfuse", "label": "Langfuse", "lane": "sink", "sub": "real keys substituted at egress", "accent": "cyan"}
+    ],
+    "edges": [
+      {"from": "nat", "to": "file", "label": "agent plane (local file)"},
+      {"from": "nat", "to": "sup", "label": "every connection"},
+      {"from": "sup", "to": "otel", "label": "rest · POST /v1/traces", "animated": true},
+      {"from": "otel", "to": "phoenix", "label": "forward (optional)"},
+      {"from": "hermes", "to": "sup", "label": "Langfuse export"},
+      {"from": "sup", "to": "gw", "label": "policy plane: decisions + findings", "animated": true},
+      {"from": "gw", "to": "langfuse", "label": "+ real credential"},
+      {"from": "hermes", "to": "harnesslog", "label": "harness plane"}
+    ]
+  },
+  "sequence": {
+    "title": "One Alto Ops request, seen in three planes",
+    "caption": "The request makes 2 LLM calls and 1 tool call (measured on this laptop, lab 05-5). In a sandbox each LLM call is a POST to inference.local, so the policy plane should log one inspect_for_inference per LLM span (predicted: 2 — verify on the Spark with `openshell logs alto-ops -n 200 --since 2m --source sandbox | grep -c inspect_for_inference`). The trace export itself is one more egress the policy must allow.",
+    "actors": [
+      {"id": "client", "label": "client (curl)"},
+      {"id": "nat", "label": "NAT serve"},
+      {"id": "sup", "label": "supervisor / proxy"},
+      {"id": "llm", "label": "model via inference.local"},
+      {"id": "sink", "label": "exporters"}
+    ],
+    "steps": [
+      {"from": "client", "to": "nat", "label": "POST /v1/workflow/full?filter_steps=LLM_END,TOOL_END", "kind": "call"},
+      {"from": "nat", "to": "sup", "label": "LLM call 1 → inference.local", "kind": "call"},
+      {"from": "sup", "to": "sup", "label": "inspect_for_inference #1", "kind": "note"},
+      {"from": "sup", "to": "llm", "label": "routed by the gateway", "kind": "call"},
+      {"from": "llm", "to": "nat", "label": "tool call: chiller_kpi(hours=6)", "kind": "return"},
+      {"from": "nat", "to": "nat", "label": "TOOL span chiller_kpi (6 ms, no egress)", "kind": "note"},
+      {"from": "nat", "to": "sup", "label": "LLM call 2 → inference.local", "kind": "call"},
+      {"from": "sup", "to": "sup", "label": "inspect_for_inference #2", "kind": "note"},
+      {"from": "llm", "to": "nat", "label": "answer: kw_per_rt 0.901 · ALARM", "kind": "return"},
+      {"from": "nat", "to": "client", "label": "intermediate_data: LLM_END ×2, TOOL_END ×1 + data: answer", "kind": "return"},
+      {"from": "nat", "to": "sink", "label": "spans exported off the hot path (file / OTLP POST /v1/traces)", "kind": "call"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Where one request's time went (lab 05-5, LAPTOP STAND-IN)",
+      "type": "hbars",
+      "unit": "s",
+      "labels": ["LLM call 1 (decide: call chiller_kpi)", "TOOL chiller_kpi", "LLM call 2 (write the answer)"],
+      "series": [
+        {"name": "span duration", "values": [7.327, 0.006, 15.499], "color": "violet"}
+      ],
+      "caption": "Span durations from the file exporter's trace of one lab 05-5 run on this Mac (nat serve over HTTP; nemotron-3-nano on Ollama, shared with other labs at the time). The model is ~100% of the run; the tool is 6 ms. A laptop stand-in — never compare with Spark numbers."
+    },
+    {
+      "title": "Tokens per LLM call (lab 05-5, LAPTOP STAND-IN)",
+      "type": "bars",
+      "unit": "tokens",
+      "labels": ["LLM call 1", "LLM call 2"],
+      "series": [
+        {"name": "prompt", "values": [359, 439], "color": "cyan"},
+        {"name": "completion", "values": [144, 326], "color": "amber"}
+      ],
+      "caption": "usage_info.token_usage on the two LLM_END events of the same run: 503 + 765 = 1268 total tokens, identical in the /v1/workflow/full stream and in the file exporter."
+    },
+    {
+      "title": "What a raw file-exporter trace is made of (lab 05-1)",
+      "type": "donut",
+      "unit": "lines",
+      "labels": ["LLM_NEW_TOKEN", "FUNCTION_START / _END", "LLM_START / _END", "TOOL_START / _END", "WORKFLOW_START"],
+      "series": [
+        {"name": "lines", "values": [429, 18, 4, 2, 1], "color": "violet"}
+      ],
+      "caption": "Event counts in the 454-line trace file of one `nat run` on this Mac (lab 05-1). 94% of the lines are streamed tokens; the spans you care about are START/END pairs. 5 STARTs had no END: the short-lived process exited before the exporter finished writing."
+    },
+    {
+      "title": "Open spans: a short `nat run` vs a long-lived process",
+      "type": "bars",
+      "unit": "spans",
+      "labels": ["nat run (lab 05-1)", "nat serve · /v1/workflow/full (lab 05-5)"],
+      "series": [
+        {"name": "closed spans", "values": [10, 16], "color": "green"},
+        {"name": "open spans (START, no END)", "values": [5, 0], "color": "red"}
+      ],
+      "caption": "Measured on this Mac. NAT 1.9's exporter stop() does not wait for its background writes, so `nat run` lost the tail of its trace (10 of its 15 spans closed); the lab 05-5 run through a long-lived `nat serve` closed all 16."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+# Alto Ops Claw — production policy, verbatim from the research tutorial Lab 6.1 (L6.1).
+# Apply on the Spark: openshell policy set alto-ops --policy prod.yaml --wait
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/usr, /lib, /etc, /app]
+  read_write: [/tmp, /sandbox/data/out]
+landlock:
+  compatibility: hard_requirement
+process:
+  run_as_user: "1500"
+  run_as_group: "1500"
+
+network_policies:
+  bms_mcp:
+    name: bms_mcp
+    endpoints:
+      - host: bms.alto.local
+        port: 8443
+        path: /mcp
+        protocol: mcp
+        enforcement: enforce
+        allowed_ips: ["10.20.0.15/32"]
+        mcp: { max_body_bytes: 131072, strict_tool_names: true }
+        rules:
+          - allow: { method: initialize }
+          - allow: { method: notifications/initialized }
+          - allow: { method: tools/list }
+          - allow: { method: tools/call, tool: { any: [read_point, list_alarms, get_trend] } }
+        deny_rules:
+          - { method: tools/call, tool: { any: [write_setpoint, override_schedule] } }
+    binaries:
+      - { path: /usr/bin/python3.12 }
+  otel_collector:
+    name: otel_collector
+    endpoints:
+      - host: otel.alto.local
+        port: 4318
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: POST, path: /v1/traces }
+    binaries:
+      - { path: /usr/bin/python3.12 }
+
+network_middlewares:
+  redact-secrets:
+    name: Redact tokens in tool results
+    middleware: openshell/regex
+    order: 10
+    config: { mode: redact }
+    on_error: fail_closed
+    endpoints:
+      include: ["bms.alto.local"]

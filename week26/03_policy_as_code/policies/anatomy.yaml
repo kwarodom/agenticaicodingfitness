@@ -1,0 +1,47 @@
+# The annotated schema policy from the research tutorial's Lab 2.2 (L2.2), which follows the OpenShell
+# policy-schema page. Module 03 · lab 03-2 validates it with policykit AND the real OpenShell CLI parser.
+version: 1
+
+# STATIC — locked at creation
+filesystem_policy:
+  include_workdir: true
+  read_only: [/usr, /lib, /etc]
+  read_write: [/tmp]
+landlock:
+  compatibility: best_effort        # or hard_requirement
+# process:
+#   run_as_user: "1500"
+#   run_as_group: "1500"
+
+# DYNAMIC — hot-reloadable
+network_policies:
+  github_rest_api:
+    endpoints:
+      - host: api.github.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only            # GET/HEAD/OPTIONS
+    binaries:
+      - path: /usr/bin/gh
+  npm_registry:
+    endpoints:
+      - host: registry.npmjs.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+        allow_encoded_slash: true
+    binaries:
+      - path: /usr/bin/node
+
+network_middlewares:
+  regex-redactor:
+    name: Redact API tokens
+    middleware: openshell/regex
+    order: 10
+    config: { mode: redact }
+    on_error: fail_closed
+    endpoints:
+      include: ["*.example.com"]
+      exclude: ["trusted.example.com"]

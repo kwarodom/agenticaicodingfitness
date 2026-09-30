@@ -1,0 +1,17 @@
+# Lab 04-1 (research tutorial L3.3) — the tutorial's minimal workflow, pointed at THIS laptop's Ollama.
+# Only the llms block differs from the tutorial: base_url + model_name (a laptop stand-in for vLLM on the Spark).
+functions:
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY                  # required by validation even for keyless servers
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: react_agent
+  llm_name: local_llm
+  tool_names: [current_datetime]
+  verbose: true

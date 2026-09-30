@@ -1,0 +1,101 @@
+{
+  "architecture": {
+    "title": "Alto Ops Claw — one NAT workflow, three front ends, two kinds of tools",
+    "caption": "One YAML file (workflow.laptop.yml) defines the agent: a tool_calling_agent with a Python tool (chiller_kpi, reads the CSV) and an MCP tool group (bms_tools, reads the mock BMS; include: read_point + list_alarms). The same file runs as `nat run` (console), `nat serve` (REST + OpenAI-compatible, :8001) and `nat mcp serve` (tools over MCP, :9901). The LLM is laptop Ollama here (LAPTOP STAND-IN), vLLM :8000 on the Spark, or https://inference.local/v1 inside an OpenShell sandbox. (Research tutorial Part 3; every path and port checked on NAT 1.9.0 in labs 04-1 to 04-5.)",
+    "lanes": [
+      {"id": "clients", "label": "Callers"},
+      {"id": "nat", "label": "NAT 1.9 workflow"},
+      {"id": "backends", "label": "Model and data"}
+    ],
+    "nodes": [
+      {"id": "cli", "label": "nat run", "lane": "clients", "sub": "console front end", "accent": "cyan"},
+      {"id": "http", "label": "curl / OpenAI client", "lane": "clients", "sub": "/v1/workflow · /v1/chat/completions · /full", "accent": "cyan"},
+      {"id": "mcpc", "label": "any MCP client", "lane": "clients", "sub": "OpenClaw · Hermes · nat mcp client", "accent": "cyan"},
+      {"id": "serve", "label": "nat serve :8001", "lane": "nat", "sub": "FastAPI · SSE steps", "accent": "green"},
+      {"id": "mcps", "label": "nat mcp serve :9901", "lane": "nat", "sub": "--tool_names chiller_kpi", "accent": "green"},
+      {"id": "agent", "label": "tool_calling_agent", "lane": "nat", "sub": "llm_name: local_llm", "accent": "violet"},
+      {"id": "kpi", "label": "chiller_kpi", "lane": "nat", "sub": "@register_function · FunctionInfo", "accent": "amber"},
+      {"id": "grp", "label": "bms_tools (mcp_client)", "lane": "nat", "sub": "bms_tools__read_point · __list_alarms", "accent": "amber"},
+      {"id": "llm", "label": "Ollama :11434 / vLLM :8000 / inference.local", "lane": "backends", "sub": "nemotron-3-nano (laptop) · Nemotron 3 Nano FP8 (Spark)", "accent": "green"},
+      {"id": "csv", "label": "chiller_plant.csv", "lane": "backends", "sub": "SYNTHETIC · 672 rows · 15 min", "accent": "cyan"},
+      {"id": "bms", "label": "mock BMS MCP :8443", "lane": "backends", "sub": "write_setpoint hidden by include", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "cli", "to": "agent", "label": "--input"},
+      {"from": "http", "to": "serve", "label": "POST"},
+      {"from": "mcpc", "to": "mcps", "label": "tools/call"},
+      {"from": "serve", "to": "agent", "label": "runs"},
+      {"from": "mcps", "to": "kpi", "label": "publishes"},
+      {"from": "agent", "to": "llm", "label": "plan + summarise", "animated": true},
+      {"from": "agent", "to": "kpi", "label": "tool call"},
+      {"from": "agent", "to": "grp", "label": "tool call"},
+      {"from": "kpi", "to": "csv", "label": "reads"},
+      {"from": "grp", "to": "bms", "label": "streamable-http /mcp", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "One chiller question through /v1/workflow/full (lab 04-3, LAPTOP STAND-IN)",
+    "caption": "Measured on this Mac: two LLM calls and one tool call per question. The plan call took 4.04 s (365 prompt / 154 completion tokens) and asked for chiller_kpi(hours=6); the tool answered in 0.01 s; the summary call took 5.99 s (445 / 256 tokens). The stream carries `data:` answer chunks and `intermediate_data:` steps (filter_steps=LLM_END,TOOL_END). Laptop numbers, never Spark numbers.",
+    "actors": [
+      {"id": "client", "label": "client (urllib)"},
+      {"id": "serve", "label": "nat serve :8001"},
+      {"id": "agent", "label": "tool_calling_agent"},
+      {"id": "llm", "label": "Ollama (nemotron-3-nano)"},
+      {"id": "tool", "label": "chiller_kpi"}
+    ],
+    "steps": [
+      {"from": "client", "to": "serve", "label": "POST /v1/workflow/full?filter_steps=LLM_END,TOOL_END", "kind": "call"},
+      {"from": "serve", "to": "agent", "label": "input_message", "kind": "call"},
+      {"from": "agent", "to": "llm", "label": "question + tool schemas", "kind": "call"},
+      {"from": "llm", "to": "agent", "label": "tool_calls: chiller_kpi({hours: 6}) · 4.04 s", "kind": "return"},
+      {"from": "agent", "to": "tool", "label": "chiller_kpi(hours=6)", "kind": "call"},
+      {"from": "tool", "to": "agent", "label": "kw_per_rt=0.901 status=ALARM · 0.01 s", "kind": "return"},
+      {"from": "agent", "to": "llm", "label": "question + tool result", "kind": "call"},
+      {"from": "llm", "to": "agent", "label": "answer text · 5.99 s", "kind": "return"},
+      {"from": "serve", "to": "client", "label": "data: chunks + intermediate_data: LLM_END, TOOL_END, LLM_END", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Where one answer's time goes (LAPTOP STAND-IN)",
+      "type": "hbars",
+      "unit": "s",
+      "labels": ["LLM_END #1 — plan (tool call)", "TOOL_END — chiller_kpi", "LLM_END #2 — summarise"],
+      "series": [
+        {"name": "seconds", "values": [4.04, 0.01, 5.99], "color": "violet"}
+      ],
+      "caption": "Measured by lab 04-3 from /v1/workflow/full steps (event_timestamp − span_event_timestamp) on this Mac with nemotron-3-nano in Ollama. The tool is ~0.1% of the time; the two LLM calls are the rest. Not Spark numbers."
+    },
+    {
+      "title": "Tokens per LLM call for one chiller question (LAPTOP STAND-IN)",
+      "type": "bars",
+      "unit": "tokens",
+      "labels": ["LLM call 1 (plan)", "LLM call 2 (summarise)"],
+      "series": [
+        {"name": "prompt", "values": [365, 445], "color": "cyan"},
+        {"name": "completion", "values": [154, 256], "color": "amber"}
+      ],
+      "caption": "usage_info.token_usage from the two LLM_END steps in lab 04-3 (1,220 tokens in total). /v1/chat/completions reported prompt_tokens 0 on NAT 1.9.0, so count tokens from the steps."
+    },
+    {
+      "title": "Wall time per nat serve endpoint (LAPTOP STAND-IN)",
+      "type": "bars",
+      "unit": "s",
+      "labels": ["POST /v1/workflow", "POST /v1/chat/completions ('Plant status?')", "POST /v1/workflow/full"],
+      "series": [
+        {"name": "seconds", "values": [10.4, 7.8, 10.1], "color": "green"}
+      ],
+      "caption": "One request each, lab 04-3 on this Mac. The chat request is shorter because the vague question got a clarifying reply with no tool call. Laptop Ollama is shared with other labs, so repeat runs vary (lab 04-1 saw 40–70 s under load)."
+    },
+    {
+      "title": "Mock BMS tools: on the server vs offered to the agent",
+      "type": "donut",
+      "unit": "tools",
+      "labels": ["offered (read_point, list_alarms)", "hidden by include (get_trend, write_setpoint)"],
+      "series": [
+        {"name": "tools", "values": [2, 2], "color": "amber"}
+      ],
+      "caption": "Lab 04-4 step B2: the mcp_client group connects to all 4 tools the mock BMS lists; include: [read_point, list_alarms] offers the agent 2. That is agent config, not a boundary — Exercise 04's OpenShell policy (protocol: mcp, deny_rules write_setpoint) is."
+    }
+  ]
+}

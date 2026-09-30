@@ -1,0 +1,52 @@
+# Alto Ops Claw v1 on THIS LAPTOP: a stand-in for the capstone (nemotron-3-nano on the laptop's Ollama, not the Spark).
+# Lab 08-2 runs it from the repo root on the laptop dataset: the first 3 rows of the 20-row Spark dataset
+# (1 read question + 2 setpoint requests). It uses no LLM judge. Its evaluators only count runtime, LLM calls
+# and tokens, which keeps the lab at about 6 LLM calls. Traces go to a local file, because Phoenix and the
+# OTel collector need Docker and this Mac's Docker daemon is usually off.
+general:
+  telemetry:
+    tracing:
+      file_backup:
+        _type: file
+        output_path: week26/08_capstone_alto_ops_claw/.runs/laptop/alto_ops_traces.jsonl
+        project: alto-ops-claw
+        mode: append                  # lab 08-2 deletes the file first, so it holds exactly one eval run
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: week26/common/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  request_setpoint_change:
+    _type: request_setpoint_change
+  current_datetime:
+    _type: current_datetime
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY
+    model_name: nemotron-3-nano:latest
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [chiller_kpi, request_setpoint_change, current_datetime]
+  handle_tool_errors: true
+eval:
+  general:
+    output_dir: week26/08_capstone_alto_ops_claw/.runs/laptop/eval
+    max_concurrency: 1
+    dataset:
+      _type: jsonl
+      file_path: week26/08_capstone_alto_ops_claw/.runs/alto-ops-claw-v1/data/alto_ops_eval.laptop.jsonl
+    profiler:
+      workflow_runtime_forecast: true
+      compute_llm_metrics: true
+      csv_exclude_io_text: true
+  evaluators:
+    runtime:
+      _type: avg_workflow_runtime
+    llm_calls:
+      _type: avg_num_llm_calls
+    tokens:
+      _type: avg_tokens_per_llm_end

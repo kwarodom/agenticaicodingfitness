@@ -1,0 +1,18 @@
+# Lab 04-5 (research tutorial L3.7) — the tutorial's code_execution block, wrapped in a minimal workflow so
+# `nat validate` can check it. The tutorial points it at a NAT "local_sandbox" on :6000.
+functions:
+  code_execution_tool:
+    _type: code_execution
+    uri: "http://127.0.0.1:6000"
+    timeout: 30
+    max_output_characters: 3000
+llms:
+  local_llm:
+    _type: openai
+    base_url: http://localhost:11434/v1
+    api_key: EMPTY
+    model_name: nemotron-3-nano:latest
+workflow:
+  _type: tool_calling_agent
+  llm_name: local_llm
+  tool_names: [code_execution_tool]

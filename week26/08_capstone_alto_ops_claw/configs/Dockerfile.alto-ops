@@ -1,0 +1,18 @@
+# Alto Ops Claw v1: the sandbox image (capstone deliverable 1). This is the research tutorial's Lab 3.8 Dockerfile
+# with two capstone changes, both marked below. Lab 08-1 copies it into the bundle as `Dockerfile`, so that
+# `openshell sandbox create --from ./` and `nemoclaw onboard --from ./Dockerfile` both find it.
+# The tutorial calls this its "own composition". Check the NAT install line and the non-root USER against
+# your base image: OpenShell rejects root.
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y python3.12 python3-pip curl && rm -rf /var/lib/apt/lists/*
+# capstone: + phoenix, because workflow.sandbox.yml exports to Phoenix (the Appendix A install line has it), and
+#           + ragas, because eval_config.yml's accuracy evaluator is ragas. The sandbox-tax leg runs `nat eval` in here.
+#           (`nat eval` itself arrives with profiler; NAT 1.9.0's profiler depends on nvidia-nat-eval.)
+RUN pip3 install --break-system-packages uv && uv pip install --system 'nvidia-nat[langchain,mcp,profiler,phoenix,opentelemetry,ragas]'
+COPY workflows/alto_ops /app/alto_ops
+RUN uv pip install --system -e /app/alto_ops
+COPY workflow.sandbox.yml /app/workflow.yml
+# capstone: the eval config ships in the image, so the sandbox-tax run (Lab 5.4) uses the same file on both sides
+COPY eval_config.yml /app/eval_config.yml
+USER 1500
+WORKDIR /sandbox

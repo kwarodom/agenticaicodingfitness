@@ -1,0 +1,22 @@
+# Alto Ops Claw INSIDE an OpenShell sandbox (research tutorial Lab 3.8): the only change is the LLM,
+# which points at the managed route. The supervisor intercepts inference.local; no provider key is here.
+functions:
+  chiller_kpi:
+    _type: chiller_kpi
+    csv_path: /sandbox/data/chiller_plant.csv
+    kw_per_rt_alarm: 0.80
+  current_datetime:
+    _type: current_datetime
+llms:
+  routed:
+    _type: openai
+    base_url: https://inference.local/v1
+    api_key: EMPTY
+    model_name: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8   # = the MODEL_HANDLE set with `openshell inference set`
+    temperature: 0.0
+workflow:
+  _type: tool_calling_agent
+  llm_name: routed
+  tool_names: [chiller_kpi, current_datetime]
+  verbose: true
+  handle_tool_errors: true
