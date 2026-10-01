@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import _capstone as C  # noqa: E402
-from sparkkit import api_host, banner, check, models, note, put, result, sh, step, table, url, warn, where  # noqa: E402
+from sparkkit import api_host, banner, check, note, put, result, sh, step, table, warn, where  # noqa: E402
 
 APPLY = "--launch" in sys.argv or os.environ.get("SPARK_APPLY") == "1"
 B_IP = api_host("b") or "spark-b"
@@ -45,7 +45,7 @@ docker run -d --name w25-brain --gpus all -p 127.0.0.1:8000:8000 \\
 GATEWAY_A = """[ -x ~/w25/litellm-venv/bin/litellm ] || { python3 -m venv ~/w25/litellm-venv && ~/w25/litellm-venv/bin/pip install 'litellm[proxy]==1.89.0'; }
 mkdir -p ~/w25/litellm ~/w25/logs
 [ -f ~/w25/litellm/master.key ] || ( umask 077; echo "sk-$(openssl rand -hex 16)" > ~/w25/litellm/master.key )
-pkill -f 'litellm --config' 2>/dev/null
+pkill -u "$(id -un)" -x litellm 2>/dev/null   # -x on the process name: -f would match this shell's own command line
 LITELLM_MASTER_KEY="$(cat ~/w25/litellm/master.key)" LITELLM_LOCAL_MODEL_COST_MAP=True \\
   nohup ~/w25/litellm-venv/bin/litellm --config ~/w25/litellm/capstone.yaml \\
   --host 0.0.0.0 --port 4000 --telemetry False > ~/w25/logs/litellm.log 2>&1 < /dev/null &"""
@@ -88,15 +88,31 @@ if where("a") == "dry" or where("b") == "dry":
 sh(ROUTER_B, "b", timeout=300)
 put(spark_cfg, "~/w25/litellm/capstone.yaml", "a")
 sh(BRAIN_A, "a", timeout=300)
-for label_, base, want in (("router on B", url("vllm", "b"), "hotel-ft"), ("brain on A", url("vllm", "a"), C.BRAIN_MODEL)):
-    print(f"│ waiting for {label_}: {base}/models lists {want} (first start downloads weights) …")
+# Poll each server from its own Spark: the brain is bound to 127.0.0.1 on A, so a laptop cannot reach it directly.
+PROBE = ("curl -s -m 3 http://localhost:8000/v1/models | python3 -c "
+         "'import sys,json; print(\" \".join(m[\"id\"] for m in json.load(sys.stdin)[\"data\"]))' 2>/dev/null")
+for label_, which, want in (("router on B", "b", "hotel-ft"), ("brain on A", "a", C.BRAIN_MODEL)):
+    print(f"│ waiting for {label_}: localhost:8000/v1/models on Spark {which.upper()} lists {want} "
+          "(first start downloads weights) …")
     ids: list[str] = []
     for _ in range(120):
-        ids = models(base, timeout=3)
+        ids = sh(PROBE, which, timeout=30, quiet=True).out.split()
         if want in ids:
             break
         time.sleep(10)
     check(want in ids, f"{label_} is up: {', '.join(ids)}", f"{label_} not up after 20 min — docker logs on that Spark")
 sh(GATEWAY_A, "a", timeout=600)
+GW_PROBE = ('curl -s -m 3 -H "Authorization: Bearer $(cat ~/w25/litellm/master.key)" http://localhost:4000/v1/models '
+            "| python3 -c 'import sys,json; print(\" \".join(m[\"id\"] for m in json.load(sys.stdin)[\"data\"]))' 2>/dev/null")
+print("│ waiting for the gateway on A: localhost:4000/v1/models lists agent-brain and hotel-router …")
+ids = []
+for _ in range(30):
+    ids = sh(GW_PROBE, "a", timeout=30, quiet=True).out.split()
+    if {"agent-brain", "hotel-router"} <= set(ids):
+        break
+    time.sleep(5)
+if not check({"agent-brain", "hotel-router"} <= set(ids), f"gateway on A is up: {', '.join(ids)}",
+             "gateway not up after 2.5 min: read ~/w25/logs/litellm.log on Spark A"):
+    raise SystemExit(1)
 result("All three up. Lab 20-3 runs the acceptance scenarios; point it at the Spark gateway with "
        "SPARK_URL_LITELLM or run the NAT agent on Spark A.")

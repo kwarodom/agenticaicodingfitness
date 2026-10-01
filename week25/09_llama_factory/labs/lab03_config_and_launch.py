@@ -117,7 +117,9 @@ print(f"│ playbook example: {ref_n} records ÷ ({1} × {8}) per step = {math.c
       f"= {ref_steps} steps  → the playbook shows 'checkpoint-411'  {'✓' if ref_steps == 411 else '✕'}")
 print(f"│ and {ref_n} × 3 records ÷ 872.12 s (train_runtime 0:14:32.12) = {ref_n * 3 / 872.12:.3f} samples/s "
       "→ the playbook shows 3.749  ✓")
-n_train = len(json.loads((DATA / "hotel_ops.json").read_text(encoding="utf-8")))
+_train = json.loads((DATA / "hotel_ops.json").read_text(encoding="utf-8"))
+n_train = len(_train)
+SYSTEM_Q = "'" + _train[0]["system"].replace("'", "''") + "'"   # YAML single-quoted, as in hotel_chat.yaml
 per_epoch = math.ceil(n_train / (BATCH * ACCUM))
 steps = per_epoch * EPOCHS
 print(f"│ your hotel run:   {n_train} records ÷ ({BATCH} × {ACCUM}) per step = {per_epoch} steps/epoch × {EPOCHS} epochs "
@@ -204,6 +206,8 @@ adapter_name_or_path: {OUT}/lora/sft   # the LoRA adapter the train config write
 template: {TEMPLATE}
 infer_backend: huggingface       # choices: [huggingface, vllm, sglang, ktransformers]
 trust_remote_code: true
+# the exact system prompt every training record carries — without it the adapter answers in prose, not JSON
+default_system: {SYSTEM_Q}
 """,
     "hotel_predict.yaml": f"""# llamafactory-cli train configs/hotel_predict.yaml   (adapted from examples/extras/nlg_eval/llama3_lora_predict.yaml)
 # Generates an answer for every held-out request → {OUT}/lora/predict/generated_predictions.jsonl (Module 13 scores it)
@@ -266,7 +270,7 @@ print("  …")
 # ── validate what we wrote, by reading it back ────────────────────────────────
 # Keys: those used in the upstream LLaMA-Factory examples this lab adapts, plus lora_alpha / lora_dropout /
 # dataset_dir / do_sample / max_new_tokens (checked against src/llamafactory/hparams/*.py, commit ce9dc9e, 2026-09-28).
-KNOWN = set("""model_name_or_path trust_remote_code quantization_bit quantization_method stage do_train do_predict
+KNOWN = set("""default_system model_name_or_path trust_remote_code quantization_bit quantization_method stage do_train do_predict
 finetuning_type lora_rank lora_alpha lora_dropout lora_target deepspeed dataset_dir dataset eval_dataset template
 cutoff_len max_samples overwrite_cache preprocessing_num_workers dataloader_num_workers output_dir logging_steps
 save_steps plot_loss overwrite_output_dir save_only_model report_to per_device_train_batch_size

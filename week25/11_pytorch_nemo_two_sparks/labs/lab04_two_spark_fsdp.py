@@ -109,6 +109,14 @@ EX_IPBR = {"a": "lo               UNKNOWN        127.0.0.1/8\nenP7s7           U
                  "enp1s0f1np1      UP             192.168.100.11/24\nenP2p1s0f1np1    UP             192.168.101.11/24"}
 
 
+def link_iface(ibdev: str, ip_br: str) -> str:
+    """The first ConnectX-7 netdev that is Up and has an IPv4 (port 0 or 1, whichever is cabled)."""
+    for dev in re.findall(r"^\S+ port \d+ ==> (\S+) \(Up\)", ibdev, re.M):
+        if iface_ip(ip_br, dev):
+            return dev
+    return COMPOSE_IF
+
+
 def iface_ip(ip_br: str, dev: str) -> str:
     m = re.search(rf"^{re.escape(dev)}\s+\S+\s+(\d+\.\d+\.\d+\.\d+)/", ip_br, re.M)
     return m.group(1) if m else ""
@@ -128,27 +136,31 @@ facts = {}
 for which in ("a", "b"):
     print(f"\n── Spark {which.upper()}")
     br = sh("ip -br -4 address", which, timeout=30, example=EX_IPBR[which]).out
+    ibdev = sh("ibdev2netdev", which, timeout=30, example=f"rocep1s0f1 port 1 ==> {COMPOSE_IF} (Up)").out
+    dev = link_iface(ibdev, br)
     swarm = sh("docker info --format '{{.Swarm.LocalNodeState}}'", which, timeout=30, example="inactive").out.strip()
     uuid = sh("nvidia-smi -a | grep UUID", which, timeout=30,
               example="    GPU UUID                              : GPU-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").out
     adv = sh("grep -c NVIDIA_GPU /etc/docker/daemon.json 2>/dev/null || echo 0", which, timeout=30, example="0").out
     res = sh("grep -cE '^\\s*swarm-resource' /etc/nvidia-container-runtime/config.toml 2>/dev/null || echo 0", which,
              timeout=30, example="0").out
-    clone = sh(f"ls ~/{ASSETS}/configs 2>/dev/null || echo missing", which, timeout=30,
-               example="config_finetuning.yaml\nconfig_fsdp_lora.yaml").out
+    clone = sh(f"ls ~/{ASSETS}/{SCRIPT} ~/{ASSETS}/docker-compose.yml 2>/dev/null || echo missing", which, timeout=30,
+               example=f"{SCRIPT}\ndocker-compose.yml").out     # not configs/: this lab's own put() creates that
     last = lambda s: (s.strip().splitlines() or ["0"])[-1].strip()  # noqa: E731
-    facts[which] = {"ip": iface_ip(br, COMPOSE_IF), "swarm": swarm.splitlines()[-1] if swarm else "?",
+    facts[which] = {"dev": dev, "ip": iface_ip(br, dev), "swarm": swarm.splitlines()[-1] if swarm else "?",
                     "uuid": bool(re.search(r"GPU-[0-9a-fx-]+", uuid)), "adv": last(adv) not in ("0", ""),
                     "res": last(res) not in ("0", ""), "clone": "missing" not in clone}
 
-rows = [[f"Spark {w.upper()}", f["ip"] or "—", f["swarm"], "✓" if f["uuid"] else "—",
+rows = [[f"Spark {w.upper()}", f["dev"], f["ip"] or "—", f["swarm"], "✓" if f["uuid"] else "—",
          "✓" if f["adv"] else "✕ step 3", "✓" if f["res"] else "✕ step 3", "✓" if f["clone"] else "✕ lab 02"]
         for w, f in facts.items()]
-table(rows, ["node", f"{COMPOSE_IF}", "swarm", "GPU UUID", "daemon.json NVIDIA_GPU", "swarm-resource", "recipes"])
+table(rows, ["node", "interconnect", "IPv4", "swarm", "GPU UUID", "daemon.json NVIDIA_GPU", "swarm-resource", "recipes"])
 for w, f in facts.items():
     if not f["ip"]:
-        warn(f"Spark {w.upper()}: {COMPOSE_IF} has no IPv4 address. Either finish Module 02, or edit UCX_NET_DEVICES, "
-             "NCCL_SOCKET_IFNAME and GLOO_SOCKET_IFNAME in docker-compose.yml to your interconnect interface.")
+        warn(f"Spark {w.upper()}: no ConnectX-7 interface is Up with an IPv4 address. Finish Module 02 first.")
+    elif f["dev"] != COMPOSE_IF:
+        warn(f"Spark {w.upper()}: the cable is on {f['dev']}, not the playbook's {COMPOSE_IF}. Edit UCX_NET_DEVICES, "
+             f"NCCL_SOCKET_IFNAME and GLOO_SOCKET_IFNAME in docker-compose.yml to {f['dev']}.")
 
 step(2, f"write {CFG_NAME} for each Spark (rank 0 = Spark A, the primary)")
 primary = facts["a"]["ip"] or "<PRIMARY_INTERCONNECT_IP>"
@@ -164,10 +176,10 @@ for rank, which in enumerate(("a", "b")):
 try:
     import yaml
     docs = {w: yaml.safe_load(p.read_text()) for w, p in files.items()}
-    check(all(d["num_machines"] == 2 and d["main_process_ip"] == docs["a"]["main_process_ip"] for d in docs.values())
+    check(bool(facts["a"]["ip"]) and all(d["num_machines"] == 2 and d["main_process_ip"] == docs["a"]["main_process_ip"] for d in docs.values())
           and [docs["a"]["machine_rank"], docs["b"]["machine_rank"]] == [0, 1],
           "both files parse, num_machines 2, ranks 0 and 1, the same main_process_ip on both",
-          "a generated file is inconsistent — report this as a bug")
+          "main_process_ip is a placeholder (Spark A has no interconnect IP) or a file is inconsistent")
     orig = PLAYBOOK_CFG[CFG_NAME].splitlines()
     ndiff = {w: sum(x != y for x, y in zip(orig, p.read_text().splitlines())) for w, p in files.items()}
     check(all(n <= 3 for n in ndiff.values()),

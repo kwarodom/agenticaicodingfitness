@@ -44,7 +44,8 @@ for which in ("a", "b"):
     disk = re.search(r"disk_free\s+(\d+)G", out)
     need_port = "8000" if which == "b" else "8000 + 4000"
     busy = re.findall(r"port (\d+) BUSY", out)
-    status = "◈ " + r.source if r.source != "live" else ("✓" if "GB10" in out and not busy else "✕")
+    blocking = [p for p in busy if p in need_port.split(" + ")]   # Spark B only serves :8000; its :4000 is not ours
+    status = "◈ " + r.source if r.source != "live" else ("✓" if "GB10" in out and not blocking else "✕")
     rows.append([f"Spark {which.upper()}", "GB10" if "GB10" in out else "?", free.group(1) + " GB" if free else "?",
                  disk.group(1) + " GB" if disk else "?", need_port, ", ".join(busy) or "none", status])
 print()

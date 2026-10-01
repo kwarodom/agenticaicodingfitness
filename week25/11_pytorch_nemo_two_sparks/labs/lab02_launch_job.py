@@ -66,7 +66,7 @@ def launch_cmd() -> str:
     trl 0.25.1, peft 0.17.1."""
     if image == PT_IMAGE:
         return f"""mkdir -p ~/w25/logs
-[ -d ~/w25/dgx-spark-playbooks ] || git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks
+[ -d ~/w25/dgx-spark-playbooks/.git ] || { rm -rf ~/w25/dgx-spark-playbooks; git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks; }
 cd {ASSETS}
 nohup docker run --gpus all --rm --ipc=host --name {name} \\
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \\

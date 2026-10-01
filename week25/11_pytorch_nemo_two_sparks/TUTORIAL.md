@@ -252,7 +252,7 @@ Recipes: `pytorch-lora-8b` (default: the playbook's usage example), `pytorch-ful
 ▣ STEP 2 · start it in the background
 ◆ Course deviations from the playbooks, on purpose: no `-it` (nothing is attached), a --name so you can stop it, nohup + a log file. The playbook clones the recipes inside the container; this clones them once to ~/w25 on the Spark and mounts them.
 $ mkdir -p ~/w25/logs   [DRY]
-  [ -d ~/w25/dgx-spark-playbooks ] || git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks
+  [ -d ~/w25/dgx-spark-playbooks/.git ] || { rm -rf ~/w25/dgx-spark-playbooks; git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks; }
   cd ~/w25/dgx-spark-playbooks/nvidia/playbook-pytorch-fine-tune/assets
   nohup docker run --gpus all --rm --ipc=host --name w25-m11-pytorch-lora-8b \
     -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
