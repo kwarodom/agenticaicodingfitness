@@ -671,7 +671,7 @@ def _kill_tree(proc: asyncio.subprocess.Process) -> None:
 
 def _shell_argv(cmd: str, target: str) -> tuple[list[str], str]:
     """argv + a one-line description of where it runs."""
-    if target == "mac" or (target == "a" and sparkkit.on_spark()):
+    if target == "mac" or (target == "a" and sparkkit.on_spark() and sparkkit.host_is_self()):
         return [SHELL_BIN, "-lc", cmd], "this machine"
     h = sparkkit.host(target)
     if not h:
@@ -758,7 +758,7 @@ def _probe() -> dict:
     for w in ("a", "b"):
         h = sparkkit.host(w)
         row = {"host": h, "reachable": False, "gpu": "", "detail": ""}
-        if w == "a" and out["on_spark"]:
+        if w == "a" and out["on_spark"] and sparkkit.host_is_self():
             row.update(host="(this machine)", reachable=True, gpu="GB10")
         elif h:
             row["reachable"] = sparkkit.reachable(w)

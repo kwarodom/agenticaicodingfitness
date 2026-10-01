@@ -12,6 +12,8 @@ The through-line: **one Spark, or two cabled together, gives you a private AI st
 model, serve it several ways, put one gateway in front, and run agents on it inside a sandbox, with no
 cloud involved.
 
+> 🧑‍🏫 **Instructors: start with [`START_HERE.md`](START_HERE.md).** It gets both Sparks ready in one check and one command, and covers who runs which lab live.
+
 ## Launch the course (web app)
 
 ```bash

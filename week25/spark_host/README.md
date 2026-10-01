@@ -1,5 +1,7 @@
 # Week 25 classroom: one DGX Spark, many laptops
 
+> For the class-day routine on two Sparks (readiness check, class mode, live demos), use [`../START_HERE.md`](../START_HERE.md). This file is the one-time Spark setup.
+
 Everyone (instructor and students) runs the **Spark Lab Runner on their own laptop**. The runner drives
 this Spark over the tailnet in two ways:
 

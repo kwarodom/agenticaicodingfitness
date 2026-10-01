@@ -50,6 +50,7 @@ status_report() {
   echo "── $(hostname)"
   dns=$(tailscale status --json 2>/dev/null | python3 -c 'import sys,json;print(json.load(sys.stdin)["Self"]["DNSName"].rstrip("."))' 2>/dev/null || echo "?")
   echo "Tailnet host : $dns   ($(tailscale ip -4 2>/dev/null || echo 'tailscale down?'))"
+  echo "Office LAN   : $(ip -4 -o addr show enP7s7 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -1) (enP7s7, DHCP: can change)"
   [[ ${#HOLDS[@]} -gt 0 && -n ${HOLDS[altoace-llm]:-} ]] && var=SPARK_HOST2 || var=SPARK_HOST
   printf '%-12s : sparklab@%s\n' "$var" "$dns"
   getent passwd sparklab >/dev/null && echo "sparklab     : account exists" || echo "sparklab     : ✗ missing — sudo $(dirname "$0")/setup_sparklab_user.sh"
