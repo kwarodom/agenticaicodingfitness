@@ -413,6 +413,8 @@ docker exec \
   accelerate launch --config_file=/workspace/configs/config_fsdp_lora.yaml /workspace/Llama3_70B_LoRA_finetuning.py'
 ```
 
+> 💡 The 70B script defaults to `meta-llama/Llama-3.1-70B-Instruct`. If your Sparks already cache Llama 3.3 70B (the classroom Sparks do), add `--model_name meta-llama/Llama-3.3-70B-Instruct` after the script name: same architecture, and no second ~140 GB download on each Spark. Lab 04 prints the command that way.
+
 The `run-multi-llama_3b`, `_8b` and `_70b` helpers in `assets/` are exactly this command for each script. Accelerate starts one process per machine, and each machine reads its own `machine_rank`, which is why the command runs on both Sparks (the playbook's Step 9 does not say so explicitly). Progress prints on Spark A only; watch Spark B with `nvidia-smi`.
 
 **Step 10 — clean up** (Spark A): `docker stack rm finetuning-multinode`.

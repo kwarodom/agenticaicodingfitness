@@ -36,6 +36,9 @@ ASSETS = "w25/dgx-spark-playbooks/nvidia/playbook-pytorch-fine-tune/assets"
 COMPOSE_IF = "enp1s0f1np1"                       # docker-compose.yml's default for the three *_IFNAME variables
 CFG_NAME = {"lora": "config_fsdp_lora.yaml", "full": "config_finetuning.yaml"}[args.config]
 SCRIPT = {"lora": "Llama3_70B_LoRA_finetuning.py", "full": "Llama3_3B_full_finetuning.py"}[args.config]
+# The 70B script defaults to Llama 3.1; the classroom Sparks cache Llama 3.3 (same architecture), so point at it
+# rather than pull a second ~140 GB onto each Spark.
+SCRIPT_ARGS = " --model_name meta-llama/Llama-3.3-70B-Instruct" if args.config == "lora" else ""
 
 # The playbook's two Accelerate files, byte for byte (assets/configs/). Only the three TODO/rank lines change.
 PLAYBOOK_CFG = {
@@ -209,7 +212,7 @@ print("$ docker stack ps finetuning-multinode                  # both tasks Runn
 print("$ export FINETUNING_CONTAINER=$(docker ps -q -f name=finetuning-multinode)   # on EACH Spark")
 print("$ docker exec -e HF_TOKEN -it \"$FINETUNING_CONTAINER\" bash -c '")
 print("    bash /workspace/install-requirements;")
-print(f"    accelerate launch --config_file=/workspace/configs/{CFG_NAME} /workspace/{SCRIPT}'   # on EACH Spark")
+print(f"    accelerate launch --config_file=/workspace/configs/{CFG_NAME} /workspace/{SCRIPT}{SCRIPT_ARGS}'   # on EACH Spark")
 note("The playbook's run-multi-llama_* helpers wrap that last command. Progress prints on Spark A only; "
      "check Spark B with nvidia-smi. HF_TOKEN must be exported in each Spark's shell first (never in a file you commit).")
 note("The stack's containers run sshd on port 2233 with root password 'root' on the host network "

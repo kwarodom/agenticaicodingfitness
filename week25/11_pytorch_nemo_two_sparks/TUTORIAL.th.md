@@ -415,6 +415,8 @@ docker exec \
   accelerate launch --config_file=/workspace/configs/config_fsdp_lora.yaml /workspace/Llama3_70B_LoRA_finetuning.py'
 ```
 
+> 💡 สคริปต์ 70B ใช้ `meta-llama/Llama-3.1-70B-Instruct` เป็นค่าเริ่มต้น ถ้า Spark ของคุณมี Llama 3.3 70B อยู่ใน cache แล้ว (Spark ในห้องเรียนมี) ให้เติม `--model_name meta-llama/Llama-3.3-70B-Instruct` ต่อท้ายชื่อสคริปต์ สถาปัตยกรรมเดียวกัน และไม่ต้องดาวน์โหลดอีก ~140 GB บน Spark แต่ละเครื่อง Lab 04 พิมพ์คำสั่งในรูปแบบนี้ให้แล้ว
+
 helper `run-multi-llama_3b`, `_8b` และ `_70b` ใน `assets/` คือคำสั่งนี้พอดีสำหรับแต่ละสคริปต์ Accelerate เปิดหนึ่ง process ต่อเครื่อง และแต่ละเครื่องอ่าน `machine_rank` ของตัวเอง นี่คือเหตุผลที่ต้องรันคำสั่งบน Spark ทั้งสองเครื่อง (Step 9 ของ playbook ไม่ได้บอกไว้ชัดเจน) ความคืบหน้าจะพิมพ์บน Spark A เท่านั้น ส่วน Spark B ให้ดูด้วย `nvidia-smi`
 
 **Step 10 — เก็บกวาด** (Spark A): `docker stack rm finetuning-multinode`

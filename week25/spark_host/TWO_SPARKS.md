@@ -10,7 +10,7 @@ and the Module 20 capstone (router fine-tune on Spark B). Everything else in the
                           ▼                              ▼
                 ┌──────────────────┐   QSFP cable   ┌──────────────────┐
                 │ Spark A (node 1) │◄══════════════►│ Spark B (node 2) │
-                │ spark-3b82       │   200 Gb/s     │ spark-xxxx       │
+                │ spark-3b82       │   200 Gb/s     │ spark-b3b6       │
                 │ 192.168.100.10   │   RoCE         │ 192.168.100.11   │
                 │ 192.168.101.10   │                │ 192.168.101.11   │
                 └──────────────────┘                └──────────────────┘
@@ -19,6 +19,19 @@ and the Module 20 capstone (router fine-tune on Spark B). Everything else in the
 
 Most steps below come from Module 02's `TUTORIAL.md`, which quotes NVIDIA's Connect Two Sparks and NCCL
 playbooks. Read §4–§6 there for the reasons behind each step.
+
+**This classroom, as verified on 2026-10-01** (the generic steps below use the playbook's example values):
+
+| | Spark A | Spark B |
+|---|---|---|
+| Hostname · tailnet | `spark-3b82` · `spark-3b82.<tailnet>.ts.net` | `spark-b3b6` · `spark-b3b6.<tailnet>.ts.net` |
+| QSFP cable | **port 0**: `enp1s0f0np0` + `enP2p1s0f0np0` | port 0 |
+| Link IPs (set by NVIDIA Sync, MTU 9000) | 192.168.100.57 · 192.168.101.57 | 192.168.100.96 · 192.168.101.96 |
+| Day job (`lab_mode.sh` stops it) | nemotron-lightning, supabase-kong, alto-backend | the `altoace` stack + litellm + ollama-bridge (~94 GB) |
+| Measured | raw RDMA 196 Gb/s · NCCL 16 GB all_gather busbw ~20.7 GB/s · vLLM TP=2 Llama 3.3 70B 2.5 tok/s | |
+
+The labs find the cabled port by themselves. The playbook's commands and `docker-compose.yml` assume port 1
+(`enp1s0f1np1`): with port 0, use the `…f0np0` names wherever they appear.
 
 ---
 
@@ -65,7 +78,20 @@ week25/spark_host/prefetch.sh hf
 sudo -u sparklab -H bash -lc '~/.local/bin/hf download meta-llama/Llama-3.3-70B-Instruct'   # Module 11 lab 04, ~140 GB
 ```
 
-Spark B has no day-job containers, so `lab_mode.sh` does nothing there.
+Spark B has its own day job (the `altoace` stack, ~94 GB). `lab_mode.sh` knows it: set `SPARK_B_ADMIN` on
+Spark A (Step 7) and `lab_mode.sh on|off|status` there covers both Sparks.
+
+**Copying a model to the other Spark instead of downloading it twice:** current `hf` versions keep the files in
+a shared `~/.cache/huggingface/hub/blobs/` store, and each `models--…/snapshots/` entry only links into it.
+Copy both, or the copy has dangling links. As `sparklab` on the receiving Spark, over the cable:
+
+```bash
+rsync -a <other-spark-link-ip>:.cache/huggingface/hub/blobs/ ~/.cache/huggingface/hub/blobs/
+rsync -a <other-spark-link-ip>:.cache/huggingface/hub/models--meta-llama--Llama-3.3-70B-Instruct/ \
+  ~/.cache/huggingface/hub/models--meta-llama--Llama-3.3-70B-Instruct/
+```
+
+132 GB took under 5 minutes Spark B → A.
 
 **Student keys:** every laptop key that is on Spark A must also be on Spark B:
 
@@ -152,8 +178,14 @@ sudo -u sparklab -H bash -lc '
   make -j src.build NVCC_GENCODE="-gencode=arch=compute_121,code=sm_121" &&
   export CUDA_HOME=/usr/local/cuda MPI_HOME=/usr/lib/aarch64-linux-gnu/openmpi NCCL_HOME=$HOME/nccl/build/ &&
   export LD_LIBRARY_PATH=$NCCL_HOME/lib:$CUDA_HOME/lib64/:$MPI_HOME/lib:$LD_LIBRARY_PATH &&
-  git clone https://github.com/NVIDIA/nccl-tests.git ~/nccl-tests/ && cd ~/nccl-tests/ && make MPI=1'
+  git clone https://github.com/NVIDIA/nccl-tests.git ~/nccl-tests/ && cd ~/nccl-tests/ && git checkout -q b4d5bee &&
+  make MPI=1'
+ls ~sparklab/nccl-tests/build/all_gather_perf ~sparklab/nccl-tests/build/all_reduce_perf
 ```
+
+`b4d5bee` (nccl-tests 2.20.0) pins both Sparks to the same build: `mpirun` runs the binary on both. The `make`
+ends with an error about `ginGetLatency_ping_perf` (`undefined reference to MPI::Win::Free()`). It is harmless:
+that is an extra device-API test, and the `*_perf` binaries the labs use are already built. The `ls` is the check.
 
 ## Step 6: point the runners at both Sparks
 
@@ -176,7 +208,10 @@ The status bar now shows **Spark A** and **Spark B** chips, both green. Hand out
 .venv/bin/python week25/02_two_sparks_nccl/labs/lab03_nccl_bench.py     # Avg bus bandwidth ≥ 21.875 GB/s
 ```
 
-Then the two-Spark labs, with **`week25/spark_host/lab_mode.sh on` on Spark A first**:
+Then the two-Spark labs, with lab mode on **on both Sparks** first. On Spark A, once:
+`echo 'SPARK_B_ADMIN=altoaidev@<spark-b>' >> week25/.env.local`. After that, `week25/spark_host/lab_mode.sh on`
+on Spark A also stops B's day job, and `off` restarts both. Spark B runs its own copy of the script, so keep its
+repo current (`git pull` on B).
 
 | Module | What it proves |
 |---|---|
