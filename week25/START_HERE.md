@@ -111,7 +111,9 @@ lab mode is on: both Sparks need their memory free.
 ### 5b · One 70B model across both Sparks (Module 05 §6), about 10 minutes
 The tutorial's commands, with this classroom's values: the cable is in **port 0** (`enp1s0f0np0`), and
 Llama 3.3 70B is already cached on both Sparks, so skip the `hf download`. The tutorial's Step 1 (the pinned,
-patched `run_cluster.sh`) is already done in `sparklab`'s home on both Sparks. Run as `sparklab`:
+patched `run_cluster.sh`) is already done in `sparklab`'s home on both Sparks. Run as `sparklab`.
+Without Tailscale, use `ssh sparklab@localhost` on Spark A itself, and Spark B's office LAN IP (`lab_mode.sh status`
+prints it).
 
 ```bash
 # Spark A: the Ray head (tmux keeps it alive)
@@ -140,14 +142,40 @@ bash ~/run_cluster.sh nvcr.io/nvidia/vllm:26.05-py3 $HEAD_NODE_IP --worker ~/.ca
 C=$(docker ps --format '{{.Names}}' | grep -E '^node-[0-9]+$')
 docker exec $C ray status                              # Active: 2 nodes · 0.0/2.0 GPU
 docker exec -d $C bash -c 'HF_HUB_OFFLINE=1 vllm serve meta-llama/Llama-3.3-70B-Instruct --tensor-parallel-size 2 \
-  --max-model-len 2048 --gpu-memory-utilization 0.8 --distributed-executor-backend ray > /root/.cache/huggingface/vllm_tp2.log 2>&1'
+  --max-model-len 8192 --gpu-memory-utilization 0.8 --distributed-executor-backend ray \
+  --enable-auto-tool-choice --tool-call-parser llama3_json \
+  --chat-template /opt/vllm/vllm-src/examples/tool_chat_template_llama3.1_json.jinja \
+  > /root/.cache/huggingface/vllm_tp2.log 2>&1'
 tail -f ~/.cache/huggingface/vllm_tp2.log              # wait for "Application startup complete."
 ```
-Then the tutorial's haiku request, or ⚡ Ask the Spark. Expect about **2.5 tok/s** for one request: two Sparks
-add memory, not per-stream speed. That's the §6 lesson.
+Two changes from the playbook's `--max-model-len 2048`, for chatting in class:
+- **The tool-calling flags.** Open WebUI (0.11+) offers the model its built-in tools in every chat
+  (`tool_choice: "auto"`). Without these flags, vLLM rejects every message with *"auto" tool choice requires
+  --enable-auto-tool-choice and --tool-call-parser to be set*. Llama 3.3 uses the Llama 3.1 JSON tool format, and
+  the template ships in the vLLM image.
+- **8192 tokens of context.** Tool descriptions fill much of 2048, and the KV cache has room for ~184,000 tokens.
 
-**Tear down** (as `sparklab`): on A, `tmux kill-session -t ray; docker rm -f $(docker ps -aq --filter name=^node-)`.
-Run the same on B.
+Then the tutorial's haiku request. Expect about **2.5–2.7 tok/s** for one request: two Sparks add memory, not
+per-stream speed. That's the §6 lesson.
+
+**Chat with it.** Use either one:
+- **⚡ Ask the Spark** in the runner: in any `vllm` request box (Module 05 §2 has one), set
+  `"model": "meta-llama/Llama-3.3-70B-Instruct"` and ask. Keep `max_tokens` around 100–200: about a minute at this speed.
+- **Open WebUI**, a ChatGPT-style page, on Spark A as `sparklab`:
+  ```bash
+  docker run -d --name w25-openwebui -p 127.0.0.1:12000:8080 --add-host host.docker.internal:host-gateway \
+    -e OPENAI_API_BASE_URL=http://host.docker.internal:8000/v1 -e OPENAI_API_KEY=none \
+    -e ENABLE_OLLAMA_API=False -e WEBUI_AUTH=False -e DEFAULT_MODELS=meta-llama/Llama-3.3-70B-Instruct \
+    -v w25-openwebui-data:/app/backend/data ghcr.io/open-webui/open-webui:ollama
+  ```
+  Open http://127.0.0.1:12000 in a browser on Spark A. It binds to localhost only, which is why it can run
+  without a login (`WEBUI_AUTH=False`): nobody else on the network reaches it. It needs no GPU, and its built-in
+  Ollama is off, so the 70B is the only model. Open it on a projector, or from a laptop with
+  `ssh -N -L 12000:localhost:12000 sparklab@<spark-a>`. Asked about the DGX Spark, the model invents an answer
+  (its training data is older than the product): a good opening for the RAG module (19).
+
+**Tear down** (as `sparklab`): on A, `docker rm -f w25-openwebui; tmux kill-session -t ray; docker rm -f $(docker ps -aq --filter name=^node-)`.
+On B, `tmux kill-session -t ray; docker rm -f $(docker ps -aq --filter name=^node-)`.
 
 ### 5c · The capstone (Module 20 lab 02), about 10 minutes
 The fine-tuned router serves on Spark B, the agent brain and the LiteLLM gateway on Spark A:
