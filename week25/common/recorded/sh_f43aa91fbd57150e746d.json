@@ -1,0 +1,8 @@
+{
+ "cmd": "ping -c 3 -W 2 -I enp1s0f0np0 192.168.100.96",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "PING 192.168.100.96 (192.168.100.96) from 192.168.100.57 enp1s0f0np0: 56(84) bytes of data.\n64 bytes from 192.168.100.96: icmp_seq=1 ttl=64 time=0.962 ms\n64 bytes from 192.168.100.96: icmp_seq=2 ttl=64 time=0.829 ms\n64 bytes from 192.168.100.96: icmp_seq=3 ttl=64 time=0.839 ms\n\n--- 192.168.100.96 ping statistics ---\n3 packets transmitted, 3 received, 0% packet loss, time 2053ms\nrtt min/avg/max/mdev = 0.829/0.876/0.962/0.060 ms\n"
+}

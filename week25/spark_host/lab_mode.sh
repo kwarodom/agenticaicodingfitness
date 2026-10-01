@@ -5,9 +5,9 @@
 #   week25/spark_host/lab_mode.sh status   # ports, memory, tailnet URL — run before class
 #   week25/spark_host/lab_mode.sh fix-perms  # give back files lab containers left root-owned (also run by on/off)
 # Two Sparks: set SPARK_B_ADMIN=altoaidev@<spark-b> (env or week25/.env.local) on Spark A and on|off|status
-# also run on Spark B over ssh, with the same script from the same repo path (SPARK_B_REPO overrides it).
+# also run on Spark B: this script is piped to B over ssh, so B always runs Spark A's copy.
 set -euo pipefail
-HERE=$(cd "$(dirname "$0")" && pwd)
+HERE=$(cd "$(dirname "$0")" 2>/dev/null && pwd || pwd)
 
 # name → why it has to go during class
 declare -A HOLDS=(
@@ -24,8 +24,7 @@ if [[ $(hostname) == spark-b3b6 ]]; then   # Spark B's day job: the altoace stac
 fi
 # vLLM servers size their KV cache from the memory free at start-up: start them after everything else
 START_LAST=(nemotron-lightning altoace-llm)
-SPARK_B_ADMIN=${SPARK_B_ADMIN:-$(sed -n 's/^SPARK_B_ADMIN=//p' "$HERE/../.env.local" 2>/dev/null | tail -1)}
-SPARK_B_REPO=${SPARK_B_REPO:-Documents/agenticaicodingfitness}
+SPARK_B_ADMIN=${SPARK_B_ADMIN:-$(sed -n 's/^SPARK_B_ADMIN=//p' "$HERE/../.env.local" 2>/dev/null | tail -1 || true)}
 STATE=${XDG_STATE_HOME:-$HOME/.local/state}/spark-lab-mode.stopped
 # Ollama :11434 · vLLM :8000/:8001 · SGLang :30000 · TRT-LLM :8355 · llama.cpp :30080 · LM Studio :1234
 # LiteLLM :4000 · Open WebUI :12000 · labs' misc :8080
@@ -47,6 +46,22 @@ fix_perms() {
   done
 }
 
+status_report() {
+  echo "── $(hostname)"
+  dns=$(tailscale status --json 2>/dev/null | python3 -c 'import sys,json;print(json.load(sys.stdin)["Self"]["DNSName"].rstrip("."))' 2>/dev/null || echo "?")
+  echo "Tailnet host : $dns   ($(tailscale ip -4 2>/dev/null || echo 'tailscale down?'))"
+  [[ ${#HOLDS[@]} -gt 0 && -n ${HOLDS[altoace-llm]:-} ]] && var=SPARK_HOST2 || var=SPARK_HOST
+  printf '%-12s : sparklab@%s\n' "$var" "$dns"
+  getent passwd sparklab >/dev/null && echo "sparklab     : account exists" || echo "sparklab     : ✗ missing — sudo $(dirname "$0")/setup_sparklab_user.sh"
+  echo "Memory       : $(free -g | awk '/Mem:/{print $7" GB available of "$2" GB"}')"
+  echo "Ports        :"
+  for p in "${LAB_PORTS[@]}"; do
+    who=$(docker ps --format '{{.Names}} {{.Ports}}' | grep -E "(0\.0\.0\.0|\[::\]):$p->" | awk '{print $1}' | head -1 || true)
+    if ss -ltn "sport = :$p" | grep -q LISTEN; then printf '  :%-6s in use %s\n' "$p" "${who:+($who)}"; else printf '  :%-6s free\n' "$p"; fi
+  done
+  echo "Day-job      :"; for c in "${!HOLDS[@]}"; do printf '  %-30s %s\n' "$c" "$(running "$c" && echo running || echo stopped)"; done
+}
+
 MODE=${1:-status}
 case "$MODE" in
   on)
@@ -57,7 +72,7 @@ case "$MODE" in
     cat "$STATE.new" >>"$STATE"; rm -f "$STATE.new"; sort -u -o "$STATE" "$STATE"
     ollama ps 2>/dev/null | awk 'NR>1{print $1}' | xargs -r -n1 ollama stop 2>/dev/null || true
     echo "▪ repairing file ownership"; fix_perms
-    echo "✓ lab mode ON — run '$0 off' after class"; LAB_MODE_NO_FANOUT=1 "$0" status ;;
+    echo "✓ lab mode ON — run 'week25/spark_host/lab_mode.sh off' after class"; status_report ;;
   off)
     if [[ ! -s $STATE ]]; then echo "nothing to restore on $(hostname) (lab mode was not switched on by this script)"
     else
@@ -74,26 +89,12 @@ case "$MODE" in
     echo "✓ lab mode OFF — day-job containers restored"
     fi ;;
   fix-perms) fix_perms ;;
-  status)
-    echo "── $(hostname)"
-    dns=$(tailscale status --json 2>/dev/null | python3 -c 'import sys,json;print(json.load(sys.stdin)["Self"]["DNSName"].rstrip("."))' 2>/dev/null || echo "?")
-    echo "Tailnet host : $dns   ($(tailscale ip -4 2>/dev/null || echo 'tailscale down?'))"
-    [[ ${#HOLDS[@]} -gt 0 && -n ${HOLDS[altoace-llm]:-} ]] && var=SPARK_HOST2 || var=SPARK_HOST
-    printf '%-12s : sparklab@%s\n' "$var" "$dns"
-    getent passwd sparklab >/dev/null && echo "sparklab     : account exists" || echo "sparklab     : ✗ missing — sudo $(dirname "$0")/setup_sparklab_user.sh"
-    echo "Memory       : $(free -g | awk '/Mem:/{print $7" GB available of "$2" GB"}')"
-    echo "Ports        :"
-    for p in "${LAB_PORTS[@]}"; do
-      who=$(docker ps --format '{{.Names}} {{.Ports}}' | grep -E "(0\.0\.0\.0|\[::\]):$p->" | awk '{print $1}' | head -1 || true)
-      if ss -ltn "sport = :$p" | grep -q LISTEN; then printf '  :%-6s in use %s\n' "$p" "${who:+($who)}"; else printf '  :%-6s free\n' "$p"; fi
-    done
-    echo "Day-job      :"; for c in "${!HOLDS[@]}"; do printf '  %-20s %s\n' "$c" "$(running "$c" && echo running || echo stopped)"; done ;;
+  status) status_report ;;
   *) sed -n 2,8p "$0"; exit 1 ;;
 esac
 
 if [[ -n $SPARK_B_ADMIN && -z ${LAB_MODE_NO_FANOUT:-} && $MODE =~ ^(on|off|status)$ ]]; then
   echo; echo "━━ Spark B ($SPARK_B_ADMIN)"
-  ssh -o BatchMode=yes -o ConnectTimeout=10 "$SPARK_B_ADMIN" \
-    "LAB_MODE_NO_FANOUT=1 bash ~/$SPARK_B_REPO/week25/spark_host/lab_mode.sh $MODE" ||
+  ssh -o BatchMode=yes -o ConnectTimeout=10 "$SPARK_B_ADMIN" "LAB_MODE_NO_FANOUT=1 bash -s $MODE" <"$0" ||
     echo "✗ Spark B: ssh or lab_mode.sh failed — run it there by hand"
 fi

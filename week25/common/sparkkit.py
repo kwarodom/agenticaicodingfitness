@@ -294,9 +294,25 @@ def _rec_key(which: str, cmd: str) -> str:
     return "sh_" + hashlib.sha1(f"{which}\n{cmd}".encode()).hexdigest()[:20]
 
 
+# Recordings are committed to a public repo: mask the classroom's network identity. The QSFP link subnets
+# (192.168.100.x / 101.x) stay, they are the lesson. 10.x is the office LAN; 100.64/10 is Tailscale.
+_PRIVATE = [(re.compile(r"\b([A-Za-z0-9-]+)\.[A-Za-z0-9-]+\.ts\.net\b"), r"\1.<tailnet>.ts.net"),
+            (re.compile(r"\b100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d{1,3}\.\d{1,3}\b"), "100.x.x.x"),
+            (re.compile(r"\b10\.\d{1,3}\.\d{1,3}\.\d{1,3}\b"), "10.x.x.x")]
+
+
+def _mask(text: str) -> str:
+    for rx, sub in _PRIVATE:
+        text = rx.sub(sub, text)
+    return text
+
+
 def _record(key: str, payload: dict) -> None:
     if os.environ.get("SPARK_RECORD") != "1":
         return
+    if _mask(payload.get("cmd", "")) != payload.get("cmd", ""):
+        return          # the command names a private host/IP: a laptop's DRY run never issues it, so it can't replay
+    payload = {k: _mask(v) if isinstance(v, str) and k != "cmd" else v for k, v in payload.items()}
     RECORDED.mkdir(parents=True, exist_ok=True)
     (RECORDED / f"{key}.json").write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
 

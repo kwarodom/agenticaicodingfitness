@@ -1,0 +1,8 @@
+{
+ "cmd": "ethtool enP2p1s0f0np0 2>/dev/null | grep Speed || cat /sys/class/net/enP2p1s0f0np0/speed",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "\tSpeed: 200000Mb/s\n"
+}

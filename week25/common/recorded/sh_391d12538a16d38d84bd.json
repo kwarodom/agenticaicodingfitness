@@ -1,0 +1,8 @@
+{
+ "cmd": "ip -4 -o addr show enP7s7",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "2: enP7s7    inet 10.x.x.x/24 brd 10.x.x.x scope global dynamic noprefixroute enP7s7\\       valid_lft 1671sec preferred_lft 1671sec\n"
+}

@@ -55,8 +55,8 @@ week25/spark_host/lab_mode.sh off      # restarts exactly what `on` stopped (vLL
 ```
 
 **Two Sparks.** Put `SPARK_B_ADMIN=altoaidev@<spark-b>` in `week25/.env.local` on Spark A. The same three commands
-then also run on Spark B over ssh, where they stop and restart B's own day job (the `altoace` stack, ~94 GB).
-Spark B needs this repo at the same path, kept up to date with `git pull`. Run `on` before **every** class that
+then also run on Spark B over ssh (the script is piped there, so B needs no copy of the repo), where they stop
+and restart B's own day job (the `altoace` stack, ~94 GB). Run `on` before **every** class that
 uses Spark B: the two-Spark labs need most of both Sparks' memory, and a 16 GB NCCL test against B's day job
 gets processes on B killed by the kernel's out-of-memory killer.
 

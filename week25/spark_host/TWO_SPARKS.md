@@ -210,8 +210,7 @@ The status bar now shows **Spark A** and **Spark B** chips, both green. Hand out
 
 Then the two-Spark labs, with lab mode on **on both Sparks** first. On Spark A, once:
 `echo 'SPARK_B_ADMIN=altoaidev@<spark-b>' >> week25/.env.local`. After that, `week25/spark_host/lab_mode.sh on`
-on Spark A also stops B's day job, and `off` restarts both. Spark B runs its own copy of the script, so keep its
-repo current (`git pull` on B).
+on Spark A also stops B's day job, and `off` restarts both (the script is piped to B over ssh).
 
 | Module | What it proves |
 |---|---|

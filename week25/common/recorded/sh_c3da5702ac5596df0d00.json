@@ -1,0 +1,8 @@
+{
+ "cmd": "mkdir -p ~/w25/logs ; nohup ib_write_bw -d rocep1s0f0 -i 1 -p 12000 -F --report_gbits > ~/w25/logs/ib_srv_0.log 2>&1 & nohup ib_write_bw -d roceP2p1s0f0 -i 1 -p 12001 -F --report_gbits > ~/w25/logs/ib_srv_1.log 2>&1 & sleep 2",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": ""
+}
