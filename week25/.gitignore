@@ -6,3 +6,5 @@
 **/__pycache__/
 .venv-litellm/
 *.egg-info/
+# site-specific (tailnet name + office IP), share it directly, not via the public repo
+spark_host/STUDENT_SETUP.md

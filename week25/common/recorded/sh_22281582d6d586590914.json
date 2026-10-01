@@ -1,0 +1,8 @@
+{
+ "cmd": "whoami",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "sparklab\n"
+}

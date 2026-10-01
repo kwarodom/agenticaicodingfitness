@@ -59,16 +59,20 @@ log = f"~/w25/logs/m11_{args.recipe}.log"
 
 
 def launch_cmd() -> str:
-    """The playbook's `docker run`, made non-interactive: no -it, a --name, nohup and a log file."""
+    """The playbook's `docker run`, made non-interactive: no -it, a --name, nohup and a log file.
+    Course change: pinned versions + `pip uninstall -y torchao`. The playbook's unpinned install now pulls
+    transformers 5 / trl 1.x, whose SFTConfig has no `logging_dir` (the playbook scripts pass it), and a peft that
+    rejects the container's torchao 0.14 when it attaches LoRA. Tested on pytorch:25.11: transformers 4.57.6,
+    trl 0.25.1, peft 0.17.1."""
     if image == PT_IMAGE:
         return f"""mkdir -p ~/w25/logs
-[ -d ~/w25/dgx-spark-playbooks ] || git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks
+[ -d ~/w25/dgx-spark-playbooks/.git ] || {{ rm -rf ~/w25/dgx-spark-playbooks; git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks; }}
 cd {ASSETS}
 nohup docker run --gpus all --rm --ipc=host --name {name} \\
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \\
   -v "${{PWD}}:/workspace" -w /workspace \\
   {image} \\
-  bash -c 'pip install transformers peft datasets trl bitsandbytes && {inner}' \\
+  bash -c 'pip install "transformers>=4.57.1,<5" "trl>=0.25.1,<0.26" "peft<0.18" datasets "bitsandbytes>=0.48.2" && pip uninstall -y torchao && {inner}' \\
   > {log} 2>&1 &
 echo "started {name} → {log}\""""
     return f"""mkdir -p ~/w25/logs ~/w25/nemo-checkpoints
@@ -120,7 +124,8 @@ print(f"$ docker ps --filter name={name}")
 print(f"$ tail -f {log}")
 print(f"$ docker stop {name}                      # to cancel")
 if image == NEMO_IMAGE:
-    note("NeMo writes checkpoints/LATEST/ — here that is ~/w25/nemo-checkpoints/LATEST/ on the Spark.")
+    note("NeMo writes checkpoints/epoch_<e>_step_<n>/ — here ~/w25/nemo-checkpoints/ on the Spark. The playbook "
+         "also promises a LATEST symlink; the 26.02 container did not create one, so ls the folder.")
 else:
     note("The PyTorch scripts save nothing unless the script has --output_dir (only the 70B LoRA script defines it). "
          "This run proves the pipeline and gives you a loss curve.")

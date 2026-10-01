@@ -252,13 +252,13 @@ Recipes: `pytorch-lora-8b` (default: the playbook's usage example), `pytorch-ful
 ▣ STEP 2 · start it in the background
 ◆ Course deviations from the playbooks, on purpose: no `-it` (nothing is attached), a --name so you can stop it, nohup + a log file. The playbook clones the recipes inside the container; this clones them once to ~/w25 on the Spark and mounts them.
 $ mkdir -p ~/w25/logs   [DRY]
-  [ -d ~/w25/dgx-spark-playbooks ] || git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks
+  [ -d ~/w25/dgx-spark-playbooks/.git ] || { rm -rf ~/w25/dgx-spark-playbooks; git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks ~/w25/dgx-spark-playbooks; }
   cd ~/w25/dgx-spark-playbooks/nvidia/playbook-pytorch-fine-tune/assets
   nohup docker run --gpus all --rm --ipc=host --name w25-m11-pytorch-lora-8b \
     -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
     -v "${PWD}:/workspace" -w /workspace \
     nvcr.io/nvidia/pytorch:25.11-py3 \
-    bash -c 'pip install transformers peft datasets trl bitsandbytes && python Llama3_8B_LoRA_finetuning.py --dataset_size 100 --num_epochs 1 --batch_size 2' \
+    bash -c 'pip install "transformers>=4.57.1,<5" "trl>=0.25.1,<0.26" "peft<0.18" datasets "bitsandbytes>=0.48.2" && pip uninstall -y torchao && python Llama3_8B_LoRA_finetuning.py --dataset_size 100 --num_epochs 1 --batch_size 2' \
     > ~/w25/logs/m11_pytorch-lora-8b.log 2>&1 &
   echo "started w25-m11-pytorch-lora-8b → ~/w25/logs/m11_pytorch-lora-8b.log"
 ```
@@ -412,6 +412,8 @@ docker exec \
   bash /workspace/install-requirements;
   accelerate launch --config_file=/workspace/configs/config_fsdp_lora.yaml /workspace/Llama3_70B_LoRA_finetuning.py'
 ```
+
+> 💡 The 70B script defaults to `meta-llama/Llama-3.1-70B-Instruct`. If your Sparks already cache Llama 3.3 70B (the classroom Sparks do), add `--model_name meta-llama/Llama-3.3-70B-Instruct` after the script name: same architecture, and no second ~140 GB download on each Spark. Lab 04 prints the command that way.
 
 The `run-multi-llama_3b`, `_8b` and `_70b` helpers in `assets/` are exactly this command for each script. Accelerate starts one process per machine, and each machine reads its own `machine_rank`, which is why the command runs on both Sparks (the playbook's Step 9 does not say so explicitly). Progress prints on Spark A only; watch Spark B with `nvidia-smi`.
 

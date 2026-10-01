@@ -40,17 +40,17 @@ DOCKER = (f"docker run --name {NAME} -e HF_TOKEN -v \"$HOME/.cache/huggingface/:
 SERVERS = {
     "nvfp4": ("nvfp4-quantization Step 8 (DGX Spark)", "deepseek-ai/DeepSeek-R1-Distill-Llama-8B (your NVFP4 export)",
               f"""export MODEL_PATH="$HOME/w25/nvfp4/output_models/saved_models_DeepSeek-R1-Distill-Llama-8B_nvfp4_hf/"
-mkdir -p ~/w25/logs && nohup {DOCKER} \\
+mkdir -p ~/w25/logs && {{ nohup {DOCKER} \\
   -v "$MODEL_PATH:/workspace/model" \\
   nvcr.io/nvidia/tensorrt-llm/release:spark-single-gpu-dev \\
   trtllm-serve /workspace/model \\
     --backend pytorch \\
     --max_batch_size 4 \\
-    --port {PORT} > {LOG} 2>&1 &
+    --port {PORT} > {LOG} 2>&1 < /dev/null & }}
 echo "started {NAME} (pid $!) → {LOG}\""""),
     "eagle3": ("speculative-decoding Option 1 (EAGLE-3)", "openai/gpt-oss-120b + nvidia/gpt-oss-120b-Eagle3-long-context",
                f"""export TRTLLM_IMAGE="nvcr.io/nvidia/tensorrt-llm/release:1.3.0rc12"
-mkdir -p ~/w25/logs && nohup {DOCKER} \\
+mkdir -p ~/w25/logs && {{ nohup {DOCKER} \\
   "$TRTLLM_IMAGE" \\
   bash -c '
     hf download openai/gpt-oss-120b && \\
@@ -79,11 +79,11 @@ EOF
       --backend pytorch --tp_size 1 \\
       --max_batch_size 1 \\
       --extra_llm_api_options /tmp/extra-llm-api-config.yml \\
-      --port {PORT}' > {LOG} 2>&1 &
+      --port {PORT}' > {LOG} 2>&1 < /dev/null & }}
 echo "started {NAME} (pid $!) → {LOG}\""""),
     "draft": ("speculative-decoding Option 2 (Draft-Target)", "nvidia/Llama-3.3-70B-Instruct-FP4 + nvidia/Llama-3.1-8B-Instruct-FP4",
               f"""export TRTLLM_IMAGE="nvcr.io/nvidia/tensorrt-llm/release:1.3.0rc12"
-mkdir -p ~/w25/logs && nohup {DOCKER} \\
+mkdir -p ~/w25/logs && {{ nohup {DOCKER} \\
   "$TRTLLM_IMAGE" \\
   bash -c "
     hf download nvidia/Llama-3.3-70B-Instruct-FP4 && \\
@@ -105,18 +105,18 @@ EOF
       --kv_cache_free_gpu_memory_fraction 0.9 \\
       --extra_llm_api_options ./extra-llm-api-config.yml \\
       --port {PORT}
-  " > {LOG} 2>&1 &
+  " > {LOG} 2>&1 < /dev/null & }}
 echo "started {NAME} (pid $!) → {LOG}\""""),
 }
 # The BF16 original of lab 02's model, for the quality comparison (a course variant of the NVFP4 serve command:
 # the Hugging Face id instead of the exported folder).
 SERVERS["bf16"] = ("course variant of nvfp4-quantization Step 8, BF16 original", "deepseek-ai/DeepSeek-R1-Distill-Llama-8B (BF16)",
-                   f"""mkdir -p ~/w25/logs && nohup {DOCKER} \\
+                   f"""mkdir -p ~/w25/logs && {{ nohup {DOCKER} \\
   nvcr.io/nvidia/tensorrt-llm/release:spark-single-gpu-dev \\
   trtllm-serve deepseek-ai/DeepSeek-R1-Distill-Llama-8B \\
     --backend pytorch \\
     --max_batch_size 4 \\
-    --port {PORT} > {LOG} 2>&1 &
+    --port {PORT} > {LOG} 2>&1 < /dev/null & }}
 echo "started {NAME} (pid $!) → {LOG}\"""")
 # The fair baseline for EAGLE-3: the SAME command with the draft head removed (a course variant, not a playbook
 # block). Same model, container, batch size and KV settings — only speculation is off.

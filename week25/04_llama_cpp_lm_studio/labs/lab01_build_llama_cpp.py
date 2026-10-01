@@ -44,7 +44,7 @@ print("→ anything missing? on the Spark: sudo apt update && sudo apt install -
 
 step(3, "clone and build llama-server with CUDA for GB10 (sm_121)")
 build_cmd = (f"mkdir -p ~/w25/logs && ([ -d ~/llama.cpp ] || git clone https://github.com/ggml-org/llama.cpp ~/llama.cpp) "
-             f"&& cd ~/llama.cpp && nohup bash -c '{CMAKE} && {BUILD}' > ~/w25/logs/llama-build.log 2>&1 < /dev/null & "
+             f"&& cd ~/llama.cpp && {{ nohup bash -c '{CMAKE} && {BUILD}' > ~/w25/logs/llama-build.log 2>&1 < /dev/null & }}; "
              f"echo build started, pid $!")
 if "--build" in sys.argv:
     sh(build_cmd, example="build started, pid 23456")
@@ -60,7 +60,7 @@ sh("ls -la ~/llama.cpp/build/bin/llama-server 2>/dev/null && ~/llama.cpp/build/b
            "version: <build number> (<commit>)\nbuilt with <compiler> for Linux aarch64")
 
 step(5, f"serve the playbook's GGUF on :{PORT}")
-serve_cmd = (f"cd ~/llama.cpp/build && nohup {SERVE} > ~/w25/logs/llama-server.log 2>&1 < /dev/null & "
+serve_cmd = (f"mkdir -p ~/w25/logs && cd ~/llama.cpp/build && {{ nohup {SERVE} > ~/w25/logs/llama-server.log 2>&1 < /dev/null & }}; "
              f"echo llama-server started, pid $!")
 if "--serve" in sys.argv:
     sh(serve_cmd, example="llama-server started, pid 34567")

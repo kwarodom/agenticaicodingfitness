@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import config  # noqa: E402
 import sim  # noqa: E402
 import view  # noqa: E402
+import relaylab  # noqa: E402
 
 BIG, MINI, NANO = "gpt-5.5", "gpt-4.4-mini", "gpt-5.4-nano"
 
@@ -61,10 +62,61 @@ def _cost_latency() -> None:
           f"{(1-routed_lat/all_big_lat)*100:.0f}% faster — same answers, right-sized model.")
 
 
-def main() -> None:
-    view.banner("PART 3", "Optimize — the router right-sizes the model", "INTERMEDIATE")
-    view.mode_line()
+def _tiers() -> tuple[str | None, str | None]:
+    """Pick a real small ('nano') and big model from what's installed on the DGX."""
+    avail = config.list_local_models()
+    small_prefs = ["gemma3:4b", "gemma3", "llama3.2:3b", "llama3.2:1b", "qwen3:0.6b", "gemma"]
+    big_prefs = ["llama3.3:70b", "qwen3:32b", "qwen3.6:35b", "nemotron-3-super", "llama3.3"]
 
+    def pick(prefs):
+        for p in prefs:
+            for m in avail:
+                if m.lower().startswith(p) or p in m.lower():
+                    return m
+        return None
+
+    small = pick(small_prefs) or (avail[0] if avail else None)
+    big = pick(big_prefs) or config.MODEL
+    return small, big
+
+
+def _complete(prompt: str, model: str, max_tokens: int = 48) -> str:
+    r = view._client().chat.completions.create(
+        model=model, messages=[{"role": "user", "content": prompt}],
+        max_tokens=max_tokens, temperature=0.2, stream=False)
+    m = r.choices[0].message
+    return (getattr(m, "content", None) or (getattr(m, "model_extra", None) or {}).get("reasoning") or "").strip()
+
+
+def _real() -> None:
+    small, big = _tiers()
+    print(f"{relaylab.status_line()}")
+    print(f"Right-sizing on THIS DGX:  small='{small}'   big='{big}'\n")
+    print("Measuring the SAME easy request on both models (real latency, recorded as spans):\n")
+
+    easy = "Classify this support message as BILLING or TECH (one word): 'my password reset link expired'."
+    hard = "A test fails intermittently only under load. In two sentences, outline how to debug it."
+
+    a_small, ms_small = relaylab.record_llm("route:easy→small", small, easy,
+                                            lambda p, m: _complete(p, m, 16))
+    print(f"  easy → {small:<16} {ms_small:7.0f} ms   « {a_small[:40]}")
+    a_big, ms_big = relaylab.record_llm("route:easy→big", big, easy,
+                                        lambda p, m: _complete(p, m, 16))
+    print(f"  easy → {big:<16} {ms_big:7.0f} ms   « {a_big[:40]}")
+
+    a_hard, ms_hard = relaylab.record_llm("route:hard→big", big, hard,
+                                          lambda p, m: _complete(p, m, 96))
+    print(f"  hard → {big:<16} {ms_hard:7.0f} ms   « {a_hard[:40]}")
+
+    if ms_big > 0:
+        save = (1 - ms_small / ms_big) * 100
+        print(f"\n  Same easy request: routing to '{small}' is {save:.0f}% faster than '{big}'")
+        print(f"  ({ms_small:.0f} ms vs {ms_big:.0f} ms). Cost both = $0.0000 (sovereign · on your DGX).")
+    print(f"  Hard request genuinely needs the big model ({ms_hard:.0f} ms). That is right-sizing.")
+    print(f"\n  These 3 calls are now spans in Phoenix → {relaylab.PHOENIX_URL} (project '{relaylab.PROJECT}').")
+
+
+def _sim() -> None:
     print("Model calls flow Hermes → Router → Gateway → a right-sized backend:")
     print("  • gpt-5.4-nano  — easy: classify / extract / route")
     print("  • gpt-4.4-mini  — medium: summarize / draft / moderate tool-use")
@@ -77,9 +129,19 @@ def main() -> None:
     view.generate("In two sentences, why does routing easy requests to a small model and "
                   "only hard ones to a big model cut cost and latency without hurting quality?",
                   max_tokens=200, title="why right-size the model")
-    print("\nTakeaway: most agent calls are easy. Routing them to a Nano/Mini and reserving")
-    print("the big model for hard turns is a top cost lever — and the win grows as easy")
-    print("traffic dominates real workloads. Next: export the telemetry & close the loop.")
+    print(f"\n(Tip: {relaylab.status_line()})")
+
+
+def main() -> None:
+    view.banner("PART 3", "Optimize — the router right-sizes the model", "INTERMEDIATE")
+    view.mode_line()
+
+    if relaylab.ready():
+        _real()
+    else:
+        _sim()
+    print("\nTakeaway: most agent calls are easy. Routing them to a small model and reserving")
+    print("the big model for hard turns is a top cost/latency lever. Next: export & close the loop.")
 
 
 if __name__ == "__main__":

@@ -178,7 +178,7 @@ else:
 
 # ── STEP 2 ────────────────────────────────────────────────────────────────────
 step(2, "your run on the Spark: is it alive, and what does the loss say?")
-alive = sh("pgrep -af 'llamafactory-cli' || echo 'no llamafactory-cli process'",
+alive = sh("pgrep -af '[l]lamafactory-cli' || echo 'no llamafactory-cli process'",
            example="no llamafactory-cli process")
 console = sh(f"tail -c 20000 {LOG} 2>/dev/null || echo 'no log yet: start training with lab 03 (SPARK_APPLY=1)'",
              quiet=True, example="◈ DRY: no log — the parser was tested on the EXAMPLE in step 1")

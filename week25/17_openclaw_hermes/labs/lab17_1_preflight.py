@@ -36,7 +36,7 @@ CHECKS = [
      lambda o: True, ""),
     ("Existing installs", "command -v openclaw hermes 2>/dev/null; ls -d ~/.openclaw ~/.hermes 2>/dev/null; echo '(end of list)'",
      "(end of list)", lambda o: True, ""),
-    ("OpenClaw gateway process", "pgrep -fa '[o]penclaw' | head -3 || echo 'no openclaw process'",
+    ("OpenClaw gateway process", "pgrep -fa '[o]penclaw' | grep -v 17_openclaw_hermes | head -3 | grep . || echo 'no openclaw process'",
      "no openclaw process", lambda o: True, ""),
 ]
 

@@ -206,7 +206,7 @@ if args.rdma:
     if not pairs:
         warn("needs two live Sparks with Up interfaces — skipped (the commands are in the tutorial).")
     else:
-        srv = " ; ".join(f"nohup ib_write_bw -d {d} -i 1 -p {12000 + i} -F --report_gbits "
+        srv = " ".join(f"nohup ib_write_bw -d {d} -i 1 -p {12000 + i} -F --report_gbits "
                          f"> ~/w25/logs/ib_srv_{i}.log 2>&1 &" for i, (d, _) in enumerate(pairs))
         sh(f"mkdir -p ~/w25/logs ; {srv} sleep 2", "a", timeout=30)
         peers = [ipv4(sh(f"ip -4 -o addr show {nd}", "a", timeout=30, quiet=True).out) for _, nd in pairs]

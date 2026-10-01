@@ -12,6 +12,8 @@ The through-line: **one Spark, or two cabled together, gives you a private AI st
 model, serve it several ways, put one gateway in front, and run agents on it inside a sandbox, with no
 cloud involved.
 
+> 🧑‍🏫 **Instructors: start with [`START_HERE.md`](START_HERE.md).** It gets both Sparks ready in one check and one command, and covers who runs which lab live.
+
 ## Launch the course (web app)
 
 ```bash
@@ -110,7 +112,7 @@ Local tool environments (all gitignored, created with `uv`):
 
 ```bash
 # recreate them
-uv venv -p 3.12 week25/.venv-nat && uv pip install -p week25/.venv-nat/bin/python "nvidia-nat[langchain]==1.9.0"
+uv venv -p 3.12 week25/.venv-nat && uv pip install -p week25/.venv-nat/bin/python "nvidia-nat[langchain]==1.9.0" greenlet "nvidia-nat-mcp~=1.9"
 uv venv week25/.venv-litellm && uv pip install -p week25/.venv-litellm/bin/python "litellm[proxy]==1.89.0" openai pyyaml
 uv pip install -p week25/.venv-nat/bin/python --no-deps -e week25/14_nat_agents/hotel_ops_nat \
   -e week25/20_capstone_sovereign_agent/hotel_capstone_nat          # the NAT plugins (Modules 14, 20)

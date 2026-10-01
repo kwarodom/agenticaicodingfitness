@@ -52,7 +52,8 @@ for title, cmd, ex, test in [
      "NVIDIA GB10, 580.95.05", lambda o: "GB10" in o),
     ("Docker without sudo", "docker version --format '{{.Server.Version}}'", "28.3.3",
      lambda o: bool(re.match(r"\d+\.\d+", o.strip()))),
-    ("NVIDIA container runtime", "docker info --format '{{json .Runtimes}}' | grep -o '\"nvidia\"' || echo none",
+    ("NVIDIA container runtime", "(docker info --format '{{json .Runtimes}}' | grep -o '\"nvidia\"'; docker info 2>/dev/null | grep -o 'nvidia.com/gpu=all') "
+     "| head -1 | grep . || echo none",   # a registered nvidia runtime, or CDI devices (how this DGX OS exposes the GPU)
      '"nvidia"', lambda o: "nvidia" in o),
 ]:
     r = sh(cmd, example=ex, timeout=60)
@@ -66,7 +67,7 @@ step(2, f"the container image (playbook Step 2: docker pull {IMAGE})")
 img = sh(f"docker image inspect {IMAGE} --format '{{{{.Id}}}} {{{{.Size}}}}' 2>/dev/null || echo 'IMAGE_MISSING'",
          example="IMAGE_MISSING")
 have_image = img.live and "IMAGE_MISSING" not in img.out
-pulling = sh(f"pgrep -af 'docker pull {IMAGE}' || echo 'no pull running'", example="no pull running", quiet=True)
+pulling = sh(f"pgrep -af '[d]ocker pull {IMAGE}' || echo 'no pull running'", example="no pull running", quiet=True)
 pull_running = pulling.live and "no pull running" not in pulling.out
 pull = f"mkdir -p ~/w25/logs && {{ nohup docker pull {IMAGE} > {PULL_LOG} 2>&1 < /dev/null & }}; sleep 2; tail -2 {PULL_LOG}"
 if have_image:

@@ -64,7 +64,8 @@ if not conf:
 step(4, "slice by guest language — an average can hide a bias")
 langs = H.by_language(rows, scores)
 table([[lang, v["n"], f"{v['department_acc']:.0%}", f"{v['priority_acc']:.0%}", f"{v['false_urgent']:.0%}",
-        f"{v['urgent_recall']:.0%}"] for lang, v in langs.items()],
+        f"{v['urgent_recall']:.0%}" if v.get("urgent_n", 1) else "— (no urgent cases)"]
+       for lang, v in langs.items()],
       ["language", "n", "department", "priority", "normal → urgent", "urgent recall"])
 
 passed = all(ok for *_, ok in H.gate(m))

@@ -1,0 +1,8 @@
+{
+ "cmd": "ip addr show enP2p1s0f0np0",
+ "which": "b",
+ "host": "Spark B · sparklab@spark-b3b6.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "5: enP2p1s0f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc mq state UP group default qlen 1000\n    link/ether 4c:bb:47:82:b3:bb brd ff:ff:ff:ff:ff:ff\n    inet 192.168.101.96/24 brd 192.168.101.255 scope global noprefixroute enP2p1s0f0np0\n       valid_lft forever preferred_lft forever\n    inet6 fe80::4ebb:47ff:fe82:b3bb/64 scope link \n       valid_lft forever preferred_lft forever\n"
+}

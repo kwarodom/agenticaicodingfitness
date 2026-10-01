@@ -1,0 +1,8 @@
+{
+ "cmd": "ibdev2netdev",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "rocep1s0f0 port 1 ==> enp1s0f0np0 (Up)\nrocep1s0f1 port 1 ==> enp1s0f1np1 (Down)\nroceP2p1s0f0 port 1 ==> enP2p1s0f0np0 (Up)\nroceP2p1s0f1 port 1 ==> enP2p1s0f1np1 (Down)\n"
+}

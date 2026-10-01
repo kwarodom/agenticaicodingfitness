@@ -1,0 +1,8 @@
+{
+ "cmd": "ls ~/nccl/build/lib/libnccl.so.2 ~/nccl-tests/build/all_gather_perf",
+ "which": "b",
+ "host": "Spark B · sparklab@spark-b3b6.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "/home/sparklab/nccl/build/lib/libnccl.so.2\n/home/sparklab/nccl-tests/build/all_gather_perf\n"
+}

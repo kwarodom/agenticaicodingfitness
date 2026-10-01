@@ -1,0 +1,8 @@
+{
+ "cmd": "ip -4 -o addr show enP2p1s0f0np0",
+ "which": "a",
+ "host": "Spark A · sparklab@spark-3b82.<tailnet>.ts.net",
+ "code": 0,
+ "date": "2026-10-01",
+ "out": "5: enP2p1s0f0np0    inet 192.168.101.57/24 brd 192.168.101.255 scope global noprefixroute enP2p1s0f0np0\\       valid_lft forever preferred_lft forever\n"
+}

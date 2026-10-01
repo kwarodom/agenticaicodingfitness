@@ -11,7 +11,9 @@ each helper prints the exact shell command or HTTP call it makes.
 
 WHERE a command runs (decided per call, printed on every line of output):
 
-  • ON THE SPARK   — this script is running on the Spark itself (nvidia-smi reports a GB10) → run locally.
+  • ON THE SPARK   — this script is running on the Spark itself (nvidia-smi reports a GB10) and SPARK_HOST is
+                     empty or names this machine as this user → run locally. (SPARK_HOST=sparklab@<this
+                     Spark> from the instructor's account goes over ssh, so labs see what students see.)
   • OVER SSH       — SPARK_HOST is set (e.g. `spark-abcd` or `me@spark-abcd.tailnet.ts.net`) and answers
                      `ssh -o BatchMode=yes` → run there. SPARK_HOST2 is the second Spark (Modules 02, 05, 11).
   • DRY            — no Spark reachable, or SPARK_MODE=dry → nothing runs. You see the command, then either
@@ -35,6 +37,7 @@ import os
 import re
 import shlex
 import shutil
+import socket
 import subprocess
 import sys
 import time
@@ -166,11 +169,30 @@ def mode() -> str:
     return "live" if reachable("a") else "dry"
 
 
+def host_is_self() -> bool:
+    """True when SPARK_HOST is empty or resolves (ssh -G: aliases, User) to this machine and this user."""
+    if "host_is_self" not in _CACHE:
+        h, ok = host("a"), True
+        if h:
+            try:
+                out = subprocess.run(["ssh", "-G", h], capture_output=True, text=True, timeout=10).stdout
+                cfg_ = dict(ln.split(" ", 1) for ln in out.splitlines() if " " in ln)
+                name = cfg_.get("hostname", "")
+                me = {socket.gethostname().split(".")[0], "localhost", "127.0.0.1"}
+                me |= set(subprocess.run(["hostname", "-I"], capture_output=True, text=True, timeout=10).stdout.split())
+                ok = (cfg_.get("user") == os.environ.get("USER", cfg_.get("user"))
+                      and (name.split(".")[0] in me or name in me))
+            except Exception:  # noqa: BLE001 — can't tell: keep the old on-the-Spark behaviour
+                ok = True
+        _CACHE["host_is_self"] = ok
+    return _CACHE["host_is_self"]
+
+
 def where(which: str = "a") -> str:
     """'local' (on the Spark) | 'ssh' | 'dry' — where sh() would run a command right now."""
     if mode() == "dry":
         return "dry"
-    if which == "a" and on_spark():
+    if which == "a" and on_spark() and host_is_self():
         return "local"
     return "ssh" if reachable(which) else "dry"
 
@@ -272,9 +294,25 @@ def _rec_key(which: str, cmd: str) -> str:
     return "sh_" + hashlib.sha1(f"{which}\n{cmd}".encode()).hexdigest()[:20]
 
 
+# Recordings are committed to a public repo: mask the classroom's network identity. The QSFP link subnets
+# (192.168.100.x / 101.x) stay, they are the lesson. 10.x is the office LAN; 100.64/10 is Tailscale.
+_PRIVATE = [(re.compile(r"\b([A-Za-z0-9-]+)\.[A-Za-z0-9-]+\.ts\.net\b"), r"\1.<tailnet>.ts.net"),
+            (re.compile(r"\b100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d{1,3}\.\d{1,3}\b"), "100.x.x.x"),
+            (re.compile(r"\b10\.\d{1,3}\.\d{1,3}\.\d{1,3}\b"), "10.x.x.x")]
+
+
+def _mask(text: str) -> str:
+    for rx, sub in _PRIVATE:
+        text = rx.sub(sub, text)
+    return text
+
+
 def _record(key: str, payload: dict) -> None:
     if os.environ.get("SPARK_RECORD") != "1":
         return
+    if _mask(payload.get("cmd", "")) != payload.get("cmd", ""):
+        return          # the command names a private host/IP: a laptop's DRY run never issues it, so it can't replay
+    payload = {k: _mask(v) if isinstance(v, str) and k != "cmd" else v for k, v in payload.items()}
     RECORDED.mkdir(parents=True, exist_ok=True)
     (RECORDED / f"{key}.json").write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
 
