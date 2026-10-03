@@ -10,7 +10,7 @@
 - กำหนดขนาด flag หน่วยความจำสามตัวที่สำคัญบน unified memory 128 GB: `--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`
 - serve โมเดล Qwen3.6-35B-A3B แบบ **agent-ready** ตาม playbook และรัน tool calling ครบหนึ่งรอบ (round trip)
 - วัด continuous batching: tok/s รวม เทียบกับ tok/s ต่อสาย (per-stream) ที่คำขอขนาน 1, 2, 4 และ 8 คำขอ
-- รันโมเดล 70B ตัวเดียวข้าม **Spark สองเครื่อง** ด้วย Ray และ tensor parallelism และ serve LoRA adapter คู่กับ base model ของมัน
+- รันโมเดล 70B ตัวเดียวข้าม **Spark สองเครื่อง** ด้วย Ray และ tensor parallelism จากนั้น (ไม่บังคับ) รัน **Nemotron 3 Super 120B** ของ NVIDIA แบบ FP8 และ serve LoRA adapter คู่กับ base model ของมัน
 
 **Time** ~55 นาที · **Difficulty** ระดับกลาง · **Hardware** Spark 1 เครื่อง (2 เครื่องสำหรับส่วนที่ 6) หรือไม่มีเลยก็ได้: ใช้โหมด DRY + ตัวแทนบนแล็ปท็อป
 
@@ -376,7 +376,12 @@ Llama 3.3 70B แบบ bf16 ต้องใช้ weights 141 GB มากก�
 │ 2 Sparks, TP=2  70.6 GB per node  102.4 GB per node  83 × 2K seqs
 │ TP=2 · ctx  8K →  20.7 full-length seqs
 │ TP=2 · ctx 32K →   5.2 full-length seqs
+│ nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8 · ctx 256K · kv fp8
+│   1 Spark         120.0 GB          ✕ does not fit
+│   2 Sparks, TP=2   60.0 GB per node  0.54 GB KV per 256K seq → 71.5 full-length seqs
 ```
+
+สามบรรทัดสุดท้ายใช้กับการรัน Nemotron (ไม่บังคับ) ท้ายส่วนนี้
 
 ทำ Module 02 ให้เสร็จก่อน (สาย QSFP, IP, SSH แบบไม่ใช้รหัสผ่านระหว่าง Spark) หรือรัน Cluster Assistant ของ NVIDIA Sync ซึ่ง playbook ยอมรับให้ใช้แทนได้ จากนั้นทำตาม playbook บน **Spark ทั้งสองเครื่อง**
 
@@ -467,7 +472,110 @@ Ray dashboard รันอยู่ที่พอร์ต 8265 ของ Spark
 
 > 💡 Spark สองเครื่องแบบ TP เพิ่มหน่วยความจำ ไม่ได้เพิ่มความเร็วต่อสาย ทุก token ต้องรอ all-reduce ผ่านลิงก์ วัด tok/s ของคุณเองด้วย lab 05-3 แล้วเทียบกับแถวที่ 4 ของ lab 05-1: 70B แบบ NVFP4 ใส่ใน Spark **เครื่องเดียว** ได้ Module 07 จะให้คุณ quantize โมเดลเอง
 
-✓ Checkpoint: `docker exec $VLLM_CONTAINER ray status` แสดง 2 โหนด และคำขอ haiku ได้ข้อความตอบกลับจากโมเดล 70B ที่ serve ข้าม Spark ทั้งสองเครื่อง
+### ไม่บังคับ: Nemotron 3 Super 120B แบบ FP8 ข้าม Spark ทั้งสองเครื่อง
+
+> ⚠ **ส่วนที่คอร์สเพิ่มเอง รันจริงบน Spark สองเครื่องเมื่อ 2026-10-03** ไม่มี playbook ของ NVIDIA สำหรับ Spark ที่ serve checkpoint นี้บน Spark สองเครื่อง flag มาจาก [model card ของ FP8](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8) (เขียนไว้สำหรับ H100 4 ตัว) และแก้ตามที่ตารางด้านล่างบอก output ทั้งหมดในส่วนนี้บันทึกจาก Spark สองเครื่องของเราด้วย `nvcr.io/nvidia/vllm:26.05-py3` (vLLM 0.20.1)
+
+Module 06 serve Nemotron 3 Super แบบ **NVFP4** (80 GB) บน Spark เครื่องเดียว checkpoint แบบ **FP8** มีขนาด 128.4 GB ใหญ่เกิน Spark เครื่องเดียว แต่สบาย ๆ บนสองเครื่อง: weight 57.57 GiB ต่อโหนด FP8 เก็บความแม่นยำได้มากกว่า NVFP4
+
+มันยังเป็นโมเดลอีกแบบหนึ่งด้วย Nemotron 3 Super เป็น hybrid ของ Mamba-2/MoE: จาก 88 ชั้น มีเพียง **8 ชั้นที่เป็น attention** และมีแค่ชั้นเหล่านั้นที่เก็บ KV cache หนึ่ง token ใช้ KV 2 × 8 ชั้น × 2 KV heads × 128 × 1 byte (fp8) = **4 KB** ส่วน Llama 3.3 70B แบบ bf16 ใช้ 2 × 80 × 8 × 128 × 2 = 328 KB ชั้น Mamba 40 ชั้นเก็บ state ขนาดคงที่ต่อ sequence แทน
+
+| Model card (H100 4 ตัว) | Spark สองเครื่อง | เหตุผล |
+|---|---|---|
+| `--tensor-parallel-size 4` | `--tensor-parallel-size 2` | GPU หนึ่งตัวต่อ Spark |
+| เครื่องเดียว backend ค่าเริ่มต้น | `--distributed-executor-backend ray` | คลัสเตอร์ Ray จากขั้นที่ 1–3 |
+| `--async-scheduling` | เอาออก | vLLM 0.20.1 ไม่ยอมเมื่อใช้ Ray: `` `ray` does not support async scheduling yet `` |
+| `--swap-space 0` | เอาออก | flag นี้ไม่มีแล้วใน vLLM 0.20.1: `unrecognized arguments: --swap-space 0` |
+| `--gpu-memory-utilization 0.9` | `0.8` | ค่าเดียวกับ 70B ด้านบน บน Spark หน่วยความจำ GPU คือหน่วยความจำของระบบ |
+| `--served-model-name nvidia/nemotron-3-super` | `nemotron-3-super` | ชื่อที่ Module 06 ใช้ บล็อก ⚡ เดิมจึงใช้ได้ |
+
+**ขั้นที่ 5 — weight บน Spark ทั้งสองเครื่อง** Spark แต่ละเครื่องโหลดครึ่งของตัวเองจาก `~/.cache/huggingface` **ของเครื่องนั้นเอง** ทั้งสองเครื่องจึงต้องมีครบ 128 GB ดาวน์โหลดบน Spark A:
+
+```bash
+# on: spark
+hf download nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8
+```
+
+จากนั้นจะรันคำสั่งเดียวกันบน Spark B ก็ได้ หรือคัดลอกผ่านลิงก์ QSFP ซึ่งเร็วกว่าดาวน์โหลดรอบสองมาก ให้คัดลอกทั้งโฟลเดอร์ `hub` ไม่ใช่แค่โฟลเดอร์ของโมเดล: `huggingface_hub` รุ่นใหม่เก็บข้อมูลไว้ในที่เก็บรวม `hub/blobs/` และโฟลเดอร์ของโมเดลมีแค่ลิงก์ชี้เข้าไป `rsync` จะข้ามไฟล์ที่ Spark B มีอยู่แล้ว:
+
+```bash
+# on: spark
+rsync -a --info=progress2 ~/.cache/huggingface/hub/ <SPARK_B_QSFP_IP>:.cache/huggingface/hub/
+```
+
+**ขั้นที่ 6 — serve** ให้ Ray head และ worker จากขั้นที่ 2–3 รันต่อไป (`ray status`: 2 โหนด 2 GPU) หยุดเซิร์ฟเวอร์ 70B ก่อนถ้ายังรันอยู่ `--enable-expert-parallel` กระจาย MoE expert ไปบน GPU สองตัวแทนการหั่นแต่ละ expert ส่วน `HF_HUB_OFFLINE=1` ทำให้ทั้งสองโหนดโหลดจาก cache ในเครื่อง:
+
+```bash
+# on: spark
+export VLLM_CONTAINER=$(docker ps --format '{{.Names}}' | grep -E '^node-[0-9]+$')
+docker exec -e HF_HUB_OFFLINE=1 $VLLM_CONTAINER vllm serve nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8 \
+  --served-model-name nemotron-3-super \
+  --host 0.0.0.0 --port 8000 \
+  --tensor-parallel-size 2 \
+  --enable-expert-parallel \
+  --distributed-executor-backend ray \
+  --dtype auto \
+  --kv-cache-dtype fp8 \
+  --max-model-len 262144 \
+  --trust-remote-code \
+  --gpu-memory-utilization 0.8 \
+  --max-cudagraph-capture-size 128 \
+  --enable-chunked-prefill \
+  --mamba-ssm-cache-dtype float32 \
+  --reasoning-parser nemotron_v3 \
+  --enable-auto-tool-choice \
+  --tool-call-parser qwen3_coder
+```
+
+**Expected output** (RECORDED — Spark A + Spark B, 2026-10-03; ตัด prefix และเวลาของ log ออก; `ip=192.168.100.96` คือครึ่งของ Spark B)
+
+```
+(RayWorkerWrapper pid=406, ip=192.168.100.96) Model loading took 57.57 GiB memory and 283.078022 seconds
+(RayWorkerWrapper pid=2786) Model loading took 57.57 GiB memory and 284.023674 seconds
+GPU KV cache size: 15,948,274 tokens
+Maximum concurrency for 262,144 tokens per request: 60.84x
+init engine (profile, create kv cache, warmup model) took 62.15 s (compilation: 14.25 s)
+(APIServer pid=1608) INFO:     Application startup complete.
+```
+
+ใช้เวลาราว 6 นาทีจากเริ่มจนพร้อม ส่วนใหญ่คือการอ่าน 120 GB จากดิสก์ KV cache 15.9 ล้าน token พอสำหรับ **บทสนทนายาว 262K token 60 รายการพร้อมกัน** การคำนวณของ Lab 05-1 ได้ 71.5: ค่าประมาณ weight 60 GB ต่ำกว่า 61.8 GB ที่ vLLM โหลดจริง และไม่ได้นับ state ของ Mamba เชื่อ log
+
+**ขั้นที่ 7 — คุยกับมัน** นี่คือ reasoning model: มันคิดก่อนตอบ จึงต้องให้ `max_tokens` มาก ๆ เมื่อให้ 400 มันใช้ทุก token ไปกับการคิดและคืน `content: null`:
+
+```bash
+# on: spark
+curl -s http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" \
+  -d '{"model": "nemotron-3-super", "messages": [{"role": "user", "content": "Write a haiku about a GPU"}], "max_tokens": 2000, "temperature": 0.7}' \
+  | python3 -c 'import sys,json; r=json.load(sys.stdin); print(r["choices"][0]["message"]["content"]); print(r["usage"])'
+```
+
+**Expected output** (RECORDED — Spark A + Spark B, 2026-10-03; haiku ของคุณจะต่างไปที่ temperature 0.7)
+
+```
+Silicon heart beats
+Pixels dance in parallel
+Dreams render fast now
+{'prompt_tokens': 23, 'total_tokens': 454, 'completion_tokens': 431, 'prompt_tokens_details': None}
+```
+
+```spark
+{"target": "vllm", "which": "a", "model": "nemotron-3-super",
+ "messages": [{"role": "user", "content": "In three sentences: why does tensor parallelism need a fast link between the GPUs?"}], "max_tokens": 2000}
+```
+
+tool calling ใช้คำขอแบบเดียวกับส่วนที่ 4 ได้ เมื่อถามว่า "What's the weather in Bangkok right now?" พร้อม tool `get_weather` มันคืน `get_weather({"city": "Bangkok"})` พร้อม `finish_reason: tool_calls` ใน 2.5 วินาที ผลที่เราวัดจากฝั่ง Spark B ผ่าน LAN:
+
+| คำขอพร้อมกัน | tok/s รวม | tok/s ต่อสาย |
+|---|---|---|
+| 1 (haiku เปิดการคิด: 740 token ใน 40.9 วินาที) | 18.1 | 18.1 |
+| 1 (ปิดการคิด) | 16.6 | 16.6 |
+| 4 (ปิดการคิด) | 34.6 | 9.8 |
+
+(RECORDED — 2026-10-03 "ปิดการคิด" คือส่ง `"chat_template_kwargs": {"enable_thinking": false}`) ผู้ใช้สี่คนได้ throughput รวมเป็นสองเท่าของคนเดียว: continuous batching (ส่วนที่ 5) ทำงานข้าม Spark ทั้งสองเครื่อง แต่ละสายช้าลง เพราะทุก token ต้องรอ all-reduce ผ่านลิงก์
+
+> 💡 vLLM ฟังทุก interface แล็ปท็อปใน tailnet ของคุณจึงเรียกได้ที่ `http://<ชื่อ tailnet ของ spark-a>:8000/v1` ด้วยโมเดล `nemotron-3-super` และ `/docs` เปิดหน้าสำรวจ API ในเบราว์เซอร์ได้ ไม่มีรหัสผ่าน: Module 08 วาง LiteLLM gateway ที่มี key ไว้ข้างหน้า
+
+✓ Checkpoint: `docker exec $VLLM_CONTAINER ray status` แสดง 2 โหนด และคำขอ haiku ได้ข้อความตอบกลับจากโมเดล 70B ที่ serve ข้าม Spark ทั้งสองเครื่อง (ไม่บังคับ: ได้จาก `nemotron-3-super` ด้วย โดยมี `Model loading took 57.57 GiB` ใน log ของทั้งสองโหนด)
 
 ## 7 · serve LoRA fine-tune คู่กับ base model
 
@@ -604,6 +712,9 @@ $ docker run -d \
 | `rm: cannot remove …/models--…: Permission denied` | container ดาวน์โหลดในฐานะ root: `sudo rm -rf $HOME/.cache/huggingface/hub/<model>` (playbook) |
 | โหนด 2 ไม่ปรากฏใน `ray status` | ลิงก์ QSFP หรือ IP มีปัญหา: ทำการตรวจของ Module 02 ใหม่ และตรวจว่า Spark ทั้งสองใช้ `MN_IF_NAME` และ image tag เดียวกัน |
 | คลัสเตอร์ Ray หายไปหลัง SSH หลุด | `run_cluster.sh` มี EXIT trap: ให้เปิดมันภายใน `tmux` เสมอ |
+| `run_cluster.sh` ไม่พิมพ์อะไรเลยนานหลายนาที และ `ray status` บอกว่ายังไม่ได้ติดตั้ง Ray | `pip install ray` ที่สคริปต์ติดตั้งตอนเริ่มค้างไป (เจอครั้งหนึ่งเมื่อ 2026-10-03 รอบที่สองเสร็จในไม่กี่วินาที) `docker rm -f node-NNNN` แล้วเริ่มใหม่ |
+| `unrecognized arguments: --swap-space 0` หรือ `` `ray` does not support async scheduling yet `` | flag จาก model card ที่เขียนไว้สำหรับ vLLM รุ่นอื่นหรือเครื่องเดียว เอาออก ตามคำสั่ง Nemotron ในส่วนที่ 6 |
+| โมเดลที่คัดลอกมาจาก Spark อีกเครื่องเล็กผิดปกติ: `du -shL ~/.cache/huggingface/hub/models--<org>--<name>/snapshots` แสดงเป็น KB ไม่ใช่ GB | คัดลอกมาแค่โฟลเดอร์ลิงก์ของโมเดล ไม่ได้คัดลอกที่เก็บรวม `hub/blobs/` ให้คัดลอกทั้งโฟลเดอร์ `~/.cache/huggingface/hub/` (ส่วนที่ 6 ขั้นที่ 5) |
 
 ## Next — บทถัดไป
 

@@ -28,7 +28,11 @@ MODELS = [
     ("nvidia/Llama-3.3-70B-Instruct-NVFP4", 70.6,  "nvfp4", 80, 8, 128),
     ("meta-llama/Llama-3.3-70B-Instruct",   70.6,  "bf16",  80, 8, 128),
 ]
-RUNTIME_GB = 4          # course assumption: activations, CUDA graphs, sampler buffers inside vLLM's slice
+# Two-Spark extension (course addition, Section 6): NVIDIA's own 120B model in FP8. It is a Mamba-2/MoE hybrid:
+# only 8 of its 88 layers are attention layers, so only those 8 hold KV cache (2 KV heads each, config.json).
+# The 40 Mamba layers keep a fixed-size state per sequence instead, which this sum leaves out.
+NEMOTRON_FP8 = ("nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8", 120.0, "fp8", 8, 2, 128)
+RUNTIME_GB = 4         # course assumption: activations, CUDA graphs, sampler buffers inside vLLM's slice
 KV_BYTES = {"auto": 2, "fp8": 1}     # --kv-cache-dtype: auto = model dtype (bf16 → 2 bytes); fp8 → 1 byte
 
 
@@ -102,6 +106,16 @@ for ctx in (8_192, 32_768):
     print(f"│ TP=2 · ctx {ctx // 1024:>2}K → {r['fits']:5.1f} full-length seqs")
 note("Tensor parallelism splits every layer's weights AND its KV heads across the nodes, so each Spark holds "
      "half. The price is an all-reduce over the 200 Gb/s QSFP link on every layer of every token (Module 02).")
+name, p, fmt, L, kvh, hd = NEMOTRON_FP8
+one = plan(p, fmt, L, kvh, hd, ctx=262_144, util=0.8, kv="fp8")
+two = plan(p, fmt, L, kvh, hd, ctx=262_144, util=0.8, kv="fp8", tp=2)
+print(f"│ {name} · ctx 256K · kv fp8")
+one_verdict = "✕ does not fit" if one["kv_room"] <= 0 else f"{one['fits']:.0f} seqs"
+print(f"│   1 Spark         {one['weights']:5.1f} GB          {one_verdict}")
+print(f"│   2 Sparks, TP=2  {two['weights']:5.1f} GB per node  {two['kv_per_seq']:.2f} GB KV per 256K seq → "
+      f"{two['fits']:4.1f} full-length seqs")
+note("Only 8 of Nemotron 3 Super's 88 layers keep a KV cache, so a 256K conversation costs ~0.5 GB, not tens of GB. "
+     "On two Sparks vLLM reported 60.84x maximum concurrency at 262,144 tokens (Section 6).")
 
 step(4, f"your command — row {args.pick}")
 pick = MODELS[max(1, min(args.pick, len(MODELS))) - 1]

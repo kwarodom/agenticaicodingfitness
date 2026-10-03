@@ -8,7 +8,7 @@
 - Size the three memory flags that matter on 128 GB of unified memory: `--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`.
 - Serve the playbook's **agent-ready** Qwen3.6-35B-A3B model and run a full tool-calling round trip.
 - Measure continuous batching: total tok/s vs per-stream tok/s at 1, 2, 4 and 8 parallel requests.
-- Run one 70B model across **two Sparks** with Ray and tensor parallelism, and serve a LoRA adapter next to its base model.
+- Run one 70B model across **two Sparks** with Ray and tensor parallelism, then (optional) NVIDIA's **Nemotron 3 Super 120B** in FP8, and serve a LoRA adapter next to its base model.
 
 **Time** ~55 min · **Difficulty** intermediate · **Hardware** 1 Spark (2 Sparks for Section 6), or none: DRY mode + laptop stand-in
 
@@ -374,7 +374,12 @@ Lab 05-1's step 3 does the memory sum for the playbook's settings:
 │ 2 Sparks, TP=2  70.6 GB per node  102.4 GB per node  83 × 2K seqs
 │ TP=2 · ctx  8K →  20.7 full-length seqs
 │ TP=2 · ctx 32K →   5.2 full-length seqs
+│ nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8 · ctx 256K · kv fp8
+│   1 Spark         120.0 GB          ✕ does not fit
+│   2 Sparks, TP=2   60.0 GB per node  0.54 GB KV per 256K seq → 71.5 full-length seqs
 ```
+
+The last three lines are for the optional Nemotron run at the end of this section.
 
 First finish Module 02 (QSFP cable, IPs, passwordless SSH between the Sparks), or run NVIDIA Sync's Cluster Assistant, which the playbook accepts as a replacement. Then follow the playbook on **both Sparks**.
 
@@ -465,7 +470,110 @@ The Ray dashboard runs on port 8265 of Spark A: `ssh -N -L 8265:localhost:8265 s
 
 > 💡 Two Sparks over TP add memory, not per-stream speed. Every token waits for an all-reduce over the link. Measure your own tok/s with lab 05-3 and compare it with row 4 of lab 05-1: the NVFP4 70B fits on **one** Spark. Module 07 quantizes models yourself.
 
-✓ Checkpoint: `docker exec $VLLM_CONTAINER ray status` shows 2 nodes, and the haiku request returns text from the 70B model served across both Sparks.
+### Optional: Nemotron 3 Super 120B in FP8 across both Sparks
+
+> ⚠ **Course addition, run on two Sparks on 2026-10-03.** No NVIDIA Spark playbook serves this checkpoint on two Sparks. The flags come from the [FP8 model card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8) (written for 4× H100), changed where the table below says so. All output in this part was recorded on our two Sparks with `nvcr.io/nvidia/vllm:26.05-py3` (vLLM 0.20.1).
+
+Module 06 serves Nemotron 3 Super as **NVFP4** (80 GB) on one Spark. The **FP8** checkpoint is 128.4 GB, too big for one Spark but comfortable on two: 57.57 GiB of weights per node. FP8 keeps more precision than NVFP4.
+
+It also shows a different kind of model. Nemotron 3 Super is a Mamba-2/MoE hybrid: of its 88 layers only **8 are attention layers**, and only those keep a KV cache. One token costs 2 × 8 layers × 2 KV heads × 128 × 1 byte (fp8) = **4 KB** of KV. Llama 3.3 70B at bf16 costs 2 × 80 × 8 × 128 × 2 = 328 KB. The 40 Mamba layers keep a fixed-size state per sequence instead.
+
+| Model card (4× H100) | Two Sparks | Why |
+|---|---|---|
+| `--tensor-parallel-size 4` | `--tensor-parallel-size 2` | one GPU per Spark |
+| one machine, default backend | `--distributed-executor-backend ray` | the Ray cluster from Steps 1–3 |
+| `--async-scheduling` | removed | vLLM 0.20.1 refuses it with Ray: `` `ray` does not support async scheduling yet `` |
+| `--swap-space 0` | removed | the flag is gone in vLLM 0.20.1: `unrecognized arguments: --swap-space 0` |
+| `--gpu-memory-utilization 0.9` | `0.8` | the 70B value above. On a Spark, GPU memory is system memory |
+| `--served-model-name nvidia/nemotron-3-super` | `nemotron-3-super` | the name Module 06 uses, so the same ⚡ blocks work |
+
+**Step 5 — the weights on both Sparks.** Each Spark loads its half from its **own** `~/.cache/huggingface`, so both need the full 128 GB. Download on Spark A:
+
+```bash
+# on: spark
+hf download nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8
+```
+
+Then either run the same command on Spark B, or copy it over the QSFP link, which is much faster than a second download. Copy the whole `hub` folder, not only the model's folder: recent `huggingface_hub` versions keep the data in a shared `hub/blobs/` store and the model folder only links into it. `rsync` skips files Spark B already has:
+
+```bash
+# on: spark
+rsync -a --info=progress2 ~/.cache/huggingface/hub/ <SPARK_B_QSFP_IP>:.cache/huggingface/hub/
+```
+
+**Step 6 — serve it.** Keep the Ray head and worker from Steps 2–3 running (`ray status`: 2 nodes, 2 GPUs). Stop the 70B server first if it is still running. `--enable-expert-parallel` spreads the MoE experts over the two GPUs instead of slicing each expert. `HF_HUB_OFFLINE=1` makes both nodes load from their local cache:
+
+```bash
+# on: spark
+export VLLM_CONTAINER=$(docker ps --format '{{.Names}}' | grep -E '^node-[0-9]+$')
+docker exec -e HF_HUB_OFFLINE=1 $VLLM_CONTAINER vllm serve nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8 \
+  --served-model-name nemotron-3-super \
+  --host 0.0.0.0 --port 8000 \
+  --tensor-parallel-size 2 \
+  --enable-expert-parallel \
+  --distributed-executor-backend ray \
+  --dtype auto \
+  --kv-cache-dtype fp8 \
+  --max-model-len 262144 \
+  --trust-remote-code \
+  --gpu-memory-utilization 0.8 \
+  --max-cudagraph-capture-size 128 \
+  --enable-chunked-prefill \
+  --mamba-ssm-cache-dtype float32 \
+  --reasoning-parser nemotron_v3 \
+  --enable-auto-tool-choice \
+  --tool-call-parser qwen3_coder
+```
+
+**Expected output** (RECORDED — Spark A + Spark B, 2026-10-03; log prefixes and timestamps trimmed; `ip=192.168.100.96` is Spark B's half)
+
+```
+(RayWorkerWrapper pid=406, ip=192.168.100.96) Model loading took 57.57 GiB memory and 283.078022 seconds
+(RayWorkerWrapper pid=2786) Model loading took 57.57 GiB memory and 284.023674 seconds
+GPU KV cache size: 15,948,274 tokens
+Maximum concurrency for 262,144 tokens per request: 60.84x
+init engine (profile, create kv cache, warmup model) took 62.15 s (compilation: 14.25 s)
+(APIServer pid=1608) INFO:     Application startup complete.
+```
+
+About 6 minutes from start to ready, most of it reading 120 GB from disk. 15.9 million tokens of KV cache is room for **60 conversations of 262K tokens at once**. Lab 05-1's arithmetic said 71.5: its 60 GB weight estimate is lower than the 61.8 GB vLLM really loaded, and it leaves out the Mamba state. Trust the log.
+
+**Step 7 — talk to it.** It is a reasoning model: it thinks before it answers, so give it a large `max_tokens`. With 400 it used every token to think and returned `content: null`:
+
+```bash
+# on: spark
+curl -s http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" \
+  -d '{"model": "nemotron-3-super", "messages": [{"role": "user", "content": "Write a haiku about a GPU"}], "max_tokens": 2000, "temperature": 0.7}' \
+  | python3 -c 'import sys,json; r=json.load(sys.stdin); print(r["choices"][0]["message"]["content"]); print(r["usage"])'
+```
+
+**Expected output** (RECORDED — Spark A + Spark B, 2026-10-03; your haiku will differ at temperature 0.7)
+
+```
+Silicon heart beats
+Pixels dance in parallel
+Dreams render fast now
+{'prompt_tokens': 23, 'total_tokens': 454, 'completion_tokens': 431, 'prompt_tokens_details': None}
+```
+
+```spark
+{"target": "vllm", "which": "a", "model": "nemotron-3-super",
+ "messages": [{"role": "user", "content": "In three sentences: why does tensor parallelism need a fast link between the GPUs?"}], "max_tokens": 2000}
+```
+
+Tool calling works with the same request as Section 4. Asked "What's the weather in Bangkok right now?" with a `get_weather` tool, it returned `get_weather({"city": "Bangkok"})` with `finish_reason: tool_calls` in 2.5 s. What we measured, from Spark B's side of the LAN:
+
+| Requests at once | Total tok/s | Per stream tok/s |
+|---|---|---|
+| 1 (a haiku, thinking on: 740 tokens in 40.9 s) | 18.1 | 18.1 |
+| 1 (thinking off) | 16.6 | 16.6 |
+| 4 (thinking off) | 34.6 | 9.8 |
+
+(RECORDED — 2026-10-03. "Thinking off" sends `"chat_template_kwargs": {"enable_thinking": false}`.) Four users get twice the total throughput of one: continuous batching (Section 5) works across both Sparks. Each stream is slower, because every token waits for an all-reduce over the link.
+
+> 💡 vLLM listens on every interface, so laptops on your tailnet reach it at `http://<spark-a tailnet name>:8000/v1` with model `nemotron-3-super`, and `/docs` opens the API explorer in a browser. There is no password: Module 08 puts a LiteLLM gateway with keys in front of it.
+
+✓ Checkpoint: `docker exec $VLLM_CONTAINER ray status` shows 2 nodes, and the haiku request returns text from the 70B model served across both Sparks (optional: also from `nemotron-3-super`, with `Model loading took 57.57 GiB` in both nodes' logs).
 
 ## 7 · Serve a LoRA fine-tune next to its base model
 
@@ -602,6 +710,9 @@ Add a second adapter to `lora_flags` (vLLM accepts several `NAME=PATH` pairs aft
 | `rm: cannot remove …/models--…: Permission denied` | The container downloaded as root: `sudo rm -rf $HOME/.cache/huggingface/hub/<model>` (playbook) |
 | Node 2 missing from `ray status` | QSFP link or IP: redo Module 02's checks, and make sure both Sparks use the same `MN_IF_NAME` and image tag |
 | Ray cluster vanished after an SSH drop | `run_cluster.sh` has an EXIT trap: always start it inside `tmux` |
+| `run_cluster.sh` prints nothing for minutes, `ray status` says Ray is not installed | The patched start-up `pip install ray` stalled (seen once on 2026-10-03; the retry finished in seconds). `docker rm -f node-NNNN`, then start it again |
+| `unrecognized arguments: --swap-space 0` or `` `ray` does not support async scheduling yet `` | Model-card flags for other vLLM versions or one machine. Drop them, as in the Nemotron command in Section 6 |
+| A model copied from the other Spark is tiny: `du -shL ~/.cache/huggingface/hub/models--<org>--<name>/snapshots` shows KB, not GB | Only the model's folder of links was copied, not the shared `hub/blobs/` store. Copy the whole `~/.cache/huggingface/hub/` folder (Section 6, Step 5) |
 
 ## Next
 
