@@ -405,6 +405,8 @@ docker run --rm -it --gpus all \
 
 Why Super fits one Spark (from the playbook's architecture notes): **LatentMoE** runs experts in a compressed dimension and activates about 12B of 120B parameters per token. **MTP** (one multi-token-prediction layer baked into the checkpoint) drafts 3 tokens for speculative decoding (Module 07). **Mamba-2 hybrid** layers keep an SSM state instead of a growing KV cache, which is why the TensorRT-LLM config sets `enable_block_reuse: false`: Mamba state is not prefix-cacheable.
 
+> 💡 Two Sparks? The **FP8** checkpoint (128.4 GB, more precision than NVFP4) runs across both with vLLM tensor parallel: [Module 05, Section 6](../05_vllm/TUTORIAL.md).
+
 ✓ Checkpoint: one Nemotron model answers through the OpenAI API, and you can say which port and served name each Nemotron recipe uses.
 
 ## 6 · A fair bake-off

@@ -407,6 +407,8 @@ docker run --rm -it --gpus all \
 
 ทำไม Super ถึงใส่ใน Spark เครื่องเดียวได้ (จากหมายเหตุด้านสถาปัตยกรรมใน playbook): **LatentMoE** รัน expert ในมิติที่ถูกบีบอัด และเปิดใช้พารามิเตอร์ราว 12B จาก 120B ต่อ token **MTP** (ชั้น multi-token-prediction หนึ่งชั้นที่ฝังมาใน checkpoint) ร่าง (draft) 3 token สำหรับ speculative decoding (Module 07) ชั้น **Mamba-2 hybrid** เก็บ SSM state แทน KV cache ที่โตขึ้นเรื่อย ๆ นี่คือเหตุผลที่ config ของ TensorRT-LLM ตั้ง `enable_block_reuse: false`: state ของ Mamba ทำ prefix cache ไม่ได้
 
+> 💡 มี Spark สองเครื่อง? checkpoint แบบ **FP8** (128.4 GB ความแม่นยำสูงกว่า NVFP4) รันข้ามทั้งสองเครื่องด้วย vLLM tensor parallel ได้: [Module 05 ส่วนที่ 6](../05_vllm/TUTORIAL.md)
+
 ✓ Checkpoint: โมเดล Nemotron หนึ่งตัวตอบผ่าน OpenAI API ได้ และคุณบอกได้ว่าสูตร Nemotron แต่ละสูตรใช้พอร์ตและชื่อที่ serve อะไร
 
 ## 6 · การประชันที่ยุติธรรม
