@@ -259,6 +259,8 @@ ssh -N -L 11000:localhost:11000 spark-a
 # now open http://localhost:11000 and log in with your Spark username + password
 ```
 
+> ℹ `spark-a` คือ alias `Host spark-a` จาก §3 ใน `~/.ssh/config` บนแล็ปท็อปของคุณ ถ้าไม่มีจะเจอ `Could not resolve hostname spark-a` ให้เพิ่ม alias หรือใช้ชื่อเต็มแทน (เช่น `<you>@spark-abcd.<tailnet>.ts.net` หรือ Tailscale IP `100.x`) รันคำสั่งนี้ใน terminal ของแล็ปท็อปเอง ไม่ใช่ ⌨ terminal ของ lab app เพราะถ้า lab app รันอยู่บน Spark เป้าหมาย "laptop" ของมันคือ Spark เครื่องนั้น และ tunnel จะไปไม่ถึงเบราว์เซอร์ของคุณ
+
 จากนั้น [DGX Dashboard playbook](https://build.nvidia.com/spark/dgx-dashboard) จะให้คุณเปิด JupyterLab จาก dashboard รันเซลล์ Stable Diffusion XL และดู GPU utilisation ไต่ขึ้นในแผง telemetry ผู้ใช้แต่ละคนได้พอร์ต JupyterLab ของตัวเอง หาพอร์ตของคุณด้วย `cat /opt/nvidia/dgx-dashboard-service/jupyterlab_ports.yaml` บน Spark แล้วเพิ่ม `-L` อีกตัวสำหรับพอร์ตนั้น
 
 > ⚠ ติดตั้งอัปเดตระบบจาก **Dashboard → Settings → Updates** ไม่ใช่ด้วย `apt upgrade` เปล่า ๆ การอัปเดตผ่าน dashboard อัปเดต firmware ด้วยและจะรีบูต Spark ให้ทำ *ก่อน* เริ่มรัน fine-tuning ที่ใช้เวลานาน
