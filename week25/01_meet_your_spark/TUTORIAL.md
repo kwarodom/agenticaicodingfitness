@@ -257,6 +257,8 @@ ssh -N -L 11000:localhost:11000 spark-a
 # now open http://localhost:11000 and log in with your Spark username + password
 ```
 
+> ℹ `spark-a` is the `Host spark-a` alias from §3 in your laptop's `~/.ssh/config`. Without it you get `Could not resolve hostname spark-a`: add the alias, or use the full target instead (e.g. `<you>@spark-abcd.<tailnet>.ts.net` or its `100.x` Tailscale IP). Run this in your laptop's own terminal, not the lab app's ⌨ terminal: when the lab app runs on a Spark, its "laptop" target is that Spark, and the tunnel won't reach your browser.
+
 The [DGX Dashboard playbook](https://build.nvidia.com/spark/dgx-dashboard) then has you start JupyterLab from the dashboard, run a Stable Diffusion XL cell, and watch GPU utilisation climb in the telemetry panel. Each user gets their own JupyterLab port. Find yours with `cat /opt/nvidia/dgx-dashboard-service/jupyterlab_ports.yaml` on the Spark, and add a second `-L` for it.
 
 > ⚠ Install system updates from **Dashboard → Settings → Updates**, not with a bare `apt upgrade`. The dashboard update also updates firmware and reboots the Spark. Do it *before* you start a long fine-tuning run.
