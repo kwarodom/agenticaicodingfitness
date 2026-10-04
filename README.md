@@ -143,13 +143,19 @@ Five interactive web apps that take the whole stack onto an **NVIDIA DGX** — r
 #### 🔹 Week 24: Typed AI Decisions with Jev (TypeSafe System One)
 **Jev judges, your code decides.** Jev returns typed judgments (`choice`, `noul`, `score`) instead of prose, so code can route, rank and verify, with actions kept behind deterministic policy.
 - 👉 **Start here:** `.venv/bin/python week24/00_jev_lab_runner/tutorial_server.py` → **http://127.0.0.1:8124** · [`week24/README.md`](week24/README.md)
-- 14 modules, EN + ไทย: the three primitives · question design · intent routing · email triage · HR evidence · AFDD alarm triage · leads/RAG · evaluation and cost · Jev vs Laya · Jev + an LLM of your choice · a hotel copilot capstone · multimodal and live (voice/video) agents. Runs **LIVE** with `TYPESAFE_API_KEY`, or **DRY** from recorded answers at $0.
+- 12 modules, EN + ไทย: hello Jev · the three primitives · question design · intent routing · email triage · HR evidence · AFDD alarm triage · leads/RAG · evaluation and cost · Jev vs Laya · Jev + an LLM of your choice · a hotel copilot capstone. Runs **LIVE** with `TYPESAFE_API_KEY`, or **DRY** from recorded answers at $0.
 
 #### 🔹 Week 25: DGX Spark — Fine-Tune, Serve & Build Sandboxed Agents
 NVIDIA's official [DGX Spark playbooks](https://build.nvidia.com/spark), hands-on, on one Spark or two cabled together.
 - 👉 **Start here:** `.venv/bin/python week25/00_spark_lab_runner/tutorial_server.py` → **http://127.0.0.1:8125** · [`week25/README.md`](week25/README.md)
 - 21 modules, EN + ไทย: connect and budget a Spark · two Sparks over QSFP + NCCL · **serve** with Ollama, llama.cpp, vLLM, SGLang, TensorRT-LLM, NIM, NVFP4 and speculative decoding · a **LiteLLM** gateway · **fine-tune** with LLaMA Factory, Unsloth, PyTorch/NeMo and VLM/FLUX · evaluate → serve → route your fine-tune · **agents** with NeMo Agent Toolkit, OpenShell, NemoClaw, OpenClaw/Hermes and local coding agents · a capstone that puts a fine-tuned router, as a tool, behind a gateway for an agent in a sandbox · an atlas of every other playbook.
 - Labs drive your Spark over SSH (**LIVE**), or run **DRY** with every output labelled RECORDED, REFERENCE or EXAMPLE. Agent and gateway labs run for real against Ollama on your laptop.
+
+#### 🔹 Week 26: NemoClaw on DGX Spark — Claws from Beginner to Expert
+Build, sandbox, trace, benchmark and harden **claws**: always-on, tool-using agents in NVIDIA **OpenShell** sandboxes, installed with **NemoClaw**, with agent logic written in **NeMo Agent Toolkit (NAT)**. The running example is **Alto Ops Claw**, a hotel chiller-plant assistant.
+- 👉 **Start here:** `.venv/bin/python week26/00_reef_lab_runner/tutorial_server.py` → **http://127.0.0.1:8126** · [`week26/README.md`](week26/README.md) (one-time setup: the `week26/.venv-nat` and `week26/.venv-openshell` venvs)
+- 8 modules, EN + ไทย: what a claw is · your first claw · OpenShell policy as code · NAT claws (custom tools, REST, MCP both ways, in a sandbox) · tracing · benchmarking · hardening · the Alto Ops Claw capstone, graded on evidence.
+- The **🪸 Reef Lab Runner** reuses your Week 25 `SPARK_HOST`. Without a Spark, Spark steps run **DRY** with labelled output, and laptop labs (NAT on Ollama, `nat serve`, MCP, eval, the policy parser) run for real. Nothing changes your Spark unless you turn on **🔓 Allow changes**. The full React app from the spec is in [`week26/alto-reef/`](week26/alto-reef/).
 
 ### 🦾 Special track: Agentic Robotics (SO-ARM101)
 From a simulated SO-ARM101 arm to a tool-using robot agent, in numbered lessons: MuJoCo manual control → record/replay → kinematic pick-and-place → active perception with the wrist camera → semantic scene → **agentic manipulation** (safe robot tools for an LLM) → a guided full pipeline. A workshop portal (`08_workshop_portal/`, **http://127.0.0.1:8000**) operates the simulation or a safety-gated LeRobot path to the physical arm.
@@ -163,7 +169,7 @@ From a simulated SO-ARM101 arm to a tool-using robot agent, in numbered lessons:
 
 ### 1. Requirements
 - **Python 3.13** (the repo's `pyproject.toml` requires it) and [**uv**](https://docs.astral.sh/uv/) (recommended), or plain `venv` + `pip`.
-- Optional: [**Ollama**](https://ollama.com) for free local models (weeks 18–25 use it as a stand-in when no GPU box is around). Optional: Docker, for Neo4j (weeks 14–15) and NVIDIA containers (weeks 19–25).
+- Optional: [**Ollama**](https://ollama.com) for free local models (weeks 18–26 use it as a stand-in when no GPU box is around). Optional: Docker, for Neo4j (weeks 14–15) and NVIDIA containers (weeks 19–26).
 
 Clone the repository and create the shared virtual environment. The labs call `.venv/bin/python`, so keep it at the repo root:
 ```bash
@@ -177,14 +183,14 @@ source .venv/bin/activate                # Windows: .venv\Scripts\activate
 ```bash
 uv pip install -r requirements.txt       # or: pip install -r requirements.txt
 ```
-Weeks with extra dependencies (frameworks, web apps, GPU tooling) list them in their own `README.md` or `requirements.txt`. Week 25 keeps its NeMo Agent Toolkit and LiteLLM tools in their own venvs; see [`week25/README.md`](week25/README.md).
+Weeks with extra dependencies (frameworks, web apps, GPU tooling) list them in their own `README.md` or `requirements.txt`. Week 25 keeps its NeMo Agent Toolkit and LiteLLM tools in their own venvs; see [`week25/README.md`](week25/README.md). Week 26 does the same for NAT 1.9 and the OpenShell CLI (Python 3.12); see [`week26/README.md`](week26/README.md).
 
 ### 3. Environment Variables
 Copy the template and fill in **only the keys for the weeks you are doing**:
 ```bash
 cp .env.example .env
 ```
-[`.env.example`](.env.example) lists every variable the code reads, grouped by the week that needs it. Most weeks need just `ANTHROPIC_API_KEY`, and many labs run with no key at all ($0 / DRY / SIM modes, or a local model). Some weeks ship their own template as well: `week6/`, `week10/`, `week15/code/`, `week23/`, `week24/` and `week25/`.
+[`.env.example`](.env.example) lists every variable the code reads, grouped by the week that needs it. Most weeks need just `ANTHROPIC_API_KEY`, and many labs run with no key at all ($0 / DRY / SIM modes, or a local model). Some weeks ship their own template as well: `week6/`, `week10/`, `week15/code/`, `week23/`, `week24/`, `week25/` and `week26/`.
 
 > 🔐 `.env` is gitignored. Never commit a key, paste one into code or a notebook, or show one in a screenshot. If a key is ever exposed, **revoke it at the provider**. Deleting it from the code does not un-publish it.
 
