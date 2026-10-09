@@ -1,0 +1,5 @@
+{
+  "name": "course-quest",
+  "owner": { "name": "Agentic Coding Fitness @ Rust Tech Bar", "email": "kwarodom@altotech.ai" },
+  "plugins": [{ "name": "course-quest", "source": "./", "description": "Animated quest through every week of the Agentic Coding Fitness course.", "category": "education" }]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "course-quest",
+  "displayName": "Agentic Quest",
+  "version": "0.1.0",
+  "description": "The whole Agentic Coding Fitness course (Week 2 → 29 + robotics) as an animated quest inside Claude Code: course map, week cards, lab guide, quizzes, XP and badges.",
+  "author": { "name": "Warodom Khamphanchai", "email": "kwarodom@altotech.ai" },
+  "repository": "https://github.com/kwarodom/agenticaicodingfitness",
+  "license": "MIT",
+  "keywords": ["education", "mods", "course", "gamification", "agentic-coding-fitness"],
+  "types": "./types/index.d.ts"
+}

@@ -29,6 +29,17 @@
       "license": "MIT",
       "keywords": ["mods", "claude-code", "education", "hooks"],
       "category": "education"
+    },
+    {
+      "name": "course-quest",
+      "displayName": "Agentic Quest",
+      "source": "./plugins/course-quest",
+      "description": "The whole course (Week 2 → 29 + robotics) as an animated quest inside Claude Code: course map, week cards with animated flows, lab guide with exact commands, quizzes, XP and badges. Needs Claude Code 2.1.287+.",
+      "version": "0.1.0",
+      "author": { "name": "Agentic Coding Fitness" },
+      "license": "MIT",
+      "keywords": ["mods", "course", "gamification", "education"],
+      "category": "education"
     }
   ]
 }
