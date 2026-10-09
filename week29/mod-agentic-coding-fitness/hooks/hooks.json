@@ -1,0 +1,16 @@
+{
+  "description": "Agentic Coding Fitness: progress-tracking mod plus one classic settings hook",
+  "modules": ["./register.js"],
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/session-end.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

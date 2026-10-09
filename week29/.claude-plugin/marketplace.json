@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace-manifest.json",
+  "name": "fitness-week29",
+  "owner": { "name": "Agentic Coding Fitness @ Rust Tech Bar", "email": "kwarodom@altotech.ai" },
+  "description": "Week 29 · Claude Code mods: the Mod Gym teaching panel, plus the finished hello-mod lab for reference.",
+  "plugins": [
+    { "name": "mod-gym", "source": "./mod-gym", "description": "In-terminal panel that teaches Claude Code mods: 8 lessons, live hook tape, checks on your lab mod.", "category": "education" },
+    { "name": "hello-mod", "source": "./reference/hello-mod", "description": "The Week 29 lab mod as it stands after lesson 08 (reference solution).", "category": "education" }
+  ]
+}

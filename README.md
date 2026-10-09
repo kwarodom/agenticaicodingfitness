@@ -165,6 +165,12 @@ Build the thing that builds the software: linted tickets on a kanban, drained by
 - 7 labs: run someone else's factory · the ticket + Builder lane · the QA lane (test-gap ledger, red-first, forensics) · Review + merge gate (review remembers, adversarial truth-check) · guards + evals · telemetry to tickets · a 48-hour capstone graded on honest metrics.
 - **Alto Mini** (`week27/00_alto_mini/`) is the target app with seeded, ticketable bugs; [`week27/factory/`](week27/factory/) is the starter kit (lane skills, hooks + tests, `factory-run.sh`, `merge-gate.sh`, stub Sentry/PostHog collectors, three eval cases with an offline `gh` stub). Offline parts are tested; the live-CLI run is Lab 05's job.
 
+#### 🔹 Week 29: Claude Code Mods, Learned Inside Claude Code
+**Change the coding agent you use every day.** Mods are TypeScript hooks, shipped in a plugin, that run inside Claude Code and can watch, rewrite or take over a tool call, a prompt or part of the screen. You learn them in a panel inside your own terminal: **🏋 Mod Gym**, itself a mod.
+- 👉 **Start here:** `claude plugin marketplace add ./week29` then `claude plugin install mod-gym@fitness-week29`, and type **`/mod-gym`** in Claude Code (2.1.287+) · [`week29/README.md`](week29/README.md)
+- 8 modules, EN + ไทย: what a mod is (and how to audit one) · a first mod in three files · the hook pipeline (observe, rewrite, wrap, answer) · guards that fail closed · panes, bands, status and toasts · state that survives a reload · slash commands, tools Claude calls and side models · test, validate and ship, with a capstone fixing an untested starter.
+- You grow one lab mod, `hello-mod`, and the panel checks it lesson by lesson; its Events tab shows Mod Gym's own hooks watching your session live.
+
 ### 🦾 Special track: Agentic Robotics (SO-ARM101)
 From a simulated SO-ARM101 arm to a tool-using robot agent, in numbered lessons: MuJoCo manual control → record/replay → kinematic pick-and-place → active perception with the wrist camera → semantic scene → **agentic manipulation** (safe robot tools for an LLM) → a guided full pipeline. A workshop portal (`08_workshop_portal/`, **http://127.0.0.1:8000**) operates the simulation or a safety-gated LeRobot path to the physical arm.
 - 👉 **Start here → [`week_agentic_robotic/README.md`](week_agentic_robotic/README.md)** (`00_getting_started/check_setup.py` first).

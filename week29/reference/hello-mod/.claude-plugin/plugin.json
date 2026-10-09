@@ -1,0 +1,6 @@
+{
+  "name": "hello-mod",
+  "version": "0.8.0",
+  "description": "Mod Gym lab mod, finished: spinner suffix, tool counter, force-push guard, band, reps state, /reps and log_reps.",
+  "types": "./types/index.d.ts"
+}

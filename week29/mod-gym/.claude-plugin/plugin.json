@@ -1,0 +1,11 @@
+{
+  "name": "mod-gym",
+  "displayName": "Mod Gym",
+  "version": "0.1.0",
+  "description": "Week 29 of Agentic Coding Fitness: an in-terminal panel that teaches Claude Code mods lesson by lesson, checks your lab mod, and shows the hook pipeline live.",
+  "author": { "name": "Warodom Khamphanchai", "email": "kwarodom@altotech.ai" },
+  "repository": "https://github.com/kwarodom/agenticaicodingfitness",
+  "license": "MIT",
+  "keywords": ["education", "mods", "claude-code", "agentic-coding-fitness"],
+  "types": "./types/index.d.ts"
+}

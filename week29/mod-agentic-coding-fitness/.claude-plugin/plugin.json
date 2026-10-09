@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "agentic-coding-fitness",
+  "displayName": "Agentic Coding Fitness",
+  "version": "3.0.0",
+  "description": "Agentic AI class companion: 26+ skills, coach/grader agents, and a progress-tracking mod (/fitness pane, streaks, auto-logged labs).",
+  "author": { "name": "Warodom Khamphanchai", "email": "kwarodom@altotech.ai" },
+  "homepage": "https://lu.ma/jy6d10xq",
+  "repository": "https://github.com/kwarodom/agenticaicodingfitness",
+  "license": "MIT",
+  "keywords": ["education", "agentic-ai", "claude-code", "mod", "progress-tracking", "altotech"]
+}

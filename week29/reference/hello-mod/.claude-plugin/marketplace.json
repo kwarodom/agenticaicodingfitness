@@ -1,0 +1,5 @@
+{
+  "name": "hello-mod",
+  "owner": { "name": "Agentic Coding Fitness student" },
+  "plugins": [{ "name": "hello-mod", "source": "./" }]
+}
