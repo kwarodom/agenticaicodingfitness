@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Alto Mini</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{font:15px/1.4 system-ui,sans-serif;margin:0;background:#f7f6f2;color:#1b1b1b}header{background:#01696f;color:#fff;padding:14px 20px}main{max-width:960px;margin:20px auto;padding:0 16px;display:grid;gap:20px}
+section{background:#fff;border:1px solid #e3e1da;border-radius:8px;padding:16px}h2{margin:0 0 10px;font-size:17px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}
+input[type=range]{width:160px}.muted{color:#777}.err{color:#b00020}button{background:#01696f;color:#fff;border:0;border-radius:6px;padding:6px 10px;cursor:pointer}</style></head>
+<body><header><strong>Alto Mini</strong> · hotel energy · <span class="muted" id="who">qa@example.local</span></header>
+<main>
+<section data-testid="rooms"><h2>Rooms</h2><table><thead><tr><th>Room</th><th>Floor</th><th>Setpoint °C</th><th></th></tr></thead><tbody id="rooms"></tbody></table><p class="err" id="room-err"></p></section>
+<section data-testid="alerts"><h2>Alerts</h2><table><thead><tr><th>When</th><th>Kind</th><th>Message</th><th>Yesterday kWh</th><th></th></tr></thead><tbody id="alerts"></tbody></table></section>
+<section data-testid="dashboard"><h2>Daily kWh — room <select id="hist-room"></select></h2><pre id="hist" class="muted">loading…</pre></section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+async function j(u,o){const r=await fetch(u,o);if(!r.ok)throw new Error(r.status+' '+u);return r.json()}
+async function rooms(){const rs=await j('/api/rooms');$('#rooms').innerHTML=rs.map(r=>`<tr data-testid="room-${r.id}"><td>${r.name}</td><td>${r.floor}</td>
+<td><input type="range" min="15" max="31" step="0.5" value="${r.setpoint}" data-id="${r.id}" aria-label="setpoint ${r.id}"> <span>${r.setpoint}</span></td>
+<td><button data-set="${r.id}">Apply</button></td></tr>`).join('');$('#hist-room').innerHTML=rs.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
+document.querySelectorAll('button[data-set]').forEach(b=>b.onclick=async()=>{const id=b.dataset.set;const v=document.querySelector(`input[data-id="${id}"]`).value;
+try{await j(`/api/rooms/${id}/setpoint`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({setpoint:+v})});$('#room-err').textContent='';rooms()}catch(e){$('#room-err').textContent='Could not set setpoint: '+e.message}})}
+async function alerts(){const as=await j('/api/alerts');$('#alerts').innerHTML=as.map(a=>`<tr data-testid="alert-${a.id}"><td>${a.ts.replace('T',' ')}</td><td>${a.kind}</td><td>${a.message}</td>
+<td>${a.yesterday_kwh==null?'—':a.yesterday_kwh}</td><td>${a.acknowledged?'<span class="muted">acked</span>':`<button data-ack="${a.id}">Ack</button>`}</td></tr>`).join('');
+document.querySelectorAll('button[data-ack]').forEach(b=>b.onclick=async()=>{await j(`/api/alerts/${b.dataset.ack}/ack`,{method:'POST'});alerts()})}
+async function hist(){const id=$('#hist-room').value;try{const h=await j(`/api/rooms/${id}/history?tz=Asia/Bangkok`);$('#hist').textContent=Object.entries(h).map(([d,k])=>`${d}  ${k}`).join('\n')}catch(e){$('#hist').textContent='error: '+e.message}}
+$('#hist-room').onchange=hist;rooms().then(hist);alerts();
+</script></body></html>

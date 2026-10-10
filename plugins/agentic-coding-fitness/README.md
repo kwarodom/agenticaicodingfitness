@@ -2,7 +2,7 @@
 
 A Claude Code plugin that turns **everything we built in class** — plus the strategy blueprint behind it — into skills you can *talk to*. For anyone who couldn't keep up on the day, wants to review at their own pace, or is ready to take an agent from "works on my machine" to **production**.
 
-It's **18 bite-sized skills**, one per big idea, covering the whole course (weeks 2–17). Each skill:
+It's **21 bite-sized skills**, one per big idea, covering the whole course (weeks 2–18 and 27). Each skill:
 - **Teaches** the idea in plain language (no jargon walls),
 - **Shows runnable example code** (with pointers to the real `weekN/` files in this repo),
 - **Offers an interactive guided lab** — a *kata* with a warm-up, a runnable drill (using a tiny `MockLLM` so it costs **$0**), and an explicit pass threshold.
@@ -54,6 +54,7 @@ Just **ask Claude in plain language** — the matching skill activates on its ow
 | "What order should I learn this in?" | `curriculum-and-periodization` |
 | "How do I work *with* the agent without shipping bugs?" | `vibe-coding-and-security` |
 | "How do agents on different teams/frameworks talk?" | `a2a-protocol` |
+| "How do I make agents ship PRs unattended — tickets, lanes, merge gates, guards, evals?" | `software-factory` |
 | "How do I write my *own* skill?" | `skill-authoring` |
 
 Or ask for a lab directly: *"Give me the guided lab for tool use."*
@@ -92,6 +93,12 @@ Or ask for a lab directly: *"Give me the guided lab for tool use."*
 |---|---|---|---|---|
 | 13 | **nemo-agent-toolkit** | NVIDIA NeMo Agent Toolkit: register tools, YAML workflows, supervisor + HITL, observability | W16 | ✅ |
 | 14 | **long-running-and-distributed-agents** | Google ADK durable state machines, pause/resume, webhooks, auth.md credentials, A2A fleet | W17 | ✅ |
+
+### The factory — unattended lanes that ship (week 27)
+
+| # | Skill | Concept | Class weeks | Grounded |
+|---|---|---|---|---|
+| 21 | **software-factory** | Ticket contracts, Build/QA/Review lanes, review-remembers + truth-check, merge gate at the reviewed SHA, guard hooks, plugin evals, telemetry → tickets | W27 | ✅ (`week27/`; not yet run on a live CLI — flagged) |
 
 ### Platform & meta — the map, the discipline, the frontier, the craft
 
