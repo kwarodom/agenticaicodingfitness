@@ -3,6 +3,27 @@
 All notable changes to the **Agentic Coding Fitness** plugin.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] — 2026-10-10
+
+Adds the Week 27 course module and takes the plugin from **20 → 21 skills**. The headline: from *one agent in a terminal* to a **software factory** — unattended lanes that take a linted ticket to a QA'd, reviewed, merged PR, with deterministic guards, behavioural evals and a telemetry-to-tickets loop.
+
+### Added — 1 new skill
+- **software-factory** (W27) — the five contracts (ticket, builder evidence, test-gap ledger, review report, merge decision), Build → QA → Review lanes as one Claude Code skill each with one worktree per issue and state kept only in GitHub, "review remembers" + the adversarial truth-check (min-confidence ≥ 70), the merge gate (`--match-head-commit` at the reviewed SHA; human-only labels `money`/`auth`/`schema`, plus AltoTech's `control`/`tenant`/`pdpa`), five `PreToolUse` guard hooks (exit 2 blocks), `claude plugin eval` cases with WITH/W-OUT deltas, and the self-improving loop (Sentry/PostHog → fresh verifier per candidate → tickets; lookback proposes one change). Grounded in `week27/` (Alto Mini target app, `factory/` starter kit, exercises with tests) and Eric Tech's open-source super-board; ships a $0 kata (ticket lint → guard fuzz → verifier).
+
+### Added — course content (`week27/`)
+- `00_alto_mini/` — the factory target: FastAPI + static page, SQLite seed, Makefile, 6 tests, four seeded ticketable gaps.
+- `factory/` — the starter kit: five lane skills, five guard hooks with offline tests, `factory-run.sh`, `merge-gate.sh`, stub telemetry + collectors, three eval cases with an offline `gh` stub.
+- Labs 01–07 (`TUTORIAL.md` + `exercises/` with tested solutions) and the research brief.
+
+### Changed
+- `guard-protected-push.py` is refspec-aware: the Lab 05 fuzz found `git push origin HEAD:main` slipping past the first version; now blocked, with four new test cases.
+
+### Versioning
+- Bumped `plugin.json` and `.claude-plugin/marketplace.json` to **2.3.0**; descriptions and keywords (`software-factory`, `agentic-sdlc`, `merge-gate`, `guard-hooks`, `plugin-evals`) refreshed. Skills are auto-discovered from `skills/*/SKILL.md`.
+
+### Honest limits
+- Nothing in `week27/factory` has been run against a live Claude Code CLI yet; `claude -p` flags and eval grader names follow the docs as read on 2026-10-10. Thai translations for Week 27 are pending.
+
 ## [2.1.0] — 2026-06-17
 
 Extends the plugin to cover the two newest course weeks (16–17), taking it from **16 → 18 skills**. The headline: agents that survive **real time** (pause for days, resume without losing context) and **service boundaries** (delegate across teams/frameworks), plus a config-driven production framework.
