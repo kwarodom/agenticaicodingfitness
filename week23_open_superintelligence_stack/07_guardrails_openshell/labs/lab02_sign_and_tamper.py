@@ -12,7 +12,7 @@ Runs 100% offline — no GPU, no endpoint, no network. The pattern is the lesson
 verified yet, so this faithful mechanism-level rebuild IS the hands-on path.)
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/07_guardrails_openshell/labs/lab02_sign_and_tamper.py
+      .venv/bin/python week23_open_superintelligence_stack/07_guardrails_openshell/labs/lab02_sign_and_tamper.py
 """
 from __future__ import annotations
 

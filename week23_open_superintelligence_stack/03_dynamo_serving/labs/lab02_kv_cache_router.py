@@ -10,7 +10,7 @@ Two halves:
      ALREADY holds its prefix, instead of recomputing it on a random worker.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/03_dynamo_serving/labs/lab02_kv_cache_router.py
+      .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab02_kv_cache_router.py
 """
 from __future__ import annotations
 

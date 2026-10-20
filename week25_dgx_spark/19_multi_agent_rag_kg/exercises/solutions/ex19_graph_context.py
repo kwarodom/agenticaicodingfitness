@@ -2,7 +2,7 @@
 """Exercise 19 · reference solution — build the graph behind GraphRAG: normalise, de-duplicate, traverse.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/19_multi_agent_rag_kg/exercises/ex19_graph_context.py
+    .venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/exercises/ex19_graph_context.py
 
 The checker is free and offline. Its triples describe the multi-agent chatbot as the
 playbook's docker-compose files and backend code wire it (written by hand for this

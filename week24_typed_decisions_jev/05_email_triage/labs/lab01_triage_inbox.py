@@ -7,7 +7,7 @@ Six synthetic emails → ONE Jev call each (a category + four yes/no signals)
 Nothing is sent, deleted, forwarded or labelled. The output is a proposal that a
 human reviews. That is the whole design: Jev judges, code decides, people act.
 
-Run: .venv/bin/python week24/05_email_triage/labs/lab01_triage_inbox.py
+Run: .venv/bin/python week24_typed_decisions_jev/05_email_triage/labs/lab01_triage_inbox.py
 """
 import json
 import sys

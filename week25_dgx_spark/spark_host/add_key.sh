@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Manage which laptops can ssh into sparklab@<this spark>.
-#   sudo week25/spark_host/add_key.sh alice.pub [bob.pub ...]   # or a quoted "ssh-ed25519 AAAA… alice" line
-#   sudo week25/spark_host/add_key.sh --list
-#   sudo week25/spark_host/add_key.sh --remove alice            # removes keys whose comment contains "alice"
+#   sudo week25_dgx_spark/spark_host/add_key.sh alice.pub [bob.pub ...]   # or a quoted "ssh-ed25519 AAAA… alice" line
+#   sudo week25_dgx_spark/spark_host/add_key.sh --list
+#   sudo week25_dgx_spark/spark_host/add_key.sh --remove alice            # removes keys whose comment contains "alice"
 set -euo pipefail
 [[ $EUID -eq 0 ]] || { echo "run with sudo" >&2; exit 1; }
 AK=/home/sparklab/.ssh/authorized_keys

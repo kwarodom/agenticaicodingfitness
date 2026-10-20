@@ -258,8 +258,8 @@
             "runnable": true,
             "how": "The full blueprint deploys via NVIDIA-AI-Blueprints repos against NIM endpoints; the faithful teaching version is App 05, which runs the router/deep-agent/fan-out pattern against your local Ollama Nemotron or in SIM.",
             "commands": [
-              "uv pip install -r week23/05_aiq_research_lab/requirements.txt",
-              ".venv/bin/python week23/05_aiq_research_lab/tutorial_server.py",
+              "uv pip install -r week23_open_superintelligence_stack/05_aiq_research_lab/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/tutorial_server.py",
               "git clone https://github.com/NVIDIA-AI-Blueprints/aiq-research-assistant"
             ]
           },
@@ -291,8 +291,8 @@
             "how": "A young project — clone the repo and follow its README to define agent specs against your local Nemotron endpoint; App 06 teaches the spec/equip/guard/fleet flow faithfully in SIM or against Ollama.",
             "commands": [
               "git clone https://github.com/NVIDIA/NemoClaw",
-              "uv pip install -r week23/06_nemoclaw/requirements.txt",
-              ".venv/bin/python week23/06_nemoclaw/tutorial_server.py"
+              "uv pip install -r week23_open_superintelligence_stack/06_nemoclaw/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -321,7 +321,7 @@
             "commands": [
               "uv pip install nemoguardrails",
               "nemoguardrails chat --config ./config",
-              ".venv/bin/python week23/07_guardrails_openshell/tutorial_server.py"
+              ".venv/bin/python week23_open_superintelligence_stack/07_guardrails_openshell/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -351,8 +351,8 @@
             "runnable": "partial",
             "how": "OpenShell is early-stage (announced via NVIDIA's developer blog); App 07 runs the full authoring→signing→gateway→sandbox flow faithfully in SIM, with the policy grammar and egress-allowlist behavior real enough to design against.",
             "commands": [
-              "uv pip install -r week23/07_guardrails_openshell/requirements.txt",
-              ".venv/bin/python week23/07_guardrails_openshell/tutorial_server.py"
+              "uv pip install -r week23_open_superintelligence_stack/07_guardrails_openshell/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/07_guardrails_openshell/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -380,7 +380,7 @@
             "commands": [
               "uv pip install arize-phoenix openinference-instrumentation-openai",
               "python -m phoenix.server.main serve",
-              ".venv/bin/python week23/08_nemo_relay/tutorial_server.py"
+              ".venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -416,8 +416,8 @@
             "how": "Fully runnable — benchmark your own box's tokens/sec (ollama --verbose prints eval rates), read wall power, and App 09's calculators do the rest in REAL or SIM.",
             "commands": [
               "ollama run nemotron-3-nano:30b-a3b --verbose \"Write one sentence about chillers.\"",
-              "uv pip install -r week23/09_inference_economics/requirements.txt",
-              ".venv/bin/python week23/09_inference_economics/tutorial_server.py"
+              "uv pip install -r week23_open_superintelligence_stack/09_inference_economics/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/09_inference_economics/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -445,8 +445,8 @@
             "commands": [
               "git clone https://github.com/NVIDIA-NeMo/RL",
               "git clone https://github.com/NVIDIA-NeMo/Gym",
-              "uv pip install -r week23/10_nemo_gym_rl/requirements.txt",
-              ".venv/bin/python week23/10_nemo_gym_rl/tutorial_server.py"
+              "uv pip install -r week23_open_superintelligence_stack/10_nemo_gym_rl/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -474,8 +474,8 @@
             "how": "The blueprint deploys via docker compose but its NeMo microservices are sized for datacenter GPUs; on one Spark the realistic scope is Curator runs, LoRA fine-tunes of small models, and evaluation — App 11 runs the full loop's logic in SIM or against your local endpoint.",
             "commands": [
               "git clone https://github.com/NVIDIA-AI-Blueprints/data-flywheel",
-              "uv pip install -r week23/11_data_flywheel/requirements.txt",
-              ".venv/bin/python week23/11_data_flywheel/tutorial_server.py"
+              "uv pip install -r week23_open_superintelligence_stack/11_data_flywheel/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/tutorial_server.py"
             ]
           },
           "on_cloud": {
@@ -503,8 +503,8 @@
             "runnable": true,
             "how": "Runs fully on a Spark against a local Nemotron via Ollama (REAL) or with no GPU at all (SIM) — the whole fleet, tools, and hotel state are local Python.",
             "commands": [
-              "uv pip install -r week23/12_capstone_smart_hotel/requirements.txt",
-              ".venv/bin/python week23/12_capstone_smart_hotel/tutorial_server.py"
+              "uv pip install -r week23_open_superintelligence_stack/12_capstone_smart_hotel/requirements.txt",
+              ".venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/tutorial_server.py"
             ]
           },
           "on_cloud": {

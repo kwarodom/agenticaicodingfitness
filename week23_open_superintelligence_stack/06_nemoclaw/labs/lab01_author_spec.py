@@ -8,7 +8,7 @@ the SAME question twice: bare vs wearing the persona. The diff IS the lesson:
 a spec turns a general model into a specialist without touching weights.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/06_nemoclaw/labs/lab01_author_spec.py
+      .venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/labs/lab01_author_spec.py
 """
 from __future__ import annotations
 

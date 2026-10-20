@@ -63,7 +63,7 @@ def main() -> None:
     print("\n✓ Checkpoint 7 passed — same task, fewer turns and lower cost each run, "
           "with NO human tuning. The agent wrote the skill it then reused.")
     print("\n  ▶ Next: see the REAL LLM version evolve live —")
-    print("      .venv/bin/python week18/self_evolving_agent/server.py")
+    print("      .venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/server.py")
 
 
 if __name__ == "__main__":

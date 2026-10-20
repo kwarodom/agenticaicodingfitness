@@ -2,7 +2,7 @@
 """Exercise 21 · reference solution — the goal → playbook router and a test set it passes.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/21_playbook_atlas/exercises/ex21_goal_router.py
+    .venv/bin/python week25_dgx_spark/21_playbook_atlas/exercises/ex21_goal_router.py
 
 The checker is free and offline: it tests your tokenizer and IDF on known inputs, indexes the 64 local
 playbook READMEs with them, runs three built-in goals, then runs YOUR test set. Every expected playbook

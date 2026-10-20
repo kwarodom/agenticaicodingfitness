@@ -34,7 +34,7 @@ And one fact that changes how you write everything: **the question id is never s
 "Is this email important?" — important to whom, for what? A person would guess your intent. Jev answers the words. Lab 01 asks a vague and a precise version of the same business rule ("does operations need to act today?") **in the same request** — they are independent, so they cannot influence each other.
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab01_vague_vs_precise.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab01_vague_vs_precise.py
 ```
 
 **Expected output**
@@ -108,7 +108,7 @@ Experiments: change the work order site to "Siam Tower". Then change the asset t
 **Speculative fan-out.** Jev ingests the state once and answers all questions in parallel. So ask everything you *might* need in one call — even questions for branches you may not take — and let code use only the relevant answers.
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab02_fanout_one_call.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab02_fanout_one_call.py
 ```
 
 **Expected output**
@@ -139,7 +139,7 @@ When is a *second* call justified? Only when a later question genuinely depends 
 Jev is a judgment model, not a calculator. Lab 03 asks it ten arithmetic-style questions right at the edges — "is 26.0 **more than** 2.0 above 24.0?", mixed date formats, counting alarms — and compares with one line of Python each.
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab03_math_in_code.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab03_math_in_code.py
 ```
 
 **Expected output**
@@ -174,7 +174,7 @@ Jev judges:      "Does the operator note report occupants feeling uncomfortable?
 State is text you did not write. Anyone who can send you an email can put instructions in it. Lab 04 asks three questions about five emails: a plain urgency question, the same question **guarded** (the `GUARD` sentence + criteria that define what counts), and an injection detector.
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab04_prompt_injection.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab04_prompt_injection.py
 ```
 
 **Expected output**
@@ -239,7 +239,7 @@ Experiments:
 
 ## Try it yourself
 
-**Exercise 03 — fix the questions.** Open `week24/03_question_design/exercises/ex03_fix_the_questions.py`. It contains three deliberately broken questions:
+**Exercise 03 — fix the questions.** Open `week24_typed_decisions_jev/03_question_design/exercises/ex03_fix_the_questions.py`. It contains three deliberately broken questions:
 
 | Bad question | Flaw |
 |---|---|
@@ -250,7 +250,7 @@ Experiments:
 Write `good_outage`, `good_team` and `good_callback`. The checker asks bad and good together on six labeled messages and reports accuracy **and clarity** (how far the nouls sit from 0.5).
 
 ```bash
-.venv/bin/python week24/03_question_design/exercises/ex03_fix_the_questions.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/exercises/ex03_fix_the_questions.py
 ```
 
 **Expected output**

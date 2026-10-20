@@ -1,0 +1,47 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "ได้กลิ่นไหม้แถวตู้ไฟชั้น 3 ใกล้ห้อง 1203 รีบมาดูด่วนค่ะ"
+  },
+  "questions": {
+   "problem_room": {
+    "type": "choice",
+    "instructions": "Which room in `message` has the problem that needs a technician?",
+    "criteria": {
+     "room_3": "room 3",
+     "room_1203": "room 1203",
+     "none_of_these": "the problem is not in any of these rooms, or the rooms are not stated"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "problem_room": {
+    "type": "choice",
+    "choice": "room_1203",
+    "confidence": 0.88,
+    "probabilities": {
+     "room_3": 0.02,
+     "room_1203": 0.92,
+     "none_of_these": 0.06
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.94
+   }
+  },
+  "usage": {
+   "input_tokens": 443,
+   "output_tokens": 73
+  }
+ }
+}

@@ -47,11 +47,11 @@ clone มีการเปลี่ยนแปลงเรื่อย ๆ ถ
 
 ## 1 · แผนที่: playbook 64 ตัว ครอบคลุมไปแล้ว 38 ตัว อีก 26 ตัวอยู่ที่นี่
 
-repository ของ NVIDIA มีมากกว่าแค่ DGX Spark playbook README แต่ละตัวมีตาราง **Supported hardware platforms** และ playbook บางตัวระบุแค่ DGX Station (GB300) หรือ RTX PC ก่อนจะเสียเวลาทั้งเย็นไปกับ playbook ตัวไหน ให้ตรวจตารางนั้นก่อน Lab 21-1 อ่านตารางนี้จาก playbook ทั้ง 64 ตัว แล้ว join กับตารางโมดูลใน `week25/AUTHORING.md`:
+repository ของ NVIDIA มีมากกว่าแค่ DGX Spark playbook README แต่ละตัวมีตาราง **Supported hardware platforms** และ playbook บางตัวระบุแค่ DGX Station (GB300) หรือ RTX PC ก่อนจะเสียเวลาทั้งเย็นไปกับ playbook ตัวไหน ให้ตรวจตารางนั้นก่อน Lab 21-1 อ่านตารางนี้จาก playbook ทั้ง 64 ตัว แล้ว join กับตารางโมดูลใน `week25_dgx_spark/AUTHORING.md`:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_1_playbook_atlas.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_1_playbook_atlas.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ตาราง 64 แถวถูกย่อไว้ในที่นี้)
@@ -605,7 +605,7 @@ make check
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ แสดง 2 จาก 10 เป้าหมายตัวอย่าง)
@@ -648,8 +648,8 @@ make check
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy"
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy" --spark
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy"
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy" --spark
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ แสดงสองแถวบนสุดของแต่ละการรัน โดยเพิ่มเส้นคั่นระหว่างสองการรัน)
@@ -668,7 +668,7 @@ make check
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_3_budget_planner.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_3_budget_planner.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
@@ -724,11 +724,11 @@ make check
 
 **labs/lab21_3_budget_planner.py** — เวลา ดิสก์ และบัญชีหรือฮาร์ดแวร์ที่ต้องใช้สำหรับ playbook ชุดหนึ่ง จัดเป็นรอบ (session)
 
-ทั้งสามรันบนแล็ปท็อปแบบออฟไลน์ในไม่กี่วินาที ไม่แตะ Spark เลย: อ่านแค่ clone ของ playbook และ `week25/AUTHORING.md`
+ทั้งสามรันบนแล็ปท็อปแบบออฟไลน์ในไม่กี่วินาที ไม่แตะ Spark เลย: อ่านแค่ clone ของ playbook และ `week25_dgx_spark/AUTHORING.md`
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 21 — ตัว route เป้าหมายและชุดทดสอบของมัน** เปิด `week25/21_playbook_atlas/exercises/ex21_goal_router.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 21 — ตัว route เป้าหมายและชุดทดสอบของมัน** เปิด `week25_dgx_spark/21_playbook_atlas/exercises/ex21_goal_router.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `tokenize(text)`: แปลงเป็นตัวพิมพ์เล็ก แยกคำตรงอักขระที่ไม่ใช่ตัวอักษรหรือตัวเลข ตัดคำยาว 1 ตัวอักษรและ stopword ออก
 2. `idf(docs)`: inverse document frequency แบบ smooth `log((1+N)/(1+df)) + 1`
@@ -738,7 +738,7 @@ make check
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/exercises/ex21_goal_router.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/exercises/ex21_goal_router.py
 ```
 
 **Expected output** (คำตอบอ้างอิง บันทึกจาก Mac เครื่องนี้)

@@ -9,7 +9,7 @@ you test negations, conditions and "no outage" phrasing yourself.
 This lab sends 8 short messages (EN + TH), one call each, and compares Jev's
 answers with the human reading. Whatever the scores, NOTHING is actuated.
 
-Run: .venv/bin/python week24/10_jev_vs_laya/labs/lab04_negation_probe.py
+Run: .venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab04_negation_probe.py
 """
 import sys
 from pathlib import Path

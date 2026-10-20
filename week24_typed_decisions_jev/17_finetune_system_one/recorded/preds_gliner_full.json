@@ -1,0 +1,1677 @@
+{
+"039be7c17c6a": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9997944235801697,
+"ms": 4797.7
+},
+"4ff439bc05ce": {
+"queue": "hvac",
+"queue_p": 0.9999936819076538,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9869792461395264,
+"ms": 61.1
+},
+"22510f89061f": {
+"queue": "hvac",
+"queue_p": 0.9999938011169434,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9889560341835022,
+"ms": 60.5
+},
+"99d56cb4529b": {
+"queue": "hvac",
+"queue_p": 0.9999986886978149,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9998062252998352,
+"ms": 63.6
+},
+"9ab769ed8b87": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 1.0,
+"ms": 61.4
+},
+"4e0ae7a77009": {
+"queue": "hvac",
+"queue_p": 0.999997615814209,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9971708655357361,
+"ms": 63.8
+},
+"27b3ffcc2aa8": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9998793601989746,
+"ms": 61.1
+},
+"93f5ad792a4c": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9998470544815063,
+"ms": 65.0
+},
+"467ccbb75682": {
+"queue": "hvac",
+"queue_p": 0.9999657869338989,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.999998927116394,
+"ms": 62.3
+},
+"d0aa767617d3": {
+"queue": "hvac",
+"queue_p": 0.9999994039535522,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999622106552124,
+"ms": 62.1
+},
+"57c9c68a429e": {
+"queue": "hvac",
+"queue_p": 0.9999990463256836,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9945588707923889,
+"ms": 67.1
+},
+"09648ebd9d07": {
+"queue": "hvac",
+"queue_p": 0.9995906949043274,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999926090240479,
+"ms": 63.8
+},
+"b38a8a394670": {
+"queue": "hvac",
+"queue_p": 0.9999996423721313,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999486207962036,
+"ms": 62.2
+},
+"c69e2fa67cdb": {
+"queue": "hvac",
+"queue_p": 0.9999996423721313,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999663829803467,
+"ms": 62.0
+},
+"fe7e46197ab4": {
+"queue": "hvac",
+"queue_p": 0.9996685981750488,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999814033508301,
+"ms": 62.9
+},
+"38e58fd51cb0": {
+"queue": "hvac",
+"queue_p": 0.9994321465492249,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.999997615814209,
+"ms": 64.3
+},
+"d942bc2a4480": {
+"queue": "housekeeping",
+"queue_p": 0.9999970197677612,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999997615814209,
+"ms": 61.6
+},
+"58ee3a22a434": {
+"queue": "housekeeping",
+"queue_p": 0.9950711727142334,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 62.7
+},
+"6e5736fd3e8e": {
+"queue": "housekeeping",
+"queue_p": 0.9999997615814209,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 61.3
+},
+"16c0b4f68219": {
+"queue": "housekeeping",
+"queue_p": 0.9999217987060547,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 62.4
+},
+"f0729299e2b9": {
+"queue": "housekeeping",
+"queue_p": 0.9999980926513672,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 61.8
+},
+"f8580eb91017": {
+"queue": "housekeeping",
+"queue_p": 0.999997615814209,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999997615814209,
+"ms": 61.7
+},
+"a743dc1ca795": {
+"queue": "housekeeping",
+"queue_p": 0.9999830722808838,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 59.5
+},
+"3441b251fe59": {
+"queue": "housekeeping",
+"queue_p": 0.9999886751174927,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 61.7
+},
+"e2c3edbdb445": {
+"queue": "front_desk",
+"queue_p": 0.9727972745895386,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9990015625953674,
+"ms": 62.2
+},
+"ef67a2833f30": {
+"queue": "housekeeping",
+"queue_p": 0.5611088871955872,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9989180564880371,
+"ms": 59.9
+},
+"108e0d9ea713": {
+"queue": "housekeeping",
+"queue_p": 0.9996391534805298,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 61.0
+},
+"fd9935a60dba": {
+"queue": "housekeeping",
+"queue_p": 0.7273284196853638,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9985455274581909,
+"ms": 60.5
+},
+"3fc766047e11": {
+"queue": "front_desk",
+"queue_p": 0.9953162670135498,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999210834503174,
+"ms": 66.4
+},
+"d4f563ee37f5": {
+"queue": "housekeeping",
+"queue_p": 0.999982476234436,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 62.3
+},
+"92fb36be04d4": {
+"queue": "housekeeping",
+"queue_p": 0.6385776996612549,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 60.0
+},
+"bfc2711cf200": {
+"queue": "housekeeping",
+"queue_p": 0.7350128293037415,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 60.1
+},
+"ba498e3b9b25": {
+"queue": "plumbing",
+"queue_p": 0.9999994039535522,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9883667826652527,
+"ms": 70.8
+},
+"ee58471fd4c7": {
+"queue": "plumbing",
+"queue_p": 0.999987006187439,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9863871335983276,
+"ms": 74.8
+},
+"a8d2da52b69e": {
+"queue": "plumbing",
+"queue_p": 0.9999958276748657,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.6304436326026917,
+"ms": 65.8
+},
+"1221721f5c72": {
+"queue": "plumbing",
+"queue_p": 0.9999996423721313,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9862886667251587,
+"ms": 64.0
+},
+"b2f7586f4456": {
+"queue": "plumbing",
+"queue_p": 0.9999983310699463,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 62.0
+},
+"555dd1166e75": {
+"queue": "plumbing",
+"queue_p": 0.999929666519165,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.8660798072814941,
+"ms": 61.6
+},
+"922ee042b60a": {
+"queue": "plumbing",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999996423721313,
+"ms": 63.2
+},
+"c13242a35bf5": {
+"queue": "plumbing",
+"queue_p": 0.999997615814209,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.916573166847229,
+"ms": 62.9
+},
+"c3c6eb9bf01b": {
+"queue": "plumbing",
+"queue_p": 0.9999904632568359,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9997789263725281,
+"ms": 58.5
+},
+"dcb0323d6a11": {
+"queue": "plumbing",
+"queue_p": 0.9999876022338867,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9996984004974365,
+"ms": 58.5
+},
+"e0f180f4f350": {
+"queue": "plumbing",
+"queue_p": 0.9999954700469971,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999876022338867,
+"ms": 60.6
+},
+"053795052f2d": {
+"queue": "plumbing",
+"queue_p": 0.9999508857727051,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999964237213135,
+"ms": 60.5
+},
+"403e24da28c3": {
+"queue": "plumbing",
+"queue_p": 0.9999961853027344,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999916553497314,
+"ms": 61.7
+},
+"9d6f6b764fba": {
+"queue": "plumbing",
+"queue_p": 0.9999918937683105,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999951124191284,
+"ms": 61.8
+},
+"87d13ec46953": {
+"queue": "plumbing",
+"queue_p": 0.9999459981918335,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999841451644897,
+"ms": 60.5
+},
+"4a9c54f81a87": {
+"queue": "plumbing",
+"queue_p": 0.9999939203262329,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999942779541016,
+"ms": 61.4
+},
+"a75d169c34f7": {
+"queue": "safety",
+"queue_p": 0.9999231100082397,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.9579586386680603,
+"ms": 62.0
+},
+"dc68f4e191c4": {
+"queue": "safety",
+"queue_p": 0.9998475313186646,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999833106994629,
+"ms": 60.6
+},
+"12482b40f6a4": {
+"queue": "safety",
+"queue_p": 0.9999362230300903,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999966621398926,
+"ms": 61.2
+},
+"3f365531c142": {
+"queue": "safety",
+"queue_p": 0.9998493194580078,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 1.0,
+"ms": 61.6
+},
+"478fe1352291": {
+"queue": "safety",
+"queue_p": 0.999903678894043,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 1.0,
+"ms": 61.8
+},
+"dc3a8946b07a": {
+"queue": "safety",
+"queue_p": 0.999933123588562,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999988079071045,
+"ms": 61.6
+},
+"028eb5671ec8": {
+"queue": "safety",
+"queue_p": 0.9998818635940552,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999734163284302,
+"ms": 61.0
+},
+"b63548fdeb5e": {
+"queue": "safety",
+"queue_p": 0.9999685287475586,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 1.0,
+"ms": 62.2
+},
+"03dd3599faa3": {
+"queue": "plumbing",
+"queue_p": 0.9996126294136047,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999843835830688,
+"ms": 63.1
+},
+"21628be64fa8": {
+"queue": "plumbing",
+"queue_p": 0.9996402263641357,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9990110397338867,
+"ms": 61.3
+},
+"881a596991ae": {
+"queue": "plumbing",
+"queue_p": 0.9995686411857605,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9993858337402344,
+"ms": 59.9
+},
+"1e3bd053e1fe": {
+"queue": "plumbing",
+"queue_p": 0.9692251682281494,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999998807907104,
+"ms": 63.1
+},
+"29b07985d279": {
+"queue": "plumbing",
+"queue_p": 0.9991323351860046,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999969005584717,
+"ms": 61.4
+},
+"61ed6e06e30e": {
+"queue": "plumbing",
+"queue_p": 0.9881384968757629,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9965597987174988,
+"ms": 62.9
+},
+"54aeb431fbd2": {
+"queue": "plumbing",
+"queue_p": 0.9997262358665466,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9993183612823486,
+"ms": 60.6
+},
+"c87c05b27201": {
+"queue": "plumbing",
+"queue_p": 0.8795089721679688,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999992847442627,
+"ms": 61.1
+},
+"44ac8323bd1a": {
+"queue": "front_desk",
+"queue_p": 0.9999425411224365,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9906874299049377,
+"ms": 61.8
+},
+"c7b7f19f6d21": {
+"queue": "front_desk",
+"queue_p": 0.9999903440475464,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999992847442627,
+"ms": 63.5
+},
+"0f6321acff49": {
+"queue": "front_desk",
+"queue_p": 0.9999183416366577,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.844934344291687,
+"ms": 61.0
+},
+"8b97a86aef16": {
+"queue": "front_desk",
+"queue_p": 0.9999912977218628,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999992847442627,
+"ms": 62.1
+},
+"39d843da3451": {
+"queue": "front_desk",
+"queue_p": 0.9999973773956299,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.999998927116394,
+"ms": 62.6
+},
+"c8a7be7a53c4": {
+"queue": "front_desk",
+"queue_p": 0.9999356269836426,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9774102568626404,
+"ms": 63.3
+},
+"3652873dd0b0": {
+"queue": "front_desk",
+"queue_p": 0.9999140501022339,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9126265048980713,
+"ms": 61.0
+},
+"95aa3dc0f919": {
+"queue": "front_desk",
+"queue_p": 0.9999233484268188,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9929258823394775,
+"ms": 62.2
+},
+"5042cba98d15": {
+"queue": "hvac",
+"queue_p": 0.4654384255409241,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 62.6
+},
+"a3da8181c395": {
+"queue": "hvac",
+"queue_p": 0.9089553356170654,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999995231628418,
+"ms": 61.8
+},
+"8eee95d5d5b3": {
+"queue": "hvac",
+"queue_p": 0.9195088148117065,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999995231628418,
+"ms": 61.0
+},
+"f0b326c345de": {
+"queue": "front_desk",
+"queue_p": 0.6659880876541138,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 60.7
+},
+"fd4197b30721": {
+"queue": "hvac",
+"queue_p": 0.6679803729057312,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 61.2
+},
+"699cce1e244f": {
+"queue": "hvac",
+"queue_p": 0.9413225054740906,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 62.3
+},
+"728650cffd09": {
+"queue": "hvac",
+"queue_p": 0.9950072765350342,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 61.8
+},
+"9c5d3dbfd360": {
+"queue": "front_desk",
+"queue_p": 0.8872127532958984,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999973773956299,
+"ms": 62.5
+},
+"4a7c9a6b8870": {
+"queue": "hvac",
+"queue_p": 0.9999991655349731,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999990463256836,
+"ms": 61.7
+},
+"feed93d63c08": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9998599290847778,
+"ms": 68.3
+},
+"65fdad0f5b56": {
+"queue": "hvac",
+"queue_p": 0.9999994039535522,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9998996257781982,
+"ms": 70.4
+},
+"bd51672b8b5d": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999803304672241,
+"ms": 65.6
+},
+"6d4b57eadd80": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999849796295166,
+"ms": 63.1
+},
+"cba3c06ebe27": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.6853411793708801,
+"ms": 61.6
+},
+"756db351e372": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999856948852539,
+"ms": 60.8
+},
+"f361e86ea462": {
+"queue": "hvac",
+"queue_p": 0.9999992847442627,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999998807907104,
+"ms": 60.9
+},
+"0718a68bbff7": {
+"queue": "housekeeping",
+"queue_p": 0.9991538524627686,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9230745434761047,
+"ms": 61.0
+},
+"89aa07bc9b90": {
+"queue": "housekeeping",
+"queue_p": 0.9992475509643555,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.95505291223526,
+"ms": 62.3
+},
+"9984841e901e": {
+"queue": "front_desk",
+"queue_p": 0.553115963935852,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.8617837429046631,
+"ms": 61.5
+},
+"d2a0b55820c8": {
+"queue": "housekeeping",
+"queue_p": 0.9984810948371887,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999233484268188,
+"ms": 60.6
+},
+"3255c0d383af": {
+"queue": "housekeeping",
+"queue_p": 0.9985724687576294,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9083733558654785,
+"ms": 66.3
+},
+"ddb5c3088ef7": {
+"queue": "housekeeping",
+"queue_p": 0.9972328543663025,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9524407982826233,
+"ms": 61.5
+},
+"b3e44e6d8a62": {
+"queue": "front_desk",
+"queue_p": 0.6939574480056763,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.997760534286499,
+"ms": 60.8
+},
+"bb6dc8332024": {
+"queue": "front_desk",
+"queue_p": 0.6316472887992859,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9830779433250427,
+"ms": 60.3
+},
+"d1e39dd86114": {
+"queue": "plumbing",
+"queue_p": 0.9999938011169434,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999986886978149,
+"ms": 60.7
+},
+"f8715e6d3855": {
+"queue": "plumbing",
+"queue_p": 0.9999712705612183,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9985997080802917,
+"ms": 64.9
+},
+"de2072c8b322": {
+"queue": "plumbing",
+"queue_p": 0.9999932050704956,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999977350234985,
+"ms": 63.8
+},
+"ff430a7e66ca": {
+"queue": "plumbing",
+"queue_p": 0.9999932050704956,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.5761168003082275,
+"ms": 61.6
+},
+"e5ed980da0e9": {
+"queue": "plumbing",
+"queue_p": 0.9999911785125732,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9999884366989136,
+"ms": 62.9
+},
+"f51d68e1ceae": {
+"queue": "plumbing",
+"queue_p": 0.9999939203262329,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9997356534004211,
+"ms": 63.1
+},
+"78b3ca36dec9": {
+"queue": "plumbing",
+"queue_p": 0.9999899864196777,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9790271520614624,
+"ms": 61.6
+},
+"0fb7b0af5d30": {
+"queue": "plumbing",
+"queue_p": 0.9998373985290527,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9995275735855103,
+"ms": 63.4
+},
+"c53a71ad4167": {
+"queue": "safety",
+"queue_p": 0.9999374151229858,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999996423721313,
+"ms": 60.5
+},
+"9147ac7b0c64": {
+"queue": "safety",
+"queue_p": 0.9999399185180664,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999996423721313,
+"ms": 61.4
+},
+"db31ea8fe4c4": {
+"queue": "safety",
+"queue_p": 0.999902606010437,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999991655349731,
+"ms": 64.8
+},
+"b3fd423492b1": {
+"queue": "safety",
+"queue_p": 0.9999772310256958,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 1.0,
+"ms": 64.3
+},
+"d60b00a59940": {
+"queue": "safety",
+"queue_p": 0.9998569488525391,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9968414306640625,
+"ms": 60.2
+},
+"e541cb978ea3": {
+"queue": "safety",
+"queue_p": 0.9999537467956543,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 1.0,
+"ms": 63.0
+},
+"0c755a9ba5b8": {
+"queue": "safety",
+"queue_p": 0.9998922348022461,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9954745173454285,
+"ms": 67.3
+},
+"ccbf7c801604": {
+"queue": "safety",
+"queue_p": 0.9999597072601318,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999998807907104,
+"ms": 61.0
+},
+"f909daec84d9": {
+"queue": "front_desk",
+"queue_p": 0.9999932050704956,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 59.6
+},
+"fd8f20b06d4c": {
+"queue": "front_desk",
+"queue_p": 0.9999959468841553,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9995949864387512,
+"ms": 61.9
+},
+"c3486384d5f2": {
+"queue": "front_desk",
+"queue_p": 0.9999947547912598,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.999651312828064,
+"ms": 60.8
+},
+"8259b5782d3d": {
+"queue": "front_desk",
+"queue_p": 0.9999942779541016,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999642372131348,
+"ms": 64.0
+},
+"0911f2775bc1": {
+"queue": "front_desk",
+"queue_p": 0.9999926090240479,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999282360076904,
+"ms": 61.3
+},
+"aad4511d8a89": {
+"queue": "front_desk",
+"queue_p": 0.9999920129776001,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999679327011108,
+"ms": 61.1
+},
+"294832167542": {
+"queue": "front_desk",
+"queue_p": 0.9999850988388062,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999887943267822,
+"ms": 62.0
+},
+"5eb357bd92dd": {
+"queue": "front_desk",
+"queue_p": 0.9999879598617554,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.999976396560669,
+"ms": 66.1
+},
+"_recorded_at": "2026-10-17",
+"78f04c67596e": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999593496322632,
+"ms": 4722.2
+},
+"8758b2e5ecd2": {
+"queue": "housekeeping",
+"queue_p": 0.9999222755432129,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999517202377319,
+"ms": 69.9
+},
+"df9d59a3def0": {
+"queue": "plumbing",
+"queue_p": 0.9999985694885254,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9986385703086853,
+"ms": 65.9
+},
+"50c538e61c6b": {
+"queue": "hvac",
+"queue_p": 0.9990645051002502,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9994401335716248,
+"ms": 65.1
+},
+"3f7f38399590": {
+"queue": "front_desk",
+"queue_p": 0.9999969005584717,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999991655349731,
+"ms": 64.1
+},
+"2a480e209925": {
+"queue": "safety",
+"queue_p": 0.8324158787727356,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.9198960065841675,
+"ms": 65.9
+},
+"7cb45814c0cb": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9966325163841248,
+"ms": 64.6
+},
+"ff7f3810b778": {
+"queue": "hvac",
+"queue_p": 0.9433441758155823,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9951016306877136,
+"ms": 65.2
+},
+"600cb222834c": {
+"queue": "housekeeping",
+"queue_p": 0.9999966621398926,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.99994957447052,
+"ms": 65.1
+},
+"cf37cb533b76": {
+"queue": "safety",
+"queue_p": 0.9986342787742615,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.8673479557037354,
+"ms": 65.9
+},
+"765b100537bf": {
+"queue": "plumbing",
+"queue_p": 0.9999996423721313,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9988793730735779,
+"ms": 65.3
+},
+"8922d924a95c": {
+"queue": "front_desk",
+"queue_p": 0.999995231628418,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9796762466430664,
+"ms": 64.4
+},
+"be77cc0a8e29": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9993865489959717,
+"ms": 65.3
+},
+"9feaacbe0d1c": {
+"queue": "plumbing",
+"queue_p": 0.5748620629310608,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.754649817943573,
+"ms": 66.5
+},
+"b2e4a16fbccb": {
+"queue": "housekeeping",
+"queue_p": 0.9999997615814209,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999401569366455,
+"ms": 64.2
+},
+"6bfdad72b2e8": {
+"queue": "hvac",
+"queue_p": 0.9999969005584717,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999747276306152,
+"ms": 64.1
+},
+"fe48dfd040d5": {
+"queue": "plumbing",
+"queue_p": 0.8991672396659851,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9996289014816284,
+"ms": 64.6
+},
+"95a35bc7e546": {
+"queue": "front_desk",
+"queue_p": 0.994421660900116,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999998807907104,
+"ms": 66.5
+},
+"4c626c978701": {
+"queue": "plumbing",
+"queue_p": 0.9996664524078369,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9382279515266418,
+"ms": 64.6
+},
+"3d91384fa369": {
+"queue": "housekeeping",
+"queue_p": 0.999301552772522,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9991783499717712,
+"ms": 65.0
+},
+"b6c635a3449a": {
+"queue": "plumbing",
+"queue_p": 0.9969660639762878,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.9711687564849854,
+"ms": 64.5
+},
+"7199cdd135c1": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.999995231628418,
+"ms": 67.9
+},
+"2159225710dd": {
+"queue": "front_desk",
+"queue_p": 0.9999630451202393,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9985973238945007,
+"ms": 66.3
+},
+"f5faab0baaab": {
+"queue": "housekeeping",
+"queue_p": 0.9988104104995728,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999046325683594,
+"ms": 65.4
+},
+"985afe65fe9e": {
+"queue": "safety",
+"queue_p": 0.9868398904800415,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9972118735313416,
+"ms": 65.1
+},
+"83582a6b5932": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.999998927116394,
+"ms": 65.7
+},
+"ad5b4f786255": {
+"queue": "plumbing",
+"queue_p": 0.9615613222122192,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9918346405029297,
+"ms": 64.3
+},
+"b8610f48e7bd": {
+"queue": "front_desk",
+"queue_p": 0.9965125918388367,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9872635006904602,
+"ms": 64.5
+},
+"c49f7424c642": {
+"queue": "safety",
+"queue_p": 0.9992948770523071,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.984803318977356,
+"ms": 65.1
+},
+"e496a31358f5": {
+"queue": "plumbing",
+"queue_p": 0.9991449117660522,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.5967360734939575,
+"ms": 64.5
+},
+"46e1ee99bf38": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9992110729217529,
+"ms": 64.5
+},
+"e09ca21b959a": {
+"queue": "housekeeping",
+"queue_p": 0.9999988079071045,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.8090402483940125,
+"ms": 64.4
+},
+"50cb4e7fcd8b": {
+"queue": "plumbing",
+"queue_p": 0.9999164342880249,
+"safety_p": null,
+"safety": false,
+"urgency": 2,
+"urgency_p": 0.9429358243942261,
+"ms": 65.2
+},
+"0983e2e41f3f": {
+"queue": "safety",
+"queue_p": 0.9999234676361084,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9981348514556885,
+"ms": 63.6
+},
+"484e9b0a8ad1": {
+"queue": "front_desk",
+"queue_p": 0.828956663608551,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999140501022339,
+"ms": 64.0
+},
+"a3ba99709f6d": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 63.4
+},
+"3f31807cbe42": {
+"queue": "housekeeping",
+"queue_p": 0.9888141751289368,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.7015768885612488,
+"ms": 64.2
+},
+"131603a19336": {
+"queue": "plumbing",
+"queue_p": 0.9999947547912598,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999793767929077,
+"ms": 64.3
+},
+"9beaafac1905": {
+"queue": "front_desk",
+"queue_p": 0.9999963045120239,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999666213989258,
+"ms": 64.3
+},
+"205849c4b77b": {
+"queue": "housekeeping",
+"queue_p": 0.9999997615814209,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999998807907104,
+"ms": 63.8
+},
+"39993cef9902": {
+"queue": "front_desk",
+"queue_p": 0.9999876022338867,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.5450734496116638,
+"ms": 65.1
+},
+"1f6c1a68dc3c": {
+"queue": "hvac",
+"queue_p": 0.9999996423721313,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9998866319656372,
+"ms": 64.7
+},
+"a9dfa4053c8d": {
+"queue": "safety",
+"queue_p": 0.6061849594116211,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9872167706489563,
+"ms": 64.2
+},
+"b986aa73435a": {
+"queue": "plumbing",
+"queue_p": 0.9991777539253235,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9189741015434265,
+"ms": 63.7
+},
+"a84a9e86ac66": {
+"queue": "hvac",
+"queue_p": 0.9999163150787354,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999819993972778,
+"ms": 64.1
+},
+"bd9f56ebcd68": {
+"queue": "front_desk",
+"queue_p": 0.9388889074325562,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999951124191284,
+"ms": 64.6
+},
+"c6de453c742c": {
+"queue": "safety",
+"queue_p": 0.9999556541442871,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.6959523558616638,
+"ms": 64.1
+},
+"273bef273fd5": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999841451644897,
+"ms": 63.9
+},
+"86a455380dcf": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999517202377319,
+"ms": 65.3
+},
+"87177718e79b": {
+"queue": "housekeeping",
+"queue_p": 0.9999969005584717,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 65.0
+},
+"673d3f7512cc": {
+"queue": "plumbing",
+"queue_p": 0.9999768733978271,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999223947525024,
+"ms": 64.1
+},
+"2c89c2e1d375": {
+"queue": "safety",
+"queue_p": 0.9999160766601562,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.9603602886199951,
+"ms": 64.4
+},
+"e767462c9019": {
+"queue": "front_desk",
+"queue_p": 0.9965733289718628,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999986886978149,
+"ms": 64.8
+},
+"2325bc8340e0": {
+"queue": "plumbing",
+"queue_p": 0.7907308340072632,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.9995645880699158,
+"ms": 64.5
+},
+"bb2c90185d8f": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 1.0,
+"ms": 63.6
+},
+"a5b0278805af": {
+"queue": "safety",
+"queue_p": 0.9868712425231934,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.9999998807907104,
+"ms": 64.3
+},
+"a44ac94c95a0": {
+"queue": "front_desk",
+"queue_p": 0.9951570630073547,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.7346778512001038,
+"ms": 65.3
+},
+"83aefb3a5e5a": {
+"queue": "plumbing",
+"queue_p": 0.9999938011169434,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9999545812606812,
+"ms": 63.8
+},
+"5a823a0ae4b1": {
+"queue": "hvac",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9982408285140991,
+"ms": 64.9
+},
+"a5f7bedfc46c": {
+"queue": "safety",
+"queue_p": 0.9998206496238708,
+"safety_p": null,
+"safety": true,
+"urgency": 1,
+"urgency_p": 0.9957899451255798,
+"ms": 64.0
+},
+"21d1e28eb4a1": {
+"queue": "hvac",
+"queue_p": 0.9999992847442627,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9829537868499756,
+"ms": 64.5
+},
+"c8c5ea537583": {
+"queue": "housekeeping",
+"queue_p": 0.9999998807907104,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999969005584717,
+"ms": 64.1
+},
+"77dc27e630c2": {
+"queue": "plumbing",
+"queue_p": 0.8053072690963745,
+"safety_p": null,
+"safety": false,
+"urgency": 1,
+"urgency_p": 0.9569352269172668,
+"ms": 64.1
+},
+"b6c22f74a28c": {
+"queue": "safety",
+"queue_p": 0.9999885559082031,
+"safety_p": null,
+"safety": true,
+"urgency": 2,
+"urgency_p": 0.999992847442627,
+"ms": 64.1
+},
+"f99fa015ab54": {
+"queue": "front_desk",
+"queue_p": 0.9999874830245972,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9999958276748657,
+"ms": 64.1
+},
+"93abf853c63c": {
+"queue": "hvac",
+"queue_p": 1.0,
+"safety_p": null,
+"safety": false,
+"urgency": 0,
+"urgency_p": 0.9992875456809998,
+"ms": 61.0
+}
+}

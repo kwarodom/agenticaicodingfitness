@@ -95,7 +95,7 @@ In the reference, the labs send these same questions wrapped by `guarded()` from
 `copilot_reference.py` is the complete answer, about 150 readable lines. Lab 01 runs it on nine fictional messages, including the hard cases.
 
 ```bash
-.venv/bin/python week24/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py
+.venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py
 ```
 
 **Expected output**
@@ -178,7 +178,7 @@ The thresholds (0.20 / 0.70 / 0.20) are **illustrative and uncalibrated**. In a 
 Before a new router touches guests, it runs **in the shadow**. The current system keeps routing, and you only log what the new one *would* have done. Here the incumbent is a typical first-keyword-wins router.
 
 ```bash
-.venv/bin/python week24/12_capstone_hotel_copilot/labs/lab02_shadow_mode.py
+.venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab02_shadow_mode.py
 ```
 
 **Expected output**
@@ -242,7 +242,7 @@ Both use `copilot_reference.py` — open it; it's the answer key for the exercis
 
 ## Try it yourself
 
-**Exercise 12 — build the copilot.** Open `week24/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py`. It has four TODOs, each checked **offline** before any API call:
+**Exercise 12 — build the copilot.** Open `week24_typed_decisions_jev/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py`. It has four TODOs, each checked **offline** before any API call:
 
 1. **TODO 1 — `QUESTIONS`**: the five questions, with exact keys. The department options need the five teams plus `unknown`.
 2. **TODO 2 — `extract_room()`**: a regex that finds `room 1203`, `Room 402.`, `ห้อง 815` and a lone `— 610.`, but not `40 minutes`, `29 degrees`, `1500 baht` or `11:30`.
@@ -250,7 +250,7 @@ Both use `copilot_reference.py` — open it; it's the answer key for the exercis
 4. **TODO 4 — `build_ticket()`**: the proposal, with `follow_ups` and `execute: False`.
 
 ```bash
-.venv/bin/python week24/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py
+.venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py
 ```
 
 **Expected output**
@@ -305,7 +305,9 @@ Two passes. First the keyword form: `(?:\broom|\brm\.?|ห้อง)\s*#?\s*(\d{
 
 ## Next
 
-You've finished Week 24. What to build next:
+You've finished the core of Week 24. **Advanced track, beyond text:** continue to [Lab 13 — images, audio and video](../13_multimodal_jev/TUTORIAL.md), where a multimodal model perceives and Jev judges, and [Lab 14 — live, real-time voice](../14_live_realtime_jev/TUTORIAL.md), where Jev referees every turn of a live call.
+
+What to build next:
 
 - **Put it in shadow at work.** Take one real, de-identified AltoTech queue (the Copilot router or a shared inbox) and run Lab 09's evaluation on a few hundred labeled examples per language.
 - **Read the patterns you now have the pieces for:** [confidence-gated routing](https://docs.typesafe.ai/patterns/confidence-routing.md), [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md), [composite scoring](https://docs.typesafe.ai/patterns/composite-scoring.md) and [intent routing](https://docs.typesafe.ai/patterns/intent-routing.md).

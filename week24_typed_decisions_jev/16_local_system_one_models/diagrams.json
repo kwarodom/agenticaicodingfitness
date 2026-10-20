@@ -1,0 +1,74 @@
+{
+  "architecture": {
+    "title": "A local-first decision service: extract, decide, and keep the data boundary in code",
+    "caption": "One question set, three engines. An adapter turns Jev's choice/noul/score questions into each engine's input. Classic GLiNER finds spans with offsets; a decision model picks among them. pick_engine() in code decides where text may go: confidential text stays on local engines (Laya, GLiNER2.5-Decide), everything else can use hosted Jev. Low-confidence local answers go to a person, never quietly to the cloud.",
+    "lanes": [
+      {"id": "in", "label": "Tickets (synthetic)"},
+      {"id": "code", "label": "Your code — adapter · pick_engine · policy"},
+      {"id": "local", "label": "This machine (.venv-local, offline)"},
+      {"id": "cloud", "label": "Hosted"},
+      {"id": "out", "label": "People"}
+    ],
+    "nodes": [
+      {"id": "ticket", "label": "Guest / BMS ticket", "lane": "in", "sub": "EN · TH · confidential?", "accent": "cyan"},
+      {"id": "pick", "label": "pick_engine()", "lane": "code", "sub": "offsets? data class? language? latency?", "accent": "green"},
+      {"id": "ner", "label": "GLiNER (classic)", "lane": "local", "sub": "spans + offsets · multilingual", "accent": "amber"},
+      {"id": "laya", "label": "Laya Router", "lane": "local", "sub": "EN ModernBERT / multilingual mmBERT", "accent": "amber"},
+      {"id": "dec", "label": "GLiNER2.5-Decide", "lane": "local", "sub": "EN 340M · multi 287M · CPU", "accent": "amber"},
+      {"id": "jev", "label": "Jev 1.13 / 1.14", "lane": "cloud", "sub": "$0.042/M · 64k context", "accent": "violet"},
+      {"id": "policy", "label": "Policy + thresholds", "lane": "code", "sub": "tuned per engine on YOUR data", "accent": "green"},
+      {"id": "human", "label": "Human review", "lane": "out", "sub": "execute: False", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "ticket", "to": "pick", "label": "task facts"},
+      {"from": "pick", "to": "ner", "label": "needs offsets"},
+      {"from": "ner", "to": "jev", "label": "candidates → Choice", "animated": true},
+      {"from": "pick", "to": "laya", "label": "confidential TH · <100 ms"},
+      {"from": "pick", "to": "dec", "label": "confidential EN"},
+      {"from": "pick", "to": "jev", "label": "everything else", "animated": true},
+      {"from": "laya", "to": "policy", "label": "probabilities"},
+      {"from": "dec", "to": "policy", "label": "label + score"},
+      {"from": "jev", "to": "policy", "label": "probabilities"},
+      {"from": "policy", "to": "human", "label": "unsure → person, not cloud"}
+    ]
+  },
+  "sequence": {
+    "title": "Lab 16-3 — GLiNER finds the rooms, Jev picks the one with the problem",
+    "caption": "Measured on 2026-10-17. GLiNER (local, ~6 s to load, then milliseconds) marks two room numbers in the Thai ticket — one is really FLOOR 3. Jev's Choice over the candidates picks room 1203 (0.92). Code keeps the offsets and highlights the span.",
+    "actors": [
+      {"id": "lab", "label": "lab03 (your code)"},
+      {"id": "ner", "label": "GLiNER multi (local)"},
+      {"id": "jev", "label": "Jev"}
+    ],
+    "steps": [
+      {"from": "lab", "to": "ner", "label": "ticket + labels: room number, floor, equipment, time", "kind": "call"},
+      {"from": "ner", "to": "lab", "label": "'3' (25–26) · '1203' (36–40)", "kind": "return"},
+      {"from": "lab", "to": "lab", "label": "code: de-duplicate → options room_3, room_1203, none_of_these", "kind": "note"},
+      {"from": "lab", "to": "jev", "label": "Choice: which room has the problem?", "kind": "call"},
+      {"from": "jev", "to": "lab", "label": "room_1203 0.92 · safety 0.94 (≈0.5 s)", "kind": "return"},
+      {"from": "lab", "to": "lab", "label": "highlight ⟦1203⟧ at 36–40 · write the ticket", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Bake-off — correct answers out of 18 tickets",
+      "type": "bars",
+      "unit": "",
+      "labels": ["queue", "safety", "urgency"],
+      "series": [
+        {"name": "Jev 1.13 (hosted)", "values": [18, 17, 15], "color": "violet"},
+        {"name": "GLiNER2.5-Decide (+multi for TH)", "values": [16, 16, 10], "color": "cyan"},
+        {"name": "Laya Router", "values": [12, 17, 10], "color": "amber"}
+      ],
+      "caption": "labs/lab05_bakeoff.py on 2026-10-17, zero-shot, 12 English + 6 Thai synthetic tickets. A classroom sample, not a verdict — but it agrees in direction with the independent Jev Decision Index (Jev 60.11, Decide 9.24, Laya 4.43)."
+    },
+    {
+      "title": "Median time per ticket (3 questions)",
+      "type": "hbars",
+      "unit": "ms",
+      "labels": ["Laya (Apple GPU, local)", "GLiNER2.5-Decide (CPU, local)", "Jev 1.13 (internet)"],
+      "series": [{"name": "median", "values": [62, 148, 476], "color": "green"}],
+      "caption": "Same laptop (Apple M4 Max), same tickets. Local numbers are model time; Jev's include the network round trip. Lab 16-2 measured 43 ms for one Laya request and 15 ms on the multilingual checkpoint."
+    }
+  ]
+}

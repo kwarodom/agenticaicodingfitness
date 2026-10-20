@@ -9,7 +9,7 @@ Three guest messages, one Choice question:
 Lesson: the winner alone hides information. The distribution tells you
 whether the model is sure, torn between two, or saying "none of these".
 
-Run: .venv/bin/python week24/02_three_primitives/labs/lab01_choice.py
+Run: .venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab01_choice.py
 """
 import sys
 from pathlib import Path

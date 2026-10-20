@@ -1,0 +1,190 @@
+{
+ "architecture": {
+  "title": "Two ways to shrink an index, one way to shrink the model",
+  "caption": "Matryoshka cuts the vector (768→128 numbers); quantization shrinks each number (4 bytes → 1 byte → 1 bit). GGUF quantizes the model weights for llama.cpp / Ollama, text-only. Re-normalise after every cut.",
+  "lanes": [
+   {
+    "id": "vec",
+    "label": "vector"
+   },
+   {
+    "id": "store",
+    "label": "stored as"
+   },
+   {
+    "id": "model",
+    "label": "model weights"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "f",
+    "label": "768-d float32",
+    "lane": "vec",
+    "sub": "3,072 B",
+    "accent": "cyan"
+   },
+   {
+    "id": "m",
+    "label": "256-d (cut + renorm)",
+    "lane": "vec",
+    "sub": "1,024 B",
+    "accent": "green"
+   },
+   {
+    "id": "i8",
+    "label": "int8",
+    "lane": "store",
+    "sub": "256 B · recall 1.000",
+    "accent": "green"
+   },
+   {
+    "id": "b",
+    "label": "binary",
+    "lane": "store",
+    "sub": "32 B · Hamming",
+    "accent": "amber"
+   },
+   {
+    "id": "pt",
+    "label": "PyTorch bf16 / int8",
+    "lane": "model",
+    "sub": "all modalities",
+    "accent": "violet"
+   },
+   {
+    "id": "gg",
+    "label": "GGUF Q4 / Q8 / BF16",
+    "lane": "model",
+    "sub": "176–558 MB · TEXT ONLY",
+    "accent": "red"
+   }
+  ],
+  "edges": [
+   {
+    "from": "f",
+    "to": "m",
+    "label": "Matryoshka"
+   },
+   {
+    "from": "m",
+    "to": "i8",
+    "label": "quantize"
+   },
+   {
+    "from": "m",
+    "to": "b",
+    "label": "sign bits"
+   },
+   {
+    "from": "pt",
+    "to": "gg",
+    "label": "convert (text model)"
+   }
+  ]
+ },
+ "sequence": {
+  "title": "Binary first, then rescore",
+  "caption": "The edge pattern: search a tiny binary index, then re-score the top hits with full-precision vectors.",
+  "actors": [
+   {
+    "id": "q",
+    "label": "query"
+   },
+   {
+    "id": "bi",
+    "label": "binary index"
+   },
+   {
+    "id": "fi",
+    "label": "full vectors"
+   }
+  ],
+  "steps": [
+   {
+    "from": "q",
+    "to": "bi",
+    "label": "Hamming search (fast, tiny)",
+    "kind": "call"
+   },
+   {
+    "from": "bi",
+    "to": "q",
+    "label": "top 50 candidates",
+    "kind": "return"
+   },
+   {
+    "from": "q",
+    "to": "fi",
+    "label": "cosine on 50 only",
+    "kind": "call"
+   },
+   {
+    "from": "fi",
+    "to": "q",
+    "label": "final top 3",
+    "kind": "return"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "MTEB multilingual by dimension (model card)",
+   "type": "line",
+   "unit": "score",
+   "labels": [
+    "768",
+    "512",
+    "256",
+    "128"
+   ],
+   "series": [
+    {
+     "name": "MTEB multilingual",
+     "values": [
+      61.36,
+      61.17,
+      60.41,
+      57.89
+     ],
+     "color": "cyan"
+    },
+    {
+     "name": "MMEB (multimodal)",
+     "values": [
+      59.01,
+      58.38,
+      56.24,
+      45.65
+     ],
+     "color": "amber"
+    }
+   ],
+   "caption": "REFERENCE — model card truncation table. Multimodal drops much faster below 256."
+  },
+  {
+   "title": "Bytes per vector vs recall@1 (hotel KB)",
+   "type": "hbars",
+   "unit": "bytes",
+   "labels": [
+    "768 fp32 (1.000)",
+    "256 int8 (1.000)",
+    "256 binary (1.000)",
+    "128 binary (0.667)"
+   ],
+   "series": [
+    {
+     "name": "bytes",
+     "values": [
+      3072,
+      256,
+      32,
+      16
+     ],
+     "color": "green"
+    }
+   ],
+   "caption": "Measured by Lab 03-2 on this Mac; recall@1 in brackets."
+  }
+ ]
+}

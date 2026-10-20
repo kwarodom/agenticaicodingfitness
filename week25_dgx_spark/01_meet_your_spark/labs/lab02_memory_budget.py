@@ -6,7 +6,7 @@ weights + KV cache at bf16, fp8 and nvfp4, compares the total with one Spark
 (128 GB unified) and two Sparks (256 GB), and estimates the single-stream decode
 ceiling from memory bandwidth. These numbers drive every choice this week.
 
-Run: .venv/bin/python week25/01_meet_your_spark/labs/lab02_memory_budget.py
+Run: .venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab02_memory_budget.py
 """
 import sys
 from pathlib import Path

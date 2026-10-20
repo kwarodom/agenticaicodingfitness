@@ -30,7 +30,7 @@ DEFAULT_MAX_TURNS = 8
 DEFAULT_MAX_BUDGET_USD = 0.50
 
 # ── paths ────────────────────────────────────────────────────────────────────
-PKG = Path(__file__).resolve().parent          # …/week18/agent_loop
+PKG = Path(__file__).resolve().parent          # …/week18_self_evolving_sovereign_edge/agent_loop
 SANDBOX = PKG / ".sandbox"                      # scratch space demos may read/write
 SESSION_FILE = PKG / ".sandbox" / "session.json"
 

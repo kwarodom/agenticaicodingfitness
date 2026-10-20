@@ -6,7 +6,7 @@ reserves with --gpu-memory-utilization. Step 2 runs read-only checks on Spark A 
 (GB10, free memory, free disk, Docker, and whether the ports the plan needs are free). DRY shows the
 commands with EXAMPLE output.
 
-Run: .venv/bin/python week25/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py
+Run: .venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py
 """
 import re
 import sys

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Record every inline block in week24/*/TUTORIAL.md and TUTORIAL.th.md so DRY mode can replay it.
+"""Record every inline block in week24_typed_decisions_jev/*/TUTORIAL.md and TUTORIAL.th.md so DRY mode can replay it.
 
   ```jev  {"state":…, "questions":…}              → one live Jev call (jev-1.13.0)
   ```llm  {"system":…, "user":…, "max_tokens":…}  → one call per LLM provider that has a key
                                                     (each provider's default model)
 
 Maintainer tool; needs keys. Recordings never contain keys.
-    .venv/bin/python week24/common/record_inline.py            # all modules
-    .venv/bin/python week24/common/record_inline.py 11_jev_plus_llm
+    .venv/bin/python week24_typed_decisions_jev/common/record_inline.py            # all modules
+    .venv/bin/python week24_typed_decisions_jev/common/record_inline.py 11_jev_plus_llm
 """
 import json
 import os

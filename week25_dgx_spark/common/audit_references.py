@@ -8,8 +8,8 @@ script finds every such string (and module-level *_REF / REF_* constants passed 
 each non-trivial line against the local clone at <repo>/dgx-spark-playbooks/ (whitespace-normalised).
 Lines not found are listed so a human can either fix the quote or relabel it as example=.
 
-    .venv/bin/python week25/common/audit_references.py            # all modules
-    .venv/bin/python week25/common/audit_references.py 05_vllm
+    .venv/bin/python week25_dgx_spark/common/audit_references.py            # all modules
+    .venv/bin/python week25_dgx_spark/common/audit_references.py 05_vllm
 """
 import ast
 import re
@@ -99,7 +99,7 @@ def main() -> None:
     if not PLAYBOOKS.is_dir():
         sys.exit(f"clone the playbooks first: git clone https://github.com/NVIDIA/dgx-spark-playbooks {PLAYBOOKS.parent}")
     text = corpus()
-    only = {Path(a.rstrip("/")).name for a in sys.argv[1:]}      # accept "05_vllm" or "week25/05_vllm/"
+    only = {Path(a.rstrip("/")).name for a in sys.argv[1:]}      # accept "05_vllm" or "week25_dgx_spark/05_vllm/"
     unknown = only - {p.name for p in WEEK.glob("[0-9][0-9]_*")}
     if unknown:
         sys.exit(f"✕ no such module folder: {', '.join(sorted(unknown))}")

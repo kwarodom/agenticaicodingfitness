@@ -5,7 +5,7 @@ App 05 of Week 23 (The Open Superintelligence Stack). Teaches the **NVIDIA AI-Q 
 Launch the interactive explainer:
 
 ```bash
-.venv/bin/python week23/05_aiq_research_lab/tutorial_server.py   # → http://127.0.0.1:8104
+.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/tutorial_server.py   # → http://127.0.0.1:8104
 ```
 
 Then do it by hand: **[TUTORIAL.md](TUTORIAL.md)** — the hands-on lab (curl the router yourself, measure routing economics, fan out real researchers, close a tool loop, install the NeMo Agent Toolkit). Lab scripts live in `labs/`.

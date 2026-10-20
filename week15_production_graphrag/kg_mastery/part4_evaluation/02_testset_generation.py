@@ -31,7 +31,7 @@ Requires:
   - pip install ragas datasets pandas langchain-anthropic langchain-community
   - source docs in ./hotel_docs/*.txt (two are shipped with this folder)
 
-Run:  python week15/kg_mastery/part4_evaluation/02_testset_generation.py
+Run:  python week15_production_graphrag/kg_mastery/part4_evaluation/02_testset_generation.py
 """
 import os
 import sys

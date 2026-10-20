@@ -8,7 +8,7 @@ Super. Routing calls are REAL when an endpoint is up; the economics table is
 illustrative fit-math (labeled as such), not a benchmark.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/06_nemoclaw/labs/lab03_fleet_router.py
+      .venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/labs/lab03_fleet_router.py
 """
 from __future__ import annotations
 

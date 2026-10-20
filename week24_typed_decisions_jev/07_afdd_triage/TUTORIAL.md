@@ -76,7 +76,7 @@ Experiment:
 ## 2 · Triage five incidents — lab 01
 
 ```bash
-.venv/bin/python week24/07_afdd_triage/labs/lab01_triage_incidents.py
+.venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab01_triage_incidents.py
 ```
 
 **Expected output**
@@ -126,7 +126,7 @@ Read the interesting rows:
 Lab 02 asks Jev about one operator note **once**, then runs four different telemetry situations through the same policy. One model call, four outcomes.
 
 ```bash
-.venv/bin/python week24/07_afdd_triage/labs/lab02_what_if.py
+.venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab02_what_if.py
 ```
 
 **Expected output**
@@ -184,7 +184,7 @@ The proposed production flow keeps every boundary from this lab:
 The reference implementation in the original script uses the same questions and override:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run afdd --limit 2 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run afdd --limit 2 --live
 ```
 
 ✓ Checkpoint: you can point to the step in this flow where a person approves before anything changes on site.
@@ -197,7 +197,7 @@ The reference implementation in the original script uses the same questions and 
 
 ## Try it yourself
 
-**Exercise 07 — compute the flags.** Open `week24/07_afdd_triage/exercises/ex07_compute_flags.py` and implement `compute_flags(reading)` returning exactly:
+**Exercise 07 — compute the flags.** Open `week24_typed_decisions_jev/07_afdd_triage/exercises/ex07_compute_flags.py` and implement `compute_flags(reading)` returning exactly:
 
 | key | rule |
 |---|---|
@@ -211,7 +211,7 @@ The reference implementation in the original script uses the same questions and 
 Five exact offline asserts run first — including the edge case "exactly 2.0 °C is **not** a deviation". Then your flags feed a live triage of the five incidents.
 
 ```bash
-.venv/bin/python week24/07_afdd_triage/exercises/ex07_compute_flags.py
+.venv/bin/python week24_typed_decisions_jev/07_afdd_triage/exercises/ex07_compute_flags.py
 ```
 
 **Expected output**

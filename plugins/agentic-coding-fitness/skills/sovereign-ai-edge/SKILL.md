@@ -85,7 +85,7 @@ The Week 18 capstone runs a **Smart-Hotel HVAC agent that clears an alarm queue*
 | **per-token cost** at scale dominates (every token is free on your GPU) | you have no local hardware budget / ops capacity |
 | **latency** to a far cloud region hurts (compute at the data) | model size needed simply won't fit your hardware even quantized |
 
-> 📁 Class repo: `week18/sovereign_ai_edge/` — a clickable, streaming web app (`tutorial_server.py` → `http://127.0.0.1:8091`) plus 9 runnable on-device demos, one per chapter: `step01_local_inference` (proof it's local) → `step02_hardware_advisor` (RAM-based sizing) → `step03_model_explorer` (real Gemma bake-off) → `step04_quant_calculator` (VRAM math) → `step05_finetune_recipe` (NeMo LoRA) → `step06_serving_runtimes` (TTFT/throughput) → `step07_tool_calling_agent` (on-device function calling) → `step08_smart_hotel_mas` (clear an HVAC alarm queue) → `step09_airgap_audit` (live sovereignty audit). The shared engine `edgeview.py` separates the model's reasoning channel from its answer, measures real tok/s, and prints `cloud cost: $0.0000` every call. Needs a local OpenAI-compatible server (`ollama run gemma4:12b`, or `gemma4:2b` on a Pi); point elsewhere with `EDGE_BASE_URL` / `EDGE_MODEL`. If nothing's running, the app loads and prints *how to start one* instead of faking a call. Full write-up: `week18/sovereign_ai_edge/README.md` + `week18/sovereign_ai_edge_tutorial.pdf`.
+> 📁 Class repo: `week18_self_evolving_sovereign_edge/sovereign_ai_edge/` — a clickable, streaming web app (`tutorial_server.py` → `http://127.0.0.1:8091`) plus 9 runnable on-device demos, one per chapter: `step01_local_inference` (proof it's local) → `step02_hardware_advisor` (RAM-based sizing) → `step03_model_explorer` (real Gemma bake-off) → `step04_quant_calculator` (VRAM math) → `step05_finetune_recipe` (NeMo LoRA) → `step06_serving_runtimes` (TTFT/throughput) → `step07_tool_calling_agent` (on-device function calling) → `step08_smart_hotel_mas` (clear an HVAC alarm queue) → `step09_airgap_audit` (live sovereignty audit). The shared engine `edgeview.py` separates the model's reasoning channel from its answer, measures real tok/s, and prints `cloud cost: $0.0000` every call. Needs a local OpenAI-compatible server (`ollama run gemma4:12b`, or `gemma4:2b` on a Pi); point elsewhere with `EDGE_BASE_URL` / `EDGE_MODEL`. If nothing's running, the app loads and prints *how to start one* instead of faking a call. Full write-up: `week18_self_evolving_sovereign_edge/sovereign_ai_edge/README.md` + `week18_self_evolving_sovereign_edge/sovereign_ai_edge_tutorial.pdf`.
 
 ---
 
@@ -106,7 +106,7 @@ Start a local server and run the proof-it's-local demo. Confirm the output repor
 
 ```bash
 ollama run gemma4:12b           # or gemma4:2b on low-RAM hardware
-.venv/bin/python week18/sovereign_ai_edge/demos/step01_local_inference.py
+.venv/bin/python week18_self_evolving_sovereign_edge/sovereign_ai_edge/demos/step01_local_inference.py
 ```
 
 **Done =** a real local completion **and** evidence nothing left the machine (cost $0, localhost endpoint).

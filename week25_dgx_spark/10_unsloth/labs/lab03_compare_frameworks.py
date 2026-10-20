@@ -9,7 +9,7 @@ scorer is tested first on a clearly labelled EXAMPLE file (synthetic, not a mode
 
 Read-only everywhere. Run it while the runs train, and again when both have finished.
 
-Run: .venv/bin/python week25/10_unsloth/labs/lab03_compare_frameworks.py
+Run: .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab03_compare_frameworks.py
 """
 import json
 import re
@@ -103,7 +103,7 @@ banner("Lab 10-3 · LLaMA Factory vs Unsloth — the same task, compared fairly"
 # ── STEP 1 ────────────────────────────────────────────────────────────────────
 step(1, "is it a fair fight? (from the real config files)")
 if not (LF_YAML.is_file() and US_JSON.is_file()):
-    sys.exit("✕ run week25/09_llama_factory/labs/lab03 and week25/10_unsloth/labs/lab02 first — their configs are compared here.")
+    sys.exit("✕ run week25_dgx_spark/09_llama_factory/labs/lab03 and week25_dgx_spark/10_unsloth/labs/lab02 first — their configs are compared here.")
 lf, us = yaml.safe_load(LF_YAML.read_text(encoding="utf-8")), json.loads(US_JSON.read_text(encoding="utf-8"))
 rows = fairness(lf, us)
 table(rows, ["what", "LLaMA Factory (Module 09)", "Unsloth (lab 02)", "verdict"])

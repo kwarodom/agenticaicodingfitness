@@ -1,6 +1,6 @@
 # 🏋️ Week 15 — Code Companion
 
-Runnable Python that follows **`week15/PLUGIN_TUTORIAL.md`** step by step. Each numbered folder mirrors one skill in the Agentic Coding Fitness bootcamp plugin, so you can *do* the recap, not just read it.
+Runnable Python that follows **`week15_production_graphrag/PLUGIN_TUTORIAL.md`** step by step. Each numbered folder mirrors one skill in the Agentic Coding Fitness bootcamp plugin, so you can *do* the recap, not just read it.
 
 ```
 code/
@@ -20,7 +20,7 @@ code/
 # from the repo root
 python3 -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
-pip install -r week15/code/requirements.txt
+pip install -r week15_production_graphrag/code/requirements.txt
 ```
 
 Create a `.env` in the **repo root** (it's gitignored — never commit real keys):
@@ -39,9 +39,9 @@ Every script calls `load_dotenv(find_dotenv())`, so it finds the repo-root `.env
 Go folder by folder, lowest number first. Inside each folder, run the scripts in order:
 
 ```bash
-python week15/code/01_llm_fundamentals/01_single_call.py
-python week15/code/01_llm_fundamentals/02_streaming.py
-python week15/code/01_llm_fundamentals/03_chatbot_memory.py
+python week15_production_graphrag/code/01_llm_fundamentals/01_single_call.py
+python week15_production_graphrag/code/01_llm_fundamentals/02_streaming.py
+python week15_production_graphrag/code/01_llm_fundamentals/03_chatbot_memory.py
 # ...then 02_tool_use/, 03_agent_loops/, etc.
 ```
 

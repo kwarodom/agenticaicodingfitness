@@ -21,7 +21,7 @@ def chat(messages, temperature=1.0):
         temperature=temperature,
         messages=messages,
     )
-    return message.content[0].text
+    return "".join(b.text for b in message.content if getattr(b, "type", None) == "text")
 
 # Start with an empty message list (this is our short-term memory)
 messages = []

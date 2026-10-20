@@ -12,7 +12,7 @@ max_concurrency 1 and 4, and compare p95 workflow runtime from inference_optimiz
      It gives the method a second path to measure. 2 questions × 2 legs ≈ 8 LLM calls.
   3. The delta calculator over the two result directories, with a "within noise?" verdict.
 
-Run: .venv/bin/python week26/06_benchmarking/labs/lab06_4_sandbox_tax.py
+Run: .venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_4_sandbox_tax.py
 """
 import json
 import sys

@@ -34,7 +34,7 @@
 "อีเมลนี้สำคัญไหม?" — สำคัญกับใคร เพื่ออะไร? คนจะเดาเจตนาของคุณได้ แต่ Jev ตอบตามถ้อยคำ Lab 01 ถามกฎทางธุรกิจเดียวกัน ("ฝ่ายปฏิบัติการต้องลงมือวันนี้ไหม?") แบบกำกวมและแบบแม่นยำ **ในคำขอเดียวกัน** — ทั้งสองเป็นอิสระต่อกัน จึงไม่มีผลต่อกัน
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab01_vague_vs_precise.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab01_vague_vs_precise.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -108,7 +108,7 @@
 **Speculative fan-out (การถามเผื่อไว้ในครั้งเดียว)** Jev อ่าน state ครั้งเดียวแล้วตอบทุกคำถามขนานกัน ดังนั้นให้ถามทุกอย่างที่คุณ *อาจ* ต้องใช้ในการเรียกครั้งเดียว — แม้แต่คำถามสำหรับกิ่งทางที่อาจไม่ได้ใช้ — แล้วให้โค้ดเลือกใช้เฉพาะคำตอบที่เกี่ยวข้อง
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab02_fanout_one_call.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab02_fanout_one_call.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -139,7 +139,7 @@
 Jev เป็นโมเดลตัดสิน ไม่ใช่เครื่องคิดเลข Lab 03 ถามคำถามแนวคำนวณสิบข้อที่อยู่ตรงขอบพอดี — "26.0 **มากกว่า** 24.0 เกิน 2.0 ไหม?" รูปแบบวันที่ปนกัน การนับจำนวนสัญญาณเตือน — แล้วเทียบกับ Python บรรทัดเดียวต่อข้อ
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab03_math_in_code.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab03_math_in_code.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -174,7 +174,7 @@ Jev judges:      "Does the operator note report occupants feeling uncomfortable?
 state คือข้อความที่คุณไม่ได้เขียนเอง ใครก็ตามที่ส่งอีเมลถึงคุณได้ ก็ใส่คำสั่งไว้ในนั้นได้ Lab 04 ถามสามคำถามเกี่ยวกับอีเมลห้าฉบับ: คำถามเรื่องความเร่งด่วนแบบธรรมดา คำถามเดียวกันแบบ **มีการ์ด (guarded)** (ประโยค `GUARD` + criteria ที่กำหนดว่าอะไรนับ) และตัวตรวจจับ injection
 
 ```bash
-.venv/bin/python week24/03_question_design/labs/lab04_prompt_injection.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab04_prompt_injection.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -239,7 +239,7 @@ state คือข้อความที่คุณไม่ได้เข�
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 03 — แก้คำถามให้ดี** เปิด `week24/03_question_design/exercises/ex03_fix_the_questions.py` ในไฟล์มีคำถามที่จงใจทำให้พังสามข้อ:
+**แบบฝึกหัด 03 — แก้คำถามให้ดี** เปิด `week24_typed_decisions_jev/03_question_design/exercises/ex03_fix_the_questions.py` ในไฟล์มีคำถามที่จงใจทำให้พังสามข้อ:
 
 | คำถามที่แย่ | ข้อบกพร่อง |
 |---|---|
@@ -250,7 +250,7 @@ state คือข้อความที่คุณไม่ได้เข�
 เขียน `good_outage`, `good_team` และ `good_callback` ตัวตรวจจะถามทั้งแบบแย่และแบบดีพร้อมกันกับข้อความที่ติดป้ายไว้หกข้อ แล้วรายงานความแม่นยำ **และความชัดเจน (clarity)** (noul อยู่ห่างจาก 0.5 แค่ไหน)
 
 ```bash
-.venv/bin/python week24/03_question_design/exercises/ex03_fix_the_questions.py
+.venv/bin/python week24_typed_decisions_jev/03_question_design/exercises/ex03_fix_the_questions.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

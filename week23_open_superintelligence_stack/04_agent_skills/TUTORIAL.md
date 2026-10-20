@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 04 — NVIDIA Agent Skills
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/04_agent_skills/tutorial_server.py` → http://127.0.0.1:8103. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/04_agent_skills/tutorial_server.py` → http://127.0.0.1:8103. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Clone the real NVIDIA skills catalog and inspect what a Skill physically is (a dir + SKILL.md).
@@ -65,7 +65,7 @@ Lab 01 writes a two-skill catalog to `.sandbox/skills/`, runs the discovery scan
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/04_agent_skills/labs/lab01_author_a_skill.py
+.venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab01_author_a_skill.py
 ```
 
 **Expected output**
@@ -137,7 +137,7 @@ Lab 02 reads the `hotel-telemetry` skill you authored in step 2, hands it to the
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/04_agent_skills/labs/lab02_load_skill_live.py
+.venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab02_load_skill_live.py
 ```
 
 **Expected output** (REAL; with no endpoint you get the same trace under a clear `[no endpoint — showing expected output]` label)
@@ -163,7 +163,7 @@ Lab 03 exposes the identical capability through both open standards: you drive r
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/04_agent_skills/labs/lab03_mcp_a2a_bridge.py
+.venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab03_mcp_a2a_bridge.py
 ```
 
 **Expected output**
@@ -186,7 +186,7 @@ Make it permanent — Claude Code loads skills from `~/.claude/skills/` natively
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r /Users/altodev/Desktop/agenticaicodingfitness/week23/04_agent_skills/.sandbox/skills/hotel-telemetry ~/.claude/skills/
+cp -r /Users/altodev/Desktop/agenticaicodingfitness/week23_open_superintelligence_stack/04_agent_skills/.sandbox/skills/hotel-telemetry ~/.claude/skills/
 ls ~/.claude/skills/hotel-telemetry
 ```
 
@@ -202,11 +202,11 @@ On a Spark (path A) the sovereign version is the same two commands over SSH, pai
 
 ## Labs (run these)
 
-**labs/lab01_author_a_skill.py** — authors a two-skill catalog to `.sandbox/skills/`, runs the discovery scan (frontmatter only), and measures the progressive-disclosure token math on your files. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/04_agent_skills/labs/lab01_author_a_skill.py`. Look for: the CATALOG TOTAL line — metadata is ~10× cheaper than bodies. Modify it: add a third skill of your own (a runbook you actually use) and rerun — watch the totals move.
+**labs/lab01_author_a_skill.py** — authors a two-skill catalog to `.sandbox/skills/`, runs the discovery scan (frontmatter only), and measures the progressive-disclosure token math on your files. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab01_author_a_skill.py`. Look for: the CATALOG TOTAL line — metadata is ~10× cheaper than bodies. Modify it: add a third skill of your own (a runbook you actually use) and rerun — watch the totals move.
 
-**labs/lab02_load_skill_live.py** — loads the lab01 skill into a live model via the OpenAI tool-call loop and times the hops; prints real setup commands + a labeled expected-output sample when no endpoint answers. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/04_agent_skills/labs/lab02_load_skill_live.py`. Look for: the model choosing to call `query_room_telemetry` unprompted — that decision came from the skill's when-to-use metadata. Modify it: change the user question to something the skill does NOT cover ("what's the weather in Paris?") and confirm the model answers without invoking the tool.
+**labs/lab02_load_skill_live.py** — loads the lab01 skill into a live model via the OpenAI tool-call loop and times the hops; prints real setup commands + a labeled expected-output sample when no endpoint answers. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab02_load_skill_live.py`. Look for: the model choosing to call `query_room_telemetry` unprompted — that decision came from the skill's when-to-use metadata. Modify it: change the user question to something the skill does NOT cover ("what's the weather in Paris?") and confirm the model answers without invoking the tool.
 
-**labs/lab03_mcp_a2a_bridge.py** — the same tool served as MCP JSON-RPC frames (genuinely dispatched in-process) and as an A2A Agent Card + six-state task lifecycle; offline, stdlib only. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/04_agent_skills/labs/lab03_mcp_a2a_bridge.py`. Look for: the `tools/call` response carrying 29.4 — it executed, it isn't a canned string. Modify it: add a second tool `file_work_order` to `tools/list` and dispatch a `tools/call` for it.
+**labs/lab03_mcp_a2a_bridge.py** — the same tool served as MCP JSON-RPC frames (genuinely dispatched in-process) and as an A2A Agent Card + six-state task lifecycle; offline, stdlib only. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab03_mcp_a2a_bridge.py`. Look for: the `tools/call` response carrying 29.4 — it executed, it isn't a canned string. Modify it: add a second tool `file_work_order` to `tools/list` and dispatch a `tools/call` for it.
 
 ## Try it yourself
 
@@ -217,7 +217,7 @@ Score each task against each skill's `description` with simple keyword overlap (
 
 2. **Prove framework-agnosticism.** Run lab02 twice against two different endpoints (e.g. local Ollama and build.nvidia.com with `DGX_CONN=cloud DGX_MODEL=nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`) without touching the skill file. Diff the two ANSWER lines.
 <details><summary>Solution</summary>
-`DGX_CONN=local .venv/bin/python week23/04_agent_skills/labs/lab02_load_skill_live.py > /tmp/a.txt`, then export the cloud vars from step 3B and redirect to `/tmp/b.txt`; `diff /tmp/a.txt /tmp/b.txt`. Wording differs, but both call the same tool with `{'room': '1203'}` and both cite 29.4°C/SOP-HVAC-07 — the capability was in the file, not the model. Also note the cost lines differ: `$0.0000` vs `cloud usage billed`.
+`DGX_CONN=local .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab02_load_skill_live.py > /tmp/a.txt`, then export the cloud vars from step 3B and redirect to `/tmp/b.txt`; `diff /tmp/a.txt /tmp/b.txt`. Wording differs, but both call the same tool with `{'room': '1203'}` and both cite 29.4°C/SOP-HVAC-07 — the capability was in the file, not the model. Also note the cost lines differ: `$0.0000` vs `cloud usage billed`.
 </details>
 
 3. **A2A input-required.** Lab 03 walks submitted → working → completed. Extend PART B2 so the agent hits `input-required` (e.g. the room id is missing from the task message) and resumes to `completed` after the "peer" supplies it.

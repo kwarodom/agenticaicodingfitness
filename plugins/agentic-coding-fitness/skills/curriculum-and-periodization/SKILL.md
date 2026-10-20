@@ -34,7 +34,7 @@ You make training harder by turning exactly the knobs that matter — never all 
 | **Complexity** | new frameworks & failure modes | LangGraph, GraphRAG, multi-agent orchestration |
 | **Autonomy** | less hand-holding | from copy-the-snippet → design-it-yourself → ship-it |
 
-> 🏋️ **Deload weeks** are not breaks — they're consolidation. The blueprint drops all three of intensity/volume/complexity by ~40% at **weeks 4, 8, 12** so the new skill *sticks* (supercompensation: you get stronger *after* the rest, not during the grind). In this repo, the natural deloads are the integration weeks (the full-stack app in week6, the mastery recap in week11) where you compose what you already learned instead of adding a new pattern.
+> 🏋️ **Deload weeks** are not breaks — they're consolidation. The blueprint drops all three of intensity/volume/complexity by ~40% at **weeks 4, 8, 12** so the new skill *sticks* (supercompensation: you get stronger *after* the rest, not during the grind). In this repo, the natural deloads are the integration weeks (the full-stack app in week06_fullstack_agent_app, the mastery recap in week11_models_and_patterns) where you compose what you already learned instead of adding a new pattern.
 
 > ⚠️ **Conceptual:** the clean "16 weeks, four phases, deloads at 4/8/12" structure (and the *16-Week Progressive Overload Profile* figure where intensity/volume/complexity rise and dip together) is the **blueprint's ideal**, drawn from fitness periodization + the 4C/ID instructional model. The **runnable** curriculum in this repo is **weeks 2–17** — see Part B for the honest mapping.
 
@@ -46,36 +46,36 @@ The blueprint describes an idealized 16 weeks. This repo has the **real, runnabl
 
 | Real week (this repo) | Concept | Recap skill | Blueprint's idealized slot |
 |---|---|---|---|
-| **week2** — LLM basics | messages, multi-turn, streaming | `llm-fundamentals` | ~W1 LLM architecture |
-| **week3** — tool use | function calling, multi-tool assistant | `tool-use` | ~W2 ReAct / function calling |
-| **week4** — pipelines + IoT | chained steps, drones & lights, OpenRouter | `agent-loops` | ~W4 prompt chaining + routing |
-| **week5** — the agent loop | REASON→ACT→OBSERVE, reusable Agent class | `agent-loops` | ~W2–3 ReAct + reflection |
-| **week6** — full-stack app | agent behind a real API (Express/TS/Postgres) | — (integration; like a deload) | ~W11 production patterns |
-| **week7** — MCP & Skills | reusable tools (MCP) + reusable know-how | `mcp-and-skills` | **W1 in the blueprint** — it front-loads MCP |
-| **week8** — RAG | ground answers in your documents | `rag-knowledge-agents` | ~W8 RAG (matches) |
-| **week9** — multi-agent | sequential / parallel swarm / router; CrewAI, LangGraph, AG2 | `multi-agent-systems` | ~W5–9 orchestration |
-| **week10** — production & eval | LangGraph guide, testing, monitoring, cost | `production-and-observability`, `agent-evaluation` | ~W10–11 eval + observability |
-| **week11** — mastery | pick models/frameworks/patterns; pattern playground | `models-and-patterns` | ~W12 integration + governance |
-| **week14** — graph memory | Neo4j, GraphRAG, durable multi-agent memory | `agent-memory-graphs` | ~W13–14 capstone-grade memory |
-| **week15** — production GraphRAG | Cypher+GDS, ingestion, 7 frameworks, RAGAS, CI gate | `knowledge-graph-mastery` | ~W15–16 polish + certification |
-| **week16** — production frameworks | NVIDIA NeMo Agent Toolkit: register tools, YAML workflows, supervisor + HITL, observability | `nemo-agent-toolkit` | ~W12 framework adoption + governance |
-| **week17** — long-running & distributed | Google ADK durable state machines, pause/resume, webhooks, auth.md credentials, A2A fleet | `long-running-and-distributed-agents`, `a2a-protocol` | ~W13–14 capstone-grade orchestration |
+| **week02_claude_api_foundations** — LLM basics | messages, multi-turn, streaming | `llm-fundamentals` | ~W1 LLM architecture |
+| **week03_tool_use** — tool use | function calling, multi-tool assistant | `tool-use` | ~W2 ReAct / function calling |
+| **week04_autonomous_pipelines** — pipelines + IoT | chained steps, drones & lights, OpenRouter | `agent-loops` | ~W4 prompt chaining + routing |
+| **week05_agent_loop** — the agent loop | REASON→ACT→OBSERVE, reusable Agent class | `agent-loops` | ~W2–3 ReAct + reflection |
+| **week06_fullstack_agent_app** — full-stack app | agent behind a real API (Express/TS/Postgres) | — (integration; like a deload) | ~W11 production patterns |
+| **week07_mcp_and_skills** — MCP & Skills | reusable tools (MCP) + reusable know-how | `mcp-and-skills` | **W1 in the blueprint** — it front-loads MCP |
+| **week08_rag_knowledge_agents** — RAG | ground answers in your documents | `rag-knowledge-agents` | ~W8 RAG (matches) |
+| **week09_multi_agent_systems** — multi-agent | sequential / parallel swarm / router; CrewAI, LangGraph, AG2 | `multi-agent-systems` | ~W5–9 orchestration |
+| **week10_production_observability** — production & eval | LangGraph guide, testing, monitoring, cost | `production-and-observability`, `agent-evaluation` | ~W10–11 eval + observability |
+| **week11_models_and_patterns** — mastery | pick models/frameworks/patterns; pattern playground | `models-and-patterns` | ~W12 integration + governance |
+| **week14_agent_memory_knowledge_graphs** — graph memory | Neo4j, GraphRAG, durable multi-agent memory | `agent-memory-graphs` | ~W13–14 capstone-grade memory |
+| **week15_production_graphrag** — production GraphRAG | Cypher+GDS, ingestion, 7 frameworks, RAGAS, CI gate | `knowledge-graph-mastery` | ~W15–16 polish + certification |
+| **week16_nemo_agent_toolkit** — production frameworks | NVIDIA NeMo Agent Toolkit: register tools, YAML workflows, supervisor + HITL, observability | `nemo-agent-toolkit` | ~W12 framework adoption + governance |
+| **week17_long_running_distributed_agents** — long-running & distributed | Google ADK durable state machines, pause/resume, webhooks, auth.md credentials, A2A fleet | `long-running-and-distributed-agents`, `a2a-protocol` | ~W13–14 capstone-grade orchestration |
 
-**The biggest divergence to call out:** the blueprint puts **MCP in Week 1** ("the USB port of AI coding" — the gateway skill). This repo reaches MCP in **week7**, *after* you've felt the pain of hand-wiring tools (week3) and run a full agent loop (week5). Both are defensible: the blueprint front-loads the ecosystem standard; this repo front-loads the fundamentals so MCP lands as "oh, *that's* what this standardizes." There's no week12/13 here, and the repo runs one week past the blueprint's 16 — **week17** is the real fleet/long-running capstone (durable agents + A2A) that the blueprint only gestured at.
+**The biggest divergence to call out:** the blueprint puts **MCP in Week 1** ("the USB port of AI coding" — the gateway skill). This repo reaches MCP in **week07_mcp_and_skills**, *after* you've felt the pain of hand-wiring tools (week03_tool_use) and run a full agent loop (week05_agent_loop). Both are defensible: the blueprint front-loads the ecosystem standard; this repo front-loads the fundamentals so MCP lands as "oh, *that's* what this standardizes." There's no week12/13 here, and the repo runs one week past the blueprint's 16 — **week17_long_running_distributed_agents** is the real fleet/long-running capstone (durable agents + A2A) that the blueprint only gestured at.
 
-> 📁 Class repo: `week2/claudeapicall.py` — your very first API call (Foundation starts here).
-> 📁 Class repo: `week3/toolsuse.py` — the model calling your functions for the first time.
-> 📁 Class repo: `week5/autoagent.py` — the reusable REASON→ACT→OBSERVE Agent class.
-> 📁 Class repo: `week6/src/server.ts` — an agent put behind a real Express/TS/Postgres API (the "deload" integration week).
-> 📁 Class repo: `week7/skill.md` + `week7/mcpserver.py` — where MCP and Skills finally arrive (week 7 here, week 1 in the blueprint).
-> 📁 Class repo: `week8/Week8_RAG_Knowledge_Agents_Lab.pdf` — the RAG lab.
-> 📁 Class repo: `week9/ex2_LangGraphSupportGraph.py` — a router/graph multi-agent system.
-> 📁 Class repo: `week10/README.md` — the production/eval week (testing, monitoring, cost).
-> 📁 Class repo: `week11/README.md` — the mastery recap: model wizard, pattern playground, 25-question quiz.
-> 📁 Class repo: `week14/agent_memory.py` + `week14/lab1_hotel_mas.py` — durable graph memory for a multi-agent hotel.
-> 📁 Class repo: `week15/kg_mastery/README.md` — the full production-GraphRAG deep dive (Parts 1–6).
-> 📁 Class repo: `week16/multi_agent_orchestration.ipynb` — NeMo Agent Toolkit: register tools, compose a YAML workflow, supervisor → specialists with HITL.
-> 📁 Class repo: `week17/checkpoints/checkpoint1_state_machine.py` → `checkpoint6_fleet.py` — long-running durable agents (pause/resume) + A2A fleet, offline; plus the live `week17/hr_onboarding/` and `week17/authmd_adk/` services.
+> 📁 Class repo: `week02_claude_api_foundations/claudeapicall.py` — your very first API call (Foundation starts here).
+> 📁 Class repo: `week03_tool_use/toolsuse.py` — the model calling your functions for the first time.
+> 📁 Class repo: `week05_agent_loop/autoagent.py` — the reusable REASON→ACT→OBSERVE Agent class.
+> 📁 Class repo: `week06_fullstack_agent_app/src/server.ts` — an agent put behind a real Express/TS/Postgres API (the "deload" integration week).
+> 📁 Class repo: `week07_mcp_and_skills/skill.md` + `week07_mcp_and_skills/mcpserver.py` — where MCP and Skills finally arrive (week 7 here, week 1 in the blueprint).
+> 📁 Class repo: `week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf` — the RAG lab.
+> 📁 Class repo: `week09_multi_agent_systems/ex2_LangGraphSupportGraph.py` — a router/graph multi-agent system.
+> 📁 Class repo: `week10_production_observability/README.md` — the production/eval week (testing, monitoring, cost).
+> 📁 Class repo: `week11_models_and_patterns/README.md` — the mastery recap: model wizard, pattern playground, 25-question quiz.
+> 📁 Class repo: `week14_agent_memory_knowledge_graphs/agent_memory.py` + `week14_agent_memory_knowledge_graphs/lab1_hotel_mas.py` — durable graph memory for a multi-agent hotel.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/README.md` — the full production-GraphRAG deep dive (Parts 1–6).
+> 📁 Class repo: `week16_nemo_agent_toolkit/multi_agent_orchestration.ipynb` — NeMo Agent Toolkit: register tools, compose a YAML workflow, supervisor → specialists with HITL.
+> 📁 Class repo: `week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py` → `checkpoint6_fleet.py` — long-running durable agents (pause/resume) + A2A fleet, offline; plus the live `week17_long_running_distributed_agents/hr_onboarding/` and `week17_long_running_distributed_agents/authmd_adk/` services.
 
 > The single best "you are here" overview is the one-page course map in `models-and-patterns` — it lines up the taught weeks against their skills in a single screen.
 
@@ -126,7 +126,7 @@ No API key, no code — this is a **planning kata** ($0). Goal: locate yourself 
 
 **Warm-up (5–10 min, pass/fail).** Answer out loud / on paper:
 1. Which **phase** (Foundation / Strength / Endurance / Performance) are you in *right now*?
-2. Name the **last real repo week** you actually ran (e.g. `week5/autoagent.py`).
+2. Name the **last real repo week** you actually ran (e.g. `week05_agent_loop/autoagent.py`).
 3. Name the **skill** that recaps it (from Part B's table).
 > ✅ Pass the warm-up if all three are concrete and consistent (the week and skill match Part B).
 
@@ -135,19 +135,19 @@ No API key, no code — this is a **planning kata** ($0). Goal: locate yourself 
 ```python
 # plan_kata.py  — runs at $0, no API key. Picks your next two skills from where you are.
 SYLLABUS = [  # (real repo week, recap skill, phase)
-    ("week2",  "llm-fundamentals",       "Foundation"),
-    ("week3",  "tool-use",               "Foundation"),
-    ("week4",  "agent-loops",            "Foundation"),
-    ("week5",  "agent-loops",            "Foundation"),
-    ("week7",  "mcp-and-skills",         "Strength"),
-    ("week8",  "rag-knowledge-agents",   "Strength"),
-    ("week9",  "multi-agent-systems",    "Endurance"),
-    ("week10", "production-and-observability", "Endurance"),
-    ("week11", "models-and-patterns",    "Endurance"),
-    ("week14", "agent-memory-graphs",    "Performance"),
-    ("week15", "knowledge-graph-mastery","Performance"),
-    ("week16", "nemo-agent-toolkit",     "Performance"),
-    ("week17", "long-running-and-distributed-agents", "Performance"),
+    ("week02_claude_api_foundations",  "llm-fundamentals",       "Foundation"),
+    ("week03_tool_use",  "tool-use",               "Foundation"),
+    ("week04_autonomous_pipelines",  "agent-loops",            "Foundation"),
+    ("week05_agent_loop",  "agent-loops",            "Foundation"),
+    ("week07_mcp_and_skills",  "mcp-and-skills",         "Strength"),
+    ("week08_rag_knowledge_agents",  "rag-knowledge-agents",   "Strength"),
+    ("week09_multi_agent_systems",  "multi-agent-systems",    "Endurance"),
+    ("week10_production_observability", "production-and-observability", "Endurance"),
+    ("week11_models_and_patterns", "models-and-patterns",    "Endurance"),
+    ("week14_agent_memory_knowledge_graphs", "agent-memory-graphs",    "Performance"),
+    ("week15_production_graphrag", "knowledge-graph-mastery","Performance"),
+    ("week16_nemo_agent_toolkit", "nemo-agent-toolkit",     "Performance"),
+    ("week17_long_running_distributed_agents", "long-running-and-distributed-agents", "Performance"),
 ]
 
 class MockLLM:
@@ -158,7 +158,7 @@ class MockLLM:
         return SYLLABUS[i + 1 : i + 3]  # the next two rungs
 
 # ---- edit ONE line: the last repo week you actually ran ----
-LAST_DONE = "week5"
+LAST_DONE = "week05_agent_loop"
 
 plan = MockLLM().next_two(LAST_DONE)
 print(f"You are in: {dict((w, p) for w, _, p in SYLLABUS)[LAST_DONE]} phase\n")
@@ -178,6 +178,6 @@ Run it: `python plan_kata.py`. It prints your phase and your **next two skills**
 | Correctly named the **real repo week + recap skill** you last ran (Part B) | 1 |
 | Script runs and prints two next skills (or a sensible end-of-syllabus message) | 1 |
 | Chosen path matches one of the Part D ladders (you can justify *why* in a sentence) | 1 |
-| You can explain **one** way the blueprint's 16-week ideal differs from this repo (e.g. MCP in W1 vs week7) | 1 |
+| You can explain **one** way the blueprint's 16-week ideal differs from this repo (e.g. MCP in W1 vs week07_mcp_and_skills) | 1 |
 
 **Pass = 4/5 criteria.** If you pass, your homework is literally the two skills the script printed — go run their guided labs.

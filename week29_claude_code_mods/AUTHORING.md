@@ -18,7 +18,7 @@ Week 29 teaches **Claude Code mods** inside Claude Code. Each lesson exists twic
   it and run every lesson's checks. `/mod-gym check` records passes in your real `$.store`, so reset afterwards:
 
   ```bash
-  claude -p "/mod-gym lab $PWD/week29/reference"
+  claude -p "/mod-gym lab $PWD/week29_claude_code_mods/reference"
   for n in 1 2 3 4 5 6 7 8; do claude -p "/mod-gym $n" >/dev/null; claude -p "/mod-gym check"; done
   claude -p "/mod-gym reset"; claude -p "/mod-gym lab ~/mod-gym-lab"
   ```

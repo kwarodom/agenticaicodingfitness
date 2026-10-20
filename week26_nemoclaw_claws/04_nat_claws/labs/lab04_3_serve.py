@@ -8,7 +8,7 @@ request shape, sent with urllib) and POST /v1/workflow/full?filter_steps=LLM_END
 intermediate steps it counts (Module 05 builds on this). The steps are saved to .runs/lab04_3_full_steps.json.
 
 LLM budget: 3 agent requests ≈ 5–6 laptop LLM calls.
-Run: .venv/bin/python week26/04_nat_claws/labs/lab04_3_serve.py
+Run: .venv/bin/python week26_nemoclaw_claws/04_nat_claws/labs/lab04_3_serve.py
 """
 import json
 import sys
@@ -31,14 +31,14 @@ TUTORIAL_ROUTES = ["/v1/workflow", "/v1/workflow/stream", "/v1/workflow/full", "
 step(0, "a NAT 1.9.0 quirk first: `nat serve` needs the `greenlet` package")
 env, how = greenlet_env()
 if env is None:
-    warn("week26/.venv-nat has no greenlet, so `nat serve` stops with: \"The SQLAlchemy asyncio module requires that "
+    warn("week26_nemoclaw_claws/.venv-nat has no greenlet, so `nat serve` stops with: \"The SQLAlchemy asyncio module requires that "
          "the Python 'greenlet' library is installed\".")
     print(f"→ fix it once, in the ⌨ terminal:  {GREENLET_FIX}")
     result("Skipped: install greenlet and rerun. (`nat run` and `nat mcp serve` do not need it.)")
     sys.exit(0)
 if env:
-    warn("week26/.venv-nat has no greenlet (NAT 1.9.0 + SQLAlchemy 2.1 import it on `nat serve`). This run borrows "
-         f"the one in week25/.venv-nat through PYTHONPATH=.runs/pyshim. The real fix: {GREENLET_FIX}")
+    warn("week26_nemoclaw_claws/.venv-nat has no greenlet (NAT 1.9.0 + SQLAlchemy 2.1 import it on `nat serve`). This run borrows "
+         f"the one in week25_dgx_spark/.venv-nat through PYTHONPATH=.runs/pyshim. The real fix: {GREENLET_FIX}")
 else:
     ok(how)
 if not any(m.startswith("nemotron-3-nano") for m in laptop_models()):
@@ -54,7 +54,7 @@ steps_saved = {}
 try:
     with background([NAT, "serve", "--config_file", LAPTOP_YML, "--host", "127.0.0.1", "--port", str(port)],
                     ready_url=f"{base}/health", log=RUNS / "lab04_3_nat_serve.log", env={"PYTHONWARNINGS": "ignore", **env},
-                    show=f"week26/.venv-nat/bin/nat serve --config_file {rel(LAPTOP_YML)} --host 127.0.0.1 --port {port}"):
+                    show=f"week26_nemoclaw_claws/.venv-nat/bin/nat serve --config_file {rel(LAPTOP_YML)} --host 127.0.0.1 --port {port}"):
         print(f"→ GET /health → {json.dumps(get_json(base + '/health'))}")
 
         step(2, "which routes did NAT 1.9 create? (GET /openapi.json)")

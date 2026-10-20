@@ -2,7 +2,7 @@
 """Exercise 02 · Read the link: which ports are Up, what busbw means, and did the test pass?
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/02_two_sparks_nccl/exercises/ex02_read_the_link.py
+    .venv/bin/python week25_dgx_spark/02_two_sparks_nccl/exercises/ex02_read_the_link.py
 
 The checker is free and offline. It feeds your functions the real `ibdev2netdev` outputs
 printed in three NVIDIA playbooks, then known bus-bandwidth factors, then the pass marks

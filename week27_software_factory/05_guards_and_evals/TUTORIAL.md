@@ -14,7 +14,7 @@
 
 ## 1 · Guards (45 min)
 
-The five hooks live in `week27/factory/.claude/hooks/` and are wired by `.claude/settings.json`:
+The five hooks live in `week27_software_factory/factory/.claude/hooks/` and are wired by `.claude/settings.json`:
 
 | Hook | Blocks | Matcher |
 |---|---|---|
@@ -28,7 +28,7 @@ They are stdlib-only Python: JSON in on stdin, exit 0 to allow, **exit 2 with a 
 
 ```bash
 # on: laptop
-cd week27/factory && ../../.venv/bin/python -m pytest -q tests
+cd week27_software_factory/factory && ../../.venv/bin/python -m pytest -q tests
 ```
 
 **Expected output**
@@ -49,7 +49,7 @@ A guard that can be talked around (try: "use python to read .env") is a finding 
 
 ```bash
 # on: laptop
-cd week27/factory
+cd week27_software_factory/factory
 PATH=$PWD/evals/_stubs/bin:$PATH claude plugin eval . --scaffold --allow-tools Bash Write Edit --runs 3 --max-cost-usd 5
 ```
 

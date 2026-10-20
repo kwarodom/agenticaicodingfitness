@@ -57,10 +57,10 @@ The topic labels below are the tutorial's proposal — not necessarily the produ
 
 ## 1 · Route nine requests
 
-The reference implementation from the source guide lives in `week24/jev_lab/jev_lab.py` (standard library only). Lab 01 imports its `QUESTIONS["intent"]` (one choice + five nouls + one score), its `prepare()` (sends only the `message` field — never the teaching label) and its `policy()`.
+The reference implementation from the source guide lives in `week24_typed_decisions_jev/jev_lab/jev_lab.py` (standard library only). Lab 01 imports its `QUESTIONS["intent"]` (one choice + five nouls + one score), its `prepare()` (sends only the `message` field — never the teaching label) and its `policy()`.
 
 ```bash
-.venv/bin/python week24/04_intent_routing/labs/lab01_route_requests.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab01_route_requests.py
 ```
 
 **Expected output**
@@ -91,7 +91,7 @@ The reference implementation from the source guide lives in `week24/jev_lab/jev_
 The same run is available as a raw JSON-lines CLI — the exact script from the source guide:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run intent --live --limit 9
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run intent --live --limit 9
 ```
 
 ### The i3 story — when the "gold" label is debatable
@@ -153,7 +153,7 @@ Experiments:
 Jev picks the **key**; your registry supplies the **prompt**. The registry is code you review like any other code — the classifier can never inject a new prompt or tool.
 
 ```bash
-.venv/bin/python week24/04_intent_routing/labs/lab02_prompt_bundle.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab02_prompt_bundle.py
 ```
 
 **Expected output**
@@ -196,7 +196,7 @@ The proposed Alto Copilot integration sequence, from the source guide:
 English is Jev's primary training language. Alto Copilot users write Thai, English and a mix. Lab 03 sends the same request in both languages and compares the topic, the confidence, and the **total variation distance** (TVD) between the two probability distributions (0 = identical, 1 = no overlap).
 
 ```bash
-.venv/bin/python week24/04_intent_routing/labs/lab03_thai_vs_english.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab03_thai_vs_english.py
 ```
 
 **Expected output**
@@ -259,14 +259,14 @@ Never switch routing on because a notebook looked good. The source guide's recom
 
 ## Try it yourself
 
-**Exercise 04 — add a route.** Alto Copilot gets many "gateway offline / sensor not reporting" questions. Open `week24/04_intent_routing/exercises/ex04_add_a_route.py`:
+**Exercise 04 — add a route.** Alto Copilot gets many "gateway offline / sensor not reporting" questions. Open `week24_typed_decisions_jev/04_intent_routing/exercises/ex04_add_a_route.py`:
 
 1. **Part A (offline, free):** implement `accepted(a)` — the confidence gate — and pass five fixed fixtures.
 2. **Part B:** write the description for the new `iot_connectivity` option (what belongs, and what does **not**), plus three test messages of your own — try one in Thai.
 3. **Part C (automatic):** the checker routes your messages, two hidden gateway messages, and two controls that must stay `hvac` and `coding`.
 
 ```bash
-.venv/bin/python week24/04_intent_routing/exercises/ex04_add_a_route.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/exercises/ex04_add_a_route.py
 ```
 
 **Expected output**
@@ -303,7 +303,7 @@ If the probabilities sum to 1 and the peak is ≥ 0.80, the second option is at 
 
 | Symptom | Fix |
 |---|---|
-| `ModuleNotFoundError: jev_lab` | Run from the repo root; the labs add `week24/jev_lab` to `sys.path` themselves |
+| `ModuleNotFoundError: jev_lab` | Run from the repo root; the labs add `week24_typed_decisions_jev/jev_lab` to `sys.path` themselves |
 | Everything routes to `clarify_or_review` | You are in DRY mode with a changed request (placeholder answers have confidence 0) — switch to ⚡ Live |
 | `jev_lab.py run … --live` says "Set TYPESAFE_API_KEY" | Source the key: `set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a` (the built-in terminal already has it) |
 | `Output file already exists` | The reference CLI refuses to overwrite result files — pick a new `--out` name |

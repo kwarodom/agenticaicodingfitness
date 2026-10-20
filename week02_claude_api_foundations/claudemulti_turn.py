@@ -13,12 +13,15 @@ messages = []
 def chat(user_msg):
     messages.append({"role": "user", "content": user_msg})
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250929",
+        model="claude-sonnet-5",
         max_tokens=1024,
         system="You are a helpful coding mentor. Be concise.",
         messages=messages
     )
-    assistant_msg = response.content[0].text
+    # Extract all text blocks (handling ThinkingBlock or other block types)
+    assistant_msg = "".join(
+        block.text for block in response.content if getattr(block, "type", None) == "text"
+    )
     messages.append({"role": "assistant", "content": assistant_msg})
     return assistant_msg
 

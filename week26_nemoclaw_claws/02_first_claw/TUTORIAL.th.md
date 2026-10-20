@@ -21,11 +21,11 @@
 | DGX Spark ที่ล้างเครื่องได้ | DGX OS ใหม่ ไม่มีข้อมูลส่วนตัว | playbook บอกให้รันเดโมบนเครื่องหรือ VM ใหม่ที่ไม่มีข้อมูลส่วนตัวหรือข้อมูลลับ |
 | SSH เข้าเครื่องได้ | `ssh -o BatchMode=yes <spark> true` | แล็บรันคำสั่งแบบอ่านอย่างเดียวที่นั่น ตั้งค่าได้ใน 🖥 Spark setup |
 | `sudo` บน Spark | คุณรู้รหัสผ่าน | ตัวติดตั้งและการแก้ Docker ต้องใช้ root — **คุณ** พิมพ์เอง แล็บไม่ทำแทน |
-| OpenShell parser บนแล็ปท็อป | `week26/.venv-openshell/bin/openshell --version` | แล็บ 02-3 และ 02-4 ตรวจทุกคำสั่ง OpenShell แบบออฟไลน์ |
+| OpenShell parser บนแล็ปท็อป | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` | แล็บ 02-3 และ 02-4 ตรวจทุกคำสั่ง OpenShell แบบออฟไลน์ |
 
 ```bash
 # on: laptop
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 bash --version | head -n 1
 ```
 
@@ -282,7 +282,7 @@ installer sees ACCEPT=1
 ✓ an assignment in front of a command reaches only THAT command: curl gets it, the installer (bash) does not
 
 ▣ STEP 3 · build the lines from choices
-◆ wrote 6 lines to week26/02_first_claw/.runs/install_*.sh — bash -n parses them, it never runs them
+◆ wrote 6 lines to week26_nemoclaw_claws/02_first_claw/.runs/install_*.sh — bash -n parses them, it never runs them
 $ for f in .runs/install_*.sh; do bash -n "$f" && echo "syntax ok  $f"; done   [this laptop]
 syntax ok  install_existing_vllm__8000.sh
 syntax ok  install_hermes__locked_down.sh
@@ -644,7 +644,7 @@ starter prompt ใน playbook ระบุคำสั่ง onboarding ที�
 
 ```bash
 # on: laptop
-.venv/bin/python week26/02_first_claw/exercises/ex02_install_line.py
+.venv/bin/python week26_nemoclaw_claws/02_first_claw/exercises/ex02_install_line.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled) [บันทึกจาก Mac เครื่องนี้ เมื่อเติม TODO ครบ]

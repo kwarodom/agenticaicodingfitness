@@ -10,7 +10,7 @@ Offline, runs anywhere. Two checkers read the same files and you compare their a
 Neither of them is the gateway on your Spark, which checks the semantic rules when you push. Where the two
 disagree, the lab says so and says which source backs which answer.
 
-Run: .venv/bin/python week26/03_policy_as_code/labs/lab03_2_policy_anatomy.py
+Run: .venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_2_policy_anatomy.py
 """
 import copy
 import sys
@@ -163,7 +163,7 @@ note("Read the columns together. The parser catches STRUCTURE (unknown field, li
      "the gateway when you push; policykit checks them before you push. policykit misses rule-shape mistakes the "
      "parser catches, and it does not know `sql` yet. Use both, then trust the gateway.")
 if not parsekit.OPENSHELL.exists():
-    warn("the CLI column is n/a — install openshell==0.0.111 into week26/.venv-openshell")
+    warn("the CLI column is n/a — install openshell==0.0.111 into week26_nemoclaw_claws/.venv-openshell")
 ok("captured on this Mac: policykit + the real OpenShell 0.0.111 parser, no gateway")
 result("You can read every rule form, and you know which mistakes the laptop catches and which only the gateway "
        "catches.")

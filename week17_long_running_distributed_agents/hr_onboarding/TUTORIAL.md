@@ -1,13 +1,13 @@
 # 🧭 Tutorial — a long-running ADK agent, step by step
 
-A hands-on walkthrough of `week17/hr_onboarding/`: a **real** Google ADK agent
+A hands-on walkthrough of `week17_long_running_distributed_agents/hr_onboarding/`: a **real** Google ADK agent
 that onboards a new hire across *days or weeks* — sending a welcome packet,
 **pausing** for a contract signature, delegating IT provisioning to a sub-agent,
 **pausing** again for a laptop delivery, and **resuming** from webhooks without
 ever losing its place.
 
 > This whole tutorial uses a **live LLM** (unlike the offline
-> `week17/checkpoints/` demos). You need `google-adk` + one model credential.
+> `week17_long_running_distributed_agents/checkpoints/` demos). You need `google-adk` + one model credential.
 
 Time: ~25 min.
 
@@ -15,7 +15,7 @@ Time: ~25 min.
 > interactive web guide — it streams each command's output in the page, manages
 > the service for you, and links to a live visualizer:
 > ```bash
-> .venv/bin/python week17/hr_onboarding/tutorial_server.py   # → http://127.0.0.1:8070
+> .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/tutorial_server.py   # → http://127.0.0.1:8070
 > ```
 > The text walkthrough below is the same content, runnable by hand.
 
@@ -53,7 +53,7 @@ START ──welcome packet──▶ WELCOME_SENT ⏸  (waiting on signature — 
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-uv pip install -r week17/hr_onboarding/requirements.txt
+uv pip install -r week17_long_running_distributed_agents/hr_onboarding/requirements.txt
 .venv/bin/python -c "import google.adk, litellm; print('ready')"
 ```
 
@@ -111,7 +111,7 @@ already seeing the new step and can't pretend it got there on its own.
 ## Step 4 · Start the long-running service
 
 ```bash
-.venv/bin/python week17/hr_onboarding/server.py
+.venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py
 ```
 
 **Checkpoint:** prints `✅ onboarding service up — model=…`. It listens on
@@ -274,15 +274,15 @@ The headline claim: a paused onboarding survives a full process restart.
 Everything in Parts 2–3 is also scripted end to end in `client.py`:
 
 ```bash
-.venv/bin/python week17/hr_onboarding/server.py     # terminal 1
-.venv/bin/python week17/hr_onboarding/client.py     # terminal 2
+.venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py     # terminal 1
+.venv/bin/python week17_long_running_distributed_agents/hr_onboarding/client.py     # terminal 2
 ```
 
 ## Cleanup
 
 ```bash
 # stop the server (Ctrl-C), then:
-rm -f week17/hr_onboarding/onboarding_sessions.db    # wipe all sessions
+rm -f week17_long_running_distributed_agents/hr_onboarding/onboarding_sessions.db    # wipe all sessions
 ```
 
 (Or use the **Cleanup & teardown** steps in the web guide.)

@@ -19,7 +19,7 @@ What this demonstrates:
 
 (Week 17 · long-running agents · ADK blog: Runner.run_async(state_delta=...))
 
-Run:  python week17/checkpoints/checkpoint3_webhook_resume.py
+Run:  python week17_long_running_distributed_agents/checkpoints/checkpoint3_webhook_resume.py
       # or serve it for real:  uvicorn checkpoint3_webhook_resume:app --reload
 """
 import sys

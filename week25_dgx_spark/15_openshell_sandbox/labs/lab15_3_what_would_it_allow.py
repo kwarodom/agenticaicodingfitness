@@ -8,7 +8,7 @@ prompt-injected version of it) might try. Then it previews a policy change the w
 `openshell policy update --add-endpoint … --dry-run` would, and shows which decisions flip.
 Finally it prints the commands that watch real decisions on the Spark (DRY unless connected).
 
-Run: .venv/bin/python week25/15_openshell_sandbox/labs/lab15_3_what_would_it_allow.py
+Run: .venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_3_what_would_it_allow.py
 """
 import copy
 import sys

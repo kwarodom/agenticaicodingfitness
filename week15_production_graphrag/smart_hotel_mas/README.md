@@ -1,6 +1,6 @@
 # 🏨 Smart Hotel MAS — 4-Memory Architecture Workshop (Code Companion)
 
-Runnable Python that follows **`week15/smart_hotel_mas.pdf`** — a 2-hour hands-on workshop building a 5-agent Multi-Agent System with a **4-layer memory architecture** over a 200-room smart hotel.
+Runnable Python that follows **`week15_production_graphrag/smart_hotel_mas.pdf`** — a 2-hour hands-on workshop building a 5-agent Multi-Agent System with a **4-layer memory architecture** over a 200-room smart hotel.
 
 ```
 The 4 memory layers (different access pattern + retention per layer):
@@ -43,7 +43,7 @@ smart_hotel_mas/
 ### 1. Start the stack
 
 ```bash
-docker compose -f week15/smart_hotel_mas/docker-compose.yml up -d
+docker compose -f week15_production_graphrag/smart_hotel_mas/docker-compose.yml up -d
 # Neo4j UI: http://localhost:7474  (neo4j / hotel_mas_2024)
 # ChromaDB: http://localhost:8001
 ```
@@ -52,7 +52,7 @@ docker compose -f week15/smart_hotel_mas/docker-compose.yml up -d
 
 ```bash
 python3 -m venv venv && source venv/bin/activate
-pip install -r week15/smart_hotel_mas/requirements.txt
+pip install -r week15_production_graphrag/smart_hotel_mas/requirements.txt
 ```
 
 `.env` in the repo root (gitignored — never commit):
@@ -64,7 +64,7 @@ ANTHROPIC_API_KEY="sk-ant-..."   # Checkpoint 6, GraphRAG, memory injection
 ### 3. Seed the hotel (Checkpoint 1 — do this first)
 
 ```bash
-python week15/smart_hotel_mas/checkpoints/checkpoint1_seed.py
+python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint1_seed.py
 # Verify in Neo4j Browser: MATCH (r:Room) RETURN count(r)  → 200
 ```
 

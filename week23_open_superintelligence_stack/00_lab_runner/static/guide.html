@@ -43,11 +43,16 @@
         background:var(--panel2);color:var(--txt);max-width:280px}
   #model-sel:disabled{opacity:.5}
   .pfhint{font-size:11px;color:var(--dim)}
+  /* visually hidden, still in the light DOM — the voice guide reads this */
+  .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+           clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
   /* ── main grid: sidebar + content ── */
   .main{flex:1;display:grid;grid-template-columns:340px 1fr;min-height:0}
   @media(max-width:900px){.main{grid-template-columns:1fr}}
   .side{border-right:1px solid var(--line);overflow:auto;background:var(--panel);padding:6px 0 20px}
   .fold{border-bottom:1px solid var(--line)}
+  /* .fhead / .sec are real <button>s (keyboard + screen-reader + AI-assistant reachable) — reset the chrome */
+  .fhead,.sec{width:100%;background:none;border:0;text-align:left;font-family:inherit;color:inherit}
   .fhead{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;font-size:12.5px}
   .fhead:hover{background:var(--panel2)} .fhead.cur .ft{color:var(--accent)}
   .chev{color:var(--dim);width:10px;flex:0 0 10px}
@@ -251,10 +256,10 @@
   <span class="hdr-prog" id="course-prog"></span>
   <span class="pill" id="pill-mode" title="mode from /api/status"><span class="dot"></span><span id="mode-txt">checking…</span></span>
   <span style="width:1px;height:22px;background:var(--line);display:inline-block"></span>
-  <button class="tbtn" id="nav-prev" onclick="nav(-1)">◀</button>
-  <span id="nav-pos" style="font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums"></span>
-  <button class="tbtn" id="nav-next" onclick="nav(1)">▶</button>
-  <button class="tbtn" id="sh-toggle" onclick="termToggle()" title="built-in terminal — run any command without leaving the app">⌨ Terminal</button>
+  <button class="tbtn" id="nav-prev" onclick="nav(-1)" aria-label="Previous section">◀</button>
+  <span id="nav-pos" aria-live="polite" style="font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums"></span>
+  <button class="tbtn" id="nav-next" onclick="nav(1)" aria-label="Next section">▶</button>
+  <button class="tbtn" id="sh-toggle" onclick="termToggle()" aria-expanded="false" aria-controls="shdrawer" title="built-in terminal — run any command without leaving the app">⌨ Terminal</button>
 </header>
 <div class="progress"><div id="bar"></div></div>
 <div class="pathbar">
@@ -264,13 +269,16 @@
   <button class="pbtn" data-p="C" onclick="setPath('C')">C 💻 laptop</button>
   <span style="width:1px;height:20px;background:var(--line);display:inline-block"></span>
   <span>Model:</span>
-  <select id="model-sel" onchange="pickModel()" title="model for ▶ Run lab runs — also exported as $DGX_MODEL in the terminal"><option value="">auto</option></select>
+  <select id="model-sel" onchange="pickModel()" aria-label="Model for lab runs" title="model for ▶ Run lab runs — also exported as $DGX_MODEL in the terminal"><option value="">auto</option></select>
   <span id="pathfields"></span>
 </div>
 
+<section class="sr-only" id="avatar-context" aria-live="polite"
+         aria-label="Lab Runner context for the voice assistant"></section>
+
 <div class="main">
-  <nav class="side" id="side"></nav>
-  <section class="content" id="content"><div class="waitmsg">loading the course…</div></section>
+  <nav class="side" id="side" aria-label="Course outline — 12 tutorials"></nav>
+  <main class="content" id="content" aria-label="Current section"><div class="waitmsg">loading the course…</div></main>
 </div>
 
 <div class="shdrawer" id="shdrawer">
@@ -367,7 +375,7 @@ async function boot(){
   }catch(e){
     attempt++;
     $("content").innerHTML=`<div class="waitmsg">⚠ backend not reachable — ${esc(e.message||e)}<br>`+
-      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week23/00_lab_runner/tutorial_server.py</code></div>`;
+      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week23_open_superintelligence_stack/00_lab_runner/tutorial_server.py</code></div>`;
     setTimeout(boot,3000);return;
   }
   COURSE=data;
@@ -401,10 +409,12 @@ function fillModels(models,defModel){
     models.map(m=>`<option value="${esc(m)}"${m===MODEL?" selected":""}>${esc(m)}</option>`).join("");
   s.disabled=!models.length;
 }
+let STATUS=null;
 async function refreshStatus(){
   const p=$("pill-mode"),txt=$("mode-txt");
   try{
     const r=await(await fetch("/api/status")).json();
+    STATUS=r;
     const real=r.mode==="real";
     if(r.run_timeout)RUNTMO=r.run_timeout;
     fillModels(r.models||[],r.model);
@@ -413,14 +423,52 @@ async function refreshStatus(){
     txt.textContent=real?`REAL · ${r.conn||"?"}${shown?" · "+shown:""}`:`SIM · ${r.conn||"—"}`;
     p.title=r.detail||r.base_url||"";
   }catch(e){
+    STATUS=null;
     p.classList.remove("real","sim");txt.textContent="offline";p.title="/api/status unreachable";
   }
+  updateAvatarContext();
+}
+
+/* ── context for the embedded voice guide ───────────────────────────────────
+   The avatar reads the rendered DOM, which shows what is on screen but not
+   which tutorial/mode/endpoint we are in. Publish that as light-DOM text so it
+   can answer "where am I?" without guessing. Terse — it is re-read every turn. */
+function updateAvatarContext(){
+  const box=$("avatar-context"); if(!box)return;
+  if(!COURSE.length||!FLAT[cur]){box.textContent="Lab Runner is still loading the course.";return;}
+  const f=FLAT[cur],c=COURSE[f.fi],s=c.sections[f.si];
+  if(!c||!s){box.textContent="Lab Runner is still loading the course.";return;}
+  const fold=foldCounts(f.fi),all=courseCounts();
+  const L=[];
+  L.push(`App: Lab Runner, Week 23 — the Open Superintelligence Stack, port 8113. `+
+         `Concept hub: Stack Navigator, port 8112.`);
+  L.push(`Current tutorial: ${c.num} — ${c.title||c.folder} (folder ${c.folder}, explainer app on port ${c.port}).`);
+  L.push(`Current section: "${s.title}" — ${f.si+1} of ${c.sections.length} in this tutorial, `+
+         `${cur+1} of ${FLAT.length} in the course.`);
+  if(s.ckTotal)L.push(`Checkpoints in this section: ${secTicked(f.fi,f.si)} of ${s.ckTotal} ticked.`);
+  L.push(`Progress: ${fold[0]} of ${fold[1]} checkpoints in this tutorial, ${all[0]} of ${all[1]} in the course.`);
+  if(STATUS){
+    const real=STATUS.mode==="real";
+    L.push(real
+      ? `Connection: REAL — ${STATUS.conn} endpoint at ${STATUS.base_url}, model ${MODEL||STATUS.model}. Labs run genuine inference, cost $0.`
+      : `Connection: SIM — no endpoint reachable, so labs degrade to a faithful simulation. Still teaches everything, cost $0.`);
+  }else L.push(`Connection: unknown — the status endpoint did not answer.`);
+  L.push(`Path: ${PATH} (A is the DGX Spark, B is build.nvidia.com, C is this laptop).`);
+  if(s.kind==="labs"&&(c.labs||[]).length){
+    L.push(`Runnable here: ${c.labs.map(l=>l.file).join(", ")}. `+
+           `Each has a button named "Run lab <filename>" — ask before pressing it, it executes on the learner's machine.`);
+  }else if((c.labs||[]).length){
+    L.push(`This tutorial's labs (${c.labs.map(l=>l.file).join(", ")}) live in its 🧪 labs section — open that first to run them.`);
+  }
+  L.push(`To move: click a tutorial or section button in the sidebar, or "Next section" / "Previous section".`);
+  box.textContent=L.join(" ");
 }
 
 /* ── path switch → env sent with /api/run ── */
-function setPath(p){PATH=p;localStorage.setItem("lr.path",p);renderPath();}
+function setPath(p){PATH=p;localStorage.setItem("lr.path",p);renderPath();updateAvatarContext();}
 function renderPath(){
-  document.querySelectorAll(".pbtn").forEach(b=>b.classList.toggle("on",b.dataset.p===PATH));
+  document.querySelectorAll(".pbtn").forEach(b=>{
+    const on=b.dataset.p===PATH;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");});
   const bar=$("pathfields");
   const urlA=localStorage.getItem("lr.pathA.url")||"";
   const keyB=localStorage.getItem("lr.pathB.key")||"";
@@ -482,18 +530,23 @@ function renderSide(){
   const curF=FLAT[cur];let h="";
   COURSE.forEach((c,fi)=>{
     const r=foldCounts(fi),open=expanded.has(fi);
+    const ftitle=c.title||c.folder;
     h+=`<div class="fold">`+
-       `<div class="fhead${curF.fi===fi?" cur":""}" onclick="toggleFold(${fi})">`+
+       `<button type="button" class="fhead${curF.fi===fi?" cur":""}" onclick="toggleFold(${fi})"`+
+       ` aria-expanded="${open?"true":"false"}" aria-controls="fsecs-${fi}"`+
+       ` aria-label="Tutorial ${esc(c.num)} — ${esc(ftitle)} · ${r[0]} of ${r[1]} checkpoints done">`+
        `<span class="chev">${open?"▾":"▸"}</span><span class="fnum">${esc(c.num)}</span>`+
-       `<span class="ft" title="${esc(c.title||c.folder)}">${esc(c.title||c.folder)}</span>`+
-       ring(r[0],r[1])+`<span class="fct">${r[0]}/${r[1]}</span></div>`;
+       `<span class="ft" title="${esc(ftitle)}">${esc(ftitle)}</span>`+
+       ring(r[0],r[1])+`<span class="fct">${r[0]}/${r[1]}</span></button>`;
     if(open){
-      h+=`<div class="fsecs">`;
+      h+=`<div class="fsecs" id="fsecs-${fi}">`;
       (c.sections||[]).forEach((s,si)=>{
         const isCur=curF.fi===fi&&curF.si===si;
         const done=s.ckTotal>0&&secTicked(fi,si)===s.ckTotal;
-        h+=`<div class="sec${isCur?" sel":""}${done?" done":""}" onclick="gotoSec(${fi},${si})">`+
-           `<span class="ico">${secIcon(s,done)}</span><span class="t" title="${esc(s.title)}">${esc(s.kind==="diagrams"?s.title.replace(/^📊\s*/,""):s.title)}</span></div>`;
+        h+=`<button type="button" class="sec${isCur?" sel":""}${done?" done":""}" onclick="gotoSec(${fi},${si})"`+
+           `${isCur?' aria-current="page"':""}`+
+           ` aria-label="${esc(c.num)} · ${esc(s.title)}${done?" (complete)":""}">`+
+           `<span class="ico">${secIcon(s,done)}</span><span class="t" title="${esc(s.title)}">${esc(s.kind==="diagrams"?s.title.replace(/^📊\s*/,""):s.title)}</span></button>`;
       });
       h+=`</div>`;
     }
@@ -506,6 +559,7 @@ function updateProg(){
   const r=courseCounts();
   $("bar").style.width=r[1]?(100*r[0]/r[1]).toFixed(1)+"%":"0%";
   $("course-prog").textContent=r[1]?`${r[0]} / ${r[1]} checkpoints`:"";
+  updateAvatarContext();
 }
 
 /* ── navigation: one continuous course across the 12 folders ── */
@@ -645,6 +699,7 @@ function renderContent(){
   $("nav-next").disabled=cur===FLAT.length-1;
   if(s.kind==="labs")restoreLabUI(f.fi);
   if(s.kind==="diagrams")armCharts();
+  updateAvatarContext();
 }
 
 /* ── lab panels: view source + run + streamed terminal + run-history spark ── */
@@ -677,19 +732,19 @@ function labCards(fi){
   if(!c.labs||!c.labs.length)return "";
   let h=`<div class="labsec"><h3 class="labshead">🧪 Run the labs — path ${esc(PATH)} env, streamed live</h3>`;
   c.labs.forEach((L,li)=>{
-    h+=`<div class="labcard">`+
+    h+=`<article class="labcard" aria-label="Lab ${esc(L.file)}${L.title?" — "+esc(L.title):""}">`+
        `<div class="labtop"><span class="labfile">${esc(L.file)}</span><span class="labtitle">${esc(L.title||"")}</span>`+
        `<span class="grow"></span>`+
        `<span class="spark" id="spark-${fi}-${li}" title="last ${20} runs — dot color = exit, height = duration">${sparkHTML(labKey(fi,li))}</span>`+
-       `<button class="tbtn" id="srcbtn-${fi}-${li}" onclick="toggleLabSrc(${fi},${li})">view source ▸</button>`+
-       `<button class="run" id="runbtn-${fi}-${li}" onclick="runLab(${fi},${li})">▶ Run</button></div>`+
+       `<button class="tbtn" id="srcbtn-${fi}-${li}" onclick="toggleLabSrc(${fi},${li})" aria-expanded="false" aria-controls="src-${fi}-${li}" aria-label="View source of ${esc(L.file)}">view source ▸</button>`+
+       `<button class="run" id="runbtn-${fi}-${li}" onclick="runLab(${fi},${li})" aria-label="Run lab ${esc(L.file)}">▶ Run</button></div>`+
        `<pre class="src" id="src-${fi}-${li}"></pre>`+
        `<div class="term-wrap" id="tw-${fi}-${li}" style="display:none">`+
        `<div class="term-bar"><span class="d" style="background:#f85149"></span>`+
        `<span class="d" style="background:#d29922"></span><span class="d" style="background:#76b900"></span>`+
        `<span>labs/${esc(L.file)}</span><span class="clr" onclick="clearLabTerm(${fi},${li})">clear ✕</span></div>`+
        `<div class="term" id="term-${fi}-${li}"></div>`+
-       `<div class="footer" id="foot-${fi}-${li}"></div></div></div>`;
+       `<div class="footer" id="foot-${fi}-${li}"></div></div></article>`;
   });
   return h+`</div>`;
 }
@@ -718,7 +773,7 @@ async function toggleLabSrc(fi,li){
   if(!el)return;
   if(el.classList.contains("open")){
     el.classList.remove("open");openSrc[k]=false;
-    if(btn)btn.textContent="view source ▸";return;
+    if(btn){btn.textContent="view source ▸";btn.setAttribute("aria-expanded","false");}return;
   }
   if(srcCache[k]===undefined){
     el.textContent="loading…";el.classList.add("open");
@@ -728,7 +783,7 @@ async function toggleLabSrc(fi,li){
     }catch(e){srcCache[k]="(could not load source: "+(e.message||e)+")";}
   }
   el.textContent=srcCache[k];el.classList.add("open");openSrc[k]=true;
-  if(btn)btn.textContent="hide source ▾";
+  if(btn){btn.textContent="hide source ▾";btn.setAttribute("aria-expanded","true");}
 }
 function clearLabTerm(fi,li){
   const k=labKey(fi,li);
@@ -819,6 +874,7 @@ function termOpen(){$("shdrawer").classList.add("open");$("sh-chev").textContent
 function termToggle(){
   const d=$("shdrawer"),open=d.classList.toggle("open");
   $("sh-chev").textContent=open?"▾":"▴";
+  $("sh-toggle").setAttribute("aria-expanded",open?"true":"false");
   if(open)$("sh-in").focus();
 }
 function sendToTerm(btn){
@@ -1237,6 +1293,57 @@ function armCharts(){
 /* ── go ── */
 renderPath();
 boot();
+</script>
+
+<!-- ── WebAvatar realtime voice guide — the "Week 23 Lab Guide" ────────────────
+     A voice tutor that can read this page and drive it: "open tutorial 03",
+     "run the first lab", "what's a NIM?". Its persona, curriculum knowledge and
+     safety rules live in the dashboard system prompt — week23_open_superintelligence_stack/avatar_system_prompt.md.
+     The page-side contract (what it may click, the #avatar-context region) is
+     documented in week23_open_superintelligence_stack/full.md §7–9.
+     Needs network — offline it simply never loads and Lab Runner works exactly
+     as before ($0 either way).
+       · turn it off for a session:  http://127.0.0.1:8113/?avatar=off
+       · turn it back on:            http://127.0.0.1:8113/?avatar=on
+     The origin you open (http://127.0.0.1:8113 or http://localhost:8113) must be
+     allow-listed for this widgetId, and mic capture needs a secure context —
+     localhost/127.0.0.1 both qualify. See week23_open_superintelligence_stack/full.md for the full contract. -->
+<script>
+(function(){
+  var LS="lr.avatar", q=new URLSearchParams(location.search);
+  if(q.get("avatar")==="off"){ try{localStorage.setItem(LS,"off");}catch(e){} }
+  if(q.get("avatar")==="on" ){ try{localStorage.removeItem(LS);}catch(e){} }
+  var off=false; try{ off=localStorage.getItem(LS)==="off"; }catch(e){}
+  if(off)return;
+
+  window.ChatWidgetConfig={
+    mode:"realtime-widget",
+    widgetId:"arm-alto",
+    greetingInstruction:"Hi, I'm your Week 23 lab guide. Ask me anything about the Open "+
+      "Superintelligence Stack, or tell me which tutorial to open and I'll walk you through it.",
+    enableBubble:"true",
+    cameraOffset:"0,0,0"
+  };
+  var s=document.createElement("script");
+  s.id="webavatar-jssdk"; s.async=true;
+  s.src="https://webavatar.didthat.cc/chat-widget.js";
+  s.onerror=function(){ console.info("[lab-runner] voice guide unavailable (offline?) — app unaffected."); };
+  (document.head||document.body).appendChild(s);
+
+  /* Lab Runner has no client-side router: every destination is either a real
+     external a[href] (opened normally) or a sidebar <button>. Same-page hashes
+     are all we intercept. */
+  window.addEventListener("webavatar-navigate",function(ev){
+    var t=(ev.detail&&ev.detail.target)||"";
+    if(t.charAt(0)==="#"&&document.querySelector(t)){
+      ev.preventDefault();
+      document.querySelector(t).scrollIntoView({behavior:"smooth",block:"start"});
+    }
+  });
+
+  /* free the audio/WebGL/observer resources on teardown */
+  window.addEventListener("pagehide",function(){ try{window.ChatWidget&&window.ChatWidget.destroy&&window.ChatWidget.destroy();}catch(e){} });
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,53 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences.\nCall reference: L14-2.",
+  "audio": "call_turn2_en.wav",
+  "text": null
+ },
+ "response": {
+  "heard": "Oh, wait, now there's smoke coming out of the air conditioner vent, and it smells like burning plastic.",
+  "said": "That sounds serious—please stop using the AC and keep away from the vent immediately. I’ll help you with next steps: please call emergency services, and I’ll alert the hotel team right away so we can respond quickly.",
+  "events": [
+   [
+    0.98,
+    "session",
+    "session updated"
+   ],
+   [
+    3.28,
+    "caller_stopped",
+    "audio committed"
+   ],
+   [
+    3.93,
+    "first_output",
+    "model started answering"
+   ],
+   [
+    3.97,
+    "heard",
+    "Oh, wait, now there's smoke coming out of the air conditioner vent, and it smells like burning plastic."
+   ],
+   [
+    4.16,
+    "said",
+    "That sounds serious—please stop using the AC and keep away from the vent immediately. I’ll help you with next steps: please call emergency services, and I’ll alert the hotel team right away so we can respond quickly."
+   ],
+   [
+    4.16,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 3.28,
+   "first_output": 3.93,
+   "total": 6.44
+  },
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini"
+ }
+}

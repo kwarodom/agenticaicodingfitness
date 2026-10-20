@@ -4,7 +4,7 @@
 Prereq: run 01_memory_demo.py first (so there's data), with Neo4j running.
 Needs:  pip install langchain-neo4j langchain-anthropic  (in requirements.txt)
 
-Run:  python week15/code/07_agent_memory/02_graphrag.py
+Run:  python week15_production_graphrag/code/07_agent_memory/02_graphrag.py
 
 You don't have to write Cypher by hand. GraphRAG = an LLM translates your
 natural-language question into Cypher, runs it, and phrases the answer. This is

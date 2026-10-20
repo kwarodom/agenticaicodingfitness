@@ -2,10 +2,10 @@
 """Exercise 05 · Telemetry: two exporters, one collector rule, one decorator — reference solution.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week26/05_tracing/exercises/ex05_telemetry.py
+    .venv/bin/python week26_nemoclaw_claws/05_tracing/exercises/ex05_telemetry.py
 
 The checker is free and offline (no model calls, no network). It uses the course's policykit model and, if
-week26/.venv-nat exists, the real `nat validate` and the installed NAT source. Stuck? Compare with
+week26_nemoclaw_claws/.venv-nat exists, the real `nat validate` and the installed NAT source. Stuck? Compare with
 exercises/solutions/.
 """
 import sys
@@ -31,7 +31,7 @@ general:
         project: alto-ops-claw
       file_backup:
         _type: file
-        output_path: week26/05_tracing/.runs/traces/alto_ops_trace.jsonl
+        output_path: week26_nemoclaw_claws/05_tracing/.runs/traces/alto_ops_trace.jsonl
         project: alto-ops-claw
         mode: overwrite
 """
@@ -58,7 +58,7 @@ EVENTS = {"SPAN_START", "SPAN_CHUNK", "SPAN_END"}      # SPAN_CHUNK only for gen
 PY = "/usr/bin/python3.12"
 TRACKING_SRC = WEEK / ".venv-nat" / "lib" / "python3.12" / "site-packages" / "nat" / "plugins" / "profiler" / \
     "decorators" / "function_tracking.py"
-BASE = ROOT / "week26" / "common" / "alto_ops" / "src" / "alto_ops" / "configs" / "workflow.laptop.yml"
+BASE = ROOT / "week26_nemoclaw_claws" / "common" / "alto_ops" / "src" / "alto_ops" / "configs" / "workflow.laptop.yml"
 
 
 def check_telemetry() -> bool:
@@ -117,7 +117,7 @@ def check_decorator() -> bool:
                  f"decorator: @track_function from nat.plugins.profiler.decorators.function_tracking · "
                  f"SPAN_START / SPAN_CHUNK (generators) / SPAN_END" + (" — found in the installed NAT 1.9.0" if src else ""),
                  f"TODO 3: DECORATOR={DECORATOR!r} EVENTS={sorted(EVENTS) or '{}'} — look in "
-                 "nat/plugins/profiler/decorators/ in week26/.venv-nat (grep for 'def track_function' and "
+                 "nat/plugins/profiler/decorators/ in week26_nemoclaw_claws/.venv-nat (grep for 'def track_function' and "
                  "'IntermediateStepType.')")
 
 

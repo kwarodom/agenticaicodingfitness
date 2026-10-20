@@ -1,5 +1,5 @@
 # ▶ Hands-on Lab 03 — NVIDIA Dynamo: disaggregated serving, KV-aware routing, SLO planning
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/03_dynamo_serving/tutorial_server.py` → http://127.0.0.1:8102. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/tutorial_server.py` → http://127.0.0.1:8102. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Measure TTFT and decode tok/s on real streamed calls and prove *prefill is compute-bound, decode is memory-bound* — the fact Dynamo's whole architecture rests on.
@@ -25,9 +25,9 @@ Goal: know the four pieces (disaggregated P/D, KV-aware routing, SLO Planner, NI
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/03_dynamo_serving/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/tutorial_server.py
 # open http://127.0.0.1:8102 — run Ch 2 (four pieces) and Ch 3 (disaggregation), or standalone:
-.venv/bin/python week23/03_dynamo_serving/demos/step01_what_is_dynamo.py
+.venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/demos/step01_what_is_dynamo.py
 ```
 
 Expected output:
@@ -91,7 +91,7 @@ Goal: prove with a stopwatch that TTFT scales with prompt length while decode to
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/03_dynamo_serving/labs/lab01_prefill_vs_decode.py
+.venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab01_prefill_vs_decode.py
 ```
 
 Expected output (abbreviated; your numbers will differ):
@@ -109,7 +109,7 @@ Expected output (abbreviated; your numbers will differ):
 Goal: see a warm prefix skip prefill, then implement the routing decision that exploits it fleet-wide.
 
 ```bash
-.venv/bin/python week23/03_dynamo_serving/labs/lab02_kv_cache_router.py
+.venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab02_kv_cache_router.py
 ```
 
 Expected output (abbreviated):
@@ -128,9 +128,9 @@ Expected output (abbreviated):
 Goal: generate the SLO Planner's input signal by hand, and end with a real $/1M-tokens number.
 
 ```bash
-.venv/bin/python week23/03_dynamo_serving/labs/lab03_slo_economics.py
+.venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab03_slo_economics.py
 # stricter SLO or your local electricity price:
-SLO_TTFT_MS=500 ELEC_USD_KWH=0.12 .venv/bin/python week23/03_dynamo_serving/labs/lab03_slo_economics.py
+SLO_TTFT_MS=500 ELEC_USD_KWH=0.12 .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab03_slo_economics.py
 ```
 
 Expected output (abbreviated):
@@ -167,9 +167,9 @@ Expected output:
 ## Labs (run these)
 All three run from the repo root, inherit `config.py`'s endpoint resolution (local Ollama / Spark tunnel / nvapi- cloud), finish in under a minute, and degrade gracefully to a labeled expected-output sample when no endpoint is up.
 
-- **labs/lab01_prefill_vs_decode.py** — streams a short and a ~850-token prompt, measures TTFT / decode tok/s / ITL for each. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/03_dynamo_serving/labs/lab01_prefill_vs_decode.py`. Look for: TTFT growing several-x with prompt length while decode tok/s barely moves. **Modify it:** add a third MEDIUM row (`PASSAGE * 4`) and check TTFT growth is roughly linear in input tokens.
-- **labs/lab02_kv_cache_router.py** — measures cold-vs-warm TTFT on a shared ~500-token system prompt, then runs a stdlib prefix-hash router printing HIT/MISS per request. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/03_dynamo_serving/labs/lab02_kv_cache_router.py`. Look for: the warm-call TTFT drop, and the hit-rate line. **Modify it:** change the request mix to `["A"]*5 + ["B"]` and watch the hit rate jump — long-lived agents with one shared prefix are cache-routing's best case.
-- **labs/lab03_slo_economics.py** — declares TTFT/ITL SLOs, ramps 1→2→4 concurrent streams with a thread pool, flags breaches, then computes $/1M tokens from measured tok/s and 240 W wall power. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/03_dynamo_serving/labs/lab03_slo_economics.py`. Look for: which SLO breaks first as concurrency climbs. **Modify it:** set `SLO_TTFT_MS=300` and find the largest concurrency your endpoint can hold — that number is your one-worker capacity, the thing the Planner multiplies.
+- **labs/lab01_prefill_vs_decode.py** — streams a short and a ~850-token prompt, measures TTFT / decode tok/s / ITL for each. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab01_prefill_vs_decode.py`. Look for: TTFT growing several-x with prompt length while decode tok/s barely moves. **Modify it:** add a third MEDIUM row (`PASSAGE * 4`) and check TTFT growth is roughly linear in input tokens.
+- **labs/lab02_kv_cache_router.py** — measures cold-vs-warm TTFT on a shared ~500-token system prompt, then runs a stdlib prefix-hash router printing HIT/MISS per request. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab02_kv_cache_router.py`. Look for: the warm-call TTFT drop, and the hit-rate line. **Modify it:** change the request mix to `["A"]*5 + ["B"]` and watch the hit rate jump — long-lived agents with one shared prefix are cache-routing's best case.
+- **labs/lab03_slo_economics.py** — declares TTFT/ITL SLOs, ramps 1→2→4 concurrent streams with a thread pool, flags breaches, then computes $/1M tokens from measured tok/s and 240 W wall power. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab03_slo_economics.py`. Look for: which SLO breaks first as concurrency climbs. **Modify it:** set `SLO_TTFT_MS=300` and find the largest concurrency your endpoint can hold — that number is your one-worker capacity, the thing the Planner multiplies.
 
 ## Try it yourself
 

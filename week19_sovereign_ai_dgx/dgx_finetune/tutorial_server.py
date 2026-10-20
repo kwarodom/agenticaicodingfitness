@@ -6,7 +6,7 @@ CONCEPT, view the demo SOURCE, and RUN it. The training-loop demo is simulated
 (you can't train a 70B on a laptop); dataset prep, recipe generation, and the
 before/after eval run for real (eval uses a live model if one is reachable).
 
-    .venv/bin/python week19/dgx_finetune/tutorial_server.py
+    .venv/bin/python week19_sovereign_ai_dgx/dgx_finetune/tutorial_server.py
     # → http://127.0.0.1:8093
 """
 from __future__ import annotations

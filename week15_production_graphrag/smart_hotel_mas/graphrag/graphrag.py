@@ -19,7 +19,7 @@ Tip: schema injection is the #1 quality factor. A precise schema string (node
 labels, key properties, relationship directions) does more for Cypher accuracy
 than any prompt-engineering trick — the model cannot guess your graph shape.
 
-Run:  python week15/smart_hotel_mas/graphrag/graphrag.py
+Run:  python week15_production_graphrag/smart_hotel_mas/graphrag/graphrag.py
 """
 import os
 import sys

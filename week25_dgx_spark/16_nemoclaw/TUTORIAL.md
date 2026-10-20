@@ -78,7 +78,7 @@ docker info --format '{{.ServerVersion}}'
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_1_preflight.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_1_preflight.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac; with a Spark you get your own values and ✓ / ✕)
@@ -274,7 +274,7 @@ Lab 16-2 runs the read-only half of this, plus the two **boundary tests** the ap
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_2_status_and_logs.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_2_status_and_logs.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac; the 403 line is the playbook's, the rest are EXAMPLE shapes)
@@ -319,7 +319,7 @@ Lab 16-3 generates the file on your laptop, validates it, and proves the validat
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_3_policy_preset.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_3_policy_preset.py
 ```
 
 **Expected output** (captured on this Mac, no Spark configured)
@@ -351,7 +351,7 @@ network_policies:
       - { path: /usr/local/bin/node }
       - { path: /usr/bin/node }
       - { path: /usr/bin/curl }
-◆ written to week25/16_nemoclaw/.runs/news-sources.yaml
+◆ written to week25_dgx_spark/16_nemoclaw/.runs/news-sources.yaml
 
 ▣ STEP 2 · parse it back and validate
 ✓ no findings: valid shape, least-privilege checks pass
@@ -389,7 +389,7 @@ An agent is only as good as its model's **tool calls**. If the model never retur
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_4_inference_route.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_4_inference_route.py
 ```
 
 **Expected output** (captured on this Mac: LAPTOP STAND-IN, laptop speed, not Spark numbers)
@@ -609,7 +609,7 @@ Labs 16-1 and 16-2 run LIVE on your Spark or DRY. Labs 16-3 and 16-4 run for rea
 
 ## Try it yourself
 
-**Exercise 16 — a least-privilege preset and its checker.** Open `week25/16_nemoclaw/exercises/ex16_policy_preset.py`. It has four `TODO`s:
+**Exercise 16 — a least-privilege preset and its checker.** Open `week25_dgx_spark/16_nemoclaw/exercises/ex16_policy_preset.py`. It has four `TODO`s:
 
 1. `is_rfc1123(name)`: is the preset name a lowercase, hyphenated RFC 1123 label?
 2. `endpoint(host)`: one HTTPS endpoint with the access mode the proxy needs.
@@ -618,7 +618,7 @@ Labs 16-1 and 16-2 run LIVE on your Spark or DRY. Labs 16-3 and 16-4 run for rea
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/exercises/ex16_policy_preset.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/exercises/ex16_policy_preset.py
 ```
 
 **Expected output** (once all four TODOs are done; captured on this Mac with the reference solution)

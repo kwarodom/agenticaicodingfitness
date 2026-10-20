@@ -11,7 +11,7 @@ TODO 2 â€” select_top(scores, k, min_score): scores = {"p1": 0.93, "p2": 0.10, â
          Return up to k passage ids, highest score first, dropping any score
          below min_score. Break ties by id ("p1" before "p3").
 
-Run: .venv/bin/python week24/08_leads_rag_points/exercises/ex08_rerank.py
+Run: .venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/exercises/ex08_rerank.py
 """
 import json
 import sys

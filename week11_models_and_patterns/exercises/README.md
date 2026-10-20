@@ -1,6 +1,6 @@
 # Multi-Agent Systems — Coding Exercises
 
-14 hands-on exercises drawn from `week9/week9_3_mas_coding_exercises.pdf`.
+14 hands-on exercises drawn from `week09_multi_agent_systems/week9_3_mas_coding_exercises.pdf`.
 Originally split across CrewAI, LangGraph, AutoGen, and the Anthropic SDK.
 This implementation deliberately omits CrewAI — the five exercises that
 specified it use a `dataclass Agent` + raw `anthropic` SDK pattern instead,
@@ -14,7 +14,7 @@ All exercises read `ANTHROPIC_API_KEY` from `.env` at the repo root and use
 ```bash
 cd /Users/jirayutchatphet/Code/AltoTech/agenticaicodingfitness
 source .venv/bin/activate
-python week11/exercises/ex01_two_agent_dialogue/ex01_two_agent_dialogue.py
+python week11_models_and_patterns/exercises/ex01_two_agent_dialogue/ex01_two_agent_dialogue.py
 ```
 
 Required packages (already installed in `.venv`):

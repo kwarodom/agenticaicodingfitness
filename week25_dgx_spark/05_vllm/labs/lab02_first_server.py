@@ -11,7 +11,7 @@ On your Spark (over ssh, or locally) this lab:
 Without a Spark, steps 1–3 are DRY (command + labelled output) and step 4 uses Ollama on this laptop as a
 labelled LAPTOP STAND-IN so you still see a real OpenAI-style response.
 
-Run: .venv/bin/python week25/05_vllm/labs/lab02_first_server.py [--yes] [--model nvidia/Llama-3.1-8B-Instruct-FP8]
+Run: .venv/bin/python week25_dgx_spark/05_vllm/labs/lab02_first_server.py [--yes] [--model nvidia/Llama-3.1-8B-Instruct-FP8]
 Stop it later on the Spark: docker rm -f vllm-server
 """
 import argparse

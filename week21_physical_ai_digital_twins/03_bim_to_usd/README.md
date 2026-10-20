@@ -16,7 +16,7 @@ faithful USD-flavored text. Either way, $0.
 ## Run the web tutorial
 
 ```bash
-cd week21/03_bim_to_usd
+cd week21_physical_ai_digital_twins/03_bim_to_usd
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8202
 ```

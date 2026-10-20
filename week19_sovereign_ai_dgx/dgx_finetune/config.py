@@ -147,7 +147,7 @@ _PREFERRED = [
 ]
 
 DEFAULT_MAX_TOKENS = 700
-PKG = Path(__file__).resolve().parent          # …/week19/dgx_finetune
+PKG = Path(__file__).resolve().parent          # …/week19_sovereign_ai_dgx/dgx_finetune
 SANDBOX = PKG / ".sandbox"                      # generated datasets / recipes go here
 
 # The base model we'll pretend to (or really) fine-tune, and the domain we adapt to.

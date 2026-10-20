@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Log the sparklab account in to nvcr.io (only NIM containers, Module 06, need this).
 # Reads the key silently, checks it, tests it against nvcr.io, and only then runs docker login.
-#   week25/spark_host/ngc_login.sh
+#   week25_dgx_spark/spark_host/ngc_login.sh
 set -uo pipefail
 
 read -rs -p "NGC Personal API Key (input hidden): " K; echo

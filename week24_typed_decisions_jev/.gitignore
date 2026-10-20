@@ -7,3 +7,5 @@
 jev_lab/run-*/
 jev_lab/benchmark_data*/
 jev_lab/data/
+# Module 16's local-model environment (torch, transformers, laya, gliner) — recreate with uv, never commit
+.venv-local/

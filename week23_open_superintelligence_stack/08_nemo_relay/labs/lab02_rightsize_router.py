@@ -7,7 +7,7 @@ small or big model FROM YOUR LIVE ENDPOINT, makes the real call, and measures
 latency + tokens. Then it prices the batch two ways — relay-routed vs
 "always the big model" — using clearly-labeled illustrative $/M-token tiers.
 
-Run:  cd <repo root> && .venv/bin/python week23/08_nemo_relay/labs/lab02_rightsize_router.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab02_rightsize_router.py
 """
 from __future__ import annotations
 

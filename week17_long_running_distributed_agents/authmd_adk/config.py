@@ -6,7 +6,7 @@ Three things modules here need:
   • where the durable ADK session store lives     → DB_URL
   • which MODEL the ADK agent (Part B) runs on     → make_model()
 
-Plus the same tiny zero-dependency .env loader as the rest of week17, so the
+Plus the same tiny zero-dependency .env loader as the rest of week17_long_running_distributed_agents, so the
 repo-root ANTHROPIC_API_KEY / ALTO_LLM_API_KEY are picked up automatically.
 
 The auth.md half (Part A + the authmd_client) is pure HTTP + crypto and needs
@@ -94,7 +94,7 @@ def make_model():
 
     raise RuntimeError(
         f"Unknown AUTHMD_PROVIDER={provider!r}. Use alto | anthropic | gemini "
-        "— see week17/authmd_adk/README.md.")
+        "— see week17_long_running_distributed_agents/authmd_adk/README.md.")
 
 
 def model_label(model) -> str:

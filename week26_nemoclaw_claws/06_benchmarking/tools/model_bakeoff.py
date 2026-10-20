@@ -9,7 +9,7 @@ Section 7 of Module 06. Point it at any vLLM / SGLang / Ollama endpoint and it m
 Every request is sent one at a time with temperature 0, so models are compared like for like.
 
     # on: spark
-    python3 week26/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
+    python3 week26_nemoclaw_claws/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
         --url http://127.0.0.1:8000/v1 --model nemotron-3.5-super-vl --vision
 
 Standard library only. Results append to --out as one JSON line per model.

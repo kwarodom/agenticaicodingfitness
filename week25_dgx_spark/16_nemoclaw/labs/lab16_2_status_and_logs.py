@@ -11,7 +11,7 @@ and the two boundary tests the application playbook uses (public internet refuse
 Secrets: the dashboard URL carries a login token. This lab prints it with the token
 masked, and masks token-shaped strings in the log slice too.
 
-Run: .venv/bin/python week25/16_nemoclaw/labs/lab16_2_status_and_logs.py
+Run: .venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_2_status_and_logs.py
 """
 import re
 import sys

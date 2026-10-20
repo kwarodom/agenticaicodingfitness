@@ -167,7 +167,7 @@ def ask(question):
         
         if not tool_calls:
             # No tool calls — return text response
-            return response.content[0].text
+            return "".join(b.text for b in response.content if getattr(b, "type", None) == "text")
         
         # Execute each tool call
         messages.append({"role": "assistant", "content": response.content})

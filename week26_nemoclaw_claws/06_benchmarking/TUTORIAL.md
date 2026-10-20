@@ -18,14 +18,14 @@
 
 | Need | Check | Why |
 |---|---|---|
-| NAT 1.9.0 with the profiler and eval extras | `week26/.venv-nat/bin/nat --version` | `nat eval`, the profiler and `nat sizing calc` run for real on this laptop |
+| NAT 1.9.0 with the profiler and eval extras | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` | `nat eval`, the profiler and `nat sizing calc` run for real on this laptop |
 | Laptop Ollama with `nemotron-3-nano` and `gemma3:4b` | `curl -s http://localhost:11434/api/tags` | the stand-in for vLLM on the Spark: nemotron-3-nano for the agent, gemma3:4b for the fast engine sweep |
-| The Alto Ops package (Module 04) | installed editable in `week26/.venv-nat` | the `chiller_kpi` tool the eval questions exercise |
+| The Alto Ops package (Module 04) | installed editable in `week26_nemoclaw_claws/.venv-nat` | the `chiller_kpi` tool the eval questions exercise |
 | A DGX Spark (optional) | `vllm-nat` container (research tutorial Lab 3.2), the `alto-ops` sandbox (Lab 3.8), a Hermes claw | the real engine, sandbox and harness numbers |
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
 curl -s http://localhost:11434/api/tags | grep -o '"name":"[^"]*"' | grep -E "nemotron-3-nano|gemma3:4b"
 ```
 
@@ -134,7 +134,7 @@ A quick single-request check from the runner (it reports TTFT and tok/s, and say
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_1_engine_sweep.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_1_engine_sweep.py
 ```
 
 **Expected output** (captured on this Mac, the stand-in sweep)
@@ -211,7 +211,7 @@ The laptop copy, `configs/eval_config.yml`, keeps the same profiler block and ch
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat eval --config_file week26/06_benchmarking/configs/eval_config.yml
+week26_nemoclaw_claws/.venv-nat/bin/nat eval --config_file week26_nemoclaw_claws/06_benchmarking/configs/eval_config.yml
 ```
 
 ```bash
@@ -275,7 +275,7 @@ The research tutorial's pandas one-liner works on 1.9.0. Filter to `LLM_END` row
 
 ```python
 import pandas as pd
-df = pd.read_csv("week26/06_benchmarking/.runs/eval/alto_ops/standardized_data_all.csv")
+df = pd.read_csv("week26_nemoclaw_claws/06_benchmarking/.runs/eval/alto_ops/standardized_data_all.csv")
 ends = df[df.event_type == "LLM_END"]
 print(ends.groupby("llm_name")[["prompt_tokens", "completion_tokens"]].describe())
 ```
@@ -335,7 +335,7 @@ On the laptop, lab 06-3 runs the calculator for real and tiny: concurrency 1 and
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_3_sizing.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_3_sizing.py
 ```
 
 **Expected output** (captured on this Mac)
@@ -351,7 +351,7 @@ Per concurrency results:
 
 === GPU ESTIMATES ===
 Estimated GPU count (Workflow Runtime): 9.8
-✓ wrote week26/06_benchmarking/.runs/sizing/alto_ops/online/job_1790740665/ (calc_runner_output.json + two PNG plots)
+✓ wrote week26_nemoclaw_claws/06_benchmarking/.runs/sizing/alto_ops/online/job_1790740665/ (calc_runner_output.json + two PNG plots)
 │ concurrency  measured p95 runtime  line   
 │ ───────────  ────────────────────  ───────
 │ 1            10.83 s               10.83 s
@@ -399,7 +399,7 @@ openshell sandbox download alto-ops /sandbox/.tmp/tax/sandbox_c1 ./.tmp/tax/sand
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_4_sandbox_tax.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_4_sandbox_tax.py
 ```
 
 **Expected output** (captured on this Mac, steps 2–3)
@@ -407,7 +407,7 @@ openshell sandbox download alto-ops /sandbox/.tmp/tax/sandbox_c1 ./.tmp/tax/sand
 ```
 ◆ Workflow Runtime (p95): 13.03s
 ◆ hop proxy on 127.0.0.1:8090 → http://localhost:11434/v1 (allow: POST /v1/chat/completions, GET /v1/models; deny the rest)
-$ nat eval --config_file week26/06_benchmarking/configs/eval_config.yml --override eval.general.max_concurrency 1 --override eval.general.output_dir week26/06_benchmarking/.runs/tax/hop_c1/ --override eval.general.dataset.file_path week26/06_benchmarking/.runs/tax_rows.jsonl --override llms.local_llm.base_url http://127.0.0.1:8090/v1   [this laptop]
+$ nat eval --config_file week26_nemoclaw_claws/06_benchmarking/configs/eval_config.yml --override eval.general.max_concurrency 1 --override eval.general.output_dir week26_nemoclaw_claws/06_benchmarking/.runs/tax/hop_c1/ --override eval.general.dataset.file_path week26_nemoclaw_claws/06_benchmarking/.runs/tax_rows.jsonl --override llms.local_llm.base_url http://127.0.0.1:8090/v1   [this laptop]
 ◆ Workflow Runtime (p95): 23.77s
 ✓ GET /api/pull through the hop → 403 (denied, like an unlisted endpoint)
 ■ stopped hop proxy on :8090
@@ -445,11 +445,11 @@ Pair each run with two more counts. The `inspect_for_inference` count in `opensh
 
 On the laptop, lab 06-5 runs the same loop for real against a `nat serve` of Alto Ops Claw (`/v1/chat/completions`, port `free_port(8001)`): 5 identical tasks, one at a time. It computes p50/p95 two ways, then builds the four-layer report from the summaries labs 06-1 to 06-4 saved in `.runs/`.
 
-> ⚠ **NAT 1.9.0: `nat serve` needs `greenlet`, and the NAT extras do not pull it in.** The FastAPI front end imports `sqlalchemy.ext.asyncio` at start-up, and that import refuses to load without greenlet. When this course was built, `week26/.venv-nat` did not have it and `nat serve` exited at once. The venv now includes greenlet. If yours does not, lab 06-5 notices, puts a clearly labelled stub on `PYTHONPATH` (`.runs/pyshim/greenlet.py`) and says so. That is safe because the async job store that would use greenlet only starts when Dask is installed. On the Spark, install greenlet into the NAT environment.
+> ⚠ **NAT 1.9.0: `nat serve` needs `greenlet`, and the NAT extras do not pull it in.** The FastAPI front end imports `sqlalchemy.ext.asyncio` at start-up, and that import refuses to load without greenlet. When this course was built, `week26_nemoclaw_claws/.venv-nat` did not have it and `nat serve` exited at once. The venv now includes greenlet. If yours does not, lab 06-5 notices, puts a clearly labelled stub on `PYTHONPATH` (`.runs/pyshim/greenlet.py`) and says so. That is safe because the async job store that would use greenlet only starts when Dask is installed. On the Spark, install greenlet into the NAT environment.
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_5_harness_bench.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_5_harness_bench.py
 ```
 
 **Expected output** (captured on this Mac)
@@ -526,7 +526,7 @@ About 13 minutes from `docker run` to ready, most of it reading 70 GiB from disk
 
 ```bash
 # on: spark
-python3 week26/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
+python3 week26_nemoclaw_claws/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
   --url http://127.0.0.1:8000/v1 --model nemotron-3.5-super-vl --vision
 ```
 
@@ -604,7 +604,7 @@ ValueError: Free memory on device cuda:0 (95.97/121.69 GiB) on startup is less t
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/exercises/ex06_bench_math.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/exercises/ex06_bench_math.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled)

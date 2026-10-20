@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "speak",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-tts",
+  "voice": "coral",
+  "text": "ขอบคุณสำหรับข้อความเกี่ยวกับห้อง 1203 ทีมช่างแอร์ได้รับแจ้งแล้ว เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด"
+ },
+ "response": {
+  "text": "ขอบคุณสำหรับข้อความเกี่ยวกับห้อง 1203 ทีมช่างแอร์ได้รับแจ้งแล้ว เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-tts",
+  "voice": "coral",
+  "file": "/Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/13_multimodal_jev/.runs/reply_voicemail_burning_th.wav",
+  "bytes": 576044,
+  "latency_ms": 2654.4
+ }
+}

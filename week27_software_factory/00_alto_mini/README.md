@@ -4,7 +4,7 @@ A deliberately small hotel-energy app (FastAPI + one static page) with **known, 
 real bug to drain through the factory. Rooms with setpoints, 14 days of kWh readings, an alerts page, a daily-kWh history.
 
 ```bash
-cd week27/00_alto_mini
+cd week27_software_factory/00_alto_mini
 make seed      # alto_mini.db — 4 rooms, 14 days of readings, 3 alerts (incl. one empty day and one None reading)
 make dev       # http://127.0.0.1:8127  (API docs at /docs)
 make test      # 6 pytest tests pass on the shipped code

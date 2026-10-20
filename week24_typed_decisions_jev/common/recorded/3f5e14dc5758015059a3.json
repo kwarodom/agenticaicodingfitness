@@ -1,0 +1,89 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-b90dc90cfd8cf17f"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which engineering queue should handle what `photo` shows?",
+    "criteria": {
+     "water_leak": "Water or another liquid leaking, dripping or pooling",
+     "smoke_or_fire": "Smoke, steam, haze, burning, fire or sparks",
+     "comfort": "Temperature or comfort complaint with no visible damage",
+     "none": "Nothing wrong is visible",
+     "unclear": "The picture is too dark, blurred or ambiguous to choose"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `photo` show something that could injure a person or damage electrical equipment — smoke, steam, haze, fire, sparks, or liquid near electrical equipment?"
+   },
+   "severity": {
+    "type": "score",
+    "instructions": "How severe is the problem visible in `photo`?",
+    "criteria": [
+     "nothing wrong",
+     "cosmetic, fix when convenient",
+     "needs a technician today",
+     "immediate hazard, clear the area"
+    ]
+   }
+  },
+  "assets": {
+   "img-b90dc90cfd8cf17f": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "e530bee04061b295",
+    "base64_chars": 169692
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "smoke_or_fire",
+    "confidence": 0.94,
+    "probabilities": {
+     "water_leak": 0.0,
+     "smoke_or_fire": 0.95,
+     "comfort": 0.02,
+     "none": 0.03,
+     "unclear": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.91
+   },
+   "severity": {
+    "type": "score",
+    "score": 1.95,
+    "confidence": 0.26,
+    "legend": {
+     "0": "nothing wrong",
+     "1": "cosmetic, fix when convenient",
+     "2": "needs a technician today",
+     "3": "immediate hazard, clear the area"
+    },
+    "probabilities": {
+     "0": 0.16,
+     "1": 0.08,
+     "2": 0.42,
+     "3": 0.34
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 2870,
+   "output_tokens": 93
+  }
+ }
+}

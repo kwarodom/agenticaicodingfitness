@@ -1,5 +1,5 @@
 // The eight Mod Gym lessons. Each one is the short, in-terminal form of a
-// week29/NN_*/TUTORIAL.md module: what to know, what to do, and the checks the
+// week29_claude_code_mods/NN_*/TUTORIAL.md module: what to know, what to do, and the checks the
 // gym runs against the student's lab mod (`<labDir>/hello-mod`).
 
 export type Check =
@@ -26,7 +26,7 @@ export const LESSONS: Lesson[] = [
   {
     id: '01',
     title: 'What a mod is',
-    tutorial: 'week29/01_what_is_a_mod/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/01_what_is_a_mod/TUTORIAL.md',
     body: `A **mod** is a plugin whose \`hooks/hooks.json\` names a \`modules\` file: TypeScript functions that run *inside* Claude Code. Every hook is \`($, e, next)\` and can **observe**, **rewrite** or **answer** an event: a tool call, a prompt, a piece of the screen being drawn.
 
 | piece | runs as | draws UI |
@@ -47,7 +47,7 @@ A mod is **not sandboxed**: it runs with your permissions. Read \`claude plugin 
   {
     id: '02',
     title: 'Your first mod: three files',
-    tutorial: 'week29/02_first_mod/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/02_first_mod/TUTORIAL.md',
     body: `Make a folder \`hello-mod\` in your lab folder with three files:
 
 \`\`\`text
@@ -84,7 +84,7 @@ export const register: Register = on => {
   {
     id: '03',
     title: 'The hook pipeline: observe, rewrite, answer',
-    tutorial: 'week29/03_hook_pipeline/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/03_hook_pipeline/TUTORIAL.md',
     body: `\`next(e)\` runs the plugins beneath you and then Claude Code itself. What you do around it is the whole pattern:
 
 | you write | effect |
@@ -122,7 +122,7 @@ on('prompt.submit', ($, e, next) =>
   {
     id: '04',
     title: 'Guards: deny, hold and catch',
-    tutorial: 'week29/04_guards/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/04_guards/TUTORIAL.md',
     body: `A hook that returns \`{ deny }\` from \`tool.call\` stops the tool: it never runs, and Claude reads your reason as the result.
 
 \`\`\`ts
@@ -154,7 +154,7 @@ Register guards **before** catch-all observers, and do not give an observer \`.c
   {
     id: '05',
     title: 'Draw: panes, bands, status, toast',
-    tutorial: 'week29/05_drawing/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/05_drawing/TUTORIAL.md',
     body: `Four ways to put something on screen:
 
 | want | call |
@@ -194,7 +194,7 @@ Rename \`register.ts\` to \`register.tsx\` for JSX, and update \`hooks.json\`.
   {
     id: '06',
     title: 'State that survives a reload',
-    tutorial: 'week29/06_state_and_store/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/06_state_and_store/TUTORIAL.md',
     body: `Three places to keep a value:
 
 | where | lives until | redraws |
@@ -233,7 +233,7 @@ declare module 'claude-code' {
   {
     id: '07',
     title: 'Commands, tools and models',
-    tutorial: 'week29/07_commands_tools_models/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/07_commands_tools_models/TUTORIAL.md',
     body: `A mod can add things that Claude and you can call:
 
 \`\`\`ts
@@ -268,7 +268,7 @@ A command runs **without a Claude turn**. A tool is listed to Claude as \`mcp__<
   {
     id: '08',
     title: 'Test, validate, ship',
-    tutorial: 'week29/08_test_and_ship/TUTORIAL.md',
+    tutorial: 'week29_claude_code_mods/08_test_and_ship/TUTORIAL.md',
     body: `\`claude plugin test <dir>\` runs \`tests/*.test.ts\` with no session, sign-in or network. Your stubs stand in for Claude Code:
 
 \`\`\`ts

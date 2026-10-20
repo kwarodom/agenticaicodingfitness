@@ -7,7 +7,7 @@ pass-rate per environment and overall, then apply a promotion gate — the same
 measurement that decides whether a GRPO-trained policy replaces the incumbent
 (and what App 11's Data Flywheel automates).
 
-Run:  cd <repo root> && .venv/bin/python week23/10_nemo_gym_rl/labs/lab03_multienv_passrate.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab03_multienv_passrate.py
 """
 from __future__ import annotations
 

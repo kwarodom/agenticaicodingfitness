@@ -21,11 +21,11 @@
 | A DGX Spark you can wipe | a fresh DGX OS, no personal data | the playbook says to run the demo on a fresh device or VM with no personal or confidential data |
 | SSH to it | `ssh -o BatchMode=yes <spark> true` | the labs run read-only commands there; set it in 🖥 Spark setup |
 | `sudo` on the Spark | you know the password | the installer and the Docker fixes need root — **you** type those, never a lab |
-| The laptop OpenShell parser | `week26/.venv-openshell/bin/openshell --version` | Labs 02-3 and 02-4 check every OpenShell command offline |
+| The laptop OpenShell parser | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` | Labs 02-3 and 02-4 check every OpenShell command offline |
 
 ```bash
 # on: laptop
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 bash --version | head -n 1
 ```
 
@@ -282,7 +282,7 @@ installer sees ACCEPT=1
 ✓ an assignment in front of a command reaches only THAT command: curl gets it, the installer (bash) does not
 
 ▣ STEP 3 · build the lines from choices
-◆ wrote 6 lines to week26/02_first_claw/.runs/install_*.sh — bash -n parses them, it never runs them
+◆ wrote 6 lines to week26_nemoclaw_claws/02_first_claw/.runs/install_*.sh — bash -n parses them, it never runs them
 $ for f in .runs/install_*.sh; do bash -n "$f" && echo "syntax ok  $f"; done   [this laptop]
 syntax ok  install_existing_vllm__8000.sh
 syntax ok  install_hermes__locked_down.sh
@@ -644,7 +644,7 @@ The checker parses your line (it never runs it), runs `bash -n` on it, and check
 
 ```bash
 # on: laptop
-.venv/bin/python week26/02_first_claw/exercises/ex02_install_line.py
+.venv/bin/python week26_nemoclaw_claws/02_first_claw/exercises/ex02_install_line.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled)

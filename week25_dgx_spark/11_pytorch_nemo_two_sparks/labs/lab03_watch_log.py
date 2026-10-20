@@ -12,7 +12,7 @@ It draws the loss curve, flags NaN or a rising loss, and shows memory (`free -g`
 container state. In DRY mode it parses an EXAMPLE log (illustrative numbers, not a Spark run) —
 so the parser itself is tested on every machine.
 
-Run: .venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab03_watch_log.py
+Run: .venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab03_watch_log.py
 """
 import ast
 import math

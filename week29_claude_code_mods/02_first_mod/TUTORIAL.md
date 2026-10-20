@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 02 — Your first mod: three files
 
-> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. The tutorials are the long form; **🏋 Mod Gym** (`/mod-gym`) is the short form inside Claude Code, with checks on your lab mod. Through the lessons you grow one mod, `hello-mod`, in your lab folder (default `~/mod-gym-lab`); the finished version is in `week29/reference/hello-mod`.
+> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. The tutorials are the long form; **🏋 Mod Gym** (`/mod-gym`) is the short form inside Claude Code, with checks on your lab mod. Through the lessons you grow one mod, `hello-mod`, in your lab folder (default `~/mod-gym-lab`); the finished version is in `week29_claude_code_mods/reference/hello-mod`.
 
 **What you'll actually do**
 - Write the smallest real mod: three files, no build step, no Node, no bundler.

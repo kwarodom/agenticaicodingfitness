@@ -13,7 +13,7 @@ with a read-only preview, and the deny-proof log check (EXAMPLE in DRY mode).
 
 policykit is a TEACHING MODEL and a lint, NOT OpenShell and NOT OpenShell's prover.
 
-Run: .venv/bin/python week26/07_hardening/labs/lab07_2_prod_policy.py
+Run: .venv/bin/python week26_nemoclaw_claws/07_hardening/labs/lab07_2_prod_policy.py
 """
 import asyncio
 import copy
@@ -256,7 +256,7 @@ async def bms_session(url: str) -> list[list[str]]:
 try:
     py = NAT_PY if NAT_PY.exists() else Path(sys.executable)
     with background([py, BMS], ready_url=f"http://localhost:{port}/mcp", log=RUNS / "bms_mcp.log",
-                    env={"BMS_MCP_PORT": str(port)}, show=f"python week26/common/bms_mcp_server.py  # port {port}"):
+                    env={"BMS_MCP_PORT": str(port)}, show=f"python week26_nemoclaw_claws/common/bms_mcp_server.py  # port {port}"):
         rows = asyncio.run(bms_session(f"http://localhost:{port}/mcp"))
     table(rows, ["tool (from the real server)", "course gate", "real answer / reason"])
     note("write_setpoint never reached the server: the gate refused it before forwarding. That is the shape of "
@@ -272,8 +272,8 @@ filesystem_policy:
   ...
 network_policies:
   <the entries your sandbox has today>"""
-put(PROD, "~/week26/07_hardening/prod.yaml")
-change(f"cd ~/week26/07_hardening && openshell policy set {SB} --policy prod.yaml --wait",
+put(PROD, "~/week26_nemoclaw_claws/07_hardening/prod.yaml")
+change(f"cd ~/week26_nemoclaw_claws/07_hardening && openshell policy set {SB} --policy prod.yaml --wait",
        preview=f"openshell policy get {SB}", example=EXAMPLE_GET)
 note("policy set changes the network sections live. filesystem_policy, landlock and process are fixed when the "
      "sandbox is created: to get hard_requirement and this read_write list in force, create the sandbox with "

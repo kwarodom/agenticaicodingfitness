@@ -17,15 +17,15 @@
 
 | Need | Check | Why |
 |---|---|---|
-| Module 09's dataset in the repo | `ls week25/09_llama_factory/data/` shows `hotel_ops_eval.json` | 60 held-out guest messages the model never trained on |
+| Module 09's dataset in the repo | `ls week25_dgx_spark/09_llama_factory/data/` shows `hotel_ops_eval.json` | 60 held-out guest messages the model never trained on |
 | Module 09's training finished on the Spark (optional) | `ls ~/w25/m09/saves/qwen3-4b-hotel/lora/sft` on the Spark | the adapter this module serves and scores |
 | Module 09's predict step ran (optional) | `ls ~/w25/m09/saves/qwen3-4b-hotel/lora/predict/` on the Spark | the fine-tune's answers to the 60 messages |
-| The LiteLLM venv from Module 08 | `ls week25/.venv-litellm/bin/litellm` | lab 13-4 starts the gateway |
+| The LiteLLM venv from Module 08 | `ls week25_dgx_spark/.venv-litellm/bin/litellm` | lab 13-4 starts the gateway |
 | Ollama on the laptop (optional) | `curl -s localhost:11434/api/tags` | the stand-in for the baseline when no Spark answers |
 
 ```bash
 # on: laptop
-ls week25/09_llama_factory/data/ week25/.venv-litellm/bin/litellm
+ls week25_dgx_spark/09_llama_factory/data/ week25_dgx_spark/.venv-litellm/bin/litellm
 ```
 
 **Expected output**
@@ -34,7 +34,7 @@ ls week25/09_llama_factory/data/ week25/.venv-litellm/bin/litellm
 dataset_info.json
 hotel_ops.json
 hotel_ops_eval.json
-week25/.venv-litellm/bin/litellm
+week25_dgx_spark/.venv-litellm/bin/litellm
 ```
 
 ✓ Checkpoint: the eval file and the LiteLLM binary exist. If you have a Spark, Module 09's adapter folder exists too.
@@ -78,7 +78,7 @@ Before trusting a fine-tune, measure the cheaper alternative: the **base model w
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab01_baseline.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab01_baseline.py
 ```
 
 **Expected output** (captured on this Mac; no Spark was reachable, so the baseline is gemma4:12b as a LAPTOP STAND-IN, a different and bigger model than the Spark's base)
@@ -89,7 +89,7 @@ Before trusting a fine-tune, measure the cheaper alternative: the **base model w
 │ 10/60 answered · 17s
 …
 │ 60/60 answered · 168s
-◆ 60 predictions from gemma4:12b (LAPTOP STAND-IN) → week25/13_finetune_to_serve/.runs/predictions_baseline_laptop.jsonl
+◆ 60 predictions from gemma4:12b (LAPTOP STAND-IN) → week25_dgx_spark/13_finetune_to_serve/.runs/predictions_baseline_laptop.jsonl
 
 ▣ STEP 2 · score them with the same rules the fine-tune will face
 │ gate metric     baseline  needed to ship
@@ -130,7 +130,7 @@ It writes `generated_predictions.jsonl`, with one `{"prompt", "predict", "label"
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab02_score_finetune.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab02_score_finetune.py
 ```
 
 **Expected output** (captured on this Mac in DRY mode: there is no fine-tune to read, so the lab says so and scores the baseline file to show the report format)
@@ -171,8 +171,8 @@ A LoRA fine-tune is a ~60 MB folder of adapter weights on top of an unchanged ba
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab03_serve_it.py            # plan only
-.venv/bin/python week25/13_finetune_to_serve/labs/lab03_serve_it.py --launch   # copy the adapter + start path A
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab03_serve_it.py            # plan only
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab03_serve_it.py --launch   # copy the adapter + start path A
 ```
 
 **Expected output** (captured on this Mac in DRY mode; the adapter config is an EXAMPLE shape)
@@ -234,7 +234,7 @@ It starts the gateway on this laptop, sends five held-out messages to `hotel-rou
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab04_route_and_gate.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab04_route_and_gate.py
 ```
 
 **Expected output** (captured on this Mac: a real LiteLLM 1.89 proxy; no Spark, so every call fell back to the laptop)
@@ -249,7 +249,7 @@ It starts the gateway on this laptop, sends five held-out messages to `hotel-rou
 │ fallbacks: hotel-router → hotel-base → hotel-laptop
 
 ▣ STEP 2 · start the gateway and send 5 held-out messages to `hotel-router`
-$ LITELLM_MASTER_KEY=sk-w25-… week25/.venv-litellm/bin/litellm --config week25/13_finetune_to_serve/.runs/hotel-gateway.yaml --host 127.0.0.1 --port 4000 --telemetry False
+$ LITELLM_MASTER_KEY=sk-w25-… week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/13_finetune_to_serve/.runs/hotel-gateway.yaml --host 127.0.0.1 --port 4000 --telemetry False
 ◆ gateway up on http://127.0.0.1:4000 after 2.6 s (pid 52797, log 08_litellm_gateway/.runs/litellm-4000.log)
 ◆ gateway stopped (pid 52797); port 4000 is free again: True
 │ guest message                        HTTP  answered by  fallbacks  right dept + JSON
@@ -294,7 +294,7 @@ Two lessons from a run where nothing on the Spark was up:
 
 ## Try it yourself
 
-**Exercise 13 — the ship gate.** Open `week25/13_finetune_to_serve/exercises/ex13_ship_gate.py`. Three `TODO`s:
+**Exercise 13 — the ship gate.** Open `week25_dgx_spark/13_finetune_to_serve/exercises/ex13_ship_gate.py`. Three `TODO`s:
 
 1. `parse_answer(text)`: extract the router's JSON from real model output (clean, inside ```json fences, or after a chatty sentence), and return `None` for invalid JSON.
 2. `promises_time(reply, guest_message)`: flag "in 10 minutes" and "within the hour", but not the guest's own booking time echoed back.
@@ -302,7 +302,7 @@ Two lessons from a run where nothing on the Spark was up:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/exercises/ex13_ship_gate.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/exercises/ex13_ship_gate.py
 ```
 
 **Expected output** (once all three TODOs are done)
@@ -343,7 +343,7 @@ vLLM accepts a JSON schema on the request (`"response_format": {"type": "json_sc
 | vLLM lists the base model but not `hotel-ft` | The `--lora-modules` path is **inside the container** (`/adapters/hotel-ft`); check the `-v "$HOME/w25/adapters:/adapters"` mount and `ls ~/w25/adapters/hotel-ft` |
 | `/v1/models` shows `hotel-ft`, but answers look like the base model | The adapter was trained with `template: qwen3_nothink`. Send the same system prompt the training data used, and compare against lab 13-1's baseline to be sure |
 | lab 13-4: every row shows a fallback | Nothing serves `hotel-ft` on Spark A's :8000 yet. Run lab 13-3 with `--launch`, then check `curl http://spark-a:8000/v1/models` |
-| lab 13-4: `litellm … not found` | Create the venv from Module 08: `uv venv week25/.venv-litellm && uv pip install -p week25/.venv-litellm/bin/python "litellm[proxy]==1.89.0"` |
+| lab 13-4: `litellm … not found` | Create the venv from Module 08: `uv venv week25_dgx_spark/.venv-litellm && uv pip install -p week25_dgx_spark/.venv-litellm/bin/python "litellm[proxy]==1.89.0"` |
 | Baseline scores swing between runs | Use `temperature: 0` (the labs do) and a fixed eval file; LLaMA Factory's predict config sets `do_sample: false` for the same reason |
 
 ## Next

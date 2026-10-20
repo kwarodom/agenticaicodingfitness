@@ -22,7 +22,7 @@
 | Mod Gym installed | `/mod-gym` opens the panel | the checks at the end |
 | Ollama (optional) | `curl -s localhost:11434/api/tags` lists `gemma4:12b` | only for `/spark-ask` in section 4 |
 
-Your lab mod lives in `~/mod-gym-lab/hello-mod` (change it with `/mod-gym lab <path>`). The finished version of everything in this lesson is in `week29/reference/hello-mod`.
+Your lab mod lives in `~/mod-gym-lab/hello-mod` (change it with `/mod-gym lab <path>`). The finished version of everything in this lesson is in `week29_claude_code_mods/reference/hello-mod`.
 
 ## 1 · A slash command: an answer with no Claude turn
 
@@ -121,7 +121,7 @@ The second session read `10` back, because the `state.set` hook from Lesson 06 c
 
 ## 3 · Two worked examples inside Mod Gym
 
-Open `week29/mod-gym/hooks/register.tsx`. The panel uses both shapes.
+Open `week29_claude_code_mods/mod-gym/hooks/register.tsx`. The panel uses both shapes.
 
 **The `gym_status` tool.** Mod Gym registers a tool with an empty input schema. Its description tells Claude when to call it and how to coach:
 

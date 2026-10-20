@@ -7,7 +7,7 @@ A self-contained web app to **revise, summarize, learn, play, and test** every c
 Just double-click `index.html` — it works in any modern browser (Chrome / Safari / Firefox / Edge). No install, no backend.
 
 ```bash
-open /Users/altodev5/AgenticCoding/week11/index.html      # macOS
+open /Users/altodev5/AgenticCoding/week11_models_and_patterns/index.html      # macOS
 ```
 
 Or drag the file into your browser.
@@ -44,14 +44,14 @@ The simulator (🧪 Sim) mode still works without keys — useful when you just 
 
 The 10-week summaries reference the actual files in your `~/AgenticCoding/` directory:
 
-- Week 2 → `week2/claudeapicall.py`, `claudemulti_turn.py`, `claudestreamingapi.py`
-- Week 3 → `week3/toolsuse.py`, `buildsmartassistant3tools.py`, `hwadd*tool.py`
-- Week 4 → `week4/dronecontrol.py`, `droneeyes.py`, `openrouterfreemodel.py`, `pipeline.py`
-- Week 5 → `week5/autoagent.py`, `sample.py`
-- Week 6 → `week6/AGENTS.md`, `CLAUDE.md`, `memory-notes.md`, `src/`
-- Week 7 → `week7/mcpserver.py`, `mcpfilesystem.py`, `agent.py`, `agenttooldt.py`, `skill.md`
-- Week 8 → `week8/Week8_RAG_Knowledge_Agents_Lab.pdf`
-- Week 9 → `week9/ex1_crewai_sequential.py`, `ex2_LangGraphSupportGraph.py`, `ex3_ParallelSwarm.py`, `ag2_test.py`, `crewai_test.py`, `langraph_test.py`, `anthropic_test.py`
+- Week 2 → `week02_claude_api_foundations/claudeapicall.py`, `claudemulti_turn.py`, `claudestreamingapi.py`
+- Week 3 → `week03_tool_use/toolsuse.py`, `buildsmartassistant3tools.py`, `hwadd*tool.py`
+- Week 4 → `week04_autonomous_pipelines/dronecontrol.py`, `droneeyes.py`, `openrouterfreemodel.py`, `pipeline.py`
+- Week 5 → `week05_agent_loop/autoagent.py`, `sample.py`
+- Week 6 → `week06_fullstack_agent_app/AGENTS.md`, `CLAUDE.md`, `memory-notes.md`, `src/`
+- Week 7 → `week07_mcp_and_skills/mcpserver.py`, `mcpfilesystem.py`, `agent.py`, `agenttooldt.py`, `skill.md`
+- Week 8 → `week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf`
+- Week 9 → `week09_multi_agent_systems/ex1_crewai_sequential.py`, `ex2_LangGraphSupportGraph.py`, `ex3_ParallelSwarm.py`, `ag2_test.py`, `crewai_test.py`, `langraph_test.py`, `anthropic_test.py`
 - Week 10 → production / eval / A2A (no folder yet — synthesized from the syllabus)
 
 ## Tips for using it

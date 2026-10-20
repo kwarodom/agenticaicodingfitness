@@ -5,7 +5,7 @@ A clickable web guide: for each chapter read the CONCEPT, view the demo SOURCE, 
 RUN it. Auto-detects a real LiteLLM proxy (PROXY mode) / a bare backend (DIRECT) /
 nothing (SIM). Cloud cost $0.
 
-    .venv/bin/python week19/dgx_litellm/tutorial_server.py
+    .venv/bin/python week19_sovereign_ai_dgx/dgx_litellm/tutorial_server.py
     # → http://127.0.0.1:8096
 """
 from __future__ import annotations

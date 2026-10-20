@@ -6,7 +6,7 @@ Docker, Ollama). On the Spark it asks, with one read-only command, which of nemo
 docker are on the PATH and which versions they report. In DRY mode the Spark half prints an EXAMPLE
 shape instead — clearly labelled, never counted as found.
 
-Run: .venv/bin/python week26/01_what_is_a_claw/labs/lab01_1_claw_map.py
+Run: .venv/bin/python week26_nemoclaw_claws/01_what_is_a_claw/labs/lab01_1_claw_map.py
 """
 import shutil
 import sys

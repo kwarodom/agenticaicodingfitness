@@ -95,8 +95,8 @@ The playbook says the build "usually takes on the order of 5–10 minutes". Lab 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py            # read-only checks
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py --build    # start the build
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py            # read-only checks
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py --build    # start the build
 ```
 
 **Expected output** (DRY mode, captured on this Mac without `--build`)
@@ -148,7 +148,7 @@ A name like **`Q4_K_M` is a recipe, not a type**: most tensors get `Q4_K`, the m
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py
 ```
 
 With no argument it opens the smallest GGUF that Ollama has downloaded on your machine. It reads only the header (a few MB), never the weights.
@@ -196,7 +196,7 @@ On the Spark, run it on the playbook's download once lab 01 `--serve` has fetche
 ```bash
 # on: spark
 cd ~/agenticaicodingfitness      # wherever you cloned this repo on the Spark
-python3 week25/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py \
+python3 week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py \
   --path '~/.cache/huggingface/hub/models--unsloth--Qwen3.6-35B-A3B-MTP-GGUF/snapshots/*/*.gguf'
 ```
 
@@ -208,7 +208,7 @@ Fewer bits mean a smaller file, more room for KV cache, and faster decode (fewer
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab03_quant_tradeoffs.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab03_quant_tradeoffs.py
 ```
 
 **Expected output** (arithmetic with a fixed random seed: the same on every machine)
@@ -324,7 +324,7 @@ Lab 04 makes the same call from Python. It uses the Spark's llama-server when it
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab04_llama_server_lm_studio.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab04_llama_server_lm_studio.py
 ```
 
 **Expected output** (LAPTOP STAND-IN — a 0.5B model on this Mac; these speeds say nothing about the Spark)
@@ -437,7 +437,7 @@ Lab 01 runs LIVE on your Spark or DRY. Labs 02 and 03 run on the laptop (lab 02 
 
 ## Try it yourself
 
-**Exercise 04 — pick a quant that fits.** Open `week25/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py`. Three `TODO`s:
+**Exercise 04 — pick a quant that fits.** Open `week25_dgx_spark/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py`. Three `TODO`s:
 
 1. `bits_per_weight(block_bytes, block_weights)`: the cost of one GGML block type.
 2. `gguf_gb(params_b, bpw)`: the size of a GGUF file.
@@ -445,7 +445,7 @@ Lab 01 runs LIVE on your Spark or DRY. Labs 02 and 03 run on the laptop (lab 02 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py
 ```
 
 **Expected output** (once all three TODOs are done)

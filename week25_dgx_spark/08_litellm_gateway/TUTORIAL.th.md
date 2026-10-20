@@ -19,7 +19,7 @@
 
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
-| LiteLLM proxy 1.89 ใน `week25/.venv-litellm` | `week25/.venv-litellm/bin/litellm --version` | `.venv` ของ repo มีไลบรารี LiteLLM แต่ไม่มี extras `[proxy]` ที่เซิร์ฟเวอร์ต้องใช้ |
+| LiteLLM proxy 1.89 ใน `week25_dgx_spark/.venv-litellm` | `week25_dgx_spark/.venv-litellm/bin/litellm --version` | `.venv` ของ repo มีไลบรารี LiteLLM แต่ไม่มี extras `[proxy]` ที่เซิร์ฟเวอร์ต้องใช้ |
 | Ollama บนแล็ปท็อป พร้อมโมเดลเล็กสองตัว | `ollama list` แสดง `gemma3:4b` และ `nemotron-3-nano:latest` | เป็น fallback บนแล็ปท็อปที่ทุกแล็บเรียกใช้ |
 | พอร์ต 4000 ว่าง | `lsof -iTCP:4000 -sTCP:LISTEN` ไม่พิมพ์อะไรออกมา | ถ้า 4000 ไม่ว่าง แล็บจะใช้พอร์ตว่างถัดไปและแจ้งให้ทราบ |
 | Module 03–07 (ไม่บังคับ) | `curl http://spark-a:8000/v1/models` | ถ้ามี engine รันอยู่ alias ของ Spark จะตอบจริง |
@@ -27,7 +27,7 @@
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-week25/.venv-litellm/bin/litellm --version
+week25_dgx_spark/.venv-litellm/bin/litellm --version
 ollama list | grep -E "gemma3:4b|nemotron-3-nano"
 ```
 
@@ -40,17 +40,17 @@ nemotron-3-nano:latest           b725f1117407    24 GB     8 weeks ago
 gemma3:4b                        a2af6cc3eb7f    3.3 GB    8 weeks ago
 ```
 
-ถ้ายังไม่มี `week25/.venv-litellm` ให้สร้างขึ้นมา (เป็น venv เฉพาะของ week25 ไม่แตะอะไรในระดับ global):
+ถ้ายังไม่มี `week25_dgx_spark/.venv-litellm` ให้สร้างขึ้นมา (เป็น venv เฉพาะของ week25_dgx_spark ไม่แตะอะไรในระดับ global):
 
 ```bash
 # on: laptop
-uv venv week25/.venv-litellm --python 3.13
-uv pip install --python week25/.venv-litellm/bin/python 'litellm[proxy]==1.89.0' openai pyyaml
+uv venv week25_dgx_spark/.venv-litellm --python 3.13
+uv pip install --python week25_dgx_spark/.venv-litellm/bin/python 'litellm[proxy]==1.89.0' openai pyyaml
 ```
 
 > ⚠ `.venv/bin/litellm` (venv ของ repo) จะปิดตัวพร้อม `ImportError: Missing dependency No module named 'backoff'. Run pip install 'litellm[proxy]'` นี่คือเหตุผลที่โมดูลนี้ใช้ venv แยกสำหรับ proxy ส่วนตัวแล็บเองยังรันด้วย `.venv/bin/python`
 
-✓ Checkpoint: `week25/.venv-litellm/bin/litellm --version` พิมพ์ 1.89.0 และมีโมเดลบนแล็ปท็อปครบทั้งสองตัว
+✓ Checkpoint: `week25_dgx_spark/.venv-litellm/bin/litellm --version` พิมพ์ 1.89.0 และมีโมเดลบนแล็ปท็อปครบทั้งสองตัว
 
 ## 1 · ทำไมต้องมี gateway?
 
@@ -78,11 +78,11 @@ client จะเห็นแค่ **alias** (`model_name` ใน config) เท
 
 ## 2 · สร้าง config จากการตั้งค่า Spark ของคุณ: lab 01
 
-Lab 01 อ่านการตั้งค่าชุดเดียวกับทุกแล็บของ Week 25 (`SPARK_HOST`, `SPARK_API_HOST`, Module 01) มันถามแต่ละ engine ที่ตอบสนองว่า serve โมเดลอะไรอยู่ (`GET /v1/models`) และถ้าไม่ได้คำตอบจะใช้ model id ตั้งต้นของคอร์สแทน จากนั้นเขียนไฟล์หนึ่งไฟล์คือ `week25/08_litellm_gateway/.runs/litellm.config.yaml` (อยู่ใน gitignore) แล้ว validate ด้วย PyYAML **และ** ด้วย `Router` ของ LiteLLM เอง
+Lab 01 อ่านการตั้งค่าชุดเดียวกับทุกแล็บของ Week 25 (`SPARK_HOST`, `SPARK_API_HOST`, Module 01) มันถามแต่ละ engine ที่ตอบสนองว่า serve โมเดลอะไรอยู่ (`GET /v1/models`) และถ้าไม่ได้คำตอบจะใช้ model id ตั้งต้นของคอร์สแทน จากนั้นเขียนไฟล์หนึ่งไฟล์คือ `week25_dgx_spark/08_litellm_gateway/.runs/litellm.config.yaml` (อยู่ใน gitignore) แล้ว validate ด้วย PyYAML **และ** ด้วย `Router` ของ LiteLLM เอง
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ที่ยังไม่ได้ตั้งค่า Spark host จึงเป็น placeholder `spark-a` / `spark-b`)
@@ -160,7 +160,7 @@ Lab 02 เปิด proxy เป็น child process เหมือนกับ
 ```bash
 # on: laptop
 export LITELLM_MASTER_KEY="sk-$(openssl rand -hex 16)"      # a fresh key; keep it out of files and shell history
-week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/litellm.config.yaml \
+week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/litellm.config.yaml \
   --host 127.0.0.1 --port 4000 --telemetry False
 ```
 
@@ -168,14 +168,14 @@ week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/litell
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab02_gateway_live.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab02_gateway_live.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: LiteLLM proxy ของจริง เรียก Ollama บนแล็ปท็อปจริง ติดป้าย LAPTOP STAND-IN)
 
 ```
 ▣ STEP 1 · start LiteLLM with lab 01's config
-$ LITELLM_MASTER_KEY=sk-w25-… week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/litellm.config.yaml --host 127.0.0.1 --port 4000 --telemetry False
+$ LITELLM_MASTER_KEY=sk-w25-… week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/litellm.config.yaml --host 127.0.0.1 --port 4000 --telemetry False
 ◆ gateway up on http://127.0.0.1:4000 after 2.1 s (pid 41369, log 08_litellm_gateway/.runs/litellm-4000.log)
 
 ▣ STEP 2 · GET /v1/models — the aliases, not the engines' model ids
@@ -240,7 +240,7 @@ Lab 03 เพิ่ม alias สาธิตสองตัวเข้าไป
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab03_fallback_and_balance.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab03_fallback_and_balance.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ที่ยังไม่ได้ตั้งค่า Spark: deployment ของ "Spark" ล่ม แล็ปท็อปเป็นผู้ตอบ, LAPTOP STAND-IN)
@@ -302,9 +302,9 @@ Lab 01 เขียนไฟล์รูปแบบสำหรับ Spark A �
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py --on-spark
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py --on-spark
 # or keep the laptop fallback, via the tailnet (the laptop must run: OLLAMA_HOST=0.0.0.0 ollama serve)
-.venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py --on-spark --laptop-url http://<laptop-tailnet-name>:11434/v1
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py --on-spark --laptop-url http://<laptop-tailnet-name>:11434/v1
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY: ไม่มีการคัดลอกอะไร)
@@ -372,7 +372,7 @@ curl -s http://spark-a:4000/v1/models -H "Authorization: Bearer $LITELLM_MASTER_
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 08 — ทำ gateway ให้สมบูรณ์** เปิด `week25/08_litellm_gateway/exercises/ex08_complete_the_gateway.py` YAML ที่ต้นไฟล์มี deployment `chat` หนึ่งตัวบน Spark A และมี `TODO` สี่จุด:
+**แบบฝึกหัด 08 — ทำ gateway ให้สมบูรณ์** เปิด `week25_dgx_spark/08_litellm_gateway/exercises/ex08_complete_the_gateway.py` YAML ที่ต้นไฟล์มี deployment `chat` หนึ่งตัวบน Spark A และมี `TODO` สี่จุด:
 
 1. deployment `chat` ตัวที่สอง: โมเดลเดียวกันบน Spark B (load balancing)
 2. `fallbacks`: `chat` → `laptop-fast`
@@ -381,7 +381,7 @@ curl -s http://spark-a:4000/v1/models -H "Authorization: Bearer $LITELLM_MASTER_
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/exercises/ex08_complete_the_gateway.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/exercises/ex08_complete_the_gateway.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสี่จุด บันทึกจาก Mac เครื่องนี้ด้วยเฉลย)
@@ -393,9 +393,9 @@ curl -s http://spark-a:4000/v1/models -H "Authorization: Bearer $LITELLM_MASTER_
 ✓ TODO 4: master_key comes from the environment, not from the file
 ✓ LiteLLM Router loaded it: 3 deployments, aliases ['chat', 'laptop-fast']
 
-═ saved to week25/08_litellm_gateway/.runs/ex08.config.yaml. Try it live (it will fall back to your laptop):
+═ saved to week25_dgx_spark/08_litellm_gateway/.runs/ex08.config.yaml. Try it live (it will fall back to your laptop):
   export LITELLM_MASTER_KEY=sk-$(openssl rand -hex 12)
-  week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/ex08.config.yaml --port 4000
+  week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/ex08.config.yaml --port 4000
 ```
 
 เมื่อเปิดไฟล์ที่บันทึกไว้ด้วยวิธีนั้นแล้วขอ `chat` บน Mac เครื่องนี้ได้ HTTP 200 พร้อม `x-litellm-model-group: laptop-fast` และ `x-litellm-attempted-fallbacks: 1`
@@ -424,7 +424,7 @@ curl -s http://spark-a:4000/v1/models -H "Authorization: Bearer $LITELLM_MASTER_
 
 | อาการ | วิธีแก้ |
 |---|---|
-| `ImportError: Missing dependency No module named 'backoff'` | คุณรัน `.venv/bin/litellm` ให้ใช้ `week25/.venv-litellm/bin/litellm` (ส่วนที่ 0) |
+| `ImportError: Missing dependency No module named 'backoff'` | คุณรัน `.venv/bin/litellm` ให้ใช้ `week25_dgx_spark/.venv-litellm/bin/litellm` (ส่วนที่ 0) |
 | `port 4000 is taken on this laptop — using 4001 instead` | มีอย่างอื่น listen ที่ 4000 อยู่ (อาจเป็น gateway อีกตัว) แล็บจะเลือกพอร์ตว่างถัดไป ถ้าทำด้วยมือ: `lsof -iTCP:4000 -sTCP:LISTEN` |
 | `Authentication Error, No api key passed in.` (401) | ส่ง `Authorization: Bearer $LITELLM_MASTER_KEY` |
 | `No connected db.` (400) | คีย์นั้นไม่ใช่ master key ถ้าไม่มีฐานข้อมูล จะใช้ได้เฉพาะ master key |

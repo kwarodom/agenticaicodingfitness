@@ -19,7 +19,7 @@ Requires:
   - ANTHROPIC_API_KEY in your environment / repo-root .env
   - pip install llama-index llama-index-graph-stores-neo4j llama-index-llms-anthropic
 
-Run:  python week15/kg_mastery/part3_graphrag/06_llamaindex.py
+Run:  python week15_production_graphrag/kg_mastery/part3_graphrag/06_llamaindex.py
 """
 import os
 import sys

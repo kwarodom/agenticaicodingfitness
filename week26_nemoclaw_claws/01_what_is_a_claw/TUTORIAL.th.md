@@ -20,15 +20,15 @@
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
 | Python ของ repo นี้ | `.venv/bin/python --version` → 3.13 | ใช้รันแล็บและ Reef Lab Runner |
-| เครื่องมือบนแล็ปท็อปของ Week 26 | `week26/.venv-nat/bin/nat --version` และ `week26/.venv-openshell/bin/openshell --version` | เอเจนต์ NAT และตัว parse policy ของ OpenShell รันบนแล็ปท็อปของคุณใน Module 03–08 |
+| เครื่องมือบนแล็ปท็อปของ Week 26 | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` และ `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` | เอเจนต์ NAT และตัว parse policy ของ OpenShell รันบนแล็ปท็อปของคุณใน Module 03–08 |
 | DGX Spark (ไม่บังคับ) | `ssh -o BatchMode=yes <spark> true` | Module 02–03 ติดตั้งและควบคุม claw ตัวจริง ถ้าไม่มี Spark ก็รันแบบ DRY |
 
-ถ้ายังไม่มีเครื่องมือสองตัวนี้บนแล็ปท็อป ใน `week26/README.md` มีคำสั่ง `uv` สองบรรทัดสำหรับสร้างไว้ให้แล้ว
+ถ้ายังไม่มีเครื่องมือสองตัวนี้บนแล็ปท็อป ใน `week26_nemoclaw_claws/README.md` มีคำสั่ง `uv` สองบรรทัดสำหรับสร้างไว้ให้แล้ว
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
@@ -151,9 +151,9 @@ harness คือ agent loop ที่อยู่ภายใน sandbox NemoCl
 | 07 · hardening | Part 6 | threat model, policy สำหรับ production, blueprint แบบกำหนดเอง, remote gateway |
 | 08 · capstone | Capstone | Alto Ops Claw v1 ที่มีเอกสารครบและผ่านการให้คะแนน |
 
-ตัวอย่างที่ใช้ตลอดทั้งสัปดาห์คือ **Alto Ops Claw**: ผู้ช่วยด้านงานปฏิบัติการของโรงแรมที่อ่านไฟล์ CSV ที่ export จาก chiller plant ตอบคำถามเรื่องพลังงาน และเรียก BMS (แบบจำลอง) ผ่าน MCP ข้อมูลของมันอยู่ที่ `week26/common/data/chiller_plant.csv` ข้อมูลนี้เป็น **ข้อมูลสังเคราะห์ (synthetic)**: เจ็ดวัน แถวละ 15 นาที โดยหกชั่วโมงสุดท้ายถูกทำให้ประสิทธิภาพตก เพื่อให้เส้นทาง alarm มีอะไรให้ตรวจเจอ
+ตัวอย่างที่ใช้ตลอดทั้งสัปดาห์คือ **Alto Ops Claw**: ผู้ช่วยด้านงานปฏิบัติการของโรงแรมที่อ่านไฟล์ CSV ที่ export จาก chiller plant ตอบคำถามเรื่องพลังงาน และเรียก BMS (แบบจำลอง) ผ่าน MCP ข้อมูลของมันอยู่ที่ `week26_nemoclaw_claws/common/data/chiller_plant.csv` ข้อมูลนี้เป็น **ข้อมูลสังเคราะห์ (synthetic)**: เจ็ดวัน แถวละ 15 นาที โดยหกชั่วโมงสุดท้ายถูกทำให้ประสิทธิภาพตก เพื่อให้เส้นทาง alarm มีอะไรให้ตรวจเจอ
 
-> 🪸 **The Reef** ปุ่ม **🪸 Reef** ของ runner แสดงสแตกของ claw ให้เห็นในภาพเดียว: gateway เป็นประภาคาร แต่ละ sandbox เป็นคอกหนึ่งคอก และ service ต่าง ๆ เป็นจุดสังเกตบนเกาะ ทุกค่ามาจากคำสั่งจริง (`openshell status`, `openshell sandbox list`, `openshell inference get`) หรือจากการ probe ผ่าน HTTP พร้อมแสดง exit code และเวลา ถ้าไม่ได้เชื่อมต่อ Spark เกาะจะว่างเปล่าและบอกเหตุผล มันไม่เคยแสดงสถานะที่แต่งขึ้นเอง แอปภาพเต็มรูปแบบที่เป็นต้นกำเนิดของมันอยู่ใน `week26/alto-reef/`
+> 🪸 **The Reef** ปุ่ม **🪸 Reef** ของ runner แสดงสแตกของ claw ให้เห็นในภาพเดียว: gateway เป็นประภาคาร แต่ละ sandbox เป็นคอกหนึ่งคอก และ service ต่าง ๆ เป็นจุดสังเกตบนเกาะ ทุกค่ามาจากคำสั่งจริง (`openshell status`, `openshell sandbox list`, `openshell inference get`) หรือจากการ probe ผ่าน HTTP พร้อมแสดง exit code และเวลา ถ้าไม่ได้เชื่อมต่อ Spark เกาะจะว่างเปล่าและบอกเหตุผล มันไม่เคยแสดงสถานะที่แต่งขึ้นเอง แอปภาพเต็มรูปแบบที่เป็นต้นกำเนิดของมันอยู่ใน `week26_nemoclaw_claws/alto-reef/`
 
 ✓ Checkpoint: คุณเปิด **🪸 Reef** มาแล้วหนึ่งครั้ง และบอกได้ว่ามันแสดงอะไรเมื่อไม่ได้เชื่อมต่อ Spark
 
@@ -173,7 +173,7 @@ harness คือ agent loop ที่อยู่ภายใน sandbox NemoCl
 
 ```bash
 # on: laptop
-.venv/bin/python week26/01_what_is_a_claw/exercises/ex01_claw_basics.py
+.venv/bin/python week26_nemoclaw_claws/01_what_is_a_claw/exercises/ex01_claw_basics.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ เมื่อทำ TODO ครบทุกจุด)
@@ -202,8 +202,8 @@ sandbox จำกัด **รัศมีความเสียหาย (blas
 
 | อาการ | สาเหตุ | วิธีแก้ |
 |---|---|---|
-| `week26/.venv-nat/bin/nat: No such file or directory` | ยังไม่ได้สร้าง venv ของ NAT | รันคำสั่ง `uv` สองบรรทัดใน `week26/README.md` |
-| `openshell --version` ไม่พิมพ์อะไรออกมาบนแล็ปท็อป | wheel ของ `openshell` รุ่นใหม่กว่า (0.0.116 / 0.1.2) มีแค่ Python SDK ไม่มี CLI | ติดตั้ง `openshell==0.0.111` ลงใน `week26/.venv-openshell` |
+| `week26_nemoclaw_claws/.venv-nat/bin/nat: No such file or directory` | ยังไม่ได้สร้าง venv ของ NAT | รันคำสั่ง `uv` สองบรรทัดใน `week26_nemoclaw_claws/README.md` |
+| `openshell --version` ไม่พิมพ์อะไรออกมาบนแล็ปท็อป | wheel ของ `openshell` รุ่นใหม่กว่า (0.0.116 / 0.1.2) มีแค่ Python SDK ไม่มี CLI | ติดตั้ง `openshell==0.0.111` ลงใน `week26_nemoclaw_claws/.venv-openshell` |
 | 🪸 Reef ขึ้นว่า "no Spark configured" | `SPARK_HOST` ว่างอยู่ | เปิด 🖥 Spark setup หรือเรียนต่อในโหมด DRY |
 | Lab 01-1 แสดง `◈ EXAMPLE` ในทุกแถวของ Spark | โหมด DRY: ไม่มีอะไรรันบน Spark | เชื่อมต่อ Spark แล้วสลับเป็น ⚡ Live |
 

@@ -16,7 +16,7 @@ Ollama, or to THIS laptop's Ollama as a labelled LAPTOP STAND-IN.
 Writes .runs/triples.json and .runs/triples.cypher (paste into Neo4j Browser on the
 txt2kg --neo4j stack, http://localhost:7474).
 
-Run: .venv/bin/python week25/19_multi_agent_rag_kg/labs/lab02_txt2kg_mini.py [--laptop-model gemma4:12b]
+Run: .venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab02_txt2kg_mini.py [--laptop-model gemma4:12b]
 """
 import argparse
 import json
@@ -185,7 +185,7 @@ def main() -> None:
     (RUNS / "triples.cypher").write_text("".join(
         f"MERGE (a:Entity {{name: {cypher_quote(s)}}}) MERGE (b:Entity {{name: {cypher_quote(o)}}}) "
         f"MERGE (a)-[:RELATION {{type: {cypher_quote(p)}}}]->(b);\n" for s, p, o in triples))
-    print("→ wrote week25/19_multi_agent_rag_kg/.runs/triples.json and triples.cypher")
+    print("→ wrote week25_dgx_spark/19_multi_agent_rag_kg/.runs/triples.json and triples.cypher")
     label = "LIVE on the Spark" if sources == {"spark"} else \
         "LAPTOP STAND-IN — the triples are real model output, not txt2kg on a Spark"
     note(label + ". Extraction is sampled: rerun and the triple count and wording change.")

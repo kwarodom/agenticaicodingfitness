@@ -12,7 +12,7 @@ Laptop-real, in four layers:
   4. the Spark proof (research tutorial Lab 6.1): policy set --wait, the blunt write request, the deny in
      `openshell logs`, a failed tool span in Phoenix. In DRY these are EXAMPLE shapes and prove nothing.
 
-Run: .venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_2_prove_the_boundary.py
+Run: .venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_2_prove_the_boundary.py
 """
 import ast
 import json
@@ -57,7 +57,7 @@ async def main():
 asyncio.run(main())
 '''
 r = laptop([NAT_PY, "-c", TOOL_CHECK], quiet=True, env=QUIET_ENV, cwd=ROOT, timeout=120,
-           show="week26/.venv-nat/bin/python -c '<build request_setpoint_change with NAT, call it 4 times>'")
+           show="week26_nemoclaw_claws/.venv-nat/bin/python -c '<build request_setpoint_change with NAT, call it 4 times>'")
 cases = [json.loads(ln[5:]) for ln in r.out.splitlines() if ln.startswith("CASE ")]
 table([[c["case"], c["args"]["work_order_id"] or '""', c["args"]["value_c"], c["out"].get("status"),
         (c["out"].get("ticket") or c["out"].get("reason") or "")[:62]] for c in cases],
@@ -157,7 +157,7 @@ print(f"â—† mock BMS port: {port}" + ("" if port == 8443 else " (8443 was busy â
 mcp_url = f"http://localhost:{port}/mcp"
 with background([NAT_PY, COMMON / "bms_mcp_server.py"], ready_url=mcp_url, log=ck.LAPTOP_RUNS / "bms.log",
                 env={"BMS_MCP_PORT": str(port), **QUIET_ENV}, timeout=60,
-                show=f"BMS_MCP_PORT={port} week26/.venv-nat/bin/python week26/common/bms_mcp_server.py"):
+                show=f"BMS_MCP_PORT={port} week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/common/bms_mcp_server.py"):
     r = laptop([NAT, "mcp", "client", "tool", "list", "--url", mcp_url], quiet=True, env=QUIET_ENV, timeout=90,
                show=f"nat mcp client tool list --url {mcp_url}")
     listed = [ln.strip() for ln in r.out.splitlines() if ln.strip() in ("read_point", "list_alarms", "get_trend",

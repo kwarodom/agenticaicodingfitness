@@ -1,5 +1,5 @@
 # ▶ Hands-on Lab 01 — Nemotron 3 Open Model Family
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/01_nemotron_models/tutorial_server.py` → http://127.0.0.1:8100. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/tutorial_server.py` → http://127.0.0.1:8100. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Point this folder at a real Nemotron endpoint (your Spark, build.nvidia.com, or local Ollama) and verify it answers.
@@ -56,7 +56,7 @@ Expected output (path B shown; A/C list whatever your box serves — e.g. `nemot
 Goal: know the three tiers cold, and be able to compute what fits where. First run the explainer's own table:
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/01_nemotron_models/demos/step01_family.py
+.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/demos/step01_family.py
 ```
 Expected output:
 ```
@@ -95,8 +95,8 @@ Cloud model-id note: `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning` is verified
 Goal: run one tool-call round trip and understand that the model only *emits JSON* — your code executes. The polished loop is `demos/step04_tool_calling.py`; the dissected version is lab02:
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/01_nemotron_models/demos/step04_tool_calling.py   # the loop
-.venv/bin/python week23/01_nemotron_models/labs/lab02_toolcall_wire.py   # the wire
+.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/demos/step04_tool_calling.py   # the loop
+.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab02_toolcall_wire.py   # the wire
 ```
 Expected output (lab02, abbreviated):
 ```
@@ -143,19 +143,19 @@ All labs inherit the step-1 connection from `config.py`, terminate in under a mi
 
 **labs/lab01_reasoning_tax.py** — sends an EASY and a HARD prompt to the same model, splits REASON from ANSWER on the stream, and measures tokens/latency of each: the reasoning tax, quantified.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/01_nemotron_models/labs/lab01_reasoning_tax.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab01_reasoning_tax.py
 ```
 Look for: the HARD prompt spending several times the REASON tokens of the EASY one, and what that does to latency. *Modify it:* add a third MEDIUM prompt and see whether the tax scales smoothly or jumps.
 
 **labs/lab02_toolcall_wire.py** — one tool-calling round trip with every raw JSON message printed: the tools schema, the assistant `tool_calls`, the `role:"tool"` result, the final answer.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/01_nemotron_models/labs/lab02_toolcall_wire.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab02_toolcall_wire.py
 ```
 Look for: `finish_reason='tool_calls'` — the model is paused, waiting for YOUR code. *Modify it:* add a second tool `dispatch_service(chiller_id)` and a system rule for when to call it; watch the model chain two calls.
 
 **labs/lab03_fit_math.py** — Part A computes the full fit table (FP16/Q8/Q4/NVFP4 × Nano/Super/Ultra × 1–2 Sparks) from the runbook formula, no endpoint needed; Part B buries a needle in a 4k-char log haystack and asks the model to find it.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/01_nemotron_models/labs/lab03_fit_math.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab03_fit_math.py
 ```
 Look for: the Ultra row failing even the 2-Spark budget at NVFP4 — sizing is arithmetic, not folklore. *Modify it:* change `SPARK_GB` to 784 (a DGX Station) and see which verdicts flip.
 

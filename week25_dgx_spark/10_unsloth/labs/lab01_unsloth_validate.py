@@ -9,8 +9,8 @@ patch message, the loss lines, and the final metrics.
 
 Opt in with  --yes  or  SPARK_APPLY=1.  Re-run the lab at any time to follow progress.
 
-Run: .venv/bin/python week25/10_unsloth/labs/lab01_unsloth_validate.py
-     SPARK_APPLY=1 .venv/bin/python week25/10_unsloth/labs/lab01_unsloth_validate.py
+Run: .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab01_unsloth_validate.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab01_unsloth_validate.py
 """
 import ast
 import os

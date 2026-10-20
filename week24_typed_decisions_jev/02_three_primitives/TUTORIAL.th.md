@@ -36,7 +36,7 @@ Choice เลือกหนึ่งตัวเลือกจากชุด�
 Lab 01 ถามคำถามเรื่องแผนกเดียวกันกับข้อความสามข้อ:
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab01_choice.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab01_choice.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -98,7 +98,7 @@ Noul (อ่านว่า "นู-อัล") ส่งตัวเลขก�
 | "p(X) + p(ไม่ X) = 1" | ไม่รับประกัน ให้ถามแต่ละการตัดสินใจ **ทางเดียว** แล้วบังคับตรรกะในโค้ด |
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab02_noul.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab02_noul.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -159,7 +159,7 @@ Score ให้คะแนน state ตามระดับที่คุณ�
 เขียนระดับเป็น **สถานการณ์ที่เป็นรูปธรรม** ที่คนจำได้ ("แขกใช้ห้องบางส่วนไม่ได้") ไม่ใช่คำกำกวม ("ปานกลาง") และใช้ตัวเลขเพื่อ **threshold** ("≥ 2.5 → เรียกผู้จัดการ") ห้ามใช้เพื่อย้อนหาขนาดจริง — 1.6 ไม่ใช่ "1.6 ชั่วโมง"
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab03_score.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab03_score.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -218,7 +218,7 @@ confidence = (n · peak − 1) / (n − 1)        n = number of options, peak = 
 สำหรับ **Score** TypeSafe ใช้สถิติอีกแบบที่ไม่ได้เปิดเผย Lab 04 วัดทั้งสองแบบ:
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab04_confidence_math.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab04_confidence_math.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -266,14 +266,14 @@ confidence = (n · peak − 1) / (n − 1)        n = number of options, peak = 
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 02 — เลือก primitive ให้ถูก** เปิด `week24/02_three_primitives/exercises/ex02_pick_the_primitive.py`
+**แบบฝึกหัด 02 — เลือก primitive ให้ถูก** เปิด `week24_typed_decisions_jev/02_three_primitives/exercises/ex02_pick_the_primitive.py`
 
 - **ส่วน A (ออฟไลน์ ฟรี):** ควิซหกข้อ — แต่ละความต้องการให้เขียน `"choice"`, `"noul"` หรือ `"score"`
 - **ส่วน B:** เขียนคำถามสามข้อสำหรับข้อความจากแขก — `department` (choice พร้อมตัวเลือกทางออก), `mentions_refund` (noul) และ `anger` (score เริ่มจากระดับที่สงบที่สุด)
 - **ส่วน C (อัตโนมัติ):** ตัวตรวจจะถาม Jev เกี่ยวกับข้อความทดสอบสามข้อ
 
 ```bash
-.venv/bin/python week24/02_three_primitives/exercises/ex02_pick_the_primitive.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/exercises/ex02_pick_the_primitive.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

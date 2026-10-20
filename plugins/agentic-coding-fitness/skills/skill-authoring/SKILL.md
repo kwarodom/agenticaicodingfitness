@@ -71,7 +71,7 @@ model: sonnet
 
 Note `allowed-tools` is *scoped to git-read commands only* — this skill can read your diff and history but can't write files or run arbitrary shell. That's the security gate doing real work.
 
-> 📁 Class repo: `week7/skill.md` — the PR-description skill built in class: tight frontmatter + a short body that *gestures* at progressive disclosure with a `references/…` pointer. (Note it never ships the file it points to — a working reminder that a pointer is only disclosure if the target actually exists. You'll build the real two-file version in the lab.)
+> 📁 Class repo: `week07_mcp_and_skills/skill.md` — the PR-description skill built in class: tight frontmatter + a short body that *gestures* at progressive disclosure with a `references/…` pointer. (Note it never ships the file it points to — a working reminder that a pointer is only disclosure if the target actually exists. You'll build the real two-file version in the lab.)
 
 ### Progressive disclosure — the three-stage load
 

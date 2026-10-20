@@ -61,7 +61,7 @@
       "caption": "From the trace timestamps of one lab 14-2 run on this Mac: nemotron-3-nano on a shared laptop Ollama — LAPTOP STAND-IN, not Spark numbers. The point is the shape: the tools take milliseconds, the model calls take the time. Faster serving (vLLM on the Spark, Modules 05–07) shortens the model bars; the agent code does not change."
     },
     {
-      "title": "What NAT 1.9 ships (components registered in week25/.venv-nat)",
+      "title": "What NAT 1.9 ships (components registered in week25_dgx_spark/.venv-nat)",
       "type": "bars",
       "unit": "components",
       "labels": ["function", "ttc_strategy", "llm_provider", "tracing", "dataset_loader", "evaluator", "front_end", "function_group"],

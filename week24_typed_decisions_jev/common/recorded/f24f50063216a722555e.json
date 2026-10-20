@@ -1,0 +1,74 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-646305adf48a5dbf"
+  },
+  "questions": {
+   "reading": {
+    "type": "box",
+    "instructions": "the large measured-temperature number on the display in `photo`"
+   },
+   "band": {
+    "type": "choice",
+    "instructions": "Which range contains the large measured temperature shown in `photo`?",
+    "criteria": {
+     "below_22": "below 22 °C",
+     "22_to_26": "22 to 26 °C",
+     "26_to_28": "26 to 28 °C",
+     "above_28": "above 28 °C"
+    }
+   },
+   "above_setpoint": {
+    "type": "noul",
+    "instructions": "Is the large measured temperature in `photo` more than 3 °C above the SET value?"
+   }
+  },
+  "assets": {
+   "img-646305adf48a5dbf": {
+    "type": "image",
+    "format": "png",
+    "sha256": "ec110486c7bdddee",
+    "base64_chars": 23788
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "reading": {
+    "type": "box",
+    "box": {
+     "top": 0.42,
+     "bottom": 0.57,
+     "left": 0.22,
+     "right": 0.53
+    },
+    "confidence": 0.81
+   },
+   "band": {
+    "type": "choice",
+    "choice": "above_28",
+    "confidence": 1.0,
+    "probabilities": {
+     "below_22": 0.0,
+     "22_to_26": 0.0,
+     "26_to_28": 0.0,
+     "above_28": 1.0
+    }
+   },
+   "above_setpoint": {
+    "type": "noul",
+    "noul": 0.97
+   }
+  },
+  "usage": {
+   "input_tokens": 1139,
+   "output_tokens": 100
+  }
+ }
+}

@@ -157,11 +157,11 @@ NeMo Curator · NeMo Anonymizer · NeMo Data Designer · cuOpt · cuDF · VSS (v
 ## Quick start (any app)
 
 ```bash
-uv pip install -r week23/01_nemotron_models/requirements.txt
-.venv/bin/python week23/00_stack_navigator/tutorial_server.py     # → http://127.0.0.1:8112 — the hub; start here
-.venv/bin/python week23/00_lab_runner/tutorial_server.py          # → http://127.0.0.1:8113 — drive the hands-on track from the browser
-.venv/bin/python week23/01_nemotron_models/tutorial_server.py     # → http://127.0.0.1:8100
-.venv/bin/python week23/01_nemotron_models/labs/lab01_reasoning_tax.py   # hands-on lab — self-terminates, SIM-safe
+uv pip install -r week23_open_superintelligence_stack/01_nemotron_models/requirements.txt
+.venv/bin/python week23_open_superintelligence_stack/00_stack_navigator/tutorial_server.py     # → http://127.0.0.1:8112 — the hub; start here
+.venv/bin/python week23_open_superintelligence_stack/00_lab_runner/tutorial_server.py          # → http://127.0.0.1:8113 — drive the hands-on track from the browser
+.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/tutorial_server.py     # → http://127.0.0.1:8100
+.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab01_reasoning_tax.py   # hands-on lab — self-terminates, SIM-safe
 ```
 Open the URL, use the **🔌 Connection** panel (local / tunnel / cloud), pick a model, and run the
 chapters. With nothing reachable it runs in **SIM** — every concept still works, $0. Every app is
@@ -197,7 +197,7 @@ W18 sovereign edge · W19 sovereign DGX (serve/tune/observe/gateway/self-evolvin
 
 ## Sources
 
-NVIDIA deck (photographed, in `week23/reference/` — reference only, not distributed): Open Superintelligence Stack
+NVIDIA deck (photographed, in `week23_open_superintelligence_stack/reference/` — reference only, not distributed): Open Superintelligence Stack
 (Prime Intellect × NVIDIA); NVIDIA Agent Toolkit; AI-Q Open Agent Blueprint;
 OpenShell Secure Runtime; NemoClaw; NeMo Relay; inference-economics session.
 

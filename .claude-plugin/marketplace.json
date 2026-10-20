@@ -22,7 +22,7 @@
     {
       "name": "mod-gym",
       "displayName": "Mod Gym",
-      "source": "./week29/mod-gym",
+      "source": "./week29_claude_code_mods/mod-gym",
       "description": "Week 29: an in-terminal panel that teaches Claude Code mods lesson by lesson, checks your lab mod, and shows the hook pipeline live. Needs Claude Code 2.1.287+.",
       "version": "0.1.0",
       "author": { "name": "Agentic Coding Fitness" },

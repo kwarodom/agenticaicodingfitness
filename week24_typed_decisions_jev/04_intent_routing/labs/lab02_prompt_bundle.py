@@ -8,7 +8,7 @@ access are resolved separately and re-checked at every call.
 Three requests: a clear HVAC question, a coding request, and a vague one that
 must fall through to "clarify" instead of guessing a prompt.
 
-Run: .venv/bin/python week24/04_intent_routing/labs/lab02_prompt_bundle.py
+Run: .venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab02_prompt_bundle.py
 """
 import json
 import sys

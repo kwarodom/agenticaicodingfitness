@@ -7,7 +7,7 @@ then quantizes 65,536 weight-like numbers five ways — FP8 E4M3, NVFP4, MXFP4,
 INT4 per-tensor and INT4 group-128 — and prints the real error of each. The random
 seed is fixed, so every machine prints the same table.
 
-Run: .venv/bin/python week25/07_nvfp4_speculative/labs/lab01_nvfp4_simulator.py
+Run: .venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab01_nvfp4_simulator.py
 """
 import math
 import random

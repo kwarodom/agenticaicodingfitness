@@ -3,13 +3,13 @@
 
 Research tutorial L3.6. Part A publishes Alto Ops tools with `nat mcp serve` (free_port(9901)) — first
 everything, then `--tool_names chiller_kpi` only — and calls them with `nat mcp client` (no LLM). Part B starts
-the course's mock BMS MCP server (week26/common/bms_mcp_server.py, free_port(8443)), shows which of its tools a
+the course's mock BMS MCP server (week26_nemoclaw_claws/common/bms_mcp_server.py, free_port(8443)), shows which of its tools a
 `function_groups: … _type: mcp_client` block with `include: [read_point, list_alarms]` hands to the agent (no
 LLM), proves that `include` + `exclude` together is refused by `nat validate`, then asks the agent one question.
 All servers are stopped at the end.
 
 LLM budget: 1 agent question ≈ 2 laptop LLM calls.
-Run: .venv/bin/python week26/04_nat_claws/labs/lab04_4_mcp_both_ways.py
+Run: .venv/bin/python week26_nemoclaw_claws/04_nat_claws/labs/lab04_4_mcp_both_ways.py
 """
 import json
 import re
@@ -47,7 +47,7 @@ try:
     with background([NAT, "mcp", "serve", "--config_file", LAPTOP_YML, "--name", "Alto Ops MCP", "--host", "localhost",
                      "--port", str(mport)], ready_url=f"http://localhost:{mport}/debug/tools/list",
                     log=RUNS / "lab04_4_mcp_all.log", env=QUIET,
-                    show=f"week26/.venv-nat/bin/nat mcp serve --config_file {rel(LAPTOP_YML)} --name \"Alto Ops MCP\" "
+                    show=f"week26_nemoclaw_claws/.venv-nat/bin/nat mcp serve --config_file {rel(LAPTOP_YML)} --name \"Alto Ops MCP\" "
                          f"--port {mport}"):
         d = get_json(f"http://localhost:{mport}/debug/tools/list")
         print(f"→ GET /debug/tools/list → server_name={d.get('server_name')!r} · count={d.get('count')}")
@@ -60,12 +60,12 @@ try:
     with background([NAT, "mcp", "serve", "--config_file", LAPTOP_YML, "--name", "Alto Ops MCP", "--host", "localhost",
                      "--port", str(mport), "--tool_names", "chiller_kpi"],
                     ready_url=f"http://localhost:{mport}/debug/tools/list", log=RUNS / "lab04_4_mcp_one.log", env=QUIET,
-                    show=f"week26/.venv-nat/bin/nat mcp serve --config_file {rel(LAPTOP_YML)} --port {mport} "
+                    show=f"week26_nemoclaw_claws/.venv-nat/bin/nat mcp serve --config_file {rel(LAPTOP_YML)} --port {mport} "
                          "--tool_names chiller_kpi"):
         listed = tool_list(murl)
         r, _ = nat(["mcp", "client", "tool", "call", "chiller_kpi", "--url", murl, "--json-args", '{"hours": 6}'],
                    echo=False,
-                   show=f"week26/.venv-nat/bin/nat mcp client tool call chiller_kpi --url {murl} --json-args '{{\"hours\": 6}}'")
+                   show=f"week26_nemoclaw_claws/.venv-nat/bin/nat mcp client tool call chiller_kpi --url {murl} --json-args '{{\"hours\": 6}}'")
         out = next((ln for ln in clean(r.out).splitlines() if ln.startswith("window=")), error_line(r.out))
         print(f"  {out}")
         if listed == ["chiller_kpi"] and "kw_per_rt=0.901" in out:
@@ -77,7 +77,7 @@ try:
     step("B1", f"start the mock BMS MCP server on :{bport} (synthetic data; write_setpoint never writes)")
     with background([NAT_PY, BMS_SERVER], ready_url=burl, log=RUNS / "lab04_4_bms.log",
                     env={**QUIET, "BMS_MCP_PORT": str(bport)},
-                    show=f"BMS_MCP_PORT={bport} week26/.venv-nat/bin/python {rel(BMS_SERVER)}"):
+                    show=f"BMS_MCP_PORT={bport} week26_nemoclaw_claws/.venv-nat/bin/python {rel(BMS_SERVER)}"):
         server_tools = tool_list(burl)
 
         step("B2", f"what the mcp_client block hands the agent — {rel(BMS_YML)} (no LLM)")
@@ -86,7 +86,7 @@ try:
             print(f"│   {ln}")
         env_b = {**QUIET, "BMS_MCP_URL": burl}
         r, _ = nat(["group", BMS_YML, "bms_tools"], prefix=[NAT_PY, DIRECT], env=env_b,
-                   show=f"BMS_MCP_URL={burl} week26/.venv-nat/bin/python {rel(DIRECT)} group {rel(BMS_YML)} bms_tools")
+                   show=f"BMS_MCP_URL={burl} week26_nemoclaw_claws/.venv-nat/bin/python {rel(DIRECT)} group {rel(BMS_YML)} bms_tools")
         sees = re.findall(r"AGENT SEES\s+(\S+)", r.out)
         hidden = re.findall(r"hidden\s+(\S+)", r.out)
         if sorted(sees) == ["bms_tools__list_alarms", "bms_tools__read_point"]:

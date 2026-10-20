@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 05.1 — RAG: "chat with your docs" from scratch.
 
-Run:  python week15/code/05_rag/01_chat_with_docs.py
+Run:  python week15_production_graphrag/code/05_rag/01_chat_with_docs.py
 
 The four moving parts of RAG:
   1. CHUNK    — split docs into bite-sized pieces

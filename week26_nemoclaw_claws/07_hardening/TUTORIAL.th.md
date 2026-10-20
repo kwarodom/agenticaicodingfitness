@@ -19,16 +19,16 @@
 | ต้องมี | วิธีเช็ก | ใช้ทำอะไร |
 |---|---|---|
 | Module 03 และ 04 | อ่าน policy เป็น และรู้จัก Alto Ops Claw แล้ว | module นี้ harden ทั้งสองอย่าง |
-| OpenShell CLI บน laptop | `week26/.venv-openshell/bin/openshell --version` → 0.0.111 | parser ตัวจริงของ policy (ไม่มี gateway อยู่ด้านหลัง) |
-| NAT venv | `week26/.venv-nat/bin/python -c "import mcp"` | ใช้รัน mock BMS ใน lab 07-2 |
+| OpenShell CLI บน laptop | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` → 0.0.111 | parser ตัวจริงของ policy (ไม่มี gateway อยู่ด้านหลัง) |
+| NAT venv | `week26_nemoclaw_claws/.venv-nat/bin/python -c "import mcp"` | ใช้รัน mock BMS ใน lab 07-2 |
 | `openssl` | `openssl version` | lab 07-3 ใช้สร้าง CA ทิ้งขว้างสำหรับ blueprint |
 | DGX Spark (ไม่บังคับ) | `ssh -o BatchMode=yes <spark> true` | apply policy, รัน blueprint runner, เก็บหลักฐานจริง |
 
 ```bash
 # on: laptop
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 openssl version
-week26/.venv-nat/bin/python -c "import mcp; print('mcp ok')"
+week26_nemoclaw_claws/.venv-nat/bin/python -c "import mcp; print('mcp ok')"
 ```
 
 **Expected output** (captured on this Mac)
@@ -204,7 +204,7 @@ Lab 07-2 ส่ง policy นี้ผ่านตัวตรวจสามต
 **Expected output** (captured on this Mac, DRY mode)
 
 ```
-$ openshell policy set alto-ops --policy week26/07_hardening/policies/prod.yaml --wait   [this laptop]
+$ openshell policy set alto-ops --policy week26_nemoclaw_claws/07_hardening/policies/prod.yaml --wait   [this laptop]
 Error:   × transport error
   ├─▶ tcp connect error
   ├─▶ tcp connect error
@@ -259,7 +259,7 @@ Parser ตัวจริงจับ YAML และ *ชื่อ* field (`Vers
 
 ```
 ◆ mock BMS on port 8443 (documented 8443). The policy talks about bms.alto.local:8443; here the same server runs on localhost, and the course gate evaluates each call as if it went to bms.alto.local:8443.
-$ python week26/common/bms_mcp_server.py  # port 8443 &   [this laptop, background → bms_mcp.log]
+$ python week26_nemoclaw_claws/common/bms_mcp_server.py  # port 8443 &   [this laptop, background → bms_mcp.log]
 ✓ ready in 3.0s → http://localhost:8443/mcp
 ✓ tools/list from the REAL mock server: read_point, list_alarms, get_trend, write_setpoint
 ■ stopped python (pid 93280)
@@ -285,7 +285,7 @@ openshell policy list alto-ops
 **Expected output** (captured on this Mac, DRY mode)
 
 ```
-$ scp prod.yaml <spark>:~/week26/07_hardening/prod.yaml   [DRY]
+$ scp prod.yaml <spark>:~/week26_nemoclaw_claws/07_hardening/prod.yaml   [DRY]
 $ openshell policy get alto-ops   [DRY]
 ◈ EXAMPLE — illustrative shape only (not a playbook quote, not a measurement):
 version: 1
@@ -294,7 +294,7 @@ filesystem_policy:
   ...
 network_policies:
   <the entries your sandbox has today>
-$ cd ~/week26/07_hardening && openshell policy set alto-ops --policy prod.yaml --wait   [DRY]
+$ cd ~/week26_nemoclaw_claws/07_hardening && openshell policy set alto-ops --policy prod.yaml --wait   [DRY]
 ◈ (dry run — the change above would be applied here)
 ```
 
@@ -442,8 +442,8 @@ openshell_target:
 
 ```bash
 # on: spark
-NEMOCLAW_BLUEPRINT_PATH=$HOME/week26/07_hardening/blueprint nemoclaw-blueprint-runner plan
-NEMOCLAW_BLUEPRINT_PATH=$HOME/week26/07_hardening/blueprint nemoclaw-blueprint-runner status --external-target
+NEMOCLAW_BLUEPRINT_PATH=$HOME/week26_nemoclaw_claws/07_hardening/blueprint nemoclaw-blueprint-runner plan
+NEMOCLAW_BLUEPRINT_PATH=$HOME/week26_nemoclaw_claws/07_hardening/blueprint nemoclaw-blueprint-runner status --external-target
 ```
 
 tutorial เขียน `NEMOCLAW_BLUEPRINT_PATH=/abs/path/blueprint` โดยไม่ได้บอกว่าต้องการโฟลเดอร์หรือไฟล์ ให้เช็กด้วย `nemoclaw-blueprint-runner --help`
@@ -533,7 +533,7 @@ openshell logs alto-ops -n 5000 --since 720h --source sandbox
 
 ```bash
 # on: laptop
-.venv/bin/python week26/07_hardening/exercises/ex07_approvals_endpoint.py
+.venv/bin/python week26_nemoclaw_claws/07_hardening/exercises/ex07_approvals_endpoint.py
 ```
 
 > ✏ **แก้จาก research tutorial** เฉลยของ tutorial พิมพ์ deny rule เป็น `{ method: "", path: "/api/v1/tickets//approve" }` คือ method ว่างและมี slash ซ้อนกัน เป็นไปได้มากว่าเครื่องหมายดอกจันสองตัวถูก Markdown กินไปเป็นตัวเอียง ตามที่พิมพ์ไว้ rule นี้ไม่มีวัน match URL approve จริง จึงเป็นโค้ดที่ไม่มีผล และมีแค่ allow-list ที่กันการ approve ไว้ เฉลยของคอร์สใช้ `{ method: "*", path: "/api/v1/tickets/*/approve" }` และตัวตรวจจะทดสอบว่า deny rule ของคุณ match `POST /api/v1/tickets/42/approve` ได้จริง
@@ -586,7 +586,7 @@ openshell logs alto-ops -n 5000 --since 720h --source sandbox
 | `error: unrecognized subcommand 'start'` บน laptop | laptop CLI 0.0.111 ไม่มี `gateway start` | รันด้วย OpenShell ที่ playbook ติดตั้ง และเช็ก `openshell gateway --help` |
 | `mTLS certificates for gateway 'openshell' were not found` | `gateway add --remote` ต้องใช้ client TLS ที่ gateway สร้างให้ | สร้าง gateway ก่อน (`gateway start --remote`) แล้วค่อย add |
 | `unknown field 'Version'` จาก `policy set` | คุณป้อน output ของ `policy get --full` ซึ่งมี metadata header | export ด้วย `openshell policy get <sandbox>` (ไม่ใส่ `--full`) |
-| lab 07-2 ข้ามขั้น mock BMS | ปัญหาเรื่องพอร์ตหรือ venv | อ่าน `week26/07_hardening/.runs/bms_mcp.log` |
+| lab 07-2 ข้ามขั้น mock BMS | ปัญหาเรื่องพอร์ตหรือ venv | อ่าน `week26_nemoclaw_claws/07_hardening/.runs/bms_mcp.log` |
 | lab 07-3 บอกว่าไม่พบไฟล์ CA | ไม่มี `openssl` ใน PATH | ติดตั้ง หรืออ่านแถวอื่นไปก่อน เพราะแถวอื่นไม่ต้องใช้ |
 | ตัวตรวจหลักฐาน parse log จริงได้ 0 บรรทัด | pattern ของคอร์สเขียนให้ตรงกับรูปแบบ EXAMPLE ไม่ใช่รูปแบบของคุณ | ปรับ `LINE` ใน lab 07-4 ให้ตรงกับบรรทัด log ของคุณ |
 

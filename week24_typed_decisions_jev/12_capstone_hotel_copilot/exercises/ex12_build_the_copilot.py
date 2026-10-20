@@ -11,7 +11,7 @@ Four TODOs, each checked OFFLINE (free) before a single API call:
 When every check is ✓, the copilot runs live on five guest messages.
 Reference answer: ../copilot_reference.py (try first — peek later).
 
-Run: .venv/bin/python week24/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py
+Run: .venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py
 """
 import json
 import re

@@ -21,11 +21,11 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "common"))
 from clawkit import NAT_PY, ROOT, laptop, warn  # noqa: E402
 
-MOD = Path(__file__).resolve().parent               # …/week26/06_benchmarking
+MOD = Path(__file__).resolve().parent               # …/week26_nemoclaw_claws/06_benchmarking
 RUNS = MOD / ".runs"
 CONFIGS = MOD / "configs"
 DATA = MOD / "data"
-CSV = ROOT / "week26" / "common" / "data" / "chiller_plant.csv"
+CSV = ROOT / "week26_nemoclaw_claws" / "common" / "data" / "chiller_plant.csv"
 
 
 def rel(p: Path) -> str:
@@ -132,13 +132,13 @@ def getcurrent():
 
 def nat_serve_env() -> dict:
     """{} if .venv-nat can import greenlet, else a PYTHONPATH that adds a clearly labelled stand-in."""
-    r = laptop([NAT_PY, "-c", "import greenlet"], quiet=True, show="week26/.venv-nat/bin/python -c 'import greenlet'")
+    r = laptop([NAT_PY, "-c", "import greenlet"], quiet=True, show="week26_nemoclaw_claws/.venv-nat/bin/python -c 'import greenlet'")
     if r.ok:
         return {}
     shim = RUNS / "pyshim"
     shim.mkdir(parents=True, exist_ok=True)
     (shim / "greenlet.py").write_text(GREENLET_STUB, encoding="utf-8")
-    warn("greenlet is missing from week26/.venv-nat, and `nat serve` will not start without it. This lab adds a stub "
+    warn("greenlet is missing from week26_nemoclaw_claws/.venv-nat, and `nat serve` will not start without it. This lab adds a stub "
          f"on PYTHONPATH ({rel(shim)}/greenlet.py). No async jobs run here, so the stub is never called.")
     return {"PYTHONPATH": str(shim)}
 

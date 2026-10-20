@@ -1,0 +1,121 @@
+{
+ "en": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "safety",
+    "confidence": 0.5607051849365234
+   },
+   "safety": {
+    "type": "noul",
+    "label": "yes",
+    "yes": true,
+    "confidence": 0.9505266547203064
+   },
+   "urgency": {
+    "type": "score",
+    "level": 0,
+    "label": "routine",
+    "confidence": 0.34288203716278076
+   }
+  },
+  "ms": 159.55758301424794
+ },
+ "th_en_model": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "plumbing",
+    "confidence": 0.2914530634880066
+   },
+   "safety": {
+    "type": "noul",
+    "label": "yes",
+    "yes": true,
+    "confidence": 0.6090250611305237
+   },
+   "urgency": {
+    "type": "score",
+    "level": 0,
+    "label": "routine",
+    "confidence": 0.3696194589138031
+   }
+  },
+  "ms": 148.6405830073636
+ },
+ "th_multi_model": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "safety",
+    "confidence": 0.2967555522918701
+   },
+   "safety": {
+    "type": "noul",
+    "label": "yes",
+    "yes": true,
+    "confidence": 0.8552044630050659
+   },
+   "urgency": {
+    "type": "score",
+    "level": 2,
+    "label": "immediate",
+    "confidence": 0.7358568906784058
+   }
+  },
+  "ms": 56.3354580081068
+ },
+ "multi": {
+  "topics": {
+   "topics": [
+    {
+     "label": "hvac",
+     "confidence": 0.9710562229156494
+    },
+    {
+     "label": "billing",
+     "confidence": 0.4216659367084503
+    }
+   ]
+  },
+  "all": {
+   "topics": [
+    {
+     "label": "hvac",
+     "confidence": 0.9710562229156494
+    },
+    {
+     "label": "billing",
+     "confidence": 0.4216659367084503
+    },
+    {
+     "label": "housekeeping",
+     "confidence": 0.2303483784198761
+    },
+    {
+     "label": "room_change",
+     "confidence": 0.3856837749481201
+    },
+    {
+     "label": "safety",
+     "confidence": 0.010301749221980572
+    }
+   ]
+  },
+  "entities": {
+   "entities": {
+    "room number": [
+     "1408"
+    ],
+    "equipment": [
+     "AC"
+    ],
+    "time": [
+     "tonight",
+     "yesterday"
+    ]
+   }
+  }
+ },
+ "_recorded_at": "2026-10-17"
+}

@@ -9,7 +9,7 @@ the GATEWAY rejects a spec the CLI lets through (the `::rest` trap), the lab say
 Part 2 is the loop on your Spark. Reads use sh(); every change goes through clawkit.change() with a
 `--dry-run` preview, so nothing changes unless you are LIVE and turned on 🔓 Allow changes (CLAW_APPLY=1).
 
-Run: .venv/bin/python week26/03_policy_as_code/labs/lab03_3_iterate_loop.py
+Run: .venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_3_iterate_loop.py
 """
 import sys
 from pathlib import Path
@@ -161,7 +161,7 @@ note("`github_repos` is the research tutorial's example rule name. Read the real
      f"`openshell policy get {S}` first (or set one with --rule-name when you add a single endpoint).")
 
 step(8, "5. full replacement — push lab 03-1's export back (this is also your rollback)")
-change(f"openshell policy set {S} --policy ~/week26/current-policy.yaml --wait",
+change(f"openshell policy set {S} --policy ~/week26_nemoclaw_claws/current-policy.yaml --wait",
        preview=f"openshell policy list {S}",
        example="  REV  STATUS   CREATED\n  7    loaded   <time>\n  …   (EXAMPLE shape — one revision per change above)")
 sh(f"openshell policy list {S}", example="  REV  STATUS   CREATED\n  8    loaded   <time>   ← the file you set\n"

@@ -13,7 +13,7 @@ OpenShell substitutes the real values at egress.
      keys and for key variables that do not belong there (Part 4 exercise 4's lesson), on three samples and on
      your own ~/.hermes if it exists. Findings are redacted — the checker never prints a key.
 
-Run: .venv/bin/python week26/05_tracing/labs/lab05_3_langfuse_handles.py
+Run: .venv/bin/python week26_nemoclaw_claws/05_tracing/labs/lab05_3_langfuse_handles.py
 """
 import re
 import sys

@@ -18,7 +18,7 @@ import hashlib
 import json
 from pathlib import Path
 
-MOD = Path(__file__).resolve().parent                 # …/week26/08_capstone_alto_ops_claw
+MOD = Path(__file__).resolve().parent                 # …/week26_nemoclaw_claws/08_capstone_alto_ops_claw
 WEEK = MOD.parent
 COMMON = WEEK / "common"
 RUNS = MOD / ".runs"

@@ -3,7 +3,7 @@
 
 The YAML below is a gateway with one alias, `chat`, served by vLLM on Spark A. Fill in the four
 TODOs in the YAML, save, then run:
-    .venv/bin/python week25/08_litellm_gateway/exercises/ex08_complete_the_gateway.py
+    .venv/bin/python week25_dgx_spark/08_litellm_gateway/exercises/ex08_complete_the_gateway.py
 
 The checker is free and offline: it parses your YAML with PyYAML, checks the four TODOs, then
 asks LiteLLM's own Router to load it. Stuck? Compare with exercises/solutions/.
@@ -107,9 +107,9 @@ def main() -> None:
     out = Path(__file__).resolve().parents[2] / ".runs" / "ex08.config.yaml"
     out.parent.mkdir(exist_ok=True)
     out.write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
-    print(f"\n═ saved to week25/08_litellm_gateway/.runs/{out.name}. Try it live (it will fall back to your laptop):")
+    print(f"\n═ saved to week25_dgx_spark/08_litellm_gateway/.runs/{out.name}. Try it live (it will fall back to your laptop):")
     print("  export LITELLM_MASTER_KEY=sk-$(openssl rand -hex 12)")
-    print(f"  week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/{out.name} --port 4000")
+    print(f"  week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/{out.name} --port 4000")
 
 
 if __name__ == "__main__":

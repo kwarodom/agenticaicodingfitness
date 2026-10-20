@@ -41,7 +41,7 @@ uv 0.11.19 (7b2cff1c3 2026-06-03 aarch64-apple-darwin)
 {"object":"list","data":[{"id":"nemotron-3.5-lightning:latest","object":"model","created":…
 ```
 
-> 💡 NAT รันใน **venv ของมันเอง** (`week25/.venv-nat`, Python 3.12) ไม่ใช่ใน `.venv` ของ repo แล็บรันด้วย Python ของ repo แล้วเรียก CLI `nat` เป็น subprocess ทั้งสองจึงไม่ชนกันเลย
+> 💡 NAT รันใน **venv ของมันเอง** (`week25_dgx_spark/.venv-nat`, Python 3.12) ไม่ใช่ใน `.venv` ของ repo แล็บรันด้วย Python ของ repo แล้วเรียก CLI `nat` เป็น subprocess ทั้งสองจึงไม่ชนกันเลย
 
 ✓ Checkpoint: `uv --version` พิมพ์เวอร์ชันออกมา และ vLLM บน Spark หรือ Ollama บนแล็ปท็อปแสดงรายชื่อโมเดลอย่างน้อยหนึ่งตัว
 
@@ -76,15 +76,15 @@ NAT เป็น Python ล้วน ไม่มีส่วนไหนต้�
 
 ## 2 · ติดตั้ง NAT และลงทะเบียน tool ของคอร์ส
 
-บนแล็ปท็อป คอร์สเก็บ NAT ไว้ใน `week25/.venv-nat` มีสามแพ็กเกจ: `nvidia-nat[langchain]` (ตัวเอเจนต์), `greenlet` (`nat serve` ของ NAT 1.9 import โมดูล asyncio ของ SQLAlchemy ซึ่งต้องใช้มัน และมันไม่ถูกดึงมาให้อัตโนมัติ) และ `nvidia-nat-mcp` (MCP client และ server):
+บนแล็ปท็อป คอร์สเก็บ NAT ไว้ใน `week25_dgx_spark/.venv-nat` มีสามแพ็กเกจ: `nvidia-nat[langchain]` (ตัวเอเจนต์), `greenlet` (`nat serve` ของ NAT 1.9 import โมดูล asyncio ของ SQLAlchemy ซึ่งต้องใช้มัน และมันไม่ถูกดึงมาให้อัตโนมัติ) และ `nvidia-nat-mcp` (MCP client และ server):
 
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-uv venv -p 3.12 week25/.venv-nat
-uv pip install --python week25/.venv-nat/bin/python "nvidia-nat[langchain]~=1.9" greenlet "nvidia-nat-mcp~=1.9"
-uv pip install --python week25/.venv-nat/bin/python --no-deps -e week25/14_nat_agents/hotel_ops_nat
-week25/.venv-nat/bin/nat --version
+uv venv -p 3.12 week25_dgx_spark/.venv-nat
+uv pip install --python week25_dgx_spark/.venv-nat/bin/python "nvidia-nat[langchain]~=1.9" greenlet "nvidia-nat-mcp~=1.9"
+uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat
+week25_dgx_spark/.venv-nat/bin/nat --version
 ```
 
 บน Spark (aarch64, DGX OS) ติดตั้งแบบเดียวกันไว้ใน `~/w25` ให้ clone repo นี้บน Spark ก่อน (`git clone <this repo> ~/agenticaicodingfitness`) เพราะ Module 15 จะอัปโหลดโฟลเดอร์โมดูลจากที่นั่นเข้าไปใน sandbox:
@@ -93,7 +93,7 @@ week25/.venv-nat/bin/nat --version
 # on: spark
 mkdir -p ~/w25 && cd ~/w25 && python3 -m venv .venv-nat
 .venv-nat/bin/pip install -q 'nvidia-nat[langchain]~=1.9' greenlet 'nvidia-nat-mcp~=1.9'
-.venv-nat/bin/pip install -q --no-deps -e ~/agenticaicodingfitness/week25/14_nat_agents/hotel_ops_nat
+.venv-nat/bin/pip install -q --no-deps -e ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents/hotel_ops_nat
 .venv-nat/bin/nat --version
 ```
 
@@ -101,18 +101,18 @@ Lab 14-1 ตรวจการติดตั้ง ลงทะเบียน 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_1_install_and_register.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_1_install_and_register.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ตัดให้สั้นลง)
 
 ```
 ▣ STEP 1 · find the NAT CLI
-$ week25/.venv-nat/bin/nat --version
+$ week25_dgx_spark/.venv-nat/bin/nat --version
 ✓ nat, version 1.9.0
 
 ▣ STEP 2 · register the course plugin (hotel_ops_nat) — the NAT way: a package with a 'nat.components' entry point
-✓ hotel_ops_nat is already installed in week25/.venv-nat (entry point nat.components → hotel_ops_nat.register)
+✓ hotel_ops_nat is already installed in week25_dgx_spark/.venv-nat (entry point nat.components → hotel_ops_nat.register)
 
 ▣ STEP 3 · what can NAT see? `nat info components` (only the kinds this module uses)
 │ type            name                       package
@@ -239,7 +239,7 @@ async def room_temperature_function(config: RoomTemperatureConfig, builder: Buil
 - **Type hint และ docstring กลายเป็น schema ของ tool** ที่โมเดลเห็น จงเขียนให้โมเดลอ่าน: บอกว่า argument หน้าตาเป็นอย่างไร ("808")
 - **Tool ถูกออกแบบให้ปลอดภัย** `room_temperature` อ่านตารางสี่ห้อง `create_maintenance_ticket` คืน `MT-` ตามด้วย hash ของห้องและปัญหา ความเสียหายเดียวกันจึงได้ id เดียวกันเสมอ และมันเขียนแค่ไฟล์ JSONL ในเครื่องที่คุณเลือก เอเจนต์เรียกได้บ่อยเท่าที่ต้องการ ภายหลังค่อยเปลี่ยนเนื้อในฟังก์ชันเป็น API ของระบบอาคารของคุณ โดย YAML ไม่ต้องเปลี่ยน
 
-ติดตั้งครั้งเดียวด้วย `uv pip install … --no-deps -e week25/14_nat_agents/hotel_ops_nat` (ส่วนที่ 2) เป็นแบบ editable: แก้ `tools.py` แล้ว `nat run` ครั้งถัดไปจะใช้โค้ดใหม่
+ติดตั้งครั้งเดียวด้วย `uv pip install … --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat` (ส่วนที่ 2) เป็นแบบ editable: แก้ `tools.py` แล้ว `nat run` ครั้งถัดไปจะใช้โค้ดใหม่
 
 ✓ Checkpoint: คุณบอกได้สามจุดที่ tool ใหม่ต้องปรากฏ: config class ที่มี `name=`, `@register_function` และการ import ใน `register.py`
 
@@ -249,7 +249,7 @@ async def room_temperature_function(config: RoomTemperatureConfig, builder: Buil
 
 ```bash
 # on: spark
-cd ~/agenticaicodingfitness/week25/14_nat_agents
+cd ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents
 HOTEL_LLM_BASE_URL=http://localhost:8000/v1 ~/w25/.venv-nat/bin/nat run \
   --config_file configs/hotel_agent_spark.yml --input "Room 808 feels hot. Check it and open a ticket if something is wrong."
 ```
@@ -258,7 +258,7 @@ Lab 14-2 ทำแบบเดียวกันจากแล็ปท็อ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_2_run_agent.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_2_run_agent.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ — LAPTOP STAND-IN, `nemotron-3-nano:latest` บน Ollama)
@@ -311,7 +311,7 @@ general:
 
 ```bash
 # on: spark
-cd ~/agenticaicodingfitness/week25/14_nat_agents
+cd ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents
 HOTEL_LLM_BASE_URL=http://localhost:8000/v1 ~/w25/.venv-nat/bin/nat serve \
   --config_file configs/hotel_agent_spark.yml --host 127.0.0.1 --port 8400
 ```
@@ -322,7 +322,7 @@ Lab 14-3 เปิดเซิร์ฟเวอร์ทั้งสอง เ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_3_serve_and_mcp.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_3_serve_and_mcp.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ — LAPTOP STAND-IN ตัดให้สั้นลง)
@@ -380,7 +380,7 @@ eval:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_4_eval.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_4_eval.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ — LAPTOP STAND-IN)
@@ -402,7 +402,7 @@ Per evaluator results:
 
 คะแนนเต็มบนคำถามสามข้อพิสูจน์ว่าท่อต่อถึงกัน ไม่ได้พิสูจน์ว่าเอเจนต์ดี คุณค่าจะมาเมื่อคุณเปลี่ยนสิ่งหนึ่งแล้วรันใหม่: base model เทียบกับ fine-tune ของคุณ (Module 13), `tool_calling_agent` เทียบกับ `react_agent`, system prompt ที่ยาวขึ้น NAT บันทึก `config_effective.yml` ไว้ข้างผลลัพธ์ คะแนนแต่ละครั้งจึงบันทึกไว้ชัดว่าเกิดจากอะไร
 
-✓ Checkpoint: มี `mentions_expected_output.json` อยู่ใต้ `week25/14_nat_agents/.runs/eval/` โดยมีคะแนนหนึ่งค่าต่อคำถาม
+✓ Checkpoint: มี `mentions_expected_output.json` อยู่ใต้ `week25_dgx_spark/14_nat_agents/.runs/eval/` โดยมีคะแนนหนึ่งค่าต่อคำถาม
 
 ## Labs — รันแล็บได้ที่นี่
 
@@ -418,7 +418,7 @@ Per evaluator results:
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 14 — ต่อสายเอเจนต์ด้วยตัวเอง** เปิด `week25/14_nat_agents/exercises/ex14_wire_the_agent.py` `TODO` แต่ละจุดในสามจุดคืนส่วนหนึ่งของ workflow ของ NAT เป็น dict ของ Python:
+**แบบฝึกหัด 14 — ต่อสายเอเจนต์ด้วยตัวเอง** เปิด `week25_dgx_spark/14_nat_agents/exercises/ex14_wire_the_agent.py` `TODO` แต่ละจุดในสามจุดคืนส่วนหนึ่งของ workflow ของ NAT เป็น dict ของ Python:
 
 1. `llm_block(target, base_url, model)`: บล็อก `llms.hotel_llm` โดยปิด thinking ด้วยวิธีที่ถูกต้องสำหรับ Ollama และสำหรับ vLLM
 2. `functions_block(ticket_log)`: tool ทั้งสามตัว แต่ละตัวมี `_type` เท่ากับชื่อที่ลงทะเบียนไว้
@@ -428,7 +428,7 @@ Per evaluator results:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/exercises/ex14_wire_the_agent.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/exercises/ex14_wire_the_agent.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด บันทึกจาก Mac เครื่องนี้)
@@ -439,8 +439,8 @@ Per evaluator results:
 ✓ workflow_block: tool_calling_agent · every function as a tool · max_iterations ≤ 6 · system prompt
 
 ▣ your config, assembled and linted for both targets
-✓ lint ollama: no problems → week25/14_nat_agents/.runs/ex14_ollama.yml
-✓ lint vllm  : no problems → week25/14_nat_agents/.runs/ex14_vllm.yml
+✓ lint ollama: no problems → week25_dgx_spark/14_nat_agents/.runs/ex14_ollama.yml
+✓ lint vllm  : no problems → week25_dgx_spark/14_nat_agents/.runs/ex14_vllm.yml
 
 ▣ the real test: does NeMo Agent Toolkit accept it? (`nat validate`, offline)
 ✓ nat validate ex14_ollama.yml: valid
@@ -465,14 +465,14 @@ Per evaluator results:
 
 | อาการ | วิธีแก้ |
 |---|---|
-| `nat serve` ล้มเหลวด้วย `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | `uv pip install --python week25/.venv-nat/bin/python greenlet` (ส่วนที่ 2 ติดตั้งให้แล้ว) |
+| `nat serve` ล้มเหลวด้วย `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | `uv pip install --python week25_dgx_spark/.venv-nat/bin/python greenlet` (ส่วนที่ 2 ติดตั้งให้แล้ว) |
 | `nat mcp` ไม่ใช่คำสั่ง หรือไม่รู้จัก `mcp_client` | ติดตั้ง MCP extra: `nvidia-nat-mcp~=1.9` ใน venv เดียวกัน |
-| `ValidationError … _type 'room_temperature'` | plugin ไม่ได้ติดตั้งใน venv ที่รัน `nat` รัน lab 14-1 ใหม่ หรือ `uv pip install --no-deps -e week25/14_nat_agents/hotel_ops_nat` |
+| `ValidationError … _type 'room_temperature'` | plugin ไม่ได้ติดตั้งใน venv ที่รัน `nat` รัน lab 14-1 ใหม่ หรือ `uv pip install --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat` |
 | แก้ tool แล้วไม่เห็นผล | ติดตั้งด้วย `-e` (editable) การติดตั้งแบบไม่ใช่ editable คัดลอกโค้ดไปครั้งเดียว |
 | เอเจนต์ตอบโดยไม่เรียก tool หรือคืนคำตอบว่างเปล่า | โมเดลแบบ thinking ใช้ `max_tokens` ไปกับการคิด ตรวจสวิตช์ในส่วนที่ 3 หรือเพิ่ม `max_tokens` |
 | `Connection refused` ไปยัง `:8000` จากแล็ปท็อป | vLLM อยู่บน Spark: ใช้ `http://spark-a:8000/v1` หรือ tunnel `ssh -L 8000:localhost:8000` (Module 01) |
 | AuthlibDeprecationWarning ทุกครั้งที่รันคำสั่ง | ไม่มีผลเสียใน NAT 1.9.0 แล็บตั้ง `PYTHONWARNINGS=ignore` และกรองมันออก |
-| หา path แบบ relative (`.runs/…`, `configs/eval_dataset.json`) ไม่เจอ | รัน `nat` จาก `week25/14_nat_agents` เหมือนที่ทุกคำสั่งในที่นี้ทำ |
+| หา path แบบ relative (`.runs/…`, `configs/eval_dataset.json`) ไม่เจอ | รัน `nat` จาก `week25_dgx_spark/14_nat_agents` เหมือนที่ทุกคำสั่งในที่นี้ทำ |
 
 ## Next — บทถัดไป
 

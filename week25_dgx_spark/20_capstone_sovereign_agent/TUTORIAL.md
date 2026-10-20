@@ -31,10 +31,10 @@ On the laptop you need the NAT venv with both plugins, and the LiteLLM venv:
 
 ```bash
 # on: laptop
-uv pip install --python week25/.venv-nat/bin/python --no-deps \
-  -e week25/14_nat_agents/hotel_ops_nat -e week25/20_capstone_sovereign_agent/hotel_capstone_nat
-week25/.venv-nat/bin/nat info components -t function | grep -E "route_guest|room_temp|maintenance"
-ls week25/.venv-litellm/bin/litellm
+uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps \
+  -e week25_dgx_spark/14_nat_agents/hotel_ops_nat -e week25_dgx_spark/20_capstone_sovereign_agent/hotel_capstone_nat
+week25_dgx_spark/.venv-nat/bin/nat info components -t function | grep -E "route_guest|room_temp|maintenance"
+ls week25_dgx_spark/.venv-litellm/bin/litellm
 ```
 
 ✓ Checkpoint: `nat info components` lists `route_guest_message`, `room_temperature` and `create_maintenance_ticket`, and the LiteLLM binary exists.
@@ -69,7 +69,7 @@ Three design decisions, and why:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py
 ```
 
 **Expected output** (captured on this Mac in DRY mode: the plan is arithmetic, the Spark rows are EXAMPLE values)
@@ -104,8 +104,8 @@ Lab 20-2 prints the three launch sequences with your hosts filled in, and writes
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab02_bring_up.py            # plan + config
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab02_bring_up.py --launch   # start all three
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab02_bring_up.py            # plan + config
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab02_bring_up.py --launch   # start all three
 ```
 
 **Expected output** (captured on this Mac in DRY mode, first lines)
@@ -172,7 +172,7 @@ Lab 20-3 starts the gateway (both aliases with laptop fallbacks) and runs the NA
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab03_agent_end_to_end.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab03_agent_end_to_end.py
 ```
 
 **Expected output** (captured on this Mac: real NAT 1.9 and LiteLLM 1.89; no Spark, so both aliases fell back to gemma4:12b as a LAPTOP STAND-IN. Two full runs gave the same verdicts)
@@ -251,7 +251,7 @@ The sandbox policy is built with Module 15's `policykit`, and written to `polici
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab04_sandbox_and_scorecard.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab04_sandbox_and_scorecard.py
 ```
 
 **Expected output** (captured on this Mac; step 2 is policykit's teaching model, not OpenShell)
@@ -325,7 +325,7 @@ The capstone is complete when every row is ✓ **on real Sparks**. The first liv
 
 ## Try it yourself
 
-**Exercise 20 — the acceptance judge.** Open `week25/20_capstone_sovereign_agent/exercises/ex20_acceptance.py`. Three `TODO`s:
+**Exercise 20 — the acceptance judge.** Open `week25_dgx_spark/20_capstone_sovereign_agent/exercises/ex20_acceptance.py`. Three `TODO`s:
 
 1. `judge(scenario, calls, tickets)`: routed first, right department, the ticket rule (tickets only for engineering and security), and the priority when a ticket is expected.
 2. `THAI_SCENARIO`: a Thai message about a normal engineering problem, the scenario that catches the bug lab 20-3 found.
@@ -333,7 +333,7 @@ The capstone is complete when every row is ✓ **on real Sparks**. The first liv
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/exercises/ex20_acceptance.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/exercises/ex20_acceptance.py
 ```
 
 **Expected output** (once all three TODOs are done)
@@ -355,7 +355,7 @@ The agent's answer is prose, and it can claim "I opened a ticket" without having
 
 <details><summary>Stretch — close the loop for real</summary>
 
-Add ten Thai normal-priority messages to Module 09's training data (`week25/09_llama_factory/data/hotel_ops.json`), retrain on Spark B, score with Module 13 lab 02, and if the gate passes, swap the adapter folder and restart the router container. Re-run lab 20-3. This is the whole week in one loop: data → fine-tune → gate → serve → agent → acceptance.
+Add ten Thai normal-priority messages to Module 09's training data (`week25_dgx_spark/09_llama_factory/data/hotel_ops.json`), retrain on Spark B, score with Module 13 lab 02, and if the gate passes, swap the adapter folder and restart the router container. Re-run lab 20-3. This is the whole week in one loop: data → fine-tune → gate → serve → agent → acceptance.
 
 </details>
 

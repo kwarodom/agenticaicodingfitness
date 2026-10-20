@@ -1,0 +1,73 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "gemini",
+  "model": "gemini-3.8-live",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences.\nCall reference: L14-1.",
+  "audio": null,
+  "text": "Hello, what time is breakfast?"
+ },
+ "response": {
+  "heard": "",
+  "said": "Breakfast is served in the main dining area from 6:30 AM to 10:00 AM daily. Can I help you with anything else?",
+  "events": [
+   [
+    0.67,
+    "session",
+    "setup complete"
+   ],
+   [
+    1.85,
+    "said",
+    "Breakfast is served in "
+   ],
+   [
+    1.85,
+    "first_audio",
+    "model started speaking"
+   ],
+   [
+    2.15,
+    "said",
+    "the main dining"
+   ],
+   [
+    2.48,
+    "said",
+    " area from 6:30"
+   ],
+   [
+    2.69,
+    "said",
+    " AM to 10:00"
+   ],
+   [
+    2.85,
+    "said",
+    " AM daily."
+   ],
+   [
+    3.16,
+    "said",
+    " Can I help you with anything"
+   ],
+   [
+    3.38,
+    "said",
+    " else?"
+   ],
+   [
+    8.69,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 0.67,
+   "first_output": 1.85,
+   "total": 8.76
+  },
+  "provider": "gemini",
+  "model": "gemini-3.8-live"
+ }
+}

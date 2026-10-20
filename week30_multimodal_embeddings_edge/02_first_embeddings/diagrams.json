@@ -1,0 +1,212 @@
+{
+ "architecture": {
+  "title": "EmbeddingGemma 2: one space, modular encoders",
+  "caption": "A 270M text model (130M transformer + 140M embedder) plus optional encoders: vision 170M, audio 300M. Every input ends as one 768-d unit vector. Leave an encoder out with config_kwargs to save memory. Text vectors are identical either way (Lab 02-3).",
+  "lanes": [
+   {
+    "id": "in",
+    "label": "inputs"
+   },
+   {
+    "id": "enc",
+    "label": "encoders"
+   },
+   {
+    "id": "out",
+    "label": "output"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "t",
+    "label": "text + task prefix",
+    "lane": "in",
+    "sub": "task: search result | query: …",
+    "accent": "cyan"
+   },
+   {
+    "id": "im",
+    "label": "image / video frames",
+    "lane": "in",
+    "sub": "280 tok / image · 140 / frame",
+    "accent": "amber"
+   },
+   {
+    "id": "au",
+    "label": "audio (mono 16 kHz)",
+    "lane": "in",
+    "sub": "25 tok / s",
+    "accent": "amber"
+   },
+   {
+    "id": "txt",
+    "label": "text model 270M",
+    "lane": "enc",
+    "sub": "24 layers · always loaded",
+    "accent": "green"
+   },
+   {
+    "id": "vis",
+    "label": "vision encoder 170M",
+    "lane": "enc",
+    "sub": "optional",
+    "accent": "violet"
+   },
+   {
+    "id": "aud",
+    "label": "audio encoder 300M",
+    "lane": "enc",
+    "sub": "optional",
+    "accent": "violet"
+   },
+   {
+    "id": "v",
+    "label": "768-d unit vector",
+    "lane": "out",
+    "sub": "Matryoshka: 512 · 256 · 128",
+    "accent": "green"
+   }
+  ],
+  "edges": [
+   {
+    "from": "t",
+    "to": "txt",
+    "label": ""
+   },
+   {
+    "from": "im",
+    "to": "vis",
+    "label": ""
+   },
+   {
+    "from": "au",
+    "to": "aud",
+    "label": ""
+   },
+   {
+    "from": "vis",
+    "to": "txt",
+    "label": "soft tokens"
+   },
+   {
+    "from": "aud",
+    "to": "txt",
+    "label": "soft tokens"
+   },
+   {
+    "from": "txt",
+    "to": "v",
+    "label": "mean pool + 512→768",
+    "animated": true
+   }
+  ]
+ },
+ "sequence": {
+  "title": "A semantic search",
+  "caption": "Documents are embedded once (title: … | text: …). Each query is embedded with its task prefix and compared by dot product, which equals cosine because every vector has length 1.",
+  "actors": [
+   {
+    "id": "u",
+    "label": "you"
+   },
+   {
+    "id": "m",
+    "label": "EmbeddingGemma 2"
+   },
+   {
+    "id": "i",
+    "label": "index"
+   }
+  ],
+  "steps": [
+   {
+    "from": "u",
+    "to": "m",
+    "label": "encode(docs) — once",
+    "kind": "call"
+   },
+   {
+    "from": "m",
+    "to": "i",
+    "label": "18 × 768 vectors",
+    "kind": "return"
+   },
+   {
+    "from": "u",
+    "to": "m",
+    "label": "encode(query, prompt_name='SearchQuery')",
+    "kind": "call"
+   },
+   {
+    "from": "m",
+    "to": "i",
+    "label": "query vector · dot product",
+    "kind": "call"
+   },
+   {
+    "from": "i",
+    "to": "u",
+    "label": "ranked notes",
+    "kind": "return"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "Task prefixes on 18 hotel questions",
+   "type": "bars",
+   "unit": "recall@1",
+   "labels": [
+    "no prefixes",
+    "prompts",
+    "prompts + titles"
+   ],
+   "series": [
+    {
+     "name": "recall@1",
+     "values": [
+      0.944,
+      1.0,
+      1.0
+     ],
+     "color": "cyan"
+    }
+   ],
+   "caption": "Measured by Lab 02-2 on this Mac (synthetic hotel KB)."
+  },
+  {
+   "title": "Peak memory by encoder set (CPU, float32)",
+   "type": "bars",
+   "unit": "MB",
+   "labels": [
+    "text",
+    "text+image",
+    "text+audio",
+    "all"
+   ],
+   "series": [
+    {
+     "name": "peak RSS",
+     "values": [
+      2249,
+      2929,
+      3721,
+      4686
+     ],
+     "color": "amber"
+    },
+    {
+     "name": "weights",
+     "values": [
+      1034,
+      1674,
+      2200,
+      2840
+     ],
+     "color": "green"
+    }
+   ],
+   "caption": "Measured by Lab 02-3, one fresh process per configuration."
+  }
+ ]
+}

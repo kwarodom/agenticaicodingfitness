@@ -29,7 +29,7 @@
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
 curl -s localhost:11434/api/version; echo
-.venv/bin/python week25/common/sparkkit.py | tail -2
+.venv/bin/python week25_dgx_spark/common/sparkkit.py | tail -2
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ซึ่งมี Ollama แต่ยังไม่ได้ตั้งค่า Spark)
@@ -92,7 +92,7 @@ layer ใหญ่หนึ่งชั้นคือ weights แบบ GGUF �
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/labs/lab01_ollama_models.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab01_ollama_models.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: ขั้นตอนบน Spark เป็น DRY ส่วนขั้นที่ 5 ถาม Ollama ของแล็ปท็อป)
@@ -226,7 +226,7 @@ curl http://localhost:11434/api/chat -d '{
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/labs/lab02_native_vs_openai.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab02_native_vs_openai.py
 ```
 
 **Expected output** (LAPTOP STAND-IN — บันทึกจาก Mac เครื่องนี้ด้วย nemotron-3-nano ตัวเลขของคุณจะต่างออกไป)
@@ -310,7 +310,7 @@ Lab 03 stream prompt เดียวสี่ครั้งผ่าน `/v1` �
 
 ```bash
 # on: laptop
-LAPTOP_BW_GBS=410 .venv/bin/python week25/03_ollama_open_webui/labs/lab03_speed_benchmark.py
+LAPTOP_BW_GBS=410 .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab03_speed_benchmark.py
 ```
 
 `LAPTOP_BW_GBS` คือ memory bandwidth ของแล็ปท็อปคุณจากสเปกชีต (410 GB/s สำหรับ Mac เครื่องนี้ซึ่งเป็น Apple M4 Max) บน Spark แล็บจะใช้ 273 GB/s และไม่สนใจค่านี้
@@ -364,7 +364,7 @@ Lab 04 ให้ tool จริงสองตัวแก่โมเดล ค
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/labs/lab04_tool_calling.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab04_tool_calling.py
 ```
 
 **Expected output** (LAPTOP STAND-IN — บันทึกจาก Mac เครื่องนี้ด้วย nemotron-3-nano)
@@ -461,7 +461,7 @@ Lab 01 รันขั้นตอนเชลล์แบบ LIVE บน Spark 
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 03 — มาตรวัด stream** เปิด `week25/03_ollama_open_webui/exercises/ex03_stream_meter.py` มันเล่นซ้ำ stream **จริง** ที่บันทึกจาก endpoint `/v1` ของ Ollama บนแล็ปท็อปของคอร์ส (nemotron-3-nano เปิดการคิด) พร้อมเวลาที่แต่ละบรรทัดมาถึง มี `TODO` สี่จุด:
+**แบบฝึกหัด 03 — มาตรวัด stream** เปิด `week25_dgx_spark/03_ollama_open_webui/exercises/ex03_stream_meter.py` มันเล่นซ้ำ stream **จริง** ที่บันทึกจาก endpoint `/v1` ของ Ollama บนแล็ปท็อปของคอร์ส (nemotron-3-nano เปิดการคิด) พร้อมเวลาที่แต่ละบรรทัดมาถึง มี `TODO` สี่จุด:
 
 1. `parse_sse(lines)`: แปลง Server-Sent Events ให้เป็นก้อน JSON (chunk)
 2. `split_text(chunks)`: ต่อชิ้นส่วน `content` และชิ้นส่วน `reasoning` แยกกัน
@@ -470,7 +470,7 @@ Lab 01 รันขั้นตอนเชลล์แบบ LIVE บน Spark 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/exercises/ex03_stream_meter.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/exercises/ex03_stream_meter.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสี่จุด ตัวตรวจทำงานแบบออฟไลน์ ผลจึงเหมือนกันทุกเครื่อง)

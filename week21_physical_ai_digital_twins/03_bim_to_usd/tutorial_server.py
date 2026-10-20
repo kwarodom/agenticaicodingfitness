@@ -15,7 +15,7 @@ Either way cloud cost is $0.00.
 
 Launch (auto-picks a free port if 8202 is taken):
 
-    .venv/bin/python week21/03_bim_to_usd/tutorial_server.py
+    .venv/bin/python week21_physical_ai_digital_twins/03_bim_to_usd/tutorial_server.py
     # → http://127.0.0.1:8202
 """
 from __future__ import annotations
@@ -35,7 +35,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week21/03_bim_to_usd
+PKG = Path(__file__).resolve().parent                 # …/week21_physical_ai_digital_twins/03_bim_to_usd
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():

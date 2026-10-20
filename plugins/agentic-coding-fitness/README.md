@@ -9,7 +9,7 @@ It's **21 bite-sized skills**, one per big idea, covering the whole course (week
 
 You don't read these like a book. You *talk to Claude* and the right skill loads automatically when your question matches.
 
-> **Honesty note:** most skills are grounded in real `weekN/` code you can run — including the **A2A protocol**, which is now runnable offline in `week17/checkpoints/` (it used to be pure map). A few things still map ahead of the course: parts of **curriculum** and **vibe-coding** come from the blueprint rather than this repo (flagged ⚠️ in the tables below), and a couple of otherwise-grounded skills mark an individual *section* `⚠️ Conceptual` where it reaches past the repo (e.g. **production-and-observability** on OpenTelemetry/OWASP-ASI; **long-running-and-distributed-agents** notes auth.md is an early-access protocol). Every banner sits right next to the content it qualifies, so you always know what's runnable here vs. what's the map.
+> **Honesty note:** most skills are grounded in real `weekN/` code you can run — including the **A2A protocol**, which is now runnable offline in `week17_long_running_distributed_agents/checkpoints/` (it used to be pure map). A few things still map ahead of the course: parts of **curriculum** and **vibe-coding** come from the blueprint rather than this repo (flagged ⚠️ in the tables below), and a couple of otherwise-grounded skills mark an individual *section* `⚠️ Conceptual` where it reaches past the repo (e.g. **production-and-observability** on OpenTelemetry/OWASP-ASI; **long-running-and-distributed-agents** notes auth.md is an early-access protocol). Every banner sits right next to the content it qualifies, so you always know what's runnable here vs. what's the map.
 
 ---
 
@@ -85,7 +85,7 @@ Or ask for a lab directly: *"Give me the guided lab for tool use."*
 |---|---|---|---|---|
 | 10 | **production-and-observability** | See it (LangSmith/OTel), stop it (HITL + checkpointing), afford it (cost) | W10 | ✅ |
 | 11 | **agent-evaluation** | Golden datasets, eval frameworks, LLM-as-judge, the 5-gate CI/CD pipeline | W10 & W15 | ✅ |
-| 12 | **agent-drills** | The practice menu — a catalog of katas grounded in the 14 `week11/exercises` | cross-cutting | ✅ |
+| 12 | **agent-drills** | The practice menu — a catalog of katas grounded in the 14 `week11_models_and_patterns/exercises` | cross-cutting | ✅ |
 
 ### Frameworks & the fleet layer — production frameworks and going beyond one process (weeks 16–17)
 
@@ -98,7 +98,7 @@ Or ask for a lab directly: *"Give me the guided lab for tool use."*
 
 | # | Skill | Concept | Class weeks | Grounded |
 |---|---|---|---|---|
-| 21 | **software-factory** | Ticket contracts, Build/QA/Review lanes, review-remembers + truth-check, merge gate at the reviewed SHA, guard hooks, plugin evals, telemetry → tickets | W27 | ✅ (`week27/`; not yet run on a live CLI — flagged) |
+| 21 | **software-factory** | Ticket contracts, Build/QA/Review lanes, review-remembers + truth-check, merge gate at the reviewed SHA, guard hooks, plugin evals, telemetry → tickets | W27 | ✅ (`week27_software_factory/`; not yet run on a live CLI — flagged) |
 
 ### Platform & meta — the map, the discipline, the frontier, the craft
 
@@ -106,10 +106,10 @@ Or ask for a lab directly: *"Give me the guided lab for tool use."*
 |---|---|---|---|---|
 | 15 | **curriculum-and-periodization** | The syllabus: 4 phases, progressive overload, the 16-week → real weeks-2–17 map | the whole program | ⚠️ partial |
 | 16 | **vibe-coding-and-security** | Context engineering, TDD vibe coding, the ~45% vuln reality, hand-off vs control | W6 / cross-cutting | ⚠️ partial |
-| 17 | **a2a-protocol** | Agent-to-Agent: agent cards, task lifecycle, A2A vs MCP — now runnable in `week17/checkpoints/` | W17 / cross-cutting | ✅ |
+| 17 | **a2a-protocol** | Agent-to-Agent: agent cards, task lifecycle, A2A vs MCP — now runnable in `week17_long_running_distributed_agents/checkpoints/` | W17 / cross-cutting | ✅ |
 | 18 | **skill-authoring** | Write your *own* skills: the two types, anatomy, the creation pipeline, evaluation | W7+ | ✅ |
 
-> The examples reference the real code in this repo's `week2/ … week17/` folders (Week 15's GraphRAG deep dive lives in `week15/kg_mastery/`; Week 17's long-running + A2A demos in `week17/checkpoints/`, `week17/hr_onboarding/`, `week17/authmd_adk/`). Clone the repo alongside installing the plugin to run them directly.
+> The examples reference the real code in this repo's `week02_claude_api_foundations/ … week17_long_running_distributed_agents/` folders (Week 15's GraphRAG deep dive lives in `week15_production_graphrag/kg_mastery/`; Week 17's long-running + A2A demos in `week17_long_running_distributed_agents/checkpoints/`, `week17_long_running_distributed_agents/hr_onboarding/`, `week17_long_running_distributed_agents/authmd_adk/`). Clone the repo alongside installing the plugin to run them directly.
 
 ---
 

@@ -1,8 +1,8 @@
 # Start Neo4j for the agent-memory lesson:
-#   docker compose -f week15/code/07_agent_memory/docker-compose.yml up -d
+#   docker compose -f week15_production_graphrag/code/07_agent_memory/docker-compose.yml up -d
 # Browser UI: http://localhost:7474   (login neo4j / password)
 # Bolt:       bolt://localhost:7687
-# Stop:       docker compose -f week15/code/07_agent_memory/docker-compose.yml down
+# Stop:       docker compose -f week15_production_graphrag/code/07_agent_memory/docker-compose.yml down
 services:
   neo4j:
     image: neo4j:latest

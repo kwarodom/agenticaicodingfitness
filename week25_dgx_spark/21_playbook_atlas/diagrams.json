@@ -1,7 +1,7 @@
 {
   "architecture": {
     "title": "How the atlas is built — the READMEs are the only source of truth",
-    "caption": "Everything in this module is read from the local clone of NVIDIA's playbooks. Lab 21-1 parses each nvidia/playbook-*/README.md (title, Estimated time, Supported hardware platforms, Prerequisites disk) and joins it with the module table in week25/AUTHORING.md. Labs 21-2 and 21-3 and Exercise 21 import that parser. The lab stays offline: links are built from the directory name and checked against the build.nvidia.com/spark slug index (fetched 2026-09-29, stored in the lab) and against links written in the READMEs.",
+    "caption": "Everything in this module is read from the local clone of NVIDIA's playbooks. Lab 21-1 parses each nvidia/playbook-*/README.md (title, Estimated time, Supported hardware platforms, Prerequisites disk) and joins it with the module table in week25_dgx_spark/AUTHORING.md. Labs 21-2 and 21-3 and Exercise 21 import that parser. The lab stays offline: links are built from the directory name and checked against the build.nvidia.com/spark slug index (fetched 2026-09-29, stored in the lab) and against links written in the READMEs.",
     "lanes": [
       {"id": "src", "label": "Sources on this laptop"},
       {"id": "labs", "label": "Module 21 labs"},
@@ -9,7 +9,7 @@
     ],
     "nodes": [
       {"id": "readmes", "label": "64 playbook READMEs", "lane": "src", "sub": "dgx-spark-playbooks/nvidia/playbook-*", "accent": "green"},
-      {"id": "authoring", "label": "week25/AUTHORING.md", "lane": "src", "sub": "module table: playbook → 01–20"},
+      {"id": "authoring", "label": "week25_dgx_spark/AUTHORING.md", "lane": "src", "sub": "module table: playbook → 01–20"},
       {"id": "atlas", "label": "lab21-1 atlas", "lane": "labs", "sub": "load_playbooks() · themes · slug evidence", "accent": "cyan"},
       {"id": "rec", "label": "lab21-2 recommender", "lane": "labs", "sub": "TF-IDF · cosine · top 3", "accent": "violet"},
       {"id": "plan", "label": "lab21-3 budget planner", "lane": "labs", "sub": "time · disk · what to bring", "accent": "amber"},

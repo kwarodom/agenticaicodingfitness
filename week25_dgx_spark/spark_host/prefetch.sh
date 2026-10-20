@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Pre-download what the Week 25 labs pull, so 20 laptops don't all start a 20 GB download in class.
-#   week25/spark_host/prefetch.sh pull   # Ollama models + container images (shared by every account)
-#   week25/spark_host/prefetch.sh hf     # Hugging Face weights into sparklab's cache (needs sudo; after hf auth login)
+#   week25_dgx_spark/spark_host/prefetch.sh pull   # Ollama models + container images (shared by every account)
+#   week25_dgx_spark/spark_host/prefetch.sh hf     # Hugging Face weights into sparklab's cache (needs sudo; after hf auth login)
 # Safe to re-run: everything already present is skipped.
 set -uo pipefail
 

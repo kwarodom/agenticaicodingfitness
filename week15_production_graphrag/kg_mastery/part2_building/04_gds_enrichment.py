@@ -15,7 +15,7 @@ already exists, and finally query the top devices by importance_score.
 Requires the Graph Data Science plugin (installed per docker-compose). If GDS
 isn't available the script prints a friendly note instead of a traceback.
 
-Run:  python week15/kg_mastery/part2_building/04_gds_enrichment.py
+Run:  python week15_production_graphrag/kg_mastery/part2_building/04_gds_enrichment.py
 """
 import sys
 from pathlib import Path

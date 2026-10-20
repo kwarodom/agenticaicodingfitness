@@ -76,7 +76,7 @@ Lab 01 ตรวจภาพตัวอย่างของ playbook และ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab01_vlm_datasets.py
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab01_vlm_datasets.py
 ```
 
 **Expected output** (step 1–3 บันทึกจาก Mac เครื่องนี้)
@@ -91,7 +91,7 @@ Lab 01 ตรวจภาพตัวอย่างของ playbook และ
 │ wildfire/4.jpg    350×350  RGB   15 KB
 …
 ▣ STEP 2 · build the hotel version: room_check/{train,test}/{ready,needs_attention}/ (SYNTHETIC stand-ins)
-→ wrote 20 PNGs under week25/12_vlm_flux_finetune/data/room_check
+→ wrote 20 PNGs under week25_dgx_spark/12_vlm_flux_finetune/data/room_check
 …
 ▣ STEP 3 · validate with imagefolder's rules — and what the trainer does with the folder names
 ✓ images: splits ['train'] · the same classes in every split ['nowildfire', 'wildfire']
@@ -156,8 +156,8 @@ dataset/
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py
-SPARK_APPLY=1 .venv/bin/python week25/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py --steps 5
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py --steps 5
 ```
 
 สิ่งที่คุณรันเองครั้งเดียวบน Spark (นี่คือ Step 2–3 และ 5.1–5.2 ของ playbook โดยแก้ path ของ clone ให้ถูกต้องแล้ว):
@@ -216,7 +216,7 @@ Lab 03 อ่าน `data.toml` และภาพจริงของ playbook
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab03_flux_dataset.py
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab03_flux_dataset.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
@@ -281,8 +281,8 @@ models/
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py
-SPARK_APPLY=1 .venv/bin/python week25/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py --epochs 25 --hotel
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py --epochs 25 --hotel
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ในโหมด DRY)
@@ -333,7 +333,7 @@ Lab 01 และ 03 รันบนแล็ปท็อปได้ทั้ง
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 12 — แก้ `data.toml` ที่พัง** เปิด `week25/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py` เพื่อนร่วมทีมเพิ่ม concept โรงแรมและทำผิดไว้สี่จุด:
+**แบบฝึกหัด 12 — แก้ `data.toml` ที่พัง** เปิด `week25_dgx_spark/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py` เพื่อนร่วมทีมเพิ่ม concept โรงแรมและทำผิดไว้สี่จุด:
 
 1. `resolution` เป็นข้อความ ไม่ใช่ตัวเลข
 2. สอง concept ใช้ trigger word เดียวกัน
@@ -344,7 +344,7 @@ Lab 01 และ 03 รันบนแล็ปท็อปได้ทั้ง
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py
 ```
 
 **Expected output** (เมื่อแก้ TODO ครบทั้งสี่จุด; บันทึกจาก Mac เครื่องนี้)

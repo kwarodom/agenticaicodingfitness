@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 02 — NIM Microservices
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/02_nim_microservices/tutorial_server.py` → http://127.0.0.1:8101. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/tutorial_server.py` → http://127.0.0.1:8101. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Get an `nvapi-` key from build.nvidia.com and call a **hosted NIM** with curl and the OpenAI SDK.
@@ -109,7 +109,7 @@ Login Succeeded
 ```bash
 # C 💻 — no Spark? The concept-equivalent on this laptop is one Ollama pull:
 ollama run gemma4        # one command → model + engine + OpenAI API on :11434/v1
-# or run the explainer app in SIM: .venv/bin/python week23/02_nim_microservices/tutorial_server.py
+# or run the explainer app in SIM: .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/tutorial_server.py
 ```
 
 Also see `demos/step01_deploy_nim.py` (Chapter 2 in the web app) — it walks this same deploy narratively in REAL or SIM mode.
@@ -131,7 +131,7 @@ export DGX_CONN=local
 
 **Expected output** (verify with the quick probe)
 ```
-$ .venv/bin/python -c "import sys; sys.path.insert(0,'week23/02_nim_microservices'); \
+$ .venv/bin/python -c "import sys; sys.path.insert(0,'week23_open_superintelligence_stack/02_nim_microservices'); \
 import config; print(config.MODE, config.CONN, config.safe_base_url(), config.MODEL)"
 real local http://localhost:11434/v1 qwen3.6:35b-a3b-q8_0
 ```
@@ -171,20 +171,20 @@ Hello! How can I help you today?
 
 **labs/lab01_fingerprint_endpoint.py** — probes `/v1/models`, Ollama's native `/api/tags`, and NIM's `/v1/health/ready` against whatever `config.py` resolved, names the server type from the fingerprint (a NIM lists exactly one model *and* answers health/ready; Ollama exposes `/api/tags`; vLLM is a bare single-model OpenAI contract), then makes one real call.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/02_nim_microservices/labs/lab01_fingerprint_endpoint.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab01_fingerprint_endpoint.py
 ```
 Look for: the three probe lines and the `✓ verdict` naming your server. Modify it: add a fourth probe for vLLM's `GET /version` (root, no `/v1`) and extend the verdict logic.
 
 **labs/lab02_base_url_swap.py** — the promotion drill: sends the same prompt with the same code to endpoint A (your config-resolved endpoint) and endpoint B (build.nvidia.com, if `NVIDIA_API_KEY=nvapi-...` is exported), streams both, and prints a side-by-side of model / first-token latency / tok/s. Zero client code differs between the two calls.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/02_nim_microservices/labs/lab02_base_url_swap.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab02_base_url_swap.py
 ```
 Look for: with both endpoints answering (a live endpoint A *and* the nvapi- key), the `side-by-side` table and the line "code changed to migrate: 0 lines"; with no key, endpoint B prints the real steps to get one plus a labeled expected-output sample. Modify it: add a third endpoint (e.g. a Tailscale-tunneled Spark) and make the table three columns.
 
 **labs/lab03_spark_fit_check.py** — offline deploy-planning math (no GPU, no endpoint, always runs): `params_B × GB-per-B(precision) × 1.18 overhead` vs ~115 GB usable on a 128 GB Spark, applied to the Nemotron 3 family, plus the aarch64 `-dgx-spark` tag gate.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/02_nim_microservices/labs/lab03_spark_fit_check.py
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/02_nim_microservices/labs/lab03_spark_fit_check.py 70 q4
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab03_spark_fit_check.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab03_spark_fit_check.py 70 q4
 ```
 Look for: Super fits only at Q4/NVFP4; Ultra fits nowhere (cloud-only). Modify it: add a "DGX Station" mode using `config.DGX_SPECS["DGX Station"]` and re-run the table against 784 GB.
 
@@ -205,7 +205,7 @@ curl -s http://localhost:11434/v1/models                                        
 <details><summary>Solution</summary>
 
 ```bash
-.venv/bin/python week23/02_nim_microservices/labs/lab03_spark_fit_check.py 405 q4
+.venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab03_spark_fit_check.py 405 q4
 ```
 Needed ≈ 405 × 0.60 × 1.18 ≈ **287 GB** → ✗ on one Spark (~115 GB budget) and ✗ even on **two linked Sparks** (~230 GB). At **NVFP4** it needs ≈ 405 × 0.55 × 1.18 ≈ 263 GB — still over 230. The runbook's "~405B on 2 Sparks" ceiling assumes aggressive quantization and minimal KV-cache headroom; the honest answer is "borderline at best — verify on the hardware, or use the cloud NIM." The fit-math lab exists precisely so you catch this before a 200 GB pull.
 </details>

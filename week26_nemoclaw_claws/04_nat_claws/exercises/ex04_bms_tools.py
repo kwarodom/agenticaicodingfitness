@@ -2,7 +2,7 @@
 """Exercise 04 · BMS tools, two layers: what the agent is OFFERED (NAT) and what the sandbox ALLOWS (OpenShell).
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week26/04_nat_claws/exercises/ex04_bms_tools.py
+    .venv/bin/python week26_nemoclaw_claws/04_nat_claws/exercises/ex04_bms_tools.py
 
 The checker is offline: it parses your YAML, asks NAT 1.9's own MCPClientConfig model whether it accepts your
 block (no server needed), runs the course's policykit teaching model on MCP actions, and asks the laptop OpenShell

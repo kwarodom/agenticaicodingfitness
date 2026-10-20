@@ -1,0 +1,78 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "gemini",
+  "model": "gemini-3.8-live",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences.\nCall reference: L14-2.",
+  "audio": "call_turn2_en.wav",
+  "text": null
+ },
+ "response": {
+  "heard": "wait Now there's smoke coming out of the air conditioner vent and it smells like burning plastic.",
+  "said": "Please evacuate your room immediately while I notify maintenance and the fire department. Stay safe.",
+  "events": [
+   [
+    0.6,
+    "session",
+    "setup complete"
+   ],
+   [
+    7.67,
+    "caller_stopped",
+    "last word of speech streamed"
+   ],
+   [
+    9.29,
+    "heard",
+    "wait Now there's smoke coming out of the air conditioner vent and it smells like burning plastic."
+   ],
+   [
+    9.29,
+    "vad_end",
+    "server detected end of speech"
+   ],
+   [
+    9.29,
+    "said",
+    "Please evacuate your "
+   ],
+   [
+    9.29,
+    "first_audio",
+    "model started speaking"
+   ],
+   [
+    9.29,
+    "said",
+    "room immediately"
+   ],
+   [
+    9.32,
+    "said",
+    " while I notify maintenance"
+   ],
+   [
+    9.52,
+    "said",
+    " and the fire department."
+   ],
+   [
+    9.72,
+    "said",
+    " Stay safe."
+   ],
+   [
+    14.21,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 7.67,
+   "first_output": 9.29,
+   "total": 14.26
+  },
+  "provider": "gemini",
+  "model": "gemini-3.8-live"
+ }
+}

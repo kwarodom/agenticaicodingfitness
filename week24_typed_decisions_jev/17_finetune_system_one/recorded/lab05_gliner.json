@@ -1,0 +1,83 @@
+{
+ "lora": {
+  "mode": "lora",
+  "seconds": 430.6,
+  "trainable": 1357832,
+  "total": 288712991,
+  "eval_history": [
+   {
+    "epoch": 1,
+    "eval_loss": 0.3057
+   },
+   {
+    "epoch": 2,
+    "eval_loss": 0.1603
+   },
+   {
+    "epoch": 3,
+    "eval_loss": 0.2397
+   },
+   {
+    "epoch": 4,
+    "eval_loss": 0.1542
+   },
+   {
+    "epoch": 5,
+    "eval_loss": 0.2457
+   },
+   {
+    "epoch": 6,
+    "eval_loss": 0.4801
+   }
+  ],
+  "best_metric": 0.15415475360350683,
+  "kept": "best",
+  "bytes": 5458976,
+  "tickets_per_s": 6.35,
+  "device": "cpu",
+  "chip": "Apple M4 Max",
+  "trained": "2026-10-17 23:50"
+ },
+ "_recorded_at": "2026-10-17",
+ "full": {
+  "mode": "full",
+  "seconds": 404.5,
+  "trainable": 287355159,
+  "total": 287355159,
+  "eval_history": [
+   {
+    "epoch": 1,
+    "eval_loss": 0.2462
+   },
+   {
+    "epoch": 2,
+    "eval_loss": 0.1669
+   },
+   {
+    "epoch": 3,
+    "eval_loss": 0.189
+   },
+   {
+    "epoch": 4,
+    "eval_loss": 0.1689
+   }
+  ],
+  "best_metric": 0.16688844381521145,
+  "kept": "best",
+  "bytes": 1165502483,
+  "tickets_per_s": 4.51,
+  "device": "cpu",
+  "chip": "Apple M4 Max",
+  "trained": "2026-10-17 23:42"
+ },
+ "switch": {
+  "on": {
+   "label": "safety",
+   "confidence": 1.0
+  },
+  "off": {
+   "label": "safety",
+   "confidence": 0.3527581989765167
+  }
+ }
+}

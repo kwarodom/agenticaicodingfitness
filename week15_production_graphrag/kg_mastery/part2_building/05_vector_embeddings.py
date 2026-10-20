@@ -15,7 +15,7 @@ Requires:
   - OPENAI_API_KEY in your environment / repo-root .env
   - pip install langchain-openai
 
-Run:  python week15/kg_mastery/part2_building/05_vector_embeddings.py
+Run:  python week15_production_graphrag/kg_mastery/part2_building/05_vector_embeddings.py
 """
 import os
 import sys

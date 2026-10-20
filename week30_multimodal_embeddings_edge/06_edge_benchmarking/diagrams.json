@@ -1,0 +1,166 @@
+{
+ "architecture": {
+  "title": "What limits an embedding model",
+  "caption": "An LLM re-reads all weights for every new token, so bandwidth limits it. An encoder reads all input tokens in one pass, so compute and fixed overheads limit it (Lab 06-3: 17–105× the bandwidth floor).",
+  "lanes": [
+   {
+    "id": "llm",
+    "label": "chat LLM"
+   },
+   {
+    "id": "emb",
+    "label": "embedding model"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "l1",
+    "label": "1 token per pass",
+    "lane": "llm",
+    "sub": "weights re-read every token",
+    "accent": "red"
+   },
+   {
+    "id": "l2",
+    "label": "bandwidth-bound",
+    "lane": "llm",
+    "sub": "the video's conveyor belt",
+    "accent": "amber"
+   },
+   {
+    "id": "e1",
+    "label": "all tokens in 1 pass",
+    "lane": "emb",
+    "sub": "weights read once",
+    "accent": "cyan"
+   },
+   {
+    "id": "e2",
+    "label": "compute / overhead-bound",
+    "lane": "emb",
+    "sub": "batch to amortise",
+    "accent": "green"
+   }
+  ],
+  "edges": [
+   {
+    "from": "l1",
+    "to": "l2",
+    "label": ""
+   },
+   {
+    "from": "e1",
+    "to": "e2",
+    "label": "",
+    "animated": true
+   }
+  ]
+ },
+ "sequence": {
+  "title": "A benchmark you can trust",
+  "caption": "Warm up, repeat, report percentiles, and label laptop numbers as a stand-in.",
+  "actors": [
+   {
+    "id": "b",
+    "label": "bench"
+   },
+   {
+    "id": "m",
+    "label": "model"
+   }
+  ],
+  "steps": [
+   {
+    "from": "b",
+    "to": "m",
+    "label": "warm-up (not timed)",
+    "kind": "call"
+   },
+   {
+    "from": "b",
+    "to": "m",
+    "label": "N timed runs + device sync",
+    "kind": "call"
+   },
+   {
+    "from": "m",
+    "to": "b",
+    "label": "times",
+    "kind": "return"
+   },
+   {
+    "from": "b",
+    "to": "b",
+    "label": "p50 · p95 · per item · LAPTOP STAND-IN",
+    "kind": "note"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "p50 latency by work (Apple M4 Max)",
+   "type": "bars",
+   "unit": "ms",
+   "labels": [
+    "text ×1",
+    "text ×32",
+    "photo",
+    "voicemail 12 s",
+    "CCTV 10 s"
+   ],
+   "series": [
+    {
+     "name": "MPS bf16",
+     "values": [
+      22,
+      135,
+      259,
+      105,
+      1247
+     ],
+     "color": "green"
+    },
+    {
+     "name": "CPU fp32",
+     "values": [
+      34,
+      495,
+      920,
+      1091,
+      4191
+     ],
+     "color": "amber"
+    }
+   ],
+   "caption": "Measured by Lab 06-1 on this Mac — LAPTOP STAND-IN."
+  },
+  {
+   "title": "Bandwidth floor, text bf16 (540 MB)",
+   "type": "hbars",
+   "unit": "ms",
+   "labels": [
+    "Raspberry Pi 5",
+    "AMD Ryzen AI Max+ 395",
+    "DGX Spark",
+    "M4 Max",
+    "RTX 4090",
+    "H100 SXM"
+   ],
+   "series": [
+    {
+     "name": "floor",
+     "values": [
+      31.0,
+      2.1,
+      1.9,
+      1.3,
+      0.5,
+      0.2
+     ],
+     "color": "violet"
+    }
+   ],
+   "caption": "ESTIMATE — weights ÷ vendor peak bandwidth (Lab 06-3), a lower bound, not a measurement."
+  }
+ ]
+}

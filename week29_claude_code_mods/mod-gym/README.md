@@ -10,7 +10,7 @@ Needs Claude Code 2.1.287+ (built and tested on 2.1.292).
 From a clone of this repo:
 
 ```bash
-claude plugin marketplace add ./week29
+claude plugin marketplace add ./week29_claude_code_mods
 claude plugin install mod-gym@fitness-week29
 ```
 

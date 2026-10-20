@@ -11,8 +11,8 @@ hybrid Mamba-Transformer MoE · 1M-token context · RL-post-trained reasoning + 
 
 ## Run
 ```bash
-uv pip install -r week23/01_nemotron_models/requirements.txt
-.venv/bin/python week23/01_nemotron_models/tutorial_server.py      # → http://127.0.0.1:8100
+uv pip install -r week23_open_superintelligence_stack/01_nemotron_models/requirements.txt
+.venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/tutorial_server.py      # → http://127.0.0.1:8100
 ```
 **🔌 Connection** panel: point at a Nemotron endpoint (Ollama `nemotron-3-*`, a NIM,
 or a DGX via tunnel). No endpoint → **SIM** (no GPU). Pick a model in the dropdown.

@@ -7,7 +7,7 @@ independent signals: relevant · answer_evidence · conflict · injection.
 Code then sorts them into include / conflicting / review / exclude and assembles
 the context block an answering LLM would receive.
 
-Run: .venv/bin/python week24/08_leads_rag_points/labs/lab02_rag_filter.py
+Run: .venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab02_rag_filter.py
 """
 import json
 import sys

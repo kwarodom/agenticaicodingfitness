@@ -12,7 +12,7 @@ Every run also tests the parsers for real on NVIDIA's published RDMA sample
 Options (from a shell):  --op all_reduce   run all_reduce_perf instead (same build; course addition)
                          --rdma            also run the raw RDMA test (ib_write_bw, needs `perftest`)
 
-Run: .venv/bin/python week25/02_two_sparks_nccl/labs/lab03_nccl_bench.py
+Run: .venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab03_nccl_bench.py
 """
 import argparse
 import os

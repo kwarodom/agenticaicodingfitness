@@ -12,7 +12,7 @@ the same call with *no* helper at all, so nothing is hidden.
 
 Two modes (the Jev Lab Runner's LIVE / DRY switch sets JEV_MODE for you):
 
-  • LIVE — TYPESAFE_API_KEY found (env, week24/.env.local or the repo-root .env) → a real call to
+  • LIVE — TYPESAFE_API_KEY found (env, week24_typed_decisions_jev/.env.local or the repo-root .env) → a real call to
     https://api.typesafe.ai/v1/systemone. Costs $0.042 per million input tokens
     (a typical lab call is ~400-900 tokens → about $0.00002).
   • DRY  — no key, or JEV_MODE=dry → no network. If this exact request was
@@ -35,14 +35,17 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-COMMON = Path(__file__).resolve().parent            # …/week24/common
-WEEK24 = COMMON.parent                              # …/week24
+COMMON = Path(__file__).resolve().parent            # …/week24_typed_decisions_jev/common
+WEEK24 = COMMON.parent                              # …/week24_typed_decisions_jev
 ROOT = WEEK24.parent                                # …/agenticaicodingfitness
 RECORDED = COMMON / "recorded"                      # replay cache for DRY mode
 
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
+IMAGES_HEADER = "TypeSafe-Danger-Zone-Images"           # Jev 1.14 "danger zone": images + Box (Module 15)
+LONG_CONTEXT_HEADER = "TypeSafe-Danger-Zone-Long-Context"  # 262k context instead of 64k / 32k
 MODELS_URL = "https://api.typesafe.ai/v1/models"
 DEFAULT_MODEL = "jev-1.13.0"                        # pinned; "jev-latest" is the moving alias
+VISION_MODEL = "jev-1.14.0"                         # Box questions need 1.14 (images work on 1.13 too)
 PRICE_PER_MTOK = 0.042                              # USD per million input tokens; output is free
 
 # Prepended to instructions by guarded(). Jev reads state as data, but state can
@@ -82,7 +85,7 @@ def _dotenv_key(name: str) -> str:
 
 
 def _local_key(name: str) -> str:
-    """week24/.env.local — what the Lab Runner's 🔑 Keys dialog saves (gitignored)."""
+    """week24_typed_decisions_jev/.env.local — what the Lab Runner's 🔑 Keys dialog saves (gitignored)."""
     try:
         for line in (WEEK24 / ".env.local").read_text(encoding="utf-8").splitlines():
             if line.strip().startswith(name + "="):
@@ -93,7 +96,7 @@ def _local_key(name: str) -> str:
 
 
 def api_key() -> str:
-    """Environment → week24/.env.local (🔑 Keys dialog) → repo-root .env."""
+    """Environment → week24_typed_decisions_jev/.env.local (🔑 Keys dialog) → repo-root .env."""
     return (os.environ.get("TYPESAFE_API_KEY", "").strip() or _local_key("TYPESAFE_API_KEY")
             or _dotenv_key("TYPESAFE_API_KEY"))
 
@@ -102,7 +105,7 @@ def key_source() -> str:
     if os.environ.get("TYPESAFE_API_KEY", "").strip():
         return "env"
     if _local_key("TYPESAFE_API_KEY"):
-        return "week24/.env.local"
+        return "week24_typed_decisions_jev/.env.local"
     return "repo .env" if _dotenv_key("TYPESAFE_API_KEY") else ""
 
 
@@ -137,6 +140,63 @@ def score(instructions, levels) -> dict:
     return {"type": "score", "instructions": instructions, "criteria": list(levels)}
 
 
+def box(instructions) -> dict:
+    """WHERE is it? One bounding box {top,bottom,left,right} as 0-1 fractions + confidence.
+    Jev 1.14 only, needs an image in the request. There is no "not found" answer — pair it
+    with a noul ("Is there a … in `photo`?") and ignore the box when that is low."""
+    return {"type": "box", "instructions": instructions}
+
+
+# ── images (Jev 1.14 danger zone — Module 15) ─────────────────────────────────
+MAX_SIDE, MIN_SIDE = 1568, 280                      # API limits: each side 280…1568 px
+
+
+def image(path, *, max_side: int = MAX_SIDE, ref: str | None = None) -> tuple[str, dict]:
+    """Prepare one image file the way TypeSafe's docs ask, and return (reference, asset).
+
+    • rotate the pixels upright (the API strips EXIF and never applies its orientation)
+    • longest side ≤ 1568 px; pad an image whose short side is under 280 px
+    • JPEG → baseline JPEG q90, PNG stays PNG; no `data:` prefix, no line breaks
+
+    The reference is a content hash ("img-" + 16 hex chars of sha256 over the source
+    bytes), so it can't collide with ordinary text, and the same photo always gets the
+    same reference — that is what lets DRY mode replay a recorded image request.
+    Put the reference anywhere text goes (state, instructions, criteria) and pass
+    assets={ref: asset} to ask(). Pass ref= for an image your code generated (a crop), so
+    the reference describes HOW it was made and stays stable across Pillow versions.
+    """
+    import base64
+    import io
+    path = Path(path)
+    raw = path.read_bytes()
+    fmt = "png" if path.suffix.lower() == ".png" else "jpg"
+    data = raw
+    try:                                            # Pillow is in the repo .venv; fall back to raw bytes
+        from PIL import Image, ImageOps
+        with Image.open(io.BytesIO(raw)) as original:
+            img = ImageOps.exif_transpose(original)
+            img.thumbnail((max_side, max_side))
+            if min(img.size) < MIN_SIDE:            # pad (never stretch) up to the minimum
+                w, h = max(img.width, MIN_SIDE), max(img.height, MIN_SIDE)
+                canvas = Image.new("RGB", (w, h), "white")
+                canvas.paste(img.convert("RGB"), ((w - img.width) // 2, (h - img.height) // 2))
+                img = canvas
+            buf = io.BytesIO()
+            if fmt == "png":
+                img.save(buf, "PNG")
+            else:
+                img.convert("RGB").save(buf, "JPEG", quality=90)   # baseline, not progressive
+            data = buf.getvalue()
+    except ImportError:
+        pass
+    ref = ref or "img-" + hashlib.sha256(raw + f"|{max_side}".encode()).hexdigest()[:16]
+    return ref, {"type": "image", "format": fmt, "data_base64": base64.b64encode(data).decode("ascii")}
+
+
+def needs_images_header(questions: dict, assets: dict | None) -> bool:
+    return bool(assets) or any(q.get("type") == "box" for q in questions.values())
+
+
 def guarded(questions: dict) -> dict:
     """Return a copy of questions with GUARD prepended to every string instruction."""
     out = {}
@@ -157,9 +217,24 @@ def _canonical(obj) -> str:
     return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
-def request_id(state, questions, model_id: str) -> str:
-    return hashlib.sha256(_canonical({"model": model_id, "state": state,
-                                      "questions": questions}).encode()).hexdigest()[:20]
+def _asset_digest(assets: dict | None) -> dict:
+    """Assets without their base64 payload: {ref: {format, sha256, bytes}} — for hashing and recording."""
+    out = {}
+    for ref, a in (assets or {}).items():
+        b = (a.get("data_base64") or "").encode()
+        out[ref] = {"type": a.get("type", "image"), "format": a.get("format"),
+                    "sha256": hashlib.sha256(b).hexdigest()[:16], "base64_chars": len(b)}
+    return out
+
+
+def request_id(state, questions, model_id: str, assets: dict | None = None,
+               flags: tuple = ()) -> str:
+    body = {"model": model_id, "state": state, "questions": questions}
+    if assets:                                      # refs are content hashes, so this stays stable
+        body["assets"] = sorted(assets)
+    if flags:
+        body["flags"] = sorted(flags)
+    return hashlib.sha256(_canonical(body).encode()).hexdigest()[:20]
 
 
 def _placeholder(questions: dict, model_id: str) -> dict:
@@ -180,14 +255,17 @@ def _placeholder(questions: dict, model_id: str) -> dict:
             answers[k] = {"type": "score", "score": (n - 1) / 2 if n else 0.0, "confidence": 0.0,
                           "legend": {str(i): str(c) for i, c in enumerate(q.get("criteria") or [])},
                           "probabilities": {str(i): p for i in range(n)}}
+        elif t == "box":                            # the whole image — clearly not a location
+            answers[k] = {"type": "box", "box": {"top": 0.0, "bottom": 1.0, "left": 0.0, "right": 1.0},
+                          "confidence": 0.0}
     return {"model": f"DRY_PLACEHOLDER (not {model_id})", "answers": answers,
             "usage": {"input_tokens": 0, "output_tokens": 0}}
 
 
-def _post(url: str, payload: dict, key: str, timeout: float = 30) -> dict:
+def _post(url: str, payload: dict, key: str, timeout: float = 30, extra_headers: dict | None = None) -> dict:
     req = Request(url, data=json.dumps(payload).encode(), method="POST",
                   headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
-                           "User-Agent": "week24-jev-lab/1"})
+                           "User-Agent": "week24-jev-lab/1", **(extra_headers or {})})
     for attempt in range(4):
         try:
             with urlopen(req, timeout=timeout) as r:
@@ -205,7 +283,9 @@ def _post(url: str, payload: dict, key: str, timeout: float = 30) -> dict:
                 body = exc.read().decode(errors="replace")[:400]
             except Exception:
                 body = ""
-            hint = {401: "check TYPESAFE_API_KEY", 402: "check billing / credits",
+            hint = {400: "bad request — read the detail (images header missing, max_tokens_exceeded, unreferenced asset …)",
+                    401: "check TYPESAFE_API_KEY", 402: "check billing / credits",
+                    413: "over a size limit — image file, pixels, request body or expanded request",
                     422: "the request shape is invalid — read the detail below",
                     429: "rate limited — wait and retry"}.get(exc.code, "see provider status")
             raise JevError(f"HTTP {exc.code} ({hint}) {body}") from None
@@ -215,16 +295,29 @@ def _post(url: str, payload: dict, key: str, timeout: float = 30) -> dict:
 
 
 def ask(state, questions: dict, *, model_id: str | None = None, quiet: bool = False,
-        mode_override: str | None = None) -> dict:
+        mode_override: str | None = None, assets: dict | None = None,
+        long_context: bool = False, images_header: bool | None = None,
+        timeout: float = 60) -> dict:
     """Evaluate `state` against `questions`. Returns the API response dict plus:
          _source     'live' | 'recorded' | 'placeholder'
          _latency_ms wall-clock for the HTTP call (live only)
-         _request_id stable hash of (model, state, questions)
+         _request_id stable hash of (model, state, questions[, assets, flags])
     mode_override="live"|"dry" forces a mode for this call only (the web runner uses it).
+    assets={ref: asset} (from image()) adds images; the images header is then sent for you
+    (images_header=False lets Lab 15-1 show the 400 you get without it).
+    long_context=True sends the long-context header (262k instead of 64k / 32k tokens).
     """
     model_id = model_id or model()
     payload = {"model": model_id, "state": state, "questions": questions}
-    rid = request_id(state, questions, model_id)
+    if assets:
+        payload["assets"] = assets
+    headers = {}
+    if images_header if images_header is not None else needs_images_header(questions, assets):
+        headers[IMAGES_HEADER] = "true"
+    if long_context:
+        headers[LONG_CONTEXT_HEADER] = "true"
+    flags = tuple(h for h in headers) + (("no-images-header",) if images_header is False else ())
+    rid = request_id(state, questions, model_id, assets, flags)
     cache = RECORDED / f"{rid}.json"
 
     use = mode_override if mode_override in ("live", "dry") else mode()
@@ -232,14 +325,19 @@ def ask(state, questions: dict, *, model_id: str | None = None, quiet: bool = Fa
         raise JevError("LIVE requested but no TYPESAFE_API_KEY is set")
     if use == "live":
         t0 = time.perf_counter()
-        resp = _post(ENDPOINT, payload, api_key())
+        resp = _post(ENDPOINT, payload, api_key(), timeout, headers)
         resp["_latency_ms"] = round((time.perf_counter() - t0) * 1000, 1)
         resp["_source"] = "live"
         if os.environ.get("JEV_RECORD") == "1":           # maintainers: refresh replay cache
             RECORDED.mkdir(exist_ok=True)
             keep = {k: v for k, v in resp.items() if not k.startswith("_")}
+            saved = dict(payload)
+            if assets:                                    # never store ~170 KB of base64 per image
+                saved["assets"] = _asset_digest(assets)
+            if headers:
+                saved["headers"] = sorted(headers)
             cache.write_text(json.dumps({"recorded_at": time.strftime("%Y-%m-%d"),
-                                         "request": payload, "response": keep},
+                                         "request": saved, "response": keep},
                                         ensure_ascii=False, indent=1), encoding="utf-8")
     elif cache.is_file():
         resp = json.loads(cache.read_text(encoding="utf-8"))["response"]
@@ -294,6 +392,14 @@ def validate(resp: dict, questions: dict) -> dict:
         a = answers[k]
         if a.get("type") != q["type"]:
             raise JevError(f"{k}: wrong answer type")
+        if q["type"] == "box":
+            b = a.get("box") or {}
+            if not all(isinstance(b.get(e), (int, float)) and 0 <= b[e] <= 1
+                       for e in ("top", "bottom", "left", "right")):
+                raise JevError(f"{k}: box edges missing or outside 0-1")
+            if not (b["left"] <= b["right"] and b["top"] <= b["bottom"]):
+                raise JevError(f"{k}: box edges out of order")
+            continue
         if q["type"] == "noul":
             v = a.get("noul")
             if not isinstance(v, (int, float)) or not 0 <= v <= 1:
@@ -341,6 +447,11 @@ def show(resp: dict, questions: dict | None = None, *, top: int = 4, title: str 
             if len(ranked) > top:
                 rest = sum(p for _, p in ranked[top:])
                 print(f"      … {len(ranked) - top} more                     {rest:4.2f}")
+        elif t == "box":
+            b = a["box"]
+            area = (b["right"] - b["left"]) * (b["bottom"] - b["top"])
+            print(f"» {k:<22} box     top {b['top']:.2f} · bottom {b['bottom']:.2f} · left {b['left']:.2f}"
+                  f" · right {b['right']:.2f}   ({area:.0%} of the image, confidence {a.get('confidence', 0):.2f})")
         elif t == "score":
             n = len(a["probabilities"])
             print(f"» {k:<22} score   {a['score']:.2f} on 0…{n - 1}   (confidence {a['confidence']:.2f})")
@@ -356,7 +467,11 @@ def summary(resp: dict) -> None:
     u = resp.get("usage") or {}
     src = resp.get("_source", "live")
     lat = f" · {resp['_latency_ms']:.0f} ms" if resp.get("_latency_ms") is not None else ""
-    tag = {"live": "LIVE", "recorded": "RECORDED replay", "placeholder": "PLACEHOLDER"}.get(src, src)
+    tag = {"live": "LIVE", "recorded": "RECORDED replay", "placeholder": "PLACEHOLDER",
+           "local": "LOCAL (this machine)"}.get(src, src)
+    if src == "local" or (src == "recorded" and not u):   # a local model: no tokens billed
+        print(f"◆ {resp.get('model')} · {tag} · $0 per call{lat}")
+        return
     print(f"◆ {resp.get('model')} · {tag} · {u.get('input_tokens', 0)} input tok"
           f" · ${cost_usd(resp):.6f}{lat}")
 

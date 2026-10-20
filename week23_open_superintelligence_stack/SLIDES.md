@@ -92,7 +92,7 @@ Common context for every brief: Week 23 = "The Open Superintelligence Stack (NVI
 Through-line: **Agent = Model + Harness** — the model reasons; the harness (context,
 orchestration, tools, memory, security, observability, self-improvement) makes it an agent.
 Every app is dual-mode (REAL endpoint or faithful SIM), always $0 cloud cost, launched as
-`.venv/bin/python week23/<folder>/tutorial_server.py`.
+`.venv/bin/python week23_open_superintelligence_stack/<folder>/tutorial_server.py`.
 
 **Optional title-slide cover art** — every deck has a matching card in [`media/`](media/)
 (`media/01-nemotron-models.jpg` … `media/12-capstone-smart-hotel.jpg`). Don't paste these into

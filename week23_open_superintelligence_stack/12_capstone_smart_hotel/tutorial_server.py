@@ -14,7 +14,7 @@ Either way cloud cost is $0.00.
 
 Launch (auto-picks a free port if 8092 is taken):
 
-    .venv/bin/python week19/sovereign_dgx/tutorial_server.py
+    .venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py
     # → http://127.0.0.1:8092
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week19/sovereign_dgx
+PKG = Path(__file__).resolve().parent                 # …/week19_sovereign_ai_dgx/sovereign_dgx
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():
@@ -127,7 +127,7 @@ STEPS = [
      "autonomous, self-improving, and sovereign — nothing leaves the box."},
     {"id":"refs","group":"Go further","kind":"concept",
      "title":"Appendix · References & real-world applications","level":"all levels",
-     "desc":"Curated references:\n  • Everything this app combines — the Sources section of week23/README.md, plus\n    each app's own appendix (01–11).\n  • The continuation — week21/ gives this fleet a BODY: a digital twin of the\n    same hotel (Capstone I) and a city around it (Capstone II).\n  • The lineage — Weeks 11 (patterns), 14/15 (graph memory), 17 (A2A), 18\n    (self-evolving, sovereign edge), 19 (DGX).\n\nReal-world applications:\n  • Hotel & building AI operations — the fictional AltoTech Grand Bangkok mirrors\n    a real product category: autonomous energy/comfort optimization for hotels\n    and commercial buildings (AltoTech's actual domain), where agent fleets\n    watch telemetry, dispatch work and answer staff.\n  • Commercial building copilots — Willow, JCI OpenBlue and Siemens Building X\n    assistants are the market's versions of the morning-brief + triage patterns\n    shown here.\n  • Data-center ops — the same fleet shape (energy desk + maintenance desk +\n    guarded actions + flywheel) runs AI factories; NVIDIA's DSX blueprint makes\n    the twin the facility's operating system.\n  • The generalization test — swap the SOP corpus, the telemetry schema and the\n    policy file, and the identical harness runs a hospital, campus or plant —\n    that is the Agent = Model + Harness thesis, cashed out."},
+     "desc":"Curated references:\n  • Everything this app combines — the Sources section of week23_open_superintelligence_stack/README.md, plus\n    each app's own appendix (01–11).\n  • The continuation — week21_physical_ai_digital_twins/ gives this fleet a BODY: a digital twin of the\n    same hotel (Capstone I) and a city around it (Capstone II).\n  • The lineage — Weeks 11 (patterns), 14/15 (graph memory), 17 (A2A), 18\n    (self-evolving, sovereign edge), 19 (DGX).\n\nReal-world applications:\n  • Hotel & building AI operations — the fictional AltoTech Grand Bangkok mirrors\n    a real product category: autonomous energy/comfort optimization for hotels\n    and commercial buildings (AltoTech's actual domain), where agent fleets\n    watch telemetry, dispatch work and answer staff.\n  • Commercial building copilots — Willow, JCI OpenBlue and Siemens Building X\n    assistants are the market's versions of the morning-brief + triage patterns\n    shown here.\n  • Data-center ops — the same fleet shape (energy desk + maintenance desk +\n    guarded actions + flywheel) runs AI factories; NVIDIA's DSX blueprint makes\n    the twin the facility's operating system.\n  • The generalization test — swap the SOP corpus, the telemetry schema and the\n    policy file, and the identical harness runs a hospital, campus or plant —\n    that is the Agent = Model + Harness thesis, cashed out."},
 ]
 STEP_BY_ID = {s["id"]: s for s in STEPS}
 

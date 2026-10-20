@@ -8,7 +8,7 @@ opentelemetry-proto package is present), and open the span tree in the UI. Then 
 'learn' half: filter the trace for slow/expensive spans and emit them as
 JSONL — exactly the feedstock App 11's Data Flywheel curates into training data.
 
-Run:  cd <repo root> && .venv/bin/python week23/08_nemo_relay/labs/lab03_otel_export.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab03_otel_export.py
 """
 from __future__ import annotations
 

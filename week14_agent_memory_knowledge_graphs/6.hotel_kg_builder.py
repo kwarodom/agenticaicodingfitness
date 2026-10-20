@@ -1,7 +1,7 @@
 """6.hotel_kg_builder.py — Smart Hotel Energy Optimization Knowledge Graph (Scenario 1).
 
 300-room hotel · 12 function halls · 5 MAS agents · FIPA-ACL Contract Net Protocol
-Run:  python week14/6.hotel_kg_builder.py
+Run:  python week14_agent_memory_knowledge_graphs/6.hotel_kg_builder.py
 """
 import os
 import sys

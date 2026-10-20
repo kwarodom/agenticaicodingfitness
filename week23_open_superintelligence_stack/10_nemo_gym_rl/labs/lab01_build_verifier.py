@@ -5,7 +5,7 @@ An environment = a task sampler + a deterministic reward_fn. The demos score
 canned answers; HERE the rollouts come from a live model on your endpoint and
 YOUR verifier decides 1.0 or 0.0 — the exact signal GRPO trains on.
 
-Run:  cd <repo root> && .venv/bin/python week23/10_nemo_gym_rl/labs/lab01_build_verifier.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab01_build_verifier.py
 """
 from __future__ import annotations
 

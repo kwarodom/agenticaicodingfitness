@@ -16,14 +16,14 @@
 
 ```bash
 # on: laptop, repo root
-cp -r week27/factory/skills/* .claude/skills/          # fitness-build, -qa, -review, -collect, -lookback
-mkdir -p .claude/hooks && cp week27/factory/.claude/hooks/*.py .claude/hooks/
-cp week27/factory/.claude/settings.json .claude/settings.json   # or merge the "hooks" block into yours
-cp -r week27/factory/scripts week27/factory/docs week27/factory/telemetry week27/00_alto_mini/
-cp week27/factory/CLAUDE.md week27/00_alto_mini/CLAUDE.md
+cp -r week27_software_factory/factory/skills/* .claude/skills/          # fitness-build, -qa, -review, -collect, -lookback
+mkdir -p .claude/hooks && cp week27_software_factory/factory/.claude/hooks/*.py .claude/hooks/
+cp week27_software_factory/factory/.claude/settings.json .claude/settings.json   # or merge the "hooks" block into yours
+cp -r week27_software_factory/factory/scripts week27_software_factory/factory/docs week27_software_factory/factory/telemetry week27_software_factory/00_alto_mini/
+cp week27_software_factory/factory/CLAUDE.md week27_software_factory/00_alto_mini/CLAUDE.md
 ```
 
-Edit `week27/00_alto_mini/CLAUDE.md` so the commands are true for this app: `make dev` (:8127), `make seed`, `make test`, test user `qa@example.local`. Keep it under 15 lines — `CLAUDE.md` holds only what Claude cannot infer.
+Edit `week27_software_factory/00_alto_mini/CLAUDE.md` so the commands are true for this app: `make dev` (:8127), `make seed`, `make test`, test user `qa@example.local`. Keep it under 15 lines — `CLAUDE.md` holds only what Claude cannot infer.
 
 ## 1 · Five tickets (45 min)
 
@@ -56,7 +56,7 @@ Open `.claude/skills/fitness-build/SKILL.md`. Map each step to what you saw supe
 ## 3 · Run the Builder headless (60 min)
 
 ```bash
-# on: laptop, in week27/00_alto_mini (board number from `gh project list --owner <you>`)
+# on: laptop, in week27_software_factory/00_alto_mini (board number from `gh project list --owner <you>`)
 export OWNER=<you> PROJECT_NUM=<n> MAX_WORKERS=2 MODEL=claude-sonnet-5
 gh project item-edit ...   # or drag T1 and T2 to Ready in the UI
 bash scripts/factory-run.sh build

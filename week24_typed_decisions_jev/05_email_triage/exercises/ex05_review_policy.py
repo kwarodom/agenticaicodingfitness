@@ -12,7 +12,7 @@ Rules to implement (in this priority order):
   4. urgent >= 0.5                → "human_review"   (a person must see outages fast)
   5. otherwise                    → the category label itself
 
-Run:  .venv/bin/python week24/05_email_triage/exercises/ex05_review_policy.py
+Run:  .venv/bin/python week24_typed_decisions_jev/05_email_triage/exercises/ex05_review_policy.py
 The offline tests run first (free). Only when they all pass does the live inbox run.
 """
 import sys

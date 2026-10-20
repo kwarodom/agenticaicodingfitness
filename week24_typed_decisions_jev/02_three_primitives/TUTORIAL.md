@@ -36,7 +36,7 @@ A Choice picks one option from a set you define (up to 255). You get the winner 
 Lab 01 asks the same department question about three messages:
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab01_choice.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab01_choice.py
 ```
 
 **Expected output**
@@ -98,7 +98,7 @@ The three things beginners get wrong:
 | "p(X) + p(not X) = 1" | Not guaranteed. Ask each decision **one way** and enforce logic in code |
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab02_noul.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab02_noul.py
 ```
 
 **Expected output**
@@ -159,7 +159,7 @@ A Score rates the state against levels you list **lowest first** (2 to 10 levels
 Write levels as **concrete situations** a person could recognise ("guest cannot use part of the room"), not vague words ("medium"). And use the number for **thresholds** ("≥ 2.5 → page the manager"), never to reconstruct a magnitude — 1.6 is not "1.6 hours".
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab03_score.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab03_score.py
 ```
 
 **Expected output**
@@ -218,7 +218,7 @@ So the same peak means more with more options: 0.70 over 4 options → 0.60; 0.7
 For a **Score**, TypeSafe uses a different statistic that it does not publish. Lab 04 measures both:
 
 ```bash
-.venv/bin/python week24/02_three_primitives/labs/lab04_confidence_math.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab04_confidence_math.py
 ```
 
 **Expected output**
@@ -266,14 +266,14 @@ The lesson is bigger than the formula: **the probabilities are the ground truth;
 
 ## Try it yourself
 
-**Exercise 02 — pick the primitive.** Open `week24/02_three_primitives/exercises/ex02_pick_the_primitive.py`.
+**Exercise 02 — pick the primitive.** Open `week24_typed_decisions_jev/02_three_primitives/exercises/ex02_pick_the_primitive.py`.
 
 - **Part A (offline, free):** a six-question quiz — for each need write `"choice"`, `"noul"` or `"score"`.
 - **Part B:** write three questions for guest messages — `department` (choice with an escape option), `mentions_refund` (noul) and `anger` (score, calmest level first).
 - **Part C (automatic):** the checker asks Jev about three test messages.
 
 ```bash
-.venv/bin/python week24/02_three_primitives/exercises/ex02_pick_the_primitive.py
+.venv/bin/python week24_typed_decisions_jev/02_three_primitives/exercises/ex02_pick_the_primitive.py
 ```
 
 **Expected output**

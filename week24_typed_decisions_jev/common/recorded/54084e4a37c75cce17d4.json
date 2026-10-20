@@ -1,0 +1,75 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "Good evening. Thermostat in 902 is stuck on 30 and ignores the buttons."
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets, showers",
+     "safety": "smoke, burning smell, fire, sparks, or water near electricity",
+     "front_desk": "check-in, check-out, billing, room changes, stay extensions"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   },
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is `message`?",
+    "criteria": [
+     "routine — whenever convenient, or nothing needs doing",
+     "today — a problem that should be fixed today",
+     "immediate — danger or damage happening now"
+    ]
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "hvac",
+    "confidence": 1.0,
+    "probabilities": {
+     "hvac": 1.0,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 0.0,
+     "front_desk": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.01
+   },
+   "urgency": {
+    "type": "score",
+    "score": 1.07,
+    "confidence": 0.79,
+    "legend": {
+     "0": "routine — whenever convenient, or nothing needs doing",
+     "1": "today — a problem that should be fixed today",
+     "2": "immediate — danger or damage happening now"
+    },
+    "probabilities": {
+     "0": 0.04,
+     "1": 0.86,
+     "2": 0.1
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 510,
+   "output_tokens": 96
+  }
+ }
+}

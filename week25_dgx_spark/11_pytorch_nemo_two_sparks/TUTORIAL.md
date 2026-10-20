@@ -37,7 +37,7 @@ Then check the memory math on your laptop:
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab01_finetune_memory.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab01_finetune_memory.py
 ```
 
 **Expected output** (arithmetic, captured on this Mac; the first table)
@@ -240,8 +240,8 @@ The Lab Runner stops a foreground lab after 900 seconds, and a fine-tune takes l
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py --recipe nemo-lora-8b
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py --recipe nemo-lora-8b
 ```
 
 Recipes: `pytorch-lora-8b` (default: the playbook's usage example), `pytorch-full-3b`, `pytorch-qlora-70b`, `nemo-lora-8b`, `nemo-qlora-70b`, `nemo-sft-qwen3-8b`.
@@ -275,7 +275,7 @@ Lab 03 reads the newest log's last 400 lines and parses both trainers: the Huggi
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab03_watch_log.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab03_watch_log.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac. The log it parses is an EXAMPLE: the line layout follows the script's `print()` calls, every number is illustrative, not a Spark run)
@@ -321,8 +321,8 @@ Lab 04 checks both Sparks (read-only), writes the two Accelerate files from the 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py              # 70B / 8B LoRA
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py --config full # 3B full SFT
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py              # 70B / 8B LoRA
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py --config full # 3B full SFT
 ```
 
 **Expected output** (DRY mode, captured on this Mac: preflight rows are EXAMPLE shapes, the files are real)
@@ -467,7 +467,7 @@ Lab 01 runs anywhere. Labs 02 and 03 run LIVE on Spark A or DRY. Lab 04 checks b
 
 ## Try it yourself
 
-**Exercise 11 — the fine-tune budget.** Open `week25/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py`. It has three `TODO`s:
+**Exercise 11 — the fine-tune budget.** Open `week25_dgx_spark/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py`. It has three `TODO`s:
 
 1. `lora_params(layers, shapes, r)`: how many parameters LoRA adds.
 2. `state_gb(frozen_b, trainable_b, frozen_bits)`: training state in GB.
@@ -477,7 +477,7 @@ The checker is offline and free.
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py
 ```
 
 **Expected output** (once all three TODOs are done, captured on this Mac)

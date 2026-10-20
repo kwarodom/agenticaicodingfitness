@@ -48,40 +48,40 @@ export const WEEKS: Week[] = [
     "needs": [
       "ANTHROPIC_API_KEY (not for the $0 drill)"
     ],
-    "start": ".venv/bin/python week2/lab/drill.py",
+    "start": ".venv/bin/python week02_claude_api_foundations/lab/drill.py",
     "labs": [
       {
         "name": "$0 memory drill (mock LLM)",
-        "path": "week2/lab/drill.py",
-        "run": ".venv/bin/python week2/lab/drill.py",
+        "path": "week02_claude_api_foundations/lab/drill.py",
+        "run": ".venv/bin/python week02_claude_api_foundations/lab/drill.py",
         "mode": "$0 · no API key",
         "what": "Tell the mock your name, then ask it back. It answers because the loop resends the history."
       },
       {
         "name": "Same drill on real Claude",
-        "path": "week2/lab/real_drill.py",
-        "run": ".venv/bin/python week2/lab/real_drill.py",
+        "path": "week02_claude_api_foundations/lab/real_drill.py",
+        "run": ".venv/bin/python week02_claude_api_foundations/lab/real_drill.py",
         "mode": "needs API key · Haiku",
         "what": "The identical loop against claude-haiku-4-5. Watch the input token count grow each turn."
       },
       {
         "name": "Single API call",
-        "path": "week2/claudeapicall.py",
-        "run": ".venv/bin/python week2/claudeapicall.py",
+        "path": "week02_claude_api_foundations/claudeapicall.py",
+        "run": ".venv/bin/python week02_claude_api_foundations/claudeapicall.py",
         "mode": "needs API key",
         "what": "Asks Claude to explain agentic AI in 3 sentences and prints the token counts."
       },
       {
         "name": "Streaming tokens",
-        "path": "week2/claudestreamingapi.py",
-        "run": ".venv/bin/python week2/claudestreamingapi.py",
+        "path": "week02_claude_api_foundations/claudestreamingapi.py",
+        "run": ".venv/bin/python week02_claude_api_foundations/claudestreamingapi.py",
         "mode": "needs API key",
         "what": "The same question, but the answer streams onto your screen word by word."
       },
       {
         "name": "Multi-turn coding mentor",
-        "path": "week2/claudemulti_turn.py",
-        "run": ".venv/bin/python week2/claudemulti_turn.py",
+        "path": "week02_claude_api_foundations/claudemulti_turn.py",
+        "run": ".venv/bin/python week02_claude_api_foundations/claudemulti_turn.py",
         "mode": "needs API key",
         "what": "A 3-turn chat about Python decorators with a system prompt, each answer building on the last."
       }
@@ -170,32 +170,32 @@ export const WEEKS: Week[] = [
       "ANTHROPIC_API_KEY",
       "Tapo light wrapper on :8003 (optional, for lights)"
     ],
-    "start": ".venv/bin/python week3/buildsmartassistant3tools.py",
+    "start": ".venv/bin/python week03_tool_use/buildsmartassistant3tools.py",
     "labs": [
       {
         "name": "3-tool smart assistant",
-        "path": "week3/buildsmartassistant3tools.py",
-        "run": ".venv/bin/python week3/buildsmartassistant3tools.py",
+        "path": "week03_tool_use/buildsmartassistant3tools.py",
+        "run": ".venv/bin/python week03_tool_use/buildsmartassistant3tools.py",
         "mode": "needs API key",
         "what": "Web search, calculator and file reader. Asks Thailand's GDP × 1.05, counts README lines, handles a missing file."
       },
       {
         "name": "Weather, math & smart lights",
-        "path": "week3/toolsuse.py",
-        "run": ".venv/bin/python week3/toolsuse.py",
+        "path": "week03_tool_use/toolsuse.py",
+        "run": ".venv/bin/python week03_tool_use/toolsuse.py",
         "mode": "needs API key + :8003 light wrapper",
         "what": "Asks Claude to turn off all lights. Without the wrapper on :8003 you see the tool's error message instead."
       },
       {
         "name": "Homework: add a 4th tool",
-        "path": "week3/hwadd4thtool.py",
+        "path": "week03_tool_use/hwadd4thtool.py",
         "run": "",
         "mode": "homework · empty file",
         "what": "An empty starter. Add a new tool schema plus its function to the assistant."
       },
       {
         "name": "Homework: add a 5th tool",
-        "path": "week3/hwadd5thtool.py",
+        "path": "week03_tool_use/hwadd5thtool.py",
         "run": "",
         "mode": "homework · empty file",
         "what": "An empty starter. Add one more tool and test a question that needs it."
@@ -287,39 +287,39 @@ export const WEEKS: Week[] = [
       "OPENROUTER_API_KEY (free-model demo)",
       "DJI Tello drone + its Wi-Fi (drone labs)"
     ],
-    "start": ".venv/bin/python week4/pipeline.py",
+    "start": ".venv/bin/python week04_autonomous_pipelines/pipeline.py",
     "labs": [
       {
         "name": "Autonomous research pipeline",
-        "path": "week4/pipeline.py",
-        "run": ".venv/bin/python week4/pipeline.py",
+        "path": "week04_autonomous_pipelines/pipeline.py",
+        "run": ".venv/bin/python week04_autonomous_pipelines/pipeline.py",
         "mode": "needs API key",
         "what": "Researches AI building energy optimization in Southeast Asia and saves final_report.md where you run it."
       },
       {
         "name": "Read a sample report",
-        "path": "week4/final_report.md",
+        "path": "week04_autonomous_pipelines/final_report.md",
         "run": "",
         "what": "A saved pipeline output: intro, key findings, implications and conclusion."
       },
       {
         "name": "Free models via OpenRouter",
-        "path": "week4/openrouterfreemodel.py",
-        "run": ".venv/bin/python week4/openrouterfreemodel.py",
+        "path": "week04_autonomous_pipelines/openrouterfreemodel.py",
+        "run": ".venv/bin/python week04_autonomous_pipelines/openrouterfreemodel.py",
         "mode": "needs OPENROUTER_API_KEY",
         "what": "Asks how many r's are in 'strawberry', then 'Are you sure?' with reasoning passed back."
       },
       {
         "name": "Drone camera view",
-        "path": "week4/droneeyes.py",
-        "run": ".venv/bin/python week4/droneeyes.py",
+        "path": "week04_autonomous_pipelines/droneeyes.py",
+        "run": ".venv/bin/python week04_autonomous_pipelines/droneeyes.py",
         "mode": "needs Tello drone",
         "what": "Shows battery level and the Tello's live video in a window. Press q to quit."
       },
       {
         "name": "Drone stunt show",
-        "path": "week4/dronecontrol.py",
-        "run": ".venv/bin/python week4/dronecontrol.py",
+        "path": "week04_autonomous_pipelines/dronecontrol.py",
+        "run": ".venv/bin/python week04_autonomous_pipelines/dronecontrol.py",
         "mode": "needs Tello drone · flies!",
         "what": "Takeoff, dashes, four flips, a 360 spin, a square patrol, a bow, then landing."
       }
@@ -407,18 +407,18 @@ export const WEEKS: Week[] = [
     "needs": [
       "ANTHROPIC_API_KEY"
     ],
-    "start": ".venv/bin/python week5/autoagent.py",
+    "start": ".venv/bin/python week05_agent_loop/autoagent.py",
     "labs": [
       {
         "name": "Read the sample to fix",
-        "path": "week5/sample.py",
+        "path": "week05_agent_loop/sample.py",
         "run": "",
         "what": "The small target script: circle area, list processing, a user class and an API fetch."
       },
       {
         "name": "Run the code review agent",
-        "path": "week5/autoagent.py",
-        "run": ".venv/bin/python week5/autoagent.py",
+        "path": "week05_agent_loop/autoagent.py",
+        "run": ".venv/bin/python week05_agent_loop/autoagent.py",
         "mode": "needs API key · rewrites sample.py",
         "what": "Watch each iteration's thoughts, tool calls and results as it lints, fixes and reruns sample.py."
       }
@@ -507,39 +507,39 @@ export const WEEKS: Week[] = [
       "Node.js + npm",
       "PostgreSQL on :5432",
       "Redis on :6379",
-      "week6/.env from week6/.env.example"
+      "week06_fullstack_agent_app/.env from week06_fullstack_agent_app/.env.example"
     ],
-    "start": "cd week6 && npm install && npm test",
+    "start": "cd week06_fullstack_agent_app && npm install && npm test",
     "labs": [
       {
         "name": "Project memory: CLAUDE.md",
-        "path": "week6/CLAUDE.md",
+        "path": "week06_fullstack_agent_app/CLAUDE.md",
         "run": "",
         "what": "See what the agent is told about the stack, conventions, ports and commands."
       },
       {
         "name": "Agent rules: AGENTS.md",
-        "path": "week6/AGENTS.md",
+        "path": "week06_fullstack_agent_app/AGENTS.md",
         "run": "",
         "what": "Default behaviour, review checklist, communication style and security reminders."
       },
       {
         "name": "Session memory notes",
-        "path": "week6/memory-notes.md",
+        "path": "week06_fullstack_agent_app/memory-notes.md",
         "run": "",
         "what": "Every endpoint, architecture decision, the schema and the TODO list in one page."
       },
       {
         "name": "Run the test suite",
-        "path": "week6/src/__tests__",
-        "run": "cd week6 && npm test",
+        "path": "week06_fullstack_agent_app/src/__tests__",
+        "run": "cd week06_fullstack_agent_app && npm test",
         "mode": "Jest + supertest",
         "what": "Auth, product, order and API tests. The integration test mocks the DB pool and Redis."
       },
       {
         "name": "Run the API + Swagger docs",
-        "path": "week6/src/server.ts",
-        "run": "cd week6 && npm run dev",
+        "path": "week06_fullstack_agent_app/src/server.ts",
+        "run": "cd week06_fullstack_agent_app && npm run dev",
         "port": 3000,
         "mode": "needs Postgres + Redis",
         "what": "Starts the API on :3000. Open /api/docs for Swagger UI or /health for a quick check."
@@ -581,7 +581,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Both dashboard endpoints are cached in Redis for 5 minutes, with keys like dashboard:<endpoint>:<days>.",
-    "readme": "week6/memory-notes.md",
+    "readme": "week06_fullstack_agent_app/memory-notes.md",
     "minutes": 60
   },
   {
@@ -631,53 +631,53 @@ export const WEEKS: Week[] = [
       "Node.js + npx (filesystem server)",
       "POE_API_KEY (Poe scripts only)"
     ],
-    "start": ".venv/bin/python week7/agenttooldt.py",
+    "start": ".venv/bin/python week07_mcp_and_skills/agenttooldt.py",
     "labs": [
       {
         "name": "Plain chat loop",
-        "path": "week7/agent.py",
-        "run": ".venv/bin/python week7/agent.py",
+        "path": "week07_mcp_and_skills/agent.py",
+        "run": ".venv/bin/python week07_mcp_and_skills/agent.py",
         "mode": "needs API key · interactive",
         "what": "Chat with Claude in the terminal; the message list is its short-term memory. Type quit to exit."
       },
       {
         "name": "One tool schema, one call",
-        "path": "week7/claudeapi.py",
-        "run": ".venv/bin/python week7/claudeapi.py",
+        "path": "week07_mcp_and_skills/claudeapi.py",
+        "run": ".venv/bin/python week07_mcp_and_skills/claudeapi.py",
         "mode": "needs API key",
         "what": "Sends a get_current_datetime tool schema and prints the message list, including Claude's tool_use block."
       },
       {
         "name": "Hand-rolled tool loop",
-        "path": "week7/agenttooldt.py",
-        "run": ".venv/bin/python week7/agenttooldt.py",
+        "path": "week07_mcp_and_skills/agenttooldt.py",
+        "run": ".venv/bin/python week07_mcp_and_skills/agenttooldt.py",
         "mode": "needs API key",
         "what": "A while-loop runs the tool whenever stop_reason is tool_use, then prints the exact time as HH:MM:SS."
       },
       {
         "name": "Remote MCP: Claude Code docs",
-        "path": "week7/mcpserver.py",
-        "run": ".venv/bin/python week7/mcpserver.py",
+        "path": "week07_mcp_and_skills/mcpserver.py",
+        "run": ".venv/bin/python week07_mcp_and_skills/mcpserver.py",
         "mode": "needs API key",
         "what": "The Agent SDK connects to the HTTP docs MCP server and explains what Claude Code hooks are."
       },
       {
         "name": "Local MCP: filesystem server",
-        "path": "week7/mcpfilesystem.py",
-        "run": ".venv/bin/python week7/mcpfilesystem.py",
+        "path": "week07_mcp_and_skills/mcpfilesystem.py",
+        "run": ".venv/bin/python week07_mcp_and_skills/mcpfilesystem.py",
         "mode": "edit the folder path first",
         "what": "Starts the filesystem MCP server via npx and lists files. The folder path is hard-coded, so point it at yours."
       },
       {
         "name": "Web search + time tools via Poe",
-        "path": "week7/claudeapi-tool-search.py",
-        "run": ".venv/bin/python week7/claudeapi-tool-search.py",
+        "path": "week07_mcp_and_skills/claudeapi-tool-search.py",
+        "run": ".venv/bin/python week07_mcp_and_skills/claudeapi-tool-search.py",
         "mode": "needs POE_API_KEY",
         "what": "Claude picks between search_web (DuckDuckGo) and get_current_time to answer two test questions."
       },
       {
         "name": "Read a worked Skill",
-        "path": "week7/skill.md",
+        "path": "week07_mcp_and_skills/skill.md",
         "run": "",
         "what": "A pr-description skill: allowed-tools and model in the frontmatter, a What/Why/Changes format, extras on demand."
       }
@@ -695,7 +695,7 @@ export const WEEKS: Week[] = [
         "why": "Server tools are namespaced mcp__<server-name>__<tool>, which is why allowed_tools uses mcp__claude-code-docs__*."
       },
       {
-        "q": "week7/mcpfilesystem.py launches its server with npx as a child process. Which MCP transport is that?",
+        "q": "week07_mcp_and_skills/mcpfilesystem.py launches its server with npx as a child process. Which MCP transport is that?",
         "options": [
           "Streamable HTTP",
           "stdio",
@@ -767,46 +767,46 @@ export const WEEKS: Week[] = [
       "Claude Code installed",
       "pip: llama-index, chromadb, sentence-transformers"
     ],
-    "start": "open week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+    "start": "open week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
     "labs": [
       {
         "name": "Set up the lab project (Steps 1–4)",
-        "path": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+        "path": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
         "run": "",
         "mode": "build it with Claude Code",
         "what": "Install Claude Code, write a CLAUDE.md, have Claude generate 5 AltoTech seed docs, and install the RAG packages."
       },
       {
         "name": "RAG from scratch (Step 8)",
-        "path": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+        "path": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
         "run": "",
         "mode": "build it with Claude Code",
         "what": "Chunk, embed with all-MiniLM-L6-v2, cosine-search the top 3 and answer. Relevant chunks should score above 0.4."
       },
       {
         "name": "LlamaIndex RAG + chat (Step 9)",
-        "path": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+        "path": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
         "run": "",
         "mode": "build it with Claude Code",
         "what": "Same result in about 30 lines instead of 80, plus a 3-turn chat engine that handles follow-up questions."
       },
       {
         "name": "Chunk size + 'I don't know' (10–11)",
-        "path": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+        "path": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
         "run": "",
         "mode": "build it with Claude Code",
         "what": "Compare 256/512/1024-token chunks, then check that out-of-scope questions get a 'no information' answer."
       },
       {
         "name": "Agentic RAG agent (Steps 12–13)",
-        "path": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+        "path": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
         "run": "",
         "mode": "build it with Claude Code",
         "what": "A tool-use agent with search, calculate and create_report. Watch it search several times on multi-hop questions."
       },
       {
         "name": "Metadata filters + ChromaDB (14–15)",
-        "path": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+        "path": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
         "run": "",
         "mode": "build it with Claude Code",
         "what": "Compare filtered and unfiltered answers, then persist the index so later runs load from disk instead of re-embedding."
@@ -848,7 +848,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "The raw RAG demo is about 80 lines; the LlamaIndex version gives the same quality in about 30.",
-    "readme": "week8/Week8_RAG_Knowledge_Agents_Lab.pdf",
+    "readme": "week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf",
     "minutes": 180
   },
   {
@@ -893,49 +893,49 @@ export const WEEKS: Week[] = [
     },
     "needs": [
       "ANTHROPIC_API_KEY",
-      "pip install -r week9/requirements.txt (AG2)",
+      "pip install -r week09_multi_agent_systems/requirements.txt (AG2)",
       "crewai + SERPER/ZAI/OPENROUTER keys (CrewAI version only)"
     ],
-    "start": ".venv/bin/python week9/ex1_sequential_pipeline.py",
+    "start": ".venv/bin/python week09_multi_agent_systems/ex1_sequential_pipeline.py",
     "labs": [
       {
         "name": "Read the theory + workshop",
-        "path": "week9/week9_2_multi_agent_theory_workshop.pdf",
+        "path": "week09_multi_agent_systems/week9_2_multi_agent_theory_workshop.pdf",
         "run": "",
         "what": "Agents, BDI, FIPA-ACL, Contract Net and the three MAS patterns, plus the exercise briefs and a 10-question quiz."
       },
       {
         "name": "Check your environment",
-        "path": "week9/verify_setup.py",
-        "run": ".venv/bin/python week9/verify_setup.py",
+        "path": "week09_multi_agent_systems/verify_setup.py",
+        "run": ".venv/bin/python week09_multi_agent_systems/verify_setup.py",
         "mode": "makes one tiny API call",
         "what": "Checks Python, framework imports, ANTHROPIC_API_KEY and a live Claude call, then prints N/N checks passed."
       },
       {
         "name": "Ex 1: sequential pipeline",
-        "path": "week9/ex1_sequential_pipeline.py",
-        "run": ".venv/bin/python week9/ex1_sequential_pipeline.py",
+        "path": "week09_multi_agent_systems/ex1_sequential_pipeline.py",
+        "run": ".venv/bin/python week09_multi_agent_systems/ex1_sequential_pipeline.py",
         "mode": "needs API key",
         "what": "Researcher → Writer → Editor on the raw SDK, with timing per stage. Saves the post to ex1_sequential_output.md."
       },
       {
         "name": "Ex 2: LangGraph router",
-        "path": "week9/ex2_graph_routing.py",
-        "run": ".venv/bin/python week9/ex2_graph_routing.py",
+        "path": "week09_multi_agent_systems/ex2_graph_routing.py",
+        "run": ".venv/bin/python week09_multi_agent_systems/ex2_graph_routing.py",
         "mode": "needs API key",
         "what": "A classifier node routes support tickets to billing, technical or general specialists. Writes ex2_routing_output.md."
       },
       {
         "name": "Ex 3: parallel swarm audit",
-        "path": "week9/ex3_parallel_swarm.py",
-        "run": ".venv/bin/python week9/ex3_parallel_swarm.py",
+        "path": "week09_multi_agent_systems/ex3_parallel_swarm.py",
+        "run": ".venv/bin/python week09_multi_agent_systems/ex3_parallel_swarm.py",
         "mode": "needs API key",
         "what": "Five specialists audit one Bangkok office tower at once; compare parallel time with sequential and see the speedup."
       },
       {
         "name": "Ex 1 the CrewAI way",
-        "path": "week9/ex1_crewai_sequential.py",
-        "run": ".venv/bin/python week9/ex1_crewai_sequential.py",
+        "path": "week09_multi_agent_systems/ex1_crewai_sequential.py",
+        "run": ".venv/bin/python week09_multi_agent_systems/ex1_crewai_sequential.py",
         "mode": "needs crewai + extra keys",
         "what": "The same crew with CrewAI's Process.sequential, LLMs via z.ai and OpenRouter, and a Serper web-search tool."
       }
@@ -976,7 +976,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "FIPA-ACL, the classic agent language, defines 22 communicative acts, such as inform, request and cfp (call for proposals).",
-    "readme": "week9/week9_2_multi_agent_theory_workshop.pdf",
+    "readme": "week09_multi_agent_systems/week9_2_multi_agent_theory_workshop.pdf",
     "minutes": 120
   },
   {
@@ -1022,50 +1022,50 @@ export const WEEKS: Week[] = [
     },
     "needs": [
       "OPENROUTER_API_KEY (free tier)",
-      "week10 venv: uv pip install -r requirements.txt",
+      "week10_production_observability venv: uv pip install -r requirements.txt",
       "ANTHROPIC_API_KEY (Ex 5 only)",
       "LANGSMITH_API_KEY (Ex 4, optional)"
     ],
-    "start": "cd week10 && uv venv && uv pip install -r requirements.txt && .venv/bin/python verify_setup.py",
+    "start": "cd week10_production_observability && uv venv && uv pip install -r requirements.txt && .venv/bin/python verify_setup.py",
     "labs": [
       {
         "name": "Ex 1: Hello StateGraph",
-        "path": "week10/notebooks/01_hello_graph.py",
-        "run": "cd week10 && .venv/bin/python notebooks/01_hello_graph.py",
+        "path": "week10_production_observability/notebooks/01_hello_graph.py",
+        "run": "cd week10_production_observability && .venv/bin/python notebooks/01_hello_graph.py",
         "mode": "free model via OpenRouter",
         "what": "A typed SupportState, a classify node and a router: your first compiled and invoked graph."
       },
       {
         "name": "Ex 2: Tool-calling supervisor",
-        "path": "week10/notebooks/02_supervisor.py",
-        "run": "cd week10 && .venv/bin/python notebooks/02_supervisor.py",
+        "path": "week10_production_observability/notebooks/02_supervisor.py",
+        "run": "cd week10_production_observability && .venv/bin/python notebooks/02_supervisor.py",
         "mode": "free model via OpenRouter",
         "what": "A supervisor routes tickets to TECHNICAL, BILLING or GENERAL specialist tools. Hit a 429? Swap the model= line."
       },
       {
         "name": "Ex 3: Checkpointing + HITL",
-        "path": "week10/notebooks/03_checkpointing.py",
-        "run": "cd week10 && .venv/bin/python notebooks/03_checkpointing.py",
+        "path": "week10_production_observability/notebooks/03_checkpointing.py",
+        "run": "cd week10_production_observability && .venv/bin/python notebooks/03_checkpointing.py",
         "mode": "free model via OpenRouter",
         "what": "draft → human_approval → send. The graph pauses at interrupt(), saves to checkpoints.db, then resumes on approve."
       },
       {
         "name": "Ex 4: LangSmith tracing",
-        "path": "week10/notebooks/04_langsmith.py",
-        "run": "cd week10 && .venv/bin/python notebooks/04_langsmith.py",
+        "path": "week10_production_observability/notebooks/04_langsmith.py",
+        "run": "cd week10_production_observability && .venv/bin/python notebooks/04_langsmith.py",
         "mode": "tracing off without LangSmith key",
         "what": "Run a weak prompt and a strong prompt, then compare their traces side by side at smith.langchain.com."
       },
       {
         "name": "Ex 5: Claude Agent SDK hybrid",
-        "path": "week10/notebooks/05_hybrid_sdk.py",
-        "run": "cd week10 && .venv/bin/python notebooks/05_hybrid_sdk.py",
+        "path": "week10_production_observability/notebooks/05_hybrid_sdk.py",
+        "run": "cd week10_production_observability && .venv/bin/python notebooks/05_hybrid_sdk.py",
         "mode": "skips SDK call without API key",
         "what": "A LangGraph node spawns a researcher subagent through the Claude Agent SDK to diagnose a ticket."
       },
       {
         "name": "Stuck? Reference solutions",
-        "path": "week10/solutions",
+        "path": "week10_production_observability/solutions",
         "run": "",
         "what": "One finished solution per exercise. Copy it over your notebook file to catch up mid-class."
       }
@@ -1106,7 +1106,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Anthropic's own measurements show multi-agent systems use about 15× more tokens than chats, so cost caps matter.",
-    "readme": "week10/README.md",
+    "readme": "week10_production_observability/README.md",
     "minutes": 150
   },
   {
@@ -1155,61 +1155,61 @@ export const WEEKS: Week[] = [
       "ANTHROPIC_API_KEY (drills, Live API mode)",
       "autogen-agentchat + autogen-ext[anthropic] (Ex 07, 14)"
     ],
-    "start": "open week11/index.html",
+    "start": "open week11_models_and_patterns/index.html",
     "labs": [
       {
         "name": "Agent Forge mastery lab",
-        "path": "week11/index.html",
-        "run": "open week11/index.html",
+        "path": "week11_models_and_patterns/index.html",
+        "run": "open week11_models_and_patterns/index.html",
         "mode": "$0 Sim mode · Live API optional",
         "what": "Weekly review, model atlas, wizard, capability radar, topology playground, 17 patterns and a 25-question quiz."
       },
       {
         "name": "Ex 01: Two-agent dialogue",
-        "path": "week11/exercises/ex01_two_agent_dialogue/ex01_two_agent_dialogue.py",
-        "run": ".venv/bin/python week11/exercises/ex01_two_agent_dialogue/ex01_two_agent_dialogue.py",
+        "path": "week11_models_and_patterns/exercises/ex01_two_agent_dialogue/ex01_two_agent_dialogue.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex01_two_agent_dialogue/ex01_two_agent_dialogue.py",
         "mode": "Beginner · needs API key",
         "what": "A Teacher and a Student Claude with separate message histories take turns explaining a Python concept."
       },
       {
         "name": "Ex 03: LangGraph router",
-        "path": "week11/exercises/ex03_langgraph_router/ex03_langgraph_router.py",
-        "run": ".venv/bin/python week11/exercises/ex03_langgraph_router/ex03_langgraph_router.py",
+        "path": "week11_models_and_patterns/exercises/ex03_langgraph_router/ex03_langgraph_router.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex03_langgraph_router/ex03_langgraph_router.py",
         "mode": "Beginner · needs API key",
         "what": "A StateGraph with conditional edges and START/END sends each query to one of three specialist nodes."
       },
       {
         "name": "Ex 06: Parallel fact-checker",
-        "path": "week11/exercises/ex06_parallel_fact_checker/ex06_parallel_fact_checker.py",
-        "run": ".venv/bin/python week11/exercises/ex06_parallel_fact_checker/ex06_parallel_fact_checker.py",
+        "path": "week11_models_and_patterns/exercises/ex06_parallel_fact_checker/ex06_parallel_fact_checker.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex06_parallel_fact_checker/ex06_parallel_fact_checker.py",
         "mode": "Easy · needs API key",
         "what": "Three checkers judge a claim at once with asyncio.gather; confidence-weighted voting decides the verdict."
       },
       {
         "name": "Ex 09: Market research swarm",
-        "path": "week11/exercises/ex09_market_research_swarm/ex09_market_research_swarm.py",
-        "run": ".venv/bin/python week11/exercises/ex09_market_research_swarm/ex09_market_research_swarm.py",
+        "path": "week11_models_and_patterns/exercises/ex09_market_research_swarm/ex09_market_research_swarm.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex09_market_research_swarm/ex09_market_research_swarm.py",
         "mode": "Intermediate · needs API key",
         "what": "One prerequisite step, then parallel researchers, then a synthesis. Saves a report next to the script."
       },
       {
         "name": "Ex 10: Self-healing pipeline",
-        "path": "week11/exercises/ex10_langgraph_self_healing/ex10_langgraph_self_healing.py",
-        "run": ".venv/bin/python week11/exercises/ex10_langgraph_self_healing/ex10_langgraph_self_healing.py",
+        "path": "week11_models_and_patterns/exercises/ex10_langgraph_self_healing/ex10_langgraph_self_healing.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex10_langgraph_self_healing/ex10_langgraph_self_healing.py",
         "mode": "Advanced · needs API key",
         "what": "Bad sensor readings go to a Claude healer and back to validation, up to 3 retries, before an alert fires."
       },
       {
         "name": "Ex 13: Autonomous research",
-        "path": "week11/exercises/ex13_autonomous_research/ex13_autonomous_research.py",
-        "run": ".venv/bin/python week11/exercises/ex13_autonomous_research/ex13_autonomous_research.py",
+        "path": "week11_models_and_patterns/exercises/ex13_autonomous_research/ex13_autonomous_research.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex13_autonomous_research/ex13_autonomous_research.py",
         "mode": "Expert · needs API key",
         "what": "Planner, tool-calling researcher, synthesiser and critic loop. DIAGRAMS.md shows the graph."
       },
       {
         "name": "Ex 14: Hotel ops command center",
-        "path": "week11/exercises/ex14_hotel_ops_command_center/ex14_hotel_ops_command_center.py",
-        "run": ".venv/bin/python week11/exercises/ex14_hotel_ops_command_center/ex14_hotel_ops_command_center.py",
+        "path": "week11_models_and_patterns/exercises/ex14_hotel_ops_command_center/ex14_hotel_ops_command_center.py",
+        "run": ".venv/bin/python week11_models_and_patterns/exercises/ex14_hotel_ops_command_center/ex14_hotel_ops_command_center.py",
         "mode": "Expert · needs AutoGen install",
         "what": "An AutoGen SelectorGroupChat of Energy, Maintenance, Guest and F&B agents with an OpsDirector."
       }
@@ -1250,7 +1250,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "The 14 drills skip CrewAI on purpose: five exercises that called for it use a small dataclass Agent on the raw SDK instead.",
-    "readme": "week11/README.md",
+    "readme": "week11_models_and_patterns/README.md",
     "minutes": 150
   },
   {
@@ -1298,60 +1298,60 @@ export const WEEKS: Week[] = [
       "Docker (Neo4j 5.18 + APOC + GDS on :7687)",
       "ANTHROPIC_API_KEY"
     ],
-    "start": "docker compose -f week14/1.docker-compose.yml up -d",
+    "start": "docker compose -f week14_agent_memory_knowledge_graphs/1.docker-compose.yml up -d",
     "labs": [
       {
         "name": "Start Neo4j",
-        "path": "week14/1.docker-compose.yml",
-        "run": "docker compose -f week14/1.docker-compose.yml up -d",
+        "path": "week14_agent_memory_knowledge_graphs/1.docker-compose.yml",
+        "run": "docker compose -f week14_agent_memory_knowledge_graphs/1.docker-compose.yml up -d",
         "mode": "$0 · local Docker",
         "what": "Boots Neo4j with APOC and Graph Data Science; Browser UI on :7474, Bolt on :7687."
       },
       {
         "name": "Connect and create a node",
-        "path": "week14/2.neo4j_connect.py",
-        "run": ".venv/bin/python week14/2.neo4j_connect.py",
+        "path": "week14_agent_memory_knowledge_graphs/2.neo4j_connect.py",
+        "run": ".venv/bin/python week14_agent_memory_knowledge_graphs/2.neo4j_connect.py",
         "mode": "$0",
         "what": "Verifies the driver connects, creates a SensorAgent node and reads it back."
       },
       {
         "name": "Build the smart-hotel graph",
-        "path": "week14/6.hotel_kg_builder.py",
-        "run": ".venv/bin/python week14/6.hotel_kg_builder.py",
+        "path": "week14_agent_memory_knowledge_graphs/6.hotel_kg_builder.py",
+        "run": ".venv/bin/python week14_agent_memory_knowledge_graphs/6.hotel_kg_builder.py",
         "mode": "$0",
         "what": "Builds a 300-room hotel with function halls, HVAC, sensors, budgets and 5 MAS agents."
       },
       {
         "name": "Cypher tour in the Browser",
-        "path": "week14/NEO4J_TUTORIAL.md",
+        "path": "week14_agent_memory_knowledge_graphs/NEO4J_TUTORIAL.md",
         "run": "",
         "what": "Run MATCH, WHERE, paths, aggregation and MERGE queries on the hotel graph, then try the exercises."
       },
       {
         "name": "Ask the graph in English",
-        "path": "week14/3.langchain_neo4j_demo.py",
-        "run": ".venv/bin/python week14/3.langchain_neo4j_demo.py",
+        "path": "week14_agent_memory_knowledge_graphs/3.langchain_neo4j_demo.py",
+        "run": ".venv/bin/python week14_agent_memory_knowledge_graphs/3.langchain_neo4j_demo.py",
         "mode": "needs API key",
         "what": "Prints the graph schema, then Claude writes Cypher to answer 'Which agents exist?'."
       },
       {
         "name": "Text to graph with an LLM",
-        "path": "week14/4.llm_graph_builder.py",
-        "run": ".venv/bin/python week14/4.llm_graph_builder.py",
+        "path": "week14_agent_memory_knowledge_graphs/4.llm_graph_builder.py",
+        "run": ".venv/bin/python week14_agent_memory_knowledge_graphs/4.llm_graph_builder.py",
         "mode": "needs API key",
         "what": "An HVAC failure note becomes nodes and relationships; see what Claude extracted."
       },
       {
         "name": "Store and recall memories",
-        "path": "week14/lab1_hotel_memory.py",
-        "run": ".venv/bin/python week14/lab1_hotel_memory.py",
+        "path": "week14_agent_memory_knowledge_graphs/lab1_hotel_memory.py",
+        "run": ".venv/bin/python week14_agent_memory_knowledge_graphs/lab1_hotel_memory.py",
         "mode": "$0 · needs APOC",
         "what": "Logs sensor readings and HVAC actions as Events, then asks which rooms get the most actions."
       },
       {
         "name": "Hotel MAS with graph memory",
-        "path": "week14/lab1_hotel_mas.py",
-        "run": ".venv/bin/python week14/lab1_hotel_mas.py",
+        "path": "week14_agent_memory_knowledge_graphs/lab1_hotel_mas.py",
+        "run": ".venv/bin/python week14_agent_memory_knowledge_graphs/lab1_hotel_mas.py",
         "mode": "needs API key",
         "what": "A CrewAI Sensor Monitor flags hot zones; the Energy Optimizer acts and logs its decisions to the graph."
       }
@@ -1392,7 +1392,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "The hotel graph is seeded with random.seed(42), so every learner builds the exact same 300-room hotel.",
-    "readme": "week14/NEO4J_TUTORIAL.md",
+    "readme": "week14_agent_memory_knowledge_graphs/NEO4J_TUTORIAL.md",
     "minutes": 120
   },
   {
@@ -1440,61 +1440,61 @@ export const WEEKS: Week[] = [
       "ANTHROPIC_API_KEY",
       "OPENAI_API_KEY (Part 2 embeddings only)"
     ],
-    "start": "docker compose -f week15/kg_mastery/docker-compose.yml up -d",
+    "start": "docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d",
     "labs": [
       {
         "name": "Start Neo4j with GDS",
-        "path": "week15/kg_mastery/docker-compose.yml",
-        "run": "docker compose -f week15/kg_mastery/docker-compose.yml up -d",
+        "path": "week15_production_graphrag/kg_mastery/docker-compose.yml",
+        "run": "docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d",
         "mode": "$0 · local Docker",
         "what": "Neo4j 5.x with APOC and Graph Data Science; Browser on :7474."
       },
       {
         "name": "Load the hotel IoT dataset",
-        "path": "week15/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py",
-        "run": ".venv/bin/python week15/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py",
+        "path": "week15_production_graphrag/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py",
+        "run": ".venv/bin/python week15_production_graphrag/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py",
         "mode": "$0",
         "what": "MERGEs rooms, devices, readings, alerts, staff, guests and suppliers. Safe to re-run."
       },
       {
         "name": "Cypher basics",
-        "path": "week15/kg_mastery/part1_fundamentals/01_cypher_basics.py",
-        "run": ".venv/bin/python week15/kg_mastery/part1_fundamentals/01_cypher_basics.py",
+        "path": "week15_production_graphrag/kg_mastery/part1_fundamentals/01_cypher_basics.py",
+        "run": ".venv/bin/python week15_production_graphrag/kg_mastery/part1_fundamentals/01_cypher_basics.py",
         "mode": "$0",
         "what": "Twelve core Cypher patterns run against the hotel graph, results printed."
       },
       {
         "name": "GraphRAG with LangChain",
-        "path": "week15/kg_mastery/part3_graphrag/01_langchain_graphcypher.py",
-        "run": ".venv/bin/python week15/kg_mastery/part3_graphrag/01_langchain_graphcypher.py",
+        "path": "week15_production_graphrag/kg_mastery/part3_graphrag/01_langchain_graphcypher.py",
+        "run": ".venv/bin/python week15_production_graphrag/kg_mastery/part3_graphrag/01_langchain_graphcypher.py",
         "mode": "needs API key",
         "what": "A plain-English question becomes generated Cypher, then a grounded answer."
       },
       {
         "name": "Score answers with RAGAS",
-        "path": "week15/kg_mastery/part4_evaluation/01_ragas_eval.py",
-        "run": ".venv/bin/python week15/kg_mastery/part4_evaluation/01_ragas_eval.py",
+        "path": "week15_production_graphrag/kg_mastery/part4_evaluation/01_ragas_eval.py",
+        "run": ".venv/bin/python week15_production_graphrag/kg_mastery/part4_evaluation/01_ragas_eval.py",
         "mode": "needs API key + ragas",
         "what": "Two hotel Q&A examples scored on the four RAGAS metrics."
       },
       {
         "name": "Improvement-loop tracker",
-        "path": "week15/kg_mastery/part4_evaluation/05_improvement_loop.py",
-        "run": ".venv/bin/python week15/kg_mastery/part4_evaluation/05_improvement_loop.py",
+        "path": "week15_production_graphrag/kg_mastery/part4_evaluation/05_improvement_loop.py",
+        "run": ".venv/bin/python week15_production_graphrag/kg_mastery/part4_evaluation/05_improvement_loop.py",
         "mode": "$0 · stdlib",
         "what": "Logs each iteration's four scores and the change you made, then prints the trend."
       },
       {
         "name": "Working + episodic memory",
-        "path": "week15/smart_hotel_mas/checkpoints/checkpoint2_memory.py",
-        "run": ".venv/bin/python week15/smart_hotel_mas/checkpoints/checkpoint2_memory.py",
+        "path": "week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint2_memory.py",
+        "run": ".venv/bin/python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint2_memory.py",
         "mode": "$0 · no services",
         "what": "L1 dict scratchpad plus an L2 SQLite log that survives restarts."
       },
       {
         "name": "Full 5-agent hotel MAS",
-        "path": "week15/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py",
-        "run": ".venv/bin/python week15/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py",
+        "path": "week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py",
+        "run": ".venv/bin/python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py",
         "mode": "needs API key + its own Neo4j",
         "what": "A CrewAI crew of 5 agents tied to all four memory layers over a 200-room hotel."
       }
@@ -1535,7 +1535,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Quality is a trend, not a one-shot score: the improvement loop says make ONE change, re-measure, keep it only if scores rise.",
-    "readme": "week15/kg_mastery/README.md",
+    "readme": "week15_production_graphrag/kg_mastery/README.md",
     "minutes": 180
   },
   {
@@ -1584,19 +1584,19 @@ export const WEEKS: Week[] = [
       "nvidia-nat[langchain,llama-index]",
       "jupyterlab"
     ],
-    "start": "jupyter lab week16/adding_tools_to_agents.ipynb",
+    "start": "jupyter lab week16_nemo_agent_toolkit/adding_tools_to_agents.ipynb",
     "labs": [
       {
         "name": "Adding tools to agents",
-        "path": "week16/adding_tools_to_agents.ipynb",
-        "run": "jupyter lab week16/adding_tools_to_agents.ipynb",
+        "path": "week16_nemo_agent_toolkit/adding_tools_to_agents.ipynb",
+        "run": "jupyter lab week16_nemo_agent_toolkit/adding_tools_to_agents.ipynb",
         "mode": "needs NVIDIA API key",
         "what": "Create a retail sales workflow, register 3 tools, run queries, then add a LlamaIndex RAG tool."
       },
       {
         "name": "Multi-agent orchestration",
-        "path": "week16/multi_agent_orchestration.ipynb",
-        "run": "jupyter lab week16/multi_agent_orchestration.ipynb",
+        "path": "week16_nemo_agent_toolkit/multi_agent_orchestration.ipynb",
+        "run": "jupyter lab week16_nemo_agent_toolkit/multi_agent_orchestration.ipynb",
         "mode": "needs NVIDIA API key",
         "what": "A supervisor delegates to specialist agents, then a custom agent asks for HITL approval before plotting."
       }
@@ -1637,7 +1637,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "In a notebook the HITL prompt can't take keyboard input, so the demo pipes echo \"yes\" into nat run to play the human.",
-    "readme": "week16/README.md",
+    "readme": "week16_nemo_agent_toolkit/README.md",
     "minutes": 90
   },
   {
@@ -1682,66 +1682,66 @@ export const WEEKS: Week[] = [
       "caption": "The agent parks at a step, an outside event pushes a state change, and it picks up exactly there."
     },
     "needs": [
-      "fastapi (week17/requirements.txt)",
+      "fastapi (week17_long_running_distributed_agents/requirements.txt)",
       "google-adk (optional; live agents)",
       "Model key for live agents: ALTO_LLM_API_KEY, ANTHROPIC_API_KEY or GOOGLE_API_KEY"
     ],
-    "start": ".venv/bin/python week17/checkpoints/checkpoint1_state_machine.py",
+    "start": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py",
     "labs": [
       {
         "name": "Durable state machine",
-        "path": "week17/checkpoints/checkpoint1_state_machine.py",
-        "run": ".venv/bin/python week17/checkpoints/checkpoint1_state_machine.py",
+        "path": "week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py",
         "mode": "$0 · offline",
         "what": "Build the work-order state machine and ADK agent wiring; behaviour comes from current_step."
       },
       {
         "name": "Survive a restart",
-        "path": "week17/checkpoints/checkpoint2_durable_sessions.py",
-        "run": ".venv/bin/python week17/checkpoints/checkpoint2_durable_sessions.py",
+        "path": "week17_long_running_distributed_agents/checkpoints/checkpoint2_durable_sessions.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint2_durable_sessions.py",
         "mode": "$0 · offline",
         "what": "Pause, kill the process, resume: session state comes back from SQLite."
       },
       {
         "name": "Webhook resume",
-        "path": "week17/checkpoints/checkpoint3_webhook_resume.py",
-        "run": ".venv/bin/python week17/checkpoints/checkpoint3_webhook_resume.py",
+        "path": "week17_long_running_distributed_agents/checkpoints/checkpoint3_webhook_resume.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint3_webhook_resume.py",
         "mode": "$0 · needs FastAPI",
         "what": "A delivery webhook applies a state_delta and wakes the agent."
       },
       {
         "name": "In-process sub-agents",
-        "path": "week17/checkpoints/checkpoint4_sub_agents.py",
-        "run": ".venv/bin/python week17/checkpoints/checkpoint4_sub_agents.py",
+        "path": "week17_long_running_distributed_agents/checkpoints/checkpoint4_sub_agents.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint4_sub_agents.py",
         "mode": "$0 · offline",
         "what": "Delegate to focused sub_agents, and see the wall: they must be your own code."
       },
       {
         "name": "A2A cards + task lifecycle",
-        "path": "week17/checkpoints/checkpoint5_a2a_cards.py",
-        "run": ".venv/bin/python week17/checkpoints/checkpoint5_a2a_cards.py",
+        "path": "week17_long_running_distributed_agents/checkpoints/checkpoint5_a2a_cards.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint5_a2a_cards.py",
         "mode": "$0 · offline",
         "what": "Validate a vendor Agent Card and walk a task through all six states, incl. input-required."
       },
       {
         "name": "Fleet capstone",
-        "path": "week17/checkpoints/checkpoint6_fleet.py",
-        "run": ".venv/bin/python week17/checkpoints/checkpoint6_fleet.py",
+        "path": "week17_long_running_distributed_agents/checkpoints/checkpoint6_fleet.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint6_fleet.py",
         "mode": "$0 · offline",
         "what": "Long-running ADK plus A2A delegation, end to end."
       },
       {
         "name": "Live HR onboarding agent",
-        "path": "week17/hr_onboarding/tutorial_server.py",
-        "run": ".venv/bin/python week17/hr_onboarding/tutorial_server.py",
+        "path": "week17_long_running_distributed_agents/hr_onboarding/tutorial_server.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/hr_onboarding/tutorial_server.py",
         "port": 8070,
         "mode": "needs a model key",
         "what": "Click-through guide; a real ADK agent pauses for a signature and a laptop, resumed by webhooks."
       },
       {
         "name": "auth.md × ADK guide",
-        "path": "week17/authmd_adk/tutorial_server.py",
-        "run": ".venv/bin/python week17/authmd_adk/tutorial_server.py",
+        "path": "week17_long_running_distributed_agents/authmd_adk/tutorial_server.py",
+        "run": ".venv/bin/python week17_long_running_distributed_agents/authmd_adk/tutorial_server.py",
         "port": 8080,
         "mode": "Part 1 offline · live part needs model",
         "what": "Discover, re-mint at wake, OTP approval, 403 on out-of-scope writes, then revocation."
@@ -1782,8 +1782,8 @@ export const WEEKS: Week[] = [
         "why": "The agent stores the durable grant and re-mints a fresh, scoped token every time it wakes."
       }
     ],
-    "funFact": "Every week17 checkpoint runs offline: they build real ADK agents and walk the real A2A lifecycle, mocking only the LLM call.",
-    "readme": "week17/README.md",
+    "funFact": "Every week17_long_running_distributed_agents checkpoint runs offline: they build real ADK agents and walk the real A2A lifecycle, mocking only the LLM call.",
+    "readme": "week17_long_running_distributed_agents/README.md",
     "minutes": 150
   },
   {
@@ -1832,65 +1832,65 @@ export const WEEKS: Week[] = [
       "Ollama + gemma4:12b (sovereign_ai_edge)",
       "uv pip install -r each folder's requirements.txt"
     ],
-    "start": ".venv/bin/python week18/agent_loop/tutorial_server.py",
+    "start": ".venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/tutorial_server.py",
     "labs": [
       {
         "name": "Agent loop web app",
-        "path": "week18/agent_loop/tutorial_server.py",
-        "run": ".venv/bin/python week18/agent_loop/tutorial_server.py",
+        "path": "week18_self_evolving_sovereign_edge/agent_loop/tutorial_server.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/tutorial_server.py",
         "port": 8090,
         "mode": "claude CLI · a few cents",
         "what": "Click through 10 parts and watch real loops stream, colour-coded by REASON, ACT, OBSERVE."
       },
       {
         "name": "Safety hooks",
-        "path": "week18/agent_loop/demos/step05_hooks_safety.py",
-        "run": ".venv/bin/python week18/agent_loop/demos/step05_hooks_safety.py",
+        "path": "week18_self_evolving_sovereign_edge/agent_loop/demos/step05_hooks_safety.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/demos/step05_hooks_safety.py",
         "mode": "claude CLI",
         "what": "A PreToolUse hook blocks rm -rf; a PostToolUse hook audits every tool call."
       },
       {
         "name": "Bounded execution",
-        "path": "week18/agent_loop/demos/step09_production.py",
-        "run": ".venv/bin/python week18/agent_loop/demos/step09_production.py",
+        "path": "week18_self_evolving_sovereign_edge/agent_loop/demos/step09_production.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/demos/step09_production.py",
         "mode": "claude CLI",
         "what": "max_budget_usd stops a runaway loop and you handle the stop subtype."
       },
       {
         "name": "Self-evolving guide",
-        "path": "week18/self_evolving_agent/tutorial_server.py",
-        "run": ".venv/bin/python week18/self_evolving_agent/tutorial_server.py",
+        "path": "week18_self_evolving_sovereign_edge/self_evolving_agent/tutorial_server.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/tutorial_server.py",
         "port": 8090,
         "mode": "SIM $0 / LIVE via claude CLI",
         "what": "Walk the architecture and run checkpoints 1 to 7 with live output."
       },
       {
         "name": "Context fencing",
-        "path": "week18/self_evolving_agent/checkpoints/checkpoint2_semantic_fencing.py",
-        "run": ".venv/bin/python week18/self_evolving_agent/checkpoints/checkpoint2_semantic_fencing.py",
+        "path": "week18_self_evolving_sovereign_edge/self_evolving_agent/checkpoints/checkpoint2_semantic_fencing.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/checkpoints/checkpoint2_semantic_fencing.py",
         "mode": "$0 · offline",
         "what": "Recalled memory is wrapped as reference data, not commands, to defuse injection."
       },
       {
         "name": "Watch it self-evolve",
-        "path": "week18/self_evolving_agent/server.py",
-        "run": ".venv/bin/python week18/self_evolving_agent/server.py",
+        "path": "week18_self_evolving_sovereign_edge/self_evolving_agent/server.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/server.py",
         "port": 8088,
         "mode": "LIVE ⇄ SIM toggle",
         "what": "Run a task, consolidate, rerun: the turns and cost bar drop and a new SKILL.md appears."
       },
       {
         "name": "Sovereign edge web app",
-        "path": "week18/sovereign_ai_edge/tutorial_server.py",
-        "run": ".venv/bin/python week18/sovereign_ai_edge/tutorial_server.py",
+        "path": "week18_self_evolving_sovereign_edge/sovereign_ai_edge/tutorial_server.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/sovereign_ai_edge/tutorial_server.py",
         "port": 8091,
         "mode": "$0 · local Ollama",
         "what": "10 chapters of on-device runs: hardware sizing, quantization, local tool calling, hotel HVAC."
       },
       {
         "name": "Air-gap sovereignty audit",
-        "path": "week18/sovereign_ai_edge/demos/step09_airgap_audit.py",
-        "run": ".venv/bin/python week18/sovereign_ai_edge/demos/step09_airgap_audit.py",
+        "path": "week18_self_evolving_sovereign_edge/sovereign_ai_edge/demos/step09_airgap_audit.py",
+        "run": ".venv/bin/python week18_self_evolving_sovereign_edge/sovereign_ai_edge/demos/step09_airgap_audit.py",
         "mode": "$0 · local",
         "what": "Checks the endpoint is local and no cloud creds are set; it even flags a *-cloud model."
       }
@@ -1931,7 +1931,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "By run 5 of an identical task, the self-evolving tutorial reports 64% fewer turns and 66% lower cost, with no human tuning.",
-    "readme": "week18/agent_loop/README.md",
+    "readme": "week18_self_evolving_sovereign_edge/agent_loop/README.md",
     "minutes": 180
   },
   {
@@ -1979,44 +1979,44 @@ export const WEEKS: Week[] = [
       "each app's requirements.txt (uv pip install)",
       "optional: Ollama or a DGX for REAL mode"
     ],
-    "start": ".venv/bin/python week19/sovereign_dgx/tutorial_server.py",
+    "start": ".venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py",
     "labs": [
       {
         "name": "Stop 1 · Sovereign DGX serving",
-        "path": "week19/sovereign_dgx",
-        "run": ".venv/bin/python week19/sovereign_dgx/tutorial_server.py",
+        "path": "week19_sovereign_ai_dgx/sovereign_dgx",
+        "run": ".venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py",
         "port": 8092,
         "mode": "$0 · SIM/REAL auto",
         "what": "Run and serve models with Ollama, vLLM, llama.cpp; see what fits in 128 GB and NVFP4 math."
       },
       {
         "name": "Stop 2 · Fine-tune on the DGX",
-        "path": "week19/dgx_finetune",
-        "run": ".venv/bin/python week19/dgx_finetune/tutorial_server.py",
+        "path": "week19_sovereign_ai_dgx/dgx_finetune",
+        "run": ".venv/bin/python week19_sovereign_ai_dgx/dgx_finetune/tutorial_server.py",
         "port": 8093,
         "mode": "$0 · SIM/REAL auto",
         "what": "Build a domain SFT dataset, write a QLoRA recipe, watch a simulated training run, eval before/after."
       },
       {
         "name": "Stop 3 · Observability (Phoenix + NAT)",
-        "path": "week19/dgx_observability",
-        "run": ".venv/bin/python week19/dgx_observability/tutorial_server.py",
+        "path": "week19_sovereign_ai_dgx/dgx_observability",
+        "run": ".venv/bin/python week19_sovereign_ai_dgx/dgx_observability/tutorial_server.py",
         "port": 8094,
         "mode": "$0 · SIM/REAL auto",
         "what": "Trace an agent as AGENT → LLM → TOOL spans, judge traces with an LLM, rebuild it with NAT."
       },
       {
         "name": "Stop 4 · Self-evolving agent v2",
-        "path": "week19/self_evolving_agent_v2",
-        "run": ".venv/bin/python week19/self_evolving_agent_v2/tutorial_server.py",
+        "path": "week19_sovereign_ai_dgx/self_evolving_agent_v2",
+        "run": ".venv/bin/python week19_sovereign_ai_dgx/self_evolving_agent_v2/tutorial_server.py",
         "port": 8095,
         "mode": "BRAIN=local|claude|sim",
         "what": "Swap the brain (DGX / Claude / sim), build episodic memory, consolidate it, prove warm beats cold."
       },
       {
         "name": "Stop 5 · LiteLLM gateway",
-        "path": "week19/dgx_litellm",
-        "run": ".venv/bin/python week19/dgx_litellm/tutorial_server.py",
+        "path": "week19_sovereign_ai_dgx/dgx_litellm",
+        "run": ".venv/bin/python week19_sovereign_ai_dgx/dgx_litellm/tutorial_server.py",
         "port": 8096,
         "mode": "$0 · gateway simulated on laptop",
         "what": "Write a LiteLLM config, then explore routing, fallbacks, hot-swap, virtual keys and logging."
@@ -2058,7 +2058,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Two DGX Sparks linked over 200GbE give 256 GB, enough to run a 235B model with tensor parallelism.",
-    "readme": "week19/README.md",
+    "readme": "week19_sovereign_ai_dgx/README.md",
     "minutes": 180
   },
   {
@@ -2106,68 +2106,68 @@ export const WEEKS: Week[] = [
       "each app's requirements.txt (uv pip install)",
       "optional: usd-core, eppy, Ollama for REAL"
     ],
-    "start": ".venv/bin/python week21/01_physical_ai_landscape/tutorial_server.py",
+    "start": ".venv/bin/python week21_physical_ai_digital_twins/01_physical_ai_landscape/tutorial_server.py",
     "labs": [
       {
         "name": "01 · Physical AI landscape",
-        "path": "week21/01_physical_ai_landscape",
-        "run": ".venv/bin/python week21/01_physical_ai_landscape/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/01_physical_ai_landscape",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/01_physical_ai_landscape/tutorial_server.py",
         "port": 8200,
         "mode": "$0 · SIM/REAL auto",
         "what": "The three-computer model, Omniverse as libraries, Cosmos, and the Mega and DSX blueprints."
       },
       {
         "name": "02 · OpenUSD foundations",
-        "path": "week21/02_openusd_foundations",
-        "run": ".venv/bin/python week21/02_openusd_foundations/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/02_openusd_foundations",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/02_openusd_foundations/tutorial_server.py",
         "port": 8201,
         "mode": "$0 · REAL with usd-core",
         "what": "Stages, prims, layers and composition from zero; runs REAL with usd-core, no GPU."
       },
       {
         "name": "03 · BIM → USD",
-        "path": "week21/03_bim_to_usd",
-        "run": ".venv/bin/python week21/03_bim_to_usd/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/03_bim_to_usd",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/03_bim_to_usd/tutorial_server.py",
         "port": 8202,
         "mode": "$0 · SIM/REAL auto",
         "what": "LOD 100–500, the IFC spatial tree as a USD hierarchy, and GUID preservation as the join key."
       },
       {
         "name": "05 · Live twin binding",
-        "path": "week21/05_live_twin_binding",
-        "run": ".venv/bin/python week21/05_live_twin_binding/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/05_live_twin_binding",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/05_live_twin_binding/tutorial_server.py",
         "port": 8204,
         "mode": "$0 · SIM/REAL auto",
         "what": "BACnet/Modbus → MQTT → USD attributes; USD + graph + TSDB joined for spatial-temporal queries."
       },
       {
         "name": "07 · What-if scenarios",
-        "path": "week21/07_whatif_scenarios",
-        "run": ".venv/bin/python week21/07_whatif_scenarios/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/07_whatif_scenarios",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/07_whatif_scenarios/tutorial_server.py",
         "port": 8206,
         "mode": "$0 · REAL with eppy",
         "what": "Parametric sweeps, the Guideline 14 calibration gate, FMU co-simulation and Alfalfa."
       },
       {
         "name": "09 · RL building controls",
-        "path": "week21/09_rl_building_controls",
-        "run": ".venv/bin/python week21/09_rl_building_controls/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/09_rl_building_controls",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/09_rl_building_controls/tutorial_server.py",
         "port": 8208,
         "mode": "$0 · SIM/REAL auto",
         "what": "Sinergym, CityLearn and BOPTEST; PPO/SAC vs rules vs Guideline 36, and why tuned MPC often wins."
       },
       {
         "name": "12 · Capstone: twin hotel",
-        "path": "week21/12_capstone_twin_hotel",
-        "run": ".venv/bin/python week21/12_capstone_twin_hotel/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/12_capstone_twin_hotel",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/12_capstone_twin_hotel/tutorial_server.py",
         "port": 8211,
         "mode": "$0 · SIM/REAL auto",
         "what": "AltoTech Grand Bangkok: scene, live telemetry, calibrated model, what-if console and agents in one."
       },
       {
         "name": "13 · Capstone: smart city",
-        "path": "week21/13_capstone_smart_city",
-        "run": ".venv/bin/python week21/13_capstone_smart_city/tutorial_server.py",
+        "path": "week21_physical_ai_digital_twins/13_capstone_smart_city",
+        "run": ".venv/bin/python week21_physical_ai_digital_twins/13_capstone_smart_city/tutorial_server.py",
         "port": 8212,
         "mode": "$0 · SIM/REAL auto",
         "what": "A twin of twins: the hotel referenced into a city stage, camera VLM alerts, district what-ifs."
@@ -2209,7 +2209,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "LOD 500 is a field-verification claim about the as-built building, not 'more polygons' or the prettiest mesh.",
-    "readme": "week21/README.md",
+    "readme": "week21_physical_ai_digital_twins/README.md",
     "minutes": 240
   },
   {
@@ -2257,68 +2257,68 @@ export const WEEKS: Week[] = [
       "each app's requirements.txt (uv pip install)",
       "optional: Ollama, a DGX or an nvapi- key for REAL"
     ],
-    "start": ".venv/bin/python week23/00_stack_navigator/tutorial_server.py",
+    "start": ".venv/bin/python week23_open_superintelligence_stack/00_stack_navigator/tutorial_server.py",
     "labs": [
       {
         "name": "00 · Stack Navigator (hub)",
-        "path": "week23/00_stack_navigator",
-        "run": ".venv/bin/python week23/00_stack_navigator/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/00_stack_navigator",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/00_stack_navigator/tutorial_server.py",
         "port": 8112,
         "mode": "$0 · SIM/REAL auto",
         "what": "An animated 16-node map of the five-layer stack, a guided tour and launch dots for all 12 apps."
       },
       {
         "name": "00 · Lab Runner",
-        "path": "week23/00_lab_runner",
-        "run": ".venv/bin/python week23/00_lab_runner/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/00_lab_runner",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/00_lab_runner/tutorial_server.py",
         "port": 8113,
         "mode": "$0 · SIM/REAL auto",
         "what": "All 12 TUTORIAL.md files as one course with checkpoints; runs every labs/*.py and streams output."
       },
       {
         "name": "01 · Nemotron models",
-        "path": "week23/01_nemotron_models",
-        "run": ".venv/bin/python week23/01_nemotron_models/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/01_nemotron_models",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/tutorial_server.py",
         "port": 8100,
         "mode": "$0 · SIM/REAL auto",
         "what": "The Nemotron 3 family, the reasoning tax, raw tool calls on the wire, and fit math per tier."
       },
       {
         "name": "02 · NIM microservices",
-        "path": "week23/02_nim_microservices",
-        "run": ".venv/bin/python week23/02_nim_microservices/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/02_nim_microservices",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/tutorial_server.py",
         "port": 8101,
         "mode": "$0 · SIM/REAL auto",
         "what": "One signed container = model + engine + OpenAI API; NIM vs raw vLLM/Ollama."
       },
       {
         "name": "04 · Agent Skills",
-        "path": "week23/04_agent_skills",
-        "run": ".venv/bin/python week23/04_agent_skills/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/04_agent_skills",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/04_agent_skills/tutorial_server.py",
         "port": 8103,
         "mode": "$0 · SIM/REAL auto",
         "what": "NVIDIA's portable Agent Skills: author one, load it live, bridge it with MCP and A2A."
       },
       {
         "name": "05 · AI-Q research lab",
-        "path": "week23/05_aiq_research_lab",
-        "run": ".venv/bin/python week23/05_aiq_research_lab/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/05_aiq_research_lab",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/tutorial_server.py",
         "port": 8104,
         "mode": "$0 · SIM/REAL auto",
         "what": "Intent Router (Nano) → Deep Agent (Super) → planner and researcher sub-agents via NAT."
       },
       {
         "name": "07 · Guardrails + OpenShell",
-        "path": "week23/07_guardrails_openshell",
-        "run": ".venv/bin/python week23/07_guardrails_openshell/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/07_guardrails_openshell",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/07_guardrails_openshell/tutorial_server.py",
         "port": 8106,
         "mode": "$0 · SIM/REAL auto",
         "what": "Naive vs guarded agents, sign a policy and tamper with it, and a red-team scorecard."
       },
       {
         "name": "12 · Capstone: smart hotel",
-        "path": "week23/12_capstone_smart_hotel",
-        "run": ".venv/bin/python week23/12_capstone_smart_hotel/tutorial_server.py",
+        "path": "week23_open_superintelligence_stack/12_capstone_smart_hotel",
+        "run": ".venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/tutorial_server.py",
         "port": 8111,
         "mode": "$0 · SIM/REAL auto",
         "what": "A self-improving agent fleet runs AltoTech Grand Bangkok; the room-1203 alarm runs end to end."
@@ -2360,7 +2360,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Each of the 36 hands-on lab scripts finishes in under a minute and falls back to a clearly labelled SIM with no endpoint.",
-    "readme": "week23/README.md",
+    "readme": "week23_open_superintelligence_stack/README.md",
     "minutes": 240
   },
   {
@@ -2369,7 +2369,7 @@ export const WEEKS: Week[] = [
     "phase": 6,
     "emoji": "⚖️",
     "tagline": "Jev judges, your code decides: typed answers, not prose",
-    "summary": "A 14-module EN/Thai course on Jev, a model that returns typed judgments (choice, noul, score) instead of text. You build routers, triage queues and a hotel copilot where code applies policy and humans approve. It runs LIVE with a TypeSafe key or DRY from recordings at $0.",
+    "summary": "A 17-module EN/Thai course on Jev, a model that returns typed judgments (choice, noul, score) instead of text. You build routers, triage queues and a hotel copilot where code applies policy and humans approve. Later modules add live voice, Jev 1.14 images and Box, and local System One models you fine-tune on a Mac or DGX Spark. It runs LIVE with a TypeSafe key or DRY from recordings at $0.",
     "concepts": [
       {
         "name": "Three primitives",
@@ -2406,66 +2406,95 @@ export const WEEKS: Week[] = [
     },
     "needs": [
       "TYPESAFE_API_KEY (LIVE only; DRY is $0)",
-      "any one LLM key or Ollama (Module 11)"
+      "any one LLM key or Ollama (Module 11)",
+      "week24_typed_decisions_jev/.venv-local + ~3 GB models (Modules 16–17; they replay without it)"
     ],
-    "start": ".venv/bin/python week24/00_jev_lab_runner/tutorial_server.py",
+    "start": ".venv/bin/python week24_typed_decisions_jev/00_jev_lab_runner/tutorial_server.py",
     "labs": [
       {
         "name": "Jev Lab Runner",
-        "path": "week24/00_jev_lab_runner",
-        "run": ".venv/bin/python week24/00_jev_lab_runner/tutorial_server.py",
+        "path": "week24_typed_decisions_jev/00_jev_lab_runner",
+        "run": ".venv/bin/python week24_typed_decisions_jev/00_jev_lab_runner/tutorial_server.py",
         "port": 8124,
         "mode": "LIVE / DRY switch",
         "what": "All 14 modules in one course: checkpoints, ▶ Run, Ask Jev probability bars, EN/ไทย switch."
       },
       {
         "name": "01 · Hello Jev",
-        "path": "week24/01_hello_jev",
-        "run": "JEV_MODE=dry .venv/bin/python week24/01_hello_jev/labs/lab01_first_call_raw.py",
+        "path": "week24_typed_decisions_jev/01_hello_jev",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab01_first_call_raw.py",
         "mode": "$0 DRY · key for LIVE",
         "what": "Your first raw Jev call: state + questions in, a typed answer out."
       },
       {
         "name": "02 · Three primitives",
-        "path": "week24/02_three_primitives",
-        "run": "JEV_MODE=dry .venv/bin/python week24/02_three_primitives/labs/lab01_choice.py",
+        "path": "week24_typed_decisions_jev/02_three_primitives",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab01_choice.py",
         "mode": "$0 DRY · key for LIVE",
         "what": "Watch a choice split its probability when a message has two needs, then try noul and score."
       },
       {
         "name": "04 · Intent routing",
-        "path": "week24/04_intent_routing",
-        "run": "JEV_MODE=dry .venv/bin/python week24/04_intent_routing/labs/lab01_route_requests.py",
+        "path": "week24_typed_decisions_jev/04_intent_routing",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab01_route_requests.py",
         "mode": "$0 DRY · key for LIVE",
         "what": "Route requests to teams and send uncertain ones to clarify-or-review."
       },
       {
         "name": "07 · AFDD fault triage",
-        "path": "week24/07_afdd_triage",
-        "run": "JEV_MODE=dry .venv/bin/python week24/07_afdd_triage/labs/lab01_triage_incidents.py",
+        "path": "week24_typed_decisions_jev/07_afdd_triage",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab01_triage_incidents.py",
         "mode": "$0 DRY · key for LIVE",
         "what": "Code computes HVAC facts, Jev picks a queue; policy overrides Jev when data can't be trusted."
       },
       {
         "name": "11 · Jev + an LLM",
-        "path": "week24/11_jev_plus_llm",
-        "run": "JEV_MODE=dry .venv/bin/python week24/11_jev_plus_llm/labs/lab02_route_then_write.py",
+        "path": "week24_typed_decisions_jev/11_jev_plus_llm",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab02_route_then_write.py",
         "mode": "$0 DRY · LLM key or Ollama",
         "what": "Jev routes, an LLM of your choice writes the reply, then Jev checks the draft."
       },
       {
         "name": "12 · Capstone hotel copilot",
-        "path": "week24/12_capstone_hotel_copilot",
-        "run": "JEV_MODE=dry .venv/bin/python week24/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py",
+        "path": "week24_typed_decisions_jev/12_capstone_hotel_copilot",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py",
         "mode": "$0 DRY · key for LIVE",
         "what": "A guest message becomes a routed, safety-checked ticket proposal with execute: False."
       },
       {
         "name": "13 · Multimodal Jev",
-        "path": "week24/13_multimodal_jev",
-        "run": "JEV_MODE=dry .venv/bin/python week24/13_multimodal_jev/labs/lab02_image_to_decision.py",
+        "path": "week24_typed_decisions_jev/13_multimodal_jev",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/13_multimodal_jev/labs/lab02_image_to_decision.py",
         "mode": "$0 DRY · keys for LIVE",
         "what": "A vision model turns an image into text; Jev turns that text into a typed decision."
+      },
+      {
+        "name": "14 · Live voice referee",
+        "path": "week24_typed_decisions_jev/14_live_realtime_jev",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/14_live_realtime_jev/labs/lab03_jev_referee.py",
+        "mode": "$0 DRY · keys for LIVE",
+        "what": "Jev is the sub-second referee inside a live voice call; every action it flags is a proposal, never an act."
+      },
+      {
+        "name": "15 · Jev sees images",
+        "path": "week24_typed_decisions_jev/15_jev_sees_images",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/15_jev_sees_images/labs/lab03_box_and_crop.py",
+        "mode": "$0 DRY · key for LIVE",
+        "what": "Jev 1.14 reads a photo: Choice and Noul on the image, then Box finds where to crop."
+      },
+      {
+        "name": "16 · Local System One bake-off",
+        "path": "week24_typed_decisions_jev/16_local_system_one_models",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/16_local_system_one_models/labs/lab05_bakeoff.py",
+        "mode": "local models · ~2 min",
+        "what": "Laya, GLiNER and GLiNER2.5-Decide run offline against Jev on 18 EN/TH tickets: accuracy, speed, cost, calibration."
+      },
+      {
+        "name": "17 · Did the fine-tune work?",
+        "path": "week24_typed_decisions_jev/17_finetune_system_one",
+        "run": "JEV_MODE=dry .venv/bin/python week24_typed_decisions_jev/17_finetune_system_one/labs/lab06_evaluate.py",
+        "mode": "local models · ~2 min",
+        "what": "Grade the fine-tuned models on 66 held-out tickets with CIs, fixed/broke and calibration, ready for SHIP or HOLD."
       }
     ],
     "quiz": [
@@ -2504,8 +2533,8 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Jev LIVE costs $0.042 per million input tokens and output is free; a typical lab call is about $0.00002.",
-    "readme": "week24/README.md",
-    "minutes": 480
+    "readme": "week24_typed_decisions_jev/README.md",
+    "minutes": 625
   },
   {
     "id": "25",
@@ -2513,7 +2542,7 @@ export const WEEKS: Week[] = [
     "phase": 6,
     "emoji": "⚡",
     "tagline": "One Spark (or two) = a private AI stack, no cloud",
-    "summary": "A 21-module EN/Thai course built on NVIDIA's DGX Spark playbooks. You serve models many ways, put one LiteLLM gateway in front, fine-tune a hotel router, and run a NAT agent inside an OpenShell sandbox. Labs drive your Spark over SSH (LIVE) or run DRY with every output clearly labelled.",
+    "summary": "A 21-module EN/Thai course built on NVIDIA's DGX Spark playbooks. You serve models many ways, put one LiteLLM gateway in front, fine-tune a hotel router, and run a NAT agent inside an OpenShell sandbox. Labs drive your Spark over SSH (LIVE) or run DRY with every output clearly labelled. Instructors start from START_HERE.md: one ready check and one command get two cabled Sparks ready for class, and Module 05 can run Nemotron 3 Super 120B in FP8 across both.",
     "concepts": [
       {
         "name": "LIVE vs DRY labels",
@@ -2552,64 +2581,72 @@ export const WEEKS: Week[] = [
     "needs": [
       "DGX Spark via SSH (LIVE only; DRY runs anywhere)",
       "Ollama on the laptop (HTTP labs stand-in)",
-      "week25/.venv-nat and .venv-litellm (Modules 08, 13, 14, 20)"
+      "week25_dgx_spark/.venv-nat and .venv-litellm (Modules 08, 13, 14, 20)",
+      "a second Spark over QSFP (optional: Modules 02, 05 §6, 11)"
     ],
-    "start": ".venv/bin/python week25/00_spark_lab_runner/tutorial_server.py",
+    "start": ".venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py",
     "labs": [
       {
         "name": "Spark Lab Runner",
-        "path": "week25/00_spark_lab_runner",
-        "run": ".venv/bin/python week25/00_spark_lab_runner/tutorial_server.py",
+        "path": "week25_dgx_spark/00_spark_lab_runner",
+        "run": ".venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py",
         "port": 8125,
         "mode": "LIVE (ssh) / DRY switch",
         "what": "All 21 modules in one course: Spark status chips, Ask the Spark, a terminal for laptop or Spark."
       },
       {
+        "name": "Instructor ready check",
+        "path": "week25_dgx_spark/START_HERE.md",
+        "run": "week25_dgx_spark/spark_host/ready_check.sh",
+        "mode": "on Spark A · instructors",
+        "what": "One check that both Sparks, the sparklab account, the keys and the downloads are ready before class."
+      },
+      {
         "name": "01 · Meet your Spark",
-        "path": "week25/01_meet_your_spark",
-        "run": ".venv/bin/python week25/01_meet_your_spark/labs/lab02_memory_budget.py",
+        "path": "week25_dgx_spark/01_meet_your_spark",
+        "run": ".venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab02_memory_budget.py",
         "mode": "$0 · arithmetic, no Spark",
         "what": "Memory-budget arithmetic: what fits in 128 GB and the decode speed ceiling. Runs anywhere."
       },
       {
         "name": "03 · Ollama + Open WebUI",
-        "path": "week25/03_ollama_open_webui",
-        "run": "SPARK_MODE=dry .venv/bin/python week25/03_ollama_open_webui/labs/lab03_speed_benchmark.py",
+        "path": "week25_dgx_spark/03_ollama_open_webui",
+        "run": "SPARK_MODE=dry .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab03_speed_benchmark.py",
         "mode": "DRY $0 · LIVE on Spark",
         "what": "Measure time-to-first-token and tok/s and compare them with the bandwidth ceiling."
       },
       {
         "name": "05 · vLLM",
-        "path": "week25/05_vllm",
-        "run": "SPARK_MODE=dry .venv/bin/python week25/05_vllm/labs/lab01_launch_builder.py",
+        "path": "week25_dgx_spark/05_vllm",
+        "run": "SPARK_MODE=dry .venv/bin/python week25_dgx_spark/05_vllm/labs/lab01_launch_builder.py",
         "mode": "DRY $0 · LIVE on Spark",
         "what": "Build a vLLM launch command; later labs cover batching, tool calls and two-Spark tensor parallel."
       },
       {
         "name": "08 · LiteLLM gateway",
-        "path": "week25/08_litellm_gateway",
-        "run": ".venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py",
+        "path": "week25_dgx_spark/08_litellm_gateway",
+        "run": ".venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py",
         "mode": "$0 · laptop, offline",
         "what": "Write a gateway config so every engine and both Sparks sit behind one URL and one key."
       },
       {
         "name": "09 · LLaMA Factory fine-tune",
-        "path": "week25/09_llama_factory",
-        "run": "SPARK_MODE=dry .venv/bin/python week25/09_llama_factory/labs/lab02_hotel_dataset.py",
+        "path": "week25_dgx_spark/09_llama_factory",
+        "run": "SPARK_MODE=dry .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab02_hotel_dataset.py",
         "mode": "DRY $0 · LIVE on Spark",
         "what": "Build the hotel-router dataset, then configure and launch a LoRA/QLoRA run."
       },
       {
         "name": "13 · Fine-tune to serve",
-        "path": "week25/13_finetune_to_serve",
-        "run": ".venv/bin/python week25/13_finetune_to_serve/labs/lab01_baseline.py",
+        "path": "week25_dgx_spark/13_finetune_to_serve",
+        "run": ".venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab01_baseline.py",
         "mode": "$0 · laptop (Ollama or DRY)",
         "what": "Score a baseline with the same rules as the fine-tune: valid JSON, right dept, no missed emergency."
       },
       {
         "name": "20 · Capstone sovereign agent",
-        "path": "week25/20_capstone_sovereign_agent",
-        "run": "SPARK_MODE=dry .venv/bin/python week25/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py",
+        "path": "week25_dgx_spark/20_capstone_sovereign_agent",
+        "run": "SPARK_MODE=dry .venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py",
         "mode": "DRY $0 · laptop stand-in",
         "what": "Plan and preflight fine-tune → serve → gateway → NAT agent in a sandbox, across two Sparks."
       }
@@ -2650,7 +2687,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "audit_references.py checks every REFERENCE against the playbooks: 139 lines, 0 mismatches.",
-    "readme": "week25/README.md",
+    "readme": "week25_dgx_spark/README.md",
     "minutes": 600
   },
   {
@@ -2659,7 +2696,7 @@ export const WEEKS: Week[] = [
     "phase": 6,
     "emoji": "🦞",
     "tagline": "Cage your agent in a sandbox, then prove the bars hold",
-    "summary": "You build Alto Ops Claw, a hotel chiller-plant assistant, as a claw: an always-on agent inside an NVIDIA OpenShell sandbox, installed with NemoClaw on a DGX Spark. You write its logic in NeMo Agent Toolkit, then trace, benchmark and harden it. No Spark? Spark labs run DRY and laptop labs still run for real.",
+    "summary": "You build Alto Ops Claw, a hotel chiller-plant assistant, as a claw: an always-on agent inside an NVIDIA OpenShell sandbox, installed with NemoClaw on a DGX Spark. You write its logic in NeMo Agent Toolkit, then trace, benchmark and harden it. No Spark? Spark labs run DRY and laptop labs still run for real. Module 06 ends with a four-model bake-off on one Spark, Nemotron 3.5 Super VL included.",
     "concepts": [
       {
         "name": "What a claw is",
@@ -2694,66 +2731,73 @@ export const WEEKS: Week[] = [
       "caption": "The sandboxed agent calls inference.local; the gateway adds the real key and routes it to a local model."
     },
     "needs": [
-      "week26/.venv-nat (NAT 1.9.0)",
-      "week26/.venv-openshell (OpenShell 0.0.111)",
+      "week26_nemoclaw_claws/.venv-nat (NAT 1.9.0)",
+      "week26_nemoclaw_claws/.venv-openshell (OpenShell 0.0.111)",
       "Ollama + nemotron-3-nano",
       "DGX Spark via SPARK_HOST (optional, DRY without)"
     ],
-    "start": ".venv/bin/python week26/00_reef_lab_runner/tutorial_server.py",
+    "start": ".venv/bin/python week26_nemoclaw_claws/00_reef_lab_runner/tutorial_server.py",
     "labs": [
       {
         "name": "The claw map",
-        "path": "week26/01_what_is_a_claw/labs/lab01_1_claw_map.py",
-        "run": ".venv/bin/python week26/01_what_is_a_claw/labs/lab01_1_claw_map.py",
+        "path": "week26_nemoclaw_claws/01_what_is_a_claw/labs/lab01_1_claw_map.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/01_what_is_a_claw/labs/lab01_1_claw_map.py",
         "mode": "read-only · laptop + Spark or DRY",
         "what": "Find which parts of the stack (NAT, OpenShell, Docker, Ollama) exist on your laptop and on your Spark."
       },
       {
         "name": "Prove inference is local",
-        "path": "week26/02_first_claw/labs/lab02_4_inference_is_local.py",
-        "run": ".venv/bin/python week26/02_first_claw/labs/lab02_4_inference_is_local.py",
+        "path": "week26_nemoclaw_claws/02_first_claw/labs/lab02_4_inference_is_local.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/02_first_claw/labs/lab02_4_inference_is_local.py",
         "mode": "Spark LIVE / DRY",
         "what": "Check the route names a local provider, list models from inside the sandbox, and watch a cloud call fail."
       },
       {
         "name": "The policy iterate loop",
-        "path": "week26/03_policy_as_code/labs/lab03_3_iterate_loop.py",
-        "run": ".venv/bin/python week26/03_policy_as_code/labs/lab03_3_iterate_loop.py",
+        "path": "week26_nemoclaw_claws/03_policy_as_code/labs/lab03_3_iterate_loop.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_3_iterate_loop.py",
         "mode": "changes need 🔓 Allow changes",
         "what": "Deny, observe, allow, verify: feed endpoint specs to the real OpenShell CLI offline, then loop on your Spark."
       },
       {
         "name": "A custom tool: chiller_kpi",
-        "path": "week26/04_nat_claws/labs/lab04_2_custom_tool.py",
-        "run": ".venv/bin/python week26/04_nat_claws/labs/lab04_2_custom_tool.py",
+        "path": "week26_nemoclaw_claws/04_nat_claws/labs/lab04_2_custom_tool.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/04_nat_claws/labs/lab04_2_custom_tool.py",
         "mode": "laptop NAT + Ollama",
         "what": "Compute ground truth with no LLM, then ask the agent twice and see why a tool description is a prompt."
       },
       {
         "name": "Agent traces",
-        "path": "week26/05_tracing/labs/lab05_1_file_and_phoenix.py",
-        "run": ".venv/bin/python week26/05_tracing/labs/lab05_1_file_and_phoenix.py",
+        "path": "week26_nemoclaw_claws/05_tracing/labs/lab05_1_file_and_phoenix.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/05_tracing/labs/lab05_1_file_and_phoenix.py",
         "mode": "laptop NAT + Ollama",
         "what": "Run Alto Ops Claw with NAT's file exporter and read its spans, tokens and durations."
       },
       {
         "name": "The sandbox tax",
-        "path": "week26/06_benchmarking/labs/lab06_4_sandbox_tax.py",
-        "run": ".venv/bin/python week26/06_benchmarking/labs/lab06_4_sandbox_tax.py",
+        "path": "week26_nemoclaw_claws/06_benchmarking/labs/lab06_4_sandbox_tax.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_4_sandbox_tax.py",
         "mode": "laptop stand-in + Spark or DRY",
         "what": "Run the same nat eval on two paths and compare p95 runtime: what the sandbox costs you."
       },
       {
+        "name": "Model bake-off",
+        "path": "week26_nemoclaw_claws/06_benchmarking/tools/model_bakeoff.py",
+        "run": "python3 week26_nemoclaw_claws/06_benchmarking/tools/model_bakeoff.py --name \"Nemotron 3.5 Super VL\" --url http://127.0.0.1:8000/v1 --model nemotron-3.5-super-vl --vision",
+        "mode": "on Spark · any OpenAI-compatible server",
+        "what": "The same speed, HVAC exam, tool-call and image checks for every model, one request at a time at temperature 0."
+      },
+      {
         "name": "Threat model: 12 attack steps",
-        "path": "week26/07_hardening/labs/lab07_1_threat_model.py",
-        "run": ".venv/bin/python week26/07_hardening/labs/lab07_1_threat_model.py",
+        "path": "week26_nemoclaw_claws/07_hardening/labs/lab07_1_threat_model.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/07_hardening/labs/lab07_1_threat_model.py",
         "mode": "offline",
         "what": "A prompt-injected claw tries 12 steps; a draft and a production policy each decide every one."
       },
       {
         "name": "Capstone: evidence and grade",
-        "path": "week26/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py",
-        "run": ".venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py",
+        "path": "week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py",
+        "run": ".venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py",
         "mode": "no LLM calls",
         "what": "Grade Alto Ops Claw v1 on the capstone scheme; Spark points need real Spark evidence."
       }
@@ -2791,157 +2835,162 @@ export const WEEKS: Week[] = [
         ],
         "answer": 1,
         "why": "Spark output is never invented: RECORDED is a real transcript, REFERENCE is quoted from docs, EXAMPLE is a shape."
+      },
+      {
+        "q": "In Module 06's bake-off, why was Nemotron 3.5 Lightning about 3× faster than the other models?",
+        "options": [
+          "It skipped the tool calls",
+          "It has only 3B active parameters per token",
+          "It ran on both Sparks at once",
+          "Thinking was turned off only for it"
+        ],
+        "answer": 1,
+        "why": "Speed follows active parameters, then the drafter: Lightning (3B active) hit 93.3 tok/s against 22–31 tok/s for the 12B-active models."
       }
     ],
     "funFact": "NemoClaw ships three harnesses: OpenClaw, Hermes and LangChain Deep Agents, all behind the same OpenShell boundary.",
-    "readme": "week26/README.md",
+    "readme": "week26_nemoclaw_claws/README.md",
     "minutes": 750
   },
   {
     "id": "27",
-    "title": "Multimodal Embeddings on the Edge",
+    "title": "Software Factory — an org chart made of loops",
     "phase": 6,
-    "emoji": "🪆",
-    "tagline": "Photos, voicemails and CCTV as vectors that never leave the building",
-    "summary": "You turn text, photos, voicemails and CCTV into vectors on your own machine with Google DeepMind's EmbeddingGemma 2 (740M, Apache 2.0). Then you build search, private RAG and Alto Edge Memory, a hotel agent memory that never sends a byte off the premises. All data is synthetic.",
+    "emoji": "🏭",
+    "tagline": "Build the thing that builds the software: tickets in, merged PRs out",
+    "summary": "You build a software factory: a kanban of linted tickets drained by unattended Build → QA → Review lanes, one Claude Code skill each, with state kept only in GitHub. Deterministic guard hooks, a merge gate and behavioural evals keep it honest, and production telemetry files its own verified tickets. The target is Alto Mini, a small hotel-energy app with seeded, ticketable bugs; the reference is Eric Tech's open-source super-board.",
     "concepts": [
       {
-        "name": "The device ladder",
-        "explain": "Capacity decides what fits, bandwidth decides how fast it runs. An embedding model fits rungs below any chat model."
+        "name": "The ticket is the contract",
+        "explain": "Every ticket has Problem, Context, Fix, Acceptance Criteria, Risk and Blocked by, 2–5 checkbox ACs and no vague words, so a lane can act on it unattended."
       },
       {
-        "name": "Matryoshka vectors",
-        "explain": "The first 512, 256 or 128 of the 768 numbers are a usable smaller vector. Cut, re-normalise, keep going."
+        "name": "Lanes, not one agent",
+        "explain": "Build, QA and Review are separate skills, each in its own worktree per issue, handing work on through GitHub labels and PRs."
       },
       {
-        "name": "One multimodal space",
-        "explain": "Text, photos, voice and video share one 768-d space, so a plain text question can find a photo or voicemail."
+        "name": "The test-gap ledger",
+        "explain": "QA maps each acceptance criterion to the tests that prove it; an AC with no test is a High gap, and a fix must go red first."
       },
       {
-        "name": "The modality gap",
-        "explain": "Items of the same modality cluster together whatever they mean, so in one ranked list notes crowd out media."
+        "name": "The merge gate",
+        "explain": "Merge only at the reviewed SHA, with no human-only label, under the size cap, and with tests passing on base + branch."
       },
       {
-        "name": "Egress proof",
-        "explain": "\"It runs locally\" becomes evidence: a guard logs every connection attempt and blocks deliberate leaks."
+        "name": "Guards and evals",
+        "explain": "PreToolUse hooks exit 2 to block secrets, stray worktrees and protected pushes; plugin evals measure the lanes' behaviour."
       }
     ],
     "flow": {
-      "title": "Sovereign RAG, all on one machine",
+      "title": "One ticket through the factory",
       "nodes": [
-        "Media + text",
-        "EmbeddingGemma",
-        "768-d vector",
-        "SQLite store",
-        "Local Gemma 4"
+        "Linted ticket",
+        "Build lane",
+        "QA lane",
+        "Review lane",
+        "Merge gate",
+        "Telemetry"
       ],
-      "loop": false,
-      "caption": "Notes, photos and voicemails become vectors in one space, are stored locally, and feed a private answer."
+      "loop": true,
+      "caption": "A ticket becomes a PR that is tested, reviewed and merged at the reviewed SHA; telemetry turns new errors into new tickets."
     },
     "needs": [
-      "week27/.venv-embed (transformers ≥ 5.19)",
-      "1.5 GB model download on first run",
-      "Ollama + gemma4:12b (Modules 05, 07)",
-      "ffmpeg (video)",
-      "Apple-silicon Mac + week27/.venv-mlx (Module 08)"
+      "make + the shared .venv (Alto Mini)",
+      "pytest (e.g. uvx pytest) for the exercise solutions",
+      "Claude Code + gh for the live factory labs",
+      "a GitHub repo you can let the factory push to"
     ],
-    "start": ".venv/bin/python week27/00_embed_lab_runner/tutorial_server.py",
+    "start": "cd week27_software_factory/00_alto_mini && make seed && make test && make dev",
     "labs": [
       {
-        "name": "The device ladder",
-        "path": "week27/01_local_sovereign_edge/labs/lab01_1_device_ladder.py",
-        "run": "week27/.venv-embed/bin/python week27/01_local_sovereign_edge/labs/lab01_1_device_ladder.py",
-        "mode": "offline · no model needed",
-        "what": "Climb from a 32 KB Arduino to 8× H100 with a fit rule of thumb, and see where an embedding model lands."
+        "name": "Alto Mini, the target",
+        "path": "week27_software_factory/00_alto_mini/Makefile",
+        "run": "make -C week27_software_factory/00_alto_mini seed test",
+        "port": 8127,
+        "mode": "offline",
+        "what": "Seed 14 days of hotel-energy data with its known gaps and run the 6 unit and API tests."
       },
       {
-        "name": "First vectors",
-        "path": "week27/02_first_embeddings/labs/lab02_1_first_vectors.py",
-        "run": "week27/.venv-embed/bin/python week27/02_first_embeddings/labs/lab02_1_first_vectors.py",
-        "mode": "1.5 GB download on first run",
-        "what": "Turn sentences into 768 numbers, check their length is 1, and run your first semantic search."
+        "name": "Lint a ticket",
+        "path": "week27_software_factory/02_ticket_and_builder/exercises/ex02_ticket_lint.py",
+        "run": "uvx pytest -q week27_software_factory/02_ticket_and_builder/exercises/solutions/test_ex02.py",
+        "mode": "offline",
+        "what": "Check the five ticket rules: sections, 2–5 checkbox ACs, no vague words, a risk emoji, a Where: line."
       },
       {
-        "name": "Matryoshka: cut the vector",
-        "path": "week27/03_matryoshka_and_quantization/labs/lab03_1_matryoshka.py",
-        "run": "week27/.venv-embed/bin/python week27/03_matryoshka_and_quantization/labs/lab03_1_matryoshka.py",
-        "mode": "offline after download",
-        "what": "Keep the first 512, 256 or 128 numbers and measure recall, storage and what you lose."
+        "name": "The test-gap ledger",
+        "path": "week27_software_factory/03_qa_lane/exercises/ex03_ledger.py",
+        "run": "uvx pytest -q week27_software_factory/03_qa_lane/exercises/solutions/test_ex03.py",
+        "mode": "offline",
+        "what": "Match each acceptance criterion to test ids and flag every uncovered one as a High gap."
       },
       {
-        "name": "Cross-modal search",
-        "path": "week27/04_multimodal_search/labs/lab04_1_cross_modal.py",
-        "run": "week27/.venv-embed/bin/python week27/04_multimodal_search/labs/lab04_1_cross_modal.py",
-        "mode": "all encoders (740M)",
-        "what": "A plain-English question finds the right photo or voicemail, with no captions or transcripts."
+        "name": "Adversarial review",
+        "path": "week27_software_factory/04_review_and_merge_gate/exercises/ex04_min_confidence.py",
+        "run": "uvx pytest -q week27_software_factory/04_review_and_merge_gate/exercises/solutions/test_ex04.py",
+        "mode": "offline",
+        "what": "Take the minimum confidence across reviewers, and never let over-engineering alone block a PR."
       },
       {
-        "name": "Egress proof",
-        "path": "week27/05_sovereign_rag/labs/lab05_1_egress_proof.py",
-        "run": "week27/.venv-embed/bin/python week27/05_sovereign_rag/labs/lab05_1_egress_proof.py",
-        "mode": "network fenced off",
-        "what": "Embed and search with only loopback allowed, then watch two deliberate leaks get blocked and logged."
+        "name": "Red-team the guards",
+        "path": "week27_software_factory/05_guards_and_evals/exercises/ex05_hook_fuzz.py",
+        "run": "cd week27_software_factory/05_guards_and_evals/exercises && python3 ex05_hook_fuzz.py",
+        "mode": "offline",
+        "what": "Fire commands at every guard hook, read the confusion table, then add five that slip through and fix the regex."
       },
       {
-        "name": "Private RAG",
-        "path": "week27/05_sovereign_rag/labs/lab05_3_private_rag.py",
-        "run": "week27/.venv-embed/bin/python week27/05_sovereign_rag/labs/lab05_3_private_rag.py",
-        "mode": "Ollama + gemma4:12b",
-        "what": "Local embeddings find the notes and a local Gemma 4 answers from them, citing each one."
+        "name": "The telemetry verifier",
+        "path": "week27_software_factory/06_telemetry_to_tickets/exercises/ex06_verifier.py",
+        "run": "uvx pytest -q week27_software_factory/06_telemetry_to_tickets/exercises/solutions/test_ex06.py",
+        "mode": "offline",
+        "what": "Decide whether an error becomes a ticket: real, still happening, not already fixed, not a duplicate."
       },
       {
-        "name": "Build Alto Edge Memory",
-        "path": "week27/07_capstone_alto_edge_memory/labs/lab07_1_build_memory.py",
-        "run": "week27/.venv-embed/bin/python week27/07_capstone_alto_edge_memory/labs/lab07_1_build_memory.py",
-        "mode": "offline · egress guard on",
-        "what": "Index notes, photos, voicemails, CCTV and incidents into one SQLite file at 512 dimensions."
-      },
-      {
-        "name": "The memory agent",
-        "path": "week27/07_capstone_alto_edge_memory/labs/lab07_2_memory_agent.py",
-        "run": "week27/.venv-embed/bin/python week27/07_capstone_alto_edge_memory/labs/lab07_2_memory_agent.py",
-        "mode": "Ollama · ≤ 6 LLM calls",
-        "what": "A local Gemma 4 searches each kind of memory before it answers two night-shift questions (EN + Thai)."
+        "name": "Guard hook tests",
+        "path": "week27_software_factory/factory/tests",
+        "run": "uvx pytest -q week27_software_factory/factory/tests",
+        "mode": "offline",
+        "what": "The starter kit's own tests for the PreToolUse guards that block with exit 2."
       }
     ],
     "quiz": [
       {
-        "q": "How many numbers are in a full EmbeddingGemma 2 vector?",
+        "q": "When does the merge gate refuse to merge a reviewed PR?",
         "options": [
-          "128",
-          "512",
-          "768",
-          "3072"
+          "Never, once review approves",
+          "Only when tests fail",
+          "When the head moved since review, a human-only label is set, the PR is too big, or tests fail on base + branch",
+          "Only when a human-only label is set"
         ],
         "answer": 2,
-        "why": "Lab 02-1 shows shape (768,), with length about 1 because the model's last module normalises every vector."
+        "why": "merge-gate.sh checks all four: head == reviewed SHA, no human-only label, size under the cap, and the verify command on base + branch."
       },
       {
-        "q": "What is the modality gap?",
+        "q": "How does a PreToolUse guard hook block a command?",
         "options": [
-          "Thai text cannot be embedded",
-          "Video takes longer to embed than text",
-          "GGUF builds lose audio support",
-          "Same-modality items cluster together, whatever they mean"
+          "It exits with code 2",
+          "It prints a warning",
+          "It deletes the worktree",
+          "It asks the model nicely"
         ],
-        "answer": 3,
-        "why": "A Thai voicemail sat closer to an unrelated towel voicemail (0.702) than to the English note meaning the same (0.644)."
+        "answer": 0,
+        "why": "In the starter kit, exit 2 blocks the tool call and the hook's message tells the agent why."
       },
       {
-        "q": "On the device ladder, what decides how fast a model runs?",
+        "q": "In the adversarial review exercise, how is the overall confidence computed?",
         "options": [
-          "Capacity",
-          "Disk size",
-          "Screen resolution",
-          "Bandwidth"
+          "The average across reviewers",
+          "The highest reviewer's score",
+          "The minimum across reviewers",
+          "The last reviewer's score"
         ],
-        "answer": 3,
-        "why": "Module 01's one idea: capacity decides what fits, bandwidth decides how fast it runs."
+        "answer": 2,
+        "why": "ex04 takes the minimum, so a single doubtful reviewer is enough to hold the PR."
       }
     ],
-    "funFact": "Cutting vectors from 768 to 256 numbers costs under 1 point on the model card's MTEB multilingual v2: 61.36 vs 60.41.",
-    "readme": "week27/README.md",
-    "minutes": 390
+    "funFact": "The course authors ran every offline part of this week, but none of it against a live Claude Code CLI; your first live run in Lab 05 is the verification.",
+    "readme": "week27_software_factory/README.md",
+    "minutes": 1230
   },
   {
     "id": "28",
@@ -2987,61 +3036,61 @@ export const WEEKS: Week[] = [
     "needs": [
       "Ollama + gemma4:12b (optional, LIVE brain)"
     ],
-    "start": ".venv/bin/python week28/00_maestro_lab_runner/tutorial_server.py",
+    "start": ".venv/bin/python week28_maestro_mas_security/00_maestro_lab_runner/tutorial_server.py",
     "labs": [
       {
         "name": "The first compromise",
-        "path": "week28/01_why_mas_security/labs/lab01_2_first_compromise.py",
-        "run": ".venv/bin/python week28/01_why_mas_security/labs/lab01_2_first_compromise.py",
+        "path": "week28_maestro_mas_security/01_why_mas_security/labs/lab01_2_first_compromise.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/01_why_mas_security/labs/lab01_2_first_compromise.py",
         "mode": "$0 · SIM/LIVE switch",
         "what": "One extra sentence travels from a guest to the chiller; then rerun with every defense on."
       },
       {
         "name": "Threat diff and CI gate",
-        "path": "week28/03_threat_model_as_code/labs/lab03_3_diff_and_gate.py",
-        "run": ".venv/bin/python week28/03_threat_model_as_code/labs/lab03_3_diff_and_gate.py",
+        "path": "week28_maestro_mas_security/03_threat_model_as_code/labs/lab03_3_diff_and_gate.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/03_threat_model_as_code/labs/lab03_3_diff_and_gate.py",
         "mode": "$0 · SIM only",
         "what": "Add a LINE guest channel, diff the threat model, and watch the CI gate fail, then pass after a fix."
       },
       {
         "name": "Spotlight: static vs nonce",
-        "path": "week28/04_goal_hijack_injection/labs/lab04_2_spotlight_static_vs_nonce.py",
-        "run": ".venv/bin/python week28/04_goal_hijack_injection/labs/lab04_2_spotlight_static_vs_nonce.py",
+        "path": "week28_maestro_mas_security/04_goal_hijack_injection/labs/lab04_2_spotlight_static_vs_nonce.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/04_goal_hijack_injection/labs/lab04_2_spotlight_static_vs_nonce.py",
         "mode": "$0 · SIM/LIVE switch",
         "what": "Break a static data marker with one line of page text, then see a random per-run nonce hold."
       },
       {
         "name": "Confused deputy + provenance",
-        "path": "week28/05_tool_misuse_privilege/labs/lab05_2_confused_deputy_and_provenance.py",
-        "run": ".venv/bin/python week28/05_tool_misuse_privilege/labs/lab05_2_confused_deputy_and_provenance.py",
+        "path": "week28_maestro_mas_security/05_tool_misuse_privilege/labs/lab05_2_confused_deputy_and_provenance.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/05_tool_misuse_privilege/labs/lab05_2_confused_deputy_and_provenance.py",
         "mode": "$0 · SIM only",
         "what": "Least agency isn't enough; authorise by who wrote the request and see attacks blocked with reasons."
       },
       {
         "name": "Look-alike vendors, pinning",
-        "path": "week28/06_inter_agent_trust_a2a/labs/lab06_2_lookalike_and_pinning.py",
-        "run": ".venv/bin/python week28/06_inter_agent_trust_a2a/labs/lab06_2_lookalike_and_pinning.py",
+        "path": "week28_maestro_mas_security/06_inter_agent_trust_a2a/labs/lab06_2_lookalike_and_pinning.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/06_inter_agent_trust_a2a/labs/lab06_2_lookalike_and_pinning.py",
         "mode": "$0 · SIM/LIVE switch",
         "what": "A second \"Acme HVAC Parts\" Agent Card appears; signed, pinned cards stop it. Discovery by name isn't identity."
       },
       {
         "name": "Memory poisoning persists",
-        "path": "week28/07_memory_rag_poisoning/labs/lab07_1_memory_poisoning_persists.py",
-        "run": ".venv/bin/python week28/07_memory_rag_poisoning/labs/lab07_1_memory_poisoning_persists.py",
+        "path": "week28_maestro_mas_security/07_memory_rag_poisoning/labs/lab07_1_memory_poisoning_persists.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/07_memory_rag_poisoning/labs/lab07_1_memory_poisoning_persists.py",
         "mode": "$0 · SIM/LIVE switch",
         "what": "One guest saves a fake policy note; another guest's session obeys it, until a memory gate blocks the write."
       },
       {
         "name": "The full red-team suite",
-        "path": "week28/09_red_team_scorecard/labs/lab09_1_full_suite.py",
-        "run": ".venv/bin/python week28/09_red_team_scorecard/labs/lab09_1_full_suite.py",
+        "path": "week28_maestro_mas_security/09_red_team_scorecard/labs/lab09_1_full_suite.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/09_red_team_scorecard/labs/lab09_1_full_suite.py",
         "mode": "$0 · SIM only · ~1 s",
         "what": "12 attacks and 8 benign tasks, naive vs all defenses: attack success rate, utility, and coverage."
       },
       {
         "name": "Capstone: apply and measure",
-        "path": "week28/10_capstone_secure_ensemble/labs/lab10_2_apply_and_measure.py",
-        "run": ".venv/bin/python week28/10_capstone_secure_ensemble/labs/lab10_2_apply_and_measure.py",
+        "path": "week28_maestro_mas_security/10_capstone_secure_ensemble/labs/lab10_2_apply_and_measure.py",
+        "run": ".venv/bin/python week28_maestro_mas_security/10_capstone_secure_ensemble/labs/lab10_2_apply_and_measure.py",
         "mode": "$0 · SIM",
         "what": "Score your defense set against the suite and the GM's budget, with evidence for every threat."
       }
@@ -3082,7 +3131,7 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "On the SIM brain the naive ensemble is harmed by all 12 attacks; with every defense on, 0 of 12 succeed and 8 of 8 tasks still work.",
-    "readme": "week28/README.md",
+    "readme": "week28_maestro_mas_security/README.md",
     "minutes": 560
   },
   {
@@ -3130,60 +3179,60 @@ export const WEEKS: Week[] = [
       "Claude Code 2.1.287+",
       "Ollama (optional, lesson 07)"
     ],
-    "start": "claude plugin marketplace add ./week29 && claude plugin install mod-gym@fitness-week29  # then type /mod-gym in Claude Code",
+    "start": "claude plugin marketplace add ./week29_claude_code_mods && claude plugin install mod-gym@fitness-week29  # then type /mod-gym in Claude Code",
     "labs": [
       {
         "name": "01 What a mod is",
-        "path": "week29/01_what_is_a_mod/TUTORIAL.md",
+        "path": "week29_claude_code_mods/01_what_is_a_mod/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 1",
         "what": "Mods vs skills, settings hooks and MCP; the trust model; audit with claude plugin validate; tour Mod Gym."
       },
       {
         "name": "02 Your first mod: three files",
-        "path": "week29/02_first_mod/TUTORIAL.md",
+        "path": "week29_claude_code_mods/02_first_mod/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 2 · press c to check",
         "what": "plugin.json, hooks.json modules and register; validate, --plugin-dir and hot reload. Add a spinner suffix."
       },
       {
         "name": "03 The hook pipeline",
-        "path": "week29/03_hook_pipeline/TUTORIAL.md",
+        "path": "week29_claude_code_mods/03_hook_pipeline/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 3 · press c to check",
         "what": "Observe, rewrite, wrap and answer, reading the Events tape. Add a tool-call counter and prompt context."
       },
       {
         "name": "04 Guards: deny, hold, catch",
-        "path": "week29/04_guards/TUTORIAL.md",
+        "path": "week29_claude_code_mods/04_guards/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 4 · press c to check",
         "what": "{ deny }, $.ui.ask, .catch and fail-closed guards, plus a measured hook-order bug. Add a force-push guard."
       },
       {
         "name": "05 Draw: panes, bands, toasts",
-        "path": "week29/05_drawing/TUTORIAL.md",
+        "path": "week29_claude_code_mods/05_drawing/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 5 · press c to check",
         "what": "Surfaces, panes, bands, status and toasts, shared with other plugins. Add a band with a button."
       },
       {
         "name": "06 State that survives",
-        "path": "week29/06_state_and_store/TUTORIAL.md",
+        "path": "week29_claude_code_mods/06_state_and_store/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 6 · press c to check",
         "what": "Module variables vs $.state atoms vs $.store, and the PluginState contract. Make your reps persist."
       },
       {
         "name": "07 Commands, tools, models",
-        "path": "week29/07_commands_tools_models/TUTORIAL.md",
+        "path": "week29_claude_code_mods/07_commands_tools_models/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 7 · press c to check",
         "what": "Slash commands with no Claude turn, tools Claude calls, $.model, $.process, $.http. Add /reps and log_reps."
       },
       {
         "name": "08 Test, validate, ship",
-        "path": "week29/08_test_and_ship/TUTORIAL.md",
+        "path": "week29_claude_code_mods/08_test_and_ship/TUTORIAL.md",
         "run": "",
         "mode": "/mod-gym 8 · capstone",
         "what": "claude plugin test, tsc, marketplaces and versions; capstone: audit and fix the untested research starter."
@@ -3225,8 +3274,154 @@ export const WEEKS: Week[] = [
       }
     ],
     "funFact": "Anthropic added mods to Claude Code on 1 October 2026, and Mod Gym, the panel that teaches them, is itself a mod.",
-    "readme": "week29/README.md",
+    "readme": "week29_claude_code_mods/README.md",
     "minutes": 380
+  },
+  {
+    "id": "30",
+    "title": "Multimodal Embeddings on the Edge",
+    "phase": 6,
+    "emoji": "🪆",
+    "tagline": "Photos, voicemails and CCTV as vectors that never leave the building",
+    "summary": "You turn text, photos, voicemails and CCTV into vectors on your own machine with Google DeepMind's EmbeddingGemma 2 (740M, Apache 2.0). Then you build search, private RAG and Alto Edge Memory, a hotel agent memory that never sends a byte off the premises. All data is synthetic.",
+    "concepts": [
+      {
+        "name": "The device ladder",
+        "explain": "Capacity decides what fits, bandwidth decides how fast it runs. An embedding model fits rungs below any chat model."
+      },
+      {
+        "name": "Matryoshka vectors",
+        "explain": "The first 512, 256 or 128 of the 768 numbers are a usable smaller vector. Cut, re-normalise, keep going."
+      },
+      {
+        "name": "One multimodal space",
+        "explain": "Text, photos, voice and video share one 768-d space, so a plain text question can find a photo or voicemail."
+      },
+      {
+        "name": "The modality gap",
+        "explain": "Items of the same modality cluster together whatever they mean, so in one ranked list notes crowd out media."
+      },
+      {
+        "name": "Egress proof",
+        "explain": "\"It runs locally\" becomes evidence: a guard logs every connection attempt and blocks deliberate leaks."
+      }
+    ],
+    "flow": {
+      "title": "Sovereign RAG, all on one machine",
+      "nodes": [
+        "Media + text",
+        "EmbeddingGemma",
+        "768-d vector",
+        "SQLite store",
+        "Local Gemma 4"
+      ],
+      "loop": false,
+      "caption": "Notes, photos and voicemails become vectors in one space, are stored locally, and feed a private answer."
+    },
+    "needs": [
+      "week30_multimodal_embeddings_edge/.venv-embed (transformers ≥ 5.19)",
+      "1.5 GB model download on first run",
+      "Ollama + gemma4:12b (Modules 05, 07)",
+      "ffmpeg (video)",
+      "Apple-silicon Mac + week30_multimodal_embeddings_edge/.venv-mlx (Module 08)"
+    ],
+    "start": ".venv/bin/python week30_multimodal_embeddings_edge/00_embed_lab_runner/tutorial_server.py",
+    "labs": [
+      {
+        "name": "The device ladder",
+        "path": "week30_multimodal_embeddings_edge/01_local_sovereign_edge/labs/lab01_1_device_ladder.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/01_local_sovereign_edge/labs/lab01_1_device_ladder.py",
+        "mode": "offline · no model needed",
+        "what": "Climb from a 32 KB Arduino to 8× H100 with a fit rule of thumb, and see where an embedding model lands."
+      },
+      {
+        "name": "First vectors",
+        "path": "week30_multimodal_embeddings_edge/02_first_embeddings/labs/lab02_1_first_vectors.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/02_first_embeddings/labs/lab02_1_first_vectors.py",
+        "mode": "1.5 GB download on first run",
+        "what": "Turn sentences into 768 numbers, check their length is 1, and run your first semantic search."
+      },
+      {
+        "name": "Matryoshka: cut the vector",
+        "path": "week30_multimodal_embeddings_edge/03_matryoshka_and_quantization/labs/lab03_1_matryoshka.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/03_matryoshka_and_quantization/labs/lab03_1_matryoshka.py",
+        "mode": "offline after download",
+        "what": "Keep the first 512, 256 or 128 numbers and measure recall, storage and what you lose."
+      },
+      {
+        "name": "Cross-modal search",
+        "path": "week30_multimodal_embeddings_edge/04_multimodal_search/labs/lab04_1_cross_modal.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/04_multimodal_search/labs/lab04_1_cross_modal.py",
+        "mode": "all encoders (740M)",
+        "what": "A plain-English question finds the right photo or voicemail, with no captions or transcripts."
+      },
+      {
+        "name": "Egress proof",
+        "path": "week30_multimodal_embeddings_edge/05_sovereign_rag/labs/lab05_1_egress_proof.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/05_sovereign_rag/labs/lab05_1_egress_proof.py",
+        "mode": "network fenced off",
+        "what": "Embed and search with only loopback allowed, then watch two deliberate leaks get blocked and logged."
+      },
+      {
+        "name": "Private RAG",
+        "path": "week30_multimodal_embeddings_edge/05_sovereign_rag/labs/lab05_3_private_rag.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/05_sovereign_rag/labs/lab05_3_private_rag.py",
+        "mode": "Ollama + gemma4:12b",
+        "what": "Local embeddings find the notes and a local Gemma 4 answers from them, citing each one."
+      },
+      {
+        "name": "Build Alto Edge Memory",
+        "path": "week30_multimodal_embeddings_edge/07_capstone_alto_edge_memory/labs/lab07_1_build_memory.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/07_capstone_alto_edge_memory/labs/lab07_1_build_memory.py",
+        "mode": "offline · egress guard on",
+        "what": "Index notes, photos, voicemails, CCTV and incidents into one SQLite file at 512 dimensions."
+      },
+      {
+        "name": "The memory agent",
+        "path": "week30_multimodal_embeddings_edge/07_capstone_alto_edge_memory/labs/lab07_2_memory_agent.py",
+        "run": "week30_multimodal_embeddings_edge/.venv-embed/bin/python week30_multimodal_embeddings_edge/07_capstone_alto_edge_memory/labs/lab07_2_memory_agent.py",
+        "mode": "Ollama · ≤ 6 LLM calls",
+        "what": "A local Gemma 4 searches each kind of memory before it answers two night-shift questions (EN + Thai)."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "How many numbers are in a full EmbeddingGemma 2 vector?",
+        "options": [
+          "128",
+          "512",
+          "768",
+          "3072"
+        ],
+        "answer": 2,
+        "why": "Lab 02-1 shows shape (768,), with length about 1 because the model's last module normalises every vector."
+      },
+      {
+        "q": "What is the modality gap?",
+        "options": [
+          "Thai text cannot be embedded",
+          "Video takes longer to embed than text",
+          "GGUF builds lose audio support",
+          "Same-modality items cluster together, whatever they mean"
+        ],
+        "answer": 3,
+        "why": "A Thai voicemail sat closer to an unrelated towel voicemail (0.702) than to the English note meaning the same (0.644)."
+      },
+      {
+        "q": "On the device ladder, what decides how fast a model runs?",
+        "options": [
+          "Capacity",
+          "Disk size",
+          "Screen resolution",
+          "Bandwidth"
+        ],
+        "answer": 3,
+        "why": "Module 01's one idea: capacity decides what fits, bandwidth decides how fast it runs."
+      }
+    ],
+    "funFact": "Cutting vectors from 768 to 256 numbers costs under 1 point on the model card's MTEB multilingual v2: 61.36 vs 60.41.",
+    "readme": "week30_multimodal_embeddings_edge/README.md",
+    "minutes": 390
   },
   {
     "id": "R1",

@@ -28,7 +28,7 @@ Requires:
   - OPENAI_API_KEY in your environment / repo-root .env
   - pip install langchain-openai langchain-text-splitters
 
-Run:  python week15/kg_mastery/part2_building/06_chunking_graphrag.py
+Run:  python week15_production_graphrag/kg_mastery/part2_building/06_chunking_graphrag.py
 """
 import os
 import sys

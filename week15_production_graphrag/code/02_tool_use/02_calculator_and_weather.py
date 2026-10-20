@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 02.2 — Two tools, and a question that needs both.
 
-Run:  python week15/code/02_tool_use/02_calculator_and_weather.py
+Run:  python week15_production_graphrag/code/02_tool_use/02_calculator_and_weather.py
 
 Ask one question that needs math AND weather. Watch the model call multiple
 tools (sometimes across several rounds) — the `while True` loop handles it.

@@ -102,7 +102,7 @@ def review_policy(answers):
 `accepted()` is a gate: confidence ≥ 0.75, top probability ≥ 0.80, and a 0.20 margin over the runner-up. These numbers are **illustrative and uncalibrated** — you would tune them on your own labelled emails (Lab 09).
 
 ```bash
-.venv/bin/python week24/05_email_triage/labs/lab01_triage_inbox.py
+.venv/bin/python week24_typed_decisions_jev/05_email_triage/labs/lab01_triage_inbox.py
 ```
 
 **Expected output**
@@ -143,7 +143,7 @@ Real mail arrives as MIME: headers, an HTML part, a plain-text part, attachments
 5. Drop the sender address — it is not needed to classify the topic (and it is personal data).
 
 ```bash
-.venv/bin/python week24/05_email_triage/labs/lab02_eml_to_state.py
+.venv/bin/python week24_typed_decisions_jev/05_email_triage/labs/lab02_eml_to_state.py
 ```
 
 **Expected output**
@@ -201,7 +201,7 @@ A production version grows in small, reversible steps:
 The full reference implementation of this lab is in the original script — same questions, same policy:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run email --input week24/05_email_triage/data/inbox.jsonl --limit 4 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run email --input week24_typed_decisions_jev/05_email_triage/data/inbox.jsonl --limit 4 --live
 ```
 
 > ⚠ Jev's `suspicious` signal is **not an email-security verdict**. Keep sender authentication (SPF/DKIM/DMARC), malware scanning, and call-back verification of bank-account changes exactly as they are. Adversarial text can move the model.
@@ -216,7 +216,7 @@ The full reference implementation of this lab is in the original script — same
 
 ## Try it yourself
 
-**Exercise 05 — write the review policy.** Open `week24/05_email_triage/exercises/ex05_review_policy.py`. Implement `route(answers)` with these rules, **in priority order**:
+**Exercise 05 — write the review policy.** Open `week24_typed_decisions_jev/05_email_triage/exercises/ex05_review_policy.py`. Implement `route(answers)` with these rules, **in priority order**:
 
 1. `suspicious ≥ 0.5` → `"fraud_desk"`
 2. category is `"other"` → `"human_review"`
@@ -227,7 +227,7 @@ The full reference implementation of this lab is in the original script — same
 The checker runs **seven offline tests first** using hand-made answer dicts — free and deterministic. Only when all pass does it run your policy on the live inbox.
 
 ```bash
-.venv/bin/python week24/05_email_triage/exercises/ex05_review_policy.py
+.venv/bin/python week24_typed_decisions_jev/05_email_triage/exercises/ex05_review_policy.py
 ```
 
 **Expected output**

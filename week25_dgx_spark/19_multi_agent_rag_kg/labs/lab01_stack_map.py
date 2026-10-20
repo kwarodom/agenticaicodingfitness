@@ -10,7 +10,7 @@ vLLM :8000, …) — and adds up the memory the playbooks say each stack needs.
 
 On a Spark it also lists running containers and listening ports (read-only).
 
-Run: .venv/bin/python week25/19_multi_agent_rag_kg/labs/lab01_stack_map.py
+Run: .venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab01_stack_map.py
 """
 import sys
 from pathlib import Path

@@ -38,7 +38,7 @@ CONSOLIDATION_BUDGET_USD = 0.15      # cap the background meta-cognitive agent
 SUMMARISE_BUDGET_USD = 0.02          # cap the GC session-summariser
 
 # ── paths ────────────────────────────────────────────────────────────────────
-PKG = Path(__file__).resolve().parent                 # …/week18/self_evolving_agent
+PKG = Path(__file__).resolve().parent                 # …/week18_self_evolving_sovereign_edge/self_evolving_agent
 MEMORY_DIR = PKG / "memory"
 SKILLS_DIR = MEMORY_DIR / "skills"
 ARCHIVE_DIR = SKILLS_DIR / "archive"

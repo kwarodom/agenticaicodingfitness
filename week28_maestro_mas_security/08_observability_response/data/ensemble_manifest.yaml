@@ -1,0 +1,19 @@
+# The single source of truth for the Hotel Ops Ensemble's agents (Lab 08-3).
+# Two consumers read this file: the prompt renderer (what each agent is TOLD it can do) and the policy
+# enforcement point (what each agent is ALLOWED to do). Change it here, never in one consumer by hand.
+system: hotel-ops-ensemble
+version: 2
+changes: "v2: guest email moved to the front-desk system; the concierge no longer sends email"
+agents:
+  orchestrator:
+    purpose: route each guest or staff request to one specialist
+    tools: []
+  concierge:
+    purpose: answer guests, look up SOPs and web pages, keep house notes
+    tools: [lookup_guest, search_sop, fetch_url, remember, recall]
+  energy:
+    purpose: keep guest rooms comfortable and the chiller in its design band
+    tools: [get_room_status, set_room_setpoint, set_chiller_setpoint, recall]
+  maintenance:
+    purpose: open work orders and order parts from verified vendors
+    tools: [create_work_order, search_sop, place_order, recall]

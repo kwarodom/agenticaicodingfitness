@@ -1,6 +1,6 @@
 # 🧭 Tutorial — auth.md × ADK, step by step
 
-A hands-on walkthrough of `week17/authmd_adk/`. You'll run real code at every
+A hands-on walkthrough of `week17_long_running_distributed_agents/authmd_adk/`. You'll run real code at every
 step and watch the two halves of the deck come together:
 
 - **ADK** keeps a long-running agent's **state** alive across days of idle time.
@@ -17,7 +17,7 @@ Time: ~30 min for Part 1, ~20 min for Part 2.
 > interactive web guide — it streams each command's output in the page and
 > manages the servers for you:
 > ```bash
-> .venv/bin/python week17/authmd_adk/tutorial_server.py   # → http://127.0.0.1:8080
+> .venv/bin/python week17_long_running_distributed_agents/authmd_adk/tutorial_server.py   # → http://127.0.0.1:8080
 > ```
 > The text walkthrough below is the same content, runnable by hand.
 
@@ -65,7 +65,7 @@ Before dissecting it, watch the entire protocol fly past. This one command boots
 the app (Part A) in a background thread and drives it with the client (Part B):
 
 ```bash
-.venv/bin/python week17/authmd_adk/run_authmd_demo.py
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_authmd_demo.py
 ```
 
 You'll see 8 labelled sections scroll by: discovery → agent-verified token →
@@ -89,7 +89,7 @@ discovery chain is **auth.md → PRM → AS metadata**. Start the app on its own
 you can poke it by hand:
 
 ```bash
-.venv/bin/python week17/authmd_adk/app_server.py
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/app_server.py
 ```
 
 In a second terminal:
@@ -162,7 +162,7 @@ Mint a real ID-JAG and exchange it by hand:
 
 ```bash
 .venv/bin/python - <<'PY'
-import sys; sys.path.insert(0, "week17/authmd_adk")
+import sys; sys.path.insert(0, "week17_long_running_distributed_agents/authmd_adk")
 import idjag_provider, httpx
 
 # 1) the trusted provider signs an ID-JAG for our user
@@ -246,7 +246,7 @@ token from Step 4 on the **write** endpoint.
 ```bash
 # reuse a sites.read token, then attempt a control.write call
 .venv/bin/python - <<'PY'
-import sys; sys.path.insert(0, "week17/authmd_adk")
+import sys; sys.path.insert(0, "week17_long_running_distributed_agents/authmd_adk")
 import idjag_provider, httpx
 B = "http://127.0.0.1:8088"
 jag = idjag_provider.mint_id_jag(subject="x", email="ops@altotech.ai",
@@ -271,7 +271,7 @@ Tokens are revocable. Mint one, use it, revoke it, watch the next call fail:
 
 ```bash
 .venv/bin/python - <<'PY'
-import sys; sys.path.insert(0, "week17/authmd_adk")
+import sys; sys.path.insert(0, "week17_long_running_distributed_agents/authmd_adk")
 from authmd_client import AuthMdClient, AuthGrant
 B = "http://127.0.0.1:8088"
 c = AuthMdClient(B)
@@ -298,7 +298,7 @@ problem.
 
 ```bash
 .venv/bin/python - <<'PY'
-import sys; sys.path.insert(0, "week17/authmd_adk")
+import sys; sys.path.insert(0, "week17_long_running_distributed_agents/authmd_adk")
 from authmd_client import AuthMdClient, AuthGrant
 
 # the DURABLE grant — this is what lives in ADK session state. No token in it.
@@ -346,7 +346,7 @@ long-running agent that actually sleeps and wakes.
 Install the rest (ADK + a model driver):
 
 ```bash
-uv pip install -r week17/authmd_adk/requirements.txt
+uv pip install -r week17_long_running_distributed_agents/authmd_adk/requirements.txt
 ```
 
 The agent is model-agnostic. By default it uses the repo's Alto gateway; no
@@ -388,10 +388,10 @@ terminals**, all from the repo root:
 
 ```bash
 # terminal 1 — Part A: the agent-ready Energy API
-.venv/bin/python week17/authmd_adk/app_server.py
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/app_server.py
 
 # terminal 2 — Part B: the long-running ADK agent service
-.venv/bin/python week17/authmd_adk/agent_server.py
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/agent_server.py
 ```
 
 **Checkpoint:** terminal 2 prints `✅ work-order service up — model=…`. Both
@@ -404,7 +404,7 @@ respond to `curl -s http://127.0.0.1:8088/healthz` and `:8089/healthz`.
 In terminal 3:
 
 ```bash
-.venv/bin/python week17/authmd_adk/run_full_demo.py
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_full_demo.py
 ```
 
 Watch the six steps print. The important moments:
@@ -517,7 +517,7 @@ process. Try it:
 | Symptom | Fix |
 |--------|-----|
 | `app_server did not come up` in Step 1 | Port 8088 busy — set `AUTHMD_APP_PORT=8093` and retry. |
-| `401` from `/agent/auth` in Part 2 | The app and agent processes disagree on the signing key. Stop both, delete `week17/authmd_adk/idjag_signing_key.pem`, restart both (they'll regenerate + share it). |
+| `401` from `/agent/auth` in Part 2 | The app and agent processes disagree on the signing key. Stop both, delete `week17_long_running_distributed_agents/authmd_adk/idjag_signing_key.pem`, restart both (they'll regenerate + share it). |
 | `run_full_demo.py` says a server isn't reachable | Start `app_server.py` *and* `agent_server.py` first (Step 12). |
 | Agent turn hangs / errors on the model | Check `AUTHMD_PROVIDER` and that the corresponding key is set; tail `agent_server.py`'s terminal for the traceback. |
 | Want a clean slate | Stop both servers; delete `work_order_sessions.db` and `idjag_signing_key.pem`. |

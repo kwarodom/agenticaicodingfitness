@@ -28,7 +28,7 @@ Requires:
   - ANTHROPIC_API_KEY in your environment / repo-root .env
   - pip install ragas datasets pandas langchain-anthropic
 
-Run:  python week15/kg_mastery/part4_evaluation/01_ragas_eval.py
+Run:  python week15_production_graphrag/kg_mastery/part4_evaluation/01_ragas_eval.py
 """
 import os
 import sys

@@ -13,8 +13,8 @@ things over ssh, under nohup, so you can watch it from the laptop:
 
 Opt in with  --yes  or  SPARK_APPLY=1.  The original train.yaml is kept as train.yaml.orig.
 
-Run: .venv/bin/python week25/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py
-     SPARK_APPLY=1 .venv/bin/python week25/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py --steps 5
+Run: .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py --steps 5
 """
 import ast
 import os

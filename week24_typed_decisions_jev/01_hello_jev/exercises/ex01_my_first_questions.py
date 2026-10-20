@@ -2,7 +2,7 @@
 """Exercise 01 · Write your first three questions.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week24/01_hello_jev/exercises/ex01_my_first_questions.py
+    .venv/bin/python week24_typed_decisions_jev/01_hello_jev/exercises/ex01_my_first_questions.py
 
 The checker validates your question SHAPES first (free, no API call), then asks
 Jev about three test messages. Stuck? Compare with exercises/solutions/.

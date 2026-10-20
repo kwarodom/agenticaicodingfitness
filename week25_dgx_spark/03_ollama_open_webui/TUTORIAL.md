@@ -27,7 +27,7 @@
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
 curl -s localhost:11434/api/version; echo
-.venv/bin/python week25/common/sparkkit.py | tail -2
+.venv/bin/python week25_dgx_spark/common/sparkkit.py | tail -2
 ```
 
 **Expected output** (captured on this Mac, which has Ollama but no Spark configured)
@@ -90,7 +90,7 @@ One big layer is the GGUF weights. The small ones are the chat template, license
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/labs/lab01_ollama_models.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab01_ollama_models.py
 ```
 
 **Expected output** (captured on this Mac: the Spark steps are DRY, step 5 asks the laptop's Ollama)
@@ -224,7 +224,7 @@ A real response carries more than that: timing fields that the OpenAI format doe
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/labs/lab02_native_vs_openai.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab02_native_vs_openai.py
 ```
 
 **Expected output** (LAPTOP STAND-IN — captured on this Mac with nemotron-3-nano; your numbers will differ)
@@ -308,7 +308,7 @@ Lab 03 streams one prompt four times through `/v1` with `"stream": true` and `st
 
 ```bash
 # on: laptop
-LAPTOP_BW_GBS=410 .venv/bin/python week25/03_ollama_open_webui/labs/lab03_speed_benchmark.py
+LAPTOP_BW_GBS=410 .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab03_speed_benchmark.py
 ```
 
 `LAPTOP_BW_GBS` is your laptop's memory bandwidth from its spec sheet (410 GB/s for this Mac's Apple M4 Max configuration). On the Spark the lab uses 273 GB/s and ignores it.
@@ -362,7 +362,7 @@ Lab 04 gives the model two real tools, Module 01's formulas from sparkkit, and a
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/labs/lab04_tool_calling.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab04_tool_calling.py
 ```
 
 **Expected output** (LAPTOP STAND-IN — captured on this Mac with nemotron-3-nano)
@@ -459,7 +459,7 @@ Lab 01 runs its shell steps LIVE on your Spark or DRY. Labs 02–04 call the Spa
 
 ## Try it yourself
 
-**Exercise 03 — the stream meter.** Open `week25/03_ollama_open_webui/exercises/ex03_stream_meter.py`. It replays a **real** stream captured from Ollama's `/v1` endpoint on the course laptop (nemotron-3-nano, thinking on), with the arrival time of every line. Four `TODO`s:
+**Exercise 03 — the stream meter.** Open `week25_dgx_spark/03_ollama_open_webui/exercises/ex03_stream_meter.py`. It replays a **real** stream captured from Ollama's `/v1` endpoint on the course laptop (nemotron-3-nano, thinking on), with the arrival time of every line. Four `TODO`s:
 
 1. `parse_sse(lines)`: turn Server-Sent Events into JSON chunks.
 2. `split_text(chunks)`: join the `content` pieces and the `reasoning` pieces separately.
@@ -468,7 +468,7 @@ Lab 01 runs its shell steps LIVE on your Spark or DRY. Labs 02–04 call the Spa
 
 ```bash
 # on: laptop
-.venv/bin/python week25/03_ollama_open_webui/exercises/ex03_stream_meter.py
+.venv/bin/python week25_dgx_spark/03_ollama_open_webui/exercises/ex03_stream_meter.py
 ```
 
 **Expected output** (once all four TODOs are done; the checker is offline, so this is the same on every machine)

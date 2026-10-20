@@ -1,0 +1,62 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-bdb430c290c344ad"
+  },
+  "questions": {
+   "leak": {
+    "type": "noul",
+    "instructions": "Is liquid pooling on the floor in `photo`?"
+   },
+   "queue": {
+    "type": "choice",
+    "instructions": "Which engineering queue should handle what `photo` shows?",
+    "criteria": {
+     "water_leak": "Water or another liquid leaking, dripping or pooling",
+     "smoke_or_fire": "Smoke, steam, haze, burning, fire or sparks",
+     "comfort": "Temperature or comfort complaint with no visible damage",
+     "none": "Nothing wrong is visible",
+     "unclear": "The picture is too dark, blurred or ambiguous to choose"
+    }
+   }
+  },
+  "assets": {
+   "img-bdb430c290c344ad": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "6ee70a72fa31a4ef",
+    "base64_chars": 208176
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "leak": {
+    "type": "noul",
+    "noul": 0.98
+   },
+   "queue": {
+    "type": "choice",
+    "choice": "water_leak",
+    "confidence": 1.0,
+    "probabilities": {
+     "water_leak": 1.0,
+     "smoke_or_fire": 0.0,
+     "comfort": 0.0,
+     "none": 0.0,
+     "unclear": 0.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 2784,
+   "output_tokens": 77
+  }
+ }
+}

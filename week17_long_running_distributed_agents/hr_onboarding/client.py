@@ -6,8 +6,8 @@ pause/resume lifecycle end to end and prints the checkpoint after every step, so
 you can watch the workflow park at WELCOME_SENT (waiting on a signature) and
 IT_PROVISIONED (waiting on hardware), then get woken by webhooks.
 
-    .venv/bin/python week17/hr_onboarding/server.py        # terminal 1
-    .venv/bin/python week17/hr_onboarding/client.py        # terminal 2
+    .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py        # terminal 1
+    .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/client.py        # terminal 2
 
 The webhook calls simulate days passing — in reality they'd arrive from a
 DocuSign callback and a carrier's delivery event, possibly long after the

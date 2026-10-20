@@ -175,7 +175,7 @@ Build me an agent that finds the temperature in two cities and says which is hot
 When should I hard-code a pipeline vs. let an agent decide the steps?
 ```
 
-**You'll get:** the `Agent` class from `week5/autoagent.py`, a trace of `💭`/`🔧`/`📋` across iterations, and the code-review-agent example.
+**You'll get:** the `Agent` class from `week05_agent_loop/autoagent.py`, a trace of `💭`/`🔧`/`📋` across iterations, and the code-review-agent example.
 
 ---
 
@@ -244,7 +244,7 @@ Show me a 5-agent parallel swarm with asyncio and why it's faster.
 Give me the multi-agent lab — I want to build the same task three ways.
 ```
 
-**You'll get:** the CrewAI sequential crew (`week9/ex1`), the LangGraph router (`week9/ex2`), the asyncio swarm (`week9/ex3`), a framework cheat-sheet, and a "don't over-build" reality check.
+**You'll get:** the CrewAI sequential crew (`week09_multi_agent_systems/ex1`), the LangGraph router (`week09_multi_agent_systems/ex2`), the asyncio swarm (`week09_multi_agent_systems/ex3`), a framework cheat-sheet, and a "don't over-build" reality check.
 
 ---
 
@@ -269,7 +269,7 @@ Explain GraphRAG: how does natural language become a Cypher query?
 Give me the agent-memory lab — let's run Neo4j in Docker and watch the graph grow.
 ```
 
-**You'll get:** the `AgentMemory` class from `week14/agent_memory.py`, the Docker quick-start, Cypher examples, a GraphRAG chain, and a lab where you *see* nodes appear in the Neo4j browser.
+**You'll get:** the `AgentMemory` class from `week14_agent_memory_knowledge_graphs/agent_memory.py`, the Docker quick-start, Cypher examples, a GraphRAG chain, and a lab where you *see* nodes appear in the Neo4j browser.
 
 ---
 
@@ -294,7 +294,7 @@ Set up a CI gate that fails the build when GraphRAG quality regresses.
 Give me the knowledge-graph-mastery lab — build a graph, query it, then evaluate it.
 ```
 
-**You'll get:** the `week15/kg_mastery/` six-part track — the hotel-graph loader, GDS enrichment, `GraphCypherQAChain` + the tool-wrapping safety pattern, the four-layer `AgentMemory`, the four RAGAS metrics with score targets, and a lab that takes a graph all the way from raw data to a *measured* system you can trust.
+**You'll get:** the `week15_production_graphrag/kg_mastery/` six-part track — the hotel-graph loader, GDS enrichment, `GraphCypherQAChain` + the tool-wrapping safety pattern, the four-layer `AgentMemory`, the four RAGAS metrics with score targets, and a lab that takes a graph all the way from raw data to a *measured* system you can trust.
 
 ---
 
@@ -418,11 +418,11 @@ ANTHROPIC_API_KEY="sk-ant-...your key..."
 Then run a week's example, e.g.:
 
 ```bash
-python week2/claudeapicall.py          # single call + token count
-python week3/toolsuse.py               # tool use (calculator/weather/lights)
-python week5/autoagent.py              # the autonomous Agent class
-python week9/ex3_ParallelSwarm.py      # 5-agent parallel swarm
-python week14/agent_memory.py          # durable Neo4j memory (needs Neo4j running)
+python week02_claude_api_foundations/claudeapicall.py          # single call + token count
+python week03_tool_use/toolsuse.py               # tool use (calculator/weather/lights)
+python week05_agent_loop/autoagent.py              # the autonomous Agent class
+python week09_multi_agent_systems/ex3_ParallelSwarm.py      # 5-agent parallel swarm
+python week14_agent_memory_knowledge_graphs/agent_memory.py          # durable Neo4j memory (needs Neo4j running)
 ```
 
 **Per-skill extras** install as you go — each skill tells you what it needs (e.g. `crewai`, `langgraph`, `claude-agent-sdk`, `neo4j langchain-neo4j`). For the memory lab, start Neo4j first:

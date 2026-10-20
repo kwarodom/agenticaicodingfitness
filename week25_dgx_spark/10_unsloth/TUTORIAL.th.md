@@ -17,7 +17,7 @@
 
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
-| รัน lab 02–03 ของ Module 09 บนแล็ปท็อปแล้ว | `ls week25/09_llama_factory/data week25/09_llama_factory/configs` | โมดูลนี้นำชุดข้อมูลและ YAML นั้นกลับมาใช้ |
+| รัน lab 02–03 ของ Module 09 บนแล็ปท็อปแล้ว | `ls week25_dgx_spark/09_llama_factory/data week25_dgx_spark/09_llama_factory/configs` | โมดูลนี้นำชุดข้อมูลและ YAML นั้นกลับมาใช้ |
 | Docker ที่รองรับ GPU บน Spark | `docker info --format '{{json .Runtimes}}'` แสดง `nvidia` | playbook รันใน container |
 | พื้นที่ว่างบน Spark ~20 GB | `df -h ~` | container image บวกโมเดล |
 | ไม่มีงานเทรนอื่นรันอยู่ | `pgrep -af llamafactory-cli`, `docker ps` | เวลาที่วัดได้จะเทียบกันได้ก็ต่อเมื่อรันทีละงาน |
@@ -25,13 +25,13 @@
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-ls week25/09_llama_factory/data week25/09_llama_factory/configs
+ls week25_dgx_spark/09_llama_factory/data week25_dgx_spark/09_llama_factory/configs
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
 
 ```
-week25/09_llama_factory/configs:
+week25_dgx_spark/09_llama_factory/configs:
 hotel_chat.yaml
 hotel_full_sft.yaml
 hotel_lora_sft.yaml
@@ -39,7 +39,7 @@ hotel_merge.yaml
 hotel_predict.yaml
 hotel_qlora_sft.yaml
 
-week25/09_llama_factory/data:
+week25_dgx_spark/09_llama_factory/data:
 dataset_info.json
 hotel_ops.json
 hotel_ops_eval.json
@@ -91,8 +91,8 @@ container แบบโต้ตอบ `-it` ใช้ภายใต้ `nohup` 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/labs/lab01_unsloth_validate.py
-SPARK_APPLY=1 .venv/bin/python week25/10_unsloth/labs/lab01_unsloth_validate.py   # pull, then run (re-run to follow)
+.venv/bin/python week25_dgx_spark/10_unsloth/labs/lab01_unsloth_validate.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab01_unsloth_validate.py   # pull, then run (re-run to follow)
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ในโหมด DRY)
@@ -128,7 +128,7 @@ Expected output in the terminal window:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/labs/lab02_hotel_unsloth.py
+.venv/bin/python week25_dgx_spark/10_unsloth/labs/lab02_hotel_unsloth.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
@@ -169,7 +169,7 @@ Expected output in the terminal window:
 
 ```bash
 # on: laptop
-SPARK_APPLY=1 .venv/bin/python week25/10_unsloth/labs/lab02_hotel_unsloth.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab02_hotel_unsloth.py
 ```
 
 คำสั่งที่มันรันบน Spark:
@@ -188,7 +188,7 @@ tail -f ~/w25/logs/m10_hotel_lora.log
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/labs/lab03_compare_frameworks.py
+.venv/bin/python week25_dgx_spark/10_unsloth/labs/lab03_compare_frameworks.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY: step 1 เทียบไฟล์ config จริง ส่วนตัวให้คะแนนใน step 4 รันกับ EXAMPLE — prediction สังเคราะห์ที่แก้ด้วยมือ ไม่ใช่ผลลัพธ์ของโมเดล)
@@ -263,7 +263,7 @@ Lab 02 step 1–3 และ lab 03 step 1, 2 และ 4 รันบนแล�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 10 — ทำให้การเปรียบเทียบที่ไม่ยุติธรรมกลายเป็นยุติธรรม** เปิด `week25/10_unsloth/exercises/ex10_fair_comparison.py` เพื่อนร่วมทีมรายงานว่า "Unsloth เร็วกว่า 2 เท่าและได้ loss ต่ำกว่า" จากการรันที่ใช้การตั้งค่าจาก notebook มีการตั้งค่าสี่ข้อที่ต่างจาก Module 09 ตัวตรวจอ่าน YAML **จริง** ของ Module 09 แล้วบอกคุณว่าข้อไหนบ้าง:
+**แบบฝึกหัด 10 — ทำให้การเปรียบเทียบที่ไม่ยุติธรรมกลายเป็นยุติธรรม** เปิด `week25_dgx_spark/10_unsloth/exercises/ex10_fair_comparison.py` เพื่อนร่วมทีมรายงานว่า "Unsloth เร็วกว่า 2 เท่าและได้ loss ต่ำกว่า" จากการรันที่ใช้การตั้งค่าจาก notebook มีการตั้งค่าสี่ข้อที่ต่างจาก Module 09 ตัวตรวจอ่าน YAML **จริง** ของ Module 09 แล้วบอกคุณว่าข้อไหนบ้าง:
 
 1. LoRA `r` / `lora_alpha`
 2. effective batch (`per_device_train_batch_size × gradient_accumulation_steps`)
@@ -272,7 +272,7 @@ Lab 02 step 1–3 และ lab 03 step 1, 2 และ 4 รันบนแล�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/exercises/ex10_fair_comparison.py
+.venv/bin/python week25_dgx_spark/10_unsloth/exercises/ex10_fair_comparison.py
 ```
 
 **Expected output** (เมื่อแก้ TODO ครบทั้งสี่จุด; บันทึกจาก Mac เครื่องนี้)

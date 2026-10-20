@@ -13,7 +13,7 @@ faithful mini-USD teaching engine (`sim.py`) mimics the same API shape. Either w
 ## Run the web tutorial
 
 ```bash
-cd week21/02_openusd_foundations
+cd week21_physical_ai_digital_twins/02_openusd_foundations
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8201
 ```

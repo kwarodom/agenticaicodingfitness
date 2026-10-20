@@ -12,7 +12,7 @@ private, the metadata IP is always blocked); and a LAPTOP STAND-IN shows what a 
 
 Pass criterion (Reef spec §6, L1.5): the provider is local AND the models list comes back. DRY never passes.
 
-Run: .venv/bin/python week26/02_first_claw/labs/lab02_4_inference_is_local.py
+Run: .venv/bin/python week26_nemoclaw_claws/02_first_claw/labs/lab02_4_inference_is_local.py
 """
 import json
 import re

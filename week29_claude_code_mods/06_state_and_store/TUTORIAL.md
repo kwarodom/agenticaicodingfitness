@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 06 — State that survives a reload
 
-> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. The course has two halves that teach the same eight lessons: these tutorials (the long form) and **🏋 Mod Gym**, a panel inside Claude Code (the short form, with checks). Mod Gym is itself a mod, so everything it does on screen is something you will learn to build. Through the lessons you grow one small lab mod, `hello-mod`; the finished version is in `week29/reference/hello-mod`.
+> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. The course has two halves that teach the same eight lessons: these tutorials (the long form) and **🏋 Mod Gym**, a panel inside Claude Code (the short form, with checks). Mod Gym is itself a mod, so everything it does on screen is something you will learn to build. Through the lessons you grow one small lab mod, `hello-mod`; the finished version is in `week29_claude_code_mods/reference/hello-mod`.
 
 **What you'll actually do**
 - Choose where a value lives: a module variable, a `$.state` atom or `$.store`, by what happens to it on a reload, a `/clear` and tomorrow's session.
@@ -223,7 +223,7 @@ on('state.set', { plugin: 'hello-mod', key: 'reps' }, async ($, e, next) => {
 })
 ```
 
-`state.set` is the event every write to an atom goes through. Hooking your own key there gives you one place that mirrors the atom into the store, which is what `week29/reference/hello-mod` does; Lesson 07's `log_reps` tool writes `reps` from a `tool.call` hook, and that write reaches this hook.
+`state.set` is the event every write to an atom goes through. Hooking your own key there gives you one place that mirrors the atom into the store, which is what `week29_claude_code_mods/reference/hello-mod` does; Lesson 07's `log_reps` tool writes `reps` from a `tool.call` hook, and that write reaches this hook.
 
 **What we measured about button presses.** In `claude plugin test`, a write made by the band's own `onPress` handler redrew the band but did **not** reach the plugin's `state.set` hook: the store stayed empty. Writes from a `tool.call` hook did reach it. Until you have checked this in a live session, write the store in the handler too:
 

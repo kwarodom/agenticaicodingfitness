@@ -1,0 +1,49 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "log": "2026-10-03 03:10 AHU-3 SAT 13.4 C status OK\n2026-10-03 03:12 AHU-3 SMOKE DETECTOR ALARM duct smoke detected, unit tripped\n2026-10-03 03:14 AHU-3 SAT 18.9 C status FAULT"
+  },
+  "questions": {
+   "alarm": {
+    "type": "noul",
+    "instructions": "Does `log` contain a smoke or fire alarm?"
+   },
+   "unit": {
+    "type": "choice",
+    "instructions": "Which unit in `log` raised the alarm?",
+    "criteria": {
+     "AHU-1": "AHU-1",
+     "AHU-2": "AHU-2",
+     "AHU-3": "AHU-3",
+     "none": "no alarm"
+    }
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "alarm": {
+    "type": "noul",
+    "noul": 0.99
+   },
+   "unit": {
+    "type": "choice",
+    "choice": "AHU-3",
+    "confidence": 1.0,
+    "probabilities": {
+     "AHU-1": 0.0,
+     "AHU-2": 0.0,
+     "AHU-3": 1.0,
+     "none": 0.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 472,
+   "output_tokens": 73
+  }
+ }
+}

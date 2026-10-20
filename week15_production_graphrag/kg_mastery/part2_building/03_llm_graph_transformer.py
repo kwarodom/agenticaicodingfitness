@@ -17,7 +17,7 @@ Requires:
   - ANTHROPIC_API_KEY in your environment / repo-root .env
   - pip install langchain-experimental langchain-neo4j langchain-anthropic langchain-core
 
-Run:  python week15/kg_mastery/part2_building/03_llm_graph_transformer.py
+Run:  python week15_production_graphrag/kg_mastery/part2_building/03_llm_graph_transformer.py
 """
 import os
 import sys

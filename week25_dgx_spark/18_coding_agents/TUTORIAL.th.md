@@ -40,7 +40,7 @@ Python 3.13.13
 ollama version is 0.34.4
 ```
 
-> 🔐 แล็บไม่เคยเขียนลง `~/.claude`, `~/.codex`, `~/.config/opencode` หรือ `~/.continue` Lab 03 เขียนไฟล์ที่สร้างทั้งหมดไว้ใต้ `week25/18_coding_agents/.runs/` (อยู่ใน gitignore) แล้วตรวจว่าไฟล์ global config ของคุณไม่ถูกแก้ไข
+> 🔐 แล็บไม่เคยเขียนลง `~/.claude`, `~/.codex`, `~/.config/opencode` หรือ `~/.continue` Lab 03 เขียนไฟล์ที่สร้างทั้งหมดไว้ใต้ `week25_dgx_spark/18_coding_agents/.runs/` (อยู่ใน gitignore) แล้วตรวจว่าไฟล์ global config ของคุณไม่ถูกแก้ไข
 
 ✓ Checkpoint: คุณเข้าถึง Spark ผ่าน SSH ได้ หรือมี Ollama รันอยู่บนแล็ปท็อปเพื่อใช้เป็นตัวแทน
 
@@ -235,7 +235,7 @@ Lab 01 ตรวจทั้งหมดนี้ รวมถึงความ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab01_endpoint_preflight.py
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab01_endpoint_preflight.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้โดยไม่ได้ตั้งค่า Spark: เป็น LAPTOP STAND-IN แถวของ Spark จึงเป็นรูปแบบ EXAMPLE และโมเดลเป็นของแล็ปท็อป)
@@ -283,7 +283,7 @@ Lab 01 ตรวจทั้งหมดนี้ รวมถึงความ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab02_tool_call_probe.py            # --trials 5 for a real verdict
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab02_tool_call_probe.py            # --trials 5 for a real verdict
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ เป็น LAPTOP STAND-IN: โมเดลบนแล็ปท็อปสามตัว ตัวละหนึ่งรอบ ผลของคุณจะต่างไปเพราะการ sampling เป็นแบบสุ่ม)
@@ -309,7 +309,7 @@ Lab 01 ตรวจทั้งหมดนี้ รวมถึงความ
 │ nemotron-3-nano:latest  2/3        2/3         1/3           1/3             15.1s
 │ gemma4:12b              3/3        3/3         3/3           3/3             13.2s
 │ gemma3:4b               0/3        0/3         0/3           0/3             —
-→ wrote week25/18_coding_agents/.runs/lab02_scorecard.json
+→ wrote week25_dgx_spark/18_coding_agents/.runs/lab02_scorecard.json
 ```
 
 รันสามครั้งบน Mac เครื่องนี้ได้รูปแบบเดียวกัน `gemma4:12b` ผ่าน 9 จาก 9 `nemotron-3-nano` ผ่าน `add` ทุกครั้ง แก้ `slugify` ได้หลังรอบซ่อมหนึ่งในสามครั้ง และพิมพ์ tool call ของ `parse_duration` ออกมาเป็นข้อความ (`<tool_call><function=write_file>…`) ทั้งสามครั้ง `gemma3:4b` ไม่มีความสามารถ `tools` เซิร์ฟเวอร์จึงปฏิเสธคำขอทันที นี่ให้บทเรียนสามข้อ:
@@ -339,8 +339,8 @@ Lab 01 ตรวจทั้งหมดนี้ รวมถึงความ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py            # placeholder host
-.venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel   # http://localhost:21434
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py            # placeholder host
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel   # http://localhost:21434
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้โดยไม่ได้ตั้งค่า Spark placeholder `YOUR_HARDWARE_IP` ของ playbook จึงยังคงอยู่)
@@ -355,7 +355,7 @@ Lab 01 ตรวจทั้งหมดนี้ รวมถึงความ
 │ claude-code-direct.env  COURSE      387 B  ✓ 3 variables
 │ opencode.json           COURSE      386 B  ✓ valid JSON
 │ codex-home/config.toml  COURSE      407 B  ✓ valid TOML · provider defined
-→ all files in week25/18_coding_agents/.runs/agent-config/
+→ all files in week25_dgx_spark/18_coding_agents/.runs/agent-config/
 …
 ▣ STEP 4 · prove your global agent config was not touched
 ✓ ~/.claude/settings.json            unchanged
@@ -369,8 +369,8 @@ Lab 01 ตรวจทั้งหมดนี้ รวมถึงความ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel
-( set -a; . week25/18_coding_agents/.runs/agent-config/claude-code-direct.env; set +a; \
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel
+( set -a; . week25_dgx_spark/18_coding_agents/.runs/agent-config/claude-code-direct.env; set +a; \
   cd ~/cli-agent-demo && claude --model qwen3.6:35b-a3b-mtp-q4_K_M )
 ```
 
@@ -388,7 +388,7 @@ Lab 01 และ 02 ใช้ Ollama ของ Spark เมื่อมันต
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 18 — ให้คะแนนคำตอบของเอเจนต์** eval harness ต้องแปลงคำตอบดิบของโมเดลให้เป็นคำตัดสิน เปิด `week25/18_coding_agents/exercises/ex18_grade_agent_reply.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 18 — ให้คะแนนคำตอบของเอเจนต์** eval harness ต้องแปลงคำตอบดิบของโมเดลให้เป็นคำตัดสิน เปิด `week25_dgx_spark/18_coding_agents/exercises/ex18_grade_agent_reply.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `tool_args(tool_call)`: คืน argument เป็น dict ไม่ว่าเซิร์ฟเวอร์จะส่งมาเป็น JSON string หรือ dict
 2. `safe_path(path)`: ปฏิเสธ path แบบ absolute, `~`, `..` และ backslash เพื่อไม่ให้เอเจนต์เขียนไฟล์นอก workspace ได้
@@ -398,7 +398,7 @@ fixture ทำตามรูปแบบคำตอบที่ lab 02 เจ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/exercises/ex18_grade_agent_reply.py
+.venv/bin/python week25_dgx_spark/18_coding_agents/exercises/ex18_grade_agent_reply.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด)

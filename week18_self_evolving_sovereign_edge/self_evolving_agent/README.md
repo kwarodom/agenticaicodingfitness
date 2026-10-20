@@ -64,7 +64,7 @@ The problem week-2..17 left open, and what solves it here:
 ## Layout — all the code in this subfolder
 
 ```
-week18/self_evolving_agent/
+week18_self_evolving_sovereign_edge/self_evolving_agent/
 ├── config.py                       models, the on-disk memory tree, .env / capability probe
 ├── core/
 │   ├── session_db.py               Part 3 — Episodic engine: WAL, jitter backoff,
@@ -89,7 +89,7 @@ week18/self_evolving_agent/
 
 ```bash
 # from the repo root, using the repo's uv-managed .venv (Python 3.13)
-uv pip install -r week18/self_evolving_agent/requirements.txt
+uv pip install -r week18_self_evolving_sovereign_edge/self_evolving_agent/requirements.txt
 ```
 
 **LIVE mode** (real LLM agent turns + real consolidation) needs the `claude` CLI,
@@ -109,7 +109,7 @@ $0). The checkpoints 1–6 are pure stdlib and never need the CLI at all.
 ### A) The step-by-step guide (recommended start)
 
 ```bash
-.venv/bin/python week18/self_evolving_agent/tutorial_server.py     # → http://127.0.0.1:8090
+.venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/tutorial_server.py     # → http://127.0.0.1:8090
 ```
 
 Click through *Understand the architecture* → run *Checkpoints 1–7* (output
@@ -118,7 +118,7 @@ streams live) → *Watch it self-evolve* (starts the visualizer + opens it).
 ### B) The live visualizer directly
 
 ```bash
-.venv/bin/python week18/self_evolving_agent/server.py              # → http://127.0.0.1:8088
+.venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/server.py              # → http://127.0.0.1:8088
 ```
 
 Then, in the browser: **Run the task → 🧠 Consolidate → Run the SAME task again.**
@@ -129,7 +129,7 @@ in the header.
 
 ```bash
 for n in 1 2 3 4 5 6 7; do
-  .venv/bin/python week18/self_evolving_agent/checkpoints/checkpoint${n}_*.py
+  .venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/checkpoints/checkpoint${n}_*.py
 done
 ```
 

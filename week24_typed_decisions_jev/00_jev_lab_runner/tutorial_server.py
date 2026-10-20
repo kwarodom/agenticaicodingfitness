@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Jev Lab Runner — the step-by-step web app for Week 24 (typed AI decisions with Jev).
 
-Same shape as Week 23's Lab Runner: it parses every week24/NN_*/TUTORIAL.md,
+Same shape as Week 23's Lab Runner: it parses every week24_typed_decisions_jev/NN_*/TUTORIAL.md,
 serves them as one continuous course (static/guide.html renders it), and runs
 each module's labs/*.py and exercises/*.py server-side, streaming output live.
 
@@ -14,7 +14,7 @@ Jev-specific additions:
 
 Launch (auto-picks a free port if 8124 is taken):
 
-    .venv/bin/python week24/00_jev_lab_runner/tutorial_server.py
+    .venv/bin/python week24_typed_decisions_jev/00_jev_lab_runner/tutorial_server.py
     # → http://127.0.0.1:8124
 """
 from __future__ import annotations
@@ -34,8 +34,8 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week24/00_jev_lab_runner
-WEEK = PKG.parent                                     # …/week24
+PKG = Path(__file__).resolve().parent                 # …/week24_typed_decisions_jev/00_jev_lab_runner
+WEEK = PKG.parent                                     # …/week24_typed_decisions_jev
 ROOT = WEEK.parent                                    # …/agenticaicodingfitness
 sys.path.insert(0, str(WEEK / "common"))
 import jevkit  # noqa: E402
@@ -48,10 +48,10 @@ STATIC = PKG / "static"
 GUIDE_PORT = int(os.environ.get("JEV_GUIDE_PORT", "8124"))
 
 # Keys live server-side only. They are looked up fresh for every run (env →
-# week24/.env.local, which the 🔑 Keys dialog writes → repo-root .env) and
+# week24_typed_decisions_jev/.env.local, which the 🔑 Keys dialog writes → repo-root .env) and
 # injected into lab subprocesses; the browser only ever sees "set / missing".
 
-MODELS = ["jev-1.13.0", "jev-latest", "jev-preview"]  # pinned first — the course default
+MODELS = ["jev-1.13.0", "jev-1.14.0", "jev-latest", "jev-preview"]  # pinned first — the course default; 1.14 for Box (Module 15)
 RUN_ENV_KEYS = ("JEV_MODE", "JEV_MODEL", "JEV_LLM_PROVIDER", "JEV_LLM_MODEL")  # the ONLY env a browser may set
 LANGS = ("en", "th")
 KEY_NAMES = {"jev": "TYPESAFE_API_KEY", **{pid: p["keys"][0] for pid, p in llmkit.PROVIDERS.items() if p["keys"]}}
@@ -75,7 +75,7 @@ def _pick_free_port(preferred: int, span: int = 40) -> int:
 
 
 def modules() -> list[str]:
-    """Every week24/NN_name/ folder with a TUTORIAL.md, in order (00 is this app)."""
+    """Every week24_typed_decisions_jev/NN_name/ folder with a TUTORIAL.md, in order (00 is this app)."""
     return [p.parent.name for p in sorted(WEEK.glob("[0-9][0-9]_*/TUTORIAL.md"))
             if MODULE_RE.match(p.parent.name) and not p.parent.name.startswith("00_")]
 
@@ -295,6 +295,11 @@ def course(lang: str = "en") -> list[dict]:
 
 # ── the app ────────────────────────────────────────────────────────────────────
 app = FastAPI(title="Jev Lab Runner — Week 24")
+try:                                              # 🎙 live console (Module 14): mic + speaker + webcam ⇄ gemini-3.8-live
+    from live_bridge import live_ws
+    app.add_api_websocket_route("/ws/live", live_ws)
+except Exception as _e:  # noqa: BLE001 — the course must still run without it
+    print(f"  ⚠ live console disabled: {_e}", file=sys.stderr, flush=True)
 _run_lock = asyncio.Lock()
 
 
@@ -333,6 +338,27 @@ async def static_file(fname: str):
     if not str(target).startswith(str(base) + os.sep) or not target.is_file():
         raise HTTPException(404, "not found")
     return FileResponse(target, headers={"Cache-Control": "no-store, max-age=0"})
+
+
+MEDIA_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp",
+             ".gif": "image/gif", ".wav": "audio/wav", ".mp3": "audio/mpeg", ".m4a": "audio/mp4",
+             ".ogg": "audio/ogg", ".mp4": "video/mp4", ".webm": "video/webm"}
+
+
+@app.get("/w24media/{folder}/{rel:path}")
+async def module_media(folder: str, rel: str):
+    """Serve ONLY week24_typed_decisions_jev/<module>/media/* (course assets) and week24_typed_decisions_jev/<module>/.runs/* (files a lab
+    just produced, e.g. a TTS reply). Extension allowlist, no traversal, no directory listings."""
+    if folder not in modules() or not re.fullmatch(r"(media|\.runs)/[A-Za-z0-9_.\-/]{1,160}", rel or ""):
+        raise HTTPException(404, "not found")
+    base = (WEEK / folder).resolve()
+    target = (base / rel).resolve()
+    ext = target.suffix.lower()
+    top = (base / rel.split("/", 1)[0]).resolve()
+    if ext not in MEDIA_EXT or not str(target).startswith(str(top) + os.sep) or not target.is_file():
+        raise HTTPException(404, "not found")
+    cache = "no-store, max-age=0" if rel.startswith(".runs/") else "max-age=3600"
+    return FileResponse(target, media_type=MEDIA_EXT[ext], headers={"Cache-Control": cache})
 
 
 @app.get("/api/course")
@@ -425,7 +451,7 @@ async def api_run(req: RunRequest, request: Request):
             return
         async with _run_lock:
             start, cost = time.time(), 0.0
-            yield f"$ {Path(PY).name} week24/{req.folder}/{req.file}   [{mode.upper()}]\n\n"
+            yield f"$ {Path(PY).name} week24_typed_decisions_jev/{req.folder}/{req.file}   [{mode.upper()}]\n\n"
             proc = await asyncio.create_subprocess_exec(
                 PY, str(path), cwd=str(ROOT), env=env,
                 stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT)
@@ -570,7 +596,7 @@ _keys_lock = threading.Lock()
 
 @app.post("/api/keys")
 async def api_keys(req: KeyRequest, request: Request) -> dict:
-    """Save (or with value "" remove) one key in week24/.env.local — gitignored, mode 0600.
+    """Save (or with value "" remove) one key in week24_typed_decisions_jev/.env.local — gitignored, mode 0600.
     The value is never echoed back; the response only says whether a key is now set."""
     _local_only(request)
     name = KEY_NAMES.get(req.provider)

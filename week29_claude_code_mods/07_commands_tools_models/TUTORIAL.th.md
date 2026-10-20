@@ -24,7 +24,7 @@
 | ติดตั้ง Mod Gym แล้ว | `/mod-gym` เปิดแผงขึ้นมา | ใช้ตรวจท้ายบท |
 | Ollama (ไม่บังคับ) | `curl -s localhost:11434/api/tags` มี `gemma4:12b` | ใช้แค่ `/spark-ask` ในหัวข้อ 4 |
 
-lab mod ของคุณอยู่ที่ `~/mod-gym-lab/hello-mod` (เปลี่ยนได้ด้วย `/mod-gym lab <path>`) เวอร์ชันที่ทำเสร็จแล้วของทุกอย่างในบทนี้อยู่ที่ `week29/reference/hello-mod`
+lab mod ของคุณอยู่ที่ `~/mod-gym-lab/hello-mod` (เปลี่ยนได้ด้วย `/mod-gym lab <path>`) เวอร์ชันที่ทำเสร็จแล้วของทุกอย่างในบทนี้อยู่ที่ `week29_claude_code_mods/reference/hello-mod`
 
 ## 1 · Slash command: ได้คำตอบโดยไม่มี turn ของ Claude
 
@@ -123,7 +123,7 @@ session ที่สองอ่านค่า `10` กลับมาได้
 
 ## 3 · ตัวอย่างจริงสองตัวใน Mod Gym
 
-เปิด `week29/mod-gym/hooks/register.tsx` แผงนี้ใช้ทั้งสองรูปแบบ
+เปิด `week29_claude_code_mods/mod-gym/hooks/register.tsx` แผงนี้ใช้ทั้งสองรูปแบบ
 
 **Tool `gym_status`** Mod Gym ลงทะเบียน tool ที่มี input schema ว่าง description ของมันบอก Claude ว่าควรเรียกเมื่อไรและควรโค้ชอย่างไร:
 

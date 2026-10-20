@@ -6,7 +6,7 @@ For three guest messages (English, Thai, and an angry refund demand):
   2. code: language, room number, the approved system prompt for that team
   3. your LLM: a short reply DRAFT for staff to approve   (execute: False)
 
-Run: .venv/bin/python week24/11_jev_plus_llm/labs/lab02_route_then_write.py
+Run: .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab02_route_then_write.py
 """
 import sys
 from pathlib import Path

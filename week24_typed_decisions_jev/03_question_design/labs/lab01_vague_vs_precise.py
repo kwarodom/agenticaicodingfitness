@@ -9,7 +9,7 @@ We ask BOTH styles in the SAME request (questions are independent, so they
 cannot influence each other) and compare against the labels a human wrote
 for the real business rule: "does this need same-day action by operations?".
 
-Run: .venv/bin/python week24/03_question_design/labs/lab01_vague_vs_precise.py
+Run: .venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab01_vague_vs_precise.py
 """
 import sys
 from pathlib import Path

@@ -6,7 +6,7 @@ when_to_use: DGX Spark setup, local NIM endpoints, sovereign/edge agent deployme
 
 # Week 19 — DGX Spark sovereign stack
 
-(Template. Port the content of `week19/` here, keeping the structure of the other 20 skills.)
+(Template. Port the content of `week19_sovereign_ai_dgx/` here, keeping the structure of the other 20 skills.)
 
 ## Concepts
 - Why a sovereign tier exists: hotel operators who cannot send telemetry off-site.

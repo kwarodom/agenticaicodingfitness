@@ -1,0 +1,394 @@
+{
+ "about": "48 hand-written synthetic tickets (30 English, 18 Thai) for Module 17, written on 2026-10-17 in styles the generator never uses: staff radio shorthand, long emails, Thai-English code-switching, negations and distractors. Never trained on. Labels follow Module 16's tickets.json. Not real guests or sites. Five tickets carry a 'note': they are deliberately hard or debatable, so read them before blaming a model.",
+ "tickets": [
+  {
+   "id": "t_en01",
+   "lang": "en",
+   "text": "RM 1418 - guest says aircon dead, room at 30C, kids inside. pls chk",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en02",
+   "lang": "en",
+   "text": "Dear team, we arrived late last night and noticed the bathroom has no towels at all. Could you send a full set at some point this morning? Many thanks, the Lees",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en03",
+   "lang": "en",
+   "text": "Engineering: the basement car park drain is backing up and water is now reaching the main switchboard room door.",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_en04",
+   "lang": "en",
+   "text": "The AC is fine, thanks, but the toilet in 2207 has been overflowing for ten minutes and the hallway carpet is soaked.",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 2
+  },
+  {
+   "id": "t_en05",
+   "lang": "en",
+   "text": "Quick q — can I pay the rest of my bill in cash at checkout instead of the card on file?",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en06",
+   "lang": "en",
+   "text": "Security patrol: light haze and a smell like an overheated motor coming from the lift machine room, level 26.",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_en07",
+   "lang": "en",
+   "text": "No hurry at all, but the fan on the bathroom ceiling in 611 is a bit noisy.",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en08",
+   "lang": "en",
+   "text": "Hello, the shower in 1830 alternates between freezing and scalding every few seconds.",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en09",
+   "lang": "en",
+   "text": "My daughter is allergic to feathers, could you swap the duvet and pillows in 904 for synthetic ones before tonight?",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en10",
+   "lang": "en",
+   "text": "Spa reception: the sauna control box is crackling and gave off a little puff of smoke, we switched it off at the wall.",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_en11",
+   "lang": "en",
+   "text": "Earlier I reported a leak under the sink in 1215 — the plumber already fixed it, please close the ticket.",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en12",
+   "lang": "en",
+   "text": "We booked a twin room but got one king bed in 1702. Can someone switch us today?",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en13",
+   "lang": "en",
+   "text": "Kitchen: the extractor hood over the wok station has stopped and the line is filling with heat, service starts in 20 minutes.",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 2
+  },
+  {
+   "id": "t_en14",
+   "lang": "en",
+   "text": "There's a strong smell of gas near the staff canteen stove on B1.",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2,
+   "note": "gas is not in the written safety definition (smoke, burning, fire, sparks, water near electricity) — a human still labels it safety"
+  },
+  {
+   "id": "t_en15",
+   "lang": "en",
+   "text": "Can housekeeping skip our room today? We are sleeping in. 1509",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en16",
+   "lang": "en",
+   "text": "The radiator under the window in 2011 is ice cold and it's snowing outside.",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en17",
+   "lang": "en",
+   "text": "Bathtub in 1311 won't drain at all, standing water with soap scum.",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en18",
+   "lang": "en",
+   "text": "I'd like to know if the hotel can store our luggage after checkout until our evening flight.",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en19",
+   "lang": "en",
+   "text": "The water from the ice machine on floor 8 is leaking straight into the floor socket next to it.",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_en20",
+   "lang": "en",
+   "text": "Someone left a room service tray with old food outside 1004 since yesterday, it smells.",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en21",
+   "lang": "en",
+   "text": "pool area: the outdoor shower tap snapped off and is gushing water across the deck",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 2
+  },
+  {
+   "id": "t_en22",
+   "lang": "en",
+   "text": "It's freezing in the gym, the AC seems stuck on max and the panel won't respond.",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en23",
+   "lang": "en",
+   "text": "My invoice lists two nights but we stayed three, please correct it before I submit my expenses.",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en24",
+   "lang": "en",
+   "text": "The candles on our anniversary dinner table look lovely, could we get a lighter to relight them? Room 1601",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 0,
+   "note": "distractor: candles and a lighter, but nothing is wrong"
+  },
+  {
+   "id": "t_en25",
+   "lang": "en",
+   "text": "Laundry: dryer number 3 is shooting sparks from the back and tripped the breaker twice.",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_en26",
+   "lang": "en",
+   "text": "Could someone show me how to set the thermostat to fan only? It's a bit stuffy but not hot.",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en27",
+   "lang": "en",
+   "text": "Faint drip from the overhead rain shower in 715 even when it's off.",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_en28",
+   "lang": "en",
+   "text": "We lost the second key card for 1120, can we get a replacement this afternoon?",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_en29",
+   "lang": "en",
+   "text": "Please don't send engineering — the 'burning smell' in 1906 was just my toast, all good now.",
+   "queue": "safety",
+   "safety": false,
+   "urgency": 0,
+   "note": "cancellation: mentions a burning smell that turned out to be toast"
+  },
+  {
+   "id": "t_en30",
+   "lang": "en",
+   "text": "Glass broke in the bathroom of 1012 and there are shards on the floor, my wife cut her foot.",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 2,
+   "note": "injury from broken glass — debatable queue; housekeeping clears it, urgency is immediate"
+  },
+  {
+   "id": "t_th01",
+   "lang": "th",
+   "text": "ห้อง 1508 แอร์ไม่ทำงานเลยค่ะ ลูกเล็กร้อนจนร้องไห้ ช่วยดูให้หน่อย",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_th02",
+   "lang": "th",
+   "text": "แม่บ้านช่วยเอาไดร์เป่าผมมาให้ที่ห้อง 1207 หน่อยนะคะ ของในห้องหาไม่เจอ",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th03",
+   "lang": "th",
+   "text": "ห้องน้ำล็อบบี้ชั้น 1 น้ำท่วมเต็มพื้นเพราะท่อแตก แขกเดินผ่านลื่นเกือบล้ม",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 2
+  },
+  {
+   "id": "t_th04",
+   "lang": "th",
+   "text": "รปภ.แจ้ง ห้องเครื่องปั๊มน้ำชั้นใต้ดินมีกลิ่นไหม้และมีควันจางๆ",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_th05",
+   "lang": "th",
+   "text": "อยากเปลี่ยนจากห้องสูบบุหรี่เป็นห้องปลอดบุหรี่ค่ะ ห้อง 909",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th06",
+   "lang": "th",
+   "text": "ห้อง 1102 aircon เสียงดังตอนกลางคืน แต่ตอนนี้ปกติแล้ว ไม่ต้องรีบนะคะ",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th07",
+   "lang": "th",
+   "text": "น้ำจากเครื่องซักผ้าในห้องซักรีดไหลไปโดนปลั๊กไฟที่พื้น",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_th08",
+   "lang": "th",
+   "text": "ห้อง 1610 ฝักบัวน้ำไหลเบามาก อาบน้ำไม่สะดวกเลย",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_th09",
+   "lang": "th",
+   "text": "ขอใบเสร็จแยกเป็นสองใบได้ไหมครับ ห้อง 2003 จ่ายคนละครึ่ง",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th10",
+   "lang": "th",
+   "text": "ห้อง 818 มีมดขึ้นโต๊ะเต็มเลย ช่วยมาทำความสะอาดวันนี้ด้วย",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_th11",
+   "lang": "th",
+   "text": "check-in ไม่ได้ครับ ระบบบอกว่าไม่มี booking แต่ผมจองไว้แล้ว ตอนนี้ยืนรออยู่ที่ล็อบบี้",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 1
+  },
+  {
+   "id": "t_th12",
+   "lang": "th",
+   "text": "ห้องอาหารชั้น 2 แอร์ดับทั้งโซน ลูกค้าเต็มร้านกำลังบ่นกันใหญ่",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 2
+  },
+  {
+   "id": "t_th13",
+   "lang": "th",
+   "text": "เบรกเกอร์ห้อง 1415 ตัดบ่อยมาก แล้วเต้ารับมีรอยดำไหม้",
+   "queue": "safety",
+   "safety": true,
+   "urgency": 2
+  },
+  {
+   "id": "t_th14",
+   "lang": "th",
+   "text": "สายฉีดชำระห้อง 1209 รั่ว น้ำหยดตลอด",
+   "queue": "plumbing",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th15",
+   "lang": "th",
+   "text": "ห้อง 702 ขอผ้าห่มเพิ่มอีกผืนครับ แอร์เย็นดีแล้ว",
+   "queue": "housekeeping",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th16",
+   "lang": "th",
+   "text": "ขอเปิดห้องเพิ่มอีกห้องติดกับห้อง 1204 สำหรับคุณแม่ที่จะมาถึงพรุ่งนี้",
+   "queue": "front_desk",
+   "safety": false,
+   "urgency": 0
+  },
+  {
+   "id": "t_th17",
+   "lang": "th",
+   "text": "เมื่อกี้ได้กลิ่นไหม้ในห้อง 1717 แต่เป็นธูปที่แขกห้องข้างๆ จุด ไม่มีอะไรแล้วค่ะ",
+   "queue": "safety",
+   "safety": false,
+   "urgency": 0,
+   "note": "cancellation: the burning smell was incense next door"
+  },
+  {
+   "id": "t_th18",
+   "lang": "th",
+   "text": "ห้องฟิตเนสอากาศอับมาก แอร์ไม่ค่อยเย็น",
+   "queue": "hvac",
+   "safety": false,
+   "urgency": 1
+  }
+ ]
+}

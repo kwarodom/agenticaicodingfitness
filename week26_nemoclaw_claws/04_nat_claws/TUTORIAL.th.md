@@ -17,16 +17,16 @@
 
 | สิ่งที่ต้องมี | วิธีตรวจ | ใช้ทำอะไร |
 |---|---|---|
-| NAT 1.9 บนแล็ปท็อป | `week26/.venv-nat/bin/nat --version` | ทุกแล็บรัน NAT CLI ตัวจริง |
+| NAT 1.9 บนแล็ปท็อป | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` | ทุกแล็บรัน NAT CLI ตัวจริง |
 | โมเดลที่เรียก tool ได้ใน Ollama บนแล็ปท็อป | `nemotron-3-nano:latest` ใน `curl -s localhost:11434/v1/models` | ใช้เป็น LAPTOP STAND-IN แทน vLLM บน Spark (~10–20 วินาทีต่อคำถาม) |
-| `greenlet` ใน NAT venv | `week26/.venv-nat/bin/python -c "import greenlet"` | `nat serve` ของ NAT 1.9.0 ต้องใช้ และการติดตั้งใหม่อาจไม่มีมาให้ (ดูหัวข้อ 5) |
+| `greenlet` ใน NAT venv | `week26_nemoclaw_claws/.venv-nat/bin/python -c "import greenlet"` | `nat serve` ของ NAT 1.9.0 ต้องใช้ และการติดตั้งใหม่อาจไม่มีมาให้ (ดูหัวข้อ 5) |
 | DGX Spark (ไม่บังคับ) | `ssh -o BatchMode=yes <spark> true` | ขั้นตอน vLLM และ sandbox; ถ้าไม่มีจะรันแบบ DRY |
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version 2>/dev/null
+week26_nemoclaw_claws/.venv-nat/bin/nat --version 2>/dev/null
 curl -s http://localhost:11434/v1/models | grep -o '"nemotron-3-nano[^"]*"'
-week26/.venv-nat/bin/python -c "import greenlet; print('greenlet', greenlet.__version__)" 2>&1 | tail -1
+week26_nemoclaw_claws/.venv-nat/bin/python -c "import greenlet; print('greenlet', greenlet.__version__)" 2>&1 | tail -1
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -37,7 +37,7 @@ nat, version 1.9.0
 greenlet 3.5.6
 ```
 
-ถ้าบรรทัดสุดท้ายขึ้นว่า `ModuleNotFoundError: No module named 'greenlet'` ให้รัน `uv pip install --python week26/.venv-nat/bin/python greenlet` หนึ่งครั้ง venv ของคอร์สนี้เคยไม่มีแพ็กเกจนี้มาก่อน (หัวข้อ 5 อธิบายสาเหตุ) และมีแค่ `nat serve` ที่ต้องใช้
+ถ้าบรรทัดสุดท้ายขึ้นว่า `ModuleNotFoundError: No module named 'greenlet'` ให้รัน `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` หนึ่งครั้ง venv ของคอร์สนี้เคยไม่มีแพ็กเกจนี้มาก่อน (หัวข้อ 5 อธิบายสาเหตุ) และมีแค่ `nat serve` ที่ต้องใช้
 
 > 📌 **เรื่องเวอร์ชัน** research tutorial เขียนโดยอ้างอิงเอกสาร NAT **1.8** แต่คอร์สนี้รัน NAT **1.9.0** และโมดูลนี้ตรวจทุกคำสั่ง ทุก YAML key และทุก endpoint กับแพ็กเกจที่ติดตั้งจริงแล้ว จุดไหนที่ 1.9 ต่างออกไป หัวข้อนั้นจะมีกล่อง **1.9 differs** บอกไว้ ถ้าทำได้ให้รันทีละแล็บ เพราะแล็บอื่นใช้ Ollama ตัวเดียวกัน เวลาที่วัดได้จึงแกว่ง
 
@@ -103,21 +103,21 @@ Nemotron 3 Nano ใช้สถาปัตยกรรมไฮบริด Mam
 
 ```bash
 # on: laptop
-mkdir -p week26/04_nat_claws/.runs/workflows
-week26/.venv-nat/bin/nat workflow create --no-install --workflow-dir week26/04_nat_claws/.runs/workflows alto_ops --description "Alto Ops Claw" 2>/dev/null
-find week26/04_nat_claws/.runs/workflows/alto_ops -type f | sort
-grep '^from nat' week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
+mkdir -p week26_nemoclaw_claws/04_nat_claws/.runs/workflows
+week26_nemoclaw_claws/.venv-nat/bin/nat workflow create --no-install --workflow-dir week26_nemoclaw_claws/04_nat_claws/.runs/workflows alto_ops --description "Alto Ops Claw" 2>/dev/null
+find week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops -type f | sort
+grep '^from nat' week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
 
 ```
-Workflow 'alto_ops' created successfully in '/Users/altodev/Desktop/agenticaicodingfitness/week26/04_nat_claws/.runs/workflows/alto_ops'.
-week26/04_nat_claws/.runs/workflows/alto_ops/pyproject.toml
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/__init__.py
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/configs/config.yml
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/register.py
+Workflow 'alto_ops' created successfully in '/Users/altodev/Desktop/agenticaicodingfitness/week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops'.
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/pyproject.toml
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/__init__.py
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/configs/config.yml
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/register.py
 from nat.plugin_api import Builder
 from nat.plugin_api import FunctionBaseConfig
 from nat.plugin_api import FunctionInfo
@@ -127,19 +127,19 @@ from nat.plugin_api import register_function
 
 > **1.9 differs.** คำสั่ง `--workflow-dir ./workflows` ของ research tutorial ล้มเหลวในโฟลเดอร์ใหม่ด้วยข้อความ `Invalid workflow directory specified. … does not exist.` scaffold ของ 1.9 import ทุกอย่างจาก facade เดียวคือ `nat.plugin_api` และ `config.yml` ใช้ `_type: nim` (NIM แบบ hosted) คุณต้องเปลี่ยนบล็อก `llms` นั้นเป็น server บนเครื่อง
 
-ต่อด้วย workflow ขั้นต่ำ `week26/04_nat_claws/configs/hello.laptop.yml` คือ YAML ของ research tutorial ที่เปลี่ยนสองบรรทัดตามหัวข้อ 2 ฟิลด์ `api_key` ต้องมีเพราะ validation บังคับ แม้ server จะไม่ใช้ key จึงใส่ค่าหลอกไว้คือ `EMPTY` ให้ validate ก่อนรันเสมอ เพราะไม่เสีย LLM call เลย
+ต่อด้วย workflow ขั้นต่ำ `week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml` คือ YAML ของ research tutorial ที่เปลี่ยนสองบรรทัดตามหัวข้อ 2 ฟิลด์ `api_key` ต้องมีเพราะ validation บังคับ แม้ server จะไม่ใช้ key จึงใส่ค่าหลอกไว้คือ `EMPTY` ให้ validate ก่อนรันเสมอ เพราะไม่เสีย LLM call เลย
 
 ```bash
 # on: laptop
-cat week26/04_nat_claws/configs/hello.laptop.yml
-week26/.venv-nat/bin/nat validate --config_file week26/04_nat_claws/configs/hello.laptop.yml 2>/dev/null | head -2
-week26/.venv-nat/bin/nat run --config_file week26/04_nat_claws/configs/hello.laptop.yml --input "What time is it in Bangkok right now?" 2>&1 | tail -1
+cat week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml
+week26_nemoclaw_claws/.venv-nat/bin/nat validate --config_file week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml 2>/dev/null | head -2
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml --input "What time is it in Bangkok right now?" 2>&1 | tail -1
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้ เฉพาะสองคำสั่งสุดท้าย)
 
 ```
-Validating configuration file: week26/04_nat_claws/configs/hello.laptop.yml
+Validating configuration file: week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml
 ✓ Configuration file is valid!
 Error: ReActAgentParsingFailedError: Failed to parse agent output after 1 attempts. Error: Invalid Format: Missing 'Action:' after 'Thought:'. LLM output: ''
 ```
@@ -148,7 +148,7 @@ YAML ไม่ผิด ปัญหาอยู่ที่โมเดล `nem
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat run --config_file week26/04_nat_claws/configs/hello.laptop.nothink.yml --input "What time is it in Bangkok right now?" 2>&1 | grep -A1 -E "Action:|Tool's response|Workflow Result"
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.nothink.yml --input "What time is it in Bangkok right now?" 2>&1 | grep -A1 -E "Action:|Tool's response|Workflow Result"
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -174,7 +174,7 @@ NAT เขียน agent log และผลลัพธ์ออกทาง *
 
 ## 4 · L3.4 — tool ที่เขียนเอง: วิเคราะห์ CSV ของ chiller plant
 
-tool จริงตัวแรกของ Alto Ops Claw อ่านไฟล์ CSV ที่ export จาก chiller plant แล้วคืนค่า kW ต่อ refrigeration ton (kW/RT) ของทั้งโรงงาน ยิ่งต่ำยิ่งดี แพ็กเกจของคอร์สติดตั้งอยู่ใน NAT venv แล้ว: `week26/common/alto_ops/src/alto_ops/chiller_tool.py` เป็นโค้ด Lab 3.4 ของ research tutorial ที่แก้ description ไปหนึ่งจุด
+tool จริงตัวแรกของ Alto Ops Claw อ่านไฟล์ CSV ที่ export จาก chiller plant แล้วคืนค่า kW ต่อ refrigeration ton (kW/RT) ของทั้งโรงงาน ยิ่งต่ำยิ่งดี แพ็กเกจของคอร์สติดตั้งอยู่ใน NAT venv แล้ว: `week26_nemoclaw_claws/common/alto_ops/src/alto_ops/chiller_tool.py` เป็นโค้ด Lab 3.4 ของ research tutorial ที่แก้ description ไปหนึ่งจุด
 
 function หนึ่งตัวประกอบด้วยสามส่วนของ NAT:
 
@@ -188,7 +188,7 @@ NAT หาแพ็กเกจเจอผ่าน entry point `nat.components
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/python week26/04_nat_claws/tools/nat_direct.py imports
+week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/04_nat_claws/tools/nat_direct.py imports
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -204,7 +204,7 @@ nat.plugin_api.FunctionBaseConfig is nat.data_models.function.FunctionBaseConfig
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/python week26/04_nat_claws/tools/nat_direct.py tool week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml chiller_kpi '{"hours": 6}' '{"hours": 24}' 2>/dev/null
+week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/04_nat_claws/tools/nat_direct.py tool week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml chiller_kpi '{"hours": 6}' '{"hours": 24}' 2>/dev/null
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -240,11 +240,11 @@ chiller_kpi({"hours": 24}) -> window=24h avg_kw=442.5 avg_rt=629.2 kw_per_rt=0.7
 
 `nat serve` เปลี่ยน YAML เดิมให้เป็น FastAPI server พอร์ตเริ่มต้นคือ 8000 ซึ่งเป็นพอร์ตของ vLLM บน Spark จึงต้องใส่ `--port 8001` (คำสั่ง curl ใน research tutorial ก็ใช้ 8001)
 
-> **1.9 differs.** NAT 1.9.0 ดึง SQLAlchemy 2.1 มาด้วย ซึ่งไม่ได้ติดตั้ง `greenlet` ให้โดยอัตโนมัติแล้ว แต่ `nat serve` import ส่วน asyncio ของ SQLAlchemy ตอนเริ่มทำงาน ถ้าไม่มี `greenlet` จะหยุดพร้อมข้อความ *"The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed"* venv ของคอร์สนี้เจอแบบนั้นจริง วิธีแก้มีบรรทัดเดียวคือ `uv pip install --python week26/.venv-nat/bin/python greenlet` และตอนนี้ติดตั้งแล้ว ถ้าเครื่องของคุณยังไม่มี lab 04-3 จะยืม `greenlet` จาก `week25/.venv-nat` ผ่าน `PYTHONPATH` (และบอกไว้ชัด) หรือพิมพ์วิธีแก้ให้ `nat run` และ `nat mcp serve` ไม่ต้องใช้แพ็กเกจนี้
+> **1.9 differs.** NAT 1.9.0 ดึง SQLAlchemy 2.1 มาด้วย ซึ่งไม่ได้ติดตั้ง `greenlet` ให้โดยอัตโนมัติแล้ว แต่ `nat serve` import ส่วน asyncio ของ SQLAlchemy ตอนเริ่มทำงาน ถ้าไม่มี `greenlet` จะหยุดพร้อมข้อความ *"The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed"* venv ของคอร์สนี้เจอแบบนั้นจริง วิธีแก้มีบรรทัดเดียวคือ `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` และตอนนี้ติดตั้งแล้ว ถ้าเครื่องของคุณยังไม่มี lab 04-3 จะยืม `greenlet` จาก `week25_dgx_spark/.venv-nat` ผ่าน `PYTHONPATH` (และบอกไว้ชัด) หรือพิมพ์วิธีแก้ให้ `nat run` และ `nat mcp serve` ไม่ต้องใช้แพ็กเกจนี้
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat serve --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --host 127.0.0.1 --port 8001
+week26_nemoclaw_claws/.venv-nat/bin/nat serve --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --host 127.0.0.1 --port 8001
 ```
 
 ในเทอร์มินัลที่สอง:
@@ -296,7 +296,7 @@ Lab 04-3 เรียกแบบเดียวกันด้วย `urllib` �
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat mcp serve --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --name "Alto Ops MCP" --port 9901
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp serve --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --name "Alto Ops MCP" --port 9901
 ```
 
 ในเทอร์มินัลที่สอง:
@@ -304,7 +304,7 @@ week26/.venv-nat/bin/nat mcp serve --config_file week26/common/alto_ops/src/alto
 ```bash
 # on: laptop
 curl -s http://localhost:9901/debug/tools/list
-week26/.venv-nat/bin/nat mcp client tool list --url http://localhost:9901/mcp 2>/dev/null
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp client tool list --url http://localhost:9901/mcp 2>/dev/null
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -322,14 +322,14 @@ tool_calling_agent
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat mcp serve --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --port 9901 --tool_names chiller_kpi
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp serve --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --port 9901 --tool_names chiller_kpi
 ```
 
 ในเทอร์มินัลที่สอง:
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat mcp client tool call chiller_kpi --url http://localhost:9901/mcp --json-args '{"hours": 6}' 2>/dev/null | grep window
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp client tool call chiller_kpi --url http://localhost:9901/mcp --json-args '{"hours": 6}' 2>/dev/null | grep window
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -338,7 +338,7 @@ week26/.venv-nat/bin/nat mcp client tool call chiller_kpi --url http://localhost
 window=6h avg_kw=473.6 avg_rt=525.9 kw_per_rt=0.901 status=ALARM
 ```
 
-**NAT ในบทบาท MCP client** ใช้ tools ของคนอื่น คอร์สมี BMS จำลองให้ คือ `week26/common/bms_mcp_server.py` ซึ่งมีสี่ tool: `read_point`, `list_alarms`, `get_trend` และ `write_setpoint` ข้อมูลเป็นข้อมูลสังเคราะห์ และ `write_setpoint` ไม่เคยเขียนอะไรจริง ไฟล์ `week26/04_nat_claws/configs/mcp_client_bms.yml` เปิดเฉพาะ tool อ่านค่าสองตัว:
+**NAT ในบทบาท MCP client** ใช้ tools ของคนอื่น คอร์สมี BMS จำลองให้ คือ `week26_nemoclaw_claws/common/bms_mcp_server.py` ซึ่งมีสี่ tool: `read_point`, `list_alarms`, `get_trend` และ `write_setpoint` ข้อมูลเป็นข้อมูลสังเคราะห์ และ `write_setpoint` ไม่เคยเขียนอะไรจริง ไฟล์ `week26_nemoclaw_claws/04_nat_claws/configs/mcp_client_bms.yml` เปิดเฉพาะ tool อ่านค่าสองตัว:
 
 ```yaml
 function_groups:
@@ -372,14 +372,14 @@ function_groups:
 
 ```bash
 # on: laptop
-BMS_MCP_PORT=8443 week26/.venv-nat/bin/python week26/common/bms_mcp_server.py
+BMS_MCP_PORT=8443 week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/common/bms_mcp_server.py
 ```
 
 ในเทอร์มินัลที่สอง:
 
 ```bash
 # on: laptop
-BMS_MCP_URL=http://localhost:8443/mcp week26/.venv-nat/bin/python week26/04_nat_claws/tools/nat_direct.py group week26/04_nat_claws/configs/mcp_client_bms.yml bms_tools 2>/dev/null
+BMS_MCP_URL=http://localhost:8443/mcp week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/04_nat_claws/tools/nat_direct.py group week26_nemoclaw_claws/04_nat_claws/configs/mcp_client_bms.yml bms_tools 2>/dev/null
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
@@ -396,7 +396,7 @@ group ยังเชื่อมต่อกับ tool ครบทั้ง�
 
 ```bash
 # on: laptop
-BMS_MCP_URL=http://localhost:8443/mcp week26/.venv-nat/bin/nat run --config_file week26/04_nat_claws/configs/mcp_client_bms.yml --input "Are there any active plant alarms right now, and what is the latest kW/RT reading?" 2>&1 | grep -A1 -E "Tool's response|Workflow Result"
+BMS_MCP_URL=http://localhost:8443/mcp week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/04_nat_claws/configs/mcp_client_bms.yml --input "Are there any active plant alarms right now, and what is the latest kW/RT reading?" 2>&1 | grep -A1 -E "Tool's response|Workflow Result"
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้ — คำตอบแบบ LAPTOP STAND-IN)
@@ -426,17 +426,17 @@ agent เรียก `bms_tools__list_alarms` และ `bms_tools__read_point`
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat validate --config_file week26/04_nat_claws/configs/code_execution.tutorial.yml 2>/dev/null | head -2
-week26/.venv-nat/bin/nat validate --config_file week26/04_nat_claws/configs/code_execution.piston.yml 2>/dev/null | head -2
+week26_nemoclaw_claws/.venv-nat/bin/nat validate --config_file week26_nemoclaw_claws/04_nat_claws/configs/code_execution.tutorial.yml 2>/dev/null | head -2
+week26_nemoclaw_claws/.venv-nat/bin/nat validate --config_file week26_nemoclaw_claws/04_nat_claws/configs/code_execution.piston.yml 2>/dev/null | head -2
 docker info --format '{{.ServerVersion}}' 2>&1 | tail -1
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้)
 
 ```
-Validating configuration file: week26/04_nat_claws/configs/code_execution.tutorial.yml
+Validating configuration file: week26_nemoclaw_claws/04_nat_claws/configs/code_execution.tutorial.yml
 ✓ Configuration file is valid!
-Validating configuration file: week26/04_nat_claws/configs/code_execution.piston.yml
+Validating configuration file: week26_nemoclaw_claws/04_nat_claws/configs/code_execution.piston.yml
 ✓ Configuration file is valid!
 failed to connect to the docker API at unix:///Users/altodev/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /Users/altodev/.docker/run/docker.sock: connect: no such file or directory
 ```
@@ -449,7 +449,7 @@ failed to connect to the docker API at unix:///Users/altodev/.docker/run/docker.
 
 ## 8 · L3.8 — รัน NAT ใน OpenShell sandbox
 
-ตรงนี้คือจุดที่สองครึ่งของคอร์สมาบรรจบกัน: workflow ของ NAT จากหัวข้อ 3–6 เข้าไปอยู่ในขอบเขตของ OpenShell จากโมดูล 03 แผนนี้มีสามไฟล์ Lab 04-5 สร้างทั้งหมดไว้ใน `week26/04_nat_claws/.runs/alto-ops-sandbox/` พร้อมแพ็กเกจ `alto_ops` และไฟล์ CSV
+ตรงนี้คือจุดที่สองครึ่งของคอร์สมาบรรจบกัน: workflow ของ NAT จากหัวข้อ 3–6 เข้าไปอยู่ในขอบเขตของ OpenShell จากโมดูล 03 แผนนี้มีสามไฟล์ Lab 04-5 สร้างทั้งหมดไว้ใน `week26_nemoclaw_claws/04_nat_claws/.runs/alto-ops-sandbox/` พร้อมแพ็กเกจ `alto_ops` และไฟล์ CSV
 
 **1 · `Dockerfile.alto-ops`** ไฟล์นี้ research tutorial เขียนขึ้นเอง ไม่ใช่ image ของ NVIDIA และยังไม่เคย build บน Mac เครื่องนี้ (Docker daemon ปิดอยู่) ให้ตรวจบรรทัดติดตั้ง NAT และ `USER` ที่ไม่ใช่ root กับ base image ของคุณเอง OpenShell ต้องการ identity ที่ไม่ใช่ root และปฏิเสธ root
 
@@ -506,7 +506,7 @@ Lab 04-5 ตรวจ policy นี้สองรอบ: รอบแรกด�
 
 > **Parser differs.** research tutorial สร้าง sandbox ในบรรทัดเดียว ด้วย `--upload ./data:/sandbox/data` และ `-- nat serve …` ต่อท้าย parser ของ OpenShell 0.0.111 บนแล็ปท็อปปฏิเสธการใช้สองอย่างนี้ร่วมกัน NemoClaw ปักเวอร์ชัน 0.0.116 บน Spark จึงควรเช็ก `openshell sandbox create --help` ที่นั่น รูปแบบที่แยกคำสั่งด้านล่าง parse ผ่านบน 0.0.111 และเพราะ `chiller_kpi` เปิดไฟล์ CSV ใหม่ทุกครั้งที่ถูกเรียก การอัปโหลดข้อมูลหลัง server เริ่มแล้วจึงไม่มีปัญหา
 
-บน Spark ให้คัดลอกโฟลเดอร์ไปก่อน (`scp -r week26/04_nat_claws/.runs/alto-ops-sandbox <spark>:~/works/alto-ops-claw/`) แล้วรัน:
+บน Spark ให้คัดลอกโฟลเดอร์ไปก่อน (`scp -r week26_nemoclaw_claws/04_nat_claws/.runs/alto-ops-sandbox <spark>:~/works/alto-ops-claw/`) แล้วรัน:
 
 ```bash
 # on: spark
@@ -554,7 +554,7 @@ checker ทำงานแบบ offline มันให้ model `MCPClientConf
 
 ```bash
 # on: laptop
-.venv/bin/python week26/04_nat_claws/exercises/ex04_bms_tools.py
+.venv/bin/python week26_nemoclaw_claws/04_nat_claws/exercises/ex04_bms_tools.py
 ```
 
 **Expected output** (บันทึกจากเครื่อง Mac นี้ เมื่อทำครบทุก TODO)
@@ -587,7 +587,7 @@ checker ทำงานแบบ offline มันให้ model `MCPClientConf
 
 <details><summary>Hint — ไปต่ออีกขั้น (research tutorial Part 3, exercise ข้อ 1 และ 2)</summary>
 
-เปลี่ยน `_type: tool_calling_agent` เป็น `react_agent` (คง `reasoning_effort: none` ไว้) แล้วนับขั้น LLM_END ด้วย `/v1/workflow/full` สำหรับคำถาม "give me the 6-hour and 24-hour kW/RT" ให้วัดจริง อย่าเดา จากนั้นอ่าน `week26/common/alto_ops/src/alto_ops/setpoint_tool.py`: `input_schema` แบบ Pydantic ของมันปฏิเสธการสร้าง ticket ถ้าไม่มี `work_order_id` นั่นคือชั้น (a) ในคำตอบสามชั้นของ research tutorial ส่วน policy ใน Exercise 04 คือชั้น (c) ซึ่งเป็นชั้นเดียวที่รอดจาก prompt injection
+เปลี่ยน `_type: tool_calling_agent` เป็น `react_agent` (คง `reasoning_effort: none` ไว้) แล้วนับขั้น LLM_END ด้วย `/v1/workflow/full` สำหรับคำถาม "give me the 6-hour and 24-hour kW/RT" ให้วัดจริง อย่าเดา จากนั้นอ่าน `week26_nemoclaw_claws/common/alto_ops/src/alto_ops/setpoint_tool.py`: `input_schema` แบบ Pydantic ของมันปฏิเสธการสร้าง ticket ถ้าไม่มี `work_order_id` นั่นคือชั้น (a) ในคำตอบสามชั้นของ research tutorial ส่วน policy ใน Exercise 04 คือชั้น (c) ซึ่งเป็นชั้นเดียวที่รอดจาก prompt injection
 
 </details>
 
@@ -599,7 +599,7 @@ checker ทำงานแบบ offline มันให้ model `MCPClientConf
 |---|---|---|
 | `ReActAgentParsingFailedError … LLM output: ''` | thinking model ใส่คำตอบทั้งหมดไว้ในฟิลด์ reasoning | เพิ่ม `reasoning_effort: none` ใต้ LLM หรือใช้ `tool_calling_agent` |
 | `Invalid workflow directory specified. … does not exist.` | NAT 1.9 ต้องการให้ `--workflow-dir` มีอยู่แล้ว | สร้างด้วย `mkdir -p` ก่อน |
-| `nat serve` หยุดพร้อมข้อความ `…requires that the Python 'greenlet' library is installed` | NAT 1.9.0 + SQLAlchemy 2.1 ที่ไม่มี greenlet | `uv pip install --python week26/.venv-nat/bin/python greenlet` |
+| `nat serve` หยุดพร้อมข้อความ `…requires that the Python 'greenlet' library is installed` | NAT 1.9.0 + SQLAlchemy 2.1 ที่ไม่มี greenlet | `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` |
 | `Address already in use` บน 8001, 9901 หรือ 8443 | มีแล็บอื่น (หรือผู้เขียนโมดูลอื่น) รัน server อยู่ | แล็บจะเลือกพอร์ตว่างถัดไปด้วย `free_port()` และพิมพ์บอก ส่วน server ที่คุณรันเองแบบ foreground ให้หยุดด้วย Ctrl-C |
 | `Invalid configuration: function_groups: Value error, include and exclude cannot be used together` | ใส่ทั้งสองรายการใน group เดียว | เก็บไว้แค่ `include` |
 | `error: the argument '--upload <UPLOAD>' cannot be used with '[COMMAND]...'` | กฎของ argument ใน OpenShell 0.0.111 | สร้าง sandbox ก่อน แล้วค่อย `openshell sandbox upload` |

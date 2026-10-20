@@ -1,0 +1,80 @@
+{
+  "architecture": {
+    "title": "The hardened Hotel Ops Ensemble — where the reference solution's nine controls sit",
+    "caption": "The reference configuration from exercises/solutions/capstone.yaml (one of several that pass): 9 switches, 15 of the GM's 16 points (the course's price list). Most controls sit at the policy enforcement point every tool call passes (L6): parameter bounds and provenance-based authorisation, plus least agency. The rest guard the edges: the email gateway (egress allowlist, L4), shared memory and the SOP corpus (memory gate, signed SOP manifest, L2), the A2A endpoint (signed, fresh, single-use messages, L7), the runtime (hop and action budgets, L4) and the audit log (hash chain + an outside witness, L5). HITL is off: it costs 5 and every row it would close is already closed twice by cheaper controls. Everything is simulated.",
+    "lanes": [
+      {"id": "in", "label": "principals and untrusted inputs"},
+      {"id": "agents", "label": "the ensemble (L3 · L7)"},
+      {"id": "guard", "label": "controls (L2 · L4 · L5 · L6)"},
+      {"id": "world", "label": "the simulated hotel"}
+    ],
+    "nodes": [
+      {"id": "guest", "label": "guest / staff", "lane": "in", "sub": "guest:1203 · staff:duty-manager", "accent": "cyan"},
+      {"id": "web", "label": "web page · vendor", "lane": "in", "sub": "reviews.example · Acme over A2A", "accent": "red"},
+      {"id": "orch", "label": "orchestrator", "lane": "agents", "sub": "deterministic routing", "accent": "violet"},
+      {"id": "spec", "label": "concierge · energy · maintenance", "lane": "agents", "sub": "tool_allowlist: each holds only its own tools", "accent": "violet"},
+      {"id": "pep", "label": "PEP", "lane": "guard", "sub": "param_bounds · principal_authz (provenance)", "accent": "green"},
+      {"id": "edge", "label": "edge controls", "lane": "guard", "sub": "egress_allowlist · signed_messages · circuit_breaker", "accent": "green"},
+      {"id": "data", "label": "data controls", "lane": "guard", "sub": "memory_gate · sop_integrity", "accent": "green"},
+      {"id": "audit", "label": "audit log", "lane": "guard", "sub": "audit_chain + witness", "accent": "amber"},
+      {"id": "hotel", "label": "rooms · chiller · email · orders", "lane": "world", "sub": "harms() = [] means nothing bad happened", "accent": "cyan"}
+    ],
+    "edges": [
+      {"from": "guest", "to": "orch", "label": "request + its origin"},
+      {"from": "orch", "to": "spec", "label": "hand-off (origins travel with it)", "animated": true},
+      {"from": "web", "to": "spec", "label": "page text · A2A replies"},
+      {"from": "spec", "to": "data", "label": "remember · recall · search_sop"},
+      {"from": "spec", "to": "pep", "label": "every tool call", "animated": true},
+      {"from": "pep", "to": "edge", "label": "allowed calls"},
+      {"from": "edge", "to": "hotel", "label": "setpoints · email · orders"},
+      {"from": "pep", "to": "audit", "label": "who, what, for whom"}
+    ]
+  },
+  "sequence": {
+    "title": "The capstone loop — from the design-time model to a report the GM can sign",
+    "caption": "The order the labs are meant to be run in. Lab 10-1 reads the base threat model and prints the planning table and the price list. You edit capstone.yaml and threat_model.yaml, rerun lab 10-2 until the scorecard says 0/12 and 8/8 and every claim has evidence, then lab 10-3 diffs the model against the base, runs the CI gate and writes the report. The grader re-checks everything, including that the report's fingerprint matches your current YAML. The LIVE spot check is optional and touches one scenario per run (≤ 6 model calls).",
+    "actors": [
+      {"id": "you", "label": "you (security lead)"},
+      {"id": "l1", "label": "lab 10-1"},
+      {"id": "yaml", "label": "capstone.yaml + threat_model.yaml"},
+      {"id": "l2", "label": "lab 10-2"},
+      {"id": "l3", "label": "lab 10-3"},
+      {"id": "grader", "label": "ex10 grader"}
+    ],
+    "steps": [
+      {"from": "you", "to": "l1", "label": "where do we start?", "kind": "call"},
+      {"from": "l1", "to": "you", "label": "12/12 harm · gate fails · planning table · price list", "kind": "return"},
+      {"from": "you", "to": "yaml", "label": "switches + reasons · mitigations, status, residuals · new threats", "kind": "call"},
+      {"from": "you", "to": "l2", "label": "measure", "kind": "call"},
+      {"from": "l2", "to": "you", "label": "scorecard · cost vs 16 · evidence per threat (switch alone)", "kind": "return"},
+      {"from": "you", "to": "l3", "label": "ship it", "kind": "call"},
+      {"from": "l3", "to": "l3", "label": "maestro.diff vs base · gate(fail_on=high) + suite · report with fingerprint", "kind": "note"},
+      {"from": "you", "to": "grader", "label": "grade", "kind": "call"},
+      {"from": "grader", "to": "you", "label": "10 ✓/✕ lines · the course's rubric /100 · exit 0 only when all ✓", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Three configurations: running cost vs attacks that still cause harm",
+      "type": "bars",
+      "unit": "points · attacks",
+      "labels": ["previous team (rubber stamp)", "reference solution", "every switch on"],
+      "series": [
+        {"name": "running cost (points)", "values": [6, 15, 26], "color": "amber"},
+        {"name": "attacks that cause harm (of 12)", "values": [12, 0, 0], "color": "red"},
+        {"name": "GM's budget", "values": [16, 16, 16], "color": "cyan"}
+      ],
+      "caption": "Captured on this Mac, SIM brain: lab 10-1 step 5 (previous team: tool_allowlist + hitl with a rubber-stamp approver), the reference solution's grader, and the suite with Defenses.all(). All three keep 8/8 benign tasks. Costs and the budget are the course's price list, not a measurement."
+    },
+    {
+      "title": "How many single switches stop each attack on its own",
+      "type": "hbars",
+      "unit": "switches",
+      "labels": ["A01 goal hijack", "A02 web page", "A03 agent to agent", "A04 confused deputy", "A05 data emailed out", "A06 memory poisoning", "A07 tampered SOP", "A08 look-alike card", "A09 replay", "A10 runaway loop", "A11 rubber stamp", "A12 audit tamper"],
+      "series": [
+        {"name": "switches that block it alone", "values": [4, 3, 3, 1, 3, 3, 3, 2, 1, 2, 3, 1], "color": "green"}
+      ],
+      "caption": "Captured on this Mac, SIM brain: lab 10-1 step 6 (careful approver). The three attacks with exactly one blocker (A04, A09, A12) force principal_authz, signed_messages and audit_chain into any configuration that reaches 0/12."
+    }
+  ]
+}

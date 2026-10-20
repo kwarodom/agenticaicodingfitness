@@ -1,0 +1,71 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "camera": "CAM-03 plant room B2",
+   "frames": [
+    {
+     "seconds_ago": 6,
+     "frame": "img-d0576f499baaf6f7"
+    },
+    {
+     "seconds_ago": 0,
+     "frame": "img-5b45482c172d2986"
+    }
+   ]
+  },
+  "questions": {
+   "haze_appeared": {
+    "type": "noul",
+    "instructions": "Did smoke, steam or haze appear between the first and the last of `frames`?"
+   },
+   "haze_now": {
+    "type": "noul",
+    "instructions": "Is there smoke, steam or haze in `frames[1].frame`?"
+   },
+   "haze_before": {
+    "type": "noul",
+    "instructions": "Is there smoke, steam or haze in `frames[0].frame`?"
+   }
+  },
+  "assets": {
+   "img-d0576f499baaf6f7": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "fc71a4b01d164910",
+    "base64_chars": 142764
+   },
+   "img-5b45482c172d2986": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "ad7131efe6f0f507",
+    "base64_chars": 111616
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "haze_appeared": {
+    "type": "noul",
+    "noul": 0.99
+   },
+   "haze_now": {
+    "type": "noul",
+    "noul": 0.98
+   },
+   "haze_before": {
+    "type": "noul",
+    "noul": 0.02
+   }
+  },
+  "usage": {
+   "input_tokens": 3641,
+   "output_tokens": 60
+  }
+ }
+}

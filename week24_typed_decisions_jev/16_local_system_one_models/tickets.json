@@ -1,0 +1,28 @@
+{
+  "about": "18 synthetic hotel-engineering tickets (12 English, 6 Thai) with hand-written labels, written for this module on 2026-10-17. Not real guests or sites. Small on purpose: it teaches HOW to compare engines fairly, it cannot crown a winner.",
+  "labels": {
+    "queue": ["hvac", "housekeeping", "plumbing", "safety", "front_desk"],
+    "safety": "true when the ticket describes smoke, burning, fire, sparks or water near electricity",
+    "urgency": ["routine", "today", "immediate"]
+  },
+  "tickets": [
+    {"id": "en01", "lang": "en", "text": "Room 1203 is too warm, the thermostat says 29 degrees and the AC only blows warm air.", "queue": "hvac", "safety": false, "urgency": 1},
+    {"id": "en02", "lang": "en", "text": "Could we get two extra bath towels and more coffee pods in 812 when someone is free?", "queue": "housekeeping", "safety": false, "urgency": 0},
+    {"id": "en03", "lang": "en", "text": "The toilet in 1507 keeps running and now water is spreading across the bathroom floor.", "queue": "plumbing", "safety": false, "urgency": 2},
+    {"id": "en04", "lang": "en", "text": "There is smoke coming out of the electrical panel next to room 1203 and the lights are flickering.", "queue": "safety", "safety": true, "urgency": 2},
+    {"id": "en05", "lang": "en", "text": "We would like to extend our stay by two nights and move to a room with a city view.", "queue": "front_desk", "safety": false, "urgency": 0},
+    {"id": "en06", "lang": "en", "text": "Water is dripping from the ceiling right onto the TV and the power socket in 905.", "queue": "safety", "safety": true, "urgency": 2},
+    {"id": "en07", "lang": "en", "text": "The AC was noisy last night but it is fine now, no need to send anyone.", "queue": "hvac", "safety": false, "urgency": 0},
+    {"id": "en08", "lang": "en", "text": "Burning smell in the corridor on floor 6 near the laundry chute, please check right away.", "queue": "safety", "safety": true, "urgency": 2},
+    {"id": "en09", "lang": "en", "text": "I was charged twice for the minibar on checkout, please refund one of them.", "queue": "front_desk", "safety": false, "urgency": 1},
+    {"id": "en10", "lang": "en", "text": "The shower drain in 1104 is slow and the tub fills up while we shower.", "queue": "plumbing", "safety": false, "urgency": 1},
+    {"id": "en11", "lang": "en", "text": "Do NOT turn off the chiller tonight, the ballroom event runs until 2am and the room is already warm.", "queue": "hvac", "safety": false, "urgency": 1},
+    {"id": "en12", "lang": "en", "text": "Sparks came out of the hair dryer socket in 702 when my daughter plugged it in.", "queue": "safety", "safety": true, "urgency": 2},
+    {"id": "th01", "lang": "th", "text": "แอร์ห้อง 1203 ไม่เย็นเลย เป่าลมร้อนออกมา", "queue": "hvac", "safety": false, "urgency": 1},
+    {"id": "th02", "lang": "th", "text": "ขอผ้าเช็ดตัวเพิ่มอีกสองผืนที่ห้อง 812 ค่ะ", "queue": "housekeeping", "safety": false, "urgency": 0},
+    {"id": "th03", "lang": "th", "text": "มีน้ำหยดจากเพดานในห้องน้ำ พื้นเปียกหมดแล้ว", "queue": "plumbing", "safety": false, "urgency": 1},
+    {"id": "th04", "lang": "th", "text": "ได้กลิ่นไหม้แถวตู้ไฟชั้น 3 ใกล้ห้อง 1203 รีบมาดูด่วนค่ะ", "queue": "safety", "safety": true, "urgency": 2},
+    {"id": "th05", "lang": "th", "text": "ขอเลื่อนเวลาเช็คเอาท์เป็นบ่ายสองโมงได้ไหมคะ", "queue": "front_desk", "safety": false, "urgency": 0},
+    {"id": "th06", "lang": "th", "text": "ไม่ต้องส่งช่างมาแล้วนะคะ แอร์กลับมาเย็นแล้ว", "queue": "hvac", "safety": false, "urgency": 0}
+  ]
+}

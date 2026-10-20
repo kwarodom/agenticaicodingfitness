@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "capability": "see",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "prompt": "You are helping a hotel engineering team. Describe what is visible in 2-3 sentences, focusing on any safety or maintenance issue. Then add one sentence starting 'Unsure:' saying what you cannot tell from the image.",
+  "media": "leak_under_ahu.jpg"
+ },
+ "response": {
+  "text": "A large, gray air handling unit is elevated on a metal frame inside a mechanical room with overhead ductwork and piping. A significant stream of liquid is actively leaking from the bottom of the unit, creating a large standing puddle on the concrete floor below. This presents an immediate maintenance issue regarding a system failure and poses a severe slip hazard for personnel.\n\nUnsure: whether the leaking fluid is clean condensate water, oil, or chemical coolant from within the unit.",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "usage": {
+   "input_tokens": 1126,
+   "output_tokens": 92
+  },
+  "latency_ms": 3816.1
+ }
+}

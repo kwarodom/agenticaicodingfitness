@@ -126,7 +126,7 @@ print(ask("What's 18% of 4,500, and what's the weather in Bangkok?"))
 2. **Mismatched `tool_use_id`** — each `tool_result` must carry the exact `id` of the `tool_use` it answers.
 3. **Looping forever / not looping** — you `while True` because the model may want several rounds of tools before it's done.
 
-> 📁 Class repo: `week3/toolsuse.py` (calculator + weather + **Tapo smart-light control**), `week3/buildsmartassistant3tools.py` (adds web search + file reading).
+> 📁 Class repo: `week03_tool_use/toolsuse.py` (calculator + weather + **Tapo smart-light control**), `week03_tool_use/buildsmartassistant3tools.py` (adds web search + file reading).
 
 ---
 
@@ -148,7 +148,7 @@ except Exception as e:
 messages.append({"role": "user", "content": [block]})
 ```
 
-Notice `week3/toolsuse.py` already does the soft version of this — `get_weather` returns `"Could not find coordinates for city: ..."` as plain text instead of throwing. `is_error: true` is the formal signal that says *"this was a failure, not a normal answer."*
+Notice `week03_tool_use/toolsuse.py` already does the soft version of this — `get_weather` returns `"Could not find coordinates for city: ..."` as plain text instead of throwing. `is_error: true` is the formal signal that says *"this was a failure, not a normal answer."*
 
 ## Two more knobs (good to know, not essential day one)
 
@@ -241,7 +241,7 @@ class MockLLM:
 
 
 # === Sample tools to grade ===
-GOOD = {   # mirrors week7/agenttooldt.py — a clean, well-described single tool
+GOOD = {   # mirrors week07_mcp_and_skills/agenttooldt.py — a clean, well-described single tool
     "name": "get_current_datetime",
     "description": "Returns the current date and time as a formatted string. Use this for any question about the current time or today's date.",
     "input_schema": {
@@ -282,7 +282,7 @@ for label, tool in [("GOOD", GOOD), ("BAD", BAD)]:
 
 **Pass threshold: 4 / 5 criteria** (and `BAD` must end at 6/6).
 
-> 📁 Related artifact: `week7/agenttooldt.py` — a single, well-formed tool (`get_current_datetime`: clear name, WHEN-style description, typed param with a default, `required: []`). Run your validator against *its* `tools` list; it should score 6/6.
+> 📁 Related artifact: `week07_mcp_and_skills/agenttooldt.py` — a single, well-formed tool (`get_current_datetime`: clear name, WHEN-style description, typed param with a default, `required: []`). Run your validator against *its* `tools` list; it should score 6/6.
 
 **Companion (optional):** repeat the drill by authoring a `get_weather` tool from scratch and validating it — reinforces writing LLM-friendly schemas, the exact skill behind every MCP tool you'll build in `mcp-and-skills` (the build-an-MCP-server section). For more reps in this format, see `agent-drills`.
 
@@ -290,4 +290,4 @@ for label, tool in [("GOOD", GOOD), ("BAD", BAD)]:
 
 ### Stretch
 
-Point the learner at the real Tapo example in `week3/toolsuse.py` and discuss how `control_lights` is just another tool whose "function" happens to be an HTTP call to a smart bulb — *and* run `validate_tool_definition()` on it to confirm its `enum`-rich, well-described schema scores 6/6. (Class homework stubs `week3/hwadd4thtool.py` / `hwadd5thtool.py` are blank on purpose — the "write your own 4th/5th tool" exercise.)
+Point the learner at the real Tapo example in `week03_tool_use/toolsuse.py` and discuss how `control_lights` is just another tool whose "function" happens to be an HTTP call to a smart bulb — *and* run `validate_tool_definition()` on it to confirm its `enum`-rich, well-described schema scores 6/6. (Class homework stubs `week03_tool_use/hwadd4thtool.py` / `hwadd5thtool.py` are blank on purpose — the "write your own 4th/5th tool" exercise.)

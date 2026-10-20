@@ -9,7 +9,7 @@ Two TODOs, both checked OFFLINE (free) before any API call:
 When every check is ✓, your chosen LLM (the runner's LLM picker) writes two real
 drafts, a planted bad draft is added, and your checks + policy decide each one.
 
-Run: .venv/bin/python week24/11_jev_plus_llm/exercises/ex11_guarded_reply.py
+Run: .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/exercises/ex11_guarded_reply.py
 """
 import sys
 from pathlib import Path

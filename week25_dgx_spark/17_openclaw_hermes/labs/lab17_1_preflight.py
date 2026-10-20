@@ -9,7 +9,7 @@ installer offers to migrate an existing OpenClaw; this course says no).
 
 Nothing is installed or changed.
 
-Run: .venv/bin/python week25/17_openclaw_hermes/labs/lab17_1_preflight.py
+Run: .venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_1_preflight.py
 """
 import json
 import re

@@ -1,6 +1,6 @@
 # 🕸️ Knowledge Graph Mastery — Code Companion
 
-Runnable Python that follows **`week15/kg_mastery.pdf`** step by step — from Neo4j/Cypher fundamentals to production GraphRAG with every major framework, plus RAGAS evaluation.
+Runnable Python that follows **`week15_production_graphrag/kg_mastery.pdf`** step by step — from Neo4j/Cypher fundamentals to production GraphRAG with every major framework, plus RAGAS evaluation.
 
 ```
 kg_mastery/
@@ -20,7 +20,7 @@ kg_mastery/
 ### 1. Start Neo4j (with APOC + GDS)
 
 ```bash
-docker compose -f week15/kg_mastery/docker-compose.yml up -d
+docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d
 # Browser UI: http://localhost:7474   (login: neo4j / mas_memory_2024)
 # Bolt:       bolt://localhost:7687
 ```
@@ -29,7 +29,7 @@ docker compose -f week15/kg_mastery/docker-compose.yml up -d
 
 ```bash
 python3 -m venv venv && source venv/bin/activate
-pip install -r week15/kg_mastery/requirements.txt
+pip install -r week15_production_graphrag/kg_mastery/requirements.txt
 ```
 
 Add keys to a `.env` in the **repo root** (gitignored — never commit):
@@ -44,7 +44,7 @@ OPENAI_API_KEY="sk-..."            # Part 2 vector embeddings (text-embedding-3-
 Everything queries the **hotel IoT** graph used throughout the course:
 
 ```bash
-python week15/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py
+python week15_production_graphrag/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py
 ```
 
 This MERGEs rooms, devices, sensor readings, alerts, staff, maintenance jobs, guests and suppliers — idempotent, safe to re-run.

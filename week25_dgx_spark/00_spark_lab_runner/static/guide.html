@@ -389,7 +389,7 @@
     position:sticky;top:0;background:var(--panel);z-index:2;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
   .sidetop .tbtn{text-transform:none;letter-spacing:0}
   @media (prefers-reduced-motion: reduce){.main.noside .side{transition:none}}
-  /* ── week25 additions: Spark chips, endpoint dots, Ask-the-Spark blocks ── */
+  /* ── week25_dgx_spark additions: Spark chips, endpoint dots, Ask-the-Spark blocks ── */
   .spchip{font-size:11.5px;padding:3px 9px;border:1px solid var(--line);border-radius:99px;color:var(--dim);white-space:nowrap}
   .spchip.ok{border-color:var(--green);color:var(--green)} .spchip.bad{border-color:var(--amber);color:var(--amber)}
   .epchips{display:inline-flex;gap:5px;flex-wrap:wrap}
@@ -446,7 +446,7 @@
   <div class="khead"><h3>🖥 Spark setup</h3><span class="pfhint">hosts are shown · tokens are write-only</span><span class="grow"></span>
     <button class="tbtn sm" onclick="closeSetup()">✕ close</button></div>
   <div class="kbody" id="keysbody"></div>
-  <div class="kfoot"><span>Saved to <code>week25/.env.local</code> on this machine (gitignored, mode 0600). Tokens are injected only into lab subprocesses and the ⌨ terminal — never sent to the browser. Test ssh first: <code>ssh -o BatchMode=yes $SPARK_HOST true</code>.</span>
+  <div class="kfoot"><span>Saved to <code>week25_dgx_spark/.env.local</code> on this machine (gitignored, mode 0600). Tokens are injected only into lab subprocesses and the ⌨ terminal — never sent to the browser. Test ssh first: <code>ssh -o BatchMode=yes $SPARK_HOST true</code>.</span>
     <span id="keysmsg" aria-live="polite"></span></div>
 </dialog>
 
@@ -558,7 +558,7 @@ async function boot(){
   }catch(e){
     attempt++;
     $("content").innerHTML=`<div class="waitmsg">⚠ backend not reachable — ${esc(e.message||e)}<br>`+
-      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week25/00_spark_lab_runner/tutorial_server.py</code></div>`;
+      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py</code></div>`;
     setTimeout(boot,3000);return;
   }
   setCourse(data);
@@ -670,7 +670,7 @@ async function openSetup(){
     `<div class="kin"><input ${r.secret?'type="password"':'type="text"'} autocomplete="off" spellcheck="false" id="kv-${esc(r.name)}" `+
     `placeholder="${esc(r.secret?(r.set?"replace (optional)":"paste token"):(r.hint||""))}" value="${esc(r.secret?"":r.value||"")}">`+
     `<button class="tbtn sm" onclick="saveSetting('${esc(r.name)}')">save</button>`+
-    (r.source==="week25/.env.local"?`<button class="tbtn sm" onclick="saveSetting('${esc(r.name)}',true)">remove</button>`:"")+
+    (r.source==="week25_dgx_spark/.env.local"?`<button class="tbtn sm" onclick="saveSetting('${esc(r.name)}',true)">remove</button>`:"")+
     `<span class="pfhint">${esc(r.hint||"")}</span></div></div>`).join("");
   $("keysmsg").textContent="";
   if(typeof dlg.showModal==="function")dlg.showModal();else dlg.setAttribute("open","");
@@ -680,7 +680,7 @@ async function saveSetting(name,remove){
   try{
     const r=await fetch("/api/settings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,value})});
     const d=await r.json();
-    $("keysmsg").textContent=r.ok?`${d.name}: ${d.set?"saved ✓ (week25/.env.local, gitignored)":"removed"}`:`✕ ${d.detail||r.status}`;
+    $("keysmsg").textContent=r.ok?`${d.name}: ${d.set?"saved ✓ (week25_dgx_spark/.env.local, gitignored)":"removed"}`:`✕ ${d.detail||r.status}`;
   }catch(e){$("keysmsg").textContent="✕ could not reach the server";}
   await refreshStatus(true);await openSetup();
 }
@@ -991,7 +991,7 @@ function kindChip(k){
 function renderContent(){
   if(!COURSE.length)return;
   const f=FLAT[cur],c=COURSE[f.fi],s=c.sections[f.si];
-  let h=`<div class="crumb">${esc(tr("module"))} ${esc(c.num)} · week25/${esc(c.folder)} · ${esc(tr("section"))} ${f.si+1}/${c.sections.length}</div>`;
+  let h=`<div class="crumb">${esc(tr("module"))} ${esc(c.num)} · week25_dgx_spark/${esc(c.folder)} · ${esc(tr("section"))} ${f.si+1}/${c.sections.length}</div>`;
   if(LANG==="th"&&!c.has_th)h+=`<div class="pwarn">${esc(tr("thMissing"))}</div>`;
   h+=`<h2>${esc(s.title)}${kindChip(s.kind)}</h2>`;
   if(s.kind==="intro"&&c.meta&&(c.meta.time||c.meta.difficulty)){
@@ -1056,7 +1056,7 @@ function fileCard(fi,rel,title,kind){
      `<div class="term-wrap" id="tw-${id}" style="display:none">`+
      `<div class="term-bar"><span class="d" style="background:#f85149"></span>`+
      `<span class="d" style="background:#d29922"></span><span class="d" style="background:#3fb950"></span>`+
-     `<span>week25/${esc(COURSE[fi].folder)}/${esc(rel)}</span><span class="clr" onclick="clearFileTerm(${fi},'${esc(rel)}')">clear ✕</span></div>`+
+     `<span>week25_dgx_spark/${esc(COURSE[fi].folder)}/${esc(rel)}</span><span class="clr" onclick="clearFileTerm(${fi},'${esc(rel)}')">clear ✕</span></div>`+
      `<div class="term" id="term-${id}"></div>`+
      `<div class="footer" id="foot-${id}"></div></div></article>`;
 }
@@ -1123,7 +1123,7 @@ function setRunButtons(dis){
 function colorize(text){
   return esc(text).split("\n").map(line=>{
     const out=colorLine(line);
-    const mm=line.match(/week25\/(\d\d_[a-z0-9_]+)\/(\.runs\/[A-Za-z0-9_.\-\/]+\.(?:wav|mp3|m4a|ogg|png|jpe?g|webp|mp4|webm))/);
+    const mm=line.match(/week25_dgx_spark\/(\d\d_[a-z0-9_]+)\/(\.runs\/[A-Za-z0-9_.\-\/]+\.(?:wav|mp3|m4a|ogg|png|jpe?g|webp|mp4|webm))/);
     if(!mm)return out;
     const src=mediaSrc(mm[1],mm[2]);
     return src?out+`<span class="termmedia">${mediaTag(src,mm[2])}</span>`:out;

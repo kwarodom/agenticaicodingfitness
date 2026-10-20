@@ -7,12 +7,12 @@ Optimization, to post-train Nemotron models). Outcome-based rewards — did the 
 tool-call / math answer **pass**? — beat human preference for coding, math, and tool-use.
 
 Runs **dual-mode**: **REAL** against a Nemotron / Ollama / vLLM OpenAI endpoint, or **SIM**
-with no GPU (`week23/10_nemo_gym_rl/sim.py`).
+with no GPU (`week23_open_superintelligence_stack/10_nemo_gym_rl/sim.py`).
 
 ## Run the web tutorial
 
 ```bash
-cd week23/nemo_gym_rl
+cd week23_open_superintelligence_stack/nemo_gym_rl
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8109
 ```

@@ -79,7 +79,7 @@ Experiment:
 3. Send `"Hi, what does your company do with AI?"` — `unknown` should win.
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/labs/lab01_lead_routing.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab01_lead_routing.py
 ```
 
 **Expected output**
@@ -121,7 +121,7 @@ def route(a):
 **Before** any of this, the retrieved documents must already be filtered by tenant, project and access policy in code. The classifier may *reject* an authorized passage for being useless — it must **never expand** what a user can see.
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/labs/lab02_rag_filter.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab02_rag_filter.py
 ```
 
 **Expected output**
@@ -176,7 +176,7 @@ Experiment: with the neutral query, `conflict` should drop and the passage becom
 Onboarding a building graph means mapping thousands of cryptic point names (`AHU-3 SAT`, `RM-214 ZN-T`) to meanings. Jev proposes an **internal semantic kind** — deliberately *not* an ontology URI it might invent — and an ambiguity signal. A curator does the rest.
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/labs/lab03_point_mapping.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab03_point_mapping.py
 ```
 
 **Expected output**
@@ -249,7 +249,7 @@ questions = {"p1": noul("Does `passages[0]` help answer `query`?"),
 
 ## Try it yourself
 
-**Exercise 08 — one-call re-rank.** Open `week24/08_leads_rag_points/exercises/ex08_rerank.py`.
+**Exercise 08 — one-call re-rank.** Open `week24_typed_decisions_jev/08_leads_rag_points/exercises/ex08_rerank.py`.
 
 1. **TODO 1** — `passage_question(i)`: return a `noul` asking whether `` `passages[i]` `` (the real index) helps answer `` `query` ``.
 2. **TODO 2** — `select_top(scores, k, min_score)`: highest score first, drop scores below `min_score`, break ties by id.
@@ -257,7 +257,7 @@ questions = {"p1": noul("Does `passages[0]` help answer `query`?"),
 Offline checks run first; then one live call scores all five passages at once.
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/exercises/ex08_rerank.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/exercises/ex08_rerank.py
 ```
 
 **Expected output**

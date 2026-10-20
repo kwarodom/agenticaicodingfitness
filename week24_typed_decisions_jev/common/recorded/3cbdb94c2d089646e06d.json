@@ -1,0 +1,47 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "Guest moved from 1203 to 1408 last night. The AC in 1408 works fine, but the bathroom ceiling in 1203 is still dripping water onto the floor. Please check it before 3pm."
+  },
+  "questions": {
+   "problem_room": {
+    "type": "choice",
+    "instructions": "Which room in `message` has the problem that needs a technician?",
+    "criteria": {
+     "room_1203": "room 1203",
+     "room_1408": "room 1408",
+     "none_of_these": "the problem is not in any of these rooms, or the rooms are not stated"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "problem_room": {
+    "type": "choice",
+    "choice": "room_1203",
+    "confidence": 1.0,
+    "probabilities": {
+     "room_1203": 1.0,
+     "room_1408": 0.0,
+     "none_of_these": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.28
+   }
+  },
+  "usage": {
+   "input_tokens": 448,
+   "output_tokens": 76
+  }
+ }
+}

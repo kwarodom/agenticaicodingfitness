@@ -1,0 +1,73 @@
+{
+ "laya_base": [
+  "positive",
+  "negative",
+  "negative",
+  "positive",
+  "negative",
+  "negative",
+  "positive",
+  "negative",
+  "positive",
+  "negative",
+  "negative",
+  "negative"
+ ],
+ "laya_ft": [
+  "positive",
+  "negative",
+  "negative",
+  "positive",
+  "negative",
+  "positive",
+  "positive",
+  "negative",
+  "positive",
+  "negative",
+  "negative",
+  "negative"
+ ],
+ "gliner_base": [
+  "positive",
+  "negative",
+  "mixed",
+  "positive",
+  "negative",
+  "positive",
+  "positive",
+  "mixed",
+  "positive",
+  "negative",
+  "mixed",
+  "negative"
+ ],
+ "gliner_lora": [
+  "positive",
+  "negative",
+  "negative",
+  "positive",
+  "negative",
+  "positive",
+  "positive",
+  "positive",
+  "positive",
+  "negative",
+  "negative",
+  "negative"
+ ],
+ "gliner_full": [
+  "positive",
+  "negative",
+  "negative",
+  "positive",
+  "negative",
+  "positive",
+  "positive",
+  "negative",
+  "positive",
+  "negative",
+  "mixed",
+  "negative"
+ ],
+ "_recorded_at": "2026-10-17"
+}

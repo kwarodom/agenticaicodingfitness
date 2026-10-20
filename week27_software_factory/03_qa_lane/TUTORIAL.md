@@ -57,7 +57,7 @@ If the gap needs **app code** to change before it is testable, that is a **Fail*
 ## 4 · Forensics with Playwright (optional, 45 min)
 
 ```bash
-# on: laptop, in week27/00_alto_mini
+# on: laptop, in week27_software_factory/00_alto_mini
 npm init -y >/dev/null && npm i -D @playwright/test && npx playwright install chromium
 cp ../factory/e2e/report-fixture.ts e2e/   # fixture: console/pageerror/5xx/auth collectors + screenshot per step
 make dev &  &&  npx playwright test e2e --reporter=line

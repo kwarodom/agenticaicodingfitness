@@ -16,7 +16,7 @@ so a full click-through costs a few cents.
 
 Launch (auto-picks a free port if 8090 is taken):
 
-    .venv/bin/python week18/agent_loop/tutorial_server.py
+    .venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/tutorial_server.py
     # → http://127.0.0.1:8090
 """
 from __future__ import annotations
@@ -33,7 +33,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week18/agent_loop
+PKG = Path(__file__).resolve().parent                 # …/week18_self_evolving_sovereign_edge/agent_loop
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():

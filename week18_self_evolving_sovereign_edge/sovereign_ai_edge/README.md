@@ -2,7 +2,7 @@
 
 An **interactive, explainable web app + runnable demos** for the
 *Sovereign AI at the Edge* tutorial
-(`week18/sovereign_ai_edge_tutorial.pdf`).
+(`week18_self_evolving_sovereign_edge/sovereign_ai_edge_tutorial.pdf`).
 
 Where the PDF *explains* sovereign edge AI — owning your hardware, models, and
 compute with **zero cloud dependency** — this folder lets you **watch it run** on
@@ -30,14 +30,14 @@ ollama run gemma4:12b        # Mac / DGX Spark / Ubuntu GPU
 # ollama run gemma4:2b       # Raspberry Pi / low-RAM devices
 
 # 1) install deps into the repo's uv-managed .venv (Python 3.13)
-uv pip install -r week18/sovereign_ai_edge/requirements.txt
+uv pip install -r week18_self_evolving_sovereign_edge/sovereign_ai_edge/requirements.txt
 
 # 2) the interactive web app  (recommended — click through all 10 chapters)
-.venv/bin/python week18/sovereign_ai_edge/tutorial_server.py
+.venv/bin/python week18_self_evolving_sovereign_edge/sovereign_ai_edge/tutorial_server.py
 # → open http://127.0.0.1:8091
 
 # 3) or run any demo straight from the terminal
-.venv/bin/python week18/sovereign_ai_edge/demos/step01_local_inference.py
+.venv/bin/python week18_self_evolving_sovereign_edge/sovereign_ai_edge/demos/step01_local_inference.py
 ```
 
 If no local endpoint is running, the web app still loads and the demos print
@@ -74,7 +74,7 @@ local **function-calling** loop, and prints `cloud cost: $0.0000` on every call.
 ## Layout
 
 ```
-week18/sovereign_ai_edge/
+week18_self_evolving_sovereign_edge/sovereign_ai_edge/
 ├── README.md                     → this file
 ├── requirements.txt              → openai + FastAPI (local-only)
 ├── config.py                     → local endpoint, model auto-detect, paths

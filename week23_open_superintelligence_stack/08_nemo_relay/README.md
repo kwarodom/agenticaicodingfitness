@@ -5,7 +5,7 @@ Week 23 · The Open Superintelligence Stack · app 08 of 12. This app teaches th
 Launch the interactive explainer:
 
 ```bash
-.venv/bin/python week23/08_nemo_relay/tutorial_server.py   # → http://127.0.0.1:8107
+.venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/tutorial_server.py   # → http://127.0.0.1:8107
 ```
 
 Then do it for real: **[TUTORIAL.md](TUTORIAL.md)** is the hands-on side — build a minimal relay, stand up a live Phoenix on :6006, write and measure a right-sizing router, and export a real OTel trace (labs in `labs/`).

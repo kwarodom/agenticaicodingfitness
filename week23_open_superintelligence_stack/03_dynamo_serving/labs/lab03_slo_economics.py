@@ -8,7 +8,7 @@ add prefill/decode workers. Then do the token economics: measured aggregate
 tok/s + the Spark's 240 W wall power → $ per million tokens.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/03_dynamo_serving/labs/lab03_slo_economics.py
+      .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab03_slo_economics.py
 Env:  SLO_TTFT_MS (default 2000) · SLO_ITL_MS (default 100) · ELEC_USD_KWH (0.15)
 """
 from __future__ import annotations

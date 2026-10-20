@@ -1,0 +1,220 @@
+{
+  "checked": "2026-10-17",
+  "sources": {
+    "directory": "https://systemonemodels.org/compare/ (model pages last checked 12–16 Oct 2026)",
+    "jev_vs_laya": "https://systemonemodels.org/compare/jev-vs-laya/",
+    "jev_vs_gliner": "https://systemonemodels.org/compare/jev-vs-gliner/",
+    "laya_card": "https://huggingface.co/convaiinnovations/laya",
+    "decide_card": "https://huggingface.co/fastino/GLiNER2.5-Decide",
+    "jev_models": "https://docs.typesafe.ai/models"
+  },
+  "note": "Latency and accuracy figures are each vendor's or author's own unless marked independent. They come from different hardware and test sets — read them as 'order of magnitude', never as a head-to-head.",
+  "open_weights": [
+    {
+      "model": "Laya",
+      "vendor": "Convai Innovations",
+      "params": "421M EN / 322M multi",
+      "types": "choice score noul",
+      "context": "512 EN · 1,024 multi (8,192 with max_len)",
+      "latency": "32.8–39.5 ms on a T4 (vendor)",
+      "licence": "Apache-2.0",
+      "install": "pip install laya",
+      "in_this_module": true
+    },
+    {
+      "model": "GLiNER2.5-Decide",
+      "vendor": "Fastino Labs",
+      "params": "340M (DeBERTa-v3)",
+      "types": "classification heads (single/multi-label, yes/no prompts, ordinal labels)",
+      "context": "not published",
+      "latency": "167 ms on 48-vCPU CPU · 38–47 ms GPU (vendor)",
+      "licence": "Apache-2.0",
+      "install": "pip install \"gliner2[local]\"",
+      "in_this_module": true
+    },
+    {
+      "model": "GLiNER2.5-multi-Decide",
+      "vendor": "Fastino Labs",
+      "params": "287M",
+      "types": "same as Decide, multilingual",
+      "context": "not published",
+      "latency": "not published",
+      "licence": "Apache-2.0",
+      "install": "pip install \"gliner2[local]\"",
+      "in_this_module": true
+    },
+    {
+      "model": "Kev (0.8B / 4B / 9B)",
+      "vendor": "Jared Palmer",
+      "params": "0.8–9B (Qwen3.5 + LoRA)",
+      "types": "choice score noul",
+      "context": "8,192 (trained ≤ 1,024)",
+      "latency": "36–179 ms model time on an L40S (author)",
+      "licence": "Apache-2.0",
+      "install": "own server, Jev-compatible /v1/systemone",
+      "in_this_module": false
+    },
+    {
+      "model": "CLM-8B",
+      "vendor": "Contrastive-LM",
+      "params": "8B",
+      "types": "choice score noul",
+      "context": "2,048",
+      "latency": "not published",
+      "licence": "Apache-2.0",
+      "install": "TypeSafe-compatible API",
+      "in_this_module": false
+    },
+    {
+      "model": "H2O-Lightning-4B",
+      "vendor": "H2O.ai",
+      "params": "4B",
+      "types": "choice score noul",
+      "context": "40,960",
+      "latency": "28.8–30.2 ms on H100 / RTX PRO 4500 (vendor)",
+      "licence": "Apache-2.0",
+      "install": "self-hosted",
+      "in_this_module": false
+    },
+    {
+      "model": "Strands-Decider 2B",
+      "vendor": "Strands Labs",
+      "params": "2B (Qwen3.5 + LoRA)",
+      "types": "noul choice score",
+      "context": "4,096",
+      "latency": "not published",
+      "licence": "Apache-2.0",
+      "install": "GPU, Mac or CPU",
+      "in_this_module": false
+    },
+    {
+      "model": "Quyet-1.0-Large",
+      "vendor": "Quyet",
+      "params": "not stated",
+      "types": "choice score noul",
+      "context": "8,000",
+      "latency": "105.4–115.8 ms (two independent medians)",
+      "licence": "Apache-2.0",
+      "install": "self-hosted",
+      "in_this_module": false
+    },
+    {
+      "model": "Torchcast Decision 27B",
+      "vendor": "Torchcast AI",
+      "params": "27B",
+      "types": "choice score noul",
+      "context": "262,144",
+      "latency": "33–49 ms on one H100 (vendor)",
+      "licence": "CC-BY-NC-4.0",
+      "install": "self-hosted",
+      "in_this_module": false
+    },
+    {
+      "model": "Surogate Rune 26B-A4B",
+      "vendor": "Surogate",
+      "params": "26B MoE (4B active)",
+      "types": "choice score noul",
+      "context": "not published",
+      "latency": "not published",
+      "licence": "Apache-2.0",
+      "install": "self-hosted",
+      "in_this_module": false
+    }
+  ],
+  "not_system_one": [
+    {
+      "model": "GLiNER (classic, urchade/gliner_multi-v2.1)",
+      "job": "zero-shot named-entity recognition: typed SPANS with start/end offsets",
+      "why_here": "extract candidates first, then let a decision model choose among them",
+      "licence": "Apache-2.0",
+      "in_this_module": true
+    }
+  ],
+  "hosted": [
+    {
+      "model": "Jev 1.13 / 1.14",
+      "vendor": "TypeSafe AI",
+      "price": "$0.042 / M input tokens, output free",
+      "context": "64k / 32k (262k long)",
+      "images": "yes (danger zone)",
+      "latency": "70–500 ms end to end (vendor); 78 ms per task (Artificial Analysis)"
+    },
+    {
+      "model": "pplx-decider",
+      "vendor": "Perplexity",
+      "price": "$0.02 / M",
+      "context": "262,144",
+      "images": "yes",
+      "latency": "not published"
+    },
+    {
+      "model": "Clef / Clef-omni",
+      "vendor": "Cloudflare",
+      "price": "$0.24 / $0.15 per M",
+      "context": "65,536 / 64,000",
+      "images": "Clef-omni",
+      "latency": "38.8–209.3 ms (vendor)"
+    },
+    {
+      "model": "Microsoft-Decision-1",
+      "vendor": "Microsoft",
+      "price": "$0.042 / M",
+      "context": "32,768",
+      "images": "no",
+      "latency": "85–125 ms (vendor)"
+    },
+    {
+      "model": "OpenAI Decisions API",
+      "vendor": "OpenAI",
+      "price": "$0.10 / M",
+      "context": "not published",
+      "images": "see vendor",
+      "latency": "not published"
+    },
+    {
+      "model": "Tev1-4B",
+      "vendor": "Together AI",
+      "price": "$0.042 / M",
+      "context": "2,048",
+      "images": "no",
+      "latency": "not published"
+    }
+  ],
+  "scores": [
+    {
+      "board": "Jev Decision Index v0.3.1 (independent, 10 Oct 2026) — Full score, 0 = chance",
+      "Jev": 60.11,
+      "GLiNER2.5-Decide": 9.24,
+      "Laya": 4.43,
+      "short": "Jev Decision Index (indep.) — score"
+    },
+    {
+      "board": "Jev Decision Index v0.3.1 — expected calibration error (lower is better)",
+      "Jev": 0.074,
+      "GLiNER2.5-Decide": 0.0884,
+      "Laya": 0.1402,
+      "short": "Jev Decision Index — calibration error ↓"
+    },
+    {
+      "board": "JevBench v1.7.46 capability score (12 Oct 2026)",
+      "Jev": 77.1,
+      "GLiNER2.5-Decide": null,
+      "Laya": 32.5,
+      "short": "JevBench capability score"
+    },
+    {
+      "board": "Fastino 'Fast Decisions' (vendor-run, 17 English domains, % exact match)",
+      "Jev": 57.6,
+      "GLiNER2.5-Decide": 60.2,
+      "Laya": 46.6,
+      "short": "Fastino Fast Decisions (vendor-run) %"
+    },
+    {
+      "board": "Banking77 after fine-tuning Laya on 1,001 examples (A. Ollman, % accuracy)",
+      "Jev": 80.0,
+      "GLiNER2.5-Decide": null,
+      "Laya": 79.4,
+      "short": "Banking77, Laya fine-tuned (Ollman) %"
+    }
+  ]
+}

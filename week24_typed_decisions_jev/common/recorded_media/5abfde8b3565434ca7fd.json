@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "watch",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "prompt": "List what happens in this CCTV clip as a JSON array of objects {\"t_seconds\": number, \"event\": string, \"could_also_be\": string}. In could_also_be, name the most likely alternative interpretation (for example smoke vs steam) or \"none\". Only the JSON.",
+  "media": "cctv_plantroom.mp4"
+ },
+ "response": {
+  "text": "[\n  {\"t_seconds\": 0, \"event\": \"plant room operating under normal conditions\", \"could_also_be\": \"none\"},\n  {\"t_seconds\": 4, \"event\": \"steam begins leaking from the blue chiller compressor\", \"could_also_be\": \"smoke\"},\n  {\"t_seconds\": 6, \"event\": \"steam plume thickens and spreads across the ceiling\", \"could_also_be\": \"smoke\"}\n]",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "usage": {
+   "input_tokens": 663,
+   "output_tokens": 101
+  },
+  "latency_ms": 5038.4
+ }
+}

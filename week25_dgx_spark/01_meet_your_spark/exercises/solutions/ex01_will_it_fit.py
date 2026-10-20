@@ -2,7 +2,7 @@
 """Exercise 01 · reference solution — the "will it fit?" calculator.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/01_meet_your_spark/exercises/ex01_will_it_fit.py
+    .venv/bin/python week25_dgx_spark/01_meet_your_spark/exercises/ex01_will_it_fit.py
 
 The checker is free and offline: it compares your functions with known answers,
 then uses them to decide where three models should run. Stuck? Compare with

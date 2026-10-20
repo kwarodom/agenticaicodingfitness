@@ -2,7 +2,7 @@
 # fine-tuned hotel router (Module 09 → served in Module 13) through the LiteLLM gateway (Module 08).
 # The room/ticket tools come from Module 14's hotel_ops_nat plugin, installed alongside it.
 #
-#   uv pip install --python week25/.venv-nat/bin/python --no-deps -e week25/20_capstone_sovereign_agent/hotel_capstone_nat
+#   uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps -e week25_dgx_spark/20_capstone_sovereign_agent/hotel_capstone_nat
 
 [build-system]
 build-backend = "setuptools.build_meta"

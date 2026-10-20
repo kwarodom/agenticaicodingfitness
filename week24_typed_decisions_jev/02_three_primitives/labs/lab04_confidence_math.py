@@ -16,7 +16,7 @@ between ADJACENT levels keeps confidence higher than mass on a FAR level.
 Either way it measures how CONCENTRATED the answer is — not "the chance the
 answer is correct on your data". You only learn that by evaluating (Lab 09).
 
-Run: .venv/bin/python week24/02_three_primitives/labs/lab04_confidence_math.py
+Run: .venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab04_confidence_math.py
 """
 import sys
 from pathlib import Path

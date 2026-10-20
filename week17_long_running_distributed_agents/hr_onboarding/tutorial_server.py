@@ -12,7 +12,7 @@ A small CONTROL PLANE that:
 
 Launch it and open the printed URL (auto-picks a free port if 8070 is taken):
 
-    .venv/bin/python week17/hr_onboarding/tutorial_server.py
+    .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/tutorial_server.py
     # → http://127.0.0.1:8070
 """
 from __future__ import annotations
@@ -31,7 +31,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week17/hr_onboarding
+PKG = Path(__file__).resolve().parent                 # …/week17_long_running_distributed_agents/hr_onboarding
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():

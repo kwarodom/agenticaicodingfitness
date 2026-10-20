@@ -10,7 +10,7 @@ Runs the SGLang playbook's Steps 6 and 7 from Python:
 Against SGLang on your Spark (:30000) when it is up, otherwise against Ollama on this laptop, labelled
 LAPTOP STAND-IN (Ollama also accepts json_schema; whether it reports cached tokens is up to its version).
 
-Run: .venv/bin/python week25/06_sglang_trtllm_nim/labs/lab03_sglang_features.py
+Run: .venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab03_sglang_features.py
 """
 import json
 import sys

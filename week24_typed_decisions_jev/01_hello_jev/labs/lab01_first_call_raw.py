@@ -4,7 +4,7 @@
 This file deliberately does NOT use jevkit. It shows the whole API:
 one HTTPS POST with {model, state, questions}, one JSON answer back.
 
-Run:  .venv/bin/python week24/01_hello_jev/labs/lab01_first_call_raw.py
+Run:  .venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab01_first_call_raw.py
 DRY:  JEV_MODE=dry … (prints the request, replays a recorded answer)
 """
 import json

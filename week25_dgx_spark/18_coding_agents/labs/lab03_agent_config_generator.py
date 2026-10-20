@@ -14,10 +14,10 @@ endpoint and one model, validates each one, and prints how to apply it:
   COURSE    codex-home/config.toml  Codex config, used with CODEX_HOME so ~/.codex is never touched
 
 It NEVER writes to ~/.claude, ~/.codex, ~/.config/opencode, ~/.continue or any other
-global config. Everything lands in week25/18_coding_agents/.runs/agent-config/
+global config. Everything lands in week25_dgx_spark/18_coding_agents/.runs/agent-config/
 (gitignored), and the lab proves the global files were not modified.
 
-Run: .venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py [--host spark-a] [--tunnel]
+Run: .venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py [--host spark-a] [--tunnel]
 """
 import argparse
 import json
@@ -33,7 +33,7 @@ from sparkkit import banner, api_host, check, note, result, step, table  # noqa:
 
 HERE = Path(__file__).resolve().parents[1]
 OUT = HERE / ".runs" / "agent-config"
-REL = "week25/18_coding_agents/.runs/agent-config"          # as seen from the repo root
+REL = "week25_dgx_spark/18_coding_agents/.runs/agent-config"          # as seen from the repo root
 PLAYBOOK_MODEL = "qwen3.6:35b-a3b-mtp-q4_K_M"
 # (~/.claude.json is left out on purpose: a running Claude Code session rewrites it all the time.)
 GLOBAL_CONFIGS = ["~/.claude/settings.json", "~/.codex/config.toml",

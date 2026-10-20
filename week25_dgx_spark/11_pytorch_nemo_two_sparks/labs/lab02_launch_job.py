@@ -15,7 +15,7 @@ Before it starts anything it checks: Docker works, no other w25-m11 job is runni
 Face login exists in ~/.cache/huggingface (it never prints the token). In DRY mode it prints the
 commands only. Stop a job with: docker stop w25-m11-<recipe>
 
-Run: .venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py [--recipe …]
+Run: .venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py [--recipe …]
 """
 import argparse
 import sys

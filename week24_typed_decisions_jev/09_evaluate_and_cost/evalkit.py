@@ -16,7 +16,7 @@ import math
 import sys
 from pathlib import Path
 
-MODULE = Path(__file__).resolve().parent                   # …/week24/09_evaluate_and_cost
+MODULE = Path(__file__).resolve().parent                   # …/week24_typed_decisions_jev/09_evaluate_and_cost
 WEEK24 = MODULE.parent
 sys.path.insert(0, str(WEEK24 / "common"))
 sys.path.insert(0, str(WEEK24 / "jev_lab"))

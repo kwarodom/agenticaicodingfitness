@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 08.1 — The Reflection pattern.
 
-Run:  python week15/code/08_patterns/01_reflection.py
+Run:  python week15_production_graphrag/code/08_patterns/01_reflection.py
 
 Reflection = the agent critiques and revises its OWN output. Draft → critique →
 improve. It's one of the highest-leverage patterns: a cheap way to raise

@@ -15,7 +15,7 @@ Read-only: it sends GET requests and four tiny chats (≤ 300 tokens). When the
 Spark's Ollama is not reachable it checks THIS laptop's Ollama instead, labelled
 LAPTOP STAND-IN, so you can see every check work before you have a Spark.
 
-Run: .venv/bin/python week25/18_coding_agents/labs/lab01_endpoint_preflight.py [--model qwen3.6:35b-a3b-mtp-q4_K_M]
+Run: .venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab01_endpoint_preflight.py [--model qwen3.6:35b-a3b-mtp-q4_K_M]
 """
 import argparse
 import json

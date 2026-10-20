@@ -13,7 +13,7 @@ Then it applies it to the Nemotron 3 family and prints the second gate every
 Spark deploy must pass: is the container built for aarch64 (a -dgx-spark tag)?
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/02_nim_microservices/labs/lab03_spark_fit_check.py
+      .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab03_spark_fit_check.py
 Try your own model:  … lab03_spark_fit_check.py 70 q4    (params_B, precision)
 """
 from __future__ import annotations

@@ -20,7 +20,7 @@ What this demonstrates:
 
 (Week 17 · fleet orchestration · ADK blog: sub_agents delegation)
 
-Run:  python week17/checkpoints/checkpoint4_sub_agents.py
+Run:  python week17_long_running_distributed_agents/checkpoints/checkpoint4_sub_agents.py
 """
 import sys
 from pathlib import Path

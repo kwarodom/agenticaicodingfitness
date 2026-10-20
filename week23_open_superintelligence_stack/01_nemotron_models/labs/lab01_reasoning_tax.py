@@ -6,7 +6,7 @@ before the ANSWER. Reasoning tokens are not free — they cost latency (and, on 
 cloud endpoint, money). This lab sends an EASY and a HARD prompt to the SAME
 model, splits REASON from ANSWER on the stream, and computes the tax.
 
-Run:  cd <repo root> && .venv/bin/python week23/01_nemotron_models/labs/lab01_reasoning_tax.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab01_reasoning_tax.py
 Works with local Ollama, a DGX Spark tunnel, or a build.nvidia.com nvapi- key
 (inherited from ../config.py). No endpoint? Prints the real commands + a sample.
 """

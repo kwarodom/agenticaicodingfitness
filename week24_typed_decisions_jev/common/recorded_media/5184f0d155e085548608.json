@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "speak",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-tts",
+  "voice": "coral",
+  "text": "Your towels are on the way to room 812."
+ },
+ "response": {
+  "text": "Your towels are on the way to room 812.",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-tts",
+  "voice": "coral",
+  "file": "/Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/13_multimodal_jev/.runs/hello_speak.wav",
+  "bytes": 175244,
+  "latency_ms": 2106.4
+ }
+}

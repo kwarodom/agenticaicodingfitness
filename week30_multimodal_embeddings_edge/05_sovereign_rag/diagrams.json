@@ -1,0 +1,188 @@
+{
+ "architecture": {
+  "title": "Sovereign RAG on one machine",
+  "caption": "Embedding, the index and generation all run locally. The egress guard logs every connection attempt; the only allowed destination is Ollama on localhost:11434. Labs 05-1 to 05-3 measured 0 connections leaving the machine.",
+  "lanes": [
+   {
+    "id": "app",
+    "label": "this machine"
+   },
+   {
+    "id": "net",
+    "label": "network"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "q",
+    "label": "question (EN / TH)",
+    "lane": "app",
+    "sub": "",
+    "accent": "cyan"
+   },
+   {
+    "id": "e",
+    "label": "EmbeddingGemma 2",
+    "lane": "app",
+    "sub": "cached · HF_HUB_OFFLINE=1",
+    "accent": "green"
+   },
+   {
+    "id": "db",
+    "label": "SQLite index",
+    "lane": "app",
+    "sub": "32 KiB · 256-d float16",
+    "accent": "green"
+   },
+   {
+    "id": "o",
+    "label": "Ollama gemma4:12b",
+    "lane": "app",
+    "sub": "localhost:11434",
+    "accent": "green"
+   },
+   {
+    "id": "g",
+    "label": "egress guard",
+    "lane": "net",
+    "sub": "loopback only · logged",
+    "accent": "amber"
+   },
+   {
+    "id": "x",
+    "label": "huggingface.co / cloud API",
+    "lane": "net",
+    "sub": "BLOCKED",
+    "accent": "red"
+   }
+  ],
+  "edges": [
+   {
+    "from": "q",
+    "to": "e",
+    "label": "QuestionAnswering prefix"
+   },
+   {
+    "from": "e",
+    "to": "db",
+    "label": "top 3"
+   },
+   {
+    "from": "db",
+    "to": "o",
+    "label": "notes + question",
+    "animated": true
+   },
+   {
+    "from": "g",
+    "to": "x",
+    "label": "DNS blocked"
+   }
+  ]
+ },
+ "sequence": {
+  "title": "One private RAG answer",
+  "caption": "Retrieve with local embeddings, generate with a local LLM that must cite the numbered notes.",
+  "actors": [
+   {
+    "id": "u",
+    "label": "night shift"
+   },
+   {
+    "id": "e",
+    "label": "embed + index"
+   },
+   {
+    "id": "l",
+    "label": "local LLM"
+   }
+  ],
+  "steps": [
+   {
+    "from": "u",
+    "to": "e",
+    "label": "question",
+    "kind": "call"
+   },
+   {
+    "from": "e",
+    "to": "u",
+    "label": "[1] [2] [3] notes",
+    "kind": "return"
+   },
+   {
+    "from": "u",
+    "to": "l",
+    "label": "answer ONLY from the notes, cite [n]",
+    "kind": "call"
+   },
+   {
+    "from": "l",
+    "to": "u",
+    "label": "answer [1]",
+    "kind": "return"
+   },
+   {
+    "from": "u",
+    "to": "u",
+    "label": "egress log: 0 connections left",
+    "kind": "note"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "Connections that left the machine",
+   "type": "bars",
+   "unit": "connections",
+   "labels": [
+    "05-1 pipeline",
+    "05-2 index",
+    "05-3 RAG"
+   ],
+   "series": [
+    {
+     "name": "left the machine",
+     "values": [
+      0,
+      0,
+      0
+     ],
+     "color": "green"
+    },
+    {
+     "name": "localhost (Ollama)",
+     "values": [
+      0,
+      0,
+      6
+     ],
+     "color": "cyan"
+    }
+   ],
+   "caption": "Egress logs from Labs 05-1 to 05-3 on this Mac."
+  },
+  {
+   "title": "Answer time, local Gemma 4",
+   "type": "bars",
+   "unit": "s",
+   "labels": [
+    "Q1 (cold load)",
+    "Q2 Thai",
+    "Q3"
+   ],
+   "series": [
+    {
+     "name": "seconds",
+     "values": [
+      27.9,
+      3.7,
+      3.0
+     ],
+     "color": "amber"
+    }
+   ],
+   "caption": "Measured by Lab 05-3 (gemma4:12b via Ollama). Q1 includes loading the model."
+  }
+ ]
+}

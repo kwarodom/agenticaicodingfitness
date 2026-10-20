@@ -1,5 +1,5 @@
 # Week 23 · App 1 — Nemotron Open Models (interactive tutorial)
-#   uv pip install -r week23/01_nemotron_models/requirements.txt
+#   uv pip install -r week23_open_superintelligence_stack/01_nemotron_models/requirements.txt
 #
 # Dual-mode (auto-detected): REAL against a Nemotron endpoint (Ollama / NIM / vLLM
 # on a DGX you point DGX_CONN/DGX_BASE_URL at) or SIM with no GPU. No cloud cost.

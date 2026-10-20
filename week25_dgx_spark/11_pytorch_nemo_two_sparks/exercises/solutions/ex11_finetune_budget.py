@@ -2,7 +2,7 @@
 """Exercise 11 · reference solution — the fine-tune budget: LoRA size, training state, and memory per Spark.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py
+    .venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py
 
 The checker is free and offline. It compares your functions with counts you can verify by hand
 (and against the 'Trainable parameters' line the 8B LoRA script prints), then plans three jobs on

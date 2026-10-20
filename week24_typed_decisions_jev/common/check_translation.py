@@ -12,8 +12,8 @@ replays ```jev blocks by exact content — so a translation must keep:
   • every **labs/…** / **exercises/…** blurb, and the **Time/Difficulty/Cost** labels
   • `**Expected output**` markers (Thai may follow in brackets)
 
-    .venv/bin/python week24/common/check_translation.py            # all modules
-    .venv/bin/python week24/common/check_translation.py 04_intent_routing
+    .venv/bin/python week24_typed_decisions_jev/common/check_translation.py            # all modules
+    .venv/bin/python week24_typed_decisions_jev/common/check_translation.py 04_intent_routing
 """
 import re
 import sys

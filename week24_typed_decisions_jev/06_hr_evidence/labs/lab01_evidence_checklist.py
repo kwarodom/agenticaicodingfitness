@@ -5,7 +5,7 @@ Four FICTIONAL professional summaries (no names, contacts, photos, age, gender
 or nationality) → for each job criterion Jev answers evidenced / not_stated /
 unclear → every record goes to a recruiter. No score, no ranking, no rejection.
 
-Run: .venv/bin/python week24/06_hr_evidence/labs/lab01_evidence_checklist.py
+Run: .venv/bin/python week24_typed_decisions_jev/06_hr_evidence/labs/lab01_evidence_checklist.py
 """
 import csv
 import sys

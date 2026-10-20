@@ -6,7 +6,7 @@ your endpoint play teacher and student on a small golden set, a blind LLM-judge
 scores each pair, and the gate rule fires: PROMOTE the student only if it ties
 or beats the teacher on quality AND is cheaper (latency as the cost proxy).
 
-Run:  .venv/bin/python week23/11_data_flywheel/labs/lab03_eval_gate.py
+Run:  .venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab03_eval_gate.py
 """
 from __future__ import annotations
 

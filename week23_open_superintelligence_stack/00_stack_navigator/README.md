@@ -12,8 +12,8 @@ DGX-Spark tok/s. The real commands are part of the content — shown either way.
 ## Launch
 
 ```bash
-uv pip install -r week23/00_stack_navigator/requirements.txt
-.venv/bin/python week23/00_stack_navigator/tutorial_server.py
+uv pip install -r week23_open_superintelligence_stack/00_stack_navigator/requirements.txt
+.venv/bin/python week23_open_superintelligence_stack/00_stack_navigator/tutorial_server.py
 # → http://127.0.0.1:8112   (NT_GUIDE_PORT overrides; auto-picks the next free port)
 ```
 

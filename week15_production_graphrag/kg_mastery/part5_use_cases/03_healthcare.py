@@ -28,7 +28,7 @@ Queries demonstrated:
   1. Drug-interaction detection — patients on an interacting medication pair.
   2. Similar patients (cohort)   — patients sharing diagnoses, for treatment ideas.
 
-Run:  python week15/kg_mastery/part5_use_cases/03_healthcare.py
+Run:  python week15_production_graphrag/kg_mastery/part5_use_cases/03_healthcare.py
 """
 import sys
 from pathlib import Path

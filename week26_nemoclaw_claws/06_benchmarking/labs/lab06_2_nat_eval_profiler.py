@@ -11,7 +11,7 @@ Layers 2 and 3 of 4 (research tutorial Part 5, Lab 5.2). Runs for real on THIS l
 `--judge` adds one row scored by the research tutorial's LLM judges (ragas AnswerAccuracy + trajectory) —
 about 5 more LLM calls and a minute. Laptop numbers are a LAPTOP STAND-IN and are noisy (a shared Ollama).
 
-Run: .venv/bin/python week26/06_benchmarking/labs/lab06_2_nat_eval_profiler.py [--judge]
+Run: .venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_2_nat_eval_profiler.py [--judge]
 """
 import argparse
 import json
@@ -59,7 +59,7 @@ PROBE = ("import json\nfrom nat.data_models.profiler import ProfilerConfig as P\
          "out={}\nfor k,f in P.model_fields.items():\n"
          "    sub=getattr(f.annotation,'model_fields',None)\n"
          "    out[k]=sorted(sub) if sub else None\nprint(json.dumps(out))")
-r = laptop([NAT_PY, "-c", PROBE], quiet=True, show="week26/.venv-nat/bin/python -c 'ProfilerConfig.model_fields …'")
+r = laptop([NAT_PY, "-c", PROBE], quiet=True, show="week26_nemoclaw_claws/.venv-nat/bin/python -c 'ProfilerConfig.model_fields …'")
 fields = json.loads(r.out.strip().splitlines()[-1]) if r.ok else {}
 
 
@@ -72,7 +72,7 @@ table([[k, "✓ exists" if known(k) else "✕ unknown"] for k in TUTORIAL_KEYS],
 extra = sorted(set(fields) - {k.split(".")[0] for k in TUTORIAL_KEYS})
 note(f"1.9.0 also has: {', '.join(extra)} (not used here)")
 v = laptop([NAT, "validate", "--config_file", rel(CONFIGS / "eval_config.spark.yml")], quiet=True, cwd=ROOT,
-           show="nat validate --config_file week26/06_benchmarking/configs/eval_config.spark.yml")
+           show="nat validate --config_file week26_nemoclaw_claws/06_benchmarking/configs/eval_config.spark.yml")
 if v.ok and "is valid" in v.out:
     ok("the research tutorial's full eval_config (ragas + trajectory judges, vLLM on the Spark) validates on 1.9.0")
 else:

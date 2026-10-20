@@ -7,9 +7,9 @@ It then runs configs/hotel_agent.yml (or hotel_agent_spark.yml for vLLM) through
 the tool calls as they happen, and prints the trace NAT wrote (general.telemetry.tracing → _type: file).
 
 Pass your own request as arguments:
-  .venv/bin/python week25/14_nat_agents/labs/lab14_2_run_agent.py "Room 1510 is cold, what is going on?"
+  .venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_2_run_agent.py "Room 1510 is cold, what is going on?"
 
-Run: .venv/bin/python week25/14_nat_agents/labs/lab14_2_run_agent.py
+Run: .venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_2_run_agent.py
 """
 import json
 import os
@@ -91,7 +91,7 @@ print(f"◆ {where} · base_url={base or '—'} · model={model or '—'} · con
 
 step(2, f"nat run · “{QUESTION}”")
 cmd = [str(NAT), "run", "--config_file", cfg_file, "--input", QUESTION]
-print(f"$ cd week25/14_nat_agents && HOTEL_LLM_BASE_URL={base or '<url>'} HOTEL_LLM_MODEL={model or '<model>'} "
+print(f"$ cd week25_dgx_spark/14_nat_agents && HOTEL_LLM_BASE_URL={base or '<url>'} HOTEL_LLM_MODEL={model or '<model>'} "
       f"../.venv-nat/bin/nat run --config_file {cfg_file} --input \"{QUESTION}\"")
 if src == "dry":
     print("◈ EXAMPLE — a LAPTOP STAND-IN run captured on this Mac while the module was written (not your machine):")

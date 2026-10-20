@@ -10,7 +10,7 @@ The gateway is stopped when the lab ends, even on Ctrl-C.
 The laptop aliases answer from the laptop's Ollama (gemma3:4b, nemotron-3-nano) — real calls,
 labelled LAPTOP STAND-IN. Spark aliases work the same way once your Sparks serve models.
 
-Run: .venv/bin/python week25/08_litellm_gateway/labs/lab02_gateway_live.py
+Run: .venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab02_gateway_live.py
 """
 import sys
 import time

@@ -247,7 +247,7 @@
     .dchart .cdot,.dchart .cval{opacity:1;transition:none}
     .dchart .cseg{transition:none}
   }
-  /* ── week24 additions: mode switch, exercise cards, inline Ask-Jev blocks ── */
+  /* ── week24_typed_decisions_jev additions: mode switch, exercise cards, inline Ask-Jev blocks ── */
   .pbtn.on{border-color:var(--accent);color:var(--accent);background:rgba(229,81,186,.13)}
   .pbtn:disabled{opacity:.4;cursor:not-allowed}
   .tbtn.sm{font-size:11px;padding:4px 9px}
@@ -327,10 +327,74 @@
     color:var(--txt);width:340px;max-width:70vw}
   .kfoot{padding:10px 16px;font-size:11.5px;color:var(--dim);border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   #keysmsg{color:var(--cyan)}
+  /* ── media: images, audio, video in tutorials and lab output ── */
+  .mediafig{margin:12px 0 14px;max-width:880px}
+  .mediafig img,.mediafig video{display:block;max-width:100%;max-height:420px;border-radius:10px;border:1px solid var(--line);background:var(--term)}
+  .mediafig audio{display:block;width:min(520px,100%)}
+  .mediafig figcaption{font-size:11.5px;color:var(--dim);margin-top:6px}
+  .termmedia{display:block;margin:6px 0 8px}
+  .termmedia img,.termmedia video{max-width:min(480px,100%);max-height:260px;border-radius:8px;border:1px solid var(--line)}
+  .termmedia audio{width:min(420px,100%)}
+  /* ── 🎙 live console ── */
+  .livebox{margin:14px 0;border:1px solid rgba(86,212,221,.5);border-radius:12px;background:var(--panel);max-width:980px;overflow:hidden}
+  .livehead{display:flex;gap:10px;align-items:center;padding:9px 12px;background:rgba(86,212,221,.08);border-bottom:1px solid var(--line)}
+  .livetag{font-size:12px;font-weight:650;color:var(--cyan)}
+  .lvstate{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--dim)}
+  .lvstate.ok{background:rgba(63,185,80,.16);color:var(--green)} .lvstate.warn{background:rgba(210,153,34,.18);color:var(--amber)}
+  .lvstate.bad{background:rgba(248,81,73,.18);color:var(--red)} .lvstate.run{color:var(--cyan)}
+  .lvclock{font-variant-numeric:tabular-nums;font-size:12px;color:var(--dim)}
+  .liveopts{padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--dim)}
+  .liveopts label{display:inline-flex;gap:5px;align-items:center;margin-right:12px}
+  .liveopts select{font:inherit;font-size:12px;padding:3px 6px;border-radius:6px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+  .lvrow{display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .lvmeter{display:inline-block;width:90px;height:8px;border-radius:4px;background:var(--panel2);overflow:hidden}
+  .lvmeter span{display:block;height:100%;width:0;background:var(--green);transition:width .1s}
+  .lvmeter span.muted{background:var(--dim)}
+  .livegrid{display:grid;grid-template-columns:minmax(220px,320px) 1fr;min-height:260px}
+  @media(max-width:760px){.livegrid{grid-template-columns:1fr}}
+  .lvleft{border-right:1px solid var(--line);padding:10px}
+  .lvleft video{display:none;width:100%;border-radius:8px;border:1px solid var(--line);background:#000;transform:scaleX(-1)}
+  .lvwatchc{margin-top:8px;font-size:11.5px;color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+  .lvwatchc.hot{border-color:rgba(248,81,73,.6);color:var(--red)}
+  .lvwatchc span{color:var(--txt)}
+  .lvtext input{width:100%;margin-top:8px;font:inherit;font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt)}
+  .lvright{padding:8px 12px;min-width:0}
+  .lvlog{max-height:380px;overflow:auto;font-size:12.5px;line-height:1.5}
+  .lvline{margin:4px 0;padding:4px 8px;border-radius:8px}
+  .lvline.you{background:rgba(86,212,221,.07)} .lvline.bot{background:rgba(188,140,255,.08)}
+  .lvline.jev{background:var(--panel2);font-size:11.5px;color:var(--dim)} .lvline.dim{color:var(--dim);font-size:11px}
+  .lvline.bad{color:var(--red)} .lvline.warn{color:var(--amber)}
+  .lvline b{color:var(--txt)} .lvs{margin-right:6px} .lvs.hot{color:var(--red);font-weight:700}
+  .lvst.bad{color:var(--red)} .lvst.warn{color:var(--amber)} .lvst.ok{color:var(--green)}
+  .lvact{margin-top:4px;color:var(--amber)} .lvfix{margin-top:4px;color:var(--cyan)}
+  .lvlang{display:inline-flex;gap:3px;align-items:center;margin-right:12px}
+  .lvlang .pbtn{padding:3px 9px;font-size:11.5px}
+  .lvline.bot.sys{opacity:.6;font-style:italic}
+  .lvfoot{padding:7px 12px;border-top:1px solid var(--line);font-size:11px;color:var(--dim)}
+  /* ── collapsible course outline: docked · hidden · pop-up (peek) ── */
+  #side-toggle{font-size:15px;line-height:1;padding:5px 10px}
+  .main.noside{grid-template-columns:1fr}
+  .main.noside .side{position:fixed;top:0;left:0;bottom:0;width:340px;max-width:88vw;z-index:60;
+    transform:translateX(-105%);transition:transform .22s ease;box-shadow:8px 0 30px rgba(0,0,0,.45);visibility:hidden}
+  .main.noside.peek .side{transform:none;visibility:visible}
+  #side-scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55}
+  .main.noside.peek ~ #side-scrim{display:block}
+  #side-tab{display:none;position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:50;writing-mode:vertical-rl;
+    font:inherit;font-size:11.5px;font-weight:650;padding:12px 5px;border:1px solid var(--line);border-left:0;
+    border-radius:0 8px 8px 0;background:var(--panel2);color:var(--dim);cursor:pointer;letter-spacing:.04em}
+  #side-tab:hover{color:var(--txt);border-color:var(--accent)}
+  .main.noside ~ #side-tab{display:block}
+  .main.noside.peek ~ #side-tab{display:none}
+  .sidetop{display:flex;align-items:center;gap:8px;padding:8px 12px 8px 14px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:var(--panel);z-index:2;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+  .sidetop .tbtn{text-transform:none;letter-spacing:0}
+  @media (prefers-reduced-motion: reduce){.main.noside .side{transition:none}}
 </style>
 </head>
 <body>
 <header>
+  <button class="tbtn" id="side-toggle" onclick="toggleSide()" aria-controls="side" aria-expanded="true"
+          title="Hide / show the course outline — shortcut [">☰</button>
   <h1>⚡ Jev Lab Runner</h1>
   <span class="sub">Week 24 · Typed AI decisions with Jev (TypeSafe System One) · 11 hands-on modules</span>
   <span class="grow"></span>
@@ -364,12 +428,14 @@
   <nav class="side" id="side" aria-label="Course outline — Week 24 modules"></nav>
   <main class="content" id="content" aria-label="Current section"><div class="waitmsg">loading the course…</div></main>
 </div>
+<div id="side-scrim" onclick="closePeek()" aria-hidden="true"></div>
+<button type="button" id="side-tab" onclick="openPeek()" aria-controls="side" title="Show the course outline — shortcut [">☰ Course</button>
 
 <dialog id="keysdlg" aria-label="API keys">
   <div class="khead"><h3>🔑 API keys</h3><span class="pfhint">Jev decides · the LLM you pick writes</span><span class="grow"></span>
     <button class="tbtn sm" onclick="closeKeys()">✕ close</button></div>
   <div class="kbody" id="keysbody"></div>
-  <div class="kfoot"><span>Saved keys go to <code>week24/.env.local</code> on this machine (gitignored, owner-only) and are never shown again or sent to the browser. Keys in the repo-root <code>.env</code> are picked up automatically.</span>
+  <div class="kfoot"><span>Saved keys go to <code>week24_typed_decisions_jev/.env.local</code> on this machine (gitignored, owner-only) and are never shown again or sent to the browser. Keys in the repo-root <code>.env</code> are picked up automatically.</span>
     <span id="keysmsg" aria-live="polite"></span></div>
 </dialog>
 
@@ -478,7 +544,7 @@ async function boot(){
   }catch(e){
     attempt++;
     $("content").innerHTML=`<div class="waitmsg">⚠ backend not reachable — ${esc(e.message||e)}<br>`+
-      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week24/00_jev_lab_runner/tutorial_server.py</code></div>`;
+      `retrying every 3s · attempt ${attempt} · start it with <code>.venv/bin/python week24_typed_decisions_jev/00_jev_lab_runner/tutorial_server.py</code></div>`;
     setTimeout(boot,3000);return;
   }
   setCourse(data);
@@ -514,7 +580,7 @@ function renderMode(){
   });
   const s=$("model-sel");
   if(s&&STATUS){
-    s.innerHTML=(STATUS.models||[]).map(x=>`<option value="${esc(x)}"${x===MODEL?" selected":""}>${esc(x)}${x===STATUS.default_model?" · pinned":" · alias"}</option>`).join("");
+    s.innerHTML=(STATUS.models||[]).map(x=>`<option value="${esc(x)}"${x===MODEL?" selected":""}>${esc(x)}${x===STATUS.default_model?" · pinned":/^jev-\d/.test(x)?" · version":" · alias"}</option>`).join("");
     s.disabled=m!=="live";
     s.title=m==="live"?"model id sent with every call — pin a version for reproducible results":"DRY replays always use the pinned jev-1.13.0 recordings";
   }
@@ -648,7 +714,7 @@ async function openKeys(){
     (r.key_optional?`<div class="kin"><span class="pfhint">runs on this machine — install from <a href="${esc(r.get_key)}" target="_blank" rel="noopener">ollama.com</a></span></div>`:
     `<div class="kin"><input type="password" autocomplete="off" spellcheck="false" id="kv-${esc(r.id)}" placeholder="${r.has_key?"replace key (optional)":"paste key"}">`+
     `<button class="tbtn sm" onclick="saveKey('${esc(r.id)}')">save</button>`+
-    (r.key_source==="week24/.env.local"?`<button class="tbtn sm" onclick="saveKey('${esc(r.id)}',true)">remove</button>`:"")+
+    (r.key_source==="week24_typed_decisions_jev/.env.local"?`<button class="tbtn sm" onclick="saveKey('${esc(r.id)}',true)">remove</button>`:"")+
     `<a class="pfhint" href="${esc(r.get_key)}" target="_blank" rel="noopener">get a key ↗</a></div>`)+`</div>`).join("");
   $("keysmsg").textContent="";
   if(typeof dlg.showModal==="function")dlg.showModal();else dlg.setAttribute("open","");
@@ -659,7 +725,7 @@ async function saveKey(id,remove){
   try{
     const r=await fetch("/api/keys",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({provider:id,value})});
     const d=await r.json();
-    $("keysmsg").textContent=r.ok?`${d.name}: ${d.has_key?"saved ✓ (week24/.env.local, gitignored)":"removed"}`:`✕ ${d.detail||r.status}`;
+    $("keysmsg").textContent=r.ok?`${d.name}: ${d.has_key?"saved ✓ (week24_typed_decisions_jev/.env.local, gitignored)":"removed"}`:`✕ ${d.detail||r.status}`;
   }catch(e){$("keysmsg").textContent="✕ could not reach the server";}
   if(inp)inp.value="";
   await refreshStatus();await openKeys();
@@ -714,6 +780,171 @@ async function askLlm(n){
   btn.disabled=false;btn.textContent=label;
 }
 
+/* ── 🎙 live console: laptop mic + speaker + webcam ⇄ gemini-3.8-live, Jev referees every turn ── */
+const LV={ws:null,stream:null,cap:null,node:null,play:null,next:0,srcs:[],playingUntil:0,frameTimer:null,clock:null,
+          t0:0,cur:null,turns:0,active:false};
+const LV_TH=()=>LANG==="th";
+function liveHTML(src){
+  let cfg={};try{cfg=JSON.parse(src||"{}")||{};}catch(e){}
+  const th=LV_TH();
+  return `<div class="livebox" id="livebox" data-preset="${esc(cfg.preset||"safe")}">
+  <div class="livehead"><span class="livetag">🎙 ${th?"คอนโซลสด — ไมค์ ลำโพง และกล้องของคุณ ⇄ gemini-3.8-live · Jev เป็นกรรมการทุกเทิร์น":"Live console — your mic, speaker and webcam ⇄ gemini-3.8-live · Jev referees every turn"}</span>
+    <span class="grow"></span><span class="lvstate" id="lv-state">idle</span><span class="lvclock" id="lv-clock">0:00</span></div>
+  <div class="liveopts">
+    <label><input type="checkbox" id="lv-consent"> ${th?"ฉันเข้าใจว่าเสียงไมค์และภาพกล้องจะถูกส่งไปยัง Google Gemini ผ่านเครื่องนี้ (สูงสุด 10 นาที)":"I understand my mic audio and camera frames are streamed to Google Gemini via this machine (max 10 min)"}</label>
+    <div class="lvrow">
+      <label>${th?"พรอมต์":"Prompt"} <select id="lv-preset"><option value="safe">SAFE (Lab 14-5)</option><option value="naive">NAIVE (${th?"ทดลองดูคำสัญญาเกินจริง":"watch it over-promise"})</option></select></label>
+      <span class="lvlang" role="group" aria-label="Conversation language">🗣 ${["auto","en","th"].map(l=>`<button type="button" class="pbtn lvl${l==="auto"?" on":""}" data-lv="${l}" onclick="liveLang('${l}')">${{auto:th?"อัตโนมัติ":"Auto",en:"EN",th:"ไทย"}[l]}</button>`).join("")}</span>
+      <label>${th?"เสียง":"Voice"} <select id="lv-voice">${["Kore","Puck","Charon","Aoede","Fenrir","Leda","Orus","Zephyr"].map(v=>`<option>${v}</option>`).join("")}</select></label>
+      <label><input type="checkbox" id="lv-cam" checked> 📷 ${th?"กล้อง":"camera"}</label>
+      <label><input type="checkbox" id="lv-watch" checked> 👁 ${th?"Jev ดูกล้องทุก 10 วินาที":"Jev watches the camera every 10 s"}</label>
+      <label><input type="checkbox" id="lv-ref" checked> ⚖ ${th?"Jev เป็นกรรมการ":"Jev referee"}</label>
+      <label><input type="checkbox" id="lv-fix" checked> 🛠 ${th?"ให้แก้คำพูดอัตโนมัติ":"auto-correct"}</label>
+      <label title="${th?"หูฟัง: พูดแทรกได้ · ลำโพง: ปิดไมค์ขณะผู้ช่วยพูดเพื่อกันเสียงสะท้อน":"headphones: you can interrupt · speaker: mic is muted while the assistant talks, to stop echo"}">🔈 <select id="lv-duplex"><option value="speaker">${th?"ลำโพงเครื่อง":"laptop speaker"}</option><option value="headphones">${th?"หูฟัง":"headphones"}</option></select></label>
+    </div>
+    <div class="lvrow"><button class="run" id="lv-start" onclick="liveStart()">▶ ${th?"เริ่มคุยสด":"Start live session"}</button>
+      <button class="tbtn" id="lv-stop" onclick="liveStop()" disabled>■ ${th?"หยุด":"Stop"}</button>
+      <span class="lvmeter"><span id="lv-level"></span></span><span class="pfhint" id="lv-hint">${th?"พูดกับผู้ช่วยได้เลย เช่น “ห้อง 1507 ค่ะ แอร์มีเสียงดัง” แล้วลองบอกว่ามีควัน · สลับ 🗣 EN / ไทย ได้ระหว่างคุย":"Talk to it: “Hi, room 1507, the AC is clicking” — then say you smell smoke. Switch 🗣 EN / ไทย any time, even mid-call."}</span></div>
+  </div>
+  <div class="livegrid">
+    <div class="lvleft"><video id="lv-video" autoplay muted playsinline></video>
+      <div class="lvwatch" id="lv-watchbox"></div>
+      <div class="lvtext"><input id="lv-typed" placeholder="${th?"หรือพิมพ์ข้อความ แล้วกด Enter":"…or type a message and press Enter"}" disabled onkeydown="if(event.key==='Enter'){liveType();}"></div></div>
+    <div class="lvright"><div class="lvlog" id="lv-log" aria-live="polite"></div></div>
+  </div>
+  <div class="lvfoot" id="lv-foot">${th?"คีย์อยู่บนเซิร์ฟเวอร์เท่านั้น · บันทึกการสนทนาอยู่ใน week24_typed_decisions_jev/14_live_realtime_jev/.runs/ (gitignored) · ภาพจากกล้องไม่ถูกเก็บ":"Keys stay on the server · the session log is saved in week24_typed_decisions_jev/14_live_realtime_jev/.runs/ (gitignored) · camera frames are not kept"}</div>
+</div>`;
+}
+let LV_LANG="auto";
+function liveLang(l){
+  LV_LANG=l;
+  document.querySelectorAll(".lvl").forEach(b=>{const on=b.dataset.lv===l;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");});
+  if(LV.active&&LV.ws&&LV.ws.readyState===1)LV.ws.send(JSON.stringify({type:"lang",lang:l}));
+}
+function armLive(){const b=$("livebox");if(!b)return;const p=$("lv-preset");if(p)p.value=b.dataset.preset||"safe";liveUI(LV.active);}
+function liveUI(on){
+  const s=$("lv-start"),x=$("lv-stop"),ty=$("lv-typed");
+  if(s)s.disabled=on;if(x)x.disabled=!on;if(ty)ty.disabled=!on;
+  ["lv-preset","lv-voice","lv-cam","lv-watch","lv-ref","lv-fix","lv-duplex","lv-consent"].forEach(id=>{const e=$(id);if(e)e.disabled=on;});
+}
+function lvState(t,cls){const e=$("lv-state");if(e){e.textContent=t;e.className="lvstate "+(cls||"");}}
+function lvLog(html,cls){const l=$("lv-log");if(!l)return null;const d=document.createElement("div");d.className="lvline "+(cls||"");d.innerHTML=html;l.appendChild(d);l.scrollTop=l.scrollHeight;return d;}
+function b64FromBytes(u8){let s="";for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s);}
+const LV_WORKLET=`class Down extends AudioWorkletProcessor{constructor(){super();this.r=sampleRate/16000;this.acc=0;this.n=0;this.buf=new Int16Array(1600);this.i=0;this.lvl=0;}
+process(inp){const ch=inp[0]&&inp[0][0];if(!ch)return true;for(let k=0;k<ch.length;k++){const v=ch[k];this.acc+=v;this.n++;this.lvl=Math.max(this.lvl,Math.abs(v));
+if(this.n>=this.r){const s=Math.max(-1,Math.min(1,this.acc/this.n));this.buf[this.i++]=s<0?s*0x8000:s*0x7fff;this.acc=0;this.n=0;
+if(this.i===this.buf.length){this.port.postMessage({pcm:this.buf.buffer.slice(0),lvl:this.lvl});this.i=0;this.lvl=0;}}}return true;}}
+registerProcessor("down16k",Down);`;
+async function liveStart(){
+  if(LV.active)return;
+  const th=LV_TH();
+  if(!$("lv-consent").checked){lvLog(`⚠ ${th?"ติ๊กช่องยินยอมก่อน":"Tick the consent box first."}`,"warn");return;}
+  const cam=$("lv-cam").checked;
+  $("lv-log").innerHTML="";$("lv-watchbox").innerHTML="";LV.turns=0;LV.cur=null;
+  lvState(th?"กำลังขอสิทธิ์ไมค์/กล้อง…":"asking for mic/camera…","run");
+  try{
+    LV.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1},
+      video:cam?{width:{ideal:640},height:{ideal:480}}:false});
+  }catch(e){lvState("idle");lvLog(`✕ ${esc(th?"เข้าถึงไมค์/กล้องไม่ได้: ":"Could not open mic/camera: ")}${esc(e.message||e)}`,"bad");return;}
+  if(cam){const v=$("lv-video");v.srcObject=LV.stream;v.style.display="block";}else $("lv-video").style.display="none";
+  LV.active=true;liveUI(true);
+  LV.play=new AudioContext({sampleRate:24000});LV.next=0;LV.srcs=[];LV.playingUntil=0;
+  LV.cap=new AudioContext();
+  const url=URL.createObjectURL(new Blob([LV_WORKLET],{type:"application/javascript"}));
+  await LV.cap.audioWorklet.addModule(url);
+  const srcNode=LV.cap.createMediaStreamSource(LV.stream);
+  LV.node=new AudioWorkletNode(LV.cap,"down16k");
+  srcNode.connect(LV.node);
+  const speakerMode=$("lv-duplex").value==="speaker";
+  LV.node.port.onmessage=ev=>{
+    const lvl=$("lv-level");if(lvl)lvl.style.width=Math.min(100,ev.data.lvl*160).toFixed(0)+"%";
+    if(!LV.ws||LV.ws.readyState!==1)return;
+    const muted=speakerMode&&LV.play&&LV.play.currentTime<LV.playingUntil;
+    if(lvl)lvl.classList.toggle("muted",!!muted);
+    if(muted)return;                                         // speaker mode: don't let the model hear itself
+    LV.ws.send(JSON.stringify({type:"audio",data:b64FromBytes(new Uint8Array(ev.data.pcm))}));
+  };
+  const proto=location.protocol==="https:"?"wss":"ws";
+  LV.ws=new WebSocket(`${proto}://${location.host}/ws/live`);
+  LV.ws.onopen=()=>LV.ws.send(JSON.stringify({type:"start",consent:true,preset:$("lv-preset").value,voice:$("lv-voice").value,
+    camera:cam,watch:$("lv-watch").checked,referee:$("lv-ref").checked,autocorrect:$("lv-fix").checked,lang:LV_LANG}));
+  LV.ws.onmessage=ev=>liveMsg(JSON.parse(ev.data));
+  LV.ws.onclose=()=>liveCleanup();
+  LV.ws.onerror=()=>lvLog("✕ websocket error","bad");
+  if(cam){
+    const cv=document.createElement("canvas");
+    LV.frameTimer=setInterval(()=>{
+      const v=$("lv-video");if(!v||!v.videoWidth||!LV.ws||LV.ws.readyState!==1)return;
+      const w=640,h=Math.round(640*v.videoHeight/v.videoWidth);cv.width=w;cv.height=h;
+      cv.getContext("2d").drawImage(v,0,0,w,h);
+      LV.ws.send(JSON.stringify({type:"frame",data:cv.toDataURL("image/jpeg",0.6).split(",")[1]}));
+    },1000);
+  }
+  LV.t0=Date.now();
+  LV.clock=setInterval(()=>{const s=Math.floor((Date.now()-LV.t0)/1000),c=$("lv-clock");if(c)c.textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;},500);
+}
+function livePlay(b64){
+  const bin=atob(b64),n=bin.length>>1,f=new Float32Array(n);
+  for(let i=0;i<n;i++){let v=bin.charCodeAt(2*i)|(bin.charCodeAt(2*i+1)<<8);if(v>=32768)v-=65536;f[i]=v/32768;}
+  const buf=LV.play.createBuffer(1,n,24000);buf.copyToChannel(f,0);
+  const s=LV.play.createBufferSource();s.buffer=buf;s.connect(LV.play.destination);
+  const start=Math.max(LV.play.currentTime+0.02,LV.next);s.start(start);LV.next=start+buf.duration;
+  LV.playingUntil=LV.next+0.35;LV.srcs.push(s);s.onended=()=>{LV.srcs=LV.srcs.filter(x=>x!==s);};
+}
+function liveTurnBox(){
+  if(!LV.cur){const th=LV_TH();LV.cur={you:lvLog(`<b>${th?"คุณ":"you"}</b> <span></span>`,"you"),bot:null};}
+  return LV.cur;
+}
+function liveMsg(m){
+  const th=LV_TH();
+  if(m.type==="audio"){livePlay(m.data);return;}
+  if(m.type==="heard"){const c=liveTurnBox();c.you.querySelector("span").textContent+=m.text;return;}
+  if(m.type==="said"){const c=liveTurnBox();if(!c.bot)c.bot=lvLog(`<b>${th?"ผู้ช่วย":"assistant"}</b> <span></span>`,"bot");c.bot.querySelector("span").textContent+=m.text;return;}
+  if(m.type==="interrupted"){LV.srcs.forEach(s=>{try{s.stop();}catch(e){}});LV.srcs=[];LV.next=0;LV.playingUntil=0;lvLog(th?"⏹ ผู้ช่วยถูกพูดแทรก":"⏹ assistant interrupted","dim");return;}
+  if(m.type==="turn"){if(LV.cur&&!LV.cur.you.querySelector("span").textContent.trim())LV.cur.you.remove();
+    if(m.system&&LV.cur&&LV.cur.bot)LV.cur.bot.classList.add("sys");LV.cur=null;LV.turns=m.turn;
+    if(m.gap!=null)lvLog(`◆ ${th?"เทิร์น":"turn"} ${m.turn} · ${th?"ผู้ช่วยตอบหลังคุณหยุดพูด":"assistant answered"} ${m.gap}s ${th?"":"after you stopped"}`,"dim");return;}
+  if(m.type==="jev"){
+    const sc=m.scores||{},row=(k,l)=>`<span class="lvs${sc[k]>=({caller_emergency:.3,needs_human:.6}[k]||.5)?" hot":""}">${l} ${(+sc[k]).toFixed(2)}</span>`;
+    const st=m.state,badge={calm:"ok",handoff:"warn",escalated:"bad"}[st]||"";
+    lvState(st,badge);
+    lvLog(`⚖ <b>Jev</b> ${th?"เทิร์น":"turn"} ${m.turn} · ${m.jev_ms?Math.round(m.jev_ms)+" ms":""} · ${row("caller_emergency",th?"ฉุกเฉิน":"emergency")} ${row("needs_human",th?"ต้องใช้คน":"needs person")} `+
+      `${row("assistant_promised_action",th?"สัญญาเกินจริง":"promised")} ${row("assistant_invented_fact",th?"แต่งข้อมูล":"invented fact")} · ${esc(m.language||"")}`+
+      (m.changed?` · <b class="lvst ${badge}">→ ${esc(st)}</b>`:"")+
+      ((m.actions||[]).length?`<div class="lvact">${m.actions.map(a=>"→ "+esc(a)).join("<br>")}<br>═ execute: False</div>`:"")+
+      ((m.corrected||[]).length?`<div class="lvfix">🛠 ${th?"สั่งให้ผู้ช่วยพูดแก้:":"told the live model to say:"} “${esc(m.corrected[0])}”</div>`:""),"jev");
+    return;}
+  if(m.type==="watch"){
+    const hot=m.hazard>=0.3;
+    $("lv-watchbox").innerHTML=`<div class="lvwatchc${hot?" hot":""}">👁 ${th?"Jev ดูกล้อง":"Jev on the camera"} · ${th?"อันตราย":"hazard"} ${(+m.hazard).toFixed(2)}${m.unclear>=0.5?` · ${th?"ภาพไม่ชัด":"image unclear"}`:""}<br><span>${esc(m.description||"")}</span></div>`;
+    if(hot)lvLog(`👁 ${th?"กล้อง: อาจมีอันตราย":"camera: possible hazard"} (${(+m.hazard).toFixed(2)}) — ${esc(m.description||"")}`,"bad");
+    return;}
+  if(m.type==="lang"){lvLog(`🗣 ${th?"เปลี่ยนภาษาเป็น":"language switched to"} <b>${esc({auto:th?"อัตโนมัติ (ตามผู้โทร)":"Auto (follows the caller)",en:"English",th:"ไทย"}[m.lang]||m.lang)}</b>`,"dim");return;}
+  if(m.type==="usage"){const f=$("lv-foot");if(f&&f.dataset.base===undefined)f.dataset.base=f.textContent;if(f)f.textContent=`${f.dataset.base} · ${m.tokens} tokens`;return;}
+  if(m.type==="status"){
+    if(m.state==="live"){lvState(th?"สด":"live","ok");lvLog(`● ${th?"เชื่อมต่อแล้ว":"connected"} · ${esc(m.model)} · ${esc(m.preset)} · 🗣 ${esc(m.lang||"auto")} · ${esc(m.call_ref)}`,"dim");}
+    else if(m.state==="stopped"){lvLog(`■ ${th?"จบ":"stopped"} · ${m.seconds}s · ${m.turns} ${th?"เทิร์น":"turns"} · ${m.frames} frames · ${m.tokens} tokens · ${th?"สถานะสุดท้าย":"final state"}: ${esc(m.final_state)}`,"dim");}
+    else if(m.detail)lvLog("… "+esc(m.detail),"dim");
+    return;}
+  if(m.type==="error"){lvLog("✕ "+esc(m.detail),"bad");}
+}
+function liveType(){const i=$("lv-typed");const t=(i.value||"").trim();if(!t||!LV.ws||LV.ws.readyState!==1)return;
+  LV.ws.send(JSON.stringify({type:"text",text:t}));const c=liveTurnBox();c.you.querySelector("span").textContent+=t;i.value="";}
+function liveStop(){if(LV.ws&&LV.ws.readyState===1){try{LV.ws.send(JSON.stringify({type:"stop"}));}catch(e){}}else liveCleanup();}
+function liveCleanup(){
+  if(!LV.active&&!LV.stream)return;
+  LV.active=false;clearInterval(LV.frameTimer);clearInterval(LV.clock);
+  if(LV.stream)LV.stream.getTracks().forEach(t=>t.stop());LV.stream=null;
+  try{LV.node&&LV.node.disconnect();}catch(e){}
+  try{LV.cap&&LV.cap.close();}catch(e){}
+  setTimeout(()=>{try{LV.play&&LV.play.close();}catch(e){}},1500);
+  const v=$("lv-video");if(v)v.srcObject=null;
+  if(LV.ws&&LV.ws.readyState<=1){try{LV.ws.close();}catch(e){}}
+  LV.ws=null;liveUI(false);
+  const st=$("lv-state");if(st&&/live|สด|asking|กำลัง/.test(st.textContent))lvState("idle");
+}
+window.addEventListener("beforeunload",()=>{if(LV.active)liveStop();});
+
 /* ── sidebar: course tree with per-folder progress rings ── */
 function ring(d,t){
   const f=t?d/t:0,C=43.98;
@@ -766,7 +997,12 @@ function renderSide(){
     }
     h+=`</div>`;
   });
-  $("side").innerHTML=h;
+  const th=LANG==="th";
+  const top=`<div class="sidetop"><span>${th?"สารบัญคอร์ส":"Course outline"}</span><span class="grow"></span>`+
+    (SIDE==="hidden"?`<button class="tbtn sm" onclick="dockSide()" title="${th?"ปักไว้ด้านซ้ายตลอด":"keep the outline docked on the left"}">📌 ${th?"ปักไว้":"Keep open"}</button>`+
+                     `<button class="tbtn sm" onclick="closePeek()" aria-label="${th?"ปิด":"Close"}">✕</button>`
+                    :`<button class="tbtn sm" onclick="hideSide()" title="${th?"ซ่อนสารบัญ (ปุ่ม [)":"hide the outline (shortcut [)"}">⇤ ${th?"ซ่อน":"Hide"}</button>`)+`</div>`;
+  $("side").innerHTML=top+h;
   updateProg();
 }
 function updateProg(){
@@ -775,8 +1011,34 @@ function updateProg(){
   $("course-prog").textContent=r[1]?`${r[0]} / ${r[1]} ${tr("checkpoints")}`:"";
 }
 
+/* ── collapsible outline: "docked" (default) or "hidden"; when hidden, ☰ pops it up ── */
+let SIDE="docked";
+try{SIDE=localStorage.getItem("jl.side")||(window.innerWidth<900?"hidden":"docked");}catch(e){}
+if(SIDE!=="hidden")SIDE="docked";
+function sideApply(){
+  const m=document.querySelector(".main");if(!m)return;
+  m.classList.toggle("noside",SIDE==="hidden");
+  if(SIDE!=="hidden")m.classList.remove("peek");
+  const open=SIDE==="docked"||m.classList.contains("peek");
+  const b=$("side-toggle");if(b){b.setAttribute("aria-expanded",open?"true":"false");b.classList.toggle("on",open);}
+  const sd=$("side");if(sd)sd.setAttribute("aria-hidden",open?"false":"true");
+}
+function saveSide(){try{localStorage.setItem("jl.side",SIDE);}catch(e){}}
+function hideSide(){SIDE="hidden";saveSide();sideApply();renderSide();}
+function dockSide(){SIDE="docked";saveSide();sideApply();renderSide();}
+function openPeek(){if(SIDE!=="hidden")return;document.querySelector(".main").classList.add("peek");sideApply();
+  const cur=document.querySelector("#side .sec.sel");if(cur)cur.scrollIntoView({block:"center"});
+  const first=document.querySelector("#side .sidetop button");if(first)first.focus({preventScroll:true});}
+function closePeek(){const m=document.querySelector(".main");if(m&&m.classList.contains("peek")){m.classList.remove("peek");sideApply();}}
+function toggleSide(){
+  if(SIDE==="docked")hideSide();
+  else if(document.querySelector(".main").classList.contains("peek"))closePeek();
+  else openPeek();
+}
 /* ── navigation: one continuous course across every module ── */
 function gotoSec(fi,si){
+  closePeek();                                             // picking a section closes the pop-up outline
+  if(typeof LV!=="undefined"&&LV.active)liveStop();      // never keep the mic/camera open off-screen
   const idx=FLAT.findIndex(f=>f.fi===fi&&f.si===si);
   if(idx<0)return;
   cur=idx;expanded.add(fi);
@@ -791,7 +1053,9 @@ function nav(d){
 }
 window.addEventListener("keydown",e=>{
   const tag=(e.target&&e.target.tagName||"").toLowerCase();
+  if(e.key==="Escape")closePeek();
   if(tag==="input"||tag==="textarea"||tag==="select")return;
+  if(e.key==="["&&!e.metaKey&&!e.ctrlKey&&!e.altKey){toggleSide();e.preventDefault();return;}
   if(e.key==="ArrowLeft"){nav(-1);e.preventDefault();}
   else if(e.key==="ArrowRight"){nav(1);e.preventDefault();}
 });
@@ -828,11 +1092,16 @@ function mdRender(md,fi,si){
       i++;
       if(lang==="jev"){out.push(jevBlockHTML(buf.join("\n"),fi,si));prevText="";continue;}
       if(lang==="llm"){out.push(llmBlockHTML(buf.join("\n"),fi,si));prevText="";continue;}
+      if(lang==="livesession"){out.push(liveHTML(buf.join("\n")));prevText="";continue;}
       out.push(`<div class="codewrap${exp?" expected":""}">`+
                (exp?"":`<button class="copy torun" onclick="sendToTerm(this)" title="load into the built-in terminal">▶ run</button>`)+
                `<button class="copy" onclick="copyCode(this)">copy</button>`+
                `<pre><code>${esc(buf.join("\n"))}</code></pre></div>`);
       prevText="";continue;
+    }
+    const mm=t.match(/^!\[([^\]]*)\]\(([A-Za-z0-9_.\-\/]+)\)$/);
+    if(mm){                                                    // ![caption](media/x.png|wav|mp4) → media figure
+      flushPara();out.push(mediaFig(mm[2],mm[1],COURSE[fi].folder));prevText=t;i++;continue;
     }
     if(/^✓\s*Checkpoint/.test(t)){                             // ✓ checkpoint → tickable card
       flushPara();
@@ -876,6 +1145,23 @@ function mdRender(md,fi,si){
   flushPara();
   return out.join("\n");
 }
+function mediaSrc(folder,rel){
+  rel=rel.replace(/^\.\//,"");
+  if(!/^(media|\.runs)\//.test(rel)||rel.indexOf("..")>=0)return null;
+  return `/w24media/${encodeURIComponent(folder)}/${rel.split("/").map(encodeURIComponent).join("/")}`;
+}
+function mediaTag(src,alt){
+  const ext=(src.split("?")[0].split(".").pop()||"").toLowerCase();
+  if(["png","jpg","jpeg","webp","gif"].includes(ext))return `<img src="${src}" alt="${esc(alt)}" loading="lazy">`;
+  if(["wav","mp3","m4a","ogg"].includes(ext))return `<audio controls preload="none" src="${src}" aria-label="${esc(alt)}"></audio>`;
+  if(["mp4","webm"].includes(ext))return `<video controls preload="metadata" playsinline src="${src}" aria-label="${esc(alt)}"></video>`;
+  return "";
+}
+function mediaFig(rel,alt,folder){
+  const src=mediaSrc(folder,rel);
+  if(!src)return `<p>${inline("!["+alt+"]("+rel+")")}</p>`;
+  return `<figure class="mediafig">${mediaTag(src,alt)}${alt?`<figcaption>${inline(alt)}</figcaption>`:""}</figure>`;
+}
 function copyCode(btn){
   const code=btn.parentElement.querySelector("code");
   const done=()=>{btn.textContent="copied ✓";setTimeout(()=>{btn.textContent="copy";},1200);};
@@ -893,7 +1179,7 @@ function kindChip(k){
 function renderContent(){
   if(!COURSE.length)return;
   const f=FLAT[cur],c=COURSE[f.fi],s=c.sections[f.si];
-  let h=`<div class="crumb">${esc(tr("module"))} ${esc(c.num)} · week24/${esc(c.folder)} · ${esc(tr("section"))} ${f.si+1}/${c.sections.length}</div>`;
+  let h=`<div class="crumb">${esc(tr("module"))} ${esc(c.num)} · week24_typed_decisions_jev/${esc(c.folder)} · ${esc(tr("section"))} ${f.si+1}/${c.sections.length}</div>`;
   if(LANG==="th"&&!c.has_th)h+=`<div class="pwarn">${esc(tr("thMissing"))}</div>`;
   h+=`<h2>${esc(s.title)}${kindChip(s.kind)}</h2>`;
   if(s.kind==="intro"&&c.meta&&(c.meta.time||c.meta.difficulty)){
@@ -916,7 +1202,7 @@ function renderContent(){
   $("nav-next").disabled=cur===FLAT.length-1;
   if(s.kind==="labs"||s.kind==="exercises")restoreLabUI(f.fi,s.kind);
   if(s.kind==="diagrams")armCharts();
-  armJev();armLlm();
+  armJev();armLlm();armLive();
 }
 
 /* ── lab + exercise cards: view source · run · streamed terminal · run-history spark ── */
@@ -958,7 +1244,7 @@ function fileCard(fi,rel,title,kind){
      `<div class="term-wrap" id="tw-${id}" style="display:none">`+
      `<div class="term-bar"><span class="d" style="background:#f85149"></span>`+
      `<span class="d" style="background:#d29922"></span><span class="d" style="background:#3fb950"></span>`+
-     `<span>week24/${esc(COURSE[fi].folder)}/${esc(rel)}</span><span class="clr" onclick="clearFileTerm(${fi},'${esc(rel)}')">clear ✕</span></div>`+
+     `<span>week24_typed_decisions_jev/${esc(COURSE[fi].folder)}/${esc(rel)}</span><span class="clr" onclick="clearFileTerm(${fi},'${esc(rel)}')">clear ✕</span></div>`+
      `<div class="term" id="term-${id}"></div>`+
      `<div class="footer" id="foot-${id}"></div></div></article>`;
 }
@@ -1024,6 +1310,15 @@ function setRunButtons(dis){
 /* house colorize: ▣/◈/✓/⚠/✕ + the rest of the glyph vocabulary */
 function colorize(text){
   return esc(text).split("\n").map(line=>{
+    const out=colorLine(line);
+    const mm=line.match(/week24_typed_decisions_jev\/(\d\d_[a-z0-9_]+)\/(\.runs\/[A-Za-z0-9_.\-\/]+\.(?:wav|mp3|m4a|ogg|png|jpe?g|webp|mp4|webm))/);
+    if(!mm)return out;
+    const src=mediaSrc(mm[1],mm[2]);
+    return src?out+`<span class="termmedia">${mediaTag(src,mm[2])}</span>`:out;
+  }).join("\n");
+}
+function colorLine(line){
+  return [line].map(line=>{
     const t=line.trimStart();
     if(t.startsWith("▣"))return `<span class="l-dgx">${line}</span>`;
     if(t.startsWith("◈"))return `<span class="l-sim">${line}</span>`;
@@ -1042,7 +1337,7 @@ function colorize(text){
     if(t.startsWith("$")||t.startsWith("docker")||t.startsWith("ollama")||t.startsWith("curl")||
        t.startsWith("export")||t.startsWith("git")||t.startsWith("./")||t.startsWith(".venv/"))return `<span class="l-cmd">${line}</span>`;
     return line;
-  }).join("\n");
+  })[0];
 }
 
 async function runFile(fi,rel){
@@ -1609,6 +1904,7 @@ function armCharts(){
 }
 /* ── go ── */
 applyChrome();
+sideApply();
 renderMode();
 boot();
 </script>

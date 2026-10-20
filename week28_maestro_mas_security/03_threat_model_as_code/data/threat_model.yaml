@@ -1,0 +1,250 @@
+# Threat model — Hotel Ops Ensemble (AltoTech Grand Bangkok, simulated) · v1
+#
+# MAESTRO's six steps, stored as code. The layer names, threat names (maestro: ids) and the six steps come
+# from the CSA page (week28_maestro_mas_security/common/sources/maestro_framework_2025-02-06.txt). These are the COURSE'S own:
+#   • the 1–5 likelihood and impact scale and the bands (score ≥15 critical · ≥10 high · ≥5 medium · else low)
+#   • the OWASP ASI ids on each threat, and the `scenario:` link to week28_maestro_mas_security/common/redteam.py
+#   • every likelihood/impact number below (the comment on each line says why)
+# Likelihood 1 rare · 2 needs insider access or luck · 3 a motivated outsider · 4 any guest or page can try it
+#            5 happens by accident.
+# Impact     1 annoyance · 2 one guest inconvenienced · 3 one room or one order wrong · 4 guest data leaves
+#            the hotel, or money is lost · 5 whole-hotel plant safety, or evidence destroyed for good.
+# Every threat starts `open`. Lab 03-2 marks one `mitigated` only after the matching red-team scenario is
+# blocked by the defense the mitigation names.
+
+system: Hotel Ops Ensemble (AltoTech Grand Bangkok, simulated)
+version: 1
+
+# ── MAESTRO step 1 · System Decomposition ─────────────────────────────────────
+components:
+  - {id: brain,           layer: L1, kind: model,          trust: internal}
+  - {id: shared_memory,   layer: L2, kind: data,           trust: mixed}      # guests can write to it
+  - {id: sop_corpus,      layer: L2, kind: data,           trust: internal}
+  - {id: web_pages,       layer: L2, kind: data,           trust: external}
+  - {id: orchestrator,    layer: L3, kind: agent,          trust: internal}
+  - {id: message_bus,     layer: L3, kind: framework,      trust: internal}
+  - {id: tools,           layer: L3, kind: framework,      trust: internal}
+  - {id: email_gateway,   layer: L4, kind: infrastructure, trust: internal}
+  - {id: runtime,         layer: L4, kind: infrastructure, trust: internal}
+  - {id: audit_log,       layer: L5, kind: observability,  trust: control}
+  - {id: pep,             layer: L6, kind: security,       trust: control}
+  - {id: human_approver,  layer: L6, kind: security,       trust: control}
+  - {id: concierge,       layer: L7, kind: agent,          trust: internal}
+  - {id: energy,          layer: L7, kind: agent,          trust: internal}
+  - {id: maintenance,     layer: L7, kind: agent,          trust: internal}
+  - {id: vendor,          layer: L7, kind: external agent, trust: external}
+  - {id: agent_directory, layer: L7, kind: registry,       trust: external}   # anyone can publish a card
+
+# ── MAESTRO step 5 · Mitigation Planning (defense: = the matching ensemble.Defenses switch) ──
+mitigations:
+  - {id: M-AUTHZ,   title: Provenance-based authorisation, defense: principal_authz,
+     control: "authorise every tool call by the least-trusted origin that asked for it, not by the agent's powers"}
+  - {id: M-BOUNDS,  title: Parameter bounds, defense: param_bounds,
+     control: "room setpoints 20-26 °C, chiller 6-9 °C, order quantity 1-10, checked at the PEP"}
+  - {id: M-SPOT,    title: Spotlighting with a per-run nonce, defense: spotlight,
+     control: "wrap untrusted text in «data-<nonce>» markers the model is told never to obey"}
+  - {id: M-SUMMARY, title: Structured hand-offs, defense: forward_summary,
+     control: "the orchestrator forwards one templated task, never the raw request text"}
+  - {id: M-ALLOW,   title: Least agency (per-agent tool allowlist), defense: tool_allowlist,
+     control: "each agent may call only the tools its role needs"}
+  - {id: M-EGRESS,  title: Egress allowlist, defense: egress_allowlist,
+     control: "email only to the hotel domain or a guest's on-file address"}
+  - {id: M-HITL,    title: Human approval for critical actions, defense: hitl,
+     control: "the duty manager approves chiller changes and parts orders, seeing who the request is for"}
+  - {id: M-CARDS,   title: Signed and pinned Agent Cards, defense: signed_cards,
+     control: "a vendor card must be signed by the key pinned at onboarding"}
+  - {id: M-MSGS,    title: Signed, fresh, single-use A2A messages, defense: signed_messages,
+     control: "verify signature, timestamp (5 min), nonce never seen before, audience"}
+  - {id: M-MEMGATE, title: Memory write gate with provenance, defense: memory_gate,
+     control: "only staff may write shared memory; recalled notes keep their writer as origin"}
+  - {id: M-SOP,     title: Signed SOP manifest, defense: sop_integrity,
+     control: "check every SOP against the publisher's signed sha256 manifest before retrieval"}
+  - {id: M-AUDIT,   title: Hash-chained audit log with a witness, defense: audit_chain,
+     control: "chain every row; hand the head hash to a witness the agents cannot write"}
+  - {id: M-BREAKER, title: Hop and action budgets, defense: circuit_breaker,
+     control: "stop a request after 4 hops or 15 actions"}
+  - {id: M-MODEL-PIN, title: Pinned model weights,
+     control: "pull the model only from an internal mirror, by digest; re-verify the digest at start-up"}
+  - {id: M-SANDBOX, title: One sandbox per agent,
+     control: "each agent runs in its own deny-by-default sandbox (Week 26), with no shared credentials"}
+  - {id: M-REDACT,  title: PII redaction in logs and traces,
+     control: "log guest ids, not names or emails; keep traces 30 days"}
+
+# ── MAESTRO steps 2–4 · layer threats, cross-layer threats, risk assessment ──
+threats:
+  - id: T01
+    title: Goal hijack rides along with a guest request
+    layers: [L1, L7]
+    components: [brain, energy, orchestrator]
+    maestro: [L7.T5, L1.T1]
+    owasp: [ASI01]
+    scenario: A01
+    likelihood: 4          # any guest can type an extra sentence into the chat
+    impact: 5              # a chiller below 6 °C is a whole-hotel plant-safety problem
+    mitigations: [M-AUTHZ, M-BOUNDS]
+    status: open
+
+  - id: T02
+    title: Instruction hidden in a web page
+    layers: [L2, L1]
+    components: [web_pages, concierge, brain]
+    maestro: [L2.T5, L1.T1]
+    owasp: [ASI01]
+    scenario: A02
+    likelihood: 3          # needs an outsider to plant text on a page staff will ask about
+    impact: 4              # the in-house guest list leaves the hotel (PDPA)
+    mitigations: [M-SPOT, M-EGRESS]
+    status: open
+
+  - id: T03
+    title: Injection that travels from agent to agent
+    layers: [L7, L3]
+    components: [orchestrator, message_bus, energy]
+    maestro: [L3.T3, L7.T5, X5]
+    owasp: [ASI01, ASI08]
+    scenario: A03
+    likelihood: 4          # the orchestrator forwards raw guest text by default
+    impact: 4              # another guest's room driven out of its safe range
+    mitigations: [M-SUMMARY]
+    status: open
+
+  - id: T04
+    title: Confused deputy — a guest changes another room
+    layers: [L6, L7]
+    components: [energy, pep]
+    maestro: [L7.T3, X3]
+    owasp: [ASI03]
+    scenario: A04
+    likelihood: 4          # one sentence, in bounds, harmless-looking
+    impact: 3              # one other room, one other guest
+    mitigations: [M-AUTHZ]
+    status: open
+
+  - id: T05
+    title: Guest list emailed to an outside address
+    layers: [L3, L4]
+    components: [concierge, email_gateway, tools]
+    maestro: [L7.T4, L2.T2, X4]
+    owasp: [ASI02]
+    scenario: A05
+    likelihood: 3          # a guest has to ask for it, but nothing stops them
+    impact: 4              # every in-house guest's name leaves the hotel
+    mitigations: [M-ALLOW]  # the first idea: "only the concierge may email". Lab 03-2 tests it.
+    status: open
+
+  - id: T06
+    title: Shared-memory poisoning across guests
+    layers: [L2]
+    components: [shared_memory, energy]
+    maestro: [L2.T1, X5]
+    owasp: [ASI06]
+    scenario: A06
+    likelihood: 3          # needs a guest to know the house rule "energy checks memory for policies"
+    impact: 5              # one guest's note sets the chiller for the whole hotel, every time
+    mitigations: [M-MEMGATE]
+    status: open
+
+  - id: T07
+    title: Tampered SOP returned by retrieval
+    layers: [L2, L3]
+    components: [sop_corpus, maintenance]
+    maestro: [L2.T4, L2.T5, X1]
+    owasp: [ASI06, ASI04]
+    scenario: A07
+    likelihood: 2          # needs write access to the SOP store (an insider or a compromised account)
+    impact: 5              # the chiller set to 4 °C by "procedure"
+    mitigations: [M-SOP]
+    status: open
+
+  - id: T08
+    title: Look-alike vendor Agent Card in the directory
+    layers: [L7]
+    components: [agent_directory, vendor, maintenance]
+    maestro: [L7.T2, L7.T10, L7.T11]
+    owasp: [ASI07, ASI04]
+    scenario: A08
+    likelihood: 3          # anyone can publish a card with the same name
+    impact: 3              # one order (and its payment) goes to the wrong party
+    mitigations: [M-CARDS]
+    status: open
+
+  - id: T09
+    title: Replayed A2A order confirmation
+    layers: [L3, L7]
+    components: [vendor, maintenance, message_bus]
+    maestro: [L7.T7]
+    owasp: [ASI07]
+    scenario: A09
+    likelihood: 2          # needs a captured, genuinely signed message
+    impact: 3              # duplicate orders, money spent twice
+    mitigations: [M-MSGS]
+    status: open
+
+  - id: T10
+    title: Runaway delegation loop
+    layers: [L4, L5]
+    components: [message_bus, runtime]
+    maestro: [L3.T5, L4.T4, X5]
+    owasp: [ASI08]
+    scenario: A10
+    likelihood: 3          # one "forward this whole message" sentence is enough
+    impact: 3              # every agent busy, real requests wait
+    mitigations: [M-BREAKER]
+    status: open
+
+  - id: T11
+    title: Rubber-stamp approval of a bad critical action
+    layers: [L6]
+    components: [human_approver, energy]
+    maestro: [L6.T2]
+    owasp: [ASI09]
+    scenario: A11
+    likelihood: 3          # approval fatigue on a busy night shift
+    impact: 5              # the chiller leaves its safe range with a human's signature on it
+    mitigations: [M-HITL, M-BOUNDS]
+    status: open
+
+  - id: T12
+    title: Audit row deleted after the fact
+    layers: [L5]
+    components: [audit_log]
+    maestro: [L5.T6, L7.T9]
+    owasp: [ASI10]
+    scenario: A12
+    likelihood: 2          # needs write access to the log
+    impact: 4              # nobody can prove which agent changed what
+    mitigations: [M-AUDIT]
+    status: open
+
+  - id: T13
+    title: Backdoored model weights
+    layers: [L1]
+    components: [brain]
+    maestro: [L1.T3, X1]
+    owasp: [ASI04]
+    likelihood: 2          # needs a poisoned model upstream or on the mirror
+    impact: 5              # every agent thinks with it
+    mitigations: [M-MODEL-PIN]
+    status: open
+
+  - id: T14
+    title: Compromised agent container moves laterally
+    layers: [L4]
+    components: [runtime, email_gateway]
+    maestro: [L4.T1, L4.T6, X2]
+    owasp: [ASI04]
+    likelihood: 2          # needs a tampered image or a runtime exploit
+    impact: 5              # one process, every agent's tools and data
+    mitigations: [M-SANDBOX]
+    status: open
+
+  - id: T15
+    title: Guest personal data copied into logs and traces
+    layers: [L5, L6]
+    components: [audit_log, pep]
+    maestro: [L5.T5, L6.T4]
+    owasp: []              # no ASI risk fits well: MAESTRO's layers catch what a top-10 list leaves out
+    likelihood: 3          # logging everything is the default
+    impact: 3              # personal data kept where it should not be (PDPA)
+    mitigations: [M-REDACT]
+    status: open

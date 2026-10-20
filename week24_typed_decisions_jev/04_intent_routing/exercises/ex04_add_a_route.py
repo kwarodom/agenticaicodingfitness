@@ -10,7 +10,7 @@ Part B (live): write the description for the new option and three test
           messages of your own. The checker also runs hidden gateway messages
           (must route to iot_connectivity) and control messages (must NOT).
 
-Run: .venv/bin/python week24/04_intent_routing/exercises/ex04_add_a_route.py
+Run: .venv/bin/python week24_typed_decisions_jev/04_intent_routing/exercises/ex04_add_a_route.py
 """
 import sys
 from pathlib import Path

@@ -3,9 +3,9 @@
 
 This needs BOTH services running (and a model for the agent):
 
-    .venv/bin/python week17/authmd_adk/app_server.py     # terminal 1 (Part A)
-    .venv/bin/python week17/authmd_adk/agent_server.py    # terminal 2 (Part B)
-    .venv/bin/python week17/authmd_adk/run_full_demo.py   # terminal 3 (this)
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/app_server.py     # terminal 1 (Part A)
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/agent_server.py    # terminal 2 (Part B)
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_full_demo.py   # terminal 3 (this)
 
 It walks one work order across "days":
 

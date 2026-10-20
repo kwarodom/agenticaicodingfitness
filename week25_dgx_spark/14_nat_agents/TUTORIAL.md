@@ -39,7 +39,7 @@ uv 0.11.19 (7b2cff1c3 2026-06-03 aarch64-apple-darwin)
 {"object":"list","data":[{"id":"nemotron-3.5-lightning:latest","object":"model","created":…
 ```
 
-> 💡 NAT runs in **its own venv** (`week25/.venv-nat`, Python 3.12), not in the repo `.venv`. The labs run with the repo Python and call the `nat` CLI as a subprocess, so the two never clash.
+> 💡 NAT runs in **its own venv** (`week25_dgx_spark/.venv-nat`, Python 3.12), not in the repo `.venv`. The labs run with the repo Python and call the `nat` CLI as a subprocess, so the two never clash.
 
 ✓ Checkpoint: `uv --version` prints a version, and either the Spark's vLLM or the laptop's Ollama lists a model.
 
@@ -74,15 +74,15 @@ NAT is pure Python. Nothing in it needs the GPU; the model server does. So you c
 
 ## 2 · Install NAT and register the course tools
 
-On the laptop, the course keeps NAT in `week25/.venv-nat`. Three packages: `nvidia-nat[langchain]` (the agents), `greenlet` (NAT 1.9's `nat serve` imports SQLAlchemy's asyncio module, which needs it, and it is not pulled in automatically), and `nvidia-nat-mcp` (the MCP client and server):
+On the laptop, the course keeps NAT in `week25_dgx_spark/.venv-nat`. Three packages: `nvidia-nat[langchain]` (the agents), `greenlet` (NAT 1.9's `nat serve` imports SQLAlchemy's asyncio module, which needs it, and it is not pulled in automatically), and `nvidia-nat-mcp` (the MCP client and server):
 
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-uv venv -p 3.12 week25/.venv-nat
-uv pip install --python week25/.venv-nat/bin/python "nvidia-nat[langchain]~=1.9" greenlet "nvidia-nat-mcp~=1.9"
-uv pip install --python week25/.venv-nat/bin/python --no-deps -e week25/14_nat_agents/hotel_ops_nat
-week25/.venv-nat/bin/nat --version
+uv venv -p 3.12 week25_dgx_spark/.venv-nat
+uv pip install --python week25_dgx_spark/.venv-nat/bin/python "nvidia-nat[langchain]~=1.9" greenlet "nvidia-nat-mcp~=1.9"
+uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat
+week25_dgx_spark/.venv-nat/bin/nat --version
 ```
 
 On the Spark (aarch64, DGX OS), the same install goes in `~/w25`. Clone this repo on the Spark first (`git clone <this repo> ~/agenticaicodingfitness`), because Module 15 uploads the module folder into a sandbox from there:
@@ -91,7 +91,7 @@ On the Spark (aarch64, DGX OS), the same install goes in `~/w25`. Clone this rep
 # on: spark
 mkdir -p ~/w25 && cd ~/w25 && python3 -m venv .venv-nat
 .venv-nat/bin/pip install -q 'nvidia-nat[langchain]~=1.9' greenlet 'nvidia-nat-mcp~=1.9'
-.venv-nat/bin/pip install -q --no-deps -e ~/agenticaicodingfitness/week25/14_nat_agents/hotel_ops_nat
+.venv-nat/bin/pip install -q --no-deps -e ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents/hotel_ops_nat
 .venv-nat/bin/nat --version
 ```
 
@@ -99,18 +99,18 @@ Lab 14-1 checks the install, registers the tools if needed, lists what NAT can s
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_1_install_and_register.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_1_install_and_register.py
 ```
 
 **Expected output** (captured on this Mac, trimmed)
 
 ```
 ▣ STEP 1 · find the NAT CLI
-$ week25/.venv-nat/bin/nat --version
+$ week25_dgx_spark/.venv-nat/bin/nat --version
 ✓ nat, version 1.9.0
 
 ▣ STEP 2 · register the course plugin (hotel_ops_nat) — the NAT way: a package with a 'nat.components' entry point
-✓ hotel_ops_nat is already installed in week25/.venv-nat (entry point nat.components → hotel_ops_nat.register)
+✓ hotel_ops_nat is already installed in week25_dgx_spark/.venv-nat (entry point nat.components → hotel_ops_nat.register)
 
 ▣ STEP 3 · what can NAT see? `nat info components` (only the kinds this module uses)
 │ type            name                       package
@@ -237,7 +237,7 @@ Three things to notice:
 - **Type hints and docstring become the tool schema** the model sees. Write them for the model: say what the argument looks like ("808").
 - **The tools are safe by design.** `room_temperature` reads a four-room table; `create_maintenance_ticket` returns `MT-` plus a hash of room and issue, so the same fault always gets the same id, and it only writes a local JSONL file you choose. An agent can call them as often as it likes. Swap the bodies for your building system's API later; the YAML does not change.
 
-Install it once with `uv pip install … --no-deps -e week25/14_nat_agents/hotel_ops_nat` (Section 2). It is editable: change `tools.py`, and the next `nat run` uses the new code.
+Install it once with `uv pip install … --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat` (Section 2). It is editable: change `tools.py`, and the next `nat run` uses the new code.
 
 ✓ Checkpoint: you can name the three places a new tool must appear: a config class with a `name=`, a `@register_function`, and an import in `register.py`.
 
@@ -247,7 +247,7 @@ Install it once with `uv pip install … --no-deps -e week25/14_nat_agents/hotel
 
 ```bash
 # on: spark
-cd ~/agenticaicodingfitness/week25/14_nat_agents
+cd ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents
 HOTEL_LLM_BASE_URL=http://localhost:8000/v1 ~/w25/.venv-nat/bin/nat run \
   --config_file configs/hotel_agent_spark.yml --input "Room 808 feels hot. Check it and open a ticket if something is wrong."
 ```
@@ -256,7 +256,7 @@ Lab 14-2 does the same from the laptop. It picks vLLM on the Spark if it answers
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_2_run_agent.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_2_run_agent.py
 ```
 
 **Expected output** (captured on this Mac — LAPTOP STAND-IN, `nemotron-3-nano:latest` on Ollama)
@@ -309,7 +309,7 @@ The same YAML file runs behind two more front ends.
 
 ```bash
 # on: spark
-cd ~/agenticaicodingfitness/week25/14_nat_agents
+cd ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents
 HOTEL_LLM_BASE_URL=http://localhost:8000/v1 ~/w25/.venv-nat/bin/nat serve \
   --config_file configs/hotel_agent_spark.yml --host 127.0.0.1 --port 8400
 ```
@@ -320,7 +320,7 @@ Lab 14-3 starts both servers, calls them, and stops them:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_3_serve_and_mcp.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_3_serve_and_mcp.py
 ```
 
 **Expected output** (captured on this Mac — LAPTOP STAND-IN, trimmed)
@@ -378,7 +378,7 @@ Each dataset row has a `question` and an `answer` that lists facts the reply mus
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/labs/lab14_4_eval.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_4_eval.py
 ```
 
 **Expected output** (captured on this Mac — LAPTOP STAND-IN)
@@ -400,7 +400,7 @@ Per evaluator results:
 
 A perfect score on three questions proves the plumbing, not the agent. The value comes when you change one thing and rerun: the base model against your fine-tune (Module 13), `tool_calling_agent` against `react_agent`, a longer system prompt. NAT saves `config_effective.yml` next to the results, so each score records exactly what produced it.
 
-✓ Checkpoint: `mentions_expected_output.json` exists under `week25/14_nat_agents/.runs/eval/`, with one score per question.
+✓ Checkpoint: `mentions_expected_output.json` exists under `week25_dgx_spark/14_nat_agents/.runs/eval/`, with one score per question.
 
 ## Labs — run them here
 
@@ -416,7 +416,7 @@ All four run on the laptop against the laptop Ollama when no Spark answers, and 
 
 ## Try it yourself
 
-**Exercise 14 — wire the agent yourself.** Open `week25/14_nat_agents/exercises/ex14_wire_the_agent.py`. Each of its three `TODO`s returns one section of a NAT workflow as a Python dict:
+**Exercise 14 — wire the agent yourself.** Open `week25_dgx_spark/14_nat_agents/exercises/ex14_wire_the_agent.py`. Each of its three `TODO`s returns one section of a NAT workflow as a Python dict:
 
 1. `llm_block(target, base_url, model)`: the `llms.hotel_llm` block, with thinking turned off the right way for Ollama and for vLLM.
 2. `functions_block(ticket_log)`: the three tools, each `_type` equal to its registered name.
@@ -426,7 +426,7 @@ The checker is offline. It lints your config, writes it as YAML, and then asks t
 
 ```bash
 # on: laptop
-.venv/bin/python week25/14_nat_agents/exercises/ex14_wire_the_agent.py
+.venv/bin/python week25_dgx_spark/14_nat_agents/exercises/ex14_wire_the_agent.py
 ```
 
 **Expected output** (once all three TODOs are done, captured on this Mac)
@@ -437,8 +437,8 @@ The checker is offline. It lints your config, writes it as YAML, and then asks t
 ✓ workflow_block: tool_calling_agent · every function as a tool · max_iterations ≤ 6 · system prompt
 
 ▣ your config, assembled and linted for both targets
-✓ lint ollama: no problems → week25/14_nat_agents/.runs/ex14_ollama.yml
-✓ lint vllm  : no problems → week25/14_nat_agents/.runs/ex14_vllm.yml
+✓ lint ollama: no problems → week25_dgx_spark/14_nat_agents/.runs/ex14_ollama.yml
+✓ lint vllm  : no problems → week25_dgx_spark/14_nat_agents/.runs/ex14_vllm.yml
 
 ▣ the real test: does NeMo Agent Toolkit accept it? (`nat validate`, offline)
 ✓ nat validate ex14_ollama.yml: valid
@@ -463,14 +463,14 @@ Add `guest_request(room, request)` to `hotel_ops_nat/src/hotel_ops_nat/tools.py`
 
 | Symptom | Fix |
 |---|---|
-| `nat serve` fails with `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | `uv pip install --python week25/.venv-nat/bin/python greenlet` (Section 2 installs it) |
+| `nat serve` fails with `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | `uv pip install --python week25_dgx_spark/.venv-nat/bin/python greenlet` (Section 2 installs it) |
 | `nat mcp` is not a command, or `mcp_client` is unknown | Install the MCP extra: `nvidia-nat-mcp~=1.9` in the same venv |
-| `ValidationError … _type 'room_temperature'` | The plugin is not installed in the venv that runs `nat`. Rerun lab 14-1, or `uv pip install --no-deps -e week25/14_nat_agents/hotel_ops_nat` |
+| `ValidationError … _type 'room_temperature'` | The plugin is not installed in the venv that runs `nat`. Rerun lab 14-1, or `uv pip install --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat` |
 | Tool changes do not show up | Install with `-e` (editable). A non-editable install copies the code once |
 | The agent answers without calling a tool, or returns an empty answer | A thinking model spent `max_tokens` on reasoning. Check the switch in Section 3, or raise `max_tokens` |
 | `Connection refused` to `:8000` from the laptop | vLLM is on the Spark: use `http://spark-a:8000/v1`, or an `ssh -L 8000:localhost:8000` tunnel (Module 01) |
 | AuthlibDeprecationWarning on every command | Harmless in NAT 1.9.0; the labs set `PYTHONWARNINGS=ignore` and filter it |
-| Relative paths (`.runs/…`, `configs/eval_dataset.json`) not found | Run `nat` from `week25/14_nat_agents`, as every command here does |
+| Relative paths (`.runs/…`, `configs/eval_dataset.json`) not found | Run `nat` from `week25_dgx_spark/14_nat_agents`, as every command here does |
 
 ## Next
 

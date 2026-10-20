@@ -5,7 +5,7 @@ A **real, runnable** companion to the slide deck
 
 - **ADK** keeps a long-running agent's *state* alive across days of idle time —
   a durable state machine, persistent sessions, event-driven wake-up. (This is
-  the `week17/hr_onboarding` lesson.)
+  the `week17_long_running_distributed_agents/hr_onboarding` lesson.)
 - **auth.md** keeps a long-running agent's *credentials* valid — scoped,
   short-lived, revocable tokens an agent re-mints every time it wakes.
 
@@ -15,7 +15,7 @@ A **real, runnable** companion to the slide deck
 
 ```
         MCP  =  VERTICAL   (an agent → its own tools/data)         ← Week 7
-        A2A  =  HORIZONTAL (an agent → another agent)              ← week17/checkpoints
+        A2A  =  HORIZONTAL (an agent → another agent)              ← week17_long_running_distributed_agents/checkpoints
      auth.md =  the CREDENTIAL an agent presents to a service it doesn't own  ← here
 
   ┌─ PART A · the AltoTech Energy API (app_server.py) ─────────────────────────┐
@@ -52,8 +52,8 @@ step, watch its command stream live in an in-page terminal, start/stop the
 servers, and demolish/start-over — all with one process.
 
 ```bash
-uv pip install -r week17/authmd_adk/requirements.txt   # or the offline subset for Part 1
-.venv/bin/python week17/authmd_adk/tutorial_server.py
+uv pip install -r week17_long_running_distributed_agents/authmd_adk/requirements.txt   # or the offline subset for Part 1
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/tutorial_server.py
 # → open http://127.0.0.1:8080
 ```
 
@@ -70,7 +70,7 @@ Part B client — real RS256/JWKS crypto, zero external network:
 
 ```bash
 uv pip install "fastapi" "uvicorn[standard]" httpx pydantic "pyjwt[crypto]"
-.venv/bin/python week17/authmd_adk/run_authmd_demo.py
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_authmd_demo.py
 ```
 
 You'll watch: discovery → agent-verified token → **wake-time re-mint** (a brand
@@ -81,10 +81,10 @@ revocation (`401`) → the audit log.
 ### 2. The long-running ADK agent, **end to end** (needs `google-adk` + a model)
 
 ```bash
-uv pip install -r week17/authmd_adk/requirements.txt
-.venv/bin/python week17/authmd_adk/app_server.py     # terminal 1 — Part A
-.venv/bin/python week17/authmd_adk/agent_server.py    # terminal 2 — Part B
-.venv/bin/python week17/authmd_adk/run_full_demo.py   # terminal 3 — the driver
+uv pip install -r week17_long_running_distributed_agents/authmd_adk/requirements.txt
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/app_server.py     # terminal 1 — Part A
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/agent_server.py    # terminal 2 — Part B
+.venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_full_demo.py   # terminal 3 — the driver
 ```
 
 The driver creates a work order, lets the agent analyze + park at `ANALYZED`,
@@ -163,7 +163,7 @@ authmd_adk/
 ## Reality check (from the deck's final slide)
 
 - **The ADK foundation is solid** — official Google guidance, mainstream
-  production patterns. Build on it now. (See `week17/hr_onboarding` for the bare
+  production patterns. Build on it now. (See `week17_long_running_distributed_agents/hr_onboarding` for the bare
   ADK version without auth.)
 - **auth.md is real but early** — a WorkOS-authored open protocol in early
   access. It composes existing OAuth RFCs (no new crypto); adoption is still

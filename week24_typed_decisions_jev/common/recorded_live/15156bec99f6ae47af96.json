@@ -1,0 +1,58 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "gemini",
+  "model": "gemini-3.8-live",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences, in the caller's language.\nHARD LIMITS: you cannot dispatch, call, send or alert anyone yourself, and you must never say you did. Our system alerts staff separately. If the caller reports smoke, fire, a burning smell, flooding, gas or an injury: tell them to leave the room now and call 0 from a safe place, and say a colleague is being alerted.\nOnly state facts from HOTEL FACTS. If the answer is not there, say you will connect them to the front desk.\nHOTEL FACTS: Hotel: Riverside Grand Bangkok (synthetic). Breakfast: 06:00–10:00, Level 2 restaurant. Checkout: 12:00. Pool: 07:00–21:00. Front desk: dial 0, open 24 hours.\nCall reference: L14-5.",
+  "audio": null,
+  "text": "Hi, what time is breakfast tomorrow?"
+ },
+ "response": {
+  "heard": "",
+  "said": "Breakfast is served from 6:00 AM to 10:00 AM at the Level 2 restaurant.",
+  "events": [
+   [
+    0.61,
+    "session",
+    "setup complete"
+   ],
+   [
+    1.56,
+    "said",
+    "Breakfast is served "
+   ],
+   [
+    1.56,
+    "first_audio",
+    "model started speaking"
+   ],
+   [
+    1.74,
+    "said",
+    "from 6:00 AM"
+   ],
+   [
+    2.06,
+    "said",
+    " to 10:00 AM at the Level"
+   ],
+   [
+    2.29,
+    "said",
+    " 2 restaurant."
+   ],
+   [
+    5.96,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 0.61,
+   "first_output": 1.56,
+   "total": 6.1
+  },
+  "provider": "gemini",
+  "model": "gemini-3.8-live"
+ }
+}

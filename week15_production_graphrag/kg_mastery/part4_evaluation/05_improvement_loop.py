@@ -23,7 +23,7 @@ FAILURE-MODE TAXONOMY (full table in FAILURE_MODES.md):
   - Over-Retrieval             -> too many irrelevant rows (low precision)
   - Low Faithfulness           -> claims not grounded in retrieved context
 
-Run:  python week15/kg_mastery/part4_evaluation/05_improvement_loop.py
+Run:  python week15_production_graphrag/kg_mastery/part4_evaluation/05_improvement_loop.py
 """
 import json
 import sys

@@ -5,7 +5,7 @@ The Week 18 self-evolving agent, with a switchable brain (local DGX model ↔ Cl
 ↔ sim) and its tripartite memory living on the DGX. Read the CONCEPT, view the
 SOURCE, RUN each step, and watch the agent get smarter — all on your hardware.
 
-    .venv/bin/python week19/self_evolving_agent_v2/tutorial_server.py
+    .venv/bin/python week19_sovereign_ai_dgx/self_evolving_agent_v2/tutorial_server.py
     # → http://127.0.0.1:8095
 """
 from __future__ import annotations

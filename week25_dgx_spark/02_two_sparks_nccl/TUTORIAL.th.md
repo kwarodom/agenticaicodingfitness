@@ -31,7 +31,7 @@
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-.venv/bin/python week25/common/sparkkit.py
+.venv/bin/python week25_dgx_spark/common/sparkkit.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ที่ยังไม่ได้ตั้งค่า Spark)
@@ -106,7 +106,7 @@ Lab 01 รันการตรวจเหล่านี้บน Spark ทั
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab01_link_check.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab01_link_check.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ แล็บป้อนรายการ interface, address และความเร็วจาก playbook ให้ตัวเอง บวกข้อความตัวอย่างสำหรับส่วนที่เหลือ ผลการรันด้านบนพิมพ์บอกว่าอะไรเป็นอะไร)
@@ -153,18 +153,18 @@ Cluster Assistant ตั้งค่าเฉพาะเครือข่า�
 
 ถ้าไม่ใช้ Cluster Assistant คุณต้องกำหนด static IP ให้ interface ของลิงก์เอง Connect Two Sparks playbook (Step 3, Option 1) เขียนไฟล์ netplan หนึ่งไฟล์ต่อ Spark: interface เชิงตรรกะสองตัวของ port 1 อยู่บน /24 subnet **คนละวง** โดย node 1 ลงท้ายด้วย `.10` และ node 2 ลงท้ายด้วย `.11` (switch playbook เตือนว่า interface สองตัวบน subnet เดียวกันทำให้ routing กำกวมและ NCCL ล้มเหลว)
 
-Lab 02 อ่านว่า interface ไหน Up บนแต่ละ Spark เขียนไฟล์ทั้งสองลงใน `week25/02_two_sparks_nccl/.runs/` บนแล็ปท็อป (อยู่ใน gitignore) ตรวจความถูกต้อง และในโหมด LIVE จะคัดลอกแต่ละไฟล์ไปไว้ที่ `~/w25/40-cx7.yaml` บน Spark ของมัน มัน **ไม่เปลี่ยนแปลงอะไรใน `/etc`** เว้นแต่คุณจะรันจากเชลล์พร้อม `SPARK_APPLY=1` และถึงอย่างนั้นก็ต่อเมื่อมี `sudo -n` แบบไม่ต้องใช้รหัสผ่าน และลิงก์ยังไม่มี address เท่านั้น ปุ่ม ▶ ของ Lab Runner ไม่เคยตั้ง `SPARK_APPLY`
+Lab 02 อ่านว่า interface ไหน Up บนแต่ละ Spark เขียนไฟล์ทั้งสองลงใน `week25_dgx_spark/02_two_sparks_nccl/.runs/` บนแล็ปท็อป (อยู่ใน gitignore) ตรวจความถูกต้อง และในโหมด LIVE จะคัดลอกแต่ละไฟล์ไปไว้ที่ `~/w25/40-cx7.yaml` บน Spark ของมัน มัน **ไม่เปลี่ยนแปลงอะไรใน `/etc`** เว้นแต่คุณจะรันจากเชลล์พร้อม `SPARK_APPLY=1` และถึงอย่างนั้นก็ต่อเมื่อมี `sudo -n` แบบไม่ต้องใช้รหัสผ่าน และลิงก์ยังไม่มี address เท่านั้น ปุ่ม ▶ ของ Lab Runner ไม่เคยตั้ง `SPARK_APPLY`
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab02_netplan_plan.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab02_netplan_plan.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้: สร้างจากรายการ interface ของ playbook)
 
 ```
 ▣ STEP 3 · the two files
-── week25/02_two_sparks_nccl/.runs/40-cx7.spark-a.yaml
+── week25_dgx_spark/02_two_sparks_nccl/.runs/40-cx7.spark-a.yaml
 network:
   version: 2
   ethernets:
@@ -176,7 +176,7 @@ network:
       addresses:
         - 192.168.101.10/24
       dhcp4: no
-── week25/02_two_sparks_nccl/.runs/40-cx7.spark-b.yaml
+── week25_dgx_spark/02_two_sparks_nccl/.runs/40-cx7.spark-b.yaml
 …
 ✓ both files parse as YAML with network.version 2 and one entry per Up interface
 ✓ generated from the playbook's interface list, both files match the playbook's Step 3 files byte for byte
@@ -274,7 +274,7 @@ ping -c 3 -M do -s 1472 -I enp1s0f1np1 192.168.100.11
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab01_link_check.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab01_link_check.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ คำตอบของ ping และ ssh เป็นรูปแบบ EXAMPLE)
@@ -329,7 +329,7 @@ Lab 03 ตรวจการ build บน Spark ทั้งสอง หา IP 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab03_nccl_bench.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab03_nccl_bench.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ playbook ไม่ได้พิมพ์ผลลัพธ์ของ NCCL ไว้ ตารางจึงเป็น EXAMPLE ที่เลือกตัวเลขให้เห็นการคำนวณชัด ไม่ใช่ค่าที่วัดได้)
@@ -386,7 +386,7 @@ ib_write_bw -d rocep1s0f0 -i 1 -p 12000 -F --report_gbits 192.168.200.12 --run_i
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab04_tp_link_cost.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab04_tp_link_cost.py
 ```
 
 **Expected output** (การคำนวณ บันทึกจาก Mac เครื่องนี้; busbw = เกณฑ์ผ่าน 21.875 GB/s ของ playbook, ขนาด weights คิดแบบ NVFP4)
@@ -459,7 +459,7 @@ Lab 01–03 รันแบบ LIVE บน Spark สองเครื่อง�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 02 — อ่านลิงก์ให้ออก** เปิด `week25/02_two_sparks_nccl/exercises/ex02_read_the_link.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 02 — อ่านลิงก์ให้ออก** เปิด `week25_dgx_spark/02_two_sparks_nccl/exercises/ex02_read_the_link.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `up_interfaces(text)`: ชื่อ netdev ที่ `ibdev2netdev` รายงานว่า `(Up)`
 2. `bus_factor(op, n)`: ตัวคูณที่แปลง algbw เป็น busbw
@@ -469,7 +469,7 @@ Lab 01–03 รันแบบ LIVE บน Spark สองเครื่อง�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/exercises/ex02_read_the_link.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/exercises/ex02_read_the_link.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด บันทึกจาก Mac เครื่องนี้)

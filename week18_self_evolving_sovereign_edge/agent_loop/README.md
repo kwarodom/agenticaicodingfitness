@@ -2,7 +2,7 @@
 
 An **interactive, explainable web app + runnable demos** for the
 *Claude Agent SDK — Agent Loop Engineering* tutorial
-(`week18/agent_loop_comprehensive_tutorial.pdf`).
+(`week18_self_evolving_sovereign_edge/agent_loop_comprehensive_tutorial.pdf`).
 
 Where the PDF *explains* the loop, this folder lets you **watch it run**. Every
 demo makes a **real** call through the Claude Agent SDK and narrates the loop as
@@ -24,14 +24,14 @@ RECEIVE PROMPT → REASON/PLAN → ACT (tool) → OBSERVE result → ↺ repeat 
 
 ```bash
 # from the repo root, using the repo's uv-managed .venv (Python 3.13)
-uv pip install -r week18/agent_loop/requirements.txt
+uv pip install -r week18_self_evolving_sovereign_edge/agent_loop/requirements.txt
 
 # 1) the interactive web app  (recommended — click through all 10 parts)
-.venv/bin/python week18/agent_loop/tutorial_server.py
+.venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/tutorial_server.py
 # → open http://127.0.0.1:8090
 
 # 2) or run any demo straight from the terminal
-.venv/bin/python week18/agent_loop/demos/step01_hello_agent.py
+.venv/bin/python week18_self_evolving_sovereign_edge/agent_loop/demos/step01_hello_agent.py
 ```
 
 Prerequisite for **live** runs: the `claude` CLI installed and signed in.
@@ -66,7 +66,7 @@ it, so the loop is never a black box.
 ## Layout
 
 ```
-week18/agent_loop/
+week18_self_evolving_sovereign_edge/agent_loop/
 ├── README.md                     → this file
 ├── requirements.txt              → claude-agent-sdk + FastAPI
 ├── config.py                     → models, budget caps, seeded sandbox

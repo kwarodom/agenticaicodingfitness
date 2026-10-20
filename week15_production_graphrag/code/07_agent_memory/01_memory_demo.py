@@ -5,7 +5,7 @@ Prereq: a running Neo4j. Start one with:
     docker run -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH=neo4j/password neo4j:latest
 Then open the browser UI at http://localhost:7474 to WATCH nodes appear.
 
-Run:  python week15/code/07_agent_memory/01_memory_demo.py
+Run:  python week15_production_graphrag/code/07_agent_memory/01_memory_demo.py
 
 What you'll see:
   - an HVAC agent stores 3 events (fault → work order → resolved)

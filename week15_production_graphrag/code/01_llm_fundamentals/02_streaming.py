@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 01.2 — Streaming: answers that appear as they're written.
 
-Run:  python week15/code/01_llm_fundamentals/02_streaming.py
+Run:  python week15_production_graphrag/code/01_llm_fundamentals/02_streaming.py
 
 A normal create() call makes you wait for the whole answer. Streaming prints
 each chunk as it arrives — the difference between a frozen screen and a chat

@@ -11,7 +11,7 @@ Module 09 fine-tunes) → Ollama on this laptop (LAPTOP STAND-IN, a different mo
 baseline) → DRY. Predictions are saved in LLaMA Factory's predict format so lab 13-2 scores them
 exactly like the fine-tune's file.
 
-Run: .venv/bin/python week25/13_finetune_to_serve/labs/lab01_baseline.py [--limit 20] [--kind ollama]
+Run: .venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab01_baseline.py [--limit 20] [--kind ollama]
 """
 import sys
 import time

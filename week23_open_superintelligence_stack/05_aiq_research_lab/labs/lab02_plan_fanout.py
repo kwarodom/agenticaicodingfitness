@@ -7,7 +7,7 @@ To-Do like the blueprint does, then runs two researcher sub-agents CONCURRENTLY 
 proves the fan-out win with a wall-clock-vs-sum-of-latencies speedup number.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness
-      .venv/bin/python week23/05_aiq_research_lab/labs/lab02_plan_fanout.py
+      .venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab02_plan_fanout.py
 """
 from __future__ import annotations
 
@@ -98,7 +98,7 @@ def main() -> None:
         print(f"  ✗ planning call failed ({type(e).__name__}) — endpoint down, or the "
               "model outran the 40s planning cap.")
         print("    rerun, or pin a faster model:  DGX_MODEL=<small-model> .venv/bin/python "
-              "week23/05_aiq_research_lab/labs/lab02_plan_fanout.py")
+              "week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab02_plan_fanout.py")
         return
     plan = _parse_plan(raw)
     if not plan:

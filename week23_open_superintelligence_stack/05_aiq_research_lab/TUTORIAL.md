@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 05 — AI-Q Open Agent Blueprint: router → deep agent → researcher fan-out
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/05_aiq_research_lab/tutorial_server.py` → http://127.0.0.1:8104. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/tutorial_server.py` → http://127.0.0.1:8104. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Wire this folder's demos and labs to a real Nemotron endpoint — your Spark, build.nvidia.com, or local Ollama.
@@ -27,7 +27,7 @@ Goal: get the companion app up and learn how this folder auto-detects REAL vs SI
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/05_aiq_research_lab/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/tutorial_server.py
 ```
 
 Expected output (SIM shown; if a local Ollama is already up you'll instead see `✓ REAL endpoint: <model> @ http://localhost:11434/v1`):
@@ -93,7 +93,7 @@ Expected output (abbreviated — Nemotron Nano is a reasoning model, so a thinki
 ...multi-source, needs cost modeling over time... deep
 ```
 
-C-path without any model: run the canned version instead — `.venv/bin/python week23/05_aiq_research_lab/demos/step01_intent_router.py` prints the same routing decision in SIM.
+C-path without any model: run the canned version instead — `.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/demos/step01_intent_router.py` prints the same routing decision in SIM.
 
 ✓ Checkpoint: you got a `deep` verdict for a hard query. Try a trivial query ("Who founded NVIDIA?") and confirm it comes back `shallow`. That one-word decision is the ~50%-cost lever.
 
@@ -103,10 +103,10 @@ Goal: see the whole blueprint shape — route → plan → fan-out → tool bus 
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/05_aiq_research_lab/demos/step01_intent_router.py
-.venv/bin/python week23/05_aiq_research_lab/demos/step02_deep_agent_plan.py
-.venv/bin/python week23/05_aiq_research_lab/demos/step03_researchers_fanout.py
-.venv/bin/python week23/05_aiq_research_lab/demos/step04_tools_toolkit.py
+.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/demos/step01_intent_router.py
+.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/demos/step02_deep_agent_plan.py
+.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/demos/step03_researchers_fanout.py
+.venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/demos/step04_tools_toolkit.py
 ```
 
 Expected output (step03, SIM shown — REAL runs one researcher live):
@@ -173,19 +173,19 @@ Ports are **[UNCERTAIN]** in the runbook (backend ~8051, frontend ~3000) — pro
 
 **labs/lab01_router_economics.py — measure the routing claim.** Classifies six queries shallow/deep against your live endpoint, scores accuracy, then computes the blended-cost saving assuming a deep run ≈ 9× a shallow answer.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/05_aiq_research_lab/labs/lab01_router_economics.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab01_router_economics.py
 ```
 Look for: the per-query ✓/✗ marks with latency, then `routing economics on this mix` — a saving % that depends entirely on how many queries stay shallow. *Modify it:* replace `QUERIES` with six questions from your own domain (hotel ops, energy audits) and see how the saving moves with your real mix.
 
 **labs/lab02_plan_fanout.py — plan to file, fan out for real.** Asks the model for a JSON plan with `parallel_ok` flags, writes it to `.sandbox/todo.md` (the blueprint's filesystem To-Do), then runs two researcher sub-agents concurrently and reports sum-of-latencies vs wall clock.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/05_aiq_research_lab/labs/lab02_plan_fanout.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab02_plan_fanout.py
 ```
 Look for: the `∥` / `⇢` marks on each TODO (parallel-legal vs sequential) and the final `fan-out speedup: ~1.9x` line — concurrency is the wall-clock half of the fan-out argument. *Modify it:* raise `max_workers` and the `[:2]` pick to 3 researchers; does the speedup scale, or does your endpoint serialize requests?
 
 **labs/lab03_tool_bus.py — close the tool loop.** A 3-tool registry over real data (`config.DGX_SPECS`, the endpoint's model list, a safe calculator). The model picks a tool as JSON, the lab executes it, and the observation grounds a one-sentence answer. Ends by printing the equivalent NAT `workflow.yml`.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/05_aiq_research_lab/labs/lab03_tool_bus.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab03_tool_bus.py
 ```
 Look for: the four arrows — `picks` → `EXECUTE` → `OBSERVE` → `final` — each one an observable event; and the failure branch if the model returns an invalid pick (that's the mismatch NAT's typed schemas exist to prevent). *Modify it:* add a fourth tool `todo_read()` that returns lab02's `.sandbox/todo.md`, and change `TASK` to "what's next on the research plan?".
 

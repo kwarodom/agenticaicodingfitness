@@ -23,7 +23,7 @@ unless a step says otherwise.
 ## 1 · Is everything ready? (any time, 5 seconds, read-only)
 
 ```bash
-week25/spark_host/ready_check.sh
+week25_dgx_spark/spark_host/ready_check.sh
 ```
 
 It checks both Sparks as `sparklab`, the account students use: SSH, student keys, Hugging Face and nvcr.io
@@ -42,33 +42,33 @@ from scratch, follow `spark_host/README.md`, then `spark_host/TWO_SPARKS.md`.
    the tagging.
 2. **Student keys, on both Sparks.** Collect each laptop's `~/.ssh/id_ed25519.pub`, then:
    ```bash
-   sudo week25/spark_host/add_key.sh alice.pub bob.pub …                                  # Spark A
-   ssh -t altoaidev@<spark-b> 'cd ~/Documents/agenticaicodingfitness && sudo week25/spark_host/add_key.sh "<one key line>"'   # Spark B, per key
+   sudo week25_dgx_spark/spark_host/add_key.sh alice.pub bob.pub …                                  # Spark A
+   ssh -t altoaidev@<spark-b> 'cd ~/Documents/agenticaicodingfitness && sudo week25_dgx_spark/spark_host/add_key.sh "<one key line>"'   # Spark B, per key
    ```
    (Or copy the `.pub` files to Spark B and run the same `add_key.sh` there.)
 3. **Send `spark_host/STUDENT_SETUP.md`** to the students. First compare its office IPs with the
-   `Office LAN` lines of `week25/spark_host/lab_mode.sh status`: they are DHCP leases and can change. It covers installing Tailscale, making a key, the
+   `Office LAN` lines of `week25_dgx_spark/spark_host/lab_mode.sh status`: they are DHCP leases and can change. It covers installing Tailscale, making a key, the
    runner, and filling in **Spark A** and **Spark B** in 🖥 Spark setup.
-4. Run `week25/spark_host/ready_check.sh` again. The keys line should now count your students.
+4. Run `week25_dgx_spark/spark_host/ready_check.sh` again. The keys line should now count your students.
 
 ## 3 · Class morning (10 minutes)
 
 ```bash
-week25/spark_host/lab_mode.sh on        # BOTH Sparks: stops A's day job and B's altoace stack
+week25_dgx_spark/spark_host/lab_mode.sh on        # BOTH Sparks: stops A's day job and B's altoace stack
 ```
 
 Check its two status blocks: about **110 GB available** on each Spark, ports 8000 / 8001 / 4000 free on A, and
-8000 free on B. (`SPARK_B_ADMIN` in `week25/.env.local` is what makes it reach Spark B.)
+8000 free on B. (`SPARK_B_ADMIN` in `week25_dgx_spark/.env.local` is what makes it reach Spark B.)
 
 Start your runner. Pick one:
 
 ```bash
 # (a) on Spark A: open it from your laptop over the tailnet (it asks for SPARK_GUIDE_PASSWORD)
-.venv/bin/python week25/00_spark_lab_runner/tutorial_server.py        # → http://spark-3b82.<tailnet>.ts.net:8125
+.venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py        # → http://spark-3b82.<tailnet>.ts.net:8125
 # (b) on your laptop: the same command, after the student setup steps
 ```
 
-On Spark A, `week25/.env.local` already sets `SPARK_HOST=sparklab@…` and `SPARK_HOST2=sparklab@…`. The runner
+On Spark A, `week25_dgx_spark/.env.local` already sets `SPARK_HOST=sparklab@…` and `SPARK_HOST2=sparklab@…`. The runner
 therefore drives both Sparks as `sparklab`, the way students' runners do. Both the **Spark A** and **Spark B**
 chips should be green.
 
@@ -103,7 +103,7 @@ Verified live on 2026-10-01. They need `lab_mode.sh on` (step 3).
 ### 5a · NCCL benchmark (Module 02 lab 03), about 2 minutes
 In the runner, ▶ Run lab 02-3, or:
 ```bash
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab03_nccl_bench.py --rdma
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab03_nccl_bench.py --rdma
 ```
 Expected: busbw **≈ 22.5 GB/s** (pass mark 21.875) and RDMA **≈ 196 Gb/s** (≥ 184). If busbw is low, check that
 lab mode is on: both Sparks need their memory free.
@@ -180,8 +180,8 @@ On B, `tmux kill-session -t ray; docker rm -f $(docker ps -aq --filter name=^nod
 ### 5c · The capstone (Module 20 lab 02), about 10 minutes
 The fine-tuned router serves on Spark B, the agent brain and the LiteLLM gateway on Spark A:
 ```bash
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py     # both ✓
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab02_bring_up.py --launch      # 3 × ✓ "is up"
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py     # both ✓
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab02_bring_up.py --launch      # 3 × ✓ "is up"
 ```
 It needs the `hotel-ft` adapter on **Spark B** (`ready_check.sh` checks it; one is trained already). To retrain
 it, run Module 09 against Spark B: set `SPARK_HOST=sparklab@spark-b3b6.<tailnet>.ts.net` in that shell, then
@@ -192,7 +192,7 @@ listens on 127.0.0.1, so on laptops it appears as the labelled LAPTOP STAND-IN.
 
 **Chat with both models in Open WebUI, through the gateway.** One command on Spark A, after `--launch`:
 ```bash
-week25/spark_host/openwebui_gateway.sh start     # ✓ models: agent-brain, hotel-router · ✓ system prompt
+week25_dgx_spark/spark_host/openwebui_gateway.sh start     # ✓ models: agent-brain, hotel-router · ✓ system prompt
 ```
 Open http://127.0.0.1:12000 (no login). The model menu has **`agent-brain`** (Qwen3.6 on A, the default) and
 **`hotel-router`** (the Module 09 fine-tune on B); ignore Open WebUI's built-in `arena-model`. Every message goes
@@ -250,9 +250,9 @@ straight after.
 ## 6 · After class
 
 ```bash
-week25/spark_host/lab_mode.sh off       # BOTH Sparks: day jobs back, vLLM servers last
+week25_dgx_spark/spark_host/lab_mode.sh off       # BOTH Sparks: day jobs back, vLLM servers last
 ```
-Wait about 5 minutes, then confirm with `week25/spark_host/lab_mode.sh status`. On Spark B, `altoace-llm` should
+Wait about 5 minutes, then confirm with `week25_dgx_spark/spark_host/lab_mode.sh status`. On Spark B, `altoace-llm` should
 show `(healthy)` in `docker ps`.
 
 ## 7 · When something goes wrong

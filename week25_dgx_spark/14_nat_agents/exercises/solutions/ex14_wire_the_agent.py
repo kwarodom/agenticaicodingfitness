@@ -2,11 +2,11 @@
 """Exercise 14 · reference solution — wire the hotel agent's NAT workflow yourself.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/14_nat_agents/exercises/ex14_wire_the_agent.py
+    .venv/bin/python week25_dgx_spark/14_nat_agents/exercises/ex14_wire_the_agent.py
 
 Each TODO returns one section of a NAT workflow file as a Python dict. The checker is offline and
-free: it lints the assembled config, writes it to week25/14_nat_agents/.runs/, and — if NAT is
-installed in week25/.venv-nat — asks the real `nat validate` whether NAT accepts it (no model is
+free: it lints the assembled config, writes it to week25_dgx_spark/14_nat_agents/.runs/, and — if NAT is
+installed in week25_dgx_spark/.venv-nat — asks the real `nat validate` whether NAT accepts it (no model is
 called). Stuck? Compare with exercises/solutions/ and with configs/hotel_agent.yml.
 """
 import os
@@ -19,7 +19,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "common"))
 from sparkkit import WEEK, banner, check  # noqa: E402
 
-MOD = Path(__file__).resolve().parents[2]                 # week25/14_nat_agents
+MOD = Path(__file__).resolve().parents[2]                 # week25_dgx_spark/14_nat_agents
 
 
 # ── TODO 1 ── the `llms.hotel_llm` block for an OpenAI-compatible server.
@@ -138,10 +138,10 @@ def main() -> None:
             ok &= check(good, f"nat validate ex14_{target}.yml: valid",
                         f"nat validate ex14_{target}.yml: " + (p.stdout + p.stderr).strip().splitlines()[-1][:200])
     else:
-        print("\n⚠ NAT is not installed in week25/.venv-nat — skipped `nat validate` (lab 14-1 shows the install).")
+        print("\n⚠ NAT is not installed in week25_dgx_spark/.venv-nat — skipped `nat validate` (lab 14-1 shows the install).")
     if not ok:
         sys.exit(1)
-    print("\n═ Run it: cd week25/14_nat_agents && ../.venv-nat/bin/nat run --config_file .runs/ex14_ollama.yml "
+    print("\n═ Run it: cd week25_dgx_spark/14_nat_agents && ../.venv-nat/bin/nat run --config_file .runs/ex14_ollama.yml "
           "--input \"Check room 808\"")
 
 

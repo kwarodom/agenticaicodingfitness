@@ -1,0 +1,72 @@
+{
+  "architecture": {
+    "title": "MAESTRO's six steps as code — from YAML to a CI gate",
+    "caption": "The threat model is a file (data/threat_model.yaml). maestro.validate() checks its schema and every reference; maestro.risk() scores it on the course's 1–5 matrix; tmkit.verify() runs each threat's red-team scenario with only its mitigations' defenses on, and only a blocked scenario earns 'mitigated'. A design change is a YAML delta: tmkit.merge() applies it, maestro.diff() says what it added, and the gate judges only those ids. The matrix, bands, schema and gate are the course's own; MAESTRO supplies the layers, threat names and the six steps.",
+    "lanes": [
+      {"id": "model", "label": "the model (data/)"},
+      {"id": "checks", "label": "checks (maestro.py · tmkit.py)"},
+      {"id": "evidence", "label": "evidence (redteam.py · ensemble.py)"},
+      {"id": "ci", "label": "pull request / CI"}
+    ],
+    "nodes": [
+      {"id": "v1", "label": "threat_model.yaml v1", "lane": "model", "sub": "17 components · 16 mitigations · 15 threats", "accent": "cyan"},
+      {"id": "delta", "label": "line_channel_change.yaml", "lane": "model", "sub": "+1 component · +2 mitigations · +3 threats", "accent": "amber"},
+      {"id": "validate", "label": "validate()", "lane": "checks", "sub": "schema · references · catalogue ids", "accent": "green"},
+      {"id": "risk", "label": "risk() · heatmap", "lane": "checks", "sub": "1–5 × 1–5 (course matrix)", "accent": "violet"},
+      {"id": "verify", "label": "tmkit.verify()", "lane": "evidence", "sub": "scenario + only its defenses", "accent": "red"},
+      {"id": "report", "label": "report_md()", "lane": "checks", "sub": ".runs/threat_report*.md", "accent": "cyan"},
+      {"id": "diff", "label": "diff() → gate(only=new)", "lane": "ci", "sub": "tmkit.py --base --head --fail-on", "accent": "amber"},
+      {"id": "exit", "label": "exit 0 / 1", "lane": "ci", "sub": "merge allowed or blocked", "accent": "green"}
+    ],
+    "edges": [
+      {"from": "v1", "to": "validate", "label": "load"},
+      {"from": "validate", "to": "risk", "label": "well-formed"},
+      {"from": "risk", "to": "verify", "label": "rank, then test", "animated": true},
+      {"from": "verify", "to": "report", "label": "mitigated only if blocked"},
+      {"from": "delta", "to": "diff", "label": "merge → v2", "animated": true},
+      {"from": "v1", "to": "diff", "label": "base"},
+      {"from": "diff", "to": "exit", "label": "gate"}
+    ]
+  },
+  "sequence": {
+    "title": "A pull request adds LINE guest chat — the gate fails, then passes on evidence",
+    "caption": "Captured from Lab 03-3 (SIM brain). The diff finds T16–T18; T16 (any LINE user acts as an in-house guest, 4×4=16) is critical, so the gate on the change exits 1. M-LINE-BIND is tested in the simulator: with principal_authz on, an unbound LINE id is external content and is refused; a bound guest may act on their own room only. T16 becomes mitigated (residual 1×4=4) and the gate exits 0.",
+    "actors": [
+      {"id": "dev", "label": "developer"},
+      {"id": "ci", "label": "CI job (tmkit.py)"},
+      {"id": "sim", "label": "simulated ensemble"}
+    ],
+    "steps": [
+      {"from": "dev", "to": "ci", "label": "PR: line_channel + T16, T17, T18 (all open)", "kind": "call"},
+      {"from": "ci", "to": "ci", "label": "diff v1 → v2: added T16, T17, T18", "kind": "note"},
+      {"from": "ci", "to": "dev", "label": "✕ T16 effective risk 16 (critical) · exit 1", "kind": "return"},
+      {"from": "dev", "to": "sim", "label": "line:U7f3a9c says 'Room 1203 is too hot.' with principal_authz on", "kind": "call"},
+      {"from": "sim", "to": "dev", "label": "🛡 external content may not trigger set_room_setpoint", "kind": "return"},
+      {"from": "dev", "to": "ci", "label": "T16 mitigated · residual 1×4", "kind": "call"},
+      {"from": "ci", "to": "dev", "label": "✓ no threat at or above 'critical' · exit 0", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Threats by severity — inherent vs after verified mitigations",
+      "type": "bars",
+      "unit": "threats",
+      "labels": ["critical", "high", "medium", "low"],
+      "series": [
+        {"name": "inherent (all open)", "values": [4, 6, 5, 0], "color": "red"},
+        {"name": "effective after verification", "values": [0, 3, 5, 7], "color": "green"}
+      ],
+      "caption": "From Lab 03-2 (SIM brain). Severity bands are the course's (≥15 critical · ≥10 high · ≥5 medium). Residual rule (course): a verified block drops likelihood to 1, impact unchanged."
+    },
+    {
+      "title": "What the evidence said about 15 planned mitigations",
+      "type": "donut",
+      "unit": "threats",
+      "labels": ["blocked its scenario → mitigated", "defense failed its test (T05)", "no scenario to run in SIM (T13–T15)"],
+      "series": [
+        {"name": "threats", "values": [11, 1, 3], "color": "cyan"}
+      ],
+      "caption": "From Lab 03-2 (SIM brain, a teaching model of a gullible LLM). T05's plan was least agency alone; the concierge legitimately holds send_email, so the guest list still left the hotel."
+    }
+  ]
+}

@@ -30,7 +30,7 @@ router ที่ส่งทุกอย่างให้คนมี coverage 
 
 ## 1 · รันการประเมินแบบ smoke test (แล็บ 01)
 
-ข้อมูลอยู่ที่ `week24/09_evaluate_and_cost/data/intent_eval.jsonl` ประกอบด้วยแถวสำหรับสอน 9 แถวจาก `jev_lab.py` บวกแถวภาษาไทยอีก 3 แถว แต่ละแถวเป็น JSON หนึ่งบรรทัด:
+ข้อมูลอยู่ที่ `week24_typed_decisions_jev/09_evaluate_and_cost/data/intent_eval.jsonl` ประกอบด้วยแถวสำหรับสอน 9 แถวจาก `jev_lab.py` บวกแถวภาษาไทยอีก 3 แถว แต่ละแถวเป็น JSON หนึ่งบรรทัด:
 
 ```json
 {"id": "t3", "language": "th", "state": {"message": "นัดช่างมาบำรุงรักษาเครื่องทำน้ำเย็นสัปดาห์หน้า"}, "expected": {"intent": "facility_ops"}}
@@ -39,7 +39,7 @@ router ที่ส่งทุกอย่างให้คนมี coverage 
 ฟิลด์ `expected` ไม่เคยไปถึง Jev: `jev_lab.prepare()` คัดลอกเฉพาะ `message` ลงใน state การปล่อยให้เฉลยรั่วเข้าไปใน input คือบั๊กของการประเมินผลที่พบบ่อยที่สุด
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/labs/lab01_smoke_eval.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab01_smoke_eval.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -110,7 +110,7 @@ router ที่ส่งทุกอย่างให้คนมี coverage 
 threshold อยู่ในโค้ด **ของคุณ** ไม่ได้อยู่ในโมเดล ดังนั้นเมื่อได้คำตอบมาแล้ว คุณลองทุก threshold ได้โดยไม่ต้องเรียก Jev อีก แล็บ 02 อ่านคำตอบที่แล็บ 01 บันทึกไว้ใน `.runs/intent_answers.json`
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/labs/lab02_threshold_sweep.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab02_threshold_sweep.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -143,12 +143,12 @@ threshold อยู่ในโค้ด **ของคุณ** ไม่ได�
 
 ## 4 · ตัวประเมินผลต้นแบบ
 
-`week24/jev_lab/jev_lab.py` (สคริปต์ต้นฉบับของบทเรียน) มีตัวประเมินผลแบบเดียวกันอยู่ในตัว รันกับไฟล์เดียวกันเพื่อดูว่าตัวเลขตรงกัน ต้องมีคีย์ใน shell ของคุณ ส่วน ⌨ Terminal ที่อยู่ในแอปมีคีย์อยู่แล้ว
+`week24_typed_decisions_jev/jev_lab/jev_lab.py` (สคริปต์ต้นฉบับของบทเรียน) มีตัวประเมินผลแบบเดียวกันอยู่ในตัว รันกับไฟล์เดียวกันเพื่อดูว่าตัวเลขตรงกัน ต้องมีคีย์ใน shell ของคุณ ส่วน ⌨ Terminal ที่อยู่ในแอปมีคีย์อยู่แล้ว
 
 ```bash
 set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a
-.venv/bin/python week24/jev_lab/jev_lab.py evaluate intent \
-  --input week24/09_evaluate_and_cost/data/intent_eval.jsonl --limit 12 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py evaluate intent \
+  --input week24_typed_decisions_jev/09_evaluate_and_cost/data/intent_eval.jsonl --limit 12 --live
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -177,7 +177,7 @@ set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a
 Jev คิดเงิน **เฉพาะ input token**: **$0.042 ต่อล้าน token** ส่วน output ฟรี แล็บ 03 เป็นการคำนวณล้วน ๆ จึงไม่ต้องใช้คีย์
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/labs/lab03_cost_calculator.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab03_cost_calculator.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -219,7 +219,7 @@ Jev คิดเงิน **เฉพาะ input token**: **$0.042 ต่อล
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 09 — ชุดทดสอบของคุณเอง ตัวชี้วัดของคุณเอง** เปิดไฟล์ `week24/09_evaluate_and_cost/exercises/ex09_build_a_testset.py`:
+**แบบฝึกหัด 09 — ชุดทดสอบของคุณเอง ตัวชี้วัดของคุณเอง** เปิดไฟล์ `week24_typed_decisions_jev/09_evaluate_and_cost/exercises/ex09_build_a_testset.py`:
 
 1. **TODO 1** — เขียนแถวที่มี label อย่างน้อย 6 แถวสำหรับ router ของ Alto Copilot: อย่างน้อย 2 แถวเป็นภาษาไทย และอย่างน้อย 1 แถวที่คำตอบที่ถูกคือ `unknown` ให้เขียนคำขอที่ *คุณ* จะได้รับจริง ๆ
 2. **TODO 2** — เขียน `macro_f1(pairs)`: ค่าเฉลี่ยของ F1 ในทุกคลาส คอมเมนต์ในไฟล์อธิบาย TP, FP, FN ไว้ให้แล้ว
@@ -227,7 +227,7 @@ Jev คิดเงิน **เฉพาะ input token**: **$0.042 ต่อล
 ตัวตรวจจะตรวจแถวของคุณและทดสอบ `macro_f1()` กับ fixture สี่ชุด **ก่อน** เรียก API ใด ๆ เมื่อทุกอย่างเป็น ✓ แล้ว มันจะประเมินแถวของคุณแบบ live
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/exercises/ex09_build_a_testset.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/exercises/ex09_build_a_testset.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

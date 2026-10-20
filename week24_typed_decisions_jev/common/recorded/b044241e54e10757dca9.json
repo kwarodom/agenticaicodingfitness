@@ -1,0 +1,90 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-bdb430c290c344ad",
+   "location": "Basement B1, AHU-2"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which engineering queue should handle what `photo` shows?",
+    "criteria": {
+     "water_leak": "Water or another liquid leaking, dripping or pooling",
+     "smoke_or_fire": "Smoke, steam, haze, burning, fire or sparks",
+     "comfort": "Temperature or comfort complaint with no visible damage",
+     "none": "Nothing wrong is visible",
+     "unclear": "The picture is too dark, blurred or ambiguous to choose"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `photo` show something that could injure a person or damage electrical equipment — smoke, steam, haze, fire, sparks, or liquid near electrical equipment?"
+   },
+   "severity": {
+    "type": "score",
+    "instructions": "How severe is the problem visible in `photo`?",
+    "criteria": [
+     "nothing wrong",
+     "cosmetic, fix when convenient",
+     "needs a technician today",
+     "immediate hazard, clear the area"
+    ]
+   }
+  },
+  "assets": {
+   "img-bdb430c290c344ad": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "6ee70a72fa31a4ef",
+    "base64_chars": 208176
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "water_leak",
+    "confidence": 1.0,
+    "probabilities": {
+     "water_leak": 1.0,
+     "smoke_or_fire": 0.0,
+     "comfort": 0.0,
+     "none": 0.0,
+     "unclear": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.96
+   },
+   "severity": {
+    "type": "score",
+    "score": 2.22,
+    "confidence": 0.75,
+    "legend": {
+     "0": "nothing wrong",
+     "1": "cosmetic, fix when convenient",
+     "2": "needs a technician today",
+     "3": "immediate hazard, clear the area"
+    },
+    "probabilities": {
+     "0": 0.0,
+     "1": 0.01,
+     "2": 0.75,
+     "3": 0.24
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 2887,
+   "output_tokens": 92
+  }
+ }
+}

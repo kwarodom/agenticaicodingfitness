@@ -5,10 +5,10 @@ A teammate ran Unsloth with the settings below, copied from a notebook, and repo
 2× faster than LLaMA Factory and has lower loss". But four settings differ from Module 09's
 LLaMA Factory run, so the claim says little about the frameworks. Fix the four TODOs so that
 every setting that must match does match, save, then run:
-    .venv/bin/python week25/10_unsloth/exercises/ex10_fair_comparison.py
+    .venv/bin/python week25_dgx_spark/10_unsloth/exercises/ex10_fair_comparison.py
 
 The checker is free and offline: it reads the REAL Module 09 YAML
-(week25/09_llama_factory/configs/hotel_lora_sft.yaml) and compares it with your dict.
+(week25_dgx_spark/09_llama_factory/configs/hotel_lora_sft.yaml) and compares it with your dict.
 Stuck? Compare with exercises/solutions/.
 """
 import sys
@@ -47,7 +47,7 @@ def main() -> None:
     banner("Exercise 10 · a fair comparison", "offline checker · reads Module 09's real YAML · no Spark needed",
            status=False)
     if not LF_YAML.is_file():
-        print("✕ run week25/09_llama_factory/labs/lab03_config_and_launch.py first (it writes the YAML compared here).")
+        print("✕ run week25_dgx_spark/09_llama_factory/labs/lab03_config_and_launch.py first (it writes the YAML compared here).")
         sys.exit(1)
     lf, us = yaml.safe_load(LF_YAML.read_text(encoding="utf-8")), UNSLOTH_CFG
     ok = True

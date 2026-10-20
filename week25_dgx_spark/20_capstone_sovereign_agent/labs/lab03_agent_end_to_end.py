@@ -10,8 +10,8 @@
 Everything is real on a laptop (both aliases fall back to Ollama, labelled LAPTOP STAND-IN). With two
 Sparks serving, the same run exercises the real fine-tune. The proxy is always stopped on exit.
 
-Needs: week25/.venv-nat with hotel_ops_nat (Module 14) and hotel_capstone_nat (this folder) installed.
-Run: .venv/bin/python week25/20_capstone_sovereign_agent/labs/lab03_agent_end_to_end.py [--only smoke]
+Needs: week25_dgx_spark/.venv-nat with hotel_ops_nat (Module 14) and hotel_capstone_nat (this folder) installed.
+Run: .venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab03_agent_end_to_end.py [--only smoke]
 """
 import os
 import subprocess
@@ -30,7 +30,7 @@ banner("Lab 20-3 · the sovereign hotel agent, end to end",
 
 step(1, "preflight: NAT and both plugins installed?")
 if not C.NAT.exists():
-    warn(f"{C.NAT} missing — uv venv -p 3.12 week25/.venv-nat && uv pip install -p week25/.venv-nat/bin/python "
+    warn(f"{C.NAT} missing — uv venv -p 3.12 week25_dgx_spark/.venv-nat && uv pip install -p week25_dgx_spark/.venv-nat/bin/python "
          "'nvidia-nat[langchain]==1.9.0'")
     raise SystemExit(0)
 info = subprocess.run([str(C.NAT), "info", "components", "-t", "function"], capture_output=True, text=True,
@@ -40,8 +40,8 @@ missing = [f"{k} ← {v}" for k, v in need.items() if k[:14] not in info]
 if missing:
     for m in missing:
         warn(f"tool not registered: {m}")
-    print("$ uv pip install --python week25/.venv-nat/bin/python --no-deps -e week25/14_nat_agents/hotel_ops_nat "
-          "-e week25/20_capstone_sovereign_agent/hotel_capstone_nat")
+    print("$ uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat "
+          "-e week25_dgx_spark/20_capstone_sovereign_agent/hotel_capstone_nat")
     raise SystemExit(0)
 check(True, "route_guest_message, room_temperature, create_maintenance_ticket are registered in NAT 1.9", "")
 

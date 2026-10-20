@@ -39,7 +39,7 @@ hf auth login
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab01_finetune_memory.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab01_finetune_memory.py
 ```
 
 **Expected output** (เป็นการคำนวณ บันทึกจาก Mac เครื่องนี้; ตารางแรก)
@@ -242,8 +242,8 @@ Lab Runner หยุดแล็บแบบ foreground หลัง 900 วิ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py --recipe nemo-lora-8b
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab02_launch_job.py --recipe nemo-lora-8b
 ```
 
 สูตรที่มี: `pytorch-lora-8b` (ค่าตั้งต้น: ตัวอย่างการใช้งานของ playbook), `pytorch-full-3b`, `pytorch-qlora-70b`, `nemo-lora-8b`, `nemo-qlora-70b`, `nemo-sft-qwen3-8b`
@@ -277,7 +277,7 @@ Lab 03 อ่าน 400 บรรทัดสุดท้ายของ log ล
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab03_watch_log.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab03_watch_log.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ log ที่มัน parse เป็น EXAMPLE: รูปแบบบรรทัดเป็นไปตามคำสั่ง `print()` ของสคริปต์ ทุกตัวเลขเป็นตัวอย่างประกอบ ไม่ใช่การรันบน Spark)
@@ -323,8 +323,8 @@ Lab 04 ตรวจ Spark ทั้งสองเครื่อง (อ่า�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py              # 70B / 8B LoRA
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py --config full # 3B full SFT
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py              # 70B / 8B LoRA
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py --config full # 3B full SFT
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้: แถว preflight เป็นรูปแบบ EXAMPLE ส่วนไฟล์เป็นของจริง)
@@ -469,7 +469,7 @@ Lab 01 รันได้ทุกที่ Lab 02 และ 03 รันแบ�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 11 — งบประมาณการ fine-tune** เปิด `week25/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 11 — งบประมาณการ fine-tune** เปิด `week25_dgx_spark/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `lora_params(layers, shapes, r)`: LoRA เพิ่มพารามิเตอร์กี่ตัว
 2. `state_gb(frozen_b, trainable_b, frozen_bits)`: training state เป็น GB
@@ -479,7 +479,7 @@ Lab 01 รันได้ทุกที่ Lab 02 และ 03 รันแบ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py
+.venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/exercises/ex11_finetune_budget.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด บันทึกจาก Mac เครื่องนี้)

@@ -172,7 +172,7 @@ DEFAULT_MAX_TOKENS = 1024
 FAST_MAX_TOKENS = 320
 
 # ── paths ─────────────────────────────────────────────────────────────────────
-PKG = Path(__file__).resolve().parent          # …/week19/sovereign_dgx
+PKG = Path(__file__).resolve().parent          # …/week19_sovereign_ai_dgx/sovereign_dgx
 SANDBOX = PKG / ".sandbox"                      # scratch space for generated artifacts
 
 # ── DGX hardware facts (accurate, used by the hardware + sizing demos) ────────

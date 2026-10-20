@@ -54,7 +54,7 @@ LoRA เทรนตัวเลข `r × (in + out)` ตัวต่อ layer �
 
 ```bash
 # on: laptop
-.venv/bin/python week25/09_llama_factory/labs/lab03_config_and_launch.py
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab03_config_and_launch.py
 ```
 
 **Expected output** (step 1 — เป็นการคำนวณ ได้ผลเหมือนกันทุกเครื่อง; บันทึกจาก Mac เครื่องนี้)
@@ -111,8 +111,8 @@ pip install -e ".[metrics]"                                                     
 
 ```bash
 # on: laptop
-.venv/bin/python week25/09_llama_factory/labs/lab01_factory_setup.py
-SPARK_APPLY=1 .venv/bin/python week25/09_llama_factory/labs/lab01_factory_setup.py
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab01_factory_setup.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab01_factory_setup.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY; ถ้ามี Spark แถว ◈ จะเปลี่ยนเป็น ✓ หรือ ✕)
@@ -186,7 +186,7 @@ LLaMA Factory อ่านเรคคอร์ดแบบ **Alpaca** (`instruc
 
 ```bash
 # on: laptop
-.venv/bin/python week25/09_llama_factory/labs/lab02_hotel_dataset.py
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab02_hotel_dataset.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ — ผลคงที่ทุกครั้ง, seed 25)
@@ -232,11 +232,11 @@ registry จับคู่บทบาทของ LLaMA Factory เข้า�
 
 > 💡 จำนวน token เป็นค่าประมาณ (ราว 4 ตัวอักษรต่อ token สำหรับภาษาอังกฤษ และ 2 สำหรับอักษรไทย) ไม่ได้ใช้ tokenizer จริง มันแค่ต้องแสดงให้เห็นว่าไม่มีอะไรเข้าใกล้ `cutoff_len`
 
-✓ Checkpoint: `week25/09_llama_factory/data/` มีไฟล์สามไฟล์ และทุกบรรทัดการ validate เป็น ✓ Module 10, 13 และ capstone นำชุดข้อมูลนี้กลับมาใช้
+✓ Checkpoint: `week25_dgx_spark/09_llama_factory/data/` มีไฟล์สามไฟล์ และทุกบรรทัดการ validate เป็น ✓ Module 10, 13 และ capstone นำชุดข้อมูลนี้กลับมาใช้
 
 ## 4 · YAML สำหรับการเทรน ทีละ key
 
-การรัน LLaMA Factory หนึ่งครั้งคือไฟล์ YAML หนึ่งไฟล์ Lab 03 (step 3) เริ่มจาก `examples/train_lora/qwen3_lora_sft.yaml` ของ playbook แล้วเขียนไฟล์หกไฟล์ลงใน `week25/09_llama_factory/configs/`:
+การรัน LLaMA Factory หนึ่งครั้งคือไฟล์ YAML หนึ่งไฟล์ Lab 03 (step 3) เริ่มจาก `examples/train_lora/qwen3_lora_sft.yaml` ของ playbook แล้วเขียนไฟล์หกไฟล์ลงใน `week25_dgx_spark/09_llama_factory/configs/`:
 
 | ไฟล์ | คำสั่ง | ผลลัพธ์บน Spark (ภายใต้ `~/w25/m09/`) |
 |---|---|---|
@@ -295,8 +295,8 @@ Step 4 ของ lab 03 คัดลอกข้อมูลและ config ไ
 
 ```bash
 # on: laptop
-SPARK_APPLY=1 .venv/bin/python week25/09_llama_factory/labs/lab03_config_and_launch.py
-SPARK_APPLY=1 .venv/bin/python week25/09_llama_factory/labs/lab03_config_and_launch.py --method qlora   # or full
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab03_config_and_launch.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab03_config_and_launch.py --method qlora   # or full
 ```
 
 คำสั่งที่มันรันบน Spark:
@@ -320,7 +320,7 @@ LLaMA Factory เขียน log สองชุด **console log** (ไฟล�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้; ตัวเลข loss เป็น EXAMPLE — ข้อมูลสังเคราะห์ที่สร้างจากสูตรเพื่อทดสอบ parser ไม่ใช่การเทรนจริง)
@@ -364,9 +364,9 @@ LLaMA Factory เขียน log สองชุด **console log** (ไฟล�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py --chat      # 3 guest requests, ~2 min
-.venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py --predict   # 60 held-out answers (nohup)
-.venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py --export    # merge (nohup)
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py --chat      # 3 guest requests, ~2 min
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py --predict   # 60 held-out answers (nohup)
+.venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py --export    # merge (nohup)
 ```
 
 - **`llamafactory-cli chat configs/hotel_chat.yaml`** คือ Step 10 ของ playbook ที่ใช้ adapter ของคุณ เป็นแบบโต้ตอบ: พิมพ์คำขอ แล้วพิมพ์ `exit` เพื่อออก แล็บส่งคำขอสามข้อเข้าไปผ่าน pipe คือภาษาอังกฤษหนึ่ง ภาษาไทยหนึ่ง และแบบเร่งด่วนหนึ่ง โดยมี `clear` คั่นระหว่างกันเพื่อไม่ให้ใช้ประวัติร่วมกัน
@@ -402,7 +402,7 @@ Lab 02 และ 03 (step 1–3) รันบนแล็ปท็อปได�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 09 — แก้ config** เปิด `week25/09_llama_factory/exercises/ex09_fix_the_config.py` ไฟล์ `dataset_info.json` และ YAML สำหรับเทรนของเพื่อนร่วมทีมมีข้อผิดพลาดสี่จุด แต่ละจุดจะทำให้การรันหยุด หรือเทรน adapter ที่ภายหลังถูกใช้กับรูปแบบแชตที่ผิด:
+**แบบฝึกหัด 09 — แก้ config** เปิด `week25_dgx_spark/09_llama_factory/exercises/ex09_fix_the_config.py` ไฟล์ `dataset_info.json` และ YAML สำหรับเทรนของเพื่อนร่วมทีมมีข้อผิดพลาดสี่จุด แต่ละจุดจะทำให้การรันหยุด หรือเทรน adapter ที่ภายหลังถูกใช้กับรูปแบบแชตที่ผิด:
 
 1. `file_name` ชี้ไปที่ไฟล์ที่ไม่มีอยู่
 2. การจับคู่คอลัมน์ระบุชื่อคอลัมน์ที่ไม่มีในเรคคอร์ด
@@ -413,7 +413,7 @@ Lab 02 และ 03 (step 1–3) รันบนแล็ปท็อปได�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/09_llama_factory/exercises/ex09_fix_the_config.py
+.venv/bin/python week25_dgx_spark/09_llama_factory/exercises/ex09_fix_the_config.py
 ```
 
 **Expected output** (เมื่อแก้ TODO ครบทั้งสี่จุด; บันทึกจาก Mac เครื่องนี้)
@@ -430,7 +430,7 @@ Lab 02 และ 03 (step 1–3) รันบนแล็ปท็อปได�
 
 <details><summary>คำใบ้ — จะหาชื่อคอลัมน์ที่ถูกต้องได้อย่างไร?</summary>
 
-เปิด `week25/09_llama_factory/data/hotel_ops.json` แล้วดู key ของเรคคอร์ดแรก `columns` จับคู่บทบาทของ LLaMA Factory (`prompt`, `query`, `response`, `system`) เข้ากับชื่อ key **ของคุณ**
+เปิด `week25_dgx_spark/09_llama_factory/data/hotel_ops.json` แล้วดู key ของเรคคอร์ดแรก `columns` จับคู่บทบาทของ LLaMA Factory (`prompt`, `query`, `response`, `system`) เข้ากับชื่อ key **ของคุณ**
 
 </details>
 

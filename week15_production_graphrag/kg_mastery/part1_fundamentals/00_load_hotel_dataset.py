@@ -5,7 +5,7 @@ Builds the knowledge graph every other script in this course queries. It is
 idempotent (MERGE-based) — safe to re-run. Reflects the domain model from
 kg_mastery.pdf §1.7 and §5.1.
 
-Run:  python week15/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py
+Run:  python week15_production_graphrag/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py
 
 Creates (roughly): 15 rooms across 5 floors, 2–3 devices each, ~24h of sensor
 readings, a handful of alerts (some unresolved/HOT), staff, maintenance jobs,

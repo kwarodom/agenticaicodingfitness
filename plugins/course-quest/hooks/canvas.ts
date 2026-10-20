@@ -12,6 +12,8 @@ export type Canvas = {
   rows: number
   put: (x: number, y: number, ch: string, fg?: number, bg?: number) => void
   text: (x: number, y: number, s: string, fg?: number, bg?: number) => number
+  /** the code point drawn at a cell (a space outside the canvas) */
+  get: (x: number, y: number) => number
   cells: () => string
 }
 
@@ -66,7 +68,8 @@ export function canvas(columns: number, rows: number, bg = DEFAULT): Canvas {
     }
     return btoa(bin)
   }
-  return { columns, rows, put, text, cells }
+  const get = (x: number, y: number) => (x < 0 || y < 0 || x >= columns || y >= rows ? 0x20 : (words[(y * columns + x) * 3] ?? 0x20))
+  return { columns, rows, put, text, get, cells }
 }
 
 // ---------- color ----------
@@ -113,19 +116,39 @@ export const DIM = 0x3a3f4b
 export const WHITE = 0xf5f5f5
 export const INK = 0x14161c
 
-// ---------- the banner: a sky, stars, a scrolling skyline and a running robot ----------
+// ---------- the banner: a friendly unit card with Bolt, the course mascot ----------
+//
+// Modelled on learning apps' unit cards: one calm, saturated color per phase, a darker
+// "lip" under the card, a mascot that talks to you in a speech line, and small chips.
 
-const ROBOT = [
-  // 6 wide, 4 tall in half-block pixels; 1 = body, 2 = eye, 3 = antenna
-  [0, 0, 3, 0, 0, 0],
-  [0, 1, 1, 1, 1, 0],
-  [0, 1, 2, 1, 2, 0],
-  [0, 1, 1, 1, 1, 0],
+/** Card colors: saturated enough that white text reads on every one. */
+export const CARD_COLOR: Record<number, number> = {
+  1: 0x1e88e5,
+  2: 0x2e9d48,
+  3: 0xe8650a,
+  4: 0x8e24aa,
+  5: 0xd81b60,
+  6: 0xb7791f,
+  7: 0x00897b,
+}
+
+// Bolt, 14 × 11 pixels. o outline · w body · v visor · e eye · E eye highlight ·
+// m smile · c cheek · b antenna bulb · h hand (the right one waves) · . card
+const BOLT = [
+  '......b.......',
+  '......o.......',
+  '..oooooooooo..',
+  '.owwwwwwwwwwo.',
+  'howvvvvvvvvwo.',
+  '.owvEevvEevwo.',
+  '.owveevveevwo.',
+  '.owvvvmmvvvwo.',
+  '.owcwwwwwwcwo.',
+  '..oooooooooo..',
+  '...oo....oo...',
 ]
-const ROBOT_LEGS = [
-  [0, 1, 0, 0, 1, 0],
-  [1, 0, 0, 0, 0, 1],
-]
+const WAVE_UP = { x: 13, y: 3 }
+const WAVE_DOWN = { x: 13, y: 5 }
 
 function hash(n: number): number {
   const x = Math.sin(n * 127.1) * 43758.5453
@@ -134,69 +157,136 @@ function hash(n: number): number {
 
 export type BannerOptions = {
   frame: number
+  phase: number
+  /** small caps line, e.g. "WEEK 24 · OPEN STACK" */
+  label: string
   title: string
-  subtitle: string
-  accent: number
-  /** frames left of a celebration (confetti); 0 for none */
+  /** what Bolt says; typed out one letter per frame */
+  speech: string
+  /** the frame the current speech started, for the typewriter */
+  speechFrom: number
+  level: number
+  xp: number
+  /** 0..1 of the way to the next level */
+  fraction: number
+  streak: number
+  /** frames left of a celebration (confetti and a jump); 0 for none */
   party: number
 }
 
-/** Three terminal rows of half-block pixels (6 pixel rows); the title sits on the middle row. */
+export const BANNER_ROWS = 6
+
 export function banner(columns: number, o: BannerOptions): Canvas {
-  const c = canvas(columns, 3)
-  const sky = (x: number, y: number) => {
-    const t = (x + o.frame * 0.6) / Math.max(20, columns)
-    const base = mix(mix(0x0b1026, 0x1b2a5a, y / 5), hsl((t * 360 + o.frame * 2) % 360, 0.55, 0.32), 0.25)
-    if (y < 2 && hash(x * 7 + y * 131) > 0.93) return mix(base, 0xffffff, 0.5 + 0.5 * Math.sin(o.frame * 0.5 + x))
-    const bx = Math.floor((x + o.frame) / 3)
-    const h = 1 + Math.floor(hash(bx) * 3)
-    if (y >= 6 - h) {
-      const lit = hash(bx * 13 + y) > 0.75 && ((o.frame >> 3) + bx) % 5 !== 0
-      return lit ? 0xffe082 : mix(0x101524, o.accent, 0.18)
+  const rows = BANNER_ROWS
+  const c = canvas(columns, rows)
+  const card = CARD_COLOR[o.phase] ?? 0x1e88e5
+  const lip = mix(card, 0x000000, 0.35)
+  const soft = mix(WHITE, card, 0.3)
+  const px = rows * 2
+
+  // Bolt's pixels: he bobs gently, jumps when you score, blinks, and waves now and then
+  const jump = o.party > 0 && Math.sin(o.party * 0.6) > 0 ? 1 : 0
+  const bob = o.party > 0 ? 0 : (o.frame >> 3) % 2
+  const top = bob - jump
+  const left = 2
+  const isBlink = o.frame % 46 < 2
+  const isWave = o.party > 0 || o.frame % 120 < 24
+  const wave = isWave && (o.frame >> 2) % 2 ? WAVE_UP : WAVE_DOWN
+  const bulb = mix(0xffeb3b, 0xff5252, 0.5 + 0.5 * Math.sin(o.frame * 0.4))
+  const bolt = (x: number, y: number): number | undefined => {
+    const lx = x - left
+    const ly = y - top
+    if (lx === wave.x && ly === wave.y) return 0xf7f7fb
+    const ch = BOLT[ly]?.[lx]
+    if (isBlink && (ch === 'e' || ch === 'E')) return ly === 6 ? 0x7cf7ff : 0x1b2340
+    switch (ch) {
+      case 'o':
+        return 0x1b2340
+      case 'w':
+        return 0xf7f7fb
+      case 's':
+        return 0xd6dae6
+      case 'v':
+        return 0x1b2340
+      case 'e':
+        return 0x7cf7ff
+      case 'E':
+        return 0xffffff
+      case 'm':
+        return 0x7cf7ff
+      case 'c':
+        return 0xff9eb1
+      case 'b':
+        return bulb
+      case 'h':
+        return 0xf7f7fb
+      default:
+        return undefined
     }
-    return base
   }
-  const rx = (o.frame % (columns + 12)) - 6
-  const bob = (o.frame >> 1) % 2
-  const robot = (x: number, y: number): number | undefined => {
-    const lx = x - rx
-    const ly = y - bob
-    if (lx < 0 || lx >= 6) return undefined
-    if (ly >= 0 && ly < 4) {
-      const v = ROBOT[ly]?.[lx] ?? 0
-      if (v === 1) return o.accent
-      if (v === 2) return 0x0b1026
-      if (v === 3) return (o.frame >> 2) % 2 ? 0xff5252 : 0xffeb3b
+  const bg = (y: number) => (y >= px - 1 ? lip : card)
+  const pixel = (x: number, y: number) => bolt(x, y) ?? bg(y)
+
+  // the card, with rounded corners, pixel art across the mascot's columns
+  const artRight = left + 15
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < columns; x++) {
+      if (x <= artRight) c.put(x, y, '▀', pixel(x, y * 2), pixel(x, y * 2 + 1))
+      else c.put(x, y, y === rows - 1 ? '▀' : ' ', card, y === rows - 1 ? lip : card)
     }
-    if (ly === 4 && ROBOT_LEGS[(o.frame >> 1) % 2]?.[lx]) return mix(o.accent, 0x000000, 0.3)
-    return undefined
   }
-  const pixel = (x: number, y: number) => robot(x, y) ?? sky(x, y)
-  const mid = (x: number) => mix(pixel(x, 2), pixel(x, 3), 0.5)
-  for (let x = 0; x < columns; x++) {
-    c.put(x, 0, '▀', pixel(x, 0), pixel(x, 1))
-    c.put(x, 2, '▀', pixel(x, 4), pixel(x, 5))
-    c.put(x, 1, ' ', DEFAULT, mid(x))
+  c.put(0, 0, '▗', card)
+  c.put(columns - 1, 0, '▖', card)
+  c.put(0, rows - 1, '▝', card)
+  c.put(columns - 1, rows - 1, '▘', card)
+
+  // the text column
+  const tx = artRight + 2
+  const room = columns - tx - 2
+  if (room >= 8) {
+    const fit = (s: string, n: number) => ([...s].length > n ? [...s].slice(0, Math.max(0, n - 1)).join('') + '…' : s)
+    // chips on the right of the label row
+    const chips = `★ Lv ${o.level}  ✦ ${o.xp} xp` + (o.streak > 1 ? `  ↑ ${o.streak} days` : '')
+    const showChips = room >= [...chips].length + 12
+    const labelRoom = showChips ? room - [...chips].length - 2 : room
+    c.text(tx, 1, fit(o.label, labelRoom), soft, card)
+    if (showChips) c.text(columns - 2 - [...chips].length, 1, chips, 0xfff3c4, card)
+    c.text(tx, 2, fit(o.title, room), WHITE, card)
+    // Bolt speaks: a typewriter, then the caret blinks
+    const shown = Math.max(0, o.frame - o.speechFrom)
+    const words = [...o.speech]
+    const typed = words.slice(0, Math.min(words.length, shown)).join('')
+    const caret = shown < words.length || (o.frame >> 2) % 2 ? '▏' : ' '
+    c.put(tx, 3, '◀', soft, card)
+    c.text(tx + 2, 3, fit(typed, room - 3) + caret, 0xfff3c4, card)
+    // the level bar
+    const label = `${Math.round(o.fraction * 100)}% to Lv ${o.level + 1}`
+    const barWidth = Math.max(6, room - [...label].length - 1)
+    for (let i = 0; i < barWidth; i++) {
+      const filled = i < Math.round(o.fraction * barWidth)
+      const shine = filled && (i - (o.frame >> 1)) % 14 === 0
+      c.put(tx + i, 4, filled ? '━' : '─', shine ? WHITE : filled ? 0xffd54f : mix(card, 0x000000, 0.25), card)
+    }
+    if (room - barWidth - 1 >= [...label].length) c.text(tx + barWidth + 1, 4, label, soft, card)
   }
-  let x = 2
-  for (const ch of o.title) {
-    if (x >= columns - 1) break
-    c.put(x, 1, ch, hsl((x * 9 + o.frame * 8) % 360, 0.9, 0.75), mid(x))
-    x += 1
+
+  // a few calm sparkles in the far corner, twinkling slowly
+  for (let i = 0; i < 3; i++) {
+    const sx = columns - 3 - i * 5
+    const sy = i % 2 === 0 ? 4 : 0
+    if (sx <= tx + 4 || sy === 4 || c.get(sx, sy) !== 0x20) continue
+    const on = Math.sin(o.frame * 0.15 + i * 2) > 0.3
+    if (on) c.put(sx, sy, '✦', mix(card, WHITE, 0.6), card)
   }
-  x += 2
-  for (const ch of o.subtitle) {
-    if (x >= columns - 1) break
-    c.put(x, 1, ch, 0xdfe6f3, mid(x))
-    x += 1
-  }
+
+  // confetti when you score
   if (o.party > 0) {
-    const bits = '✦✧*·•+'
-    for (let i = 0; i < Math.min(60, columns); i++) {
-      const cx = Math.floor(hash(i * 3.1 + o.party) * columns)
-      const cy = Math.floor(hash(i * 5.7 + o.party * 0.3) * 3)
-      const ch = bits[Math.floor(hash(i + o.party) * bits.length)] ?? '*'
-      c.put(cx, cy, ch, hsl((i * 47 + o.frame * 20) % 360, 0.95, 0.65))
+    const colors = [0xffd54f, 0xff8a80, 0x80d8ff, 0xb9f6ca, 0xffffff]
+    for (let i = 0; i < Math.min(28, columns >> 1); i++) {
+      const cx = Math.floor(hash(i * 3.1) * columns)
+      const cy = Math.floor((hash(i * 5.7) * rows + (30 - o.party) * 0.35) % (rows - 1))
+      if (cx <= artRight || [cx - 1, cx, cx + 1].some(x => c.get(x, cy) !== 0x20)) continue
+      c.put(cx, cy, i % 3 === 0 ? '✦' : i % 3 === 1 ? '•' : '·', colors[i % colors.length] ?? WHITE, card)
     }
   }
   return c

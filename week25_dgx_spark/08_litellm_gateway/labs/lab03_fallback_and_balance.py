@@ -12,7 +12,7 @@ Starts the gateway on this laptop with lab 01's config plus two demo aliases, th
      standing in for Spark A and Spark B), and counts which one the router picked.
 If your Sparks DO serve these models, the Spark answers instead, and the lab says so.
 
-Run: .venv/bin/python week25/08_litellm_gateway/labs/lab03_fallback_and_balance.py
+Run: .venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab03_fallback_and_balance.py
 """
 import collections
 import re

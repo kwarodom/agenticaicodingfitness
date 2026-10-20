@@ -129,7 +129,7 @@ docker volume rm "$(basename "$PWD")_postgres_data"      # deletes the chat hist
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab01_stack_map.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab01_stack_map.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ parse จาก `dgx-spark-playbooks@3410c65` คำสั่ง Spark ใน Step 4 จะพิมพ์รูปแบบ EXAMPLE ในโหมด DRY)
@@ -215,7 +215,7 @@ Lab 02 คือ txt2kg ใน Python หน้าจอเดียว input �
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab02_txt2kg_mini.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab02_txt2kg_mini.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ใช้ LAPTOP STAND-IN `gemma4:12b` ไม่ใช่ `llama3.1:8b` ของ txt2kg บน Spark การสกัดมีการสุ่ม (sampling) triple ของคุณจึงจะต่างไป)
@@ -243,7 +243,7 @@ Lab 02 คือ txt2kg ใน Python หน้าจอเดียว input �
 ◆ entities that appear in more than one playbook: playbook
 ◆ connected components: 11 (1 would mean every fact is reachable from every other)
 → no multi-hop path between the top hubs: the extracted facts do not share entity names
-→ wrote week25/19_multi_agent_rag_kg/.runs/triples.json and triples.cypher
+→ wrote week25_dgx_spark/19_multi_agent_rag_kg/.runs/triples.json and triples.cypher
 ```
 
 triple อ่านแล้วดูดี แต่ *กราฟ* แย่: ข้อเท็จจริง 22 ข้อกระจายเป็น 11 เกาะ และ entity เดียวที่เชื่อมสองเอกสารคือคำว่า "playbook" ที่ไร้ประโยชน์ รันสองครั้งบน Mac เครื่องนี้ได้รูปแบบเดียวกัน นี่คือบทเรียนจริงของ txt2kg และคุณเห็นมันได้ที่นี่ภายในหนึ่งนาที แทนที่จะต้องอัปโหลดไปเป็นชั่วโมงก่อน:
@@ -276,8 +276,8 @@ playbook ที่สามไม่ใช่ stack แบบ Compose แต่�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py --ask "serve a VLM for live video" --no-llm
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py --ask "serve a VLM for live video" --no-llm
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ การค้นคืนเป็นการคำนวณล้วนและได้ผลเหมือนกันทุกเครื่อง ส่วนคำตอบมาจาก LAPTOP STAND-IN)
@@ -328,7 +328,7 @@ Lab 01 ทำงานแบบออฟไลน์ ยกเว้นขั้
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 19 — กราฟเบื้องหลัง GraphRAG** เปิด `week25/19_multi_agent_rag_kg/exercises/ex19_graph_context.py` triple 13 ตัวในไฟล์อธิบายการต่อสายของ chatbot (ส่วนที่ 2) พร้อมตัวพิมพ์เล็กใหญ่ที่ปนกันและข้อมูลซ้ำแบบที่ตัวสกัดสร้างขึ้นจริง ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 19 — กราฟเบื้องหลัง GraphRAG** เปิด `week25_dgx_spark/19_multi_agent_rag_kg/exercises/ex19_graph_context.py` triple 13 ตัวในไฟล์อธิบายการต่อสายของ chatbot (ส่วนที่ 2) พร้อมตัวพิมพ์เล็กใหญ่ที่ปนกันและข้อมูลซ้ำแบบที่ตัวสกัดสร้างขึ้นจริง ในไฟล์มี `TODO` สามจุด:
 
 1. `normalise(triple)`: แปลงเป็นตัวพิมพ์เล็ก ตัดช่องว่างหัวท้าย และยุบช่องว่างภายในให้เหลือช่องเดียว
 2. `build_graph(triples)`: ตัดตัวซ้ำโดยคงลำดับที่พบครั้งแรก และสร้างเซตเพื่อนบ้าน (neighbour set) ทั้งสองทิศทาง
@@ -336,7 +336,7 @@ Lab 01 ทำงานแบบออฟไลน์ ยกเว้นขั้
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/exercises/ex19_graph_context.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/exercises/ex19_graph_context.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด)

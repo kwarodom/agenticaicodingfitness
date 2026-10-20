@@ -11,7 +11,7 @@ playbook's "~35 GB order of magnitude" first download) only with --serve. Both r
 ~/w25/logs/, so the Lab Runner's 15-minute limit never kills them. Installing apt
 packages needs sudo, so the lab prints that command for you to type.
 
-Run: .venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py [--build] [--serve]
+Run: .venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py [--build] [--serve]
 """
 import sys
 from pathlib import Path

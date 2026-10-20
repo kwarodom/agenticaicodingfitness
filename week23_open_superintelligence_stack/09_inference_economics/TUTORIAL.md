@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 09 — Inference Economics: cost/M-token, throughput per GPU & per MW, goodput
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/09_inference_economics/tutorial_server.py` → http://127.0.0.1:8108. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/09_inference_economics/tutorial_server.py` → http://127.0.0.1:8108. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Measure your own endpoint's REAL tokens/sec — first with `ollama run --verbose`, then from a streamed API call with TTFT split out
@@ -27,7 +27,7 @@ Goal: see which mode config.py auto-detected — REAL (a live endpoint answered)
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/09_inference_economics/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/09_inference_economics/tutorial_server.py
 ```
 
 Expected output:
@@ -144,7 +144,7 @@ Goal: Ch 3's lens. Same tokens/s, divided by silicon and by POWER — at datacen
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/09_inference_economics/demos/step02_throughput.py
+.venv/bin/python week23_open_superintelligence_stack/09_inference_economics/demos/step02_throughput.py
 ```
 
 Expected output (abbreviated; in REAL the `1×` row is YOUR measured tok/s):
@@ -164,7 +164,7 @@ Expected output (abbreviated; in REAL the `1×` row is YOUR measured tok/s):
 **labs/lab01_measure_cost_per_mtok.py** — streams one real generation, splits TTFT from decode rate, counts tokens (exact `usage` when the server reports it, honest ~4-chars/tok estimate otherwise), then derives $/M-token from watts + tariff + amortization and compares to a cloud list price. This is step 3+4 done properly, for ANY endpoint including path B.
 
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/09_inference_economics/labs/lab01_measure_cost_per_mtok.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/09_inference_economics/labs/lab01_measure_cost_per_mtok.py
 ```
 
 Look for: the `TTFT … tok/s decode` line, and whether tokens were `exact (usage)` or `estimated`. On path B it flags that the wall-power math is hypothetical (the cloud call itself is usage-billed). Modify it: set `LAB_WATTS`/`LAB_KWH_PRICE` to your real wall numbers, then change `PROMPT` to something 3× longer and watch $/Mtok stay put while TTFT grows — cost is per token, latency is per request.
@@ -172,7 +172,7 @@ Look for: the `TTFT … tok/s decode` line, and whether tokens were `exact (usag
 **labs/lab02_goodput_bench.py** — Ch 4 hands-on: four self-verifying micro-tasks (17×23, string reversal, primality, a capital) run live, get graded by a word-boundary match on the exact expected answer (terse or chatty replies both count; `<think>` traces stripped), and produce a MEASURED success rate → `$/success = $/attempt ÷ success_rate`, plus a sensitivity table for 35%/70%/95% success.
 
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/09_inference_economics/labs/lab02_goodput_bench.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/09_inference_economics/labs/lab02_goodput_bench.py
 ```
 
 Look for: any `✗ FAIL` row (small models often miss the reversal), and how one failure moves $/SUCCESS while $/attempt is unchanged. Modify it: add a fifth task your model will plausibly fail (e.g. "How many r's in 'strawberry'? Reply with only the number." → `3`) and re-run — watch goodput degrade with the success rate.
@@ -180,7 +180,7 @@ Look for: any `✗ FAIL` row (small models often miss the reversal), and how one
 **labs/lab03_llm_judge.py** — Ch 5 hands-on, one level deeper than demos/step04_evaluate.py (which judges a single case live): the live endpoint judges ALL five golden answers, and each verdict is compared to ground truth. You get two scores — the golden-set score (how good the answers were) and JUDGE AGREEMENT (how good the judge is), gated at 80%.
 
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/09_inference_economics/labs/lab03_llm_judge.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/09_inference_economics/labs/lab03_llm_judge.py
 ```
 
 Look for: whether the judge FAILs `2 + 2 = 5` and `17 = 3 × 6` — a weak judge PASSes them, agreement drops below the gate, and the lab tells you not to trust any goodput number built on it. Modify it: swap `config.MODEL` for a smaller judge (`DGX_MODEL=qwen3:4b` env) and compare agreement — you just measured why judge choice is an economics decision.

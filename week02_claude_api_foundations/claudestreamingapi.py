@@ -1,5 +1,5 @@
-# PYTHON — streaming.py
 #!/usr/bin/env python3
+# PYTHON — streaming.py
 
 import os
 from dotenv import load_dotenv
@@ -12,7 +12,7 @@ client = anthropic.Anthropic()
 # === Streaming — tokens appear in real-time ===
 print("AI: ", end="")
 with client.messages.stream(
-    model="claude-sonnet-4-5-20250929",
+    model="claude-sonnet-5",
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Explain agentic AI in 3 sentences."}

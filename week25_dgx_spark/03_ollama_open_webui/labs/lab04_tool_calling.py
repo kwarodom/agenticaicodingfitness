@@ -9,7 +9,7 @@ model writes the final answer. Uses the Spark's Ollama when it answers, otherwis
 laptop stand-in (labelled). Checks /api/show first: only models with the "tools"
 capability can do this.
 
-Run: .venv/bin/python week25/03_ollama_open_webui/labs/lab04_tool_calling.py
+Run: .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab04_tool_calling.py
 """
 import json
 import sys

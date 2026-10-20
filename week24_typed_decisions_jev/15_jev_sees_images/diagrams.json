@@ -1,0 +1,70 @@
+{
+  "architecture": {
+    "title": "Jev 1.14 sees the photo itself — the policy doesn't change",
+    "caption": "Two evidence paths into the same typed questions. Module 13's pipeline (a vision LLM writes text, Jev judges the text) stays the production path and the one that can read exact numbers. Module 15's direct path sends the photo to Jev as an asset under the TypeSafe-Danger-Zone-Images header: ~1 s, ~2.7k tokens, and it can compare against reference pictures and return a Box. Both feed one policy; execute stays False.",
+    "lanes": [
+      {"id": "media", "label": "Media (synthetic)"},
+      {"id": "code", "label": "Your code — prepare · gate · policy"},
+      {"id": "jev", "label": "Jev 1.14 (danger zone)"},
+      {"id": "llm", "label": "Vision LLM (Module 13 path)"},
+      {"id": "out", "label": "People"}
+    ],
+    "nodes": [
+      {"id": "photo", "label": "Photo / CCTV frame", "lane": "media", "sub": "leak · plant room · thermostat", "accent": "cyan"},
+      {"id": "prep", "label": "image()", "lane": "code", "sub": "upright · ≤1568 px · content-hash ref", "accent": "green"},
+      {"id": "jev", "label": "state + assets + questions", "lane": "jev", "sub": "choice · noul · score · box", "accent": "violet"},
+      {"id": "see", "label": "see()", "lane": "llm", "sub": "describes in words (2–4 s)", "accent": "amber"},
+      {"id": "jevtext", "label": "Jev on the text", "lane": "jev", "sub": "same questions, `description`", "accent": "violet"},
+      {"id": "gate", "label": "Gate + policy", "lane": "code", "sub": "noul ≥ 0.8 before trusting a box", "accent": "green"},
+      {"id": "crop", "label": "Crop for review", "lane": "out", "sub": ".runs/*_box.jpg · execute: False", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "photo", "to": "prep", "label": "file"},
+      {"from": "prep", "to": "jev", "label": "direct · header on", "animated": true},
+      {"from": "photo", "to": "see", "label": "pipeline"},
+      {"from": "see", "to": "jevtext", "label": "text"},
+      {"from": "jev", "to": "gate", "label": "typed answers + box", "animated": true},
+      {"from": "jevtext", "to": "gate", "label": "typed answers"},
+      {"from": "gate", "to": "crop", "label": "proposal"}
+    ]
+  },
+  "sequence": {
+    "title": "Lab 15-3 — find the puddle, and refuse a box around nothing",
+    "caption": "Measured live on 2026-10-17 with jev-1.14.0. One request carries the Noul gate and the Box. A second request asks for a fire extinguisher that is not in the photo: Box still returns four edges, the gate (0.09) tells code to ignore them.",
+    "actors": [
+      {"id": "lab", "label": "lab03 (your code)"},
+      {"id": "jev", "label": "Jev 1.14"},
+      {"id": "pil", "label": "Pillow"}
+    ],
+    "steps": [
+      {"from": "lab", "to": "jev", "label": "photo + noul 'puddle?' + box 'the puddle'", "kind": "call"},
+      {"from": "jev", "to": "lab", "label": "0.97 · box 0.15–0.76 × 0.67–0.95 · conf 0.69 (≈0.9 s)", "kind": "return"},
+      {"from": "lab", "to": "pil", "label": "fractions × 1152×768 → crop + red outline", "kind": "call"},
+      {"from": "pil", "to": "lab", "label": ".runs/puddle_box.jpg", "kind": "return"},
+      {"from": "lab", "to": "jev", "label": "photo + noul 'extinguisher?' + box", "kind": "call"},
+      {"from": "jev", "to": "lab", "label": "0.09 · a tiny box anyway · conf 0.34", "kind": "return"},
+      {"from": "lab", "to": "lab", "label": "gate < 0.80 → ignore the box", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Direct vs pipeline — time per photo",
+      "type": "bars",
+      "unit": "seconds",
+      "labels": ["leak_under_ahu", "plantroom_smoke", "plantroom_normal"],
+      "series": [
+        {"name": "pipeline (gemini-3.5-flash + Jev text)", "values": [4.2, 3.7, 4.1], "color": "amber"},
+        {"name": "direct (Jev 1.14 on the photo)", "values": [1.1, 0.7, 0.8], "color": "violet"}
+      ],
+      "caption": "labs/lab04_direct_vs_pipeline.py on 2026-10-17, single observations. Both paths chose the same queue on all three photos; the pipeline's safety on the normal room was 0.47 (close to the line), the direct path's 0.05."
+    },
+    {
+      "title": "Input tokens per call",
+      "type": "hbars",
+      "unit": "tokens",
+      "labels": ["short text call (Modules 01–05)", "1 photo + 2 questions", "photo + 2 reference pictures", "criteria with 3 example pictures", "47k-token log (long context)"],
+      "series": [{"name": "input tokens", "values": [180, 2784, 6702, 9137, 46997], "color": "cyan"}],
+      "caption": "Images bill as ordinary input tokens ($0.042 per million). Every place a reference appears adds the image again. Measured by Labs 15-1, 15-2 and 15-5."
+    }
+  ]
+}

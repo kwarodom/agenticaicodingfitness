@@ -3,7 +3,7 @@
 
 The research tutorial's Part 6, exercise 5. A claim is not evidence. Evidence is a command someone else can run,
 plus what its output proves. Fill in the three TODOs, save, then run:
-    .venv/bin/python week26/08_capstone_alto_ops_claw/exercises/ex08_evidence_pack.py
+    .venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/exercises/ex08_evidence_pack.py
 
 The checker is free and offline. Stuck? Compare with exercises/solutions/.
 """

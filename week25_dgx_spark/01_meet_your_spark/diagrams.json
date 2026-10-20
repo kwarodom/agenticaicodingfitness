@@ -1,7 +1,7 @@
 {
   "architecture": {
     "title": "How this course reaches your Spark — the laptop drives, the Spark does the work",
-    "caption": "The Lab Runner and the labs run on your laptop. Commands travel over SSH (BatchMode, key login) to Spark A, and to Spark B in the two-Spark modules. HTTP labs call the serving engines' OpenAI-compatible ports directly over the tailnet, or through an ssh -L tunnel for services bound to localhost (DGX Dashboard, Ollama). Tokens live in week25/.env.local and never reach the browser.",
+    "caption": "The Lab Runner and the labs run on your laptop. Commands travel over SSH (BatchMode, key login) to Spark A, and to Spark B in the two-Spark modules. HTTP labs call the serving engines' OpenAI-compatible ports directly over the tailnet, or through an ssh -L tunnel for services bound to localhost (DGX Dashboard, Ollama). Tokens live in week25_dgx_spark/.env.local and never reach the browser.",
     "lanes": [
       {"id": "laptop", "label": "Your laptop"},
       {"id": "net", "label": "Network"},

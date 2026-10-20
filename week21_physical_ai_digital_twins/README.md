@@ -100,8 +100,8 @@ Cross-references inside the apps ("… App 7") use these same numbers.
 ## Quick start (any app)
 
 ```bash
-uv pip install -r week21/01_physical_ai_landscape/requirements.txt
-.venv/bin/python week21/01_physical_ai_landscape/tutorial_server.py   # → http://127.0.0.1:8200
+uv pip install -r week21_physical_ai_digital_twins/01_physical_ai_landscape/requirements.txt
+.venv/bin/python week21_physical_ai_digital_twins/01_physical_ai_landscape/tutorial_server.py   # → http://127.0.0.1:8200
 ```
 
 Open the URL, use the **🔌 Connection** panel for LLM chapters (local / tunnel / cloud), and run the

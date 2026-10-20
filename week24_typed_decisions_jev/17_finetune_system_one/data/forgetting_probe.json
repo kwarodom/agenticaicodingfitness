@@ -1,0 +1,20 @@
+{
+  "about": "A different job the fine-tune never trained on: is this review positive, negative or mixed? 12 synthetic reviews (8 English, 4 Thai), hand-labelled on 2026-10-17. Lab 17-6 asks the base and the fine-tuned models the same question, to see whether specialising on tickets broke a general skill (catastrophic forgetting).",
+  "question": {"type": "choice", "instructions": "What is the overall sentiment of `message`?",
+               "criteria": {"positive": "the writer is happy overall", "negative": "the writer is unhappy overall",
+                            "mixed": "clearly both good and bad points"}},
+  "items": [
+    {"text": "Fantastic breakfast and the staff remembered our names. Would come back tomorrow.", "label": "positive"},
+    {"text": "The room was dirty, the Wi-Fi never worked and nobody answered the phone.", "label": "negative"},
+    {"text": "Great pool, but the walls are so thin we heard every word next door.", "label": "mixed"},
+    {"text": "Best sleep I've had in months, the bed is incredible.", "label": "positive"},
+    {"text": "Overpriced and the food arrived cold twice.", "label": "negative"},
+    {"text": "Lovely view and friendly reception, though checkout took forty minutes.", "label": "mixed"},
+    {"text": "Absolutely spotless, quiet and close to the station. Perfect for work trips.", "label": "positive"},
+    {"text": "I will never stay here again after the way the manager spoke to us.", "label": "negative"},
+    {"text": "พนักงานน่ารักมาก ห้องสะอาด ประทับใจสุดๆ", "label": "positive"},
+    {"text": "ห้องมีกลิ่นอับ แอร์ไม่เย็น ไม่คุ้มราคาเลย", "label": "negative"},
+    {"text": "อาหารเช้าอร่อย แต่ที่จอดรถน้อยมาก หาที่จอดยาก", "label": "mixed"},
+    {"text": "บริการช้ามาก รอเช็คอินเกือบชั่วโมง", "label": "negative"}
+  ]
+}

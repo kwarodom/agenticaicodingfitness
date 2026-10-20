@@ -57,7 +57,7 @@ asyncio.run(main())
 - Tools from a server are namespaced `mcp__<server-name>__<tool>`. `allowed_tools` is your safety gate — the agent can only touch what you permit.
 - The Agent SDK runs the *whole agent loop* for you (the loop you built by hand in the `agent-loops` skill) — you just supply the prompt and the servers.
 
-> 📁 Class repo: `week7/mcpserver.py` (remote docs server), `week7/mcpfilesystem.py` (local filesystem server), `week7/agent.py` (plain chat loop for comparison).
+> 📁 Class repo: `week07_mcp_and_skills/mcpserver.py` (remote docs server), `week07_mcp_and_skills/mcpfilesystem.py` (local filesystem server), `week07_mcp_and_skills/agent.py` (plain chat loop for comparison).
 
 ### MCP vs. hand-written tools
 | Hand-written tools (Week 3) | MCP servers (Week 7) |
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     mcp.run()   # speaks MCP over stdio
 ```
 
-> 📁 Class repo: `week15/kg_mastery/part3_graphrag/05_fastmcp_server.py` — a full FastMCP server (3 tools + a `graph://schema` resource) with a Claude Desktop config snippet at the bottom.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part3_graphrag/05_fastmcp_server.py` — a full FastMCP server (3 tools + a `graph://schema` resource) with a Claude Desktop config snippet at the bottom.
 
 **Three principles that bite if you ignore them:**
 
@@ -158,7 +158,7 @@ MCP gives a model real reach — so the attack surface is real too (30+ CVEs and
 
 **The context-pollution angle.** Loading every tool from many servers also *pollutes context* — seven servers can eat ~67K tokens before you ask anything. **Deferred tool loading** (the ToolSearch pattern) hides tools until needed, then loads only the 3–5 relevant ones per query — a large token cut *and* better tool selection.
 
-> 📁 Class repo: `week7/claudeapi-tool-search.py` — local Python tools (`search_web`, `get_current_time`) wired into a Claude tool-use loop, the hand-written baseline that the deferred/MCP approach scales up from.
+> 📁 Class repo: `week07_mcp_and_skills/claudeapi-tool-search.py` — local Python tools (`search_web`, `get_current_time`) wired into a Claude tool-use loop, the hand-written baseline that the deferred/MCP approach scales up from.
 
 ---
 
@@ -189,7 +189,7 @@ description: "Write a clear pull-request description from the staged git diff. U
 
 The **frontmatter `description` is the trigger** — write it as "what it does + when to use it," because that text is how the model decides to invoke the skill. The body is the expertise.
 
-> 📁 Class repo: `week7/skill.md` — a PR-description skill built in class.
+> 📁 Class repo: `week07_mcp_and_skills/skill.md` — a PR-description skill built in class.
 
 ### Skills → Plugins → Marketplaces
 - **Skill** = one folder with a `SKILL.md`.
@@ -290,7 +290,7 @@ It's one slice of a bigger picture — **six layers of context** the model sees 
 - **Preferred / Avoid code pairs** — showing both is the single most effective way to teach a model your taste.
 - Be specific: *"Never call the Prisma client directly — RLS lives in `/lib/db/`"* beats *"follow DB best practices."*
 
-> 📁 Class repo: `week6/CLAUDE.md` and `AgentMemoryDemo/CLAUDE.md` — real project-memory files (Project Overview → Code Conventions → Important Context → File Structure → Commands) you can copy as a starting template.
+> 📁 Class repo: `week06_fullstack_agent_app/CLAUDE.md` and `AgentMemoryDemo/CLAUDE.md` — real project-memory files (Project Overview → Code Conventions → Important Context → File Structure → Commands) you can copy as a starting template.
 
 ---
 

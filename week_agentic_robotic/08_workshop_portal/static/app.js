@@ -34,8 +34,8 @@ const llmProfiles = {
   },
   custom: {
     label: "Custom",
-    model: "",
-    models: [],
+    model: "openthaigpt-thaillm-8b-instruct-v7.2",
+    models: ["openthaigpt-thaillm-8b-instruct-v7.2"],
     help: "Use an OpenAI-compatible endpoint such as Ollama, LM Studio, or another gateway.",
   },
 };
@@ -55,11 +55,11 @@ const llmModels = Object.fromEntries(
     savedLlmPreferences.models?.[provider] ?? profile.model,
   ]),
 );
-const llmBaseUrls = { custom: savedLlmPreferences.baseUrls?.custom || "" };
+const llmBaseUrls = { custom: savedLlmPreferences.baseUrls?.custom || "http://thaillm.or.th/api/v1" };
 const llmKeys = { openrouter: "", openai: "", anthropic: "", glm: "", custom: "", ...storedJson(llmSecretsKey) };
 let llmProvider = llmProfiles[savedLlmPreferences.provider]
   ? savedLlmPreferences.provider
-  : "openrouter";
+  : "custom";
 let dialogLlmProvider = llmProvider;
 
 const keyMap = new Map();

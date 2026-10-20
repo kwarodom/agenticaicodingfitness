@@ -6,7 +6,7 @@ judges the whole golden set with your live endpoint, computes the golden-set
 score, and — the hands-on twist — compares every verdict to a known ground
 truth to measure JUDGE AGREEMENT. An eval gate is only as good as its judge.
 
-Run:  cd <repo root> && .venv/bin/python week23/09_inference_economics/labs/lab03_llm_judge.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/09_inference_economics/labs/lab03_llm_judge.py
 """
 from __future__ import annotations
 

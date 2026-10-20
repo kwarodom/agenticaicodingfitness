@@ -5,7 +5,7 @@ Goal: tie CP1–CP5 into one end-to-end story — a single hotel maintenance
 work-order that is BOTH long-running (durable, pause/resume) AND distributed
 (delegates across a service boundary to the vendor via A2A, and to an in-house
 energy agent in-process). This is "L3 — Fleet Orchestration": the layer above
-the in-process MAS from week15.
+the in-process MAS from week15_production_graphrag.
 
 The architecture (MCP vertical · A2A horizontal):
 
@@ -20,9 +20,9 @@ The whole flow runs OFFLINE: durable state in SQLite, the vendor and LLM mocked.
 Each step prints what happened and how the work-order's persisted step advances
 OPEN → DIAGNOSED → AWAITING_PART → PART_DELIVERED → REPAIRED → CLOSED.
 
-(Week 17 capstone · long-running agents + A2A · maps to week15 L3 fleet layer)
+(Week 17 capstone · long-running agents + A2A · maps to week15_production_graphrag L3 fleet layer)
 
-Run:  python week17/checkpoints/checkpoint6_fleet.py
+Run:  python week17_long_running_distributed_agents/checkpoints/checkpoint6_fleet.py
 """
 import sys
 from pathlib import Path
@@ -126,7 +126,7 @@ def main():
     step("   • Distributed: the vendor was reached HORIZONTALLY via A2A (its card +")
     step("     task lifecycle + input-required), the energy agent VERTICALLY in-")
     step("     process. MCP would be each agent's link down to its own tools/data.")
-    step("   • This is the L3 fleet layer above week15's single-process hotel MAS.")
+    step("   • This is the L3 fleet layer above week15_production_graphrag's single-process hotel MAS.")
 
 
 if __name__ == "__main__":

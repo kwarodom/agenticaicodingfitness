@@ -4,7 +4,7 @@
 A teammate added the hotel concept to the playbook's data.toml. Four mistakes: some can stop sd-scripts
 before it starts, others let it train for hours and produce a LoRA you cannot prompt.
 Fix the four TODOs in DATA_TOML, save, then run:
-    .venv/bin/python week25/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py
+    .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py
 
 The checker is free and offline: it parses the text with Python's tomllib and checks every image_dir
 against the real folders (lab 03's flux_data/ and the playbook's assets/flux_data/).
@@ -79,7 +79,7 @@ def main() -> None:
                 f"TODO 2: trigger {dup} is used by two concepts — the LoRA would blend the toy and the GPU")
     missing = [s["image_dir"] for s in subsets if folder(s["image_dir"]) is None]
     ok &= check(not missing, "TODO 3: every image_dir exists",
-                f"TODO 3: {missing} not found — ls week25/12_vlm_flux_finetune/flux_data (run labs/lab03 first)")
+                f"TODO 3: {missing} not found — ls week25_dgx_spark/12_vlm_flux_finetune/flux_data (run labs/lab03 first)")
     keep = cfg["general"].get("keep_tokens", 0)
     bad = [s["class_tokens"] for s in subsets if len(s.get("class_tokens", "").split()) != keep]
     ok &= check(not bad, f"TODO 4: every class_tokens has {keep} words: trigger + class",

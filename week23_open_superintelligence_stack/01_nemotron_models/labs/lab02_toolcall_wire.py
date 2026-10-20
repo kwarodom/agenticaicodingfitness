@@ -7,7 +7,7 @@ ACTUALLY on the wire: the tool schema you send, the assistant message with
 result you append, and the final answer. Once you can read these four JSON
 shapes, every agent framework stops being magic.
 
-Run:  cd <repo root> && .venv/bin/python week23/01_nemotron_models/labs/lab02_toolcall_wire.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab02_toolcall_wire.py
 No endpoint? Prints the real commands + a clearly-labeled sample transcript.
 """
 from __future__ import annotations

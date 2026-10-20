@@ -1,7 +1,7 @@
 # Week 18 — Sovereign AI at the Edge (interactive tutorial + real local demos)
 #
 # Install into the repo's uv-managed .venv (Python 3.13):
-#     uv pip install -r week18/sovereign_ai_edge/requirements.txt
+#     uv pip install -r week18_self_evolving_sovereign_edge/sovereign_ai_edge/requirements.txt
 #
 # The demos call a LOCAL OpenAI-compatible endpoint (Ollama by default) — no
 # cloud API key, no cloud cost. You also need a local model server running:

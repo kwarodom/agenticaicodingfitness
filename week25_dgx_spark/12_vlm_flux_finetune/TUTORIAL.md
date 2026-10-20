@@ -74,7 +74,7 @@ Lab 01 inspects the playbook's sample images and builds a hotel version: *is thi
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab01_vlm_datasets.py
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab01_vlm_datasets.py
 ```
 
 **Expected output** (steps 1–3, captured on this Mac)
@@ -89,7 +89,7 @@ Lab 01 inspects the playbook's sample images and builds a hotel version: *is thi
 │ wildfire/4.jpg    350×350  RGB   15 KB
 …
 ▣ STEP 2 · build the hotel version: room_check/{train,test}/{ready,needs_attention}/ (SYNTHETIC stand-ins)
-→ wrote 20 PNGs under week25/12_vlm_flux_finetune/data/room_check
+→ wrote 20 PNGs under week25_dgx_spark/12_vlm_flux_finetune/data/room_check
 …
 ▣ STEP 3 · validate with imagefolder's rules — and what the trainer does with the folder names
 ✓ images: splits ['train'] · the same classes in every split ['nowildfire', 'wildfire']
@@ -154,8 +154,8 @@ The playbook's path is: clone the repo, build the `vlm_demo` image, start it wit
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py
-SPARK_APPLY=1 .venv/bin/python week25/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py --steps 5
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab02_vlm_train_on_spark.py --steps 5
 ```
 
 What you run yourself, once, on the Spark (these are the playbook's Steps 2–3 and 5.1–5.2, with the clone path corrected):
@@ -214,7 +214,7 @@ Lab 03 reads the playbook's real `data.toml` and images, works out the training 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab03_flux_dataset.py
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab03_flux_dataset.py
 ```
 
 **Expected output** (captured on this Mac)
@@ -279,8 +279,8 @@ models/
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py
-SPARK_APPLY=1 .venv/bin/python week25/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py --epochs 25 --hotel
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py --epochs 25 --hotel
 ```
 
 **Expected output** (captured on this Mac, DRY mode)
@@ -331,7 +331,7 @@ Labs 01 and 03 run fully on the laptop. Labs 02 and 04 drive the Spark over SSH,
 
 ## Try it yourself
 
-**Exercise 12 — fix a broken `data.toml`.** Open `week25/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py`. A teammate added the hotel concept and made four mistakes:
+**Exercise 12 — fix a broken `data.toml`.** Open `week25_dgx_spark/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py`. A teammate added the hotel concept and made four mistakes:
 
 1. `resolution` is text, not a number.
 2. Two concepts share a trigger word.
@@ -342,7 +342,7 @@ The checker is offline. It parses the text with `tomllib` and checks every folde
 
 ```bash
 # on: laptop
-.venv/bin/python week25/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py
+.venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/exercises/ex12_fix_data_toml.py
 ```
 
 **Expected output** (once all four TODOs are fixed; captured on this Mac)

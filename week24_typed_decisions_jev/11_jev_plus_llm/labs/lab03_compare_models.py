@@ -6,7 +6,7 @@ Jev routes each message ONCE; then every available provider writes the same repl
 and whether a Thai guest got a Thai answer. Single observations — NOT a benchmark,
 and no prices: they differ per provider and change often (see each pricing page).
 
-Run: .venv/bin/python week24/11_jev_plus_llm/labs/lab03_compare_models.py
+Run: .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab03_compare_models.py
 """
 import sys
 from concurrent.futures import ThreadPoolExecutor

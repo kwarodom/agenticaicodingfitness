@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """Lab 10-3 · Run the shared benchmark — Jev side only — and read the report.
 
-Runs week24/jev_lab/jev_laya_benchmark.py with
+Runs week24_typed_decisions_jev/jev_lab/jev_laya_benchmark.py with
     --providers jev --live-jev --limit 28
 on the 28 fictional smoke rows (all 7 lab schemas, EN/TH/mixed): 28 calls,
 ≈ 25k input tokens, ≈ $0.001, ~15 s. Laya is NOT needed for this run.
 
-Output goes to a NEW folder under week24/10_jev_vs_laya/.runs/ (the runner
+Output goes to a NEW folder under week24_typed_decisions_jev/10_jev_vs_laya/.runs/ (the runner
 refuses to overwrite a previous run — results are evidence, not scratch).
 
 DRY mode: nothing is sent; the lab prints the recorded results of a real run.
 
-Run: .venv/bin/python week24/10_jev_vs_laya/labs/lab03_jev_only_benchmark.py
+Run: .venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab03_jev_only_benchmark.py
 """
 import json
 import os

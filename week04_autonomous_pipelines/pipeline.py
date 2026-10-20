@@ -34,7 +34,7 @@ class ResearchPipeline:
             max_tokens=max_tokens,
             messages=[{"role": "user", "content": prompt}]
         )
-        return resp.content[0].text
+        return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text")
     
     def _parse_json(self, text):
         """Helper: Extract and parse JSON from Claude's response"""

@@ -1,7 +1,7 @@
 # Week 23 content audit — findings (report only, nothing fixed)
 
-Audit date: 2026-08-03. Scope: `week23/README.md` table vs each app's actual code; missing
-per-app READMEs; inconsistencies. All paths relative to `week23/`.
+Audit date: 2026-08-03. Scope: `week23_open_superintelligence_stack/README.md` table vs each app's actual code; missing
+per-app READMEs; inconsistencies. All paths relative to `week23_open_superintelligence_stack/`.
 
 ## 1. Port table vs reality — ✅ all 12 match
 
@@ -46,24 +46,24 @@ Correct in 05 (:344, AIQ_GUIDE_PORT), 09 (:343, ECON_GUIDE_PORT), 10 (:338, GYM_
 
 ## 3. Stale "Week 19 / sovereign_dgx / port 8092" copy-paste leftovers
 
-The apps were forked from `week19/sovereign_dgx` and 10 of 12 still carry its launch
+The apps were forked from `week19_sovereign_ai_dgx/sovereign_dgx` and 10 of 12 still carry its launch
 instructions in the module docstring — the printed launch path and port are wrong for Week 23:
 
 - `tutorial_server.py` lines 15–18 ("Launch (auto-picks a free port if 8092 is taken):
-  `.venv/bin/python week19/sovereign_dgx/tutorial_server.py` → http://127.0.0.1:8092") in:
+  `.venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py` → http://127.0.0.1:8092") in:
   01 (:15–18), 02 (:15–18), 03 (:15–18), 04 (:15–18), 06 (:15–18), 07 (:15–18), 08 (:15–18),
   10 (:15–18), 11 (:15–18), 12 (:15–18). Only 05 (:19–22, correct AIQ_GUIDE_PORT=8104 line)
   and 09 (:19–22, ECON_GUIDE_PORT=8108) were updated.
-- Stale path comment `# …/week19/sovereign_dgx` on `PKG = …` in every `tutorial_server.py`
+- Stale path comment `# …/week19_sovereign_ai_dgx/sovereign_dgx` on `PKG = …` in every `tutorial_server.py`
   (line 37; 05 and 09 at line 41) — all 12 apps.
 - Every `config.py` docstring still opens with "Shared configuration for the **Week 19**
   Sovereign AI on DGX demos" (config.py:2 in all 12 apps) and has the stale
-  `# …/week19/sovereign_dgx` comment at config.py:204 (all 12).
+  `# …/week19_sovereign_ai_dgx/sovereign_dgx` comment at config.py:204 (all 12).
 - Generic docstring title: 10 of 12 `tutorial_server.py` line 2 still read
   "Interactive, explainable tutorial for **Sovereign AI on a DGX**" instead of naming the app
   (only 05 "NVIDIA AI-Q Open Agent Blueprint" and 09 "AI Performance & Evaluation" are
   customized).
-- `week23/.gitignore:1` comment says "Week 19 — generated / runtime artifacts".
+- `week23_open_superintelligence_stack/.gitignore:1` comment says "Week 19 — generated / runtime artifacts".
 
 ## 4. Missing per-app README.md — 5 of 12 apps
 
@@ -103,8 +103,8 @@ globs for `view.py`/`sim.py`.
 
 ## 8. README references a folder that does not exist locally
 
-`README.md:143` cites the source deck "photographed, in `week23/reference/`", but
-`week23/reference/` is absent and explicitly gitignored (`week23/.gitignore:10` —
+`README.md:143` cites the source deck "photographed, in `week23_open_superintelligence_stack/reference/`", but
+`week23_open_superintelligence_stack/reference/` is absent and explicitly gitignored (`week23_open_superintelligence_stack/.gitignore:10` —
 "reference only, not for distribution"). Intentional, but a fresh clone follows a dead
 reference; a parenthetical "(not distributed)" would help.
 

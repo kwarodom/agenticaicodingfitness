@@ -11,7 +11,7 @@ It never runs the installer. The runner does not run `curl | bash` for you: copy
 into the ⌨ terminal yourself (# on: spark). The last step asks the Spark the L1.2 pass question: does
 `nemoclaw --version` answer?
 
-Run: .venv/bin/python week26/02_first_claw/labs/lab02_2_install_line.py
+Run: .venv/bin/python week26_nemoclaw_claws/02_first_claw/labs/lab02_2_install_line.py
 """
 import sys
 from pathlib import Path
@@ -69,7 +69,7 @@ lines = {}
 for name, choice in VARIANTS:
     lines[name] = ik.build(**choice)
     (RUNS / f"install_{slug(name)}.sh").write_text(lines[name] + "\n", encoding="utf-8")
-note(f"wrote {len(lines)} lines to week26/02_first_claw/.runs/install_*.sh — bash -n parses them, it never runs them")
+note(f"wrote {len(lines)} lines to week26_nemoclaw_claws/02_first_claw/.runs/install_*.sh — bash -n parses them, it never runs them")
 syn = laptop(["bash", "-c", 'for f in install_*.sh; do bash -n "$f" && echo "syntax ok  $f"; done'], cwd=RUNS,
              show='for f in .runs/install_*.sh; do bash -n "$f" && echo "syntax ok  $f"; done')
 rows = []

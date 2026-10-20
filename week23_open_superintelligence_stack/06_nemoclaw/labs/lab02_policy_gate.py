@@ -9,7 +9,7 @@ what a NAIVE runtime would do (execute everything) vs what the GATED runtime doe
 red-team replay guarantees you see denials even offline.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/06_nemoclaw/labs/lab02_policy_gate.py
+      .venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/labs/lab02_policy_gate.py
 """
 from __future__ import annotations
 

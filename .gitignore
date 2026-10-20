@@ -12,11 +12,11 @@ final_report.md
 research_report.md
 
 # Week 17 durable-session SQLite stores (generated at runtime)
-week17/week17_sessions.db
-week17/hr_onboarding/onboarding_sessions.db
+week17_long_running_distributed_agents/week17_sessions.db
+week17_long_running_distributed_agents/hr_onboarding/onboarding_sessions.db
 
 # Week 18 self-evolving agent runtime state (generated at runtime)
-week18/self_evolving_agent/memory/agent_state.db
+week18_self_evolving_sovereign_edge/self_evolving_agent/memory/agent_state.db
 
 # Week 9 / Week 11 MAS exercise runtime outputs (LLM-generated, non-deterministic)
 ex*_output.md
@@ -32,7 +32,7 @@ dgx-spark-playbooks/
 # ── never publish: secrets, AltoTech-confidential material, personal/local files ──
 # local Claude Code settings (can hold API keys / permissions) — also in personal global ignore
 **/.claude/settings.local.json
-# any env file except checked-in templates (e.g. week23/connect-remote.env names the private tailnet)
+# any env file except checked-in templates (e.g. week23_open_superintelligence_stack/connect-remote.env names the private tailnet)
 *.env
 !*.env.example
 # alto-slide-generator build output: Greenify GTM / business-model deck (confidential)
@@ -44,7 +44,7 @@ temp/
 **/.sandbox/
 week_agentic_robotic/02_record_replay/trajectories/
 # personal notes, not course content
-week21/test.html
+week21_physical_ai_digital_twins/test.html
 
 # Jev Lab Runner 🔑 Keys dialog output (real keys)
 **/.env.local

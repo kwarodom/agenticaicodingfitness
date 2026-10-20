@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "hear",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-transcribe",
+  "media": "voicemail_flood_en.wav"
+ },
+ "response": {
+  "text": "Hi, this is the guest in room 1507. The bathroom is flooding. There's water all over the floor, and it's coming under the door into the bedroom. Please send someone right away!",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-transcribe",
+  "usage": {
+   "input_tokens": 113,
+   "output_tokens": 42
+  },
+  "latency_ms": 2537.0
+ }
+}

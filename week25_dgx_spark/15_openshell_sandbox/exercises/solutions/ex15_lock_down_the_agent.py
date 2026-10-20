@@ -3,7 +3,7 @@
 
 After setup the agent needs no package index: only its files and its model. Fill in the three TODOs,
 save, then run:
-    .venv/bin/python week25/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py
+    .venv/bin/python week25_dgx_spark/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py
 
 The checker is offline and free. It validates your policy with policykit (the playbook rules), then
 replays twelve actions through policykit.decide — a course-made teaching model of OpenShell's

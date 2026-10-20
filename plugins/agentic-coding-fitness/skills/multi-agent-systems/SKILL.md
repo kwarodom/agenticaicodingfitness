@@ -107,7 +107,7 @@ print(crew.kickoff())
 
 The **role + goal + backstory** is just a well-structured system prompt per agent. Output of each task flows into the next.
 
-> 📁 Class repo: `week9/ex1_crewai_sequential.py`
+> 📁 Class repo: `week09_multi_agent_systems/ex1_crewai_sequential.py`
 
 ---
 
@@ -149,7 +149,7 @@ app.invoke({"ticket_text": "I don't recognize a charge on my invoice."})
 
 This is centralized planning / BDI-style deliberation: decide **what** (classify) then **how** (route to specialist).
 
-> 📁 Class repo: `week9/ex2_LangGraphSupportGraph.py`
+> 📁 Class repo: `week09_multi_agent_systems/ex2_LangGraphSupportGraph.py`
 
 ---
 
@@ -187,7 +187,7 @@ asyncio.run(run_audit())   # all 5 finish in ~the time of the slowest, not the s
 
 This is **distributed sensing + stigmergy**: agents work independently and write to shared results; an aggregator synthesizes.
 
-> 📁 Class repo: `week9/ex3_ParallelSwarm.py`
+> 📁 Class repo: `week09_multi_agent_systems/ex3_ParallelSwarm.py`
 
 ---
 
@@ -244,7 +244,7 @@ This connects straight to `production-and-observability` (cost + tracing) — th
 
 There's no "best" — pick by the shape of your problem. Stuck choosing? See the `models-and-patterns` skill.
 
-> 📁 Class workshop PDFs: `week9/week9_2_multi_agent_theory_workshop.pdf` (BDI, FIPA, coordination theory), `week9/week9_3_mas_coding_exercises.pdf`.
+> 📁 Class workshop PDFs: `week09_multi_agent_systems/week9_2_multi_agent_theory_workshop.pdf` (BDI, FIPA, coordination theory), `week09_multi_agent_systems/week9_3_mas_coding_exercises.pdf`.
 
 ---
 
@@ -275,7 +275,7 @@ supervisor = create_react_agent(
 
 If you use the dedicated `create_supervisor()` helper instead, the key knob is **`output_mode`**: `full_history` streams every agent's messages (the audit trail you need for compliance / debugging) while `last_message` returns only the final answer (much cheaper). Choose by whether you must *explain* the reasoning later. **Nested two-level hierarchy** = compile a research-team supervisor and a writing-team supervisor as named subgraphs, then pass them as "agents" to a top-level supervisor.
 
-> 📁 Class repo: `week10/notebooks/02_supervisor.py` — the tool-calling supervisor routing tickets to 3 specialists.
+> 📁 Class repo: `week10_production_observability/notebooks/02_supervisor.py` — the tool-calling supervisor routing tickets to 3 specialists.
 
 ### Checkpointers — time-travel debugging + HITL
 
@@ -301,7 +301,7 @@ app.invoke(Command(resume={"action": "approve"}), config=config)  # resumes from
 
 Kill the process between those two `invoke`s and it *still* resumes — state lives on disk, keyed by `thread_id`. The **`Send` API** does the same dynamic scatter-gather you hand-rolled with `asyncio.gather`, but inside the graph.
 
-> 📁 Class repo: `week10/notebooks/03_checkpointing.py` — `SqliteSaver` + `interrupt()` for HITL, with a kill-and-resume challenge.
+> 📁 Class repo: `week10_production_observability/notebooks/03_checkpointing.py` — `SqliteSaver` + `interrupt()` for HITL, with a kill-and-resume challenge.
 
 ### Durable execution — pick by blast radius
 
@@ -331,8 +331,8 @@ Hierarchical mode is convenient but **leaky**: the manager sometimes does the wo
 
 **Mixing frameworks?** That's the real end-state — a LangGraph orchestrator delegating to a CrewAI nutrition team. The standard for that cross-framework hop is the `a2a-protocol` skill (Agent Cards + task delegation); MCP connects each agent to its *tools*, A2A connects *agents to agents*.
 
-> 📁 Class repo: `week15/smart_hotel_mas/README.md` — a 5-agent CrewAI crew (Sensor · Energy · Memory · Alert · Report) over a 4-layer memory stack; the in-process capstone.
-> 📁 **Beyond one process:** `week17/` stretches this MAS across *time* (long-running, pause-for-days, durable sessions) and *services* (A2A across teams/frameworks) — the `long-running-and-distributed-agents` and `a2a-protocol` skills. That's the L3 fleet layer above this one.
+> 📁 Class repo: `week15_production_graphrag/smart_hotel_mas/README.md` — a 5-agent CrewAI crew (Sensor · Energy · Memory · Alert · Report) over a 4-layer memory stack; the in-process capstone.
+> 📁 **Beyond one process:** `week17_long_running_distributed_agents/` stretches this MAS across *time* (long-running, pause-for-days, durable sessions) and *services* (A2A across teams/frameworks) — the `long-running-and-distributed-agents` and `a2a-protocol` skills. That's the L3 fleet layer above this one.
 
 ---
 
@@ -421,6 +421,6 @@ print(out["route"], "->", out["sent"])
 **Pass = 4 of 5 criteria** (criteria 2 and 3 are mandatory — durability is the whole point of Week 10).
 
 ### Stretch — the 14 drills
-For more reps, point them at `week11/exercises/README.md`: **14 graded MAS exercises** (Beginner → Expert) spanning 2-agent dialogue, sequential pipelines, LangGraph routers/cycles, parallel fact-checkers, AutoGen group chat, self-healing graphs, negotiation, and a hotel-ops command center. Treat them as a kata ladder — see the `agent-drills` skill for how to structure timed reps.
+For more reps, point them at `week11_models_and_patterns/exercises/README.md`: **14 graded MAS exercises** (Beginner → Expert) spanning 2-agent dialogue, sequential pipelines, LangGraph routers/cycles, parallel fact-checkers, AutoGen group chat, self-healing graphs, negotiation, and a hotel-ops command center. Treat them as a kata ladder — see the `agent-drills` skill for how to structure timed reps.
 
 End on the judgment call: "the pattern is the design decision — frameworks are just how you spell it. And a supervisor that can't survive a restart is a demo, not a system."

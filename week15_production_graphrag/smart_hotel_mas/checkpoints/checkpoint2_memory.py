@@ -6,7 +6,7 @@ heavier services. L1 = Working Memory (in-process dict, holds the current
 task's transient state). L2 = Episodic Memory (SQLite, an append-only log of
 "what happened" that survives process restarts). (smart_hotel_mas.pdf §CP2)
 
-Run:  python week15/smart_hotel_mas/checkpoints/checkpoint2_memory.py
+Run:  python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint2_memory.py
 
 Pure stdlib — no Neo4j / ChromaDB / network needed for this checkpoint.
 """

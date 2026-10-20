@@ -9,7 +9,7 @@ Thai, English and a mix of both — so we measure, pair by pair:
   • how far does the probability distribution move? (total variation distance)
   • does confidence drop in Thai?
 
-Run: .venv/bin/python week24/04_intent_routing/labs/lab03_thai_vs_english.py
+Run: .venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab03_thai_vs_english.py
 """
 import sys
 from pathlib import Path

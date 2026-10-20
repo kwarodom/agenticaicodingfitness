@@ -11,7 +11,7 @@ then diffs model id, latency, and tok/s side by side. That diff is the entire
 migration cost of Ollama → NIM → cloud (and back). Zero code changed.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/02_nim_microservices/labs/lab02_base_url_swap.py
+      .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab02_base_url_swap.py
 Optional cloud leg:  export NVIDIA_API_KEY=nvapi-...   (from build.nvidia.com)
 """
 from __future__ import annotations

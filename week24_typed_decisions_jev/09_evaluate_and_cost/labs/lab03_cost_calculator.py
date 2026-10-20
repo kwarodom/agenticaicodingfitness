@@ -7,7 +7,7 @@ Jev bills INPUT tokens only: $0.042 per million (output is free). This lab:
   3. shows why batching questions into one call is cheaper,
   4. checks a workload against the published rate limits.
 
-Run: .venv/bin/python week24/09_evaluate_and_cost/labs/lab03_cost_calculator.py
+Run: .venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab03_cost_calculator.py
 """
 import sys
 from pathlib import Path

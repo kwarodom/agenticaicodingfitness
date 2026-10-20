@@ -13,12 +13,12 @@ better** over time — without your data leaving the DGX. NeMo Relay names the l
 ```
 
 Runs **dual-mode**: **REAL** against a NIM / Ollama / vLLM endpoint, or **SIM** with no
-GPU (`week23/11_data_flywheel/sim.py`).
+GPU (`week23_open_superintelligence_stack/11_data_flywheel/sim.py`).
 
 ## Run the web tutorial
 
 ```bash
-cd week23/11_data_flywheel
+cd week23_open_superintelligence_stack/11_data_flywheel
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8110
 ```

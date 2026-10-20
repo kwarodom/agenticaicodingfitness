@@ -14,7 +14,7 @@ Either way cloud cost is $0.00 — these chapters never call an LLM.
 
 Launch (auto-picks a free port if 8201 is taken):
 
-    .venv/bin/python week21/02_openusd_foundations/tutorial_server.py
+    .venv/bin/python week21_physical_ai_digital_twins/02_openusd_foundations/tutorial_server.py
     # → http://127.0.0.1:8201
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week21/02_openusd_foundations
+PKG = Path(__file__).resolve().parent                 # …/week21_physical_ai_digital_twins/02_openusd_foundations
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():

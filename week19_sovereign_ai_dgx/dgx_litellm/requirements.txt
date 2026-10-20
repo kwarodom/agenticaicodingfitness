@@ -1,7 +1,7 @@
 # Week 19 · App 5 — Serving models on a DGX with LiteLLM
 #
 # Install into the repo's uv-managed .venv (Python 3.13):
-#     uv pip install -r week19/dgx_litellm/requirements.txt
+#     uv pip install -r week19_sovereign_ai_dgx/dgx_litellm/requirements.txt
 #
 # The app auto-detects three situations:
 #   PROXY  — a real LiteLLM proxy answers at LITELLM_BASE_URL (default :4000)

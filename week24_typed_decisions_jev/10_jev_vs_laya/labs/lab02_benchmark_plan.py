@@ -7,7 +7,7 @@ Laya, downloading weights, or calling Jev. Always plan before you run.
 
 Everything happens in a throw-away temp folder.
 
-Run: .venv/bin/python week24/10_jev_vs_laya/labs/lab02_benchmark_plan.py
+Run: .venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab02_benchmark_plan.py
 """
 import collections
 import json

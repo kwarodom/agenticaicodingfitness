@@ -46,7 +46,7 @@ Seed PR T6: a correct, tested two-decimal kWh formatter wrapped in a strategy cl
 ## 4 · The merge gate (45 min)
 
 ```bash
-# on: laptop, in week27/00_alto_mini
+# on: laptop, in week27_software_factory/00_alto_mini
 bash scripts/merge-gate.sh <PR> <reviewed-sha>
 ```
 

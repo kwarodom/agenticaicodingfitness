@@ -7,7 +7,7 @@ different outcomes — because the numbers are code's job, not the model's.
 
 Then a second call shows a classic literal-reading trap: "No smoke" vs "smoke".
 
-Run: .venv/bin/python week24/07_afdd_triage/labs/lab02_what_if.py
+Run: .venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab02_what_if.py
 """
 import sys
 from pathlib import Path

@@ -57,10 +57,10 @@ label หัวข้อด้านล่างเป็นข้อเสน�
 
 ## 1 · จัดเส้นทางคำขอเก้ารายการ
 
-ตัวต้นแบบ (reference implementation) จากคู่มือต้นทางอยู่ที่ `week24/jev_lab/jev_lab.py` (ใช้แค่ standard library) แล็บ 01 นำเข้า `QUESTIONS["intent"]` (choice 1 ข้อ + noul 5 ข้อ + score 1 ข้อ), `prepare()` (ส่งเฉพาะฟิลด์ `message` ไม่เคยส่ง label ที่ใช้สอน) และ `policy()` ของมัน
+ตัวต้นแบบ (reference implementation) จากคู่มือต้นทางอยู่ที่ `week24_typed_decisions_jev/jev_lab/jev_lab.py` (ใช้แค่ standard library) แล็บ 01 นำเข้า `QUESTIONS["intent"]` (choice 1 ข้อ + noul 5 ข้อ + score 1 ข้อ), `prepare()` (ส่งเฉพาะฟิลด์ `message` ไม่เคยส่ง label ที่ใช้สอน) และ `policy()` ของมัน
 
 ```bash
-.venv/bin/python week24/04_intent_routing/labs/lab01_route_requests.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab01_route_requests.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -91,7 +91,7 @@ label หัวข้อด้านล่างเป็นข้อเสน�
 การรันแบบเดียวกันนี้มีให้ใช้เป็น CLI ที่พิมพ์ผลเป็น JSON ทีละบรรทัดด้วย ซึ่งเป็นสคริปต์ตัวเดียวกับในคู่มือต้นทาง:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run intent --live --limit 9
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run intent --live --limit 9
 ```
 
 ### เรื่องของ i3 — เมื่อ label "เฉลย" ก็ยังถกเถียงได้
@@ -153,7 +153,7 @@ label หัวข้อด้านล่างเป็นข้อเสน�
 Jev เลือก **กุญแจ (key)** ส่วน registry ของคุณเป็นผู้ให้ **prompt** registry คือโค้ดที่คุณรีวิวเหมือนโค้ดอื่น ๆ ตัวจัดประเภทไม่มีทางแทรก prompt หรือเครื่องมือใหม่เข้ามาได้
 
 ```bash
-.venv/bin/python week24/04_intent_routing/labs/lab02_prompt_bundle.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab02_prompt_bundle.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -196,7 +196,7 @@ Jev เลือก **กุญแจ (key)** ส่วน registry ของค
 ภาษาอังกฤษคือภาษาหลักที่ใช้ฝึก Jev ผู้ใช้ Alto Copilot เขียนทั้งไทย อังกฤษ และปนกัน แล็บ 03 ส่งคำขอเดียวกันในทั้งสองภาษา แล้วเปรียบเทียบหัวข้อ confidence และ **total variation distance** (TVD) ระหว่างการแจกแจงความน่าจะเป็นสองชุด (0 = เหมือนกัน, 1 = ไม่ทับซ้อนกันเลย)
 
 ```bash
-.venv/bin/python week24/04_intent_routing/labs/lab03_thai_vs_english.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab03_thai_vs_english.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -259,14 +259,14 @@ Jev เลือก **กุญแจ (key)** ส่วน registry ของค
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 04 — เพิ่ม route** Alto Copilot ได้รับคำถามแนว "gateway ออฟไลน์ / เซนเซอร์ไม่ส่งข้อมูล" เยอะมาก เปิดไฟล์ `week24/04_intent_routing/exercises/ex04_add_a_route.py`:
+**แบบฝึกหัด 04 — เพิ่ม route** Alto Copilot ได้รับคำถามแนว "gateway ออฟไลน์ / เซนเซอร์ไม่ส่งข้อมูล" เยอะมาก เปิดไฟล์ `week24_typed_decisions_jev/04_intent_routing/exercises/ex04_add_a_route.py`:
 
 1. **ส่วน A (ออฟไลน์ ไม่เสียค่าใช้จ่าย):** เขียนฟังก์ชัน `accepted(a)` ซึ่งก็คือ confidence gate ให้ผ่าน fixture ตายตัวทั้งห้าชุด
 2. **ส่วน B:** เขียนคำอธิบายของตัวเลือกใหม่ `iot_connectivity` (อะไรเข้าข่าย และอะไร **ไม่** เข้าข่าย) พร้อมข้อความทดสอบของคุณเองสามข้อความ ลองเขียนหนึ่งข้อความเป็นภาษาไทย
 3. **ส่วน C (อัตโนมัติ):** ตัวตรวจจะส่งข้อความของคุณ ข้อความเรื่อง gateway ที่ซ่อนไว้สองข้อความ และข้อความควบคุมสองข้อความที่ต้องอยู่ที่ `hvac` และ `coding` เหมือนเดิม
 
 ```bash
-.venv/bin/python week24/04_intent_routing/exercises/ex04_add_a_route.py
+.venv/bin/python week24_typed_decisions_jev/04_intent_routing/exercises/ex04_add_a_route.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -303,7 +303,7 @@ Jev เลือก **กุญแจ (key)** ส่วน registry ของค
 
 | อาการ | วิธีแก้ |
 |---|---|
-| `ModuleNotFoundError: jev_lab` | รันจากโฟลเดอร์รากของ repo แล็บจะเพิ่ม `week24/jev_lab` เข้า `sys.path` ให้เอง |
+| `ModuleNotFoundError: jev_lab` | รันจากโฟลเดอร์รากของ repo แล็บจะเพิ่ม `week24_typed_decisions_jev/jev_lab` เข้า `sys.path` ให้เอง |
 | ทุกคำขอไปที่ `clarify_or_review` หมด | คุณอยู่ในโหมด DRY และแก้คำขอไปแล้ว (คำตอบ placeholder มี confidence เป็น 0) ให้สลับเป็น ⚡ Live |
 | `jev_lab.py run … --live` บอกว่า "Set TYPESAFE_API_KEY" | โหลดคีย์เข้า shell: `set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a` (terminal ที่อยู่ในแอปมีคีย์อยู่แล้ว) |
 | `Output file already exists` | CLI ต้นแบบไม่ยอมเขียนทับไฟล์ผลลัพธ์ ให้ตั้งชื่อ `--out` ใหม่ |

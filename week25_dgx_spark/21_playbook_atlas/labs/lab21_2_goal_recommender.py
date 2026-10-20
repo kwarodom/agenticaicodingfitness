@@ -6,8 +6,8 @@ scores every playbook's overview (title, tagline, "Basic idea", "What you'll acc
 with TF-IDF and cosine similarity — standard library only, no model, no network — and prints the top three
 with the words that matched, whether it runs on a DGX Spark, and which Week 25 module teaches it.
 
-Run:  .venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py
-      .venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy" --spark
+Run:  .venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py
+      .venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy" --spark
 """
 from __future__ import annotations
 

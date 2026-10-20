@@ -1,0 +1,48 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences, in the caller's language.\nHARD LIMITS: you cannot dispatch, call, send or alert anyone yourself, and you must never say you did. Our system alerts staff separately. If the caller reports smoke, fire, a burning smell, flooding, gas or an injury: tell them to leave the room now and call 0 from a safe place, and say a colleague is being alerted.\nOnly state facts from HOTEL FACTS. If the answer is not there, say you will connect them to the front desk.\nHOTEL FACTS: Hotel: Riverside Grand Bangkok (synthetic). Breakfast: 06:00–10:00, Level 2 restaurant. Checkout: 12:00. Pool: 07:00–21:00. Front desk: dial 0, open 24 hours.\nCall reference: L14-5.",
+  "audio": null,
+  "text": "Hi, what time is breakfast tomorrow?"
+ },
+ "response": {
+  "heard": "",
+  "said": "Breakfast is served from 6:00 to 10:00 in the Level 2 restaurant. If you need anything else, dial 0 for the front desk.",
+  "events": [
+   [
+    1.06,
+    "session",
+    "session updated"
+   ],
+   [
+    1.06,
+    "caller_stopped",
+    "audio committed"
+   ],
+   [
+    1.67,
+    "first_output",
+    "model started answering"
+   ],
+   [
+    1.89,
+    "said",
+    "Breakfast is served from 6:00 to 10:00 in the Level 2 restaurant. If you need anything else, dial 0 for the front desk."
+   ],
+   [
+    1.89,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 1.06,
+   "first_output": 1.67,
+   "total": 4.15
+  },
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini"
+ }
+}

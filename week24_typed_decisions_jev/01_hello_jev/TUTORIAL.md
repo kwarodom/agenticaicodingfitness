@@ -105,7 +105,7 @@ Read it left to right:
 Lab 01 does exactly the curl call above with nothing but the Python standard library — no helper, no SDK — and prints both the request and the raw response so you can see every byte. Open it with **view source** in the 🧪 Labs section, or run it here:
 
 ```bash
-.venv/bin/python week24/01_hello_jev/labs/lab01_first_call_raw.py
+.venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab01_first_call_raw.py
 ```
 
 **Expected output**
@@ -193,7 +193,7 @@ Now experiment — one change at a time, then ask again:
 Lab 02 makes the same three-question call through `jevkit` (the tiny helper all later labs use), prints it with probability bars, then shows how **your code** turns the typed answer into a decision — a routing rule you can read, test and change without touching the model.
 
 ```bash
-.venv/bin/python week24/01_hello_jev/labs/lab02_read_the_answer.py
+.venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab02_read_the_answer.py
 ```
 
 **Expected output**
@@ -217,7 +217,7 @@ Lab 02 makes the same three-question call through `jevkit` (the tiny helper all 
 ═ execute: False — this lab never pages anyone; it prints the proposal.
 ```
 
-`jevkit` is ~350 lines of plain Python in `week24/common/jevkit.py`: `ask()` sends the request, `show()` prints the bars, `choice()/noul()/score()` build questions. Nothing magic — open it.
+`jevkit` is ~350 lines of plain Python in `week24_typed_decisions_jev/common/jevkit.py`: `ask()` sends the request, `show()` prints the bars, `choice()/noul()/score()` build questions. Nothing magic — open it.
 
 ✓ Checkpoint: you can point to the exact `if` statement in lab 02 that turns Jev's answers into a priority.
 
@@ -231,7 +231,7 @@ Both run LIVE with the key, or DRY (recorded answers) with the mode switch in th
 
 ## Try it yourself
 
-**Exercise 01 — your first questions.** Open `week24/01_hello_jev/exercises/ex01_my_first_questions.py` in your editor. It has three `TODO`s:
+**Exercise 01 — your first questions.** Open `week24_typed_decisions_jev/01_hello_jev/exercises/ex01_my_first_questions.py` in your editor. It has three `TODO`s:
 
 1. Write a `noul` asking whether a guest message is a **complaint**.
 2. Write a `choice` with at least three **room areas** (`bathroom`, `bedroom`, `balcony`, plus an escape option).
@@ -240,7 +240,7 @@ Both run LIVE with the key, or DRY (recorded answers) with the mode switch in th
 Save, then press **▶ Run** on the exercise card below (or run the command). The built-in checker validates your questions *before* spending a cent, then asks Jev about three test messages and prints the answers.
 
 ```bash
-.venv/bin/python week24/01_hello_jev/exercises/ex01_my_first_questions.py
+.venv/bin/python week24_typed_decisions_jev/01_hello_jev/exercises/ex01_my_first_questions.py
 ```
 
 **Expected output**

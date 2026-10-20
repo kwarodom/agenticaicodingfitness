@@ -14,7 +14,7 @@ pure stdlib). Ch 3–5 run on the built-in twin stores everywhere. Cloud cost $0
 ## Run the web tutorial
 
 ```bash
-cd week21/11_staff_copilot
+cd week21_physical_ai_digital_twins/11_staff_copilot
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8210
 ```

@@ -23,7 +23,7 @@ SensorReading is the same label the curated hotel dataset uses, so these
 readings hang off the same :Room nodes (X1xx imported rooms, or whatever ids
 the JSON references).
 
-Run:  python week15/kg_mastery/part2_building/02_load_json_apoc.py
+Run:  python week15_production_graphrag/kg_mastery/part2_building/02_load_json_apoc.py
 """
 import json
 import sys

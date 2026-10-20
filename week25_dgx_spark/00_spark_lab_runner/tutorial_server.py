@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Spark Lab Runner — the step-by-step web app for Week 25 (DGX Spark: fine-tune, serve, build agents).
 
-Same shape as Week 24's Jev Lab Runner: it parses every week25/NN_*/TUTORIAL.md,
+Same shape as Week 24's Jev Lab Runner: it parses every week25_dgx_spark/NN_*/TUTORIAL.md,
 serves them as one continuous course (static/guide.html renders it), and runs
 each module's labs/*.py and exercises/*.py server-side, streaming output live.
 
@@ -10,14 +10,14 @@ Spark-specific additions:
     server runs ON the Spark, else over `ssh $SPARK_HOST` (and `$SPARK_HOST2` for the
     two-Spark modules). DRY runs nothing and shows RECORDED / REFERENCE output, labelled.
   • 🖥 Spark setup dialog: Spark hostnames + HF_TOKEN / NGC_API_KEY / NVIDIA_API_KEY,
-    saved server-side to week25/.env.local (gitignored, mode 0600), never sent back.
+    saved server-side to week25_dgx_spark/.env.local (gitignored, mode 0600), never sent back.
   • Endpoint probes: which of Ollama / vLLM / SGLang / TRT-LLM / llama.cpp / LiteLLM answer.
   • /api/chat — the proxy behind the inline "⚡ Ask the Spark" blocks.
   • The ⌨ terminal can target this Mac, Spark A or Spark B (ssh), picked per command.
 
 Launch (auto-picks a free port if 8125 is taken):
 
-    .venv/bin/python week25/00_spark_lab_runner/tutorial_server.py
+    .venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py
     # → http://127.0.0.1:8125
 """
 from __future__ import annotations
@@ -40,8 +40,8 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week25/00_spark_lab_runner
-WEEK = PKG.parent                                     # …/week25
+PKG = Path(__file__).resolve().parent                 # …/week25_dgx_spark/00_spark_lab_runner
+WEEK = PKG.parent                                     # …/week25_dgx_spark
 ROOT = WEEK.parent                                    # …/agenticaicodingfitness
 sys.path.insert(0, str(WEEK / "common"))
 import sparkkit  # noqa: E402
@@ -85,7 +85,7 @@ def _pick_free_port(preferred: int, span: int = 40) -> int:
 
 
 def modules() -> list[str]:
-    """Every week25/NN_name/ folder with a TUTORIAL.md, in order (00 is this app)."""
+    """Every week25_dgx_spark/NN_name/ folder with a TUTORIAL.md, in order (00 is this app)."""
     return [p.parent.name for p in sorted(WEEK.glob("[0-9][0-9]_*/TUTORIAL.md"))
             if MODULE_RE.match(p.parent.name) and not p.parent.name.startswith("00_")]
 
@@ -373,7 +373,7 @@ MEDIA_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", "
 
 @app.get("/w25media/{folder}/{rel:path}")
 async def module_media(folder: str, rel: str):
-    """Serve ONLY week25/<module>/media/* and week25/<module>/.runs/* (files a lab just produced).
+    """Serve ONLY week25_dgx_spark/<module>/media/* and week25_dgx_spark/<module>/.runs/* (files a lab just produced).
     Extension allowlist, no traversal, no directory listings."""
     if folder not in modules() or not re.fullmatch(r"(media|\.runs)/[A-Za-z0-9_.\-/]{1,160}", rel or ""):
         raise HTTPException(404, "not found")
@@ -473,7 +473,7 @@ async def api_run(req: RunRequest, request: Request):
             return
         async with _run_lock:
             start = time.time()
-            yield f"$ {Path(PY).name} week25/{req.folder}/{req.file}   [{mode.upper()}]\n\n"
+            yield f"$ {Path(PY).name} week25_dgx_spark/{req.folder}/{req.file}   [{mode.upper()}]\n\n"
             proc = await asyncio.create_subprocess_exec(
                 PY, str(path), cwd=str(ROOT), env=env,
                 stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT)
@@ -584,7 +584,7 @@ async def api_settings_get(request: Request) -> dict:
 
 @app.post("/api/settings")
 async def api_settings_set(req: SettingRequest, request: Request) -> dict:
-    """Save (or with value "" remove) one setting in week25/.env.local — gitignored, mode 0600.
+    """Save (or with value "" remove) one setting in week25_dgx_spark/.env.local — gitignored, mode 0600.
     Secret values are never echoed back; the response only says whether one is now set."""
     _local_only(request)
     if req.name not in SETTINGS:

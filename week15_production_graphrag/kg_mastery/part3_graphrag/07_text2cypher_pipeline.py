@@ -19,7 +19,7 @@ Requires:
   - ANTHROPIC_API_KEY in your environment / repo-root .env
   - pip install langchain-neo4j langchain-anthropic langchain-core
 
-Run:  python week15/kg_mastery/part3_graphrag/07_text2cypher_pipeline.py
+Run:  python week15_production_graphrag/kg_mastery/part3_graphrag/07_text2cypher_pipeline.py
 """
 import os
 import re

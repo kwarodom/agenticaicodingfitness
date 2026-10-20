@@ -19,5 +19,5 @@ litellm>=1.40             # run ADK on Claude / the Alto gateway instead of Gemi
 greenlet>=3.0             # required by SQLAlchemy async (DatabaseSessionService)
 aiosqlite>=0.20           # the sqlite+aiosqlite:// async driver
 
-# install everything:  uv pip install -r week17/authmd_adk/requirements.txt
+# install everything:  uv pip install -r week17_long_running_distributed_agents/authmd_adk/requirements.txt
 # offline subset only:  uv pip install "fastapi" "uvicorn[standard]" httpx pydantic "pyjwt[crypto]"

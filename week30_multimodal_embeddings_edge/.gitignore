@@ -1,0 +1,8 @@
+.venv-embed/
+.venv-mlx/
+00_embed_lab_runner/progress.json
+00_embed_lab_runner/.run_history.json
+**/.runs/
+**/__pycache__/
+.DS_Store
+.models/

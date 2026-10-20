@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 01.3 — Multi-turn memory: how a chatbot "remembers".
 
-Run:  python week15/code/01_llm_fundamentals/03_chatbot_memory.py
+Run:  python week15_production_graphrag/code/01_llm_fundamentals/03_chatbot_memory.py
 
 THE KEY INSIGHT: the API is stateless. The model remembers nothing between
 calls. A conversation only continues because YOU keep a list and resend the

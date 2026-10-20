@@ -102,7 +102,7 @@ def review_policy(answers):
 `accepted()` คือ gate: confidence ≥ 0.75, ความน่าจะเป็นสูงสุด ≥ 0.80 และห่างจากอันดับสองอย่างน้อย 0.20 ตัวเลขเหล่านี้ **เป็นแค่ตัวอย่างและยังไม่ได้ปรับเทียบ (uncalibrated)** คุณจะปรับจูนมันกับอีเมลที่ติด label แล้วของคุณเอง (แล็บ 09)
 
 ```bash
-.venv/bin/python week24/05_email_triage/labs/lab01_triage_inbox.py
+.venv/bin/python week24_typed_decisions_jev/05_email_triage/labs/lab01_triage_inbox.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -143,7 +143,7 @@ def review_policy(answers):
 5. ตัดที่อยู่ผู้ส่งออก ไม่จำเป็นต่อการจัดหัวข้อ (และเป็นข้อมูลส่วนบุคคล)
 
 ```bash
-.venv/bin/python week24/05_email_triage/labs/lab02_eml_to_state.py
+.venv/bin/python week24_typed_decisions_jev/05_email_triage/labs/lab02_eml_to_state.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -201,7 +201,7 @@ def review_policy(answers):
 ตัวต้นแบบเต็มของแล็บนี้อยู่ในสคริปต์ดั้งเดิม คำถามชุดเดียวกัน policy เดียวกัน:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run email --input week24/05_email_triage/data/inbox.jsonl --limit 4 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run email --input week24_typed_decisions_jev/05_email_triage/data/inbox.jsonl --limit 4 --live
 ```
 
 > ⚠ สัญญาณ `suspicious` ของ Jev **ไม่ใช่คำตัดสินด้านความปลอดภัยของอีเมล** ให้คงการยืนยันตัวผู้ส่ง (SPF/DKIM/DMARC) การสแกนมัลแวร์ และการโทรกลับเพื่อยืนยันการเปลี่ยนบัญชีธนาคารไว้เหมือนเดิมทุกประการ ข้อความที่มุ่งร้ายสามารถดึงผลของโมเดลได้
@@ -216,7 +216,7 @@ def review_policy(answers):
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 05 — เขียน policy การรีวิว** เปิดไฟล์ `week24/05_email_triage/exercises/ex05_review_policy.py` แล้วเขียน `route(answers)` ตามกฎเหล่านี้ **เรียงตามลำดับความสำคัญ**:
+**แบบฝึกหัด 05 — เขียน policy การรีวิว** เปิดไฟล์ `week24_typed_decisions_jev/05_email_triage/exercises/ex05_review_policy.py` แล้วเขียน `route(answers)` ตามกฎเหล่านี้ **เรียงตามลำดับความสำคัญ**:
 
 1. `suspicious ≥ 0.5` → `"fraud_desk"`
 2. หมวดหมู่เป็น `"other"` → `"human_review"`
@@ -227,7 +227,7 @@ def review_policy(answers):
 ตัวตรวจจะรัน **การทดสอบแบบออฟไลน์เจ็ดข้อก่อน** โดยใช้ dict คำตอบที่เขียนขึ้นเอง ไม่เสียเงินและให้ผลแน่นอน เมื่อผ่านทั้งหมดแล้วเท่านั้นจึงจะรัน policy ของคุณกับกล่องจดหมายแบบ live
 
 ```bash
-.venv/bin/python week24/05_email_triage/exercises/ex05_review_policy.py
+.venv/bin/python week24_typed_decisions_jev/05_email_triage/exercises/ex05_review_policy.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

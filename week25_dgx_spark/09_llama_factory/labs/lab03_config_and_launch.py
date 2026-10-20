@@ -11,8 +11,8 @@ starts `llamafactory-cli train` under nohup with a log in ~/w25/logs/.
 Opt in to the launch with  --launch  or  SPARK_APPLY=1.  Choose the method with --method lora|qlora|full
 (default lora). Without the opt-in, the lab prints the exact command and stops.
 
-Run: .venv/bin/python week25/09_llama_factory/labs/lab03_config_and_launch.py
-     SPARK_APPLY=1 .venv/bin/python week25/09_llama_factory/labs/lab03_config_and_launch.py
+Run: .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab03_config_and_launch.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab03_config_and_launch.py
 """
 import json
 import math
@@ -338,4 +338,4 @@ if not APPLY:
     sys.exit(0)
 sh(launch, example="started pid 48213")
 result(f"training '{METHOD}' is running under nohup. It survives this lab and your laptop sleeping. "
-       f"Watch it: .venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py")
+       f"Watch it: .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py")

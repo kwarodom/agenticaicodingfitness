@@ -29,7 +29,7 @@ step so the "magic" of on-device AI is never a black box:
 
 ```bash
 # 1) install deps into the repo's uv-managed .venv (Python 3.13)
-uv pip install -r week19/sovereign_dgx/requirements.txt
+uv pip install -r week19_sovereign_ai_dgx/sovereign_dgx/requirements.txt
 
 # 2) (optional) go REAL — any OpenAI-compatible local server works
 curl -fsSL https://ollama.com/install.sh | sh
@@ -37,11 +37,11 @@ ollama run qwen3.6:35b-a3b-q8_0       # DGX Spark / Ubuntu GPU
 # ollama run gemma4:12b               # Mac / smaller boxes
 
 # 3) the interactive web app  (recommended — click through all 10 chapters)
-.venv/bin/python week19/sovereign_dgx/tutorial_server.py
+.venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py
 # → open http://127.0.0.1:8092
 
 # 4) or run any demo straight from the terminal
-.venv/bin/python week19/sovereign_dgx/demos/step03_ollama_on_dgx.py
+.venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/demos/step03_ollama_on_dgx.py
 ```
 
 Point at a real DGX, or force a mode:
@@ -57,7 +57,7 @@ export DGX_MODE=sim     # force the simulator   |   DGX_MODE=real to require liv
 ## Layout
 
 ```
-week19/sovereign_dgx/
+week19_sovereign_ai_dgx/sovereign_dgx/
 ├── README.md                     → this file
 ├── requirements.txt              → openai + FastAPI (openai only used in REAL mode)
 ├── config.py                     → endpoint detection, REAL/SIM mode, DGX specs

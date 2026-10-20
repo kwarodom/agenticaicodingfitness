@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 08.2 — A tiny model chooser (the decision layer, Week 11).
 
-Run:  python week15/code/08_patterns/02_model_chooser.py
+Run:  python week15_production_graphrag/code/08_patterns/02_model_chooser.py
 
 There's no "best" model — only the best fit on four axes: capability, cost,
 latency, context. This is NOT an API demo; it's a thinking tool. It encodes the

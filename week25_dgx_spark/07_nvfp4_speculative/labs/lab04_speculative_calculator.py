@@ -6,7 +6,7 @@ tokens costs about the same as generating one on a Spark (decode is memory-bound
 the expected tokens per target step, E = (1 − α^(k+1)) / (1 − α), checks the formula
 against a Monte Carlo run, and finds the best draft length for the playbook's two setups.
 
-Run: .venv/bin/python week25/07_nvfp4_speculative/labs/lab04_speculative_calculator.py
+Run: .venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab04_speculative_calculator.py
      add --alpha 0.7 --cost 0.1 to try your own acceptance rate and draft cost
      add --measured 1.8 to back out the acceptance rate from a speed-up you measured with lab 03
 """

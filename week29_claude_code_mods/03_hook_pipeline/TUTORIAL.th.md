@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 03 — The hook pipeline: observe, rewrite, wrap, answer
 
-> ส่วนหนึ่งของ Week 29 · Claude Code mods คุณจะเรียนวิธีเปลี่ยนหน้าตาและพฤติกรรมของ Claude Code เอง จากในเทอร์มินัลที่คุณเขียนโค้ดอยู่ทุกวัน บทเรียนชุดนี้คือฉบับยาว ส่วน **🏋 Mod Gym** ซึ่งเป็น panel ใน Claude Code คือฉบับสั้นที่มีการตรวจงานให้ ตลอดบทเรียนคุณจะค่อย ๆ สร้าง lab mod ตัวเดียวชื่อ `hello-mod` ฉบับที่เสร็จสมบูรณ์อยู่ที่ `week29/reference/hello-mod`
+> ส่วนหนึ่งของ Week 29 · Claude Code mods คุณจะเรียนวิธีเปลี่ยนหน้าตาและพฤติกรรมของ Claude Code เอง จากในเทอร์มินัลที่คุณเขียนโค้ดอยู่ทุกวัน บทเรียนชุดนี้คือฉบับยาว ส่วน **🏋 Mod Gym** ซึ่งเป็น panel ใน Claude Code คือฉบับสั้นที่มีการตรวจงานให้ ตลอดบทเรียนคุณจะค่อย ๆ สร้าง lab mod ตัวเดียวชื่อ `hello-mod` ฉบับที่เสร็จสมบูรณ์อยู่ที่ `week29_claude_code_mods/reference/hello-mod`
 
 > 💬 หมายเหตุภาษา: เนื้อหาบทเรียนเป็นภาษาไทย แต่ผลลัพธ์ที่โปรแกรมพิมพ์ออกเทอร์มินัล (และโค้ดทั้งหมด) เป็นภาษาอังกฤษ ตัวอย่างผลลัพธ์ในกล่องโค้ดจึงเป็นภาษาอังกฤษตรงกับที่คุณจะเห็นจริง
 
@@ -27,7 +27,7 @@
 แล็บของบทนี้สร้างไว้ใน repo แล้ว คุณจึงเอา mod ของคุณไปเทียบได้:
 
 ```text
-week29/03_hook_pipeline/
+week29_claude_code_mods/03_hook_pipeline/
   labs/hello-mod-l03/              hello-mod as it stands after this lesson, with tests
   labs/order-demo/                 three hooks on one event, to measure the order
   exercises/solutions/heavy-set/   the exercise solution
@@ -105,7 +105,7 @@ export const register: Register = on => {
 
 ```bash
 # on: laptop
-claude plugin validate week29/03_hook_pipeline/labs/hello-mod-l03
+claude plugin validate week29_claude_code_mods/03_hook_pipeline/labs/hello-mod-l03
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้, Claude Code 2.1.292; ตัดบรรทัดของ manifest ออก)
@@ -158,7 +158,7 @@ test('rewrite: the prompt reaches Claude Code with one more line of context', as
 
 ```bash
 # on: laptop
-claude plugin test week29/03_hook_pipeline/labs/hello-mod-l03
+claude plugin test week29_claude_code_mods/03_hook_pipeline/labs/hello-mod-l03
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้)
@@ -211,7 +211,7 @@ test('the first hook registered is the outermost', async ($, on) => {
 
 ```bash
 # on: laptop
-claude plugin test week29/03_hook_pipeline/labs/order-demo
+claude plugin test week29_claude_code_mods/03_hook_pipeline/labs/order-demo
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้)
@@ -260,7 +260,7 @@ Mod Gym สร้างจาก pattern สี่แบบเดียวกั
 
 ```bash
 # on: laptop
-claude plugin validate week29/mod-gym
+claude plugin validate week29_claude_code_mods/mod-gym
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้; แสดงสองบรรทัดแรกของ `❯ ./` และตัดบรรทัดหลังจากนั้น)
@@ -279,7 +279,7 @@ claude plugin validate week29/mod-gym
 ทีนี้ดูของจริง:
 
 1. พิมพ์ `/mod-gym 3` (กระโดดไปบทนี้) แล้ว `/mod-gym` เพื่อเปิด panel
-2. กด **2** เพื่อไปแท็บ *Events* แล้วส่ง prompt อะไรก็ได้ที่ทำให้ Claude ใช้ tool เช่น "list the files in week29"
+2. กด **2** เพื่อไปแท็บ *Events* แล้วส่ง prompt อะไรก็ได้ที่ทำให้ Claude ใช้ tool เช่น "list the files in week29_claude_code_mods"
 3. อ่านแต่ละแถว: `◦` คือ observe, `⟳` คือ wrap, `◆` คือ answer แถว `tool.call` แต่ละแถวแสดงเวลาที่ tool ใช้ **ภายใน** `await next(e)` ของ Mod Gym
 4. กด **1** แล้ว **c** Mod Gym จะตรวจว่า `register.ts` ของคุณ hook `tool.call`, await `next(`, rewrite `prompt.submit` และ `claude plugin validate` แสดง `tool.call`
 5. กด **a** เพื่อใส่คำถามโค้ชลงใน prompt ของคุณ มันจะขอให้ Claude ติดป้าย pattern ให้ hook แต่ละตัวของคุณ
@@ -338,7 +338,7 @@ test('a turn with 6 tool calls raises one toast', async ($, on) => {
 
 ```bash
 # on: laptop
-claude plugin test week29/03_hook_pipeline/exercises/solutions/heavy-set
+claude plugin test week29_claude_code_mods/03_hook_pipeline/exercises/solutions/heavy-set
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้)

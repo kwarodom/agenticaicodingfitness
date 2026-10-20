@@ -1,0 +1,299 @@
+{
+ "en_warmup": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "hvac",
+    "probabilities": {
+     "hvac": 0.7685,
+     "housekeeping": 0.095,
+     "plumbing": 0.0301,
+     "safety": 0.0491,
+     "front_desk": 0.0573
+    },
+    "confidence": 0.4761,
+    "answer_confidence": 0.7685,
+    "action": {
+     "act_probability": 1.0
+    }
+   },
+   "wants_move": {
+    "type": "noul",
+    "noul": 0.9316,
+    "confidence": 0.9316,
+    "answer_confidence": 0.9316,
+    "action": {
+     "act_probability": 1.0
+    }
+   },
+   "urgency": {
+    "type": "score",
+    "score": 1.0649,
+    "legend": {
+     "0": "routine",
+     "1": "today",
+     "2": "immediate"
+    },
+    "probabilities": {
+     "0": 0.1856,
+     "1": 0.564,
+     "2": 0.2505
+    },
+    "confidence": 0.1058,
+    "answer_confidence": 0.564,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "english",
+   "repo": "convaiinnovations/laya",
+   "reason": "English Latin text",
+   "detection": {
+    "script": "latin",
+    "script_profile": {
+     "latin": 1.0
+    },
+    "language": "en",
+    "is_english": true,
+    "language_undecided": false,
+    "diacritic_rate": 0.0,
+    "non_latin_fraction": 0.0,
+    "mixed_segment": null
+   },
+   "workflow": null
+  },
+  "ms": 3916.269083012594
+ },
+ "en": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "hvac",
+    "probabilities": {
+     "hvac": 0.7685,
+     "housekeeping": 0.095,
+     "plumbing": 0.0301,
+     "safety": 0.0491,
+     "front_desk": 0.0573
+    },
+    "confidence": 0.4761,
+    "answer_confidence": 0.7685,
+    "action": {
+     "act_probability": 1.0
+    }
+   },
+   "wants_move": {
+    "type": "noul",
+    "noul": 0.9316,
+    "confidence": 0.9316,
+    "answer_confidence": 0.9316,
+    "action": {
+     "act_probability": 1.0
+    }
+   },
+   "urgency": {
+    "type": "score",
+    "score": 1.0649,
+    "legend": {
+     "0": "routine",
+     "1": "today",
+     "2": "immediate"
+    },
+    "probabilities": {
+     "0": 0.1856,
+     "1": 0.564,
+     "2": 0.2505
+    },
+    "confidence": 0.1058,
+    "answer_confidence": 0.564,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "english",
+   "repo": "convaiinnovations/laya",
+   "reason": "English Latin text",
+   "detection": {
+    "script": "latin",
+    "script_profile": {
+     "latin": 1.0
+    },
+    "language": "en",
+    "is_english": true,
+    "language_undecided": false,
+    "diacritic_rate": 0.0,
+    "non_latin_fraction": 0.0,
+    "mixed_segment": null
+   },
+   "workflow": null
+  },
+  "ms": 43.05350000504404
+ },
+ "th_warmup": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "plumbing",
+    "probabilities": {
+     "hvac": 0.0058,
+     "housekeeping": 0.0063,
+     "plumbing": 0.9517,
+     "safety": 0.0325,
+     "front_desk": 0.0037
+    },
+    "confidence": 0.8502,
+    "answer_confidence": 0.9517,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "multilingual",
+   "repo": "convaiinnovations/laya/multilingual",
+   "reason": "non-Latin script (thai, 100% of letters); the English checkpoint cannot read it",
+   "detection": {
+    "script": "thai",
+    "script_profile": {
+     "thai": 1.0
+    },
+    "language": null,
+    "is_english": false,
+    "language_undecided": true,
+    "diacritic_rate": 0.0,
+    "non_latin_fraction": 1.0,
+    "mixed_segment": null
+   },
+   "workflow": null
+  },
+  "ms": 2711.5455419989303
+ },
+ "th_routed": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "plumbing",
+    "probabilities": {
+     "hvac": 0.0058,
+     "housekeeping": 0.0063,
+     "plumbing": 0.9517,
+     "safety": 0.0325,
+     "front_desk": 0.0037
+    },
+    "confidence": 0.8502,
+    "answer_confidence": 0.9517,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "multilingual",
+   "repo": "convaiinnovations/laya/multilingual",
+   "reason": "non-Latin script (thai, 100% of letters); the English checkpoint cannot read it",
+   "detection": {
+    "script": "thai",
+    "script_profile": {
+     "thai": 1.0
+    },
+    "language": null,
+    "is_english": false,
+    "language_undecided": true,
+    "diacritic_rate": 0.0,
+    "non_latin_fraction": 1.0,
+    "mixed_segment": null
+   },
+   "workflow": null
+  },
+  "ms": 15.13304200489074
+ },
+ "th_forced_en": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "front_desk",
+    "probabilities": {
+     "hvac": 0.2144,
+     "housekeeping": 0.2292,
+     "plumbing": 0.1477,
+     "safety": 0.1332,
+     "front_desk": 0.2755
+    },
+    "confidence": 0.022,
+    "answer_confidence": 0.2755,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "english",
+   "repo": "convaiinnovations/laya",
+   "reason": "explicit model='english'",
+   "detection": null,
+   "workflow": null
+  },
+  "ms": 27.007542026694864
+ },
+ "long_default": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "hvac",
+    "probabilities": {
+     "hvac": 0.8628,
+     "housekeeping": 0.0248,
+     "plumbing": 0.0229,
+     "safety": 0.0315,
+     "front_desk": 0.0579
+    },
+    "confidence": 0.6399,
+    "answer_confidence": 0.8628,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "english",
+   "repo": "convaiinnovations/laya",
+   "reason": "explicit model='english'",
+   "detection": null,
+   "workflow": null
+  },
+  "ms": 186.09574998845346
+ },
+ "long_multi_8k": {
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "plumbing",
+    "probabilities": {
+     "hvac": 0.0014,
+     "housekeeping": 0.0078,
+     "plumbing": 0.9637,
+     "safety": 0.0195,
+     "front_desk": 0.0076
+    },
+    "confidence": 0.8779,
+    "answer_confidence": 0.9637,
+    "action": {
+     "act_probability": 1.0
+    }
+   }
+  },
+  "routing": {
+   "model": "multilingual",
+   "repo": "convaiinnovations/laya/multilingual",
+   "reason": "explicit model='multilingual'",
+   "detection": null,
+   "workflow": null
+  },
+  "ms": 304.70837498432957
+ },
+ "_recorded_at": "2026-10-17"
+}

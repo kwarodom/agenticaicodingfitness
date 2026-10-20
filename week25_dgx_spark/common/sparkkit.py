@@ -26,7 +26,7 @@ Ollama :11434 · vLLM :8000 · SGLang :30000 · TensorRT-LLM :8355 · llama.cpp 
 NIM :8000 · LiteLLM :4000. When the Spark endpoint is down, `chat_any()` may use Ollama on THIS laptop as a
 labelled "LAPTOP STAND-IN" so client-side ideas (streaming, tool calls, gateways, agents) still run for real.
 
-Configuration lookup order (never printed): process env → week25/.env.local (the runner's 🖥 Spark dialog
+Configuration lookup order (never printed): process env → week25_dgx_spark/.env.local (the runner's 🖥 Spark dialog
 writes it, gitignored) → repo-root .env.
 """
 from __future__ import annotations
@@ -45,8 +45,8 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-COMMON = Path(__file__).resolve().parent            # …/week25/common
-WEEK = COMMON.parent                                # …/week25
+COMMON = Path(__file__).resolve().parent            # …/week25_dgx_spark/common
+WEEK = COMMON.parent                                # …/week25_dgx_spark
 ROOT = WEEK.parent                                  # …/agenticaicodingfitness
 RECORDED = COMMON / "recorded"                      # real Spark transcripts, replayed in DRY mode
 
@@ -95,7 +95,7 @@ def _file_value(path: Path, name: str) -> str:
 
 
 def cfg(name: str, default: str = "") -> str:
-    """env → week25/.env.local → repo-root .env → default."""
+    """env → week25_dgx_spark/.env.local → repo-root .env → default."""
     v = os.environ.get(name, "").strip()
     return v or _file_value(WEEK / ".env.local", name) or _file_value(ROOT / ".env", name) or default
 
@@ -104,7 +104,7 @@ def cfg_source(name: str) -> str:
     if os.environ.get(name, "").strip():
         return "environment"
     if _file_value(WEEK / ".env.local", name):
-        return "week25/.env.local"
+        return "week25_dgx_spark/.env.local"
     if _file_value(ROOT / ".env", name):
         return "repo-root .env"
     return ""

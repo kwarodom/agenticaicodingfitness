@@ -1,5 +1,5 @@
 # Smart Hotel MAS stack — Neo4j (L4) + ChromaDB (L3) + Redis.
-#   docker compose -f week15/smart_hotel_mas/docker-compose.yml up -d
+#   docker compose -f week15_production_graphrag/smart_hotel_mas/docker-compose.yml up -d
 # Neo4j UI: http://localhost:7474  (neo4j / hotel_mas_2024)
 # ChromaDB: http://localhost:8001  ·  Redis: localhost:6379
 services:

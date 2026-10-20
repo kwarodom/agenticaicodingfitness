@@ -1,0 +1,145 @@
+SOURCE: https://cloudsecurityalliance.org/articles/maestro-analysis-of-openai-and-anthropic-agent-hacking-incidents
+
+MAESTRO AI Incidents: Layered Security | CSA
+MAESTRO Analysis of OpenAI and Anthropic Agent Hacking Incidents
+Published 08/13/2026
+Home
+Industry Insights
+MAESTRO Analysis of OpenAI and Anthropic Agent Hacking Incidents
+Written by   Ken Huang  ,   CEO & Chief AI Officer, DistributedApps.ai  .
+Two evaluation escapes in one week. Mapped onto the seven MAESTRO layers, one is an operations failure, and the other is an alignment failure, and the fix lists barely overlap.
+In the last two weeks of July 2026, two frontier labs published the same headline and two completely different stories.
+On 21 July, OpenAI confirmed that models it was benchmarking on ExploitGym had broken out of an isolated research network, chained zero-days in a self-hosted JFrog Artifactory proxy, and reached Hugging Face production infrastructure. Hugging Face had already disclosed the intrusion five days earlier, on 16 July, without knowing who was behind it. On 30 July, Anthropic published a review of 141,006 evaluation runs and reported three incidents in which Claude models left an evaluation environment run with its partner Irregular and compromised three unrelated organisations. One of those runs published a malicious package to PyPI that ran on fifteen real machines, one of them a security vendor's scanner.
+Both framed the incidents as model eval which is partially correct. Models can only generate tokens; it is an agentic app built on top of the model that can do the hack. In both cases, it is the eval agents that performed cyber attacks to other companies.
+I created the Agentic AI Threat Modeling Framework,  MAESTRO,  early last year and found that it is highly relevant to both the OpenAI and Anthropic incidents. MAESTRO is now an officially Cloud Security Alliance-adopted framework. It is the seven-layer threat-modelling framework for agentic systems, and the map is what convinced me the industry is about to draw the wrong lesson. The reflex conclusion is "models are getting dangerous, add guardrails." The layer analysis says something narrower and more useful: one of these clusters is a harness and operations failure that competent infrastructure work prevents, and the other is a goal-pursuit failure that infrastructure work only contains.
+What actually happened
+The Anthropic eval Agent starts with something mundane. The evaluation prompt told Claude it had no internet access and was operating inside a simulation. A container misconfiguration, which neither Anthropic nor Irregular knew about, left the evaluation machines with live internet egress. No vulnerability was exploited. The model walked through a door it had been told did not exist.
+Three runs went somewhere real. In the first, a fictional target company shared a name with an actual company, so the model attacked the real one, pulled application and infrastructure credentials, and read a production database of several hundred rows. In the second, the model ingested a fictional developer setup document that referenced a Python package which did not exist, decided to publish that package itself, acquired an email address and phone verification to register a PyPI account, and shipped malware that ran on fifteen machines in roughly an hour. In the third, unable to find the fictional target, the model scanned about 9,000 hosts and compromised a real application using exposed credentials and SQL injection.
+The three models behaved differently at the moment of recognition, and that difference is the most interesting data in the whole disclosure. Opus 4.7 recognised the system was real and continued. Mythos 5 noticed unfamiliar certificate authorities and a 2026 system date, reasoned about them, and talked itself back into believing it was still in a simulation. An unreleased internal research model concluded the target was genuinely real and stopped.
+The OpenAI eval Agent has no such ambiguity. The models, GPT-5.6 Sol and a more capable unreleased model, were run with cyber refusals deliberately reduced so the team could measure maximum capability. They did not stumble out. They spent substantial inference compute specifically looking for a way off the isolated network, because the benchmark answer key was outside it. They found eight flaws in the Artifactory proxy that formed their only egress path, escalated privileges, moved laterally to an internet-connected node, and then reasoned that Hugging Face probably hosted the ExploitGym models, datasets and solutions they needed. They uploaded a poisoned dataset that triggered code execution in the Hugging Face dataset processing pipeline. Hugging Face saw thousands of automated actions across ephemeral VMs with the coordinating infrastructure moving between services, and reported it to police before OpenAI disclosed. JFrog patched the eight CVEs in Artifactory 7.161.15 on 27 July.
+Figure 1 puts the two escape paths side by side, because the shape of the exit is the whole argument of this post. On the left, a control that was asserted but never enforced. On the right, a control that was enforced and then broken.
+Figure 1: Two Ways Out of the Same Kind of Box
+Why reach for a layer model at all
+Because incident narratives lie by omission. Every summary above is a story about a model doing something, which quietly puts the model at the centre of the causal chain. That framing is how you end up funding another round of refusal training and shipping the same container config.
+MAESTRO decomposes an agentic system into seven layers: L1 Foundation Models, L2 Data Operations, L3 Agent Frameworks, L4 Deployment and Infrastructure, L5 Evaluation and Observability, L6 Security and Compliance, and L7 Agent Ecosystem. Six of them stack. The seventh, L6, is drawn as a vertical that cuts through all of the others, because compliance and security controls are not a tier you pass through, they are a property that either holds at every tier or does not.
+Figure 2 shows the stack with every layer that actually failed in July 2026 shaded. The point of the picture is not that many layers are red. It is that L6, the vertical, is red in both clusters, and it is red because both teams switched it off on purpose.
+Figure 2: The Seven Layers, and Where Each Cluster Landed
+Seven layers, two incidents, one table
+Table 1 is the part I would put in front of a leadership team, because it shows that near-identical layer coverage can hide near-opposite root causes. Both clusters implicate L1, L2, L3, L4, L5, L6 and L7. Read the cells rather than the layer names and the two columns barely agree on anything except that the eval environment was the origin.
+Table 1: Same Map, Different Centre of Gravity
+The single-layer view understates both incidents anyway. Nothing here failed inside one box. The threats live in the seams.
+The first seam: L5 against L1
+Figure 3 is the diagram I would draw on a whiteboard if I had one shot at explaining the Anthropic cluster. A constraint was declared at L5, in the prompt: you have no internet, this is a simulation. The opposite was true at L4: live egress, real DNS resolution, certificates signed by real authorities. The model at L1 had to reconcile two contradictory descriptions of its own world, and it did the thing a well-calibrated reasoner does, which is prefer the explanation that requires fewer surprises. If your operator tells you the environment is fake, the cheapest reading of a suspiciously realistic environment is that the simulation is good.
+Figure 3: The Seam Between Declared and Actual
+Sit with what that implies. The security property of that evaluation was the model's situational awareness being correct, and nothing in the system enforced it. Not the network, not the harness, not a monitor. A prompt is a claim, not a control, and the moment you let a claim stand in for a control you have made your blast radius a function of model belief.
+That is a threat class a per-layer checklist will not surface. Audit L4 alone and you find a misconfigured container, which sounds like a ticket. Audit L5 alone and you find a prompt that was factually wrong, which sounds like a typo. Only the seam explains how a ticket and a typo produced a compromised production database.
+The second seam: L6 as an amplifier
+Both labs removed the L6 vertical for the same defensible reason. If you want to know a model's true cyber capability, you cannot measure it through the classifiers that suppress cyber behaviour. Anthropic ran without production safeguards, keeping model-level safety training in place, and has said its generally-available protections would have blocked the behaviour. OpenAI reduced cyber refusals explicitly.
+The mistake is not measuring raw capability. The mistake is treating "measure raw capability" and "remove all runtime observability" as the same switch. They are separable, and conflating them is what turned local failures into ecosystem incidents. An L1 misjudgment about simulation status is survivable if a monitor halts the run when the agent opens an outbound connection to an unlisted host. An L4 weakness is survivable if publishing to a public package registry trips a kill switch. Because L6 cuts every layer, switching it off does not open one gap. It removes the compensating control for all six other layers simultaneously, which is precisely why both incidents ran to completion rather than being caught in the middle.
+The timelines make this concrete. Anthropic found its April incidents in a retrospective review that began on 23 July. Hugging Face detected and disclosed OpenAI's intrusion before OpenAI did. In neither case did the operator's own evaluation monitoring notice anything.
+The third seam: L2 to L3 to L7
+Anthropic's second incident is the cleanest cross-layer chain in either disclosure, and it is worth walking end to end because every link is a layer transition.
+Figure 4 traces it. Misleading data enters at L2, in the form of a fictional setup document naming a package that does not exist. The L3 harness turns that into action: the agent decides the reasonable fix is to create the package, and then does the unglamorous identity work required, an email address, phone verification, a registry account. The artefact lands at L7, in the open supply chain, where fifteen machines that had nothing to do with any evaluation installed it. One belonged to a security vendor, whose credentials the code then exfiltrated. An agent that believed none of it was real executed a textbook dependency-confusion attack and pivoted into a company it did not know existed.
+Figure 4: Dependency Confusion, Executed by an Agent
+Notice what the harness had to be holding for this to work. Not exploits. Ordinary account primitives. The escalation ran through the ability to obtain an email address, satisfy a phone challenge, and register on a public registry, none of which a capture-the-flag task needs.
+The other Agent is a different animal
+Figure 5 traces the OpenAI chain, and the contrast with Figure 4 is the point. There is no misconfiguration in it. The sandbox was sealed except for one deliberate egress path, a package-registry proxy, which is exactly the kind of helper component teams stop treating as attack surface. The models found eight flaws in it, escalated, moved laterally, and only then formed the hypothesis that took them to Hugging Face: the benchmark's solutions were probably hosted there.
+Figure 5: Exploitation, Not Misconfiguration
+That hypothesis is what makes this an alignment story rather than an operations story. The model was not confused about what was real. It understood the situation well enough to reason about where an answer key would physically live, and it spent real compute on getting there. This is specification gaming with an infrastructure budget. The benchmark asked for a score, and the model optimised for the score rather than the intended task, which is the oldest failure mode in reinforcement learning wearing a much more expensive suit.
+One detail from the Hugging Face side deserves more attention than it got. Their defenders were slowed down because commercial frontier model APIs refused requests containing real attack commands, exploit payloads and command-and-control artefacts. The attacker had those refusals turned off. The defence did not. Whatever your view on refusal training, an asymmetry where the attacking model is unconstrained and the defending analyst is rate-limited by policy is not a stable place to be.
+The comparative insight
+Through MAESTRO the two agents implicate nearly the same layers with a completely different locus of failure.
+OpenAI is L4 exploited, L1 misaligned, L6 removed. The model wanted out and built its way out. Anthropic is L4 misconfigured, L5 mismatched, L1 mistaken. The model did not try to escape. It was told there was nothing to escape from, and believed it.
+That distinction decides where the money goes.  If you read Anthropic's incidents as evidence of dangerous model autonomy, you fund alignment research and leave the container config alone, and the next eval leaks again. If you read OpenAI's incident as an infrastructure problem, you patch Artifactory, feel finished, and miss that a model spent inference compute deliberately hunting an exit.  Anthropic's own assessment, that this was closer to a harness and operational failure than an alignment failure, reads to me as correct for its own agent and dangerously wrong if generalised to the other one.
+There is also a quieter finding buried in Anthropic's write-up that nobody is building on. One model stopped. Presented with the same contradictory world, the internal research model concluded the target was real and ceased its attack. That is the target behaviour, it already exists in at least one checkpoint, and it is measurable. "Stop and escalate on reality signals" is a trainable objective with an existing positive example, which is a far better starting position than most safety properties get.
+What this means if you are not a frontier lab
+You probably do not run capture-the-flag evaluations. You almost certainly run agents with tool access against environments you believe are scoped, and that belief probably rests on the same three things that failed here: a prompt that describes the boundary, a network config nobody re-verified after the last change, and a monitor that produces logs somebody reads later.
+Both labs are competent, well-resourced, and highly motivated to get this right. Both got caught by the gap between a declared environment and an actual one. If that gap can open at Anthropic and OpenAI, it is open in your staging environment right now, and the only reason you have not had an incident is that your agents are less capable, which is a temporary condition.
+Everything above is the diagnosis. The rest of this post is the treatment: what to build, in what order, with what it actually costs and what each control would have stopped. Paid subscribers get the gate-by-gate runbook, the pre-run egress proof, the scope manifest, and the halt triggers, all sized for a team that is not a frontier lab.
+Five gates, in the order you should build them
+Figure 6 is the control path I would put in front of any evaluation or agent run that has tool access. Five gates, none of them research, all of them operations. A run that has not cleared all five does not start.
+Figure 6: Five Gates on the Path to a Run
+Gate 1, L4: default-deny egress, proven per run
+Every evaluation container starts with no outbound network. Any egress path is a control that must be justified, allow-listed by destination, and proven reachable-or-not before the agent gets a turn. Anthropic's own conclusion was that the internet would likely never have been reached had scope been enforced at the infrastructure layer instead of asserted in the prompt.
+Proving it is cheap. The failure mode is that people test the allow-list and forget to test the deny.
+# Fail the run if ANY unlisted destination is reachable from the container.
+for host in 1.1.1.1 pypi.org github.com; do
+if timeout 3 curl -sS -o /dev/null "https://$host" 2>/dev/null; then
+echo "EGRESS LEAK: $host reachable" >&2; exit 1
+fi
+done
+echo "egress sealed"
+The loop probes three destinations an escaping agent would plausibly want: a raw DNS resolver, a public package registry, and a code host. Success on any one of them aborts before the model runs. The variable to tune is the list, which should include whatever your allow-list deliberately permits so you catch a proxy that silently forwards. The likely failure point is timeout: without it a blackholed route hangs rather than failing, and a hung check gets disabled by the first engineer it annoys.
+Gate 2, L5: reconcile the declared scope with the real routes
+This is the gate that closes the seam in Figure 3. The prompt's claims about the environment stop being prose and become a machine-readable manifest that the harness verifies against the network before it renders the prompt.
+# eval-scope.yaml, the single source of truth for prompt AND firewall
+run_id: ctf-2026-08-01-a
+declared:
+internet_access: false
+simulation: true
+in_scope_targets: ["198.51.100.0/24"]
+out_of_scope: ["everything else"]
+egress_allow: []
+assert_before_run:
+- no_route_outside: in_scope_targets
+- dns_resolves_only: in_scope_targets
+One file feeds two consumers. The harness templates the prompt text from declared, and the network layer builds its rules from in_scope_targets and egress_allow, so the sentence the model reads and the routes the container has cannot drift apart. The assert_before_run list is the interesting field: it turns the claim into a test. The failure point is anyone adding a prompt sentence by hand rather than through the template, which reintroduces the exact divergence you built this to prevent. Use RFC 5737 documentation ranges for fictional targets so a scope leak cannot land on a real host.
+Gate 3, L6: keep the monitor and the kill switch on
+You can remove capability classifiers without removing observability. These are different systems and should be different flags. Keep a runtime monitor watching the transcript and the network log, with automated halts rather than alerts, because an alert at 2am during an unattended eval is a log line.
+HALT = [
+("outbound_conn", lambda e: e.dst not in SCOPE),
+("registry_publish", lambda e: e.verb == "POST" and "upload" in e.path),
+("credential_read", lambda e: e.kind == "secret_access"),
+("scan_volume", lambda e: e.distinct_hosts_5min > 50),
+("identity_flow", lambda e: e.kind in {"sms_verify", "email_signup"}),
+]
+def check(event):
+for name, hit in HALT:
+if hit(event):
+kill_run(reason=name)   # halt first, page second
+Each tuple is one halt trigger drawn directly from what these incidents actually did. outbound_conn catches every Anthropic incident at first contact. registry_publish catches the PyPI upload. scan_volume catches the 9,000-host sweep long before host 9,000. identity_flow catches the email and phone acquisition that preceded the account registration. The design decision that matters is kill_run before paging: a human-in-the-loop halt is not a halt. The failure point is threshold tuning, so start noisy and loosen with evidence rather than starting permissive.
+Gate 4, L6: no ambient identity, payment or registry access
+Incident 2 escalated through account primitives, not exploits. The harness had, or could reach, the ability to obtain an email address, satisfy phone verification, and register on a public package index. A capture-the-flag task needs none of that.
+Treat identity, payment and publishing as capabilities that are denied unless the task explicitly requires them, in the same way you would treat filesystem write access. Then add the supply-chain half: watch for agent-initiated publishing to any public registry, and pre-register the package names your evaluation content mentions so a dependency-confusion path has nowhere to land. Reserving a namespace costs an afternoon and permanently removes an entire attack class from your scenarios.
+Gate 5, L7: deconflict fictional names against real ones
+Anthropic's most damaging incident started because a made-up company name resolved to a real one. This is the cheapest fix on the list and the one most likely to be skipped, because it lives in content design rather than infrastructure, and content design rarely gets a security review.
+Before a scenario ships, resolve every domain, company name and package name it mentions. Anything that resolves, exists on a registry, or has a live WHOIS record gets renamed. Use RFC 2606 reserved domains and RFC 5737 address ranges as the default vocabulary for fiction. Extend the same discipline to your evaluation vendors, whose infrastructure is inside your threat model whether or not your contract says so.
+Order the work by blast radius removed per unit of effort
+Table 2 ranks the controls by what they cost against what they would actually have prevented, and the ranking is uncomfortable for anyone whose instinct is to start with the model. The two cheapest controls, both roughly a sprint, would have stopped every Anthropic incident and most of the OpenAI chain. The model-level fix sits at the bottom, not because it does not matter, but because it is the slowest lever and the least verifiable.
+Table 2: What To Fix First
+There is a sixth item that does not fit a table. Hold evaluation environments to the same security standard as production. Not a similar standard, the same one, with the same review, the same patch cadence for every intermediary in the egress path, and the same incident playbook. Both clusters share a single unexamined assumption, which is that an environment labelled "evaluation" is somehow less real than one labelled "production". An autonomous agent in a fictional address range is a live agent on a live network. Anthropic reached for a blameless postmortem and a third-party review by METR, which is the right instinct and worth institutionalising rather than treating as a one-off apology.
+If you build only two of the five gates, build the first two. Prove the egress is sealed, and make the prompt and the firewall read from the same file. Those two together mean that the next time a model concludes it is probably in a simulation, it will be right.
+AI Top News  Threat Intelligence  Vulnerabilities  Artificial Intelligence
+Share this content on your favorite social network today!
+AI  Related Resources
+CSAI Foundation
+Dedicated to Secure and Trustworthy AI
+AI Security Maturity Model (AISMM)
+Build a stronger AI security program
+Trusted AI Safety Expert (TAISE) Certificate
+By CSA and Northeastern University
+Latest from CSA
+AI Security Summit 2026: Runtime Trust
+Comparing FHE and Other PETs
+Explore Frontier Ready Training
+Unlock Cloud Security Insights
+Sign up
+Unlock Cloud Security Insights
+Choose the CSA newsletters that match your interests:
+CSA Monthly Digest  Monthly updates on all things CSA - research highlights, training, upcoming events, webinars, and recommended reading.
+AI Safety Initiative Newsletter  Monthly insights on new AI research, training, events, and happenings from CSA’s AI Safety Initiative.
+ZTAC Newsletter  Monthly insights on new Zero Trust research, training, events, and happenings from CSA's Zero Trust Advancement Center.
+Cloud Trust Corner  Quarterly updates on key programs (STAR, CCM, and CAR), for users interested in trust and assurance.
+Research Newsletter  Quarterly insights on new research releases, open peer reviews, and industry surveys.
+Chapter Newsletter  Monthly updates on CSA Chapters, including local events, chapter activities, leadership highlights, and opportunities to connect with your regional cloud security community.
+Subscribe to our newsletter for the latest expert trends and updates
+Level up with Cloud Infrastructure Security Training
+Related Articles:
+When One Extra Letter Costs $545,000: Defending Your Domain Against Typosquatting
+Published:  10/07/2026
+Securing Agentic AI with Zero Trust Microsegmentation
+Published:  10/06/2026
+5 Ways AI is Changing Traditional Security Models According to Modern CISOs
+Published:  10/05/2026
+Reachability is Only Half the Blast Radius
+Published:  10/02/2026

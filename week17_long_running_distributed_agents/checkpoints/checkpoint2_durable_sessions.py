@@ -18,7 +18,7 @@ What this demonstrates:
 
 (Week 17 · long-running agents · ADK blog: DatabaseSessionService)
 
-Run:  python week17/checkpoints/checkpoint2_durable_sessions.py
+Run:  python week17_long_running_distributed_agents/checkpoints/checkpoint2_durable_sessions.py
 """
 import json
 import sqlite3

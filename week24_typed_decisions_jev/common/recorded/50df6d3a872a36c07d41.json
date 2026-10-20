@@ -1,0 +1,80 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-d0576f499baaf6f7"
+  },
+  "questions": {
+   "condition": {
+    "type": "choice",
+    "instructions": "Which example does the plant room in `photo` look most like?",
+    "criteria": {
+     "normal": {
+      "description": "Normal operation, clear air",
+      "examples": [
+       "img-c7d2cd2cf789676f"
+      ]
+     },
+     "haze": {
+      "description": "Smoke, steam or haze in the room",
+      "examples": [
+       "img-b90dc90cfd8cf17f"
+      ]
+     },
+     "water": "Liquid pooling on the floor, like this: img-bdb430c290c344ad",
+     "none": "Not a plant room, or matches none of the examples"
+    }
+   }
+  },
+  "assets": {
+   "img-d0576f499baaf6f7": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "fc71a4b01d164910",
+    "base64_chars": 142764
+   },
+   "img-c7d2cd2cf789676f": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "180e9154317fc051",
+    "base64_chars": 216312
+   },
+   "img-b90dc90cfd8cf17f": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "e530bee04061b295",
+    "base64_chars": 169692
+   },
+   "img-bdb430c290c344ad": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "6ee70a72fa31a4ef",
+    "base64_chars": 208176
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "condition": {
+    "type": "choice",
+    "choice": "normal",
+    "confidence": 0.99,
+    "probabilities": {
+     "normal": 0.99,
+     "haze": 0.01,
+     "water": 0.0,
+     "none": 0.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 9137,
+   "output_tokens": 46
+  }
+ }
+}

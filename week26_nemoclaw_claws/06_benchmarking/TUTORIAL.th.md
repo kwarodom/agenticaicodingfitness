@@ -18,14 +18,14 @@
 
 | ต้องมี | ตรวจด้วย | ใช้ทำอะไร |
 |---|---|---|
-| NAT 1.9.0 พร้อม extra ของ profiler และ eval | `week26/.venv-nat/bin/nat --version` | `nat eval`, profiler และ `nat sizing calc` รันจริงบนแล็ปท็อปเครื่องนี้ |
+| NAT 1.9.0 พร้อม extra ของ profiler และ eval | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` | `nat eval`, profiler และ `nat sizing calc` รันจริงบนแล็ปท็อปเครื่องนี้ |
 | Ollama บนแล็ปท็อป ที่มี `nemotron-3-nano` และ `gemma3:4b` | `curl -s http://localhost:11434/api/tags` | ตัวแทน vLLM บน Spark: nemotron-3-nano ใช้กับ agent ส่วน gemma3:4b ใช้กับการ sweep engine ที่ต้องการความเร็ว |
-| แพ็กเกจ Alto Ops (Module 04) | ติดตั้งแบบ editable ไว้ใน `week26/.venv-nat` | tool `chiller_kpi` ที่คำถามใน eval เรียกใช้ |
+| แพ็กเกจ Alto Ops (Module 04) | ติดตั้งแบบ editable ไว้ใน `week26_nemoclaw_claws/.venv-nat` | tool `chiller_kpi` ที่คำถามใน eval เรียกใช้ |
 | DGX Spark (ไม่บังคับ) | container `vllm-nat` (research tutorial Lab 3.2), sandbox `alto-ops` (Lab 3.8) และ Hermes claw | ตัวเลข engine, sandbox และ harness ของจริง |
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
 curl -s http://localhost:11434/api/tags | grep -o '"name":"[^"]*"' | grep -E "nemotron-3-nano|gemma3:4b"
 ```
 
@@ -134,7 +134,7 @@ Mean TPOT (ms):                          …
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_1_engine_sweep.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_1_engine_sweep.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ส่วน sweep ของ stand-in)
@@ -211,7 +211,7 @@ eval:
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat eval --config_file week26/06_benchmarking/configs/eval_config.yml
+week26_nemoclaw_claws/.venv-nat/bin/nat eval --config_file week26_nemoclaw_claws/06_benchmarking/configs/eval_config.yml
 ```
 
 ```bash
@@ -275,7 +275,7 @@ one-liner ของ pandas ใน research tutorial ใช้ได้บน 1.9
 
 ```python
 import pandas as pd
-df = pd.read_csv("week26/06_benchmarking/.runs/eval/alto_ops/standardized_data_all.csv")
+df = pd.read_csv("week26_nemoclaw_claws/06_benchmarking/.runs/eval/alto_ops/standardized_data_all.csv")
 ends = df[df.event_type == "LLM_END"]
 print(ends.groupby("llm_name")[["prompt_tokens", "completion_tokens"]].describe())
 ```
@@ -335,7 +335,7 @@ nat sizing calc --offline_mode --calc_output_dir $CALC_OUTPUT_DIR --test_gpu_cou
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_3_sizing.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_3_sizing.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
@@ -351,7 +351,7 @@ Per concurrency results:
 
 === GPU ESTIMATES ===
 Estimated GPU count (Workflow Runtime): 9.8
-✓ wrote week26/06_benchmarking/.runs/sizing/alto_ops/online/job_1790740665/ (calc_runner_output.json + two PNG plots)
+✓ wrote week26_nemoclaw_claws/06_benchmarking/.runs/sizing/alto_ops/online/job_1790740665/ (calc_runner_output.json + two PNG plots)
 │ concurrency  measured p95 runtime  line   
 │ ───────────  ────────────────────  ───────
 │ 1            10.83 s               10.83 s
@@ -399,7 +399,7 @@ openshell sandbox download alto-ops /sandbox/.tmp/tax/sandbox_c1 ./.tmp/tax/sand
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_4_sandbox_tax.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_4_sandbox_tax.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ step 2–3)
@@ -407,7 +407,7 @@ openshell sandbox download alto-ops /sandbox/.tmp/tax/sandbox_c1 ./.tmp/tax/sand
 ```
 ◆ Workflow Runtime (p95): 13.03s
 ◆ hop proxy on 127.0.0.1:8090 → http://localhost:11434/v1 (allow: POST /v1/chat/completions, GET /v1/models; deny the rest)
-$ nat eval --config_file week26/06_benchmarking/configs/eval_config.yml --override eval.general.max_concurrency 1 --override eval.general.output_dir week26/06_benchmarking/.runs/tax/hop_c1/ --override eval.general.dataset.file_path week26/06_benchmarking/.runs/tax_rows.jsonl --override llms.local_llm.base_url http://127.0.0.1:8090/v1   [this laptop]
+$ nat eval --config_file week26_nemoclaw_claws/06_benchmarking/configs/eval_config.yml --override eval.general.max_concurrency 1 --override eval.general.output_dir week26_nemoclaw_claws/06_benchmarking/.runs/tax/hop_c1/ --override eval.general.dataset.file_path week26_nemoclaw_claws/06_benchmarking/.runs/tax_rows.jsonl --override llms.local_llm.base_url http://127.0.0.1:8090/v1   [this laptop]
 ◆ Workflow Runtime (p95): 23.77s
 ✓ GET /api/pull through the hop → 403 (denied, like an unlisted endpoint)
 ■ stopped hop proxy on :8090
@@ -445,11 +445,11 @@ done 2>&1 | sort -n | awk '{a[NR]=$1} END {print "p50",a[int(NR*0.5)],"p95",a[in
 
 บนแล็ปท็อป lab 06-5 รันลูปเดียวกันจริง กับ `nat serve` ของ Alto Ops Claw (`/v1/chat/completions`, พอร์ต `free_port(8001)`): งานเหมือนกัน 5 ครั้ง ทีละครั้ง คำนวณ p50/p95 สองวิธี แล้วสร้างรายงานสี่ชั้นจากสรุปที่ lab 06-1 ถึง 06-4 บันทึกไว้ใน `.runs/`
 
-> ⚠ **NAT 1.9.0: `nat serve` ต้องใช้ `greenlet` แต่ extra ของ NAT ไม่ได้ติดตั้งมาให้** front end ของ FastAPI import `sqlalchemy.ext.asyncio` ตอนเริ่มทำงาน และ import นั้นไม่ยอมโหลดถ้าไม่มี greenlet ตอนสร้างคอร์สนี้ `week26/.venv-nat` ยังไม่มี greenlet และ `nat serve` ออกทันที ตอนนี้ venv มี greenlet แล้ว ถ้าของคุณยังไม่มี lab 06-5 จะตรวจเจอ แล้ววาง stub ที่ติดป้ายชัดเจนไว้บน `PYTHONPATH` (`.runs/pyshim/greenlet.py`) พร้อมแจ้งให้ทราบ ซึ่งปลอดภัย เพราะ async job store ที่จะใช้ greenlet จะเริ่มทำงานก็ต่อเมื่อติดตั้ง Dask ไว้เท่านั้น บน Spark ให้ติดตั้ง greenlet ลงใน environment ของ NAT
+> ⚠ **NAT 1.9.0: `nat serve` ต้องใช้ `greenlet` แต่ extra ของ NAT ไม่ได้ติดตั้งมาให้** front end ของ FastAPI import `sqlalchemy.ext.asyncio` ตอนเริ่มทำงาน และ import นั้นไม่ยอมโหลดถ้าไม่มี greenlet ตอนสร้างคอร์สนี้ `week26_nemoclaw_claws/.venv-nat` ยังไม่มี greenlet และ `nat serve` ออกทันที ตอนนี้ venv มี greenlet แล้ว ถ้าของคุณยังไม่มี lab 06-5 จะตรวจเจอ แล้ววาง stub ที่ติดป้ายชัดเจนไว้บน `PYTHONPATH` (`.runs/pyshim/greenlet.py`) พร้อมแจ้งให้ทราบ ซึ่งปลอดภัย เพราะ async job store ที่จะใช้ greenlet จะเริ่มทำงานก็ต่อเมื่อติดตั้ง Dask ไว้เท่านั้น บน Spark ให้ติดตั้ง greenlet ลงใน environment ของ NAT
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/labs/lab06_5_harness_bench.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_5_harness_bench.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้)
@@ -526,7 +526,7 @@ INFO:     Application startup complete.
 
 ```bash
 # on: spark
-python3 week26/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
+python3 week26_nemoclaw_claws/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
   --url http://127.0.0.1:8000/v1 --model nemotron-3.5-super-vl --vision
 ```
 
@@ -604,7 +604,7 @@ ValueError: Free memory on device cuda:0 (95.97/121.69 GiB) on startup is less t
 
 ```bash
 # on: laptop
-.venv/bin/python week26/06_benchmarking/exercises/ex06_bench_math.py
+.venv/bin/python week26_nemoclaw_claws/06_benchmarking/exercises/ex06_bench_math.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ เมื่อเติม TODO ครบ)

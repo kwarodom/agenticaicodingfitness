@@ -12,7 +12,7 @@ zone (`sim.py` — same MDP shape as Sinergym, $0, no GPU); optional REAL upgrad
 ## Run the web tutorial
 
 ```bash
-cd week21/09_rl_building_controls
+cd week21_physical_ai_digital_twins/09_rl_building_controls
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8208
 ```

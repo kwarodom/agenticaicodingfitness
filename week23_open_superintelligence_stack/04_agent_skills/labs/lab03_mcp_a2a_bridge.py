@@ -8,7 +8,7 @@ then an Agent Card + the six-state A2A task lifecycle for the same capability.
 Everything executes locally and offline — the frames are genuine, only the wire
 (stdio/HTTP) is skipped.
 
-Run:  .venv/bin/python week23/04_agent_skills/labs/lab03_mcp_a2a_bridge.py
+Run:  .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab03_mcp_a2a_bridge.py
 Needs: nothing — stdlib only, no endpoint, terminates in seconds.
 """
 from __future__ import annotations

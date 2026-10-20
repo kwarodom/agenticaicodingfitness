@@ -5,14 +5,14 @@ Research tutorial Lab 4.5 (L4.5). On THIS laptop, for real:
   1. start `nat serve` for Alto Ops Claw (with the file exporter) on a free port near 8001, in the background;
   2. POST /v1/workflow/full?filter_steps=LLM_END,TOOL_END — count the LLM and TOOL end events in the stream;
      (if `nat serve` cannot start here, the lab says exactly why and runs the same route function in-process —
-     week26/05_tracing/fullstream.py — labelled as such);
+     week26_nemoclaw_claws/05_tracing/fullstream.py — labelled as such);
   3. read the file exporter's trace for the SAME run and compare its LLM span count with the stream's;
   4. predict the sandboxed case: one `inspect_for_inference` per LLM span — and show how to check it on the
      Spark (read-only, bounded; DRY → EXAMPLE);
   5. the mapping table of the three planes (agent traces · policy logs · harness logs).
 One request = 2 LLM calls with nemotron-3-nano on Ollama (LAPTOP STAND-IN). The server is always stopped.
 
-Run: .venv/bin/python week26/05_tracing/labs/lab05_5_correlate.py
+Run: .venv/bin/python week26_nemoclaw_claws/05_tracing/labs/lab05_5_correlate.py
 """
 import json
 import sys
@@ -51,7 +51,7 @@ t0 = time.time()
 try:
     with background([NAT, "serve", "--config_file", cfg, "--port", str(port)], ready_url=f"http://localhost:{port}/docs",
                     log=log, cwd=ROOT, timeout=180,
-                    show=f"nat serve --config_file week26/05_tracing/.runs/{cfg.name} --port {port}"):
+                    show=f"nat serve --config_file week26_nemoclaw_claws/05_tracing/.runs/{cfg.name} --port {port}"):
         step(2, f"POST /v1/workflow/full?filter_steps={FILTER}")
         url = f"http://localhost:{port}/v1/workflow/full?filter_steps={FILTER}"
         print(f"$ curl -s -X POST '{url}' -H 'Content-Type: application/json' "
@@ -72,15 +72,15 @@ except RuntimeError as e:
     if "greenlet" in tail:
         warn("`nat serve` exited before it was ready: NAT 1.9.0's FastAPI front end imports its async job store "
              "(SQLAlchemy asyncio) at start-up, and SQLAlchemy asyncio needs the `greenlet` package, which is not "
-             "in week26/.venv-nat on this laptop.")
+             "in week26_nemoclaw_claws/.venv-nat on this laptop.")
         print("→ fix (the lab does not install anything): "
-              "uv pip install --python week26/.venv-nat/bin/python greenlet   — then run this lab again")
+              "uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet   — then run this lab again")
     else:
         warn(f"`nat serve` did not come up: {str(e)[:400]}")
     step(2, f"fallback — the same route function in-process: generate_streaming_response_full(filter_steps={FILTER})")
     t0 = time.time()
     r = laptop([NAT_PY, MODULE / "fullstream.py", cfg, QUESTION, FILTER], cwd=ROOT, quiet=True, timeout=400,
-               show=f'week26/.venv-nat/bin/python week26/05_tracing/fullstream.py week26/05_tracing/.runs/{cfg.name} '
+               show=f'week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/05_tracing/fullstream.py week26_nemoclaw_claws/05_tracing/.runs/{cfg.name} '
                     f'"{QUESTION}" {FILTER}')
     body = r.out
     how = "in-process twin of /v1/workflow/full (nat serve could not start)"

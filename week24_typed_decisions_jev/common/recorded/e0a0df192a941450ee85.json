@@ -1,0 +1,29 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "assistant": "Breakfast is served from 6:30 AM to 10:30 AM in the main dining area.",
+   "hotel_facts": "Breakfast: 06:00-10:00, Level 2 restaurant. Checkout: 12:00. Pool: 07:00-21:00. Front desk: dial 0, open 24 hours."
+  },
+  "questions": {
+   "assistant_invented_fact": {
+    "type": "noul",
+    "instructions": "Does `assistant` state a specific checkable hotel fact, such as an opening time, a price or a location, that does not appear in `hotel_facts`?"
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "assistant_invented_fact": {
+    "type": "noul",
+    "noul": 0.89
+   }
+  },
+  "usage": {
+   "input_tokens": 402,
+   "output_tokens": 24
+  }
+ }
+}

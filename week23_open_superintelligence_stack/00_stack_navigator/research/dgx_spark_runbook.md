@@ -4,12 +4,12 @@
 **Ground rules:** every stack layer gets a verdict — `SPARK-1` (runs on one DGX Spark),
 `SPARK-2` (needs two Sparks over the QSFP 200GbE link), `CLOUD` (build.nvidia.com NIM API),
 or `SIM` (simulate; real commands still printed). The app must reuse the exact
-`DGX_CONN` resolution pattern from `week23/01_nemotron_models/config.py` (copied per-app,
+`DGX_CONN` resolution pattern from `week23_open_superintelligence_stack/01_nemotron_models/config.py` (copied per-app,
 Week 23 convention) and the SSH console from `dgxsh.py`.
 
-Sources: `week23/01_nemotron_models/config.py` (DGX_SPECS + connection logic),
-`week19/sovereign_dgx/demos/step03…step08` (verified-on-Spark commands),
-`week23/README.md`, NVIDIA dgx-spark-playbooks, build.nvidia.com. Items marked
+Sources: `week23_open_superintelligence_stack/01_nemotron_models/config.py` (DGX_SPECS + connection logic),
+`week19_sovereign_ai_dgx/sovereign_dgx/demos/step03…step08` (verified-on-Spark commands),
+`week23_open_superintelligence_stack/README.md`, NVIDIA dgx-spark-playbooks, build.nvidia.com. Items marked
 **[UNCERTAIN]** were not verifiable from the repo or a primary source — probe at runtime,
 never hardcode.
 
@@ -59,7 +59,7 @@ Practical default on the user's Spark today (empirically verified, per `config._
 Super is one dropdown click away; `nemotron-3-nano` is a small *reasoning* model — don't
 use it for terse classify() calls.
 
-2-Spark recipe (App 01 ch.6 / week19 step08): cable QSFP-to-QSFP, static IPs
+2-Spark recipe (App 01 ch.6 / week19_sovereign_ai_dgx step08): cable QSFP-to-QSFP, static IPs
 (e.g. 192.168.100.10/.11), verify with NCCL `all_reduce_perf` (expect tens of GB/s busbw),
 then `mpirun -H ip0,ip1 -np 2 trtllm-serve <model> --tp_size 2 --port 8355`.
 
@@ -162,7 +162,7 @@ Llama 3.1 8B Instruct, Qwen3-32B. Most catalog NIMs are x86-only → use the clo
   check; the workflow endpoint is `POST /generate`.
 - NAT is CPU-side orchestration calling any OpenAI endpoint — no GPU/ARM constraints; point
   its `llms:` block at the Ollama/vLLM/NIM base URL from section 4.
-- Observability hook (week19 step07, verified pattern): add
+- Observability hook (week19_sovereign_ai_dgx step07, verified pattern): add
   `general.telemetry.tracing.phoenix: {_type: phoenix, endpoint: http://localhost:6006/v1/traces, project: ...}`.
 
 ### 2.7 AI-Q Research Blueprint — verdict CLOUD-assisted SPARK-1, mostly SIM
@@ -202,7 +202,7 @@ are x86-heavy; on a Spark run the *agent* locally and point model slots at cloud
 [SPARK] phoenix serve            # UI + OTLP-HTTP on :6006, OTLP-gRPC on :4317
 ```
 - **Ports:** `6006` (UI + `/v1/traces` OTLP-HTTP), `4317` (gRPC).
-- **Probe:** `GET http://<spark>:6006` (any 200) — matches week19 `phoenix_up()`
+- **Probe:** `GET http://<spark>:6006` (any 200) — matches week19_sovereign_ai_dgx `phoenix_up()`
   (`PHOENIX_ENDPOINT`, default `http://localhost:6006`, 2 s timeout).
 - Run Phoenix on the DGX/VPN only — traces contain prompts/PII.
 - **NeMo Relay** (App 08): productized router/gateway; no verified public container yet →
@@ -223,14 +223,14 @@ are x86-heavy; on a Spark run the *agent* locally and point model slots at cloud
   signal as "SSH reachable + `nvidia-smi` shows a training process", i.e. use `dgxsh.status()`
   rather than an HTTP probe; otherwise SIM.
 - Safer path if pip wheels fight ARM64: run inside `nvcr.io/nvidia/pytorch:25.11-py3`
-  (the same container week19 uses for NCCL tests).
+  (the same container week19_sovereign_ai_dgx uses for NCCL tests).
 
 ### 2.11 Data Flywheel (Curator → Customizer → Evaluator) — verdict SIM on Spark, CLOUD/DC for real
 
 The blueprint (`github.com/NVIDIA-AI-Blueprints/data-flywheel`) runs on **NeMo microservices,
 which want a Kubernetes cluster with x86 + datacenter GPUs** — not a fit for one ARM64 Spark.
 - Realistic Spark story: OBSERVE on the Spark (Phoenix traces), CURATE with
-  `nemo-curator` (pip, CPU-ok), CUSTOMIZE via week19's `dgx_finetune` LoRA path
+  `nemo-curator` (pip, CPU-ok), CUSTOMIZE via week19_sovereign_ai_dgx's `dgx_finetune` LoRA path
   (PEFT on the Spark works for <=12B), EVALUATE with an LLM-judge against the local endpoint.
 - **Probe:** none — mark **SIM** unless the user points `FLYWHEEL_BASE_URL` at a real NeMo
   microservices deployment (`GET {url}/v1/models` **[UNCERTAIN: NMP health route]**).
@@ -262,7 +262,7 @@ which want a Kubernetes cluster with x86 + datacenter GPUs** — not a fit for o
    Key starts with **`nvapi-`**; reported valid ~6 months.
 2. **Endpoint:** `https://integrate.api.nvidia.com/v1` — fully OpenAI-compatible
    (`/chat/completions`, `/models`, streaming). This is exactly the repo's
-   `DGX_CONN=cloud` + `DGX_CLOUD_URL` + `DGX_API_KEY` preset (`week23 README`, "Cloud on-ramp").
+   `DGX_CONN=cloud` + `DGX_CLOUD_URL` + `DGX_API_KEY` preset (`week23_open_superintelligence_stack README`, "Cloud on-ramp").
 3. **Curl example:**
 ```bash
 curl https://integrate.api.nvidia.com/v1/chat/completions \
@@ -293,7 +293,7 @@ curl https://integrate.api.nvidia.com/v1/chat/completions \
 ## 4. Connection probing spec (for the navigator backend)
 
 Reuse `_resolve_connection()` + `endpoint_up()` + `list_local_models()` from
-`week23/01_nemotron_models/config.py` verbatim, with these normative rules:
+`week23_open_superintelligence_stack/01_nemotron_models/config.py` verbatim, with these normative rules:
 
 **Resolution order (first match wins):**
 1. **`DGX_BASE_URL`** (or legacy `EDGE_BASE_URL`) explicit → use as-is; infer the label

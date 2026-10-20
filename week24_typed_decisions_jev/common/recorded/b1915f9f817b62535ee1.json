@@ -1,0 +1,75 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "ขอใบเสร็จแยกเป็นสองใบได้ไหมครับ ห้อง 2003 จ่ายคนละครึ่ง"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets, showers",
+     "safety": "smoke, burning smell, fire, sparks, or water near electricity",
+     "front_desk": "check-in, check-out, billing, room changes, stay extensions"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   },
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is `message`?",
+    "criteria": [
+     "routine — whenever convenient, or nothing needs doing",
+     "today — a problem that should be fixed today",
+     "immediate — danger or damage happening now"
+    ]
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "front_desk",
+    "confidence": 1.0,
+    "probabilities": {
+     "hvac": 0.0,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 0.0,
+     "front_desk": 1.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.01
+   },
+   "urgency": {
+    "type": "score",
+    "score": 0.12,
+    "confidence": 0.83,
+    "legend": {
+     "0": "routine — whenever convenient, or nothing needs doing",
+     "1": "today — a problem that should be fixed today",
+     "2": "immediate — danger or damage happening now"
+    },
+    "probabilities": {
+     "0": 0.89,
+     "1": 0.11,
+     "2": 0.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 539,
+   "output_tokens": 97
+  }
+ }
+}

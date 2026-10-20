@@ -1,0 +1,45 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-bdb430c290c344ad"
+  },
+  "questions": {
+   "puddle": {
+    "type": "box",
+    "instructions": "the puddle of liquid on the floor in `photo`"
+   }
+  },
+  "assets": {
+   "img-bdb430c290c344ad": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "6ee70a72fa31a4ef",
+    "base64_chars": 208176
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "puddle": {
+    "type": "box",
+    "box": {
+     "top": 0.67,
+     "bottom": 0.95,
+     "left": 0.15,
+     "right": 0.76
+    },
+    "confidence": 0.71
+   }
+  },
+  "usage": {
+   "input_tokens": 2654,
+   "output_tokens": 22
+  }
+ }
+}

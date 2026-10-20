@@ -15,7 +15,7 @@ external network:
   7. Revocation        revoke the token → the next call is 401
   8. Audit             dump the app's audit log
 
-    .venv/bin/python week17/authmd_adk/run_authmd_demo.py
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_authmd_demo.py
 
 Only needs: fastapi, uvicorn, httpx, pyjwt[crypto]. No google-adk, no API key.
 """

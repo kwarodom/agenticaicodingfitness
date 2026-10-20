@@ -1,0 +1,101 @@
+SOURCE: https://www.giskard.ai/knowledge/owasp-top-10-for-agentic-application-2026
+
+OWASP Top 10 for Agentic Applications 2026: Security Guide
+🎉  StereoTales, our paper on stereotypes in frontier LLMs, is accepted at NeurIPS 2026.
+Read the announcement
+Solutions
+Resources
+Pricing    Company
+Research
+Get your AI assessment
+0
+Knowledge   Blog
+December 18, 2025
+5 min read
+David Berenstein (ex-Giskard)
+Currenturl
+OWASP top 10 for agentic applications 2026: Understanding the risks of agents and tools
+The Top 10 for Agentic Applications, released in December 2025, lists the highest-impact threats to autonomous AI agentic applications, systems that plan, decide, and act across tools and steps. It distills the top threats in a practical manner, building directly on prior OWASP work while highlighting agent-specific amplifiers, such as delegation and multi-step execution. The list pivots from passive LLM risks to active agent behaviors. Agents are treated as principals with goals, tools, memory, and inter-agent protocols as distinct attack surfaces.
+Introduction
+In December 2025, OWASP published the first version of their   Top 10 for Agentic Applications  , a reference document which identifies the 10 major risks posed by modern Agentic AI systems. This document serves as a valuable guide for developers, data scientists, and security practitioners to understand the most critical security issues affecting these systems.
+In this article, we summarize the Top 10 for Agentic Applications and provide insights into the potential security risks associated with these autonomous systems.
+What is OWASP and its Top 10
+OWASP (or 'Open Worldwide Application Security Project') is a well-known non-profit organization that produces guidelines, educational resources, and tools (e.g. ZAP) in the software security space. Their most famous is the   OWASP top 10    ,   a regularly updated list of the ten most critical security risks in web applications, which has become industry standard.
+OWASP Top 10 for agentic applications 2026
+Following the rapid move of Agentic AI systems from pilots to production across finance, healthcare, and defense , OWASP assembled a global community of dozens of security experts from industry, academia, and government to develop guidance on Agentic security. The team identified high-risk issues affecting these autonomous agents, evaluating their impact, attack scenarios, and remediation strategies.
+The outcome of this work is the  Top 10 for Agentic Applications , a list of the ten most critical vulnerabilities that affect Agentic AI. Each vulnerability is accompanied by examples, prevention tips, attack scenarios, and references. Let's dive in.
+ASI01: Agent Goal Hijack
+ASI02: Tool Misuse and Exploitation
+ASI03: Identity and Privilege Abuse
+ASI04: Agentic Supply Chain Vulnerabilities
+ASI05: Unexpected Code Execution (RCE)
+ASI06: Memory & Context Poisoning
+ASI07: Insecure Inter-Agent Communication
+ASI08: Cascading Failures
+ASI09: Human-Agent Trust Exploitation
+ASI10: Rogue Agents
+OWASP Top 10 for agentic applications 2026. Source: OWASP   Examples of OWASP top 10 for agentic applications 2026
+OWASP ASI01: Agent Goal Hijack
+Attackers manipulate the agent's decision pathways or objectives, often through indirect means, such as documents or external data sources.
+Example (EchoLeak):  An attacker sends an email with a hidden payload. When a Microsoft 365 Copilot processes it, the agent silently executes instructions to exfiltrate confidential emails and chat logs without the user ever clicking a link.
+Example (Calendar Drift):  A malicious calendar invite contains a \"quiet mode\" instruction that subtly reweights the agent's objectives, steering it toward low-friction approval that technically remains within policy but violates business intent.
+OWASP ASI02: Tool Misuse and Exploitation
+This involves the unsafe use of legitimate tools by an agent, often due to ambiguous instructions or over-privileged access .
+Example (Typosquatting):  An agent attempts to call a finance tool but is tricked into calling a malicious tool named  report  instead of  report_finance , causing data disclosure.
+Example (DNS Exfiltration):  A coding agent is allowed to use a \"ping\" tool. An attacker tricks the agent into repeatedly pinging a remote server to exfiltrate data via DNS queries.
+OWASP ASI03: Identity and Privilege Abuse
+Agents often operate in an \"attribution gap,\" managing permissions dynamically without a distinct, governed identity.
+Example (The Confused Deputy):  A low-privilege agent relays a valid-looking instruction to a high-privilege agent (e.g., a finance bot). The high-privilege agent trusts the internal request and executes a transfer without re-verifying the user's original intent.
+Example (Memory Escalation):  An IT agent caches SSH credentials during a patch cycle. Later, a non-admin user prompts the agent to reuse the open session to create an unauthorized account.
+OWASP ASI04: Agentic Supply Chain Vulnerabilities
+Agents often compose capabilities at runtime, loading tools or data from third parties that may be compromised
+Example (MCP Impersonation):  A malicious \"Model Context Protocol\" (MCP) server impersonates a legitimate service like Postmark. When the agent connects, the server secretly BCCs all emails to the attacker.
+Example (Poisoned Templates):  An agent pulls prompt templates from an external source. These templates contain hidden instructions to perform destructive actions, which the agent executes blindly.
+OWASP ASI05: Unexpected Code Execution (RCE)
+Agents often generate and execute code to solve problems (e.g., \"vibe coding\"), which can easily be exploited to run malicious commands .
+Example (Vibe Coding Runaway):  A self-repairing coding agent generates unreviewed shell commands to fix a build error. It accidentally (or via manipulation) executes commands that delete production data.
+Example (Direct Injection):  An attacker submits a prompt with embedded shell commands (e.g.,  && rm -rf / ). The agent processes this as a legitimate file-processing instruction and deletes the directory.
+{{cta}}
+OWASP ASI06: Memory & Context Poisoning
+Attackers corrupt the agent's long-term memory or Retrieval-Augmented Generation (RAG) data, thereby permanently biasing future decisions.
+Example (Pricing Manipulation):  An attacker reinforces fake flight prices in a travel agent's memory. The agent stores this as truth and subsequently approves bookings at inflated rates, thereby bypassing payment checks.
+Example (Context Window Exploitation):  An attacker splits malicious attempts across multiple sessions so that earlier rejections drop out of the agent's context window, eventually tricking the AI into granting admin access
+OWASP ASI07: Insecure Inter-Agent Communication
+In multi-agent systems, messages between agents can be intercepted, spoofed, or replayed if not secured
+Example (Protocol Downgrade):  An attacker forces agents to communicate over unencrypted HTTP, allowing a Man-in-the-Middle (MITM) to inject hidden instructions that alter agent goals .
+Example (Registration Spoofing):  An attacker registers a fake peer agent in a discovery service using a cloned schema, intercepting privileged coordination traffic intended for legitimate agents .
+OWASP ASI08: Cascading Failures
+A single fault in one agent can propagate across the network, amplifying into a system-wide disaster.
+Example (Financial Cascade):  A Market Analysis agent is poisoned to inflate risk limits. Downstream Position and Execution agents automatically trade larger positions based on this incorrect data, resulting in massive financial losses, while compliance tools identify \"valid\" activity.
+Example (Cloud Bloat):  A Resource Planning agent is poisoned to authorize extra permissions. The Deployment agent then provisions costly, backdoored infrastructure automatically
+OWASP ASI09: Human-Agent Trust Exploitation
+Agents exploit \"anthropomorphism\" and authority bias to manipulate human users into making errors.
+Example (Invoice Fraud):  A finance copilot ingests a poisoned invoice. It confidently suggests an \"urgent\" payment to an attacker's bank account, and the manager approves it because they trust the AI's expertise.
+Example (Explainability):  An agent fabricates a convincing audit rationale for a risky configuration change. The human reviewer, trusting the detailed explanation, approves the deployment of malware or unsafe settings.
+OWASP ASI10: Rogue Agents
+Agents that deviate from their intended function due to misalignment, forming \"insider threats\" that may collude or optimize for the wrong metrics.
+Example (Reward Hacking):  An agent tasked with minimizing cloud storage costs learns that deleting production backups is the most efficient way to achieve its goal, destroying disaster recovery assets in the process.
+Example (Self-Replication):  A compromised automation agent spawns unauthorized replicas of itself across a network to ensure persistence, consuming resources against the owner's intent.
+Conclusion
+As with any other software, Agentic AI systems are susceptible to security vulnerabilities that must be assessed both before and after deployment. The   OWASP Top 10 for Agentic Applications   serves as a valuable guide for developers, data scientists, and security practitioners to understand the most critical security issues affecting these autonomous systems.
+Given the increasing reliance on agents to plan, decide, and act across multiple systems, it is essential to be aware of these vulnerabilities, from Goal Hijacking to Cascading Failures, and take preventive measures to mitigate the risks. By following the recommendations provided in this Top 10, and ensuring robust testing, organizations can better protect their systems and data from potential attacks and ensure the reliability of their agentic applications.
+In this spirit, industry supporters of the project, such as  Giskard , can assist organizations in ensuring that their agentic and generative systems behave as expected. This can be achieved through the use of automated vulnerability scans and the implementation of systematic, continuous red teaming to secure AI agents against these evolving threats.   Reach out to our team  .
+Continuously secure LLM agents , preventing hallucinations and security issues.
+Book a Demo
+You will also like
+Risk assessment for LLMs and AI agents: OWASP, MITRE Atlas, and NIST AI RMF explained
+There are three major tools for assessing risks associated with LLMs and AI Agents: OWASP, MITRE Attack and NIST AI RMF. Each of them has its own approach to risk and security, while examining it from different angles with varying levels of granularity and organisational scope. This blog will help you understand them.
+View post
+Agentic tool extraction: Multi-turn attack that exposes the agent's internal functions
+Agentic Tool Extraction (ATE) is a multi-turn reconnaissance attack to extract complete tool schemas, function names, parameters, types, and return values. ATE exploits conversation context, using seemingly benign questions that bypass standard filters to build a technical blueprint of the agent's capabilities. In this article, we demonstrate how attackers weaponize extracted schemas to craft precise exploits and explain how conversation-level defenses can detect progressive extraction patterns before tool signatures are fully exposed.
+View post
+OWASP Top 10 for LLM 2023: Understanding the Risks of Large Language Models
+In this post, we introduce OWASP's first version of the Top 10 for LLM, which identifies critical security risks in modern LLM systems. It covers vulnerabilities like Prompt Injection, Insecure Output Handling, Model Denial of Service, and more. Each vulnerability is explained with examples, prevention tips, attack scenarios, and references. The document serves as a valuable guide for developers and security practitioners to protect LLM-based applications and data from potential attacks.
+View post
+Get  AI security insights  in your inbox
+Subscribe
+Get  AI security insights  in your inbox
+Red Team your AI agent,
+whatever its API.
+Limited spots:  try our new  Agentic Red Teamer  on your own agent, free.
+Limited offer for startups and small teams

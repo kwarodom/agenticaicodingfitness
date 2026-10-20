@@ -18,11 +18,11 @@
 
 | Need | Check | Why |
 |---|---|---|
-| Module 14 done | `week25/.venv-nat/bin/nat --version` | the agent you will sandbox |
+| Module 14 done | `week25_dgx_spark/.venv-nat/bin/nat --version` | the agent you will sandbox |
 | Module 05 done on the Spark | vLLM answers on `:8000`, started with `--host 0.0.0.0` | the model the sandbox routes to |
 | Docker without sudo on the Spark, with the NVIDIA runtime | `docker ps` on the Spark | OpenShell runs a k3s cluster inside Docker |
 | Python ≥ 3.12 on the Spark | `python3 --version` | a playbook prerequisite |
-| This repo cloned on the Spark | `ls ~/agenticaicodingfitness/week25` | lab 15-4 uploads the NAT module into the sandbox from there |
+| This repo cloned on the Spark | `ls ~/agenticaicodingfitness/week25_dgx_spark` | lab 15-4 uploads the NAT module into the sandbox from there |
 
 > ⚠ The playbook's first instruction: **use a clean environment**. Run agents on a Spark (or VM) without personal data, real accounts or production credentials. OpenShell lowers the risk of running an agent; it does not remove it.
 
@@ -93,15 +93,15 @@ sudo loginctl enable-linger $USER
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-uv venv -p 3.12 week25/15_openshell_sandbox/.venv-openshell
-uv pip install --python week25/15_openshell_sandbox/.venv-openshell/bin/python "openshell==0.0.111"
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_1_install_and_gateway.py
+uv venv -p 3.12 week25_dgx_spark/15_openshell_sandbox/.venv-openshell
+uv pip install --python week25_dgx_spark/15_openshell_sandbox/.venv-openshell/bin/python "openshell==0.0.111"
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_1_install_and_gateway.py
 ```
 
 **Expected output** (the laptop half, captured on this Mac; the Spark half is DRY here)
 
 ```
-▣ STEP B1 · the OpenShell CLI on this laptop (openshell==0.0.111 in week25/15_openshell_sandbox/.venv-openshell)
+▣ STEP B1 · the OpenShell CLI on this laptop (openshell==0.0.111 in week25_dgx_spark/15_openshell_sandbox/.venv-openshell)
 $ openshell --version   [this laptop]
 openshell 0.0.111
 …
@@ -204,11 +204,11 @@ The rules a policy must follow are spread over three playbooks. Collected in one
 | Every endpoint has `host` and `port` | same row | the gateway, on push |
 | Each group needs `binaries`, and each endpoint an access mode, or calls fail with `CONNECT tunnel failed, response 403` | NemoClaw-applications | nobody — it applies cleanly and then denies |
 
-Lab 15-2 generates the policy from a short Python spec, then checks it and eight broken variants with **policykit** (`week25/15_openshell_sandbox/policykit.py`, a course-made validator for the rules above) and with the **real OpenShell parser**. The trick: `openshell policy set` parses the file on your laptop before it contacts a gateway, so pointing it at a closed port (`OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9`) tells "parse error" apart from "parsed, then could not connect" — no gateway needed.
+Lab 15-2 generates the policy from a short Python spec, then checks it and eight broken variants with **policykit** (`week25_dgx_spark/15_openshell_sandbox/policykit.py`, a course-made validator for the rules above) and with the **real OpenShell parser**. The trick: `openshell policy set` parses the file on your laptop before it contacts a gateway, so pointing it at a closed port (`OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9`) tells "parse error" apart from "parsed, then could not connect" — no gateway needed.
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_2_policy_builder.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_2_policy_builder.py
 ```
 
 **Expected output** (captured on this Mac, trimmed)
@@ -245,7 +245,7 @@ Before you push a policy, ask what it lets the agent do. Lab 15-3 replays thirte
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_3_what_would_it_allow.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_3_what_would_it_allow.py
 ```
 
 **Expected output** (captured on this Mac; policykit model, not OpenShell)
@@ -301,10 +301,10 @@ Now combine Modules 14 and 15. Lab 15-4 prints — and with `--yes` runs — the
 
 ```bash
 # on: spark
-cd ~/agenticaicodingfitness/week25
+cd ~/agenticaicodingfitness/week25_dgx_spark
 mkdir -p ~/w25 && cp 15_openshell_sandbox/policies/hotel_agent_policy.yaml ~/w25/
 openshell sandbox create --name hotel-agent --from base --policy ~/w25/hotel_agent_policy.yaml \
-  --upload ~/agenticaicodingfitness/week25/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true
+  --upload ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true
 openshell sandbox exec -n hotel-agent -- python3 -m venv /sandbox/.venv-nat
 openshell sandbox exec -n hotel-agent -- /sandbox/.venv-nat/bin/pip install -q 'nvidia-nat[langchain]~=1.9' greenlet
 openshell sandbox exec -n hotel-agent -- /sandbox/.venv-nat/bin/pip install -q --no-deps -e /sandbox/14_nat_agents/hotel_ops_nat
@@ -320,7 +320,7 @@ From the laptop, the same with the lab (DRY prints each command with an EXAMPLE 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_4_sandbox_the_nat_agent.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_4_sandbox_the_nat_agent.py
 ```
 
 **Expected output** (EXAMPLE — illustrative shape, not a measurement)
@@ -400,7 +400,7 @@ Labs 15-2 and 15-3 are offline and identical on every machine. Lab 15-1's Spark 
 
 ## Try it yourself
 
-**Exercise 15 — lock down the agent.** After setup, the NAT agent needs no package index: only its files and its model. Open `week25/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py` and write the **runtime** policy in three `TODO`s:
+**Exercise 15 — lock down the agent.** After setup, the NAT agent needs no package index: only its files and its model. Open `week25_dgx_spark/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py` and write the **runtime** policy in three `TODO`s:
 
 1. `filesystem()`: the OS readable, only `/sandbox`, `/tmp` and `/dev/null` writable.
 2. `network_policies()`: exactly one group, `inference`, for `inference.local:443` and the NAT venv's Python.
@@ -410,7 +410,7 @@ The checker validates your policy with policykit, then replays twelve actions an
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py
 ```
 
 **Expected output** (once all three TODOs are done, captured on this Mac, trimmed)

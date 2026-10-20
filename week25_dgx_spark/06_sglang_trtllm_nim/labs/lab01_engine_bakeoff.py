@@ -10,7 +10,7 @@ a time. The table reports medians of time-to-first-token and decode tok/s.
 With no Spark, only this laptop's Ollama is up: it is run as ONE clearly labelled LAPTOP STAND-IN row, so you
 see the method working. It is not an engine result and must not be compared with Spark rows.
 
-Run: .venv/bin/python week25/06_sglang_trtllm_nim/labs/lab01_engine_bakeoff.py [--max-tokens 100]
+Run: .venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab01_engine_bakeoff.py [--max-tokens 100]
 """
 import argparse
 import statistics

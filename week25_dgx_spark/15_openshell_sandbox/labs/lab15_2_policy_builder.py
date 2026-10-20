@@ -11,7 +11,7 @@
    start with /, no root user, host + port present) are checked later, by the gateway — which is why
    policykit exists.
 
-Run: .venv/bin/python week25/15_openshell_sandbox/labs/lab15_2_policy_builder.py
+Run: .venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_2_policy_builder.py
 """
 import copy
 import os

@@ -6,12 +6,12 @@
 container** that runs on your DGX. One `docker run` → a sovereign production endpoint.
 
 Runs **dual-mode**: **REAL** against a NIM / Ollama / vLLM OpenAI endpoint, or **SIM**
-with no GPU (`week23/02_nim_microservices/sim.py`).
+with no GPU (`week23_open_superintelligence_stack/02_nim_microservices/sim.py`).
 
 ## Run the web tutorial
 
 ```bash
-cd week23/nim_microservices
+cd week23_open_superintelligence_stack/nim_microservices
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8101
 ```

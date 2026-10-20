@@ -7,7 +7,7 @@ laptop Ollama (nemotron-3-nano) — first exactly as written, then with the one 
 On the Spark (read-only or gated by change()): the uv install of NAT and the Nemotron 3 Nano vLLM container.
 
 LLM budget: at most 3 laptop LLM calls.
-Run: .venv/bin/python week26/04_nat_claws/labs/lab04_1_hello_workflow.py
+Run: .venv/bin/python week26_nemoclaw_claws/04_nat_claws/labs/lab04_1_hello_workflow.py
 """
 import shutil
 import sys

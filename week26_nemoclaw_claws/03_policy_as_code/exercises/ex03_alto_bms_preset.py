@@ -7,7 +7,7 @@ hotel's BMS REST API at bms.alto.local:8443 (it resolves to 10.20.0.15). Only /u
   POST /api/v1/admin/**       DENIED, even if an allow rule would match — enforced, not just audited.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week26/03_policy_as_code/exercises/ex03_alto_bms_preset.py
+    .venv/bin/python week26_nemoclaw_claws/03_policy_as_code/exercises/ex03_alto_bms_preset.py
 
 The checker is free and offline: policykit.validate, a policykit.decide() test matrix (a teaching model), and —
 if the laptop CLI is installed — the real OpenShell 0.0.111 parser. Stuck? Compare with exercises/solutions/.

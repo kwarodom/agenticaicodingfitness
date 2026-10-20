@@ -10,7 +10,7 @@ Research tutorial Lab 4.1 (L4.1). On THIS laptop, for real:
   5. the trace file parsed: span names, LLM vs TOOL spans, token counts, durations, open spans.
 The Spark half (Phoenix in Docker next to vLLM) is shown with sh()/change(): DRY → EXAMPLE, never a fake trace.
 
-Run: .venv/bin/python week26/05_tracing/labs/lab05_1_file_and_phoenix.py
+Run: .venv/bin/python week26_nemoclaw_claws/05_tracing/labs/lab05_1_file_and_phoenix.py
 """
 import json
 import re
@@ -60,7 +60,7 @@ probe = ("from nat.observability.register import FileTelemetryExporterConfig as 
          "for k, v in C.model_fields.items():\n"
          "    print(f'{k}|' + ('REQUIRED' if v.is_required() else repr(v.default)))")
 r = laptop([NAT_PY, "-c", probe], quiet=True, timeout=120,
-           show="week26/.venv-nat/bin/python -c 'from nat.observability.register import FileTelemetryExporterConfig …'")
+           show="week26_nemoclaw_claws/.venv-nat/bin/python -c 'from nat.observability.register import FileTelemetryExporterConfig …'")
 fields = [ln.split("|", 1) for ln in r.out.splitlines() if "|" in ln and not ln.startswith(" ")]
 if fields:
     table([[k, v] for k, v in fields], ["field", "default"])
@@ -78,11 +78,11 @@ TUTORIAL_BLOCK = """general:
 tut = RUNS / "lab05_1_tutorial_block.yml"
 tut.write_text(TUTORIAL_BLOCK, encoding="utf-8")
 r = laptop([NAT, "validate", "--config_file", tut], quiet=True, timeout=120,
-           show="nat validate --config_file week26/05_tracing/.runs/lab05_1_tutorial_block.yml")
+           show="nat validate --config_file week26_nemoclaw_claws/05_tracing/.runs/lab05_1_tutorial_block.yml")
 err = next((ln.strip() for ln in r.out.splitlines() if ln.startswith("Invalid configuration")), "")
 print(("✕ " if r.code else "✓ ") + f"research tutorial's block → exit {r.code}" + (f" · {err}" if err else ""))
 r = laptop([NAT, "validate", "--config_file", CONFIGS / "workflow.traced.yml"], quiet=True, timeout=120,
-           show="nat validate --config_file week26/05_tracing/configs/workflow.traced.yml")
+           show="nat validate --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml")
 print(("✓ " if r.ok else "✕ ") + f"course block (output_path + project + mode) → exit {r.code}")
 
 step(3, "Phoenix: is anything answering on localhost:6006?")
@@ -111,7 +111,7 @@ if trace.exists():
     trace.unlink()
 t0 = time.time()
 r = laptop([NAT, "run", "--config_file", cfg, "--input", QUESTION], cwd=ROOT, quiet=True, timeout=400,
-           show=f'nat run --config_file week26/05_tracing/.runs/{cfg.name} --input "{QUESTION}"')
+           show=f'nat run --config_file week26_nemoclaw_claws/05_tracing/.runs/{cfg.name} --input "{QUESTION}"')
 wall = time.time() - t0
 answer = r.out.split("Workflow Result:", 1)[-1].strip().strip("-").strip() if "Workflow Result:" in r.out else ""
 answer = re.sub(r"\x1b\[[0-9;]*m", "", answer).split("\n-----", 1)[0].strip()

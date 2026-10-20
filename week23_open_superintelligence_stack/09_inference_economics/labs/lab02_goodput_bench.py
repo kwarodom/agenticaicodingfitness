@@ -8,7 +8,7 @@ your live endpoint. We grade each reply, count tokens per attempt, and compute
 
 then a sensitivity table shows why success rate dominates sticker price.
 
-Run:  cd <repo root> && .venv/bin/python week23/09_inference_economics/labs/lab02_goodput_bench.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/09_inference_economics/labs/lab02_goodput_bench.py
 Override the per-token price:  LAB_MTOK=0.45 (illustrative $/1M output tokens)
 """
 from __future__ import annotations

@@ -22,13 +22,13 @@
 | ต้องมี | ตรวจด้วย | เพื่ออะไร |
 |---|---|---|
 | Python ของ repo นี้ | `.venv/bin/python --version` → 3.13 | รันแล็บ, policykit และตัวตรวจแบบฝึกหัด |
-| OpenShell CLI บนแล็ปท็อป | `week26/.venv-openshell/bin/openshell --version` | parser ตัวจริงที่ทุกแล็บในโมดูลนี้ใช้ถาม |
+| OpenShell CLI บนแล็ปท็อป | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` | parser ตัวจริงที่ทุกแล็บในโมดูลนี้ใช้ถาม |
 | claw จาก Module 02 (ไม่บังคับ) | `ssh <spark> nemoclaw my-assistant status` | แล็บ 03-1, 03-3 และ 03-4 อ่านและเปลี่ยน policy ของมัน ถ้าไม่มีก็รันแบบ DRY |
 | ชื่อ sandbox ของคุณ | 🖥 Spark setup → `CLAW_SANDBOX` (ค่าเริ่มต้น `my-assistant`) | ทุกคำสั่งฝั่ง Spark ในโมดูลนี้ใช้ชื่อนี้ |
 
 ```bash
 # on: laptop
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 command -v nemoclaw || echo "nemoclaw: not on this laptop"
 ```
 
@@ -41,7 +41,7 @@ nemoclaw: not on this laptop
 
 ถูกต้องแล้ว NemoClaw อยู่บน Spark ส่วนบนแล็ปท็อป OpenShell **0.0.111** เป็นแค่ parser: แล็บจะรันมันโดยชี้ไปที่ gateway ที่ไม่มีอะไรฟังอยู่ (`127.0.0.1:9`) อะไรที่ CLI ตรวจเองได้จะล้มทันที ส่วนอะไรที่ผ่านการตรวจเหล่านั้นไปแล้วจะล้มด้วย `Connection refused` ซึ่งพิสูจน์ว่ามัน parse ผ่าน NemoClaw ตรึงเวอร์ชัน **0.0.116** ไว้บน Spark และรุ่นล่าสุดคือ **0.1.2** ถ้า flag บนเครื่องคุณต่างไป ให้เชื่อ `--help`
 
-> 📌 **policykit เป็นแบบจำลองเพื่อการสอน** `week26/common/policykit.py` ทำตามกฎที่เอกสารอธิบาย เพื่อให้คุณคิดเรื่อง policy ได้ก่อน push มันไม่ใช่ OpenShell ตัวที่บังคับใช้จริงคือ Landlock, seccomp และ proxy บน Spark จุดไหนที่ policykit กับ CLI ตัวจริงเห็นไม่ตรงกัน โมดูลนี้จะแสดงให้ดูทั้งสองฝั่ง
+> 📌 **policykit เป็นแบบจำลองเพื่อการสอน** `week26_nemoclaw_claws/common/policykit.py` ทำตามกฎที่เอกสารอธิบาย เพื่อให้คุณคิดเรื่อง policy ได้ก่อน push มันไม่ใช่ OpenShell ตัวที่บังคับใช้จริงคือ Landlock, seccomp และ proxy บน Spark จุดไหนที่ policykit กับ CLI ตัวจริงเห็นไม่ตรงกัน โมดูลนี้จะแสดงให้ดูทั้งสองฝั่ง
 
 ✓ Checkpoint: `openshell --version` บนแล็ปท็อปพิมพ์ 0.0.111 และคุณรู้ว่าแล็บจะใช้ชื่อ sandbox อะไร
 
@@ -91,7 +91,7 @@ openshell policy list my-assistant
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_1_read_policy.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_1_read_policy.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — step 5) [บันทึกจาก Mac เครื่องนี้ในโหมด DRY — ขั้นที่ 5]
@@ -118,7 +118,7 @@ $ openshell policy get my-assistant --base --full   [this laptop]
 
 ## 3 · L2.2 — กายวิภาคของไฟล์ policy
 
-`week26/03_policy_as_code/policies/anatomy.yaml` คือ schema policy พร้อมคำอธิบายจาก research tutorial:
+`week26_nemoclaw_claws/03_policy_as_code/policies/anatomy.yaml` คือ schema policy พร้อมคำอธิบายจาก research tutorial:
 
 ```yaml
 version: 1
@@ -217,7 +217,7 @@ network_policies:
 
 ```bash
 # on: laptop
-cd week26 && OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9 HOME=.runs/openshell-home \
+cd week26_nemoclaw_claws && OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9 HOME=.runs/openshell-home \
   .venv-openshell/bin/openshell policy set parse-probe --policy 03_policy_as_code/policies/anatomy.yaml
 ```
 
@@ -234,7 +234,7 @@ Error:   × transport error
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_2_policy_anatomy.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_2_policy_anatomy.py
 ```
 
 **Expected output** (captured on this Mac — steps 3 and 4, command echo lines trimmed) [บันทึกจาก Mac เครื่องนี้ — ขั้นที่ 3 และ 4 ตัดบรรทัดคำสั่งออก]
@@ -322,7 +322,7 @@ openshell policy list my-assistant
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_3_iterate_loop.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_3_iterate_loop.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — steps 1 and 3, command echo lines trimmed) [บันทึกจาก Mac เครื่องนี้ในโหมด DRY — ขั้นที่ 1 และ 3 ตัดบรรทัดคำสั่งออก]
@@ -533,7 +533,7 @@ Expected output should show `provider: local-vllm` and your chosen `model`.
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_5_byo_vllm.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_5_byo_vllm.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — step 3 and the parser table of step 5) [บันทึกจาก Mac เครื่องนี้ในโหมด DRY — ขั้นที่ 3 และตาราง parser ของขั้นที่ 5]
@@ -594,7 +594,7 @@ sandbox แบบอื่นที่ควรรู้: `--from base` (Ubuntu 
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/exercises/ex03_alto_bms_preset.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/exercises/ex03_alto_bms_preset.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled) [บันทึกจาก Mac เครื่องนี้ เมื่อเติมทุก TODO แล้ว]

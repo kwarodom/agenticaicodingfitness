@@ -11,7 +11,7 @@ With no endpoint it runs the folder's SIM regex rails, clearly labeled — so
 nobody is blocked.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/07_guardrails_openshell/labs/lab03_redteam_scorecard.py
+      .venv/bin/python week23_open_superintelligence_stack/07_guardrails_openshell/labs/lab03_redteam_scorecard.py
 """
 from __future__ import annotations
 

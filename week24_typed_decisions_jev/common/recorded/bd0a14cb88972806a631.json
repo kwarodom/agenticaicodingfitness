@@ -1,0 +1,53 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-5b45482c172d2986"
+  },
+  "questions": {
+   "same_room": {
+    "type": "noul",
+    "instructions": "Is `photo` the same plant room, with the same equipment layout, as this reference picture taken on a normal day: img-c7d2cd2cf789676f?"
+   },
+   "differs_from_normal": {
+    "type": "noul",
+    "instructions": "Compared with this reference picture of a normal day: img-c7d2cd2cf789676f, does `photo` show smoke, steam or haze that is not in the reference?"
+   }
+  },
+  "assets": {
+   "img-5b45482c172d2986": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "ad7131efe6f0f507",
+    "base64_chars": 111616
+   },
+   "img-c7d2cd2cf789676f": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "180e9154317fc051",
+    "base64_chars": 216312
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "same_room": {
+    "type": "noul",
+    "noul": 0.53
+   },
+   "differs_from_normal": {
+    "type": "noul",
+    "noul": 0.98
+   }
+  },
+  "usage": {
+   "input_tokens": 6702,
+   "output_tokens": 40
+  }
+ }
+}

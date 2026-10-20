@@ -28,7 +28,7 @@ commands and config are always shown.
 ## Quick start
 
 ```bash
-uv pip install -r week19/dgx_litellm/requirements.txt
+uv pip install -r week19_sovereign_ai_dgx/dgx_litellm/requirements.txt
 
 # (optional) run a REAL gateway — step 1 writes the config for you
 pip install 'litellm[proxy]'
@@ -38,7 +38,7 @@ export LITELLM_BASE_URL=http://localhost:4000
 ollama run qwen3.6:35b-a3b-q8_0      # gemma4:12b on a Mac
 
 # the interactive web app
-.venv/bin/python week19/dgx_litellm/tutorial_server.py
+.venv/bin/python week19_sovereign_ai_dgx/dgx_litellm/tutorial_server.py
 # → open http://127.0.0.1:8096
 ```
 
@@ -50,7 +50,7 @@ Env overrides: `LITELLM_BASE_URL`, `LITELLM_KEY`, `DGX_BASE_URL` (the backend),
 ## Layout
 
 ```
-week19/dgx_litellm/
+week19_sovereign_ai_dgx/dgx_litellm/
 ├── README.md · requirements.txt · config.py
 ├── litesim.py          → the LiteLLM router simulator (model_list, routing, keys)
 ├── liteview.py         → the gateway-call engine (proxy / direct / sim)

@@ -1,0 +1,8 @@
+# The PEP allow-list as a SEPARATE, hand-maintained file (Lab 08-3's drift example).
+# Nobody updated it when the manifest went to v2, so the concierge can still send email.
+version: 1
+allow:
+  orchestrator: []
+  concierge: [lookup_guest, send_email, search_sop, fetch_url, remember, recall]
+  energy: [get_room_status, set_room_setpoint, set_chiller_setpoint, recall]
+  maintenance: [create_work_order, search_sop, place_order, recall]

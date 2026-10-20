@@ -18,7 +18,7 @@ pair answers with one real chat: on the Spark's vLLM, or on the laptop stand-in 
 It never edits ~/.openclaw/openclaw.json. With a Spark, the two files are copied to
 ~/w25/agents/ for you to merge by hand.
 
-Run: .venv/bin/python week25/17_openclaw_hermes/labs/lab17_3_agent_configs.py [--context 262144]
+Run: .venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_3_agent_configs.py [--context 262144]
 """
 import argparse
 import json

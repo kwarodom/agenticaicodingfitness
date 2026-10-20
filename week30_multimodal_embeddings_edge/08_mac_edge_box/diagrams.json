@@ -1,0 +1,230 @@
+{
+ "architecture": {
+  "title": "One Mac, three runtimes, one always-on service",
+  "caption": "On Apple silicon the CPU, GPU and Neural Engine share unified memory. EmbeddingGemma 2 runs through PyTorch (MPS), MLX or ONNX Runtime. MLX 4-bit backs the local embedding service that small devices call over HTTP. CoreML/Neural Engine could take only 22 % of the graph and refused the model's empty media inputs (Lab 08-1).",
+  "lanes": [
+   {
+    "id": "dev",
+    "label": "small devices (LAN)"
+   },
+   {
+    "id": "mac",
+    "label": "Mac (unified memory)"
+   },
+   {
+    "id": "hw",
+    "label": "Apple silicon"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "esp",
+    "label": "ESP32 · Pi · BMS gateway",
+    "lane": "dev",
+    "sub": "send words, get meaning",
+    "accent": "amber"
+   },
+   {
+    "id": "svc",
+    "label": "embed_service.py",
+    "lane": "mac",
+    "sub": "/embed · /search · loopback by default",
+    "accent": "green"
+   },
+   {
+    "id": "mlx",
+    "label": "MLX bf16 / 4-bit",
+    "lane": "mac",
+    "sub": "7.3 / 6.1 ms per query",
+    "accent": "green"
+   },
+   {
+    "id": "pt",
+    "label": "PyTorch + MPS",
+    "lane": "mac",
+    "sub": "22.5 ms · the reference",
+    "accent": "cyan"
+   },
+   {
+    "id": "onnx",
+    "label": "ONNX Runtime q4",
+    "lane": "mac",
+    "sub": "175 MB · text only · CPU",
+    "accent": "violet"
+   },
+   {
+    "id": "gpu",
+    "label": "GPU",
+    "lane": "hw",
+    "sub": "MLX · MPS",
+    "accent": "green"
+   },
+   {
+    "id": "ane",
+    "label": "Neural Engine (CoreML)",
+    "lane": "hw",
+    "sub": "22 % of graph · refused",
+    "accent": "red"
+   }
+  ],
+  "edges": [
+   {
+    "from": "esp",
+    "to": "svc",
+    "label": "HTTP JSON + token",
+    "animated": true
+   },
+   {
+    "from": "svc",
+    "to": "mlx",
+    "label": ""
+   },
+   {
+    "from": "mlx",
+    "to": "gpu",
+    "label": ""
+   },
+   {
+    "from": "pt",
+    "to": "gpu",
+    "label": ""
+   },
+   {
+    "from": "onnx",
+    "to": "ane",
+    "label": "CoreML EP ✕"
+   }
+  ]
+ },
+ "sequence": {
+  "title": "A small device asks the Mac",
+  "caption": "The video's Arduino → Mac Studio pattern, for embeddings. 9 ms round trip on this Mac (Lab 08-3).",
+  "actors": [
+   {
+    "id": "d",
+    "label": "small device"
+   },
+   {
+    "id": "s",
+    "label": "embed service"
+   },
+   {
+    "id": "m",
+    "label": "MLX model"
+   }
+  ],
+  "steps": [
+   {
+    "from": "d",
+    "to": "s",
+    "label": "POST /search {\"q\": \"someone is stuck in the lift\"}",
+    "kind": "call"
+   },
+   {
+    "from": "s",
+    "to": "m",
+    "label": "embed query (prefix added)",
+    "kind": "call"
+   },
+   {
+    "from": "m",
+    "to": "s",
+    "label": "768-d vector",
+    "kind": "return"
+   },
+   {
+    "from": "s",
+    "to": "d",
+    "label": "[Lift entrapment 0.832, …]",
+    "kind": "return"
+   },
+   {
+    "from": "s",
+    "to": "s",
+    "label": "launchd: RunAtLoad · KeepAlive",
+    "kind": "note"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "One query on this Mac (text, p50)",
+   "type": "hbars",
+   "unit": "ms",
+   "labels": [
+    "MLX 4-bit",
+    "MLX bf16",
+    "ONNX q4 CPU",
+    "ONNX fp16 CPU",
+    "PyTorch MPS"
+   ],
+   "series": [
+    {
+     "name": "ms",
+     "values": [
+      6.1,
+      7.3,
+      15.5,
+      17.2,
+      22.5
+     ],
+     "color": "green"
+    }
+   ],
+   "caption": "Measured by Lab 08-1 on an Apple M4 Max."
+  },
+  {
+   "title": "MLX 4-bit drift from fp32 — (1 − min cosine) × 1000, lower is better",
+   "type": "bars",
+   "unit": "‰",
+   "labels": [
+    "text",
+    "photo",
+    "voice"
+   ],
+   "series": [
+    {
+     "name": "measured here",
+     "values": [
+      13.5,
+      16.9,
+      20.6
+     ],
+     "color": "cyan"
+    },
+    {
+     "name": "model card",
+     "values": [
+      19.1,
+      9.6,
+      25.6
+     ],
+     "color": "amber"
+    }
+   ],
+   "caption": "Lab 08-2 (hotel media) vs the mlx-community 4-bit card's own checks. Text and voice drift about as the card says; photos drift more on these images (16.9 ‰ vs 9.6 ‰)."
+  },
+  {
+   "title": "Sustained load through the service",
+   "type": "line",
+   "unit": "notes/s",
+   "labels": [
+    "0–15 s",
+    "15–30 s",
+    "30–45 s"
+   ],
+   "series": [
+    {
+     "name": "throughput",
+     "values": [
+      409,
+      387,
+      383
+     ],
+     "color": "violet"
+    }
+   ],
+   "caption": "Lab 08-3, 32-note batches at 256-d, on AC power: −6.3 % over a minute."
+  }
+ ]
+}

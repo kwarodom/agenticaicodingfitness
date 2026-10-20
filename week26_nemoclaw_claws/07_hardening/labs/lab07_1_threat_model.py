@@ -10,7 +10,7 @@ Balanced policy (policies/balanced_draft.yaml) and once against the tutorial's p
 policykit.decide() is NOT OpenShell. The real enforcement is Landlock, seccomp and the egress proxy on the
 Spark. The model follows the semantics the docs describe so you can reason about a policy before you push it.
 
-Run: .venv/bin/python week26/07_hardening/labs/lab07_1_threat_model.py
+Run: .venv/bin/python week26_nemoclaw_claws/07_hardening/labs/lab07_1_threat_model.py
 """
 import sys
 from pathlib import Path

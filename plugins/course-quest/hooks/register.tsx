@@ -39,6 +39,34 @@ const isBandHiddenAtom = atom({ plugin: 'course-quest', key: 'isBandHidden' } as
 
 let frame = 0
 let party = 0
+let partyFrom = 0
+let cheer = ''
+
+function celebrate(message: string) {
+  party = 30
+  partyFrom = frame
+  cheer = message
+}
+
+/** An emoji only when it draws as one clean glyph (no text-style or variation-selector ones). */
+function icon(emoji: string): string {
+  const cp = emoji.codePointAt(0) ?? 0
+  return cp > 0xffff && !emoji.includes('\ufe0f') ? emoji + ' ' : ''
+}
+
+/** What Bolt says on the banner, in turn, about 12 s each. */
+function speeches(w: Week, p: QuestProgress, labsLeft: number, days: number): string[] {
+  const list = [
+    p.visited[w.id] ? `Welcome back to Week ${w.id}! Let's keep going.` : `Hi! Ready to explore Week ${w.id}?`,
+    w.tagline,
+    labsLeft > 0 ? `${labsLeft} lab${labsLeft === 1 ? '' : 's'} to go this week. You've got this!` : 'All labs done here. Try the quiz: press k',
+    'Press t and Claude will teach you this week.',
+    'Press g and Claude will walk you through the labs.',
+  ]
+  if (days > 1) list.push(`${days}-day streak! Keep the habit going.`)
+  return list
+}
+const SPEECH_FRAMES = 110
 let isOpen = false
 let timer: Timer | undefined
 const painters: Record<string, () => Canvas> = {}
@@ -306,7 +334,7 @@ export const register: Register = on => {
                 ⚡ Quest
               </Text>
               <Text dimColor>
-                {' '}Lv {lvl} · {p.xp} xp · W{w.id} {w.emoji} {w.title}
+                {' '}Lv {lvl} · {p.xp} xp · W{w.id} {icon(w.emoji)}{w.title}
               </Text>
             </Text>
           </Box>
@@ -348,9 +376,23 @@ export const register: Register = on => {
       return <Raster key={key} columns={c.columns} rows={rows ?? c.rows} cells={c.cells()} />
     }
 
-    const head = paint('banner', () =>
-      banner(width, { frame, title: '✦ AGENTIC QUEST ✦', subtitle: `Lv ${lvl} · ${p.xp} xp · ${Math.round(fraction * 100)}% to Lv ${lvl + 1}`, accent: color, party }),
-    )
+    const lines = speeches(w, p, w.labs.length - labsDone(p, w), streak(p.days))
+    const head = paint('banner', () => {
+      const turn = Math.floor(frame / SPEECH_FRAMES)
+      return banner(width, {
+        frame,
+        phase: w.phase,
+        label: `WEEK ${w.id} · ${(PHASES[w.phase]?.label ?? '').replace(/^\S+\s/, '').toUpperCase()}`,
+        title: w.title,
+        speech: party > 0 ? cheer : (lines[turn % lines.length] ?? ''),
+        speechFrom: party > 0 ? partyFrom : turn * SPEECH_FRAMES,
+        level: lvl,
+        xp: p.xp,
+        fraction,
+        streak: streak(p.days),
+        party,
+      })
+    })
 
     const tabButton = (id: QuestTab, hotkey: string, label: string) => (
       <Button key={'tab-' + id} hotkey={hotkey} variant={tab === id ? 'primary' : 'secondary'} onPress={() => update($, tabAtom, () => id)}>
@@ -364,19 +406,18 @@ export const register: Register = on => {
         {tabButton('labs', 'l', 'Labs')}
         {tabButton('quiz', 'k', 'Quiz')}
         {tabButton('stats', 's', 'Stats')}
-        <Text dimColor> │ </Text>
         <Button key="prev" hotkey="p" onPress={() => goWeek($, wi - 1)}>
-          ◀ Prev
+          ◀
         </Button>
         <Button key="next" hotkey="n" onPress={() => goWeek($, wi + 1)}>
-          Next ▶
+          ▶
         </Button>
       </Box>
     )
     const weekTitle = (
       <Text wrap="truncate-end">
         <Text color={hex(color)} bold>
-          {w.emoji} Week {w.id} · {w.title}
+          {icon(w.emoji)}Week {w.id} · {w.title}
         </Text>
         <Text dimColor> {PHASES[w.phase]?.label}</Text>
       </Text>
@@ -414,16 +455,16 @@ export const register: Register = on => {
       const up = nextUp(p)
       return shell(
         <Box flexDirection="column" rowGap={1}>
-          <Text bold>🗺  The course map</Text>
+          <Text bold>The course map</Text>
           {paint('map', () => metro(width, lines, w.id, frame))}
           <Text dimColor wrap="wrap">
-            ● done ◐ started ○ new · ◉ you are here · a train runs on your current line
+            ● done  ◐ started  ○ new  ◉ you are here
           </Text>
           <Select
             key="pick-week"
             label="Jump to a week"
             value={w.id}
-            options={WEEKS.map(x => ({ value: x.id, label: `${x.id} ${x.emoji} ${x.title}` }))}
+            options={WEEKS.map(x => ({ value: x.id, label: `${x.id} ${icon(x.emoji)}${x.title}` }))}
             onSelect={async value => {
               await goWeek($, findWeek(value))
               await $.store.set('week', findWeek(value))
@@ -433,7 +474,7 @@ export const register: Register = on => {
           {up && (
             <Text wrap="wrap">
               <Text color="success">Next up: </Text>
-              {up.emoji} Week {up.id} · {up.title} <Text dimColor>({up.tagline})</Text>
+              {icon(up.emoji)}Week {up.id} · {up.title} <Text dimColor>({up.tagline})</Text>
             </Text>
           )}
         </Box>,
@@ -567,7 +608,7 @@ export const register: Register = on => {
                     return { ...q, xp: Math.max(0, q.xp + (isDone ? -20 : 20)), labs: { ...q.labs, [w.id]: [...set].sort((a, b) => a - b) } }
                   })
                   if (!isDone) {
-                    party = 18
+                    celebrate('Lab done! +20 xp. Nice work!')
                     $.ui.toast('🧪 Lab done! +20 xp')
                   }
                 }}
@@ -621,7 +662,7 @@ export const register: Register = on => {
                       return { ...q, xp: q.xp + gain + bonus, quiz: { ...q.quiz, [w.id]: now } }
                     })
                     if (right) {
-                      party = 24
+                      celebrate(first ? 'Correct! +10 xp. Woohoo!' : 'Correct again! You remember it.')
                       $.ui.toast(first ? '🎉 Correct! +10 xp' : '🎉 Correct!')
                     }
                   }}

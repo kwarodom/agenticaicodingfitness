@@ -14,7 +14,7 @@ Either way cloud cost is $0.00.
 
 Launch (auto-picks a free port if 8092 is taken):
 
-    .venv/bin/python week19/sovereign_dgx/tutorial_server.py
+    .venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py
     # → http://127.0.0.1:8092
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week19/sovereign_dgx
+PKG = Path(__file__).resolve().parent                 # …/week19_sovereign_ai_dgx/sovereign_dgx
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():
@@ -140,7 +140,7 @@ STEPS = [
         "  THIS app (sovereign_dgx) → run + serve + manage models on a DGX.\n"
         "  Next: dgx_finetune (adapt a model to YOUR domain on the DGX),\n"
         "        dgx_observability (trace agents with Phoenix + NeMo Agent Toolkit),\n"
-        "        self_evolving_agent_v2 (the week18 agent, now driven by a DGX model).\n\n"
+        "        self_evolving_agent_v2 (the week18_self_evolving_sovereign_edge agent, now driven by a DGX model).\n\n"
         "You went from one local 'hello' to a managed, multi-node, audited sovereign "
         "model fleet — and not a byte left the building.",
     },

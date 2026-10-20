@@ -67,5 +67,5 @@ def check_connection():
         print("⚠️  Cannot reach Neo4j.")
         print(f"   ({type(e).__name__}: {e})")
         print(f"   Expected at {NEO4J_URI}. Start it with:")
-        print("   docker compose -f week15/kg_mastery/docker-compose.yml up -d")
+        print("   docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d")
         return False

@@ -19,8 +19,8 @@ NIM / DGX endpoint, else a faithful **SIM**. Ch 2–4 are pure stdlib. Either wa
 ## Run the web tutorial
 
 ```bash
-uv pip install -r week21/01_physical_ai_landscape/requirements.txt
-.venv/bin/python week21/01_physical_ai_landscape/tutorial_server.py   # → http://127.0.0.1:8200
+uv pip install -r week21_physical_ai_digital_twins/01_physical_ai_landscape/requirements.txt
+.venv/bin/python week21_physical_ai_digital_twins/01_physical_ai_landscape/tutorial_server.py   # → http://127.0.0.1:8200
 ```
 
 Open **http://127.0.0.1:8200**. Use **🔌 Connection** to point Ch 5 at your endpoint,
@@ -29,7 +29,7 @@ or leave it in SIM. Set `TWIN_GUIDE_PORT` to change the port.
 ## Run the chapters standalone
 
 ```bash
-cd week21/01_physical_ai_landscape
+cd week21_physical_ai_digital_twins/01_physical_ai_landscape
 ../../.venv/bin/python demos/step01_three_computers.py        # DGX train · OVX sim · AGX act
 ../../.venv/bin/python demos/step02_omniverse_2026.py         # libraries + microservices
 ../../.venv/bin/python demos/step03_cosmos_wfm.py             # deterministic vs generative

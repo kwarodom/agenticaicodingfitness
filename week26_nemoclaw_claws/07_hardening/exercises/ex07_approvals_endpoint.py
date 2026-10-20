@@ -11,7 +11,7 @@ network_policies entry so the claw can
 and can NEVER approve one (/api/v1/tickets/<id>/approve, whatever the method).
 
 Fill in the four TODOs in APPROVALS_YAML, save, then run:
-    .venv/bin/python week26/07_hardening/exercises/ex07_approvals_endpoint.py
+    .venv/bin/python week26_nemoclaw_claws/07_hardening/exercises/ex07_approvals_endpoint.py
 
 The checker is free and offline: policykit.validate + harden + a decide() matrix. policykit is the course's
 teaching model, not OpenShell. Stuck? Compare with exercises/solutions/.

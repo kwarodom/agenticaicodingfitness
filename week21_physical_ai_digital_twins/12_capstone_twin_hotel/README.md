@@ -40,15 +40,15 @@ The Week 23 capstone gave the hotel an agent **fleet**; this capstone gives the 
 ## Quick start
 
 ```bash
-uv pip install -r week21/12_capstone_twin_hotel/requirements.txt
-.venv/bin/python week21/12_capstone_twin_hotel/tutorial_server.py   # → http://127.0.0.1:8211
+uv pip install -r week21_physical_ai_digital_twins/12_capstone_twin_hotel/requirements.txt
+.venv/bin/python week21_physical_ai_digital_twins/12_capstone_twin_hotel/tutorial_server.py   # → http://127.0.0.1:8211
 ```
 
 Everything runs in **SIM** with no GPU, $0 — deterministic, so the numbers are reproducible.
 An Ollama / vLLM / NIM / DGX endpoint (🔌 Connection panel or `DGX_BASE_URL`) makes the
 agent-reasoning moments (morning brief, postmortem, copilot answers) genuinely model-written.
 
-Run any chapter standalone: `.venv/bin/python week21/12_capstone_twin_hotel/demos/step05_a_day_in_the_life.py`.
+Run any chapter standalone: `.venv/bin/python week21_physical_ai_digital_twins/12_capstone_twin_hotel/demos/step05_a_day_in_the_life.py`.
 
 ## Take it to your building — the variant briefs
 
@@ -62,7 +62,7 @@ Run any chapter standalone: `.venv/bin/python week21/12_capstone_twin_hotel/demo
 ## Continuity
 
 The graphs are **Week 14/15**, the memory loop is **Week 18**, the fleet and the room-1203
-incident are **Week 23** ([`week23/12_capstone_smart_hotel/`](../../week23/12_capstone_smart_hotel/)),
+incident are **Week 23** ([`week23_open_superintelligence_stack/12_capstone_smart_hotel/`](../../week23_open_superintelligence_stack/12_capstone_smart_hotel/)),
 and every mechanism here was taught step-by-step in **Apps 01–11** of this week.
 
 ## Sources

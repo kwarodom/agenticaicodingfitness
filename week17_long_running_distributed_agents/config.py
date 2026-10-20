@@ -11,7 +11,7 @@ short and self-contained:
   - have_adk()/have_a2a() capability probes (checkpoints degrade gracefully)
   - banner()/step()      tiny print helpers for readable checkpoint output
 
-Design rule (same as week15): nothing here requires google-adk, a2a-sdk, or any
+Design rule (same as week15_production_graphrag): nothing here requires google-adk, a2a-sdk, or any
 network/credentials at import time. Heavy/optional imports stay lazy inside the
 checkpoint that needs them, guarded with a clear `pip install ...` message.
 """
@@ -47,7 +47,7 @@ APP_NAME = "hotel_maintenance_fleet"
 # weekend — and resume EXACTLY where it left off when the part is delivered,
 # without hallucinating that the repair already happened.
 #
-# This is the week15 smart-hotel domain, now stretched across real time. It is
+# This is the week15_production_graphrag smart-hotel domain, now stretched across real time. It is
 # the canonical "long-running agent" shape from the ADK blog (an HR onboarding
 # that pauses for a document signature), mapped onto our hotel.
 # ════════════════════════════════════════════════════════════════════════════

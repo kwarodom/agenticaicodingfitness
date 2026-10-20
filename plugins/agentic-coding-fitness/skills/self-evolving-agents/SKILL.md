@@ -117,7 +117,7 @@ consolidate(session_db) -> updates MEMORY.md / USER.md and may write skills/<new
 
 `fence()` is the injection defense — it makes recalled text inert reference data. `consolidate()` is the meta-cognitive agent that closes the loop.
 
-> 📁 Class repo: `week18/self_evolving_agent/` — two front doors: a **step-by-step guide** (`tutorial_server.py` → `http://127.0.0.1:8090`) and a **live "watch it evolve" visualizer** (`server.py` → `http://127.0.0.1:8088`: run a task → 🧠 Consolidate → run the *same* task again and watch the turns/cost bar drop and a new `SKILL.md` appear). The seven self-contained checkpoints (`core/` + `checkpoints/checkpoint1_episodic.py … checkpoint7_self_evolving.py`) build it piece by piece — CP1 SessionDB, CP2 semantic + fencing, CP3 SKILL library, CP4 consolidation, CP5 GC, CP6 GEPA, CP7 the same-task-×3 capstone. **Checkpoints 1–6 are pure stdlib and run offline at $0**; LIVE mode uses the `claude` CLI (subscription auth, **no API key**). Full write-up: `week18/self_evolving_agent/README.md` + `TUTORIAL.md` + `week18/self_evolving_agent_tutorial.pdf`.
+> 📁 Class repo: `week18_self_evolving_sovereign_edge/self_evolving_agent/` — two front doors: a **step-by-step guide** (`tutorial_server.py` → `http://127.0.0.1:8090`) and a **live "watch it evolve" visualizer** (`server.py` → `http://127.0.0.1:8088`: run a task → 🧠 Consolidate → run the *same* task again and watch the turns/cost bar drop and a new `SKILL.md` appear). The seven self-contained checkpoints (`core/` + `checkpoints/checkpoint1_episodic.py … checkpoint7_self_evolving.py`) build it piece by piece — CP1 SessionDB, CP2 semantic + fencing, CP3 SKILL library, CP4 consolidation, CP5 GC, CP6 GEPA, CP7 the same-task-×3 capstone. **Checkpoints 1–6 are pure stdlib and run offline at $0**; LIVE mode uses the `claude` CLI (subscription auth, **no API key**). Full write-up: `week18_self_evolving_sovereign_edge/self_evolving_agent/README.md` + `TUTORIAL.md` + `week18_self_evolving_sovereign_edge/self_evolving_agent_tutorial.pdf`.
 
 ---
 
@@ -138,7 +138,7 @@ Run the offline checkpoints in order and, at CP4, fill in the distiller so an ep
 
 ```bash
 for n in 1 2 3 4; do
-  .venv/bin/python week18/self_evolving_agent/checkpoints/checkpoint${n}_*.py
+  .venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/checkpoints/checkpoint${n}_*.py
 done
 ```
 

@@ -9,7 +9,7 @@
     CLI's `--approval-mode` help text, then SIMULATES the approval lifecycle with policykit (a teaching model):
     denied → approved revision → recreated sandbox, denied again.
 
-Run: .venv/bin/python week26/03_policy_as_code/labs/lab03_4_presets_posture.py
+Run: .venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_4_presets_posture.py
 """
 import copy
 import sys

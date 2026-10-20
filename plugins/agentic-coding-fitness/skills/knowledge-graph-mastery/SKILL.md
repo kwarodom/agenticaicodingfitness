@@ -15,7 +15,7 @@ Week 15 (this skill):           build · enrich · GraphRAG · EVALUATE → mast
 
 If the question is "how do agents remember across runs?" use **agent-memory-graphs**. Use *this* skill when the question is about graph algorithms (GDS), Text2Cypher, picking a GraphRAG framework, or measuring quality.
 
-> 📁 Class repo: the whole track lives in `week15/kg_mastery/` — six parts, each with its own runnable scripts and README. `week15/kg_mastery.pdf` is the written course; `common.py` holds the shared Neo4j driver + model IDs every script imports.
+> 📁 Class repo: the whole track lives in `week15_production_graphrag/kg_mastery/` — six parts, each with its own runnable scripts and README. `week15_production_graphrag/kg_mastery.pdf` is the written course; `common.py` holds the shared Neo4j driver + model IDs every script imports.
 
 ---
 
@@ -34,7 +34,7 @@ Everything queries one **Hotel IoT** graph, so you learn the techniques against 
 (:Agent)-[:PERFORMED]->(:Event {type, details, ts})   # written by agents in Parts 3–5
 ```
 
-> 📁 `week15/kg_mastery/common.py` documents this contract; load it once with `part1_fundamentals/00_load_hotel_dataset.py` (idempotent — safe to re-run).
+> 📁 `week15_production_graphrag/kg_mastery/common.py` documents this contract; load it once with `part1_fundamentals/00_load_hotel_dataset.py` (idempotent — safe to re-run).
 
 ---
 
@@ -77,7 +77,7 @@ Then make it semantically searchable:
 - **Vector embeddings** — embed room descriptions (OpenAI `text-embedding-3-small`, 1536 dims), store on nodes, do cosine search. → `05_vector_embeddings.py`
 - **Chunking for GraphRAG** — split a document into a `(:Chunk)` graph + vector index, the foundation of hybrid graph+vector retrieval. → `06_chunking_graphrag.py`
 
-> 📁 `week15/kg_mastery/part2_building/` (+ its README has the full run table and the `:Imported` label convention so demo data never clashes with the curated dataset).
+> 📁 `week15_production_graphrag/kg_mastery/part2_building/` (+ its README has the full run table and the `:Imported` label convention so demo data never clashes with the curated dataset).
 
 ---
 
@@ -155,7 +155,7 @@ The workflow:
 
 Together, `05_improvement_loop.py` (offline trend) and `04_production_monitoring.py` (live signal) close the loop: you measure, diagnose, change one thing, re-measure, and watch live traffic so regressions surface before users do.
 
-> 📁 `week15/kg_mastery/part4_evaluation/` — note its README: RAGAS's test-set API shifts between versions, so the scripts print your installed version if imports differ. Every script guards a missing key/package with a clear message instead of a traceback.
+> 📁 `week15_production_graphrag/kg_mastery/part4_evaluation/` — note its README: RAGAS's test-set API shifts between versions, so the scripts print your installed version if imports differ. Every script guards a missing key/package with a clear message instead of a traceback.
 
 ---
 
@@ -171,7 +171,7 @@ The flagship reference is the **hotel IoT agent**: a LangGraph ReAct agent with 
 | Financial fraud (5.4) | Circular money-flow ring detection, Louvain clustering | `:FIN` |
 
 > ⚠️ Healthcare & financial use **synthetic data on purpose** — real PHI / transaction data carries HIPAA/GDPR/PDPA/AML obligations. Never load real records into a teaching graph.
-> 📁 `week15/kg_mastery/part5_use_cases/` · reference: `part6_reference/framework_comparison.md`.
+> 📁 `week15_production_graphrag/kg_mastery/part5_use_cases/` · reference: `part6_reference/framework_comparison.md`.
 
 ---
 
@@ -179,15 +179,15 @@ The flagship reference is the **hotel IoT agent**: a LangGraph ReAct agent with 
 
 ```bash
 # 1. Neo4j 5.x with APOC + Graph Data Science
-docker compose -f week15/kg_mastery/docker-compose.yml up -d
+docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d
 #    Browser UI: http://localhost:7474   (neo4j / mas_memory_2024)
 
 # 2. Deps + keys
-pip install -r week15/kg_mastery/requirements.txt
+pip install -r week15_production_graphrag/kg_mastery/requirements.txt
 #    repo-root .env:  ANTHROPIC_API_KEY (Parts 3–4) · OPENAI_API_KEY (Part 2 vectors)
 
 # 3. Load the hotel graph FIRST — everything queries it
-python week15/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py
+python week15_production_graphrag/kg_mastery/part1_fundamentals/00_load_hotel_dataset.py
 ```
 
 > ⚠️ **Connection gotcha:** `common.py` defaults `NEO4J_URI` to `bolt://localhost:7690` (the Week-14 stack), but the kg_mastery `docker-compose.yml` maps Bolt to **7687**. If you use the kg_mastery compose, set `NEO4J_URI=bolt://localhost:7687` in your repo-root `.env` so the scripts connect to the right stack.

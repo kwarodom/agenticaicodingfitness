@@ -64,7 +64,7 @@ decoded      = code × scale
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab01_nvfp4_simulator.py
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab01_nvfp4_simulator.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: Python ล้วนที่ใช้ seed คงที่ ทุกเครื่องจึงพิมพ์ตัวเลขเดียวกัน)
@@ -144,8 +144,8 @@ docker run --rm -it --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=671
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py --start   # launch (LIVE only)
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py           # status, any time
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py --start   # launch (LIVE only)
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py           # status, any time
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ ผลลัพธ์เป็นรูปแบบ EXAMPLE ไม่ใช่ของ Spark)
@@ -230,8 +230,8 @@ Lab 03 เปิดเซิร์ฟเวอร์และจับเวล�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start nvfp4
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label nvfp4
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start nvfp4
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label nvfp4
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ที่ไม่มี Spark: เวลาที่วัดได้เป็นของ Ollama บนแล็ปท็อปเครื่องนี้ ติดป้ายไว้ และไม่ได้บอกอะไรเกี่ยวกับ Spark)
@@ -275,9 +275,9 @@ Lab 03 เปิดเซิร์ฟเวอร์และจับเวล�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label nvfp4
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start bf16
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label bf16
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label nvfp4
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start bf16
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label bf16
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ที่ไม่มี Spark: LAPTOP STAND-IN รันคำถามหกข้อชุดเดียวกันบน gemma3:4b เพื่อแสดงการทำงานของชุดทดสอบ)
@@ -314,7 +314,7 @@ Lab 03 เปิดเซิร์ฟเวอร์และจับเวล�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab04_speculative_calculator.py
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab04_speculative_calculator.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: เป็นการคำนวณและการจำลองที่ใช้ seed คงที่ ได้ผลเหมือนกันทุกที่)
@@ -425,18 +425,18 @@ EOF
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start baseline
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label baseline
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start eagle3
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label eagle3
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --stop
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start baseline
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label baseline
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start eagle3
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label eagle3
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --stop
 ```
 
 การวัดแต่ละครั้งส่ง prompt ทดสอบ EAGLE-3 ของ playbook เอง (โจทย์ปัญหาเรื่องรถไฟ) ด้วย `max_tokens: 300` ที่ temperature 0 แล้วบันทึก tok/s ไว้ภายใต้ label ของมัน หาร eagle3 ด้วย baseline เพื่อได้ speed-up ของคุณ แล้วให้ lab 04 คำนวณย้อนกลับหา acceptance rate ที่สอดคล้องกัน:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab04_speculative_calculator.py --measured 1.8
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab04_speculative_calculator.py --measured 1.8
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้สำหรับค่าตัวอย่าง 1.8× ไม่ใช่ค่าที่วัดจาก Spark: ใส่ค่าของคุณเอง)
@@ -467,7 +467,7 @@ Lab 01 และ 04 รันบนแล็ปท็อป Lab 02 และ 03 
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 07 — ตัว quantize 4 บิต และตัววางแผนความยาว draft** เปิด `week25/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py` ในไฟล์มี `TODO` สี่จุด:
+**แบบฝึกหัด 07 — ตัว quantize 4 บิต และตัววางแผนความยาว draft** เปิด `week25_dgx_spark/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py` ในไฟล์มี `TODO` สี่จุด:
 
 1. `e2m1_round(x)`: ค่า E2M1 ที่ใกล้ที่สุด พร้อมเครื่องหมาย และอิ่มตัว (saturate) ที่ ±6
 2. `quantize_block(block)`: scale = max |value| ÷ 6 แล้วคืนค่าที่ decode แล้ว
@@ -476,7 +476,7 @@ Lab 01 และ 04 รันบนแล็ปท็อป Lab 02 และ 03 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสี่จุด บันทึกจาก Mac เครื่องนี้ด้วยเฉลย)

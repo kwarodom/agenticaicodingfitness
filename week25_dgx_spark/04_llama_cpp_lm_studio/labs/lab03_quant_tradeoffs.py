@@ -11,7 +11,7 @@ Qwen3.6-35B-A3B, on one DGX Spark.
 Honest scope: this measures how well the NUMBERS survive, not how well the MODEL answers.
 Model quality needs a benchmark on the real model.
 
-Run: .venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab03_quant_tradeoffs.py
+Run: .venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab03_quant_tradeoffs.py
 """
 import sys
 from pathlib import Path

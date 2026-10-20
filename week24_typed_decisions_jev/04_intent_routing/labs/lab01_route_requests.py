@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lab 04-1 · Route Alto Copilot requests — topic + signals + a policy gate.
 
-We reuse the reference implementation in week24/jev_lab/jev_lab.py:
+We reuse the reference implementation in week24_typed_decisions_jev/jev_lab/jev_lab.py:
   • QUESTIONS["intent"] — 1 choice (7 topics) + 5 nouls + 1 score, in ONE call
   • prepare()           — allowlists input fields (teaching labels are never sent)
   • policy()            — deterministic code: accepted() gate, dispatch, compute tier
@@ -9,7 +9,7 @@ We reuse the reference implementation in week24/jev_lab/jev_lab.py:
 Nine synthetic requests (English + Thai) → a routing table. Every route is a
 PROPOSAL (execute: False); authorization is always checked separately.
 
-Run: .venv/bin/python week24/04_intent_routing/labs/lab01_route_requests.py
+Run: .venv/bin/python week24_typed_decisions_jev/04_intent_routing/labs/lab01_route_requests.py
 """
 import sys
 from pathlib import Path
@@ -44,7 +44,7 @@ for row in SAMPLES:
 table(rows, ["id", "message", "teaching label", "jev", "conf", "route", "dispatch", "tier"])
 print(f"◆ Jev agreed with the teaching label on {agree}/{len(SAMPLES)} rows — read the disagreements, don't just count them")
 
-step(3, "what the policy() did (read it in week24/jev_lab/jev_lab.py)")
+step(3, "what the policy() did (read it in week24_typed_decisions_jev/jev_lab/jev_lab.py)")
 print("│ route    = topic only if accepted(): confidence ≥ .75, peak ≥ .80, margin ≥ .20, not 'unknown'")
 print("│ dispatch = single_agent if needs_mas ≤ .20 · mas_candidate if ≥ .80 · else review_dispatch")
 print("│ tier     = reasoning_candidate if complexity ≥ 1.5 or its confidence < .75, else fast_candidate")

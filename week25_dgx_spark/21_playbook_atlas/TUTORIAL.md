@@ -45,11 +45,11 @@ The clone moves. If your count or commit differs, the labs still work: they read
 
 ## 1 · The map: 64 playbooks, 38 already covered, 26 here
 
-NVIDIA's repository holds more than DGX Spark playbooks. Each README has a **Supported hardware platforms** table, and some playbooks list only DGX Station (GB300) or an RTX PC. Before you spend an evening on a playbook, check that table. Lab 21-1 reads it for all 64 playbooks and joins it with the module table in `week25/AUTHORING.md`:
+NVIDIA's repository holds more than DGX Spark playbooks. Each README has a **Supported hardware platforms** table, and some playbooks list only DGX Station (GB300) or an RTX PC. Before you spend an evening on a playbook, check that table. Lab 21-1 reads it for all 64 playbooks and joins it with the module table in `week25_dgx_spark/AUTHORING.md`:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_1_playbook_atlas.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_1_playbook_atlas.py
 ```
 
 **Expected output** (captured on this Mac; the 64-row table is shortened here)
@@ -603,7 +603,7 @@ You now know all 26. Two small labs help you choose.
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py
 ```
 
 **Expected output** (captured on this Mac; 2 of the 10 demo goals shown)
@@ -646,8 +646,8 @@ Pass your own goal as an argument. `--spark` keeps only playbooks whose table li
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy"
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy" --spark
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy"
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_2_goal_recommender.py "fine-tune a robot policy" --spark
 ```
 
 **Expected output** (captured on this Mac; the top two rows of each run, with a separator line added between the two runs)
@@ -666,7 +666,7 @@ The best match, GR00T, is Station-only. With `--spark` you get general fine-tuni
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/labs/lab21_3_budget_planner.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_3_budget_planner.py
 ```
 
 **Expected output** (captured on this Mac)
@@ -722,11 +722,11 @@ Read "200 GB" as a lower bound: seven READMEs give no disk figure, and ComfyUI's
 
 **labs/lab21_3_budget_planner.py** — Time, disk and accounts or hardware for a set of playbooks, packed into sessions.
 
-All three run on the laptop, offline, in a few seconds. They never touch a Spark: they only read the playbook clone and `week25/AUTHORING.md`.
+All three run on the laptop, offline, in a few seconds. They never touch a Spark: they only read the playbook clone and `week25_dgx_spark/AUTHORING.md`.
 
 ## Try it yourself
 
-**Exercise 21 — the goal router and its test set.** Open `week25/21_playbook_atlas/exercises/ex21_goal_router.py`. It has three `TODO`s:
+**Exercise 21 — the goal router and its test set.** Open `week25_dgx_spark/21_playbook_atlas/exercises/ex21_goal_router.py`. It has three `TODO`s:
 
 1. `tokenize(text)`: lower-case, split on non-alphanumerics, drop 1-letter words and stopwords.
 2. `idf(docs)`: the smoothed inverse document frequency `log((1+N)/(1+df)) + 1`.
@@ -736,7 +736,7 @@ The checker indexes the real READMEs with your functions, runs three built-in go
 
 ```bash
 # on: laptop
-.venv/bin/python week25/21_playbook_atlas/exercises/ex21_goal_router.py
+.venv/bin/python week25_dgx_spark/21_playbook_atlas/exercises/ex21_goal_router.py
 ```
 
 **Expected output** (the reference solution, captured on this Mac)

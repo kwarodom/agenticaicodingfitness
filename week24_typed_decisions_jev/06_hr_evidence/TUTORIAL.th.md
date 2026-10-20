@@ -89,7 +89,7 @@
 แล็บ 01 อ่านโปรไฟล์สมมติสี่รายการจาก `data/profiles.csv` แล้วถามคำถามหาหลักฐานสามข้อกับแต่ละรายการ ทุกรายการไม่ว่าจะได้ label อะไร จะไปที่ `recruiter_review`
 
 ```bash
-.venv/bin/python week24/06_hr_evidence/labs/lab01_evidence_checklist.py
+.venv/bin/python week24_typed_decisions_jev/06_hr_evidence/labs/lab01_evidence_checklist.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -149,7 +149,7 @@ label อย่าง `evidenced` ยังตรวจสอบย้อนห�
 ลองทดลอง: เปลี่ยนคำถามเป็นเรื่องงาน *ระบบอาคาร* มันเลือก `s1` (ไดรเวอร์ BACnet) หรือ `s3` (งานมีตอัปเรื่องอาคารอัจฉริยะ)? แล้ว *คุณ* จะนับข้อไหนเป็นหลักฐานของการลงมือทำจริง?
 
 ```bash
-.venv/bin/python week24/06_hr_evidence/labs/lab02_sentence_evidence.py
+.venv/bin/python week24_typed_decisions_jev/06_hr_evidence/labs/lab02_sentence_evidence.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -185,7 +185,7 @@ label อย่าง `evidenced` ยังตรวจสอบย้อนห�
 ตัวต้นแบบเต็ม (สามคำถามเดียวกัน policy เดียวกัน) อยู่ในสคริปต์ดั้งเดิม:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run hr --limit 2 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run hr --limit 2 --live
 ```
 
 ✓ Checkpoint: คุณระบุการตรวจสอบสี่ข้อที่ต้องทำก่อนประมวลผลข้อความของผู้สมัครจริงได้
@@ -198,7 +198,7 @@ label อย่าง `evidenced` ยังตรวจสอบย้อนห�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 06 — เพิ่มเกณฑ์และ policy ที่เป็นธรรม** เปิดไฟล์ `week24/06_hr_evidence/exercises/ex06_new_criterion.py`
+**แบบฝึกหัด 06 — เพิ่มเกณฑ์และ policy ที่เป็นธรรม** เปิดไฟล์ `week24_typed_decisions_jev/06_hr_evidence/exercises/ex06_new_criterion.py`
 
 1. **TODO 1** — เขียน `cloud_evidence`: `choice` ที่มีตัวเลือก `evidenced` / `not_stated` / `unclear` พอดี เกี่ยวกับการ deploy บนคลาวด์ที่ลงมือทำจริง (AWS, Azure, GCP…) ระบุใน instruction ว่าความสนใจหรือคอร์สเรียนไม่นับเป็นการลงมือทำจริง
 2. **TODO 2** — เขียน `checklist_row(answers)` ที่คืนค่า `{"cloud": …, "follow_up": [criteria not evidenced], "route": "recruiter_review"}` ต้องไม่มีคะแนน อันดับ ผลรวม หรือการคัดออกอยู่ในนั้นเด็ดขาด
@@ -206,7 +206,7 @@ label อย่าง `evidenced` ยังตรวจสอบย้อนห�
 ตัวตรวจจะรันการทดสอบรูปแบบและ policy แบบออฟไลน์ก่อน จากนั้นจึงถาม Jev เกี่ยวกับข้อความทดสอบสามข้อความ
 
 ```bash
-.venv/bin/python week24/06_hr_evidence/exercises/ex06_new_criterion.py
+.venv/bin/python week24_typed_decisions_jev/06_hr_evidence/exercises/ex06_new_criterion.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

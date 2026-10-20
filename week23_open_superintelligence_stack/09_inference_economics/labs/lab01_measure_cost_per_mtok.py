@@ -5,7 +5,7 @@ One genuine streamed generation → time-to-first-token + decode rate → turn
 watts and electricity price into dollars per million tokens for YOUR box,
 and compare against an illustrative cloud list price.
 
-Run:  cd <repo root> && .venv/bin/python week23/09_inference_economics/labs/lab01_measure_cost_per_mtok.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/09_inference_economics/labs/lab01_measure_cost_per_mtok.py
 Override the economics:  LAB_WATTS=240 LAB_KWH_PRICE=0.15 LAB_BOX_USD=3999
 """
 from __future__ import annotations

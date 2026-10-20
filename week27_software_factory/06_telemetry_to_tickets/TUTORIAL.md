@@ -14,11 +14,11 @@
 
 ## 1 · The feeds (15 min)
 
-`week27/factory/telemetry/sentry.json` has six issues; `posthog.json` has three signals; `board_snapshot.json` is the kanban as the verifier sees it. Run the collectors:
+`week27_software_factory/factory/telemetry/sentry.json` has six issues; `posthog.json` has three signals; `board_snapshot.json` is the kanban as the verifier sees it. Run the collectors:
 
 ```bash
 # on: laptop
-cd week27/factory/scripts
+cd week27_software_factory/factory/scripts
 python3 collect_sentry.py --since 14d | jq -r '.candidates[] | "\(.id)  \(.hint)  \(.title)"'
 python3 collect_posthog.py --since 14d | jq -r '.candidates[] | "\(.key)  \(.hint)"'
 ```

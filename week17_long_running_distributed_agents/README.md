@@ -1,6 +1,6 @@
 # 🏨 Week 17 — Long-Running Agents & Fleet Orchestration (Google ADK + A2A)
 
-Runnable Python that takes the **week15 smart-hotel MAS** — 5 agents in *one*
+Runnable Python that takes the **week15_production_graphrag smart-hotel MAS** — 5 agents in *one*
 CrewAI process — and stretches it across **real time** and **service boundaries**:
 
 - **Long-running** — a maintenance work-order that **pauses for days** waiting on
@@ -20,7 +20,7 @@ adapted to this course's hotel domain, with agent communication via **A2A**.
 > to light up the live wiring; you don't need them to learn the patterns.
 
 ```
-The two problems week15 left open, and what solves each:
+The two problems week15_production_graphrag left open, and what solves each:
 
   Single process, lives only while running   →  Long-running: durable state
   ───────────────────────────────────────       machine + DatabaseSessionService
@@ -57,7 +57,7 @@ The two problems week15 left open, and what solves each:
 ## Layout
 
 ```
-week17/
+week17_long_running_distributed_agents/
 ├── config.py                       → WorkOrderStep state machine, MODEL, DB URL,
 │                                      MockLLM, capability probes, print helpers
 ├── requirements.txt                → FastAPI (CP3); ADK / A2A optional
@@ -82,7 +82,7 @@ are pure stdlib.
 
 ```bash
 # from the repo root, using the repo's uv-managed .venv (Python 3.13)
-uv pip install -r week17/requirements.txt        # really only needed for CP3
+uv pip install -r week17_long_running_distributed_agents/requirements.txt        # really only needed for CP3
 ```
 
 Want to see the **real** ADK agent objects instead of the simulation? Add the
@@ -106,15 +106,15 @@ result, so a clean exit means it worked.
 | 3 | **Webhook** → `Runner.run_async(state_delta=…)` resume | FastAPI | External events resume the agent (push, not poll) |
 | 4 | ADK **`sub_agents`** in-process delegation | stdlib | Focused sub-agents keep reasoning sharp — but they must be *your* code |
 | 5 | **A2A** Agent Card + six-state task lifecycle (`input-required` HITL) | stdlib | Delegate to an agent you don't own, discovered via `/.well-known/agent.json` |
-| 6 | **Capstone**: long-running + distributed, end-to-end | FastAPI optional | The L3 fleet layer above week15's single-process MAS |
+| 6 | **Capstone**: long-running + distributed, end-to-end | FastAPI optional | The L3 fleet layer above week15_production_graphrag's single-process MAS |
 
 ```bash
-.venv/bin/python week17/checkpoints/checkpoint1_state_machine.py
-.venv/bin/python week17/checkpoints/checkpoint2_durable_sessions.py
-.venv/bin/python week17/checkpoints/checkpoint3_webhook_resume.py
-.venv/bin/python week17/checkpoints/checkpoint4_sub_agents.py
-.venv/bin/python week17/checkpoints/checkpoint5_a2a_cards.py
-.venv/bin/python week17/checkpoints/checkpoint6_fleet.py
+.venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py
+.venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint2_durable_sessions.py
+.venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint3_webhook_resume.py
+.venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint4_sub_agents.py
+.venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint5_a2a_cards.py
+.venv/bin/python week17_long_running_distributed_agents/checkpoints/checkpoint6_fleet.py
 ```
 
 ---
@@ -149,7 +149,7 @@ delegating across the network *feels* like calling a local sub-agent.
   the *protocol* (cards, lifecycle, `input-required`) is what you internalize.
   The real shape (`a2a-sdk` / `python_a2a` / ADK `RemoteA2aAgent`) is printed by
   CP5 as guarded, illustrative code. This mirrors the plugin's `a2a-protocol`
-  skill, which maps A2A onto week15's hotel MAS as the **L3 fleet** layer.
+  skill, which maps A2A onto week15_production_graphrag's hotel MAS as the **L3 fleet** layer.
 - **CP2 uses a SQLite mirror, not the real `DatabaseSessionService`.** ADK's
   service persists session state for you against any SQLAlchemy URL; we show that
   exact config and run an equivalent SQLite store so the restart is observable

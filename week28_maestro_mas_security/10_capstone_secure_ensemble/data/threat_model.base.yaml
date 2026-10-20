@@ -1,0 +1,158 @@
+# DO NOT EDIT — the design-time threat model as it sits on the base branch. Lab 10-3 diffs your
+# threat_model.yaml against this file, the way CSA's CI/CD article diffs a pull request against its base.
+#
+# Hotel Ops Ensemble — MAESTRO threat model (the capstone starter)
+#
+# You are the hotel's security lead. This is the threat model the team wrote at design time: 8 threats, one led
+# by each MAESTRO layer plus one cross-layer threat, all still `open`. Your job (Module 10, deliverable b):
+#
+#   TODO 1  for every threat you have now defended, list its mitigations (ids from the list below), set
+#           `status: mitigated`, and add `residual_likelihood` / `residual_impact` (1–5, never above the inherent)
+#   TODO 2  a threat with impact 5 needs TWO independent controls: two mitigations with different `defense`
+#           switches, both on in capstone.yaml, each of which stops the threat's scenario on its own
+#   TODO 3  the red-team suite has 12 attacks; this model only covers 8 of them. Add a threat for each attack
+#           scenario nobody modelled (lab10_2 lists them). Use MAESTRO references from the 🗺 map.
+#   TODO 4  anything you leave `open` or mark `accepted` gets a one-line `rationale:` (it goes in the GM's report)
+#
+# Schema (week28_maestro_mas_security/AUTHORING.md): threats need id, title, layers, components, likelihood, impact, mitigations, status.
+# `maestro:` ids come from week28_maestro_mas_security/common/maestro.py (parsed from the CSA page). `owasp:` ids are OWASP ASI01–ASI10.
+# `scenario:` is the red-team scenario (week28_maestro_mas_security/common/redteam.py) that tests the threat.
+# The 1–5 scores and severity bands are the course's (≥15 critical · ≥10 high · ≥5 medium).
+
+system: Hotel Ops Ensemble (AltoTech Grand Bangkok, simulated)
+version: 1.0-design
+
+components:
+  - {id: brain,           layer: L1, kind: model,          trust: internal}
+  - {id: shared_memory,   layer: L2, kind: data,           trust: internal}
+  - {id: sop_corpus,      layer: L2, kind: data,           trust: internal}
+  - {id: web_pages,       layer: L2, kind: data,           trust: untrusted}
+  - {id: orchestrator,    layer: L3, kind: agent,          trust: internal}
+  - {id: message_bus,     layer: L3, kind: framework,      trust: internal}
+  - {id: tools,           layer: L3, kind: framework,      trust: internal}
+  - {id: email_gateway,   layer: L4, kind: infrastructure, trust: internal}
+  - {id: runtime,         layer: L4, kind: infrastructure, trust: internal}
+  - {id: audit_log,       layer: L5, kind: observability,  trust: internal}
+  - {id: pep,             layer: L6, kind: security,       trust: internal}
+  - {id: human_approver,  layer: L6, kind: security,       trust: human}
+  - {id: concierge,       layer: L7, kind: agent,          trust: internal}
+  - {id: energy,          layer: L7, kind: agent,          trust: internal}
+  - {id: maintenance,     layer: L7, kind: agent,          trust: internal}
+  - {id: agent_directory, layer: L7, kind: registry,       trust: untrusted}
+  - {id: vendor,          layer: L7, kind: external agent, trust: external}
+
+# One mitigation per Defenses switch (the `defense:` field names it), plus one process control with no switch.
+mitigations:
+  - {id: M-SPOT,    title: "Spotlight untrusted text in «data» blocks",          control: "L1 · prompt hygiene",          defense: spotlight}
+  - {id: M-FWD,     title: "Hand off a structured task, never the raw text",      control: "L3 · secure inter-agent hand-off", defense: forward_summary}
+  - {id: M-ALLOW,   title: "Least agency: each agent holds only its own tools",   control: "L3 · tool scoping",            defense: tool_allowlist}
+  - {id: M-BOUNDS,  title: "Range-check setpoints and quantities",                control: "L6 · PEP parameter policy",    defense: param_bounds}
+  - {id: M-AUTHZ,   title: "Authorise by the least-trusted origin (provenance)",  control: "L6 · PEP principal policy",    defense: principal_authz}
+  - {id: M-HITL,    title: "A human approves critical actions",                   control: "L6 · human oversight",         defense: hitl}
+  - {id: M-EGRESS,  title: "Email only to the hotel domain or on-file addresses", control: "L4 · egress allowlist",        defense: egress_allowlist}
+  - {id: M-CARDS,   title: "Signed, pinned vendor Agent Cards",                   control: "L7 · agent identity",          defense: signed_cards}
+  - {id: M-SIGMSG,  title: "Signed, fresh, single-use A2A messages",              control: "L7 · message integrity",       defense: signed_messages}
+  - {id: M-MEMGATE, title: "Only staff write shared memory; recalls keep provenance", control: "L2 · memory write gate",  defense: memory_gate}
+  - {id: M-SOPSIG,  title: "SOPs verified against a signed manifest",             control: "L2 · corpus integrity",        defense: sop_integrity}
+  - {id: M-AUDIT,   title: "Hash-chained audit log with an outside witness",      control: "L5 · tamper evidence",         defense: audit_chain}
+  - {id: M-BREAKER, title: "Hop and action budgets halt runaway delegation",      control: "L4 · runtime budgets",         defense: circuit_breaker}
+  - {id: M-IRP,     title: "Incident response runbook for the duty manager",      control: "cross-layer · process (no switch, no scenario evidence)"}
+
+threats:
+  - id: T01
+    title: A guest message carries a second instruction that reaches the chiller
+    layers: [L1, L7]
+    components: [brain, orchestrator, energy]
+    maestro: [L1.T1, L7.T5]
+    owasp: [ASI01]
+    scenario: A01
+    likelihood: 4
+    impact: 5
+    mitigations: []          # TODO 1 + TODO 2
+    status: open
+
+  - id: T02
+    title: One guest writes a "policy" into shared memory that another guest's session obeys
+    layers: [L2, L7]
+    components: [shared_memory, concierge, energy]
+    maestro: [L2.T4, X5]
+    owasp: [ASI06]
+    scenario: A06
+    likelihood: 3
+    impact: 5
+    mitigations: []          # TODO 1 + TODO 2
+    status: open
+
+  - id: T03
+    title: The orchestrator forwards text verbatim, so an instruction travels agent to agent
+    layers: [L3, L7]
+    components: [orchestrator, message_bus, energy]
+    maestro: [L3.T3, L7.T5]
+    owasp: [ASI01, ASI08]
+    scenario: A03
+    likelihood: 4
+    impact: 4
+    mitigations: []          # TODO 1
+    status: open
+
+  - id: T04
+    title: A message that asks to be forwarded multiplies until the runtime's hard cap
+    layers: [L4, L5]
+    components: [runtime, message_bus]
+    maestro: [L4.T4]
+    owasp: [ASI08]
+    scenario: A10
+    likelihood: 4
+    impact: 3
+    mitigations: []          # TODO 1
+    status: open
+
+  - id: T05
+    title: An insider deletes an audit row and nobody can tell
+    layers: [L5]
+    components: [audit_log]
+    maestro: [L5.T6, L7.T9]
+    owasp: [ASI10]
+    scenario: A12
+    likelihood: 3
+    impact: 4
+    mitigations: []          # TODO 1
+    status: open
+
+  - id: T06
+    title: A guest changes another guest's room through the energy agent (confused deputy)
+    layers: [L6, L7]
+    components: [pep, energy]
+    maestro: [X3, L7.T3]
+    owasp: [ASI03]
+    scenario: A04
+    likelihood: 4
+    impact: 3
+    mitigations: []          # TODO 1
+    status: open
+
+  - id: T07
+    title: A look-alike vendor Agent Card receives the hotel's parts orders
+    layers: [L7]
+    components: [agent_directory, vendor, maintenance]
+    maestro: [L7.T2, L7.T10]
+    owasp: [ASI07, ASI04]
+    scenario: A08
+    likelihood: 3
+    impact: 4
+    mitigations: []          # TODO 1
+    status: open
+
+  - id: T08
+    title: A web page the concierge reads makes it email the guest list out of the hotel
+    layers: [L2, L1, L4]
+    components: [web_pages, concierge, email_gateway]
+    maestro: [X4, L2.T2]
+    owasp: [ASI01, ASI02]
+    scenario: A02
+    likelihood: 3
+    impact: 5
+    mitigations: []          # TODO 1 + TODO 2
+    status: open
+
+  # TODO 3 — add the threats for the attack scenarios no threat covers yet (lab10_2 lists them)

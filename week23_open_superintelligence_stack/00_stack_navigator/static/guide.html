@@ -207,8 +207,8 @@
   </section>
 
   <section class="appsstrip">
-    <h3>Week 23 apps — 01…12 on this laptop <span class="dimtxt" style="font-weight:400">· green dot = running · refreshed every 15 s</span></h3>
-    <div class="appgrid" id="appgrid"><span class="cstat">checking ports 8100–8111…</span></div>
+    <h3>Week 23 apps — Lab Runner + 01…12 on this laptop <span class="dimtxt" style="font-weight:400">· green dot = running · refreshed every 15 s</span></h3>
+    <div class="appgrid" id="appgrid"><span class="cstat">checking ports 8100–8111 + 8113…</span></div>
   </section>
 
   <div id="panels"></div>
@@ -259,7 +259,7 @@ async function boot(){
   catch(e){
     bootTries++;
     el("hero-svg").innerHTML='<div class="heromsg">⚠ backend not reachable ('+esc(e.message)+
-      ') — retrying in 3 s… (attempt '+bootTries+')<br><span class="dimtxt">start it with: .venv/bin/python week23/00_stack_navigator/tutorial_server.py</span></div>';
+      ') — retrying in 3 s… (attempt '+bootTries+')<br><span class="dimtxt">start it with: .venv/bin/python week23_open_superintelligence_stack/00_stack_navigator/tutorial_server.py</span></div>';
     setTimeout(boot,3000); return;
   }
   LAYERS=STACK.layers||[]; JOURNEY=STACK.journey||[];
@@ -610,7 +610,7 @@ async function refreshApps(){
 function renderApps(){
   el("appgrid").innerHTML=APPS.map(a=>
     '<a class="appcard'+(a.running?" on":"")+'" href="http://127.0.0.1:'+a.port+'/" target="_blank" rel="noopener" '+
-    'title="'+esc(a.folder)+(a.running?" · running":" · not running — launch: .venv/bin/python week23/"+a.folder+"/tutorial_server.py")+'">'+
+    'title="'+esc(a.folder)+(a.running?" · running":" · not running — launch: .venv/bin/python week23_open_superintelligence_stack/"+a.folder+"/tutorial_server.py")+'">'+
     '<span class="rdot'+(a.running?" on":"")+'"></span><span class="anum">'+esc(a.num)+'</span>'+
     '<span class="atitle">'+esc(a.title)+'</span><span class="aport">:'+a.port+'</span></a>').join("");
 }

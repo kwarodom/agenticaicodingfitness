@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 06 — NemoClaw: build specialized agents
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/06_nemoclaw/tutorial_server.py` → http://127.0.0.1:8105. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/tutorial_server.py` → http://127.0.0.1:8105. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Author a NemoClaw agent SPEC by hand — base model + persona + skills + tools + signed policy — and run it through a 5-point lint (including Spark fit-math).
@@ -35,7 +35,7 @@ Goal: get the explainer running and see whether you're REAL or SIM before touchi
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/06_nemoclaw/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/tutorial_server.py
 ```
 
 Expected output:
@@ -114,7 +114,7 @@ Goal: read one complete NemoClaw agent spec and hear its persona speak.
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/06_nemoclaw/demos/step01_define_agent.py
+.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/demos/step01_define_agent.py
 ```
 
 Expected output (abbreviated, REAL mode):
@@ -144,7 +144,7 @@ In SIM mode the JSON is identical and the answer is labeled `ANSWER (simulated)`
 Goal: watch the discover → attach → invoke loop where the model actually calls the tools its skills expose.
 
 ```bash
-.venv/bin/python week23/06_nemoclaw/demos/step02_equip_skills.py
+.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/demos/step02_equip_skills.py
 ```
 
 Expected output (abbreviated, REAL mode):
@@ -169,7 +169,7 @@ C-path note: small local models sometimes skip a tool and answer directly — re
 Goal: see every tool call checked by a policy gateway *before* it executes.
 
 ```bash
-.venv/bin/python week23/06_nemoclaw/demos/step03_run_openshell.py
+.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/demos/step03_run_openshell.py
 ```
 
 Expected output (abbreviated):
@@ -192,7 +192,7 @@ Notice the demo never actually *denies* anything — the model was only offered 
 Goal: one task, three specialists, and a supervisor that picks the right one.
 
 ```bash
-.venv/bin/python week23/06_nemoclaw/demos/step04_fleet.py
+.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/demos/step04_fleet.py
 ```
 
 Expected output (abbreviated, REAL mode):
@@ -214,7 +214,7 @@ Expected output (abbreviated, REAL mode):
 **labs/lab01_author_spec.py — author + lint a spec, then A/B the persona.** You write a *new* specialist (an energy analyst) and lint it: all 7 fields, Spark fit-math (Q8 GB/B × 1.18 overhead vs 115 GB usable), signed policy, non-empty egress allowlist, tools ⊆ skills. Then the same base model answers the same question bare vs wearing the persona (if your workhorse is a thinking model, the lab auto-picks a direct-answer one — you'll see a `◆ auto-picked …` line).
 
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/06_nemoclaw/labs/lab01_author_spec.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/labs/lab01_author_spec.py
 ```
 
 Look for: five `✓` lint lines, then two answers — the persona'd one should be terser, cite the meter reading, and refuse to actuate. Modify it: change `base_model` to `nemotron-3-ultra` and re-run — the fit-math check should fail (~688 GB needed vs 115 GB usable): Ultra is cloud-only.
@@ -222,7 +222,7 @@ Look for: five `✓` lint lines, then two answers — the persona'd one should b
 **labs/lab02_policy_gate.py — naive runtime vs the policy gate.** The tool list includes a honeypot (`post_report(url=…)` reaching any host) and the task nudges the agent to exfiltrate. Every requested call is judged twice — naive (executes everything) vs gated (signed tool allowlist + egress allowlist). A canned red-team replay guarantees denials even offline.
 
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/06_nemoclaw/labs/lab02_policy_gate.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/labs/lab02_policy_gate.py
 ```
 
 Look for: `naive runtime : EXECUTES it   ☠ data would leave the building` directly above `gated runtime : ✗ DENY — egress to 'analytics.example.com' not allowlisted`, and `2/4 calls denied` in the replay. Modify it: add `"analytics.example.com"` to `POLICY["egress_allowlist"]` and re-run — the replay drops to 1/4 denied, which is exactly why the policy is *signed* by someone who isn't the agent.
@@ -230,7 +230,7 @@ Look for: `naive runtime : EXECUTES it   ☠ data would leave the building` dire
 **labs/lab03_fleet_router.py — route a batch, score the router, right-size the fleet.** Three tasks routed twice — keyword baseline (local code) and model-as-supervisor (real calls) — scored against the human-expected specialist, followed by illustrative Nano-vs-Super GPU-hours math.
 
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/06_nemoclaw/labs/lab03_fleet_router.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/labs/lab03_fleet_router.py
 ```
 
 Look for: the two score lines (`keyword score: 3/3`, `model-router score: n/3`) and the right-sizing result (~44% GPU-hours saved by routing 2/3 of traffic to Nano-class). Modify it: add a fourth task that contains *no* routing keywords ("Guests on floor 12 are unhappy this week — find out why") — watch the keyword baseline guess `code` while the model router does better.

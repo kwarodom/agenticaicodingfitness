@@ -1,0 +1,26 @@
+{
+ "machine": {
+  "chip": "Apple M4 Max",
+  "mem_gb": 36.0,
+  "torch": "2.14.1",
+  "devices": [
+   "mps",
+   "cpu"
+  ],
+  "laya_dev": "mps",
+  "gl_dev": "cpu",
+  "os": "Darwin arm64"
+ },
+ "params": {
+  "Laya multilingual": 321908998,
+  "GLiNER2.5-multi-Decide": 287355159
+ },
+ "speed": {
+  "laya_items_per_s": 11.300079546869851,
+  "gl_lora_tickets_per_s": 6.421217808085131,
+  "gl_full_tickets_per_s": 4.105469233649758,
+  "measured": "2026-10-17",
+  "on": "Apple M4 Max"
+ },
+ "_recorded_at": "2026-10-17"
+}

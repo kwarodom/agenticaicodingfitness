@@ -6,7 +6,7 @@ localhost, in case you tunnelled), and writes ONE `ssh -L` command that forwards
 all of them — the manual version of what NVIDIA Sync does for DGX Dashboard.
 Read-only: it only sends GET /v1/models (or GET /) to each port.
 
-Run: .venv/bin/python week25/01_meet_your_spark/labs/lab03_ports_and_tunnels.py
+Run: .venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab03_ports_and_tunnels.py
 """
 import sys
 from pathlib import Path

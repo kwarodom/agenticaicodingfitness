@@ -17,16 +17,16 @@
 
 | Need | Check | Why |
 |---|---|---|
-| NAT 1.9 on this laptop | `week26/.venv-nat/bin/nat --version` | every lab runs the real NAT CLI |
+| NAT 1.9 on this laptop | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` | every lab runs the real NAT CLI |
 | A tool-calling model in laptop Ollama | `nemotron-3-nano:latest` in `curl -s localhost:11434/v1/models` | the LAPTOP STAND-IN for vLLM on the Spark (~10–20 s per agent question) |
-| `greenlet` in the NAT venv | `week26/.venv-nat/bin/python -c "import greenlet"` | `nat serve` on NAT 1.9.0 needs it, and a fresh install can miss it (Section 5) |
+| `greenlet` in the NAT venv | `week26_nemoclaw_claws/.venv-nat/bin/python -c "import greenlet"` | `nat serve` on NAT 1.9.0 needs it, and a fresh install can miss it (Section 5) |
 | A DGX Spark (optional) | `ssh -o BatchMode=yes <spark> true` | the vLLM and sandbox steps; without one they run DRY |
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version 2>/dev/null
+week26_nemoclaw_claws/.venv-nat/bin/nat --version 2>/dev/null
 curl -s http://localhost:11434/v1/models | grep -o '"nemotron-3-nano[^"]*"'
-week26/.venv-nat/bin/python -c "import greenlet; print('greenlet', greenlet.__version__)" 2>&1 | tail -1
+week26_nemoclaw_claws/.venv-nat/bin/python -c "import greenlet; print('greenlet', greenlet.__version__)" 2>&1 | tail -1
 ```
 
 **Expected output** (captured on this Mac)
@@ -37,7 +37,7 @@ nat, version 1.9.0
 greenlet 3.5.6
 ```
 
-If the last line says `ModuleNotFoundError: No module named 'greenlet'`, run `uv pip install --python week26/.venv-nat/bin/python greenlet` once. This course's venv first shipped without it (Section 5 explains why). Only `nat serve` needs it.
+If the last line says `ModuleNotFoundError: No module named 'greenlet'`, run `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` once. This course's venv first shipped without it (Section 5 explains why). Only `nat serve` needs it.
 
 > 📌 **Versions.** The research tutorial was written against the NAT **1.8** docs. This course runs NAT **1.9.0**, and this module checked every command, YAML key and endpoint against the installed package. Where 1.9 differs, the section says so in a **1.9 differs** note. Run one lab at a time if you can: other labs share the same Ollama, so times vary.
 
@@ -103,21 +103,21 @@ Start with a scaffold. On NAT 1.9, `--workflow-dir` must already exist, so creat
 
 ```bash
 # on: laptop
-mkdir -p week26/04_nat_claws/.runs/workflows
-week26/.venv-nat/bin/nat workflow create --no-install --workflow-dir week26/04_nat_claws/.runs/workflows alto_ops --description "Alto Ops Claw" 2>/dev/null
-find week26/04_nat_claws/.runs/workflows/alto_ops -type f | sort
-grep '^from nat' week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
+mkdir -p week26_nemoclaw_claws/04_nat_claws/.runs/workflows
+week26_nemoclaw_claws/.venv-nat/bin/nat workflow create --no-install --workflow-dir week26_nemoclaw_claws/04_nat_claws/.runs/workflows alto_ops --description "Alto Ops Claw" 2>/dev/null
+find week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops -type f | sort
+grep '^from nat' week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
 ```
 
 **Expected output** (captured on this Mac)
 
 ```
-Workflow 'alto_ops' created successfully in '/Users/altodev/Desktop/agenticaicodingfitness/week26/04_nat_claws/.runs/workflows/alto_ops'.
-week26/04_nat_claws/.runs/workflows/alto_ops/pyproject.toml
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/__init__.py
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/configs/config.yml
-week26/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/register.py
+Workflow 'alto_ops' created successfully in '/Users/altodev/Desktop/agenticaicodingfitness/week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops'.
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/pyproject.toml
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/__init__.py
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/alto_ops.py
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/configs/config.yml
+week26_nemoclaw_claws/04_nat_claws/.runs/workflows/alto_ops/src/alto_ops/register.py
 from nat.plugin_api import Builder
 from nat.plugin_api import FunctionBaseConfig
 from nat.plugin_api import FunctionInfo
@@ -127,19 +127,19 @@ from nat.plugin_api import register_function
 
 > **1.9 differs.** The research tutorial's `--workflow-dir ./workflows` fails on a fresh folder with `Invalid workflow directory specified. … does not exist.` The 1.9 scaffold imports everything from one facade, `nat.plugin_api`, and its `config.yml` uses `_type: nim` (a hosted NIM). You replace that `llms` block with a local server.
 
-Now the minimal workflow. `week26/04_nat_claws/configs/hello.laptop.yml` is the research tutorial's YAML with the two laptop lines from Section 2. The `api_key` field is required by validation even for keyless servers, so it holds a dummy value, `EMPTY`. Validate before you run: it costs no LLM call.
+Now the minimal workflow. `week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml` is the research tutorial's YAML with the two laptop lines from Section 2. The `api_key` field is required by validation even for keyless servers, so it holds a dummy value, `EMPTY`. Validate before you run: it costs no LLM call.
 
 ```bash
 # on: laptop
-cat week26/04_nat_claws/configs/hello.laptop.yml
-week26/.venv-nat/bin/nat validate --config_file week26/04_nat_claws/configs/hello.laptop.yml 2>/dev/null | head -2
-week26/.venv-nat/bin/nat run --config_file week26/04_nat_claws/configs/hello.laptop.yml --input "What time is it in Bangkok right now?" 2>&1 | tail -1
+cat week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml
+week26_nemoclaw_claws/.venv-nat/bin/nat validate --config_file week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml 2>/dev/null | head -2
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml --input "What time is it in Bangkok right now?" 2>&1 | tail -1
 ```
 
 **Expected output** (captured on this Mac, the last two commands)
 
 ```
-Validating configuration file: week26/04_nat_claws/configs/hello.laptop.yml
+Validating configuration file: week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.yml
 ✓ Configuration file is valid!
 Error: ReActAgentParsingFailedError: Failed to parse agent output after 1 attempts. Error: Invalid Format: Missing 'Action:' after 'Thought:'. LLM output: ''
 ```
@@ -148,7 +148,7 @@ The YAML is fine. The model is the issue. `nemotron-3-nano` is a **thinking mode
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat run --config_file week26/04_nat_claws/configs/hello.laptop.nothink.yml --input "What time is it in Bangkok right now?" 2>&1 | grep -A1 -E "Action:|Tool's response|Workflow Result"
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/04_nat_claws/configs/hello.laptop.nothink.yml --input "What time is it in Bangkok right now?" 2>&1 | grep -A1 -E "Action:|Tool's response|Workflow Result"
 ```
 
 **Expected output** (captured on this Mac)
@@ -174,7 +174,7 @@ The `tool_calling_agent` in the next sections does not have this problem: it use
 
 ## 4 · L3.4 — A custom tool: chiller-plant CSV analytics
 
-Alto Ops Claw's first real tool reads a chiller-plant CSV export and returns the plant's kW per refrigeration ton (kW/RT). Lower is better. The course package is already installed in the NAT venv: `week26/common/alto_ops/src/alto_ops/chiller_tool.py`. It is the research tutorial's Lab 3.4 code with one change in the description.
+Alto Ops Claw's first real tool reads a chiller-plant CSV export and returns the plant's kW per refrigeration ton (kW/RT). Lower is better. The course package is already installed in the NAT venv: `week26_nemoclaw_claws/common/alto_ops/src/alto_ops/chiller_tool.py`. It is the research tutorial's Lab 3.4 code with one change in the description.
 
 Three NAT pieces make a function:
 
@@ -188,7 +188,7 @@ NAT finds the package through the `nat.components` entry point in `pyproject.tom
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/python week26/04_nat_claws/tools/nat_direct.py imports
+week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/04_nat_claws/tools/nat_direct.py imports
 ```
 
 **Expected output** (captured on this Mac)
@@ -204,7 +204,7 @@ nat.plugin_api.FunctionBaseConfig is nat.data_models.function.FunctionBaseConfig
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/python week26/04_nat_claws/tools/nat_direct.py tool week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml chiller_kpi '{"hours": 6}' '{"hours": 24}' 2>/dev/null
+week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/04_nat_claws/tools/nat_direct.py tool week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml chiller_kpi '{"hours": 6}' '{"hours": 24}' 2>/dev/null
 ```
 
 **Expected output** (captured on this Mac)
@@ -240,11 +240,11 @@ One more pattern from the research tutorial: an agent can be a tool of another a
 
 `nat serve` turns the same YAML into a FastAPI server. Its default port is 8000, which is vLLM's port on the Spark, so pass `--port 8001` (the research tutorial's curls use 8001 too).
 
-> **1.9 differs.** NAT 1.9.0 pulls in SQLAlchemy 2.1, which no longer installs `greenlet` by default, yet `nat serve` imports SQLAlchemy's asyncio extension at start-up. Without `greenlet` it stops with *"The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed"*. This course's venv hit exactly that; the fix is one line, `uv pip install --python week26/.venv-nat/bin/python greenlet`, and it is now installed. If it is missing on your machine, lab 04-3 borrows the `greenlet` from `week25/.venv-nat` through `PYTHONPATH` (and says so), or prints the fix. `nat run` and `nat mcp serve` do not need it.
+> **1.9 differs.** NAT 1.9.0 pulls in SQLAlchemy 2.1, which no longer installs `greenlet` by default, yet `nat serve` imports SQLAlchemy's asyncio extension at start-up. Without `greenlet` it stops with *"The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed"*. This course's venv hit exactly that; the fix is one line, `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet`, and it is now installed. If it is missing on your machine, lab 04-3 borrows the `greenlet` from `week25_dgx_spark/.venv-nat` through `PYTHONPATH` (and says so), or prints the fix. `nat run` and `nat mcp serve` do not need it.
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat serve --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --host 127.0.0.1 --port 8001
+week26_nemoclaw_claws/.venv-nat/bin/nat serve --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --host 127.0.0.1 --port 8001
 ```
 
 In a second terminal:
@@ -296,7 +296,7 @@ The step table is the most useful thing on this page. One question took two LLM 
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat mcp serve --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --name "Alto Ops MCP" --port 9901
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp serve --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --name "Alto Ops MCP" --port 9901
 ```
 
 In a second terminal:
@@ -304,7 +304,7 @@ In a second terminal:
 ```bash
 # on: laptop
 curl -s http://localhost:9901/debug/tools/list
-week26/.venv-nat/bin/nat mcp client tool list --url http://localhost:9901/mcp 2>/dev/null
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp client tool list --url http://localhost:9901/mcp 2>/dev/null
 ```
 
 **Expected output** (captured on this Mac)
@@ -322,14 +322,14 @@ Two things to notice. First, without `--tool_names` the **whole agent** is publi
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat mcp serve --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --port 9901 --tool_names chiller_kpi
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp serve --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --port 9901 --tool_names chiller_kpi
 ```
 
 In a second terminal:
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat mcp client tool call chiller_kpi --url http://localhost:9901/mcp --json-args '{"hours": 6}' 2>/dev/null | grep window
+week26_nemoclaw_claws/.venv-nat/bin/nat mcp client tool call chiller_kpi --url http://localhost:9901/mcp --json-args '{"hours": 6}' 2>/dev/null | grep window
 ```
 
 **Expected output** (captured on this Mac)
@@ -338,7 +338,7 @@ week26/.venv-nat/bin/nat mcp client tool call chiller_kpi --url http://localhost
 window=6h avg_kw=473.6 avg_rt=525.9 kw_per_rt=0.901 status=ALARM
 ```
 
-**NAT as an MCP client** consumes someone else's tools. The course ships a mock BMS, `week26/common/bms_mcp_server.py`, with four tools: `read_point`, `list_alarms`, `get_trend` and `write_setpoint`. The data is synthetic, and `write_setpoint` never writes. `week26/04_nat_claws/configs/mcp_client_bms.yml` switches on only the two read tools:
+**NAT as an MCP client** consumes someone else's tools. The course ships a mock BMS, `week26_nemoclaw_claws/common/bms_mcp_server.py`, with four tools: `read_point`, `list_alarms`, `get_trend` and `write_setpoint`. The data is synthetic, and `write_setpoint` never writes. `week26_nemoclaw_claws/04_nat_claws/configs/mcp_client_bms.yml` switches on only the two read tools:
 
 ```yaml
 function_groups:
@@ -372,14 +372,14 @@ Start the mock BMS and ask NAT which tools the agent would get. No LLM is involv
 
 ```bash
 # on: laptop
-BMS_MCP_PORT=8443 week26/.venv-nat/bin/python week26/common/bms_mcp_server.py
+BMS_MCP_PORT=8443 week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/common/bms_mcp_server.py
 ```
 
 In a second terminal:
 
 ```bash
 # on: laptop
-BMS_MCP_URL=http://localhost:8443/mcp week26/.venv-nat/bin/python week26/04_nat_claws/tools/nat_direct.py group week26/04_nat_claws/configs/mcp_client_bms.yml bms_tools 2>/dev/null
+BMS_MCP_URL=http://localhost:8443/mcp week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/04_nat_claws/tools/nat_direct.py group week26_nemoclaw_claws/04_nat_claws/configs/mcp_client_bms.yml bms_tools 2>/dev/null
 ```
 
 **Expected output** (captured on this Mac)
@@ -396,7 +396,7 @@ The group still connects to all four tools. `include` decides which ones the age
 
 ```bash
 # on: laptop
-BMS_MCP_URL=http://localhost:8443/mcp week26/.venv-nat/bin/nat run --config_file week26/04_nat_claws/configs/mcp_client_bms.yml --input "Are there any active plant alarms right now, and what is the latest kW/RT reading?" 2>&1 | grep -A1 -E "Tool's response|Workflow Result"
+BMS_MCP_URL=http://localhost:8443/mcp week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/04_nat_claws/configs/mcp_client_bms.yml --input "Are there any active plant alarms right now, and what is the latest kW/RT reading?" 2>&1 | grep -A1 -E "Tool's response|Workflow Result"
 ```
 
 **Expected output** (captured on this Mac — LAPTOP STAND-IN answer)
@@ -426,17 +426,17 @@ If Alto Ops Claw should write and run Python for ad-hoc analysis, it must not ru
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat validate --config_file week26/04_nat_claws/configs/code_execution.tutorial.yml 2>/dev/null | head -2
-week26/.venv-nat/bin/nat validate --config_file week26/04_nat_claws/configs/code_execution.piston.yml 2>/dev/null | head -2
+week26_nemoclaw_claws/.venv-nat/bin/nat validate --config_file week26_nemoclaw_claws/04_nat_claws/configs/code_execution.tutorial.yml 2>/dev/null | head -2
+week26_nemoclaw_claws/.venv-nat/bin/nat validate --config_file week26_nemoclaw_claws/04_nat_claws/configs/code_execution.piston.yml 2>/dev/null | head -2
 docker info --format '{{.ServerVersion}}' 2>&1 | tail -1
 ```
 
 **Expected output** (captured on this Mac)
 
 ```
-Validating configuration file: week26/04_nat_claws/configs/code_execution.tutorial.yml
+Validating configuration file: week26_nemoclaw_claws/04_nat_claws/configs/code_execution.tutorial.yml
 ✓ Configuration file is valid!
-Validating configuration file: week26/04_nat_claws/configs/code_execution.piston.yml
+Validating configuration file: week26_nemoclaw_claws/04_nat_claws/configs/code_execution.piston.yml
 ✓ Configuration file is valid!
 failed to connect to the docker API at unix:///Users/altodev/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /Users/altodev/.docker/run/docker.sock: connect: no such file or directory
 ```
@@ -449,7 +449,7 @@ Inside a claw, a Piston server is one more network endpoint. It needs its own `n
 
 ## 8 · L3.8 — Run NAT inside an OpenShell sandbox
 
-This is where the two halves of the course meet: the NAT workflow from Sections 3–6, inside the OpenShell boundary from Module 03. The plan has three files. Lab 04-5 generates all of them into `week26/04_nat_claws/.runs/alto-ops-sandbox/`, together with the `alto_ops` package and the CSV.
+This is where the two halves of the course meet: the NAT workflow from Sections 3–6, inside the OpenShell boundary from Module 03. The plan has three files. Lab 04-5 generates all of them into `week26_nemoclaw_claws/04_nat_claws/.runs/alto-ops-sandbox/`, together with the `alto_ops` package and the CSV.
 
 **1 · `Dockerfile.alto-ops`.** This is the research tutorial's own composition, not an NVIDIA image. It was not built on this Mac (the Docker daemon is off). Verify the NAT install line and the non-root `USER` against your base image. OpenShell requires a non-root identity and rejects root.
 
@@ -506,7 +506,7 @@ Lab 04-5 checks this policy twice: once with the course's `policykit` teaching m
 
 > **Parser differs.** The research tutorial creates the sandbox in one line, with `--upload ./data:/sandbox/data` and a trailing `-- nat serve …`. The laptop's OpenShell 0.0.111 parser rejects that combination. NemoClaw pins 0.0.116 on the Spark, so check `openshell sandbox create --help` there. The split form below parses on 0.0.111. `chiller_kpi` opens the CSV on every call, so uploading the data after the server starts is fine.
 
-On the Spark, copy the folder over (`scp -r week26/04_nat_claws/.runs/alto-ops-sandbox <spark>:~/works/alto-ops-claw/`), then:
+On the Spark, copy the folder over (`scp -r week26_nemoclaw_claws/04_nat_claws/.runs/alto-ops-sandbox <spark>:~/works/alto-ops-claw/`), then:
 
 ```bash
 # on: spark
@@ -554,7 +554,7 @@ The checker is offline. It asks NAT 1.9's own `MCPClientConfig` model to validat
 
 ```bash
 # on: laptop
-.venv/bin/python week26/04_nat_claws/exercises/ex04_bms_tools.py
+.venv/bin/python week26_nemoclaw_claws/04_nat_claws/exercises/ex04_bms_tools.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled)
@@ -587,7 +587,7 @@ MCP rules match a JSON-RPC `method` and, for `tools/call`, a `tool`. A client mu
 
 <details><summary>Hint — going further (research tutorial Part 3, exercises 1 and 2)</summary>
 
-Change `_type: tool_calling_agent` to `react_agent` (keep `reasoning_effort: none`) and count LLM_END steps with `/v1/workflow/full` for "give me the 6-hour and 24-hour kW/RT". Measure, don't assume. Then read `week26/common/alto_ops/src/alto_ops/setpoint_tool.py`: its Pydantic `input_schema` refuses a ticket without a `work_order_id`. That is layer (a) of the research tutorial's three-layer answer; Exercise 04's policy is layer (c), the only one that survives prompt injection.
+Change `_type: tool_calling_agent` to `react_agent` (keep `reasoning_effort: none`) and count LLM_END steps with `/v1/workflow/full` for "give me the 6-hour and 24-hour kW/RT". Measure, don't assume. Then read `week26_nemoclaw_claws/common/alto_ops/src/alto_ops/setpoint_tool.py`: its Pydantic `input_schema` refuses a ticket without a `work_order_id`. That is layer (a) of the research tutorial's three-layer answer; Exercise 04's policy is layer (c), the only one that survives prompt injection.
 
 </details>
 
@@ -599,7 +599,7 @@ Change `_type: tool_calling_agent` to `react_agent` (keep `reasoning_effort: non
 |---|---|---|
 | `ReActAgentParsingFailedError … LLM output: ''` | a thinking model put its whole answer in the reasoning field | add `reasoning_effort: none` under the LLM, or use `tool_calling_agent` |
 | `Invalid workflow directory specified. … does not exist.` | NAT 1.9 wants `--workflow-dir` to exist | `mkdir -p` it first |
-| `nat serve` exits: `…requires that the Python 'greenlet' library is installed` | NAT 1.9.0 + SQLAlchemy 2.1 without greenlet | `uv pip install --python week26/.venv-nat/bin/python greenlet` |
+| `nat serve` exits: `…requires that the Python 'greenlet' library is installed` | NAT 1.9.0 + SQLAlchemy 2.1 without greenlet | `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` |
 | `Address already in use` on 8001, 9901 or 8443 | another lab (or a module author) is running a server | the labs pick the next free port with `free_port()` and print it; stop your own foreground servers with Ctrl-C |
 | `Invalid configuration: function_groups: Value error, include and exclude cannot be used together` | both lists in one group | keep only `include` |
 | `error: the argument '--upload <UPLOAD>' cannot be used with '[COMMAND]...'` | OpenShell 0.0.111 argument rules | create first, then `openshell sandbox upload` |

@@ -10,7 +10,7 @@ DRY mode (no Spark): every command is shown, the playbook's expected result is q
 EXAMPLE shapes — and the table says "◈ DRY — not checked", never ✓. Nothing here needs sudo; if Docker needs a
 fix, the lab prints the commands for you to run yourself in the ⌨ terminal.
 
-Run: .venv/bin/python week26/02_first_claw/labs/lab02_1_verify_spark.py
+Run: .venv/bin/python week26_nemoclaw_claws/02_first_claw/labs/lab02_1_verify_spark.py
 """
 import re
 import sys

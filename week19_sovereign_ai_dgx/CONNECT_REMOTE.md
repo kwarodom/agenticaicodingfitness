@@ -40,11 +40,11 @@ If step 2 shows the models list, you're connected.
 
 ```bash
 # From the repo root:
-source week19/connect-remote.env       # sets DGX_CONN + DGX_TUNNEL_URL
+source week19_sovereign_ai_dgx/connect-remote.env       # sets DGX_CONN + DGX_TUNNEL_URL
 
 uv venv && source .venv/bin/activate
-uv pip install -r week19/sovereign_dgx/requirements.txt
-.venv/bin/python week19/sovereign_dgx/tutorial_server.py   # → http://127.0.0.1:8092
+uv pip install -r week19_sovereign_ai_dgx/sovereign_dgx/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py   # → http://127.0.0.1:8092
 ```
 
 Open the URL. The 🔌 Connection panel should read **`tunnel` · REAL · on your DGX · $0**.
@@ -96,7 +96,7 @@ specific laptops, add a grant in the Tailscale admin console
 
 | Symptom | Fix |
 |---|---|
-| App shows **SIM**, not REAL | `source week19/connect-remote.env` in the *same* shell; `curl …:11434/v1/models` must succeed. |
+| App shows **SIM**, not REAL | `source week19_sovereign_ai_dgx/connect-remote.env` in the *same* shell; `curl …:11434/v1/models` must succeed. |
 | `curl` to the Spark hangs / no route | `tailscale status` — is the laptop up and is `spark-3b82` listed? Re-run `sudo tailscale up`. |
 | DNS name won't resolve | Enable MagicDNS, or use the IP: `export DGX_TUNNEL_URL=http://100.111.125.74:11434/v1`. |
 | Demo output looks empty | Reasoning model — see **Model note**; pin `DGX_MODEL=llama3.3:70b`. |

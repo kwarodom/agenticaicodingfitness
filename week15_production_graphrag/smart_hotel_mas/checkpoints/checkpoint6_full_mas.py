@@ -14,7 +14,7 @@ other agents just did.
 
 (smart_hotel_mas.pdf §CP6)
 
-Run:  python week15/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py
+Run:  python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py
 """
 import json
 import sys

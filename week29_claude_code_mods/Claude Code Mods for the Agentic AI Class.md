@@ -103,7 +103,7 @@ Name rule worth knowing: `claude plugin validate` rejects plugin names that pass
 
 ## 5. Gap analysis of the current plugin (v2.2.0)
 
-What the repo has today (verified via the GitHub API on 9 Oct 2026): `.claude-plugin/marketplace.json` (marketplace `agentic-coding-fitness`, v2.2.0), `plugins/agentic-coding-fitness/.claude-plugin/plugin.json` (MIT, homepage lu.ma), `.claude/settings.json` enabling it, 20 `skills/*/SKILL.md` using `name`/`description`/`when_to_use` and a "Guided lab" kata each, `CHANGELOG.md` up to 2.1.0, `week15/PLUGIN_TUTORIAL.md` (still says 9 skills).
+What the repo has today (verified via the GitHub API on 9 Oct 2026): `.claude-plugin/marketplace.json` (marketplace `agentic-coding-fitness`, v2.2.0), `plugins/agentic-coding-fitness/.claude-plugin/plugin.json` (MIT, homepage lu.ma), `.claude/settings.json` enabling it, 20 `skills/*/SKILL.md` using `name`/`description`/`when_to_use` and a "Guided lab" kata each, `CHANGELOG.md` up to 2.1.0, `week15_production_graphrag/PLUGIN_TUTORIAL.md` (still says 9 skills).
 
 | Gap | Impact | Fix in v3.0.0 |
 |---|---|---|
@@ -111,7 +111,7 @@ What the repo has today (verified via the GitHub API on 9 Oct 2026): `.claude-pl
 | No progress tracking | Students cannot see where they are across 26 labs | `$.store`-backed `/fitness` pane, auto-logging |
 | Weeks 19, 21, 23–26 and robotics exist in the repo but not as skills | Half the second semester is invisible to Claude | Add 7 skills (template provided) |
 | `when_to_use` only | Fine — it is a documented optional field ([Skills](https://code.claude.com/docs/en/skills)) — but labs should set `disable-model-invocation: true` where you want manual `/plugin:skill` invocation | Review frontmatter per skill |
-| Install docs mention `/plugin marketplace update` + reinstall | Still valid; add `claude plugin validate` and the version-pinning rule: "Claude Code caches an installed plugin by version, so your edits don't reach the installed copy until you increment" `version` ([Create a mod](https://code.claude.com/docs/en/plugins/mods/create)) | Update README + `week15/PLUGIN_TUTORIAL.md` |
+| Install docs mention `/plugin marketplace update` + reinstall | Still valid; add `claude plugin validate` and the version-pinning rule: "Claude Code caches an installed plugin by version, so your edits don't reach the installed copy until you increment" `version` ([Create a mod](https://code.claude.com/docs/en/plugins/mods/create)) | Update README + `week15_production_graphrag/PLUGIN_TUTORIAL.md` |
 | No tests or evals | No way to prove the plugin helps | `claude plugin test` for the mod, `claude plugin eval` for the coach |
 
 ---
@@ -202,7 +202,7 @@ If a stub is reported as unnecessary for your version, delete it; if a call is r
 
 - `agents/coach.md` (Sonnet, read-only tools, Socratic, never writes lab code, AltoTech examples) and `agents/grader.md` (Haiku, runs `uv run pytest`, scores the rubric, calls `mcp__agentic-coding-fitness__log_lab`). Invoke as `@agent-agentic-coding-fitness:coach` ([Components](https://code.claude.com/docs/en/plugins/components)).
 - `skills/fitness-whats-new/SKILL.md`: manual skill (`disable-model-invocation: true`, `allowed-tools: WebFetch`) that produces the 5-minute weekly digest from the What's new page and flags mods-API changes affecting your mod.
-- `skills/week19-dgx-spark-sovereign-stack/SKILL.md`: template for the six missing weeks plus robotics; copy and fill from `week19/`, `week21/`, `week23/`–`week26/`, `week_agentic_robotic/`.
+- `skills/week19-dgx-spark-sovereign-stack/SKILL.md`: template for the six missing weeks plus robotics; copy and fill from `week19_sovereign_ai_dgx/`, `week21_physical_ai_digital_twins/`, `week23_open_superintelligence_stack/`–`week26_nemoclaw_claws/`, `week_agentic_robotic/`.
 - `evals/coach-explains-mods/`: one case with a rubric grader. Run `claude plugin eval init` first to let it draft cases/graders in the exact format for your version, then `claude plugin eval` to compare against the no-plugin baseline ([Plugin evals](https://code.claude.com/docs/en/plugin-evals)). The grader frontmatter in the starter (`type: rubric`) is a placeholder until `eval init` confirms the accepted grader types.
 
 ### Step 6 — Ship it (10 min)
@@ -210,7 +210,7 @@ If a stub is reported as unnecessary for your version, delete it; if a call is r
 1. `CHANGELOG.md`: add `3.0.0 — 2026-10-xx: progress-tracking mod (/fitness, /fitness-log, /fitness-grade, /fitness-next, log_lab tool), coach and grader agents, weeks 19–26 + robotics skills, plugin tests and evals`.
 2. `.claude-plugin/marketplace.json`: set the plugin entry's `version` to `3.0.0`; the README should state the Claude Code version you tested with, since "the events and methods can change between releases" ([Create a mod](https://code.claude.com/docs/en/plugins/mods/create)).
 3. Students update with `/plugin marketplace update agentic-coding-fitness`, then reinstall `agentic-coding-fitness@agentic-coding-fitness`, then `/reload-plugins` (or restart) — reloading warns if MCP tools would change ([Commands](https://code.claude.com/docs/en/commands)).
-4. Update `week15/PLUGIN_TUTORIAL.md` (currently says 9 skills) and the README skill count (26+).
+4. Update `week15_production_graphrag/PLUGIN_TUTORIAL.md` (currently says 9 skills) and the README skill count (26+).
 
 ### AltoTech tie-ins for the labs
 

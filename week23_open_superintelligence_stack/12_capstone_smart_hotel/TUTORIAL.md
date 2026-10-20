@@ -1,5 +1,5 @@
 # ▶ Hands-on Lab 12 — Capstone: the Sovereign Autonomous Hotel
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/12_capstone_smart_hotel/tutorial_server.py` → http://127.0.0.1:8111. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/tutorial_server.py` → http://127.0.0.1:8111. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Run the whole Week 23 stack as ONE system: AI-Q router → NemoClaw specialists → signed OpenShell policy → Relay/Phoenix trace → Data Flywheel, operating AltoTech Grand Bangkok.
@@ -25,8 +25,8 @@ Goal: see the whole fleet run once before you take it apart.
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-uv pip install -r week23/12_capstone_smart_hotel/requirements.txt
-.venv/bin/python week23/12_capstone_smart_hotel/tutorial_server.py
+uv pip install -r week23_open_superintelligence_stack/12_capstone_smart_hotel/requirements.txt
+.venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/tutorial_server.py
 ```
 
 Expected output:
@@ -47,7 +47,7 @@ Goal: every chapter is a plain script — run the room-1203 thread from your ter
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-DGX_MODE=sim .venv/bin/python week23/12_capstone_smart_hotel/demos/step02_critical_alarm.py
+DGX_MODE=sim .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/demos/step02_critical_alarm.py
 ```
 
 Expected output (abbreviated):
@@ -98,7 +98,7 @@ ollama pull qwen3:4b && export DGX_CONN=local
 
 Then re-run the alarm without forcing SIM:
 ```bash
-.venv/bin/python week23/12_capstone_smart_hotel/demos/step02_critical_alarm.py
+.venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/demos/step02_critical_alarm.py
 ```
 
 Expected output:
@@ -115,7 +115,7 @@ Expected output:
 Goal: confirm the hotel is an ordinary Python object the tools mutate — no agent required.
 
 ```bash
-.venv/bin/python week23/12_capstone_smart_hotel/hotel/world.py
+.venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/hotel/world.py
 ```
 
 Expected output:
@@ -139,7 +139,7 @@ Two things to notice: the telemetry call was made with `{"room": "Room 1203"}` a
 Goal: see the safety half of Agent = Model + Harness — a VIP setpoint change denied and routed to a human.
 
 ```bash
-DGX_MODE=sim .venv/bin/python week23/12_capstone_smart_hotel/demos/step03_guest_vip.py
+DGX_MODE=sim .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/demos/step03_guest_vip.py
 ```
 
 Expected output (abbreviated):
@@ -157,8 +157,8 @@ Guest request:  “VIP in room 1512 would like it a little cooler.”
 Goal: close the loop — observe, right-size, then self-improve on verifiable rewards.
 
 ```bash
-DGX_MODE=sim .venv/bin/python week23/12_capstone_smart_hotel/demos/step04_observe_optimize.py
-DGX_MODE=sim .venv/bin/python week23/12_capstone_smart_hotel/demos/step05_flywheel.py
+DGX_MODE=sim .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/demos/step04_observe_optimize.py
+DGX_MODE=sim .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/demos/step05_flywheel.py
 ```
 
 Expected output (abbreviated):
@@ -180,19 +180,19 @@ On a real Spark the flywheel's distillation step is the one layer this box does 
 
 **labs/lab01_world_mutation.py — the world is real.** Runs the room-1203 alarm through the full fleet with a deterministic brain, diffs `HotelState` before/after (work order created, tickets up), then calls `set_setpoint` directly — no agent — and watches the building's kW drop. Finally, if an endpoint is connected, it sends the tool schemas to your model once (max_tokens 300, one attempt, 45 s cap) and reports whether it emitted a *native* tool_call; with no endpoint it prints the exact go-REAL commands and a labeled expected-output sample.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/12_capstone_smart_hotel/labs/lab01_world_mutation.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/labs/lab01_world_mutation.py
 ```
 Look for the `◈` markers in the before/after diff — those fields changed because a tool ran. *Modify it:* change the alarm text to "Room 1804 temperature alarm — triage and act." and the room to `1804` — the same fleet triages a different room and the diff shows `WO-1804`.
 
 **labs/lab02_policy_redteam.py — attack the signed policy.** Fires seven tool calls straight at the OpenShell `Gateway` — out-of-band setpoints, a VIP room, tools missing from a role's allowlist — and checks each verdict against what a correct policy should do. Then it tampers with the policy dict and shows the content-hash signature no longer verifies. Fully offline.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/12_capstone_smart_hotel/labs/lab02_policy_redteam.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/labs/lab02_policy_redteam.py
 ```
 Look for the VIP row: `DENY→human` — a deny that escalates rather than drops, and the tamper test's signature mismatch. *Modify it:* add an attack row where role `energy` calls `dispatch_work_order` — predict the verdict before you run it (it should deny: not on energy's allowlist).
 
 **labs/lab03_router_goodput.py — right-sizing A/B, scored by goodput.** Runs the whole morning sweep twice — normal Nano/Super routing vs a hobbled all-Super router — with identical deterministic decisions, then scores both with the flywheel's verifiable rewards and prints cost per *successful* decision. Equal reward, smaller bill: the router's whole argument, in one table. Fully offline.
 ```bash
-cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/12_capstone_smart_hotel/labs/lab03_router_goodput.py
+cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/labs/lab03_router_goodput.py
 ```
 Look for the VERDICT block: identical rewards, then the cost/energy/goodput deltas. *Modify it:* in `AllSuperRelay`, return `NANO` instead of `SUPER` (import it from `hotel.relay`) — cost drops further and rewards *still* hold here, but only because the deterministic SimBrain's decisions don't depend on which model was billed; on a real endpoint Nano genuinely fails hard multi-step reasoning, which is exactly what `route()`'s simple/hard split protects against.
 
@@ -205,7 +205,7 @@ In `hotel/world.py`, inside `fresh_state()`:
 ```python
 "2101": Room("2101", 21, 27.0, 21.0, occupied=False),
 ```
-Re-run `DGX_MODE=sim .venv/bin/python week23/12_capstone_smart_hotel/demos/step01_morning_brief.py`. The Deep Agent's sweep sees an *unoccupied* room and delegates to the **energy** specialist, which raises the setpoint to 25.0 °C (inside the policy band) and books ~16 kW saved (4 kW/°C × 4 °C, unoccupied). It is not triaged CRITICAL — the >3 °C rule only fires for *occupied* rooms.
+Re-run `DGX_MODE=sim .venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/demos/step01_morning_brief.py`. The Deep Agent's sweep sees an *unoccupied* room and delegates to the **energy** specialist, which raises the setpoint to 25.0 °C (inside the policy band) and books ~16 kW saved (4 kW/°C × 4 °C, unoccupied). It is not triaged CRITICAL — the >3 °C rule only fires for *occupied* rooms.
 </details>
 
 **2. Tighten the comfort band and re-red-team.** Change `setpoint_bounds_c` in `hotel/policy.py` to `[22.0, 24.0]` and re-run lab 02. Which verdicts flip — and what happened to the signature?

@@ -4,10 +4,10 @@
 Part A follows the OpenShell playbook on the Spark, read-only: environment check (Step 1), Docker
 access (Step 2), the CLI (Step 3) and the gateway service (Step 4). It never runs the installer for
 you — that is a `curl | sh` you run yourself on the Spark (TUTORIAL §2). Part B runs the OpenShell CLI
-on THIS laptop from week25/15_openshell_sandbox/.venv-openshell (a pinned PyPI wheel, no installer,
+on THIS laptop from week25_dgx_spark/15_openshell_sandbox/.venv-openshell (a pinned PyPI wheel, no installer,
 no sudo): version, `openshell status` and `openshell doctor check` — real output, no gateway needed.
 
-Run: .venv/bin/python week25/15_openshell_sandbox/labs/lab15_1_install_and_gateway.py
+Run: .venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_1_install_and_gateway.py
 """
 import os
 import re
@@ -52,11 +52,11 @@ sh("systemctl --user status --no-pager openshell-gateway | head -5; openshell st
 note("Playbook: `openshell status` should report the gateway as Connected. If not: "
      "systemctl --user start openshell-gateway, then journalctl --user -u openshell-gateway -f.")
 
-step("B1", f"the OpenShell CLI on this laptop ({PIN} in week25/15_openshell_sandbox/.venv-openshell)")
+step("B1", f"the OpenShell CLI on this laptop ({PIN} in week25_dgx_spark/15_openshell_sandbox/.venv-openshell)")
 if not OPENSHELL.exists():
     warn("not installed on this laptop. It is optional; to add it (week25-local, no sudo, no installer script):")
-    print("$ uv venv -p 3.12 week25/15_openshell_sandbox/.venv-openshell")
-    print(f'$ uv pip install --python week25/15_openshell_sandbox/.venv-openshell/bin/python "{PIN}"')
+    print("$ uv venv -p 3.12 week25_dgx_spark/15_openshell_sandbox/.venv-openshell")
+    print(f'$ uv pip install --python week25_dgx_spark/15_openshell_sandbox/.venv-openshell/bin/python "{PIN}"')
     result("Part A is the playbook; Part B needs the laptop CLI. Everything else in Module 15 works without it.")
     sys.exit(0)
 env = {**os.environ, "NO_COLOR": "1", "HOME": str(MOD / ".runs" / "openshell-home")}

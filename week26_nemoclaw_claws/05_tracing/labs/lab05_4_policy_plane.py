@@ -12,7 +12,7 @@ Research tutorial Lab 4.4 (L4.4). Three parts:
      decisions come from the course's policykit teaching model (not from OpenShell); the parser counts
      allow / deny / inspect_for_inference and reports audit-mode violations as FINDINGS, not blocks.
 
-Run: .venv/bin/python week26/05_tracing/labs/lab05_4_policy_plane.py
+Run: .venv/bin/python week26_nemoclaw_claws/05_tracing/labs/lab05_4_policy_plane.py
 """
 import re
 import sys

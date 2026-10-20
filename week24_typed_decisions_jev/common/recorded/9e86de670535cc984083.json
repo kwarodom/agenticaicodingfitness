@@ -1,0 +1,56 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "events": [
+    "Steam begins leaking from the blue compressor unit on the left",
+    "Vapor or smoke starts venting from the blue compressor unit on the left",
+    "Empty plant room operating under normal conditions"
+   ]
+  },
+  "questions": {
+   "hazard_0": {
+    "type": "noul",
+    "instructions": "Does `events[0]` describe smoke, steam, haze, fire, sparks or leaking fluid that could be dangerous in a plant room?"
+   },
+   "hazard_1": {
+    "type": "noul",
+    "instructions": "Does `events[1]` describe smoke, steam, haze, fire, sparks or leaking fluid that could be dangerous in a plant room?"
+   },
+   "hazard_2": {
+    "type": "noul",
+    "instructions": "Does `events[2]` describe smoke, steam, haze, fire, sparks or leaking fluid that could be dangerous in a plant room?"
+   },
+   "smoke_only_0": {
+    "type": "noul",
+    "instructions": "Does `events[0]` mention smoke or fire?"
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "hazard_0": {
+    "type": "noul",
+    "noul": 0.98
+   },
+   "hazard_1": {
+    "type": "noul",
+    "noul": 0.93
+   },
+   "hazard_2": {
+    "type": "noul",
+    "noul": 0.03
+   },
+   "smoke_only_0": {
+    "type": "noul",
+    "noul": 0.02
+   }
+  },
+  "usage": {
+   "input_tokens": 433,
+   "output_tokens": 81
+  }
+ }
+}

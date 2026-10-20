@@ -16,7 +16,7 @@ a full click-through costs $0.00.
 
 Launch (auto-picks a free port if 8091 is taken):
 
-    .venv/bin/python week18/sovereign_ai_edge/tutorial_server.py
+    .venv/bin/python week18_self_evolving_sovereign_edge/sovereign_ai_edge/tutorial_server.py
     # → http://127.0.0.1:8091
 """
 from __future__ import annotations
@@ -36,7 +36,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week18/sovereign_ai_edge
+PKG = Path(__file__).resolve().parent                 # …/week18_self_evolving_sovereign_edge/sovereign_ai_edge
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():

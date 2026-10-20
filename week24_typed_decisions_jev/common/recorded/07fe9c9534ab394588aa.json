@@ -1,0 +1,59 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "description": "The image shows a large, grey air handling unit situated in a basement utility room. A significant puddle of dark liquid has accumulated on the concrete floor directly underneath the machine, which appears to be dripping from the frame above. This poses an immediate slip hazard. Unsure: I cannot tell whether the leaking liquid is water condensation, oil, or another type of mechanical fluid."
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which engineering queue should handle the issue in `description`?",
+    "criteria": {
+     "water_leak": "Water or another liquid leaking, dripping or pooling",
+     "smoke_or_fire": "Smoke, steam, haze, burning, fire or sparks",
+     "comfort": "Temperature or comfort complaint with no visible damage",
+     "none": "Nothing wrong is described",
+     "unclear": "The description is too vague or contradictory to choose"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `description` describe something that could injure a person or damage electrical equipment — smoke, steam, haze, fire, sparks, or water near electrical equipment?"
+   },
+   "hedged": {
+    "type": "noul",
+    "instructions": "Does `description` say the image is unclear, or that the model cannot tell something important?"
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "water_leak",
+    "confidence": 1.0,
+    "probabilities": {
+     "unclear": 0.0,
+     "comfort": 0.0,
+     "smoke_or_fire": 0.0,
+     "water_leak": 1.0,
+     "none": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.89
+   },
+   "hedged": {
+    "type": "noul",
+    "noul": 0.96
+   }
+  },
+  "usage": {
+   "input_tokens": 540,
+   "output_tokens": 96
+  }
+ }
+}

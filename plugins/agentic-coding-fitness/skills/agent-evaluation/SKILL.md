@@ -30,8 +30,8 @@ A **golden dataset** is a versioned list of real `(input, expected_output)` pair
 
 You can **bootstrap** the set instead of hand-writing every row: RAGAS reads your source docs and synthesizes a diverse mix of question types (simple lookup / reasoning / multi-context), each with a reference answer and the contexts it came from. Then you spot-check and delete the junk.
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/02_testset_generation.py` — auto-generates a test set from `hotel_docs/*.txt` with a 40/40/20 simple/reasoning/multi-context mix.
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/hotel_kg_testset.csv` — the resulting golden set: columns `user_input, reference_contexts, reference, persona_name, query_style, ...`. Open it to see what a real row looks like.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/02_testset_generation.py` — auto-generates a test set from `hotel_docs/*.txt` with a 40/40/20 simple/reasoning/multi-context mix.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/hotel_kg_testset.csv` — the resulting golden set: columns `user_input, reference_contexts, reference, persona_name, query_style, ...`. Open it to see what a real row looks like.
 
 The hand-built, graph-grounded version is even stricter — every `ground_truth` is *verified against the live data* before it's committed:
 
@@ -45,7 +45,7 @@ GOLD = [
 ]
 ```
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/04_cicd_gate_real.py` — a gold set where each row was verified to exist in the graph, so a low score means *quality*, not data mismatch.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/04_cicd_gate_real.py` — a gold set where each row was verified to exist in the graph, so a low score means *quality*, not data mismatch.
 
 ---
 
@@ -74,9 +74,9 @@ results = evaluate(dataset, metrics=metrics, llm=eval_llm, embeddings=eval_embed
 
 The point of multiple metrics: **low faithfulness + high relevancy = the model is confidently making things up.** A single number can't tell you that.
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/01_ragas_eval.py` — the four RAGAS metrics with target thresholds and how to read them.
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/FAILURE_MODES.md` — a "lowest metric → root cause → fix" table (low recall → missing context; low precision → over-retrieval).
-> 📁 Class repo: `week10/notebooks/04_langsmith.py` — turn on tracing, then *diff* a weak prompt vs a strong one. "You cannot fix what you cannot see."
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/01_ragas_eval.py` — the four RAGAS metrics with target thresholds and how to read them.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/FAILURE_MODES.md` — a "lowest metric → root cause → fix" table (low recall → missing context; low precision → over-retrieval).
+> 📁 Class repo: `week10_production_observability/notebooks/04_langsmith.py` — turn on tracing, then *diff* a weak prompt vs a strong one. "You cannot fix what you cannot see."
 
 ---
 
@@ -143,15 +143,15 @@ Wire that `sys.exit` into a GitHub Actions job and a prompt tweak that tanks fai
   run: python eval_gate.py   # exits non-zero if any metric regresses
 ```
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/03_cicd_gate.py` — the gate mechanics: `THRESHOLDS`, mean-per-metric, `sys.exit`, plus the full GitHub Actions YAML.
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/04_cicd_gate_real.py` — the same gate against the *real* pipeline + graph-grounded gold set.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/03_cicd_gate.py` — the gate mechanics: `THRESHOLDS`, mean-per-metric, `sys.exit`, plus the full GitHub Actions YAML.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/04_cicd_gate_real.py` — the same gate against the *real* pipeline + graph-grounded gold set.
 
 **Layer three regression types** (running only "targeted" tests is a documented anti-pattern — a reasoning-prompt change can break tool selection):
 - **Direct** — re-run the tests for the capability you changed.
 - **Adjacent** — re-run capabilities that *interact with* it (the misses live here).
 - **Random spot-check** — 5–10 unrelated cases as a safety net.
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/05_improvement_loop.py` + `improvement_log.json` — log each iteration's four scores plus the action taken, so you keep changes only when scores rise.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/05_improvement_loop.py` + `improvement_log.json` — log each iteration's four scores plus the action taken, so you keep changes only when scores rise.
 
 ---
 

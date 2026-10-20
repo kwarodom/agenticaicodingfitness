@@ -199,7 +199,7 @@ DEFAULT_MAX_TOKENS = 1024
 FAST_MAX_TOKENS = 320
 
 # ── paths ─────────────────────────────────────────────────────────────────────
-PKG = Path(__file__).resolve().parent          # …/week23/00_stack_navigator
+PKG = Path(__file__).resolve().parent          # …/week23_open_superintelligence_stack/00_stack_navigator
 SANDBOX = PKG / ".sandbox"                      # scratch space for generated artifacts
 
 # ── DGX hardware facts (accurate, used by the hardware + sizing demos) ────────

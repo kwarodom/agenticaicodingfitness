@@ -16,9 +16,9 @@ Endpoints
   GET  /healthz
 
 Run it (needs Part A's app_server.py running too):
-    .venv/bin/python week17/authmd_adk/app_server.py    # terminal 1
-    .venv/bin/python week17/authmd_adk/agent_server.py   # terminal 2
-    .venv/bin/python week17/authmd_adk/run_full_demo.py  # terminal 3
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/app_server.py    # terminal 1
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/agent_server.py   # terminal 2
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/run_full_demo.py  # terminal 3
 """
 from __future__ import annotations
 

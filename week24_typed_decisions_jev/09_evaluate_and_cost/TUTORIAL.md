@@ -30,7 +30,7 @@ A router that sends everything to a human has 0% coverage and 0 wrong-accepted: 
 
 ## 1 · Run the smoke evaluation (lab 01)
 
-The data is `week24/09_evaluate_and_cost/data/intent_eval.jsonl` — the 9 teaching rows from `jev_lab.py` plus 3 more Thai rows. Each row is one line of JSON:
+The data is `week24_typed_decisions_jev/09_evaluate_and_cost/data/intent_eval.jsonl` — the 9 teaching rows from `jev_lab.py` plus 3 more Thai rows. Each row is one line of JSON:
 
 ```json
 {"id": "t3", "language": "th", "state": {"message": "นัดช่างมาบำรุงรักษาเครื่องทำน้ำเย็นสัปดาห์หน้า"}, "expected": {"intent": "facility_ops"}}
@@ -39,7 +39,7 @@ The data is `week24/09_evaluate_and_cost/data/intent_eval.jsonl` — the 9 teach
 The `expected` field never reaches Jev: `jev_lab.prepare()` copies only `message` into the state. Leaking the answer key into the input is the most common evaluation bug there is.
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/labs/lab01_smoke_eval.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab01_smoke_eval.py
 ```
 
 **Expected output**
@@ -110,7 +110,7 @@ Here is row i3 with only the topic question. Press **⚡ Ask Jev**, then try the
 A threshold lives in **your** code, not in the model. So once you have the answers you can try every threshold without calling Jev again. Lab 02 reads the answers Lab 01 saved in `.runs/intent_answers.json`.
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/labs/lab02_threshold_sweep.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab02_threshold_sweep.py
 ```
 
 **Expected output**
@@ -143,12 +143,12 @@ A mistake made at top p = 1.00 can't be caught by any threshold. Only better que
 
 ## 4 · The reference evaluator
 
-`week24/jev_lab/jev_lab.py` (the original tutorial script) has the same evaluator built in. Run it on the same file to see the numbers agree. It needs the key in your shell; the built-in ⌨ Terminal already has it.
+`week24_typed_decisions_jev/jev_lab/jev_lab.py` (the original tutorial script) has the same evaluator built in. Run it on the same file to see the numbers agree. It needs the key in your shell; the built-in ⌨ Terminal already has it.
 
 ```bash
 set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a
-.venv/bin/python week24/jev_lab/jev_lab.py evaluate intent \
-  --input week24/09_evaluate_and_cost/data/intent_eval.jsonl --limit 12 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py evaluate intent \
+  --input week24_typed_decisions_jev/09_evaluate_and_cost/data/intent_eval.jsonl --limit 12 --live
 ```
 
 **Expected output**
@@ -177,7 +177,7 @@ set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a
 Jev bills **input tokens only**: **$0.042 per million**. Output is free. Lab 03 is pure arithmetic, so it needs no key.
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/labs/lab03_cost_calculator.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab03_cost_calculator.py
 ```
 
 **Expected output**
@@ -219,7 +219,7 @@ Run lab 01 first; labs 02 and 03 reuse its saved answers (`.runs/intent_answers.
 
 ## Try it yourself
 
-**Exercise 09 — your own test set, your own metric.** Open `week24/09_evaluate_and_cost/exercises/ex09_build_a_testset.py`:
+**Exercise 09 — your own test set, your own metric.** Open `week24_typed_decisions_jev/09_evaluate_and_cost/exercises/ex09_build_a_testset.py`:
 
 1. **TODO 1** — write at least 6 labeled rows for the Alto Copilot router: at least 2 in Thai and at least 1 whose correct answer is `unknown`. Write requests *you* would actually receive.
 2. **TODO 2** — implement `macro_f1(pairs)`: the average F1 across classes. The comments spell out TP, FP, FN.
@@ -227,7 +227,7 @@ Run lab 01 first; labs 02 and 03 reuse its saved answers (`.runs/intent_answers.
 The checker validates your rows and tests `macro_f1()` against four fixtures **before** any API call. When everything is ✓, it evaluates your rows live.
 
 ```bash
-.venv/bin/python week24/09_evaluate_and_cost/exercises/ex09_build_a_testset.py
+.venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/exercises/ex09_build_a_testset.py
 ```
 
 **Expected output**

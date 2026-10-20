@@ -8,7 +8,7 @@ will use. With --launch (or SPARK_APPLY=1) it starts them in order and waits for
     3. Spark A · LiteLLM gateway with two aliases                   (Module 08's on-Spark install)
 Deviations from the playbooks are marked in the printed commands.
 
-Run: .venv/bin/python week25/20_capstone_sovereign_agent/labs/lab02_bring_up.py [--launch]
+Run: .venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab02_bring_up.py [--launch]
 """
 import os
 import sys

@@ -9,13 +9,13 @@ Every decision the Optimizer makes is persisted back into the graph as an
 Event node via AgentMemory — so the MAS has durable, queryable memory.
 
 Run:
-    ./.venv/bin/python week14/lab1_hotel_mas.py        # from repo root
-    # or, from inside week14/:
+    ./.venv/bin/python week14_agent_memory_knowledge_graphs/lab1_hotel_mas.py        # from repo root
+    # or, from inside week14_agent_memory_knowledge_graphs/:
     ../.venv/bin/python lab1_hotel_mas.py
 
 Prerequisites:
     - Neo4j running at bolt://localhost:7687 (docker compose up -d)
-    - Hotel graph built:  python week14/6.hotel_kg_builder.py
+    - Hotel graph built:  python week14_agent_memory_knowledge_graphs/6.hotel_kg_builder.py
     - ANTHROPIC_API_KEY in the repo-root .env
 """
 import os
@@ -33,7 +33,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from agent_memory import AgentMemory, URI, AUTH
 
-# Load ANTHROPIC_API_KEY from the repo-root .env (one level up from week14/).
+# Load ANTHROPIC_API_KEY from the repo-root .env (one level up from week14_agent_memory_knowledge_graphs/).
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 # ── Shared infrastructure ──────────────────────────────────────────────────────

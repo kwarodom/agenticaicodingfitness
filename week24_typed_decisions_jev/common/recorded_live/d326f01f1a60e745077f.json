@@ -1,0 +1,78 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "gemini",
+  "model": "gemini-3.8-live",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences.\nCall reference: L14-4.",
+  "audio": "call_turn1_en.wav",
+  "text": null
+ },
+ "response": {
+  "heard": "Hi. It's room 1507. The air conditioner is making a clicking noise. It's a bit annoying but not urgent.",
+  "said": "Thank you for letting us know, room 1507. I will send maintenance to check your air conditioner shortly.",
+  "events": [
+   [
+    0.6,
+    "session",
+    "setup complete"
+   ],
+   [
+    9.31,
+    "caller_stopped",
+    "last word of speech streamed"
+   ],
+   [
+    10.93,
+    "heard",
+    "Hi. It's room 1507. The air conditioner is making a clicking noise. It's a bit annoying but not urgent."
+   ],
+   [
+    10.93,
+    "vad_end",
+    "server detected end of speech"
+   ],
+   [
+    10.93,
+    "said",
+    "Thank you for letting "
+   ],
+   [
+    10.93,
+    "first_audio",
+    "model started speaking"
+   ],
+   [
+    10.93,
+    "said",
+    "us know, room 1507."
+   ],
+   [
+    10.93,
+    "said",
+    " I will"
+   ],
+   [
+    11.01,
+    "said",
+    " send maintenance to check"
+   ],
+   [
+    11.16,
+    "said",
+    " your air conditioner shortly."
+   ],
+   [
+    15.96,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 9.31,
+   "first_output": 10.93,
+   "total": 16.02
+  },
+  "provider": "gemini",
+  "model": "gemini-3.8-live"
+ }
+}

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Reef Lab Runner — the step-by-step web app for Week 26 (NemoClaw on DGX Spark, beginner to expert).
 
-Same shape as Week 25's Spark Lab Runner: it parses every week26/NN_*/TUTORIAL.md,
+Same shape as Week 25's Spark Lab Runner: it parses every week26_nemoclaw_claws/NN_*/TUTORIAL.md,
 serves them as one continuous course (static/guide.html renders it), and runs
 each module's labs/*.py and exercises/*.py server-side, streaming output live.
 
-Claw-specific additions (from the Alto Reef spec, week26/alto-reef/docs/spec.md):
+Claw-specific additions (from the Alto Reef spec, week26_nemoclaw_claws/alto-reef/docs/spec.md):
   • LIVE / DRY switch. LIVE runs commands on your DGX Spark — locally when this server
     runs ON the Spark, else over `ssh $SPARK_HOST`. DRY runs nothing on the Spark and shows
     RECORDED / REFERENCE / EXAMPLE output, labelled. Laptop labs (NAT, the OpenShell policy
@@ -17,13 +17,13 @@ Claw-specific additions (from the Alto Reef spec, week26/alto-reef/docs/spec.md)
     probes (vLLM, NAT, NAT MCP, Phoenix, OTel, Hermes), each shown with its command, exit code
     and probe time. Unreachable = red, never a cached value presented as live.
   • 🖥 Spark setup dialog: Spark host + sandbox name + HF_TOKEN / NVIDIA_API_KEY, saved
-    server-side to week26/.env.local (gitignored, mode 0600), never sent back.
+    server-side to week26_nemoclaw_claws/.env.local (gitignored, mode 0600), never sent back.
   • /api/chat — the proxy behind the inline "⚡ Ask the claw" blocks (vLLM, Ollama, NAT, Hermes).
   • The ⌨ terminal can target this Mac or the Spark (ssh), picked per command.
 
 Launch (auto-picks a free port if 8126 is taken):
 
-    .venv/bin/python week26/00_reef_lab_runner/tutorial_server.py
+    .venv/bin/python week26_nemoclaw_claws/00_reef_lab_runner/tutorial_server.py
     # → http://127.0.0.1:8126
 """
 from __future__ import annotations
@@ -45,8 +45,8 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week26/00_reef_lab_runner
-WEEK = PKG.parent                                     # …/week26
+PKG = Path(__file__).resolve().parent                 # …/week26_nemoclaw_claws/00_reef_lab_runner
+WEEK = PKG.parent                                     # …/week26_nemoclaw_claws
 ROOT = WEEK.parent                                    # …/agenticaicodingfitness
 sys.path.insert(0, str(WEEK / "common"))
 import clawkit as sparkkit  # noqa: E402 — same API as Week 25's sparkkit, plus the claw stack
@@ -93,7 +93,7 @@ def _pick_free_port(preferred: int, span: int = 40) -> int:
 
 
 def modules() -> list[str]:
-    """Every week26/NN_name/ folder with a TUTORIAL.md, in order (00 is this app)."""
+    """Every week26_nemoclaw_claws/NN_name/ folder with a TUTORIAL.md, in order (00 is this app)."""
     return [p.parent.name for p in sorted(WEEK.glob("[0-9][0-9]_*/TUTORIAL.md"))
             if MODULE_RE.match(p.parent.name) and not p.parent.name.startswith("00_")]
 
@@ -357,7 +357,7 @@ MEDIA_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", "
 
 @app.get("/w26media/{folder}/{rel:path}")
 async def module_media(folder: str, rel: str):
-    """Serve ONLY week26/<module>/media/* and week26/<module>/.runs/* (files a lab just produced).
+    """Serve ONLY week26_nemoclaw_claws/<module>/media/* and week26_nemoclaw_claws/<module>/.runs/* (files a lab just produced).
     Extension allowlist, no traversal, no directory listings."""
     if folder not in modules() or not re.fullmatch(r"(media|\.runs)/[A-Za-z0-9_.\-/]{1,160}", rel or ""):
         raise HTTPException(404, "not found")
@@ -460,7 +460,7 @@ async def api_run(req: RunRequest, request: Request):
         async with _run_lock:
             start = time.time()
             apply = "  · 🔓 changes allowed" if env.get("CLAW_APPLY") == "1" else ""
-            yield f"$ {Path(PY).name} week26/{req.folder}/{req.file}   [{mode.upper()}{apply}]\n\n"
+            yield f"$ {Path(PY).name} week26_nemoclaw_claws/{req.folder}/{req.file}   [{mode.upper()}{apply}]\n\n"
             proc = await asyncio.create_subprocess_exec(
                 PY, str(path), cwd=str(ROOT), env=env,
                 stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT)
@@ -571,7 +571,7 @@ async def api_settings_get(request: Request) -> dict:
 
 @app.post("/api/settings")
 async def api_settings_set(req: SettingRequest, request: Request) -> dict:
-    """Save (or with value "" remove) one setting in week26/.env.local — gitignored, mode 0600.
+    """Save (or with value "" remove) one setting in week26_nemoclaw_claws/.env.local — gitignored, mode 0600.
     Secret values are never echoed back; the response only says whether one is now set."""
     _local_only(request)
     if req.name not in SETTINGS:
@@ -962,7 +962,7 @@ if __name__ == "__main__":
     if st["laptop_models"]:
         banner += [f"      💻 laptop Ollama stand-in: {', '.join(st['laptop_models'][:3])}"]
     tools = [n for n, pth in (("NAT", sparkkit.NAT), ("OpenShell parser", sparkkit.OPENSHELL)) if pth.exists()]
-    banner += [f"      🧰 laptop tools: {', '.join(tools) or 'none — see week26/README.md (uv venvs)'}"]
+    banner += [f"      🧰 laptop tools: {', '.join(tools) or 'none — see week26_nemoclaw_claws/README.md (uv venvs)'}"]
     banner += [f"      ▤ course: {len(parsed)} modules · {sum(len(e['sections']) for e in parsed)} sections · "
                f"{sum(len(e['labs']) for e in parsed)} labs · {sum(len(e['exercises']) for e in parsed)} exercises"]
     if port != GUIDE_PORT:

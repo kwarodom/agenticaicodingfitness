@@ -7,14 +7,14 @@ runs from labs 08-1/08-2/08-4) and what only the Spark can prove (a sandbox that
 logs, Phoenix traces, eval and sizing files, the sandbox tax). The rules are fixed:
 
   • Spark points need Spark evidence: a LIVE read-only command, or a RECORDED transcript of the lab's exact
-    command (week26/common/recorded/, written with SPARK_RECORD=1). An EXAMPLE never counts. In DRY every
+    command (week26_nemoclaw_claws/common/recorded/, written with SPARK_RECORD=1). An EXAMPLE never counts. In DRY every
     Spark-only item is "not yet evidenced", and it says why.
   • A laptop point is awarded only when the file it needs exists, and (for the bundle) still matches its
     MANIFEST.json hashes.
   • The bonus ("a policy OpenShell's prover accepts with no new credentialed hosts") is never auto-awarded:
     the grader shows the laptop pre-check, and a human awards it from the prover's own output.
 
-No LLM calls, no servers. Run: .venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py
+No LLM calls, no servers. Run: .venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py
 """
 import json
 import sys

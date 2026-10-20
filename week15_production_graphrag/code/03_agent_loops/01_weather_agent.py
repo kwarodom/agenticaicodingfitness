@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 03.1 — Your first autonomous agent.
 
-Run:  python week15/code/03_agent_loops/01_weather_agent.py
+Run:  python week15_production_graphrag/code/03_agent_loops/01_weather_agent.py
 
 Same tools as folder 02, but now wrapped in the Agent loop with a GOAL that
 needs several steps. Read the 💭 / 🔧 / 📋 trace: each cycle is one

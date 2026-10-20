@@ -41,17 +41,17 @@ updates properties, it doesn't duplicate nodes. Each script prints its own
 
 ```bash
 # 1. Make sure Neo4j is up (docker compose in kg_mastery/)
-docker compose -f week15/kg_mastery/docker-compose.yml up -d
+docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d
 
 # 2. The agent needs an API key + LangGraph stack
 export ANTHROPIC_API_KEY=sk-ant-...
 pip install langgraph langchain-anthropic langchain-core
 
 # 3. Run any use case
-python week15/kg_mastery/part5_use_cases/01_hotel_iot_agent.py     # live data + LLM
-python week15/kg_mastery/part5_use_cases/02_supply_chain.py        # loads :SC,  Cypher only
-python week15/kg_mastery/part5_use_cases/03_healthcare.py          # loads :HC,  Cypher only
-python week15/kg_mastery/part5_use_cases/04_financial_fraud.py     # loads :FIN, Cypher only
+python week15_production_graphrag/kg_mastery/part5_use_cases/01_hotel_iot_agent.py     # live data + LLM
+python week15_production_graphrag/kg_mastery/part5_use_cases/02_supply_chain.py        # loads :SC,  Cypher only
+python week15_production_graphrag/kg_mastery/part5_use_cases/03_healthcare.py          # loads :HC,  Cypher only
+python week15_production_graphrag/kg_mastery/part5_use_cases/04_financial_fraud.py     # loads :FIN, Cypher only
 ```
 
 Only `01_hotel_iot_agent.py` calls an LLM and needs `ANTHROPIC_API_KEY`. The

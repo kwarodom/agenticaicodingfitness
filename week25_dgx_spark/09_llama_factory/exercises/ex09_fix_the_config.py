@@ -4,10 +4,10 @@
 A teammate wrote the registry and the configs below for the hotel dataset. Each one would crash
 `llamafactory-cli train` (or, worse, train fine and then be used with the wrong chat format).
 Fix the four TODOs by editing the text, save, then run:
-    .venv/bin/python week25/09_llama_factory/exercises/ex09_fix_the_config.py
+    .venv/bin/python week25_dgx_spark/09_llama_factory/exercises/ex09_fix_the_config.py
 
 The checker is free and offline: it parses the text with json / PyYAML and checks it against the
-real files in week25/09_llama_factory/data/ (run lab 02 first if they are missing).
+real files in week25_dgx_spark/09_llama_factory/data/ (run lab 02 first if they are missing).
 Stuck? Compare with exercises/solutions/.
 """
 import json
@@ -76,7 +76,7 @@ def main() -> None:
 
     fname = entry.get("file_name", "")
     ok &= check((DATA / fname).is_file(), f"TODO 1: file_name '{fname}' exists in data/",
-                f"TODO 1: file_name '{fname}' is not in data/ — ls week25/09_llama_factory/data")
+                f"TODO 1: file_name '{fname}' is not in data/ — ls week25_dgx_spark/09_llama_factory/data")
 
     rows = json.loads((DATA / fname).read_text(encoding="utf-8")) if (DATA / fname).is_file() else \
         json.loads((DATA / "hotel_ops.json").read_text(encoding="utf-8"))

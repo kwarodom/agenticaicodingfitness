@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Lesson 06.3 — Router / dispatcher (triage desk).
 
-Run:  python week15/code/06_multi_agent/03_router.py
+Run:  python week15_production_graphrag/code/06_multi_agent/03_router.py
 
 A classifier agent reads each support ticket and routes it to the right
 specialist (billing / technical / general). Decide WHAT (classify) then HOW
-(route). This is the LangGraph router pattern from week9/ex2 — here as plain
+(route). This is the LangGraph router pattern from week09_multi_agent_systems/ex2 — here as plain
 functions so the control flow is obvious.
 """
 import json

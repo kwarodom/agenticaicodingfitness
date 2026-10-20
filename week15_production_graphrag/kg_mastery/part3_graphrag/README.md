@@ -41,5 +41,5 @@ Every script guards its optional framework import and tells you exactly what to
 
 ```bash
 # example — script 1
-python week15/kg_mastery/part3_graphrag/01_langchain_graphcypher.py
+python week15_production_graphrag/kg_mastery/part3_graphrag/01_langchain_graphcypher.py
 ```

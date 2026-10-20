@@ -7,7 +7,7 @@
 - Learn the four rules that made every first test in this course fail, and the messages that tell you which one you broke.
 - Type-check the mod with the declarations Claude Code writes for your build.
 - Read `claude plugin validate` as a reviewer, add `marketplace.json`, and ship: GitHub install line, folder marketplace, version bumps.
-- **Capstone:** take the research starter `week29/mod-agentic-coding-fitness`, run it through test, validate and `tsc`, and fix what is actually broken.
+- **Capstone:** take the research starter `week29_claude_code_mods/mod-agentic-coding-fitness`, run it through test, validate and `tsc`, and fix what is actually broken.
 
 **Time** ~75 min · **Difficulty** intermediate · **Hardware** this laptop only
 
@@ -22,7 +22,7 @@
 | Node (for `tsc`) | `npx --version` | section 4 runs TypeScript through `npx` |
 | A GitHub repo (optional) | `gh auth status` | only to publish in section 6 |
 
-The finished lab mod, tests included, is `week29/reference/hello-mod`. Compare against it whenever you are stuck.
+The finished lab mod, tests included, is `week29_claude_code_mods/reference/hello-mod`. Compare against it whenever you are stuck.
 
 ## 1 · The test kit: you play Claude Code
 
@@ -70,7 +70,7 @@ The kit gives you three ready-made stand-ins: `mock.store(on, entries?)` (an in-
 claude plugin test ~/mod-gym-lab/hello-mod
 ```
 
-**Expected output** (captured on this Mac with `week29/reference/hello-mod`, which has two more tests: the guard and the prompt context)
+**Expected output** (captured on this Mac with `week29_claude_code_mods/reference/hello-mod`, which has two more tests: the guard and the prompt context)
 
 ```
 tests/hello-mod.test.ts:
@@ -134,7 +134,7 @@ This test is how Lesson 04's ordering rule was found: with a catch-all observer 
 
 ## 3 · UI tests: mount the pane and press its buttons
 
-`$.ui.mount` draws a component through your plugin on a surface you name and lets you act on it by `key`. Mod Gym's own test (`week29/mod-gym/tests/mod-gym.test.ts`) loops over two surfaces:
+`$.ui.mount` draws a component through your plugin on a surface you name and lets you act on it by `key`. Mod Gym's own test (`week29_claude_code_mods/mod-gym/tests/mod-gym.test.ts`) loops over two surfaces:
 
 ```ts
 for (const surface of ['terminal', 'desktop'] as const) {
@@ -228,11 +228,11 @@ Warnings do not fail validation; errors do. Two more errors you met in earlier l
 
 They answer `y` to add the marketplace and pick a scope. A mod that is only a hooks module is active at once.
 
-**From a folder (how Mod Gym is installed on the teacher's machine).** A marketplace can be a folder. `week29/.claude-plugin/marketplace.json` is one, listing `mod-gym` (`./mod-gym`) and the reference `hello-mod` (`./reference/hello-mod`):
+**From a folder (how Mod Gym is installed on the teacher's machine).** A marketplace can be a folder. `week29_claude_code_mods/.claude-plugin/marketplace.json` is one, listing `mod-gym` (`./mod-gym`) and the reference `hello-mod` (`./reference/hello-mod`):
 
 ```bash
 # on: laptop — do this once, from the repo root
-claude plugin marketplace add ./week29
+claude plugin marketplace add ./week29_claude_code_mods
 claude plugin install mod-gym@fitness-week29 --scope user
 claude plugin list
 ```
@@ -242,7 +242,7 @@ claude plugin list
 ```
   ❯ mod-gym@fitness-week29
     Version: 0.1.0
-    Read from: /Users/altodev/Desktop/agenticaicodingfitness/week29/mod-gym
+    Read from: /Users/altodev/Desktop/agenticaicodingfitness/week29_claude_code_mods/mod-gym
     Scope: user
     Status: ✔ enabled
 ```
@@ -254,7 +254,7 @@ claude plugin list
 **The class marketplace.** The repo root's `.claude-plugin/marketplace.json` (marketplace `agentic-coding-fitness`, the one students already added) now lists two plugins:
 
 ```
-[('agentic-coding-fitness', './plugins/agentic-coding-fitness'), ('mod-gym', './week29/mod-gym')]
+[('agentic-coding-fitness', './plugins/agentic-coding-fitness'), ('mod-gym', './week29_claude_code_mods/mod-gym')]
 ```
 
 Once that is pushed, students run `/plugin marketplace update agentic-coding-fitness`, then `/plugin install mod-gym@agentic-coding-fitness`.
@@ -265,11 +265,11 @@ Once that is pushed, students run `/plugin marketplace update agentic-coding-fit
 
 ## 7 · Capstone: audit the research starter
 
-`week29/mod-agentic-coding-fitness` is the v3.0.0 starter from this week's research: a `/fitness` progress pane, `/fitness-log`, `/fitness-grade`, a `log_lab` tool and auto-logging of passing `pytest` runs. Its author wrote it from the docs and said so: *"The starter `register.js` and tests were not executed against a live Claude Code."* Your job: make it pass test, validate **and** `tsc`, changing only what is actually wrong. Work on a copy; leave the original as it is.
+`week29_claude_code_mods/mod-agentic-coding-fitness` is the v3.0.0 starter from this week's research: a `/fitness` progress pane, `/fitness-log`, `/fitness-grade`, a `log_lab` tool and auto-logging of passing `pytest` runs. Its author wrote it from the docs and said so: *"The starter `register.js` and tests were not executed against a live Claude Code."* Your job: make it pass test, validate **and** `tsc`, changing only what is actually wrong. Work on a copy; leave the original as it is.
 
 ```bash
 # on: laptop
-cp -R week29/mod-agentic-coding-fitness ~/mod-gym-lab/starter && find ~/mod-gym-lab/starter -name .DS_Store -delete
+cp -R week29_claude_code_mods/mod-agentic-coding-fitness ~/mod-gym-lab/starter && find ~/mod-gym-lab/starter -name .DS_Store -delete
 claude plugin validate ~/mod-gym-lab/starter
 cd ~/mod-gym-lab/starter && claude plugin test .
 ```

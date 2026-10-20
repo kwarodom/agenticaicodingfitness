@@ -16,10 +16,10 @@ Endpoints
   GET  /healthz
 
 Run it (foreground):
-    .venv/bin/python week17/hr_onboarding/server.py
+    .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py
 Run it (background process):
-    nohup .venv/bin/python week17/hr_onboarding/server.py > /tmp/onboarding.log 2>&1 &
-Then drive it with:  .venv/bin/python week17/hr_onboarding/client.py
+    nohup .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py > /tmp/onboarding.log 2>&1 &
+Then drive it with:  .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/client.py
 """
 from __future__ import annotations
 

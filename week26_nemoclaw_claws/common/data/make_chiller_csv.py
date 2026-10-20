@@ -6,7 +6,7 @@ Not from a real building. Deterministic (seed 26) so every learner, lab and eval
 then degrades to ~0.9 kW/RT over the last 6 hours (a fouled condenser, say) so the alarm path has something
 to find.
 
-    .venv/bin/python week26/common/data/make_chiller_csv.py
+    .venv/bin/python week26_nemoclaw_claws/common/data/make_chiller_csv.py
 """
 import csv
 import math

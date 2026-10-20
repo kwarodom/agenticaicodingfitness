@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """parsekit — Module 03's tiny wrapper around the REAL OpenShell CLI on this laptop, used as an offline parser.
 
-It does what clawkit.openshell_offline() does — run `week26/.venv-openshell/bin/openshell` (0.0.111) against a
-dead gateway (127.0.0.1:9) — but from the week26/ folder, so file paths print short (`03_policy_as_code/…`).
+It does what clawkit.openshell_offline() does — run `week26_nemoclaw_claws/.venv-openshell/bin/openshell` (0.0.111) against a
+dead gateway (127.0.0.1:9) — but from the week26_nemoclaw_claws/ folder, so file paths print short (`03_policy_as_code/…`).
 Whatever the CLI checks on its own (argument grammar, YAML structure) comes back at once as an error; anything
 that got past those checks fails with "Connection refused" — which proves it PARSED (clawkit.parsed_ok).
 Semantic rules (no root, no `read_write: [/]`, an L7 endpoint needs access or rules …) are checked later by the

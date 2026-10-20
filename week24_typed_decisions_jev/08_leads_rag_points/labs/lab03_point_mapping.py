@@ -4,7 +4,7 @@
 Six point descriptions → an internal semantic kind (NOT an ontology URI) + an
 ambiguity signal → curator_review. Nothing is written to the building graph.
 
-Run: .venv/bin/python week24/08_leads_rag_points/labs/lab03_point_mapping.py
+Run: .venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab03_point_mapping.py
 """
 import json
 import sys

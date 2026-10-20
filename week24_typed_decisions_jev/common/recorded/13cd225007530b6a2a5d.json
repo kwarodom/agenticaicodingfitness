@@ -1,0 +1,39 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-bdb430c290c344ad"
+  },
+  "questions": {
+   "leak": {
+    "type": "noul",
+    "instructions": "Is liquid pooling on the floor in `photo`?"
+   }
+  },
+  "assets": {
+   "img-bdb430c290c344ad": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "6ee70a72fa31a4ef",
+    "base64_chars": 208176
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "leak": {
+    "type": "noul",
+    "noul": 0.98
+   }
+  },
+  "usage": {
+   "input_tokens": 2652,
+   "output_tokens": 21
+  }
+ }
+}

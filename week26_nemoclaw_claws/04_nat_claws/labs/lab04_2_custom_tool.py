@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Lab 04-2 · A custom tool: chiller_kpi, its ground truth, and why a tool description is a prompt.
 
-Research tutorial L3.4. Walks week26/common/alto_ops/src/alto_ops/chiller_tool.py (register_function ·
+Research tutorial L3.4. Walks week26_nemoclaw_claws/common/alto_ops/src/alto_ops/chiller_tool.py (register_function ·
 FunctionBaseConfig · FunctionInfo), checks the 1.9 import paths, computes the ground truth twice with no LLM
 (plain Python over the CSV, then NAT's own builder calling the tool), and only then asks the tool_calling_agent.
 It asks the same question twice: once with the research tutorial's original tool description, once with the
 course's (which says what RT means) — and checks what the model called "RT".
 
 LLM budget: 2 agent questions ≈ 4 laptop LLM calls.
-Run: .venv/bin/python week26/04_nat_claws/labs/lab04_2_custom_tool.py
+Run: .venv/bin/python week26_nemoclaw_claws/04_nat_claws/labs/lab04_2_custom_tool.py
 """
 import csv
 import re
@@ -41,7 +41,7 @@ table([["FunctionBaseConfig subclass, name=\"chiller_kpi\"", "the YAML `_type:` 
       ["piece", "what it does"])
 
 step(2, "the import paths on NAT 1.9 — the tutorial says 'confirm on your version'")
-nat(["imports"], prefix=[NAT_PY, DIRECT], show=f"week26/.venv-nat/bin/python {rel(DIRECT)} imports")
+nat(["imports"], prefix=[NAT_PY, DIRECT], show=f"week26_nemoclaw_claws/.venv-nat/bin/python {rel(DIRECT)} imports")
 note("Both styles work on 1.9.0: the long paths (the tutorial, chiller_tool.py) and the `nat.plugin_api` facade that "
      "`nat workflow create` now generates. They are the same objects.")
 
@@ -58,7 +58,7 @@ note(f"{len(rows)} rows of SYNTHETIC 15-minute data in {rel(CSV)}; the last 6 h 
 
 step(4, "ground truth #2 — NAT's builder calls the registered tool directly (no LLM)")
 r, _ = nat(["tool", LAPTOP_YML, "chiller_kpi", '{"hours": 6}', '{"hours": 24}'], prefix=[NAT_PY, DIRECT],
-           show=f"week26/.venv-nat/bin/python {rel(DIRECT)} tool {rel(LAPTOP_YML)} chiller_kpi "
+           show=f"week26_nemoclaw_claws/.venv-nat/bin/python {rel(DIRECT)} tool {rel(LAPTOP_YML)} chiller_kpi "
                 "'{\"hours\": 6}' '{\"hours\": 24}'")
 got = dict((int(h), float(v)) for h, v in re.findall(r"window=(\d+)h .*?kw_per_rt=([\d.]+)", r.out))
 if got.get(6) is not None and abs(got[6] - truth[6]) < 0.001:

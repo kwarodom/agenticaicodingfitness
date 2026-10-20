@@ -115,7 +115,7 @@ Lab 06-3 runs the playbook's Steps 6 and 7 from Python: a `json_schema` request 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/labs/lab03_sglang_features.py
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab03_sglang_features.py
 ```
 
 **Expected output** (captured on this Mac: no Spark, so Ollama stood in. It is not SGLang)
@@ -426,7 +426,7 @@ Lab 06-1 applies these rules to every engine that answers:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/labs/lab01_engine_bakeoff.py
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab01_engine_bakeoff.py
 ```
 
 **Expected output** (captured on this Mac: no Spark, so every Spark endpoint is down and only the laptop row ran)
@@ -463,7 +463,7 @@ Measurements tell you which engine is fastest. Your workload's **hard needs** de
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/labs/lab02_which_engine.py --need tools,two-sparks
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab02_which_engine.py --need tools,two-sparks
 ```
 
 **Expected output** (offline, the same on every machine)
@@ -513,7 +513,7 @@ Labs 01 and 03 call the engines on your Spark, or the labelled laptop stand-in. 
 
 ## Try it yourself
 
-**Exercise 06 — plan a fair bake-off.** Open `week25/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py`. It has four `TODO`s:
+**Exercise 06 — plan a fair bake-off.** Open `week25_dgx_spark/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py`. It has four `TODO`s:
 
 1. `PORTS`: each engine's OpenAI port, from the playbooks (including the Nemotron Super TensorRT-LLM recipe).
 2. `port_conflicts(ports)`: every pair of engines that share a port.
@@ -522,7 +522,7 @@ Labs 01 and 03 call the engines on your Spark, or the labelled laptop stand-in. 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py
 ```
 
 **Expected output** (once all four TODOs are done, captured on this Mac)

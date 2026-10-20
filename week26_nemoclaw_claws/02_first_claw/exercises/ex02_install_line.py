@@ -2,7 +2,7 @@
 """Exercise 02 · The install line: a non-interactive Hermes claw, and two questions about it.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week26/02_first_claw/exercises/ex02_install_line.py
+    .venv/bin/python week26_nemoclaw_claws/02_first_claw/exercises/ex02_install_line.py
 
 The checker is free and offline: it parses your line (it never runs it) and asks the real bash on this laptop
 to syntax-check it with `bash -n`. Stuck? Compare with exercises/solutions/.

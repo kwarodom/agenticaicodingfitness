@@ -104,7 +104,7 @@ threshold (เกณฑ์) ในแล็บนี้ (**600 s** ถือว�
 ## 2 · คัดแยกห้าเหตุการณ์ — lab 01
 
 ```bash
-.venv/bin/python week24/07_afdd_triage/labs/lab01_triage_incidents.py
+.venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab01_triage_incidents.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -154,7 +154,7 @@ def policy(state, a):
 Lab 02 ถาม Jev เกี่ยวกับบันทึกของผู้ปฏิบัติงานหนึ่งฉบับ **ครั้งเดียว** แล้วนำสถานการณ์ telemetry สี่แบบผ่านนโยบายเดียวกัน เรียกโมเดลครั้งเดียว ได้ผลลัพธ์สี่แบบ
 
 ```bash
-.venv/bin/python week24/07_afdd_triage/labs/lab02_what_if.py
+.venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab02_what_if.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -212,7 +212,7 @@ Lab 02 ถาม Jev เกี่ยวกับบันทึกของผ�
 reference implementation ในสคริปต์ต้นฉบับใช้คำถามและการ override แบบเดียวกัน:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run afdd --limit 2 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run afdd --limit 2 --live
 ```
 
 ✓ Checkpoint: คุณชี้ได้ว่าขั้นไหนในลำดับงานนี้ที่คนเป็นผู้อนุมัติก่อนจะมีอะไรเปลี่ยนที่ไซต์
@@ -225,7 +225,7 @@ reference implementation ในสคริปต์ต้นฉบับใช�
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 07 — คำนวณ flag เอง** เปิด `week24/07_afdd_triage/exercises/ex07_compute_flags.py` แล้วเขียน `compute_flags(reading)` ให้คืนค่าตามนี้ทุกประการ:
+**แบบฝึกหัด 07 — คำนวณ flag เอง** เปิด `week24_typed_decisions_jev/07_afdd_triage/exercises/ex07_compute_flags.py` แล้วเขียน `compute_flags(reading)` ให้คืนค่าตามนี้ทุกประการ:
 
 | key | กฎ |
 |---|---|
@@ -239,7 +239,7 @@ reference implementation ในสคริปต์ต้นฉบับใช�
 assert ออฟไลน์ที่แม่นยำห้าข้อจะรันก่อน — รวมถึงกรณีขอบ "เท่ากับ 2.0 °C พอดี **ไม่ถือ** ว่าเบี่ยงเบน" จากนั้น flag ของคุณจะป้อนเข้าการคัดแยกจริงของห้าเหตุการณ์
 
 ```bash
-.venv/bin/python week24/07_afdd_triage/exercises/ex07_compute_flags.py
+.venv/bin/python week24_typed_decisions_jev/07_afdd_triage/exercises/ex07_compute_flags.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

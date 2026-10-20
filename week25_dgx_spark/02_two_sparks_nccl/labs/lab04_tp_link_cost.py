@@ -11,7 +11,7 @@ layer ends with two all-reduces over the QSFP link. This lab adds both up for fi
 ASSUMPTION here (swept over 10, 30, 100 µs). Measure yours with the playbook's ib_write_lat
 and pass it:  --alpha-us 25   ·   pass your NCCL busbw from lab03:  --busbw 22.4
 
-Run: .venv/bin/python week25/02_two_sparks_nccl/labs/lab04_tp_link_cost.py
+Run: .venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab04_tp_link_cost.py
 """
 import argparse
 import sys

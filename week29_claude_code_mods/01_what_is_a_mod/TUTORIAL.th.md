@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 01 — mod คืออะไร
 
-> ส่วนหนึ่งของ Week 29 · Claude Code mods คุณจะได้เรียนวิธีเปลี่ยนหน้าตาและพฤติกรรมของตัว Claude Code เอง จากในเทอร์มินัลที่คุณเขียนโค้ดอยู่ทุกวัน คอร์สนี้มีสองส่วนที่สอนแปดบทเรียนเดียวกัน คือ tutorial ชุดนี้ (ฉบับเต็ม) และ **🏋 Mod Gym** ซึ่งเป็นแผง (panel) ภายใน Claude Code (ฉบับย่อ พร้อมตัวตรวจงาน) Mod Gym เองก็เป็น mod ตัวหนึ่ง ทุกอย่างที่มันแสดงบนจอจึงเป็นสิ่งที่คุณจะได้เรียนสร้างเอง ตลอดบทเรียนคุณจะค่อย ๆ สร้าง lab mod เล็ก ๆ หนึ่งตัวชื่อ `hello-mod` ฉบับที่เสร็จแล้วอยู่ที่ `week29/reference/hello-mod`
+> ส่วนหนึ่งของ Week 29 · Claude Code mods คุณจะได้เรียนวิธีเปลี่ยนหน้าตาและพฤติกรรมของตัว Claude Code เอง จากในเทอร์มินัลที่คุณเขียนโค้ดอยู่ทุกวัน คอร์สนี้มีสองส่วนที่สอนแปดบทเรียนเดียวกัน คือ tutorial ชุดนี้ (ฉบับเต็ม) และ **🏋 Mod Gym** ซึ่งเป็นแผง (panel) ภายใน Claude Code (ฉบับย่อ พร้อมตัวตรวจงาน) Mod Gym เองก็เป็น mod ตัวหนึ่ง ทุกอย่างที่มันแสดงบนจอจึงเป็นสิ่งที่คุณจะได้เรียนสร้างเอง ตลอดบทเรียนคุณจะค่อย ๆ สร้าง lab mod เล็ก ๆ หนึ่งตัวชื่อ `hello-mod` ฉบับที่เสร็จแล้วอยู่ที่ `week29_claude_code_mods/reference/hello-mod`
 
 > 💬 หมายเหตุภาษา: เนื้อหาบทเรียนเป็นภาษาไทย แต่ผลลัพธ์ที่โปรแกรมพิมพ์ออกเทอร์มินัล (และโค้ดทั้งหมด) เป็นภาษาอังกฤษ ตัวอย่างผลลัพธ์ในกล่องโค้ดจึงเป็นภาษาอังกฤษตรงกับที่คุณจะเห็นจริง
 
@@ -19,7 +19,7 @@
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
 | Claude Code 2.1.287 ขึ้นไป | `claude --version` | mod เริ่มมีใน 2.1.287 (เทอร์มินัล) |
-| repo นี้ | `ls week29/mod-gym` | Mod Gym ติดตั้งจากโฟลเดอร์นี้ |
+| repo นี้ | `ls week29_claude_code_mods/mod-gym` | Mod Gym ติดตั้งจากโฟลเดอร์นี้ |
 | Week 15 (skill และ plugin) | รู้ว่า `SKILL.md` คืออะไร | บทนี้เทียบ mod กับ skill |
 
 ```bash
@@ -92,13 +92,13 @@ audit Mod Gym ก่อนติดตั้ง:
 
 ```bash
 # on: laptop (repo root)
-claude plugin validate week29/mod-gym
+claude plugin validate week29_claude_code_mods/mod-gym
 ```
 
 **Expected output** (บันทึกจริงบน Mac เครื่องนี้ ตัดบางส่วน)
 
 ```
-Validating hooks: …/week29/mod-gym/hooks/hooks.json
+Validating hooks: …/week29_claude_code_mods/mod-gym/hooks/hooks.json
 
   ❯ ./register.tsx hooks: session.start, prompt.submit, tool.call, turn.complete, tool.call{tool=mcp__mod-gym__gym_status}, command.run{command=mod-gym}, ui.render{component=AbovePrompt}, ui.render{component=Pane, requestId=mod-gym}
   ❯ ./register.tsx answers its own command: command.run{command=mod-gym}
@@ -132,11 +132,11 @@ Validating hooks: …/week29/mod-gym/hooks/hooks.json
 
 ## 5 · ติดตั้ง Mod Gym
 
-โฟลเดอร์ `week29/` ของ repo นี้เป็น plugin marketplace (`week29/.claude-plugin/marketplace.json` ชื่อ `fitness-week29`) ให้เพิ่ม marketplace นี้ แล้วติดตั้ง Mod Gym ที่ user scope:
+โฟลเดอร์ `week29_claude_code_mods/` ของ repo นี้เป็น plugin marketplace (`week29_claude_code_mods/.claude-plugin/marketplace.json` ชื่อ `fitness-week29`) ให้เพิ่ม marketplace นี้ แล้วติดตั้ง Mod Gym ที่ user scope:
 
 ```bash
 # on: laptop (repo root)
-claude plugin marketplace add ./week29
+claude plugin marketplace add ./week29_claude_code_mods
 claude plugin install mod-gym@fitness-week29 --scope user
 claude plugin list
 ```
@@ -146,7 +146,7 @@ claude plugin list
 ```
   ❯ mod-gym@fitness-week29
     Version: 0.1.0
-    Read from: /Users/altodev/Desktop/agenticaicodingfitness/week29/mod-gym
+    Read from: /Users/altodev/Desktop/agenticaicodingfitness/week29_claude_code_mods/mod-gym
     Scope: user
     Status: ✔ enabled
 ```
@@ -177,7 +177,7 @@ Lesson 01 of 08 · What a mod is
 …lesson text…
 Checks
 · Claude Code is 2.1.287 or newer
-Long form: week29/01_what_is_a_mod/TUTORIAL.md · lab: ~/mod-gym-lab/hello-mod
+Long form: week29_claude_code_mods/01_what_is_a_mod/TUTORIAL.md · lab: ~/mod-gym-lab/hello-mod
 [ Prev ] [ Next ] [ Check ] [ Ask Claude ] [ Close ]
 ```
 
@@ -233,11 +233,11 @@ Lesson 01 · What a mod is · 1/1 checks
 
 ## ลองทำเอง — audit mod ของคนแปลกหน้า
 
-`week29/mod-agentic-coding-fitness/` เป็น mod ติดตามความคืบหน้าที่ร่างขึ้นจากบันทึกการค้นคว้าของสัปดาห์นี้ และยังไม่เคยถูกรันเลย **อย่า**ติดตั้งมัน ให้ audit มัน:
+`week29_claude_code_mods/mod-agentic-coding-fitness/` เป็น mod ติดตามความคืบหน้าที่ร่างขึ้นจากบันทึกการค้นคว้าของสัปดาห์นี้ และยังไม่เคยถูกรันเลย **อย่า**ติดตั้งมัน ให้ audit มัน:
 
 ```bash
 # on: laptop (repo root)
-claude plugin validate week29/mod-agentic-coding-fitness
+claude plugin validate week29_claude_code_mods/mod-agentic-coding-fitness
 ```
 
 ตอบสามคำถามโดยดูจากผลลัพธ์อย่างเดียว:
@@ -274,7 +274,7 @@ claude plugin validate week29/mod-agentic-coding-fitness
 | อาการ | สาเหตุ | วิธีแก้ |
 |---|---|---|
 | `/mod-gym` ไม่ใช่คำสั่ง | session เริ่มก่อนการติดตั้ง | รัน `/reload-plugins` หรือเริ่ม session ใหม่ |
-| `claude plugin install` บอกว่าไม่พบ plugin | ไม่ได้เพิ่ม marketplace จาก repo root | รัน `claude plugin marketplace add ./week29` จาก repo root แล้วติดตั้งอีกครั้ง |
+| `claude plugin install` บอกว่าไม่พบ plugin | ไม่ได้เพิ่ม marketplace จาก repo root | รัน `claude plugin marketplace add ./week29_claude_code_mods` จาก repo root แล้วติดตั้งอีกครั้ง |
 | `mod-gym` สองรายการใน `claude plugin list` | ติดตั้งจากทั้ง `fitness-week29` และ `agentic-coding-fitness` | ถอนการติดตั้งหนึ่งตัว: `claude plugin uninstall mod-gym@fitness-week29` |
 | band ไม่ขึ้น | ถูกซ่อนไว้ หรือ plugin อื่นที่อยู่ชั้นบนวาด band โดยไม่ส่งต่อ | `/mod-gym band on` ส่วน status line และ `/mod-gym` ยังใช้ได้ |
 | แผงเปิดแบบ inline ใต้ transcript ไม่ใช่ sidebar | เทอร์มินัลไม่ได้อยู่ใน layout แบบ fullscreen | เป็นเรื่องปกติ: เฉพาะ layout แบบ fullscreen ที่วาง pane ไว้ข้าง transcript แผงทำงานเหมือนกันเมื่อเป็น inline |

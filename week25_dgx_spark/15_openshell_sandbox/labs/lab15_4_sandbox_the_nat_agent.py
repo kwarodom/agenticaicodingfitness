@@ -11,7 +11,7 @@ Safety: in DRY mode every command is printed with an EXAMPLE output. With a Spar
 read-only checks run; commands that CREATE or CHANGE something on the Spark run only with
 SPARK_APPLY=1 (or --yes). Deleting the sandbox additionally needs --cleanup.
 
-Run: .venv/bin/python week25/15_openshell_sandbox/labs/lab15_4_sandbox_the_nat_agent.py [--yes] [--cleanup]
+Run: .venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_4_sandbox_the_nat_agent.py [--yes] [--cleanup]
 """
 import os
 import sys
@@ -72,7 +72,7 @@ if where() == "dry" or APPLY:
 else:
     print("$ scp hotel_agent_policy.yaml <spark>:~/w25/hotel_agent_policy.yaml   [not run — add --yes or SPARK_APPLY=1]")
 change(f"openshell sandbox create --name {SB} --from base --policy ~/w25/hotel_agent_policy.yaml "
-       f"--upload {REPO}/week25/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true",
+       f"--upload {REPO}/week25_dgx_spark/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true",
        example=f"✓ sandbox {SB} created · policy applied · phase: Ready")
 
 step(5, "install NAT inside the sandbox while the setup-only pypi rule is open")

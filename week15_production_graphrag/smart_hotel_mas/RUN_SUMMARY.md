@@ -2,7 +2,7 @@
 
 A record of standing up the **Smart Hotel Multi-Agent System** workshop end-to-end on a local machine: what was built, what was verified working, and where to take it next.
 
-> Scope: the 6-checkpoint workshop in `week15/smart_hotel_mas/` — a 5-agent MAS with a 4-layer memory architecture over a 200-room smart hotel. All six checkpoints were run and verified.
+> Scope: the 6-checkpoint workshop in `week15_production_graphrag/smart_hotel_mas/` — a 5-agent MAS with a 4-layer memory architecture over a 200-room smart hotel. All six checkpoints were run and verified.
 
 ---
 
@@ -57,7 +57,7 @@ SensorAgent ─▶ EnergyAgent ─▶ MemoryAgent ─▶ AlertAgent ─▶ Repor
 | `.venv` | 3.14 | CP1–CP5 |
 | `.venv313` | 3.13 | CP6 (crewai) |
 
-**Config** — `week15/smart_hotel_mas/.env` (gitignored) points the scripts at this stack (`NEO4J_URI=bolt://localhost:7687`, `CHROMA_PORT=8002`, `hotel_mas_2024`, `ANTHROPIC_API_KEY`). Because `config.py`'s `find_dotenv()` resolves from its own directory, this local `.env` wins for the workshop while the repo-root `.env` keeps serving the separate `kg_mastery` workshop.
+**Config** — `week15_production_graphrag/smart_hotel_mas/.env` (gitignored) points the scripts at this stack (`NEO4J_URI=bolt://localhost:7687`, `CHROMA_PORT=8002`, `hotel_mas_2024`, `ANTHROPIC_API_KEY`). Because `config.py`'s `find_dotenv()` resolves from its own directory, this local `.env` wins for the workshop while the repo-root `.env` keeps serving the separate `kg_mastery` workshop.
 
 ---
 
@@ -95,25 +95,25 @@ The workshop's `checkpoint6_full_mas.py` predated crewai 1.x. Two breakages were
 
 ```bash
 # 1. Stack
-docker compose -f week15/smart_hotel_mas/docker-compose.local.yml up -d
+docker compose -f week15_production_graphrag/smart_hotel_mas/docker-compose.local.yml up -d
 
 # 2. CP1–CP5  (Python 3.14 OK)
-python3 -m venv week15/smart_hotel_mas/.venv
-week15/smart_hotel_mas/.venv/bin/pip install -r week15/smart_hotel_mas/requirements.txt
+python3 -m venv week15_production_graphrag/smart_hotel_mas/.venv
+week15_production_graphrag/smart_hotel_mas/.venv/bin/pip install -r week15_production_graphrag/smart_hotel_mas/requirements.txt
 for cp in 1_seed 2_memory 3_semantic 4_optimizer 5_rl_anomaly; do
-  week15/smart_hotel_mas/.venv/bin/python week15/smart_hotel_mas/checkpoints/checkpoint${cp}.py
+  week15_production_graphrag/smart_hotel_mas/.venv/bin/python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint${cp}.py
 done
 
 # 3. CP6  (needs Python <3.14 for crewai)
-python3.13 -m venv week15/smart_hotel_mas/.venv313
-week15/smart_hotel_mas/.venv313/bin/pip install -r week15/smart_hotel_mas/requirements.txt
-week15/smart_hotel_mas/.venv313/bin/python week15/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py
+python3.13 -m venv week15_production_graphrag/smart_hotel_mas/.venv313
+week15_production_graphrag/smart_hotel_mas/.venv313/bin/pip install -r week15_production_graphrag/smart_hotel_mas/requirements.txt
+week15_production_graphrag/smart_hotel_mas/.venv313/bin/python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint6_full_mas.py
 
 # teardown
-docker compose -f week15/smart_hotel_mas/docker-compose.local.yml down
+docker compose -f week15_production_graphrag/smart_hotel_mas/docker-compose.local.yml down
 ```
 
-> Requires `ANTHROPIC_API_KEY` (CP6, GraphRAG) in `week15/smart_hotel_mas/.env`.
+> Requires `ANTHROPIC_API_KEY` (CP6, GraphRAG) in `week15_production_graphrag/smart_hotel_mas/.env`.
 
 ---
 

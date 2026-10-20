@@ -10,7 +10,7 @@ Research tutorial Lab 4.2 (L4.2). On THIS laptop, for real:
   4. the sandbox-policy entry a SANDBOXED NAT needs to reach the collector (protocol rest, POST /v1/traces,
      audit first), checked with the course's policykit model and parsed by the real OpenShell CLI offline.
 
-Run: .venv/bin/python week26/05_tracing/labs/lab05_2_otel_collector.py
+Run: .venv/bin/python week26_nemoclaw_claws/05_tracing/labs/lab05_2_otel_collector.py
 """
 import json
 import shutil
@@ -46,8 +46,8 @@ if port != 4318:
     note(f"4318 is taken on this laptop → this lab uses {port} (the Spark keeps 4318)")
 nat_cfg_text = (CONFIGS / "workflow.otel.yml").read_text(encoding="utf-8")
 nat_cfg_text = nat_cfg_text.replace("endpoint: http://0.0.0.0:4318/v1/traces", f"endpoint: http://localhost:{port}/v1/traces")
-nat_cfg_text = nat_cfg_text.replace("week26/05_tracing/.runs/traces/alto_ops_trace.jsonl",
-                                    "week26/05_tracing/.runs/traces/lab05_2_trace.jsonl")
+nat_cfg_text = nat_cfg_text.replace("week26_nemoclaw_claws/05_tracing/.runs/traces/alto_ops_trace.jsonl",
+                                    "week26_nemoclaw_claws/05_tracing/.runs/traces/lab05_2_trace.jsonl")
 nat_cfg = OTEL / "workflow.otel.yml"
 nat_cfg.write_text(nat_cfg_text, encoding="utf-8")
 block = nat_cfg_text.split("    tracing:\n", 1)[1].split("      file_backup:", 1)[0]
@@ -55,7 +55,7 @@ print("    tracing:\n" + block.rstrip())
 note("the research tutorial's block says endpoint http://0.0.0.0:4318/v1/traces; this laptop copy sends to "
      f"localhost:{port} (the port the collector publishes here). Inside a sandbox you name the collector's host.")
 r = laptop([NAT, "validate", "--config_file", nat_cfg], quiet=True, timeout=120,
-           show="nat validate --config_file week26/05_tracing/.runs/otel/workflow.otel.yml")
+           show="nat validate --config_file week26_nemoclaw_claws/05_tracing/.runs/otel/workflow.otel.yml")
 print(("✓ " if r.ok else "✕ ") + f"nat validate → exit {r.code}")
 note("NAT 1.9 sets the OTel resource attribute service.name = `project` (nat/plugins/opentelemetry/register.py). "
      "That is why Phoenix files otelcollector traces under 'default' — the quirk the research tutorial cites.")
@@ -86,7 +86,7 @@ else:
         with background(argv, ready_url=f"http://localhost:{port}/v1/traces", log=RUNS / "lab05_2_collector.log",
                         timeout=300):
             r = laptop([NAT, "run", "--config_file", nat_cfg, "--input", QUESTION], cwd=ROOT, quiet=True,
-                       timeout=400, show=f'nat run --config_file week26/05_tracing/.runs/otel/workflow.otel.yml '
+                       timeout=400, show=f'nat run --config_file week26_nemoclaw_claws/05_tracing/.runs/otel/workflow.otel.yml '
                                          f'--input "{QUESTION}"')
             print(("✓ " if r.ok else "✕ ") + f"nat run exit {r.code} (LAPTOP STAND-IN model)")
             time.sleep(7)                    # the collector's file exporter and NAT's batch flush (5 s default)

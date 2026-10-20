@@ -2,7 +2,7 @@
 """Exercise 03 · reference solution — the stream meter.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week25/03_ollama_open_webui/exercises/ex03_stream_meter.py
+    .venv/bin/python week25_dgx_spark/03_ollama_open_webui/exercises/ex03_stream_meter.py
 
 The checker is free and offline. It replays a REAL stream captured from Ollama's OpenAI
 endpoint on the course laptop (LAPTOP STAND-IN: nemotron-3-nano, thinking on, 2026-09-29),

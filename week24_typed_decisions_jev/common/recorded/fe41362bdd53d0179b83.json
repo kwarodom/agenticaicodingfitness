@@ -1,0 +1,53 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "photo": "img-bdb430c290c344ad"
+  },
+  "questions": {
+   "extinguisher_visible": {
+    "type": "noul",
+    "instructions": "Is there a red fire extinguisher in `photo`?"
+   },
+   "extinguisher": {
+    "type": "box",
+    "instructions": "the red fire extinguisher in `photo`"
+   }
+  },
+  "assets": {
+   "img-bdb430c290c344ad": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "6ee70a72fa31a4ef",
+    "base64_chars": 208176
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "extinguisher_visible": {
+    "type": "noul",
+    "noul": 0.09
+   },
+   "extinguisher": {
+    "type": "box",
+    "box": {
+     "top": 0.02,
+     "bottom": 0.07,
+     "left": 0.64,
+     "right": 0.69
+    },
+    "confidence": 0.34
+   }
+  },
+  "usage": {
+   "input_tokens": 2673,
+   "output_tokens": 43
+  }
+ }
+}

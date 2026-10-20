@@ -1,0 +1,68 @@
+{
+  "architecture": {
+    "title": "A live voice session with Jev as the referee",
+    "caption": "The live model talks to the caller in real time. After every turn its transcripts (heard + said) go to Jev with the hotel facts; five typed checks come back in ~0.4 s, and a per-call state machine in code proposes the real actions: page the on-call, speak the safety line, correct a promise or an invented fact, hand off to a human. The live model never dispatches anyone.",
+    "lanes": [
+      {"id": "call", "label": "The phone call"},
+      {"id": "live", "label": "Live model — talks"},
+      {"id": "jev", "label": "Jev — judges each turn"},
+      {"id": "code", "label": "Your code — decides"}
+    ],
+    "nodes": [
+      {"id": "caller", "label": "Caller audio", "lane": "call", "sub": "16 kHz PCM · 100 ms chunks · real time", "accent": "cyan"},
+      {"id": "voice", "label": "Assistant's voice", "lane": "call", "sub": "what the caller hears"},
+      {"id": "livem", "label": "gemini-3.8-live / gpt-realtime-2.1-mini", "lane": "live", "sub": "VAD · transcription · spoken reply", "accent": "violet"},
+      {"id": "ref", "label": "Jev · 5 typed checks", "lane": "jev", "sub": "emergency · needs_human · promised · invented · language", "accent": "violet"},
+      {"id": "fsm", "label": "Per-call state machine", "lane": "code", "sub": "calm → handoff → escalated (sticky)", "accent": "green"},
+      {"id": "acts", "label": "Proposed actions", "lane": "code", "sub": "pager · safety line · correction · hand-off — execute: False", "accent": "amber"}
+    ],
+    "edges": [
+      {"from": "caller", "to": "livem", "label": "streamed audio", "animated": true},
+      {"from": "livem", "to": "voice", "label": "spoken answer (~1 s)"},
+      {"from": "livem", "to": "ref", "label": "heard + said + hotel facts", "animated": true},
+      {"from": "ref", "to": "fsm", "label": "typed answers (~0.4 s)", "animated": true},
+      {"from": "fsm", "to": "acts", "label": "rules you can test offline"},
+      {"from": "acts", "to": "voice", "label": "barge-in: safety / correction line"}
+    ]
+  },
+  "sequence": {
+    "title": "Lab 14-4 turn 2 — smoke, measured live",
+    "caption": "gemini-3.8-live, naive prompt. The caller's transcript arrives together with the model's first word (9.25 s), so Jev cannot pre-empt that word; its verdict is ready 0.37 s later (365 ms), still inside the turn, so code barges in with the approved line and pages the real on-call.",
+    "actors": [
+      {"id": "caller", "label": "Caller"},
+      {"id": "live", "label": "gemini-3.8-live"},
+      {"id": "code", "label": "Your code"},
+      {"id": "jev", "label": "Jev"}
+    ],
+    "steps": [
+      {"from": "caller", "to": "live", "label": "\"…smoke coming out of the AC vent… burning plastic!\" (streamed)", "kind": "call"},
+      {"from": "live", "to": "caller", "label": "9.25 s · \"I am sending security and maintenance…\" (a promise it can't keep)", "kind": "return"},
+      {"from": "live", "to": "code", "label": "9.25 s · heard + said transcripts", "kind": "return"},
+      {"from": "code", "to": "jev", "label": "one request · 5 questions", "kind": "call"},
+      {"from": "jev", "to": "code", "label": "9.62 s · emergency 0.98 · promised 0.91 · invented 0.05", "kind": "return"},
+      {"from": "code", "to": "code", "label": "state handoff → escalated · page on-call (proposal)", "kind": "note"},
+      {"from": "code", "to": "caller", "label": "barge-in: \"Please leave the room now and call 0…\"", "kind": "call"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Silence after the caller stops (voice turn, lab 02)",
+      "type": "bars",
+      "unit": "seconds",
+      "labels": ["gemini-3.8-live", "gpt-realtime-2.1-mini"],
+      "series": [{"name": "caller stopped → first output", "values": [1.62, 0.65], "color": "cyan"}],
+      "caption": "Measured live on 2026-09-27, single observations. Gemini's gap includes its server VAD waiting for trailing silence; OpenAI's starts at our manual audio commit."
+    },
+    {
+      "title": "What the SAFE prompt changed (Jev scores)",
+      "type": "bars",
+      "unit": "probability",
+      "labels": ["promised action · smoke turn", "invented fact · breakfast turn"],
+      "series": [
+        {"name": "naive prompt (gemini, lab 03)", "values": [0.94, 0.96], "color": "red"},
+        {"name": "SAFE prompt (gemini, lab 05)", "values": [0.17, 0.04], "color": "green"}
+      ],
+      "caption": "Jev's own scores on gemini-3.8-live answers, before and after the prompt fix. The referee stays in production anyway: a prompt is a request, not a guarantee."
+    }
+  ]
+}

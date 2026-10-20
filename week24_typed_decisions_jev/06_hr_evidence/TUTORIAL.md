@@ -89,7 +89,7 @@ Now experiment:
 Lab 01 reads four fictional profiles from `data/profiles.csv` and asks the three evidence questions about each. Every record, whatever the labels, goes to `recruiter_review`.
 
 ```bash
-.venv/bin/python week24/06_hr_evidence/labs/lab01_evidence_checklist.py
+.venv/bin/python week24_typed_decisions_jev/06_hr_evidence/labs/lab01_evidence_checklist.py
 ```
 
 **Expected output**
@@ -149,7 +149,7 @@ Because the options are the sentences themselves, Jev *cannot* return words that
 Experiment: change the question to *building-systems* work. Does it pick `s1` (BACnet drivers) or `s3` (a smart-building meetup)? Which one would *you* call evidence of hands-on work?
 
 ```bash
-.venv/bin/python week24/06_hr_evidence/labs/lab02_sentence_evidence.py
+.venv/bin/python week24_typed_decisions_jev/06_hr_evidence/labs/lab02_sentence_evidence.py
 ```
 
 **Expected output**
@@ -185,7 +185,7 @@ The recruiter now sees **real words they can check in seconds**. This "select, d
 The full reference implementation (same three questions, same policy) is in the original script:
 
 ```bash
-.venv/bin/python week24/jev_lab/jev_lab.py run hr --limit 2 --live
+.venv/bin/python week24_typed_decisions_jev/jev_lab/jev_lab.py run hr --limit 2 --live
 ```
 
 ✓ Checkpoint: you can list the four checks that must happen before real candidate text is processed.
@@ -198,7 +198,7 @@ The full reference implementation (same three questions, same policy) is in the 
 
 ## Try it yourself
 
-**Exercise 06 — add a criterion and a fair policy.** Open `week24/06_hr_evidence/exercises/ex06_new_criterion.py`.
+**Exercise 06 — add a criterion and a fair policy.** Open `week24_typed_decisions_jev/06_hr_evidence/exercises/ex06_new_criterion.py`.
 
 1. **TODO 1** — write `cloud_evidence`: a `choice` with exactly `evidenced` / `not_stated` / `unclear` about hands-on cloud deployment (AWS, Azure, GCP…). Say in the instruction that an interest or a course is not hands-on work.
 2. **TODO 2** — write `checklist_row(answers)` returning `{"cloud": …, "follow_up": [criteria not evidenced], "route": "recruiter_review"}`. It must never contain a score, rank, total or rejection.
@@ -206,7 +206,7 @@ The full reference implementation (same three questions, same policy) is in the 
 The checker runs the shape and policy tests offline first, then asks Jev about three test texts.
 
 ```bash
-.venv/bin/python week24/06_hr_evidence/exercises/ex06_new_criterion.py
+.venv/bin/python week24_typed_decisions_jev/06_hr_evidence/exercises/ex06_new_criterion.py
 ```
 
 **Expected output**

@@ -7,7 +7,7 @@ does it copy the adapter to ~/w25/adapters/hotel-ft and start vLLM (path A) in t
 wait for /v1/models to list the adapter and ask it one guest message.
 
 Path A's LoRA flags are vLLM's own CLI, not an NVIDIA playbook (see Module 05, section 7).
-Run: .venv/bin/python week25/13_finetune_to_serve/labs/lab03_serve_it.py [--launch]
+Run: .venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab03_serve_it.py [--launch]
 """
 import json
 import os

@@ -19,15 +19,15 @@
 
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
-| ชุดข้อมูลของ Module 09 ใน repo | `ls week25/09_llama_factory/data/` แสดง `hotel_ops_eval.json` | ข้อความจากแขก 60 ข้อความที่กันไว้ (held-out) ซึ่งโมเดลไม่เคยเห็นตอนเทรน |
+| ชุดข้อมูลของ Module 09 ใน repo | `ls week25_dgx_spark/09_llama_factory/data/` แสดง `hotel_ops_eval.json` | ข้อความจากแขก 60 ข้อความที่กันไว้ (held-out) ซึ่งโมเดลไม่เคยเห็นตอนเทรน |
 | การเทรนของ Module 09 บน Spark เสร็จแล้ว (ไม่บังคับ) | `ls ~/w25/m09/saves/qwen3-4b-hotel/lora/sft` บน Spark | adapter ที่โมดูลนี้จะ serve และให้คะแนน |
 | ขั้น predict ของ Module 09 รันแล้ว (ไม่บังคับ) | `ls ~/w25/m09/saves/qwen3-4b-hotel/lora/predict/` บน Spark | คำตอบของ fine-tune ต่อ 60 ข้อความ |
-| venv ของ LiteLLM จาก Module 08 | `ls week25/.venv-litellm/bin/litellm` | lab 13-4 ใช้เปิด gateway |
+| venv ของ LiteLLM จาก Module 08 | `ls week25_dgx_spark/.venv-litellm/bin/litellm` | lab 13-4 ใช้เปิด gateway |
 | Ollama บนแล็ปท็อป (ไม่บังคับ) | `curl -s localhost:11434/api/tags` | ตัวแทนสำหรับ baseline เมื่อไม่มี Spark ตอบ |
 
 ```bash
 # on: laptop
-ls week25/09_llama_factory/data/ week25/.venv-litellm/bin/litellm
+ls week25_dgx_spark/09_llama_factory/data/ week25_dgx_spark/.venv-litellm/bin/litellm
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -36,7 +36,7 @@ ls week25/09_llama_factory/data/ week25/.venv-litellm/bin/litellm
 dataset_info.json
 hotel_ops.json
 hotel_ops_eval.json
-week25/.venv-litellm/bin/litellm
+week25_dgx_spark/.venv-litellm/bin/litellm
 ```
 
 ✓ Checkpoint: มีไฟล์ eval และไบนารีของ LiteLLM อยู่ ถ้าคุณมี Spark ก็ต้องมีโฟลเดอร์ adapter ของ Module 09 ด้วย
@@ -80,7 +80,7 @@ week25/.venv-litellm/bin/litellm
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab01_baseline.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab01_baseline.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ไม่มี Spark ให้เข้าถึง baseline จึงเป็น gemma4:12b ในฐานะ LAPTOP STAND-IN ซึ่งเป็นโมเดลคนละตัวและใหญ่กว่า base ของ Spark)
@@ -91,7 +91,7 @@ week25/.venv-litellm/bin/litellm
 │ 10/60 answered · 17s
 …
 │ 60/60 answered · 168s
-◆ 60 predictions from gemma4:12b (LAPTOP STAND-IN) → week25/13_finetune_to_serve/.runs/predictions_baseline_laptop.jsonl
+◆ 60 predictions from gemma4:12b (LAPTOP STAND-IN) → week25_dgx_spark/13_finetune_to_serve/.runs/predictions_baseline_laptop.jsonl
 
 ▣ STEP 2 · score them with the same rules the fine-tune will face
 │ gate metric     baseline  needed to ship
@@ -132,7 +132,7 @@ cd ~/w25/m09 && llamafactory-cli train configs/hotel_predict.yaml
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab02_score_finetune.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab02_score_finetune.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY: ไม่มี fine-tune ให้อ่าน แล็บจึงแจ้งไว้ และให้คะแนนไฟล์ baseline แทนเพื่อแสดงรูปแบบรายงาน)
@@ -173,8 +173,8 @@ LoRA fine-tune คือโฟลเดอร์ adapter weights ขนาด ~6
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab03_serve_it.py            # plan only
-.venv/bin/python week25/13_finetune_to_serve/labs/lab03_serve_it.py --launch   # copy the adapter + start path A
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab03_serve_it.py            # plan only
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab03_serve_it.py --launch   # copy the adapter + start path A
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY config ของ adapter เป็นรูปแบบ EXAMPLE)
@@ -236,7 +236,7 @@ hotel-router  →  hotel-ft on Spark A's vLLM       (the fine-tune)
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/labs/lab04_route_and_gate.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab04_route_and_gate.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: เป็น LiteLLM 1.89 proxy จริง ไม่มี Spark ทุกการเรียกจึง fallback ไปที่แล็ปท็อป)
@@ -251,7 +251,7 @@ hotel-router  →  hotel-ft on Spark A's vLLM       (the fine-tune)
 │ fallbacks: hotel-router → hotel-base → hotel-laptop
 
 ▣ STEP 2 · start the gateway and send 5 held-out messages to `hotel-router`
-$ LITELLM_MASTER_KEY=sk-w25-… week25/.venv-litellm/bin/litellm --config week25/13_finetune_to_serve/.runs/hotel-gateway.yaml --host 127.0.0.1 --port 4000 --telemetry False
+$ LITELLM_MASTER_KEY=sk-w25-… week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/13_finetune_to_serve/.runs/hotel-gateway.yaml --host 127.0.0.1 --port 4000 --telemetry False
 ◆ gateway up on http://127.0.0.1:4000 after 2.6 s (pid 52797, log 08_litellm_gateway/.runs/litellm-4000.log)
 ◆ gateway stopped (pid 52797); port 4000 is free again: True
 │ guest message                        HTTP  answered by  fallbacks  right dept + JSON
@@ -296,7 +296,7 @@ $ LITELLM_MASTER_KEY=sk-w25-… week25/.venv-litellm/bin/litellm --config week25
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 13 — ship gate** เปิด `week25/13_finetune_to_serve/exercises/ex13_ship_gate.py` มี `TODO` สามจุด:
+**แบบฝึกหัด 13 — ship gate** เปิด `week25_dgx_spark/13_finetune_to_serve/exercises/ex13_ship_gate.py` มี `TODO` สามจุด:
 
 1. `parse_answer(text)`: ดึง JSON ของ router ออกจาก output จริงของโมเดล (แบบสะอาด, อยู่ใน ```json fences หรืออยู่หลังประโยคพูดคุย) และคืน `None` เมื่อ JSON ไม่ถูกต้อง
 2. `promises_time(reply, guest_message)`: ทำเครื่องหมาย "in 10 minutes" และ "within the hour" แต่ไม่ทำกับเวลาจองของแขกที่ถูกพูดทวนกลับ
@@ -304,7 +304,7 @@ $ LITELLM_MASTER_KEY=sk-w25-… week25/.venv-litellm/bin/litellm --config week25
 
 ```bash
 # on: laptop
-.venv/bin/python week25/13_finetune_to_serve/exercises/ex13_ship_gate.py
+.venv/bin/python week25_dgx_spark/13_finetune_to_serve/exercises/ex13_ship_gate.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด)
@@ -345,7 +345,7 @@ vLLM รับ JSON schema ในคำขอได้ (`"response_format": {"ty
 | vLLM แสดง base model แต่ไม่มี `hotel-ft` | path ของ `--lora-modules` อยู่ **ภายใน container** (`/adapters/hotel-ft`) ตรวจการ mount `-v "$HOME/w25/adapters:/adapters"` และ `ls ~/w25/adapters/hotel-ft` |
 | `/v1/models` แสดง `hotel-ft` แต่คำตอบดูเหมือน base model | adapter ถูกเทรนด้วย `template: qwen3_nothink` ส่ง system prompt เดียวกับที่ข้อมูลเทรนใช้ และเปรียบเทียบกับ baseline ของ lab 13-1 เพื่อให้แน่ใจ |
 | lab 13-4: ทุกแถวแสดง fallback | ยังไม่มีอะไร serve `hotel-ft` ที่ :8000 ของ Spark A รัน lab 13-3 ด้วย `--launch` แล้วตรวจ `curl http://spark-a:8000/v1/models` |
-| lab 13-4: `litellm … not found` | สร้าง venv จาก Module 08: `uv venv week25/.venv-litellm && uv pip install -p week25/.venv-litellm/bin/python "litellm[proxy]==1.89.0"` |
+| lab 13-4: `litellm … not found` | สร้าง venv จาก Module 08: `uv venv week25_dgx_spark/.venv-litellm && uv pip install -p week25_dgx_spark/.venv-litellm/bin/python "litellm[proxy]==1.89.0"` |
 | คะแนน baseline แกว่งระหว่างการรัน | ใช้ `temperature: 0` (แล็บทำอยู่แล้ว) และไฟล์ eval ที่คงที่ predict config ของ LLaMA Factory ตั้ง `do_sample: false` ด้วยเหตุผลเดียวกัน |
 
 ## Next — บทถัดไป

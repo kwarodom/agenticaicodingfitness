@@ -1,0 +1,188 @@
+{
+ "architecture": {
+  "title": "One space for text, photos, voice and video",
+  "caption": "All four modalities land in the same 768-d space, so a sentence can find a photo, a voicemail or a CCTV clip. Items of one modality cluster together (the modality gap), so rank per kind or filter by kind.",
+  "lanes": [
+   {
+    "id": "q",
+    "label": "questions"
+   },
+   {
+    "id": "s",
+    "label": "shared 768-d space"
+   },
+   {
+    "id": "m",
+    "label": "media (SYNTHETIC)"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "en",
+    "label": "English question",
+    "lane": "q",
+    "sub": "SearchQuery prefix",
+    "accent": "cyan"
+   },
+   {
+    "id": "th",
+    "label": "Thai question",
+    "lane": "q",
+    "sub": "same prefix",
+    "accent": "cyan"
+   },
+   {
+    "id": "sp",
+    "label": "EmbeddingGemma 2",
+    "lane": "s",
+    "sub": "740M · all encoders",
+    "accent": "green"
+   },
+   {
+    "id": "ph",
+    "label": "6 photos",
+    "lane": "m",
+    "sub": "no captions",
+    "accent": "amber"
+   },
+   {
+    "id": "vm",
+    "label": "3 voicemails",
+    "lane": "m",
+    "sub": "one in Thai · no transcript",
+    "accent": "amber"
+   },
+   {
+    "id": "cc",
+    "label": "CCTV 10 s",
+    "lane": "m",
+    "sub": "10 frames · 1,400 tokens",
+    "accent": "amber"
+   }
+  ],
+  "edges": [
+   {
+    "from": "en",
+    "to": "sp",
+    "label": ""
+   },
+   {
+    "from": "th",
+    "to": "sp",
+    "label": ""
+   },
+   {
+    "from": "ph",
+    "to": "sp",
+    "label": ""
+   },
+   {
+    "from": "vm",
+    "to": "sp",
+    "label": ""
+   },
+   {
+    "from": "cc",
+    "to": "sp",
+    "label": "",
+    "animated": true
+   }
+  ]
+ },
+ "sequence": {
+  "title": "An interleaved incident record",
+  "caption": "Placeholders in the text are filled from the matching keys, in order; the model returns one vector for the whole record (Lab 04-2).",
+  "actors": [
+   {
+    "id": "r",
+    "label": "record"
+   },
+   {
+    "id": "m",
+    "label": "EmbeddingGemma 2"
+   },
+   {
+    "id": "i",
+    "label": "index"
+   }
+  ],
+  "steps": [
+   {
+    "from": "r",
+    "to": "m",
+    "label": "text … <|image|> … <|video|>",
+    "kind": "call"
+   },
+   {
+    "from": "m",
+    "to": "m",
+    "label": "30 + 280 + 1,400 = 1,710 of 8,192 tokens",
+    "kind": "note"
+   },
+   {
+    "from": "m",
+    "to": "i",
+    "label": "ONE 768-d vector",
+    "kind": "return"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "Retrieval checks passed (measured)",
+   "type": "bars",
+   "unit": "correct",
+   "labels": [
+    "text→media (7)",
+    "cross-lingual text (6)",
+    "records (4)",
+    "Thai voicemail (2)"
+   ],
+   "series": [
+    {
+     "name": "correct",
+     "values": [
+      7,
+      6,
+      3,
+      1
+     ],
+     "color": "green"
+    },
+    {
+     "name": "asked",
+     "values": [
+      7,
+      6,
+      4,
+      2
+     ],
+     "color": "cyan"
+    }
+   ],
+   "caption": "Labs 04-1, 04-3 and 04-2 on this Mac. The misses are absence ('normally') and the English → Thai-speech gap."
+  },
+  {
+   "title": "The modality gap: the Thai voicemail's neighbours",
+   "type": "hbars",
+   "unit": "cosine",
+   "labels": [
+    "towel voicemail (unrelated)",
+    "Thai note (same meaning)",
+    "English note (same meaning)"
+   ],
+   "series": [
+    {
+     "name": "cosine",
+     "values": [
+      0.702,
+      0.691,
+      0.644
+     ],
+     "color": "amber"
+    }
+   ],
+   "caption": "Measured by Lab 04-3: an unrelated voicemail sits closer than notes with the same meaning."
+  }
+ ]
+}

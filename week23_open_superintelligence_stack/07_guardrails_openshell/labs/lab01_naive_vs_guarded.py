@@ -8,7 +8,7 @@ forwards the message if the rail says NO. The model's reply then passes an
 OUTPUT RAIL before you see it. Same endpoint, two very different outcomes.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/07_guardrails_openshell/labs/lab01_naive_vs_guarded.py
+      .venv/bin/python week23_open_superintelligence_stack/07_guardrails_openshell/labs/lab01_naive_vs_guarded.py
 """
 from __future__ import annotations
 

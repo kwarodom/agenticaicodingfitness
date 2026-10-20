@@ -15,7 +15,7 @@ Mostly laptop-real:
 The Dockerfile lint and the blueprint validator are COURSE code that follows the tutorial's wording. The real
 checks are done by nemoclaw-blueprint-runner and the NemoClaw SDK on the Spark.
 
-Run: .venv/bin/python week26/07_hardening/labs/lab07_3_blueprints_and_gateways.py
+Run: .venv/bin/python week26_nemoclaw_claws/07_hardening/labs/lab07_3_blueprints_and_gateways.py
 """
 import copy
 import hashlib
@@ -121,7 +121,7 @@ print("\n→ the same image, 'just make it work' edition:")
 for lv, msg in lint_dockerfile(bad, POLICY):
     print(f"{lv} {msg}")
 print("$ nemoclaw onboard --from ./Dockerfile   [type it in the ⌨ terminal on the Spark — the wizard is interactive]")
-put(RUNS / "image" / "Dockerfile", "~/week26/07_hardening/image/Dockerfile")
+put(RUNS / "image" / "Dockerfile", "~/week26_nemoclaw_claws/07_hardening/image/Dockerfile")
 note("The build context also needs workflows/alto_ops and workflow.sandbox.yml next to the Dockerfile. "
      "Module 08 (capstone) assembles the full context and builds it.")
 
@@ -304,8 +304,8 @@ else:
     note("With a second Spark in 🖥 Spark setup (SPARK_HOST2) this step provisions its gateway through change().")
 
 step(7, "the external target — nemoclaw-blueprint-runner on the Spark (read-only)")
-put(BLUEPRINT, "~/week26/07_hardening/blueprint/blueprint.yaml")
-BP_DIR = "$HOME/week26/07_hardening/blueprint"
+put(BLUEPRINT, "~/week26_nemoclaw_claws/07_hardening/blueprint/blueprint.yaml")
+BP_DIR = "$HOME/week26_nemoclaw_claws/07_hardening/blueprint"
 sh("command -v nemoclaw-blueprint-runner || echo 'nemoclaw-blueprint-runner: not on PATH'",
    example="/home/<you>/.local/bin/nemoclaw-blueprint-runner")
 sh(f"NEMOCLAW_BLUEPRINT_PATH={BP_DIR} nemoclaw-blueprint-runner plan",

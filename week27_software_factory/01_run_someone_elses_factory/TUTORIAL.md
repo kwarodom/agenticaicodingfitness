@@ -3,7 +3,7 @@
 > Part of Week 27 · Software Factory: an org chart made of loops. You install a working factory on **Alto Mini**, drain one ticket, and read every comment the lanes leave behind before you build anything yourself.
 
 **What you'll actually do**
-- Install Eric Tech's open-source `super-board` on `week27/00_alto_mini` and run its 8-step onboarding.
+- Install Eric Tech's open-source `super-board` on `week27_software_factory/00_alto_mini` and run its 8-step onboarding.
 - Write one ticket in the standard format for a real seeded bug (the `—` on the Alerts page).
 - Drain it Build → QA → Review → merge, and reconstruct what happened from the issue and PR threads alone.
 - Record cost, bounces and where the human gate sat.
@@ -17,12 +17,12 @@
 | Need | Check | Why |
 |---|---|---|
 | A fork you own | `gh repo view --json nameWithOwner` inside your fork of this repo (or push `00_alto_mini` to a fresh repo) | the factory writes issues, branches and PRs |
-| Alto Mini runs | `cd week27/00_alto_mini && make seed && make test` → `6 passed` | the QA lane needs a working app and a green baseline |
+| Alto Mini runs | `cd week27_software_factory/00_alto_mini && make seed && make test` → `6 passed` | the QA lane needs a working app and a green baseline |
 | Claude Code | `claude --version` | the lanes run as Claude Code skills (or Codex with `--codex`) |
 
 ```bash
 # on: laptop
-cd week27/00_alto_mini && make seed && make test && make dev   # leave running on :8127
+cd week27_software_factory/00_alto_mini && make seed && make test && make dev   # leave running on :8127
 ```
 
 ## 1 · Install and onboard (15 min)

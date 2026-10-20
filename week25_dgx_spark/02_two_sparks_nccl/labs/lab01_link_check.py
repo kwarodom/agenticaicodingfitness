@@ -10,7 +10,7 @@ In DRY mode the interface list and Spark A's address are the playbook's REFERENC
 output; everything the playbook shows no output for is a labelled EXAMPLE.
 Nothing here changes either machine.
 
-Run: .venv/bin/python week25/02_two_sparks_nccl/labs/lab01_link_check.py
+Run: .venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab01_link_check.py
 """
 import re
 import sys

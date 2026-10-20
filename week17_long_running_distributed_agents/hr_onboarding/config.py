@@ -84,7 +84,7 @@ def make_model():
 
     raise RuntimeError(
         f"Unknown ONBOARDING_PROVIDER={provider!r}. Use alto | anthropic | gemini "
-        "— see week17/hr_onboarding/README.md.")
+        "— see week17_long_running_distributed_agents/hr_onboarding/README.md.")
 
 
 def model_label(model) -> str:

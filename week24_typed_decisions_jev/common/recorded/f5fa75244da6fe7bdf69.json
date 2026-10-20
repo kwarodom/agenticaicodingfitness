@@ -1,0 +1,63 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "crop": "img-crop-421cc2e5bd67"
+  },
+  "questions": {
+   "left": {
+    "type": "noul",
+    "instructions": "Does the puddle of liquid in `crop` continue past the left edge of the image?"
+   },
+   "right": {
+    "type": "noul",
+    "instructions": "Does the puddle of liquid in `crop` continue past the right edge of the image?"
+   },
+   "top": {
+    "type": "noul",
+    "instructions": "Does the puddle of liquid in `crop` continue past the top edge of the image?"
+   },
+   "bottom": {
+    "type": "noul",
+    "instructions": "Does the puddle of liquid in `crop` continue past the bottom edge of the image?"
+   }
+  },
+  "assets": {
+   "img-crop-421cc2e5bd67": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "afeac863e323036e",
+    "base64_chars": 37872
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "left": {
+    "type": "noul",
+    "noul": 0.76
+   },
+   "right": {
+    "type": "noul",
+    "noul": 0.23
+   },
+   "top": {
+    "type": "noul",
+    "noul": 0.44
+   },
+   "bottom": {
+    "type": "noul",
+    "noul": 0.08
+   }
+  },
+  "usage": {
+   "input_tokens": 909,
+   "output_tokens": 68
+  }
+ }
+}

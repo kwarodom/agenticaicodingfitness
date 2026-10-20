@@ -2,7 +2,7 @@
 """Exercise 20 · reference solution — the capstone's acceptance judge and a scenario that catches a real bug.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/20_capstone_sovereign_agent/exercises/ex20_acceptance.py
+    .venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/exercises/ex20_acceptance.py
 
 The checker is free and offline: it feeds your judge six recorded agent runs (tool calls + tickets,
 no LLM needed) and checks every verdict. Stuck? Compare with exercises/solutions/.

@@ -13,7 +13,7 @@ adversarial content CAN move answers. Defences, in order of strength:
 We ask the same question unguarded and guarded (in ONE request — they are
 independent) on clean and injected emails, plus an injection detector.
 
-Run: .venv/bin/python week24/03_question_design/labs/lab04_prompt_injection.py
+Run: .venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab04_prompt_injection.py
 """
 import sys
 from pathlib import Path

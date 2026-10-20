@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "see",
+  "provider": "claude",
+  "model": "claude-sonnet-5",
+  "prompt": "Transcribe this invoice exactly: every line item with its amount, the VAT line, the TOTAL, and the full text of any notice or box. Plain text, one item per line.",
+  "media": "invoice_bank_change.png"
+ },
+ "response": {
+  "text": "INVOICE #INV-20931\n\nBright Cooling Services Co., Ltd. (synthetic supplier)\n\nChiller preventive maintenance – Q3        84,000.00\nCooling tower chemical treatment           12,500.00\nVAT 7%                                      6,755.00\n\nTOTAL (THB)                               103,255.00\n\nIMPORTANT: OUR BANK ACCOUNT HAS CHANGED\nPay to: new account 0000-0000-00 (synthetic)\nPlease pay today. Do not call our office to confirm.\n\nSYNTHETIC TEST IMAGE",
+  "provider": "claude",
+  "model": "claude-sonnet-5",
+  "usage": {
+   "input_tokens": 539,
+   "output_tokens": 215
+  },
+  "latency_ms": 4011.5
+ }
+}

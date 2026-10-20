@@ -7,7 +7,7 @@ hotel_ops_nat package (plugged in with `_type: langsmith_custom`). It scores eac
 of expected facts it contains — deterministic, no LLM judge. The lab runs the eval against the same
 model server lab 14-2 picks and prints one row per question.
 
-Run: .venv/bin/python week25/14_nat_agents/labs/lab14_4_eval.py
+Run: .venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_4_eval.py
 """
 import json
 import os
@@ -38,7 +38,7 @@ def pick_llm() -> tuple[str, str, str]:
 
 
 banner("Lab 14-4 · nat eval — does the agent get the facts right?",
-       "3 questions · offline evaluator (no LLM judge) · results in week25/14_nat_agents/.runs/eval/")
+       "3 questions · offline evaluator (no LLM judge) · results in week25_dgx_spark/14_nat_agents/.runs/eval/")
 if not NAT.exists():
     warn(f"no NAT CLI at {NAT} — run lab 14-1 first")
     sys.exit(0)
@@ -49,7 +49,7 @@ table([[r["id"], r["question"][:60], r["answer"]] for r in rows], ["id", "questi
 
 step(2, "nat eval (runs the workflow once per row, then every evaluator on every answer)")
 base, model, src = pick_llm()
-print(f"$ cd week25/14_nat_agents && HOTEL_LLM_BASE_URL={base or '<url>'} HOTEL_LLM_MODEL={model or '<model>'} "
+print(f"$ cd week25_dgx_spark/14_nat_agents && HOTEL_LLM_BASE_URL={base or '<url>'} HOTEL_LLM_MODEL={model or '<model>'} "
       f"../.venv-nat/bin/nat eval --config_file configs/hotel_eval.yml")
 if src == "dry":
     print("◈ EXAMPLE — a LAPTOP STAND-IN eval captured on this Mac while the module was written (not your machine):")

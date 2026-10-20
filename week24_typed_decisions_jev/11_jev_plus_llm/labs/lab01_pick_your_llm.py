@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Lab 11-1 · Pick your LLM — which providers have a key, and one hello from your choice.
 
-Keys are looked up env → week24/.env.local (🔑 Keys dialog) → repo-root .env.
+Keys are looked up env → week24_typed_decisions_jev/.env.local (🔑 Keys dialog) → repo-root .env.
 This lab prints WHERE a key was found, never the key itself.
 
-Run:            .venv/bin/python week24/11_jev_plus_llm/labs/lab01_pick_your_llm.py
+Run:            .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab01_pick_your_llm.py
 Pick provider:  JEV_LLM_PROVIDER=gemini .venv/bin/python …   (the runner's LLM picker sets this)
 """
 import sys

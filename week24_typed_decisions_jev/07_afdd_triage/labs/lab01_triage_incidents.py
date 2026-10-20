@@ -10,7 +10,7 @@ Five synthetic incidents. For each one:
 
 No BACnet write, no setpoint change, no work order. A proposal only.
 
-Run: .venv/bin/python week24/07_afdd_triage/labs/lab01_triage_incidents.py
+Run: .venv/bin/python week24_typed_decisions_jev/07_afdd_triage/labs/lab01_triage_incidents.py
 """
 import json
 import math

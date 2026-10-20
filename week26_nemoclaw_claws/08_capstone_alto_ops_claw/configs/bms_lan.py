@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the course's MOCK BMS (week26/common/bms_mcp_server.py) so the SANDBOX can reach it: bound to the LAN, not 127.0.0.1.
+"""Run the course's MOCK BMS (week26_nemoclaw_claws/common/bms_mcp_server.py) so the SANDBOX can reach it: bound to the LAN, not 127.0.0.1.
 
 The shared mock binds 127.0.0.1. A sandbox on the Spark cannot reach the host's loopback: OpenShell always blocks
 127.0.0.0/8. So the capstone runs the same mock on the Spark host's LAN address, where `bms.alto.local` resolves.

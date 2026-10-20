@@ -21,7 +21,7 @@ into a client. Claude Desktop config snippet is at the bottom of this file.
 Requires:
   - pip install fastmcp
 
-Run (as an MCP server):  python week15/kg_mastery/part3_graphrag/05_fastmcp_server.py
+Run (as an MCP server):  python week15_production_graphrag/kg_mastery/part3_graphrag/05_fastmcp_server.py
 """
 import json
 import sys
@@ -134,7 +134,7 @@ if __name__ == "__main__":
 #     "hotel-knowledge-graph": {
 #       "command": "python",
 #       "args": [
-#         "/Users/altodev5/AgenticCoding/week15/kg_mastery/part3_graphrag/05_fastmcp_server.py"
+#         "/Users/altodev5/AgenticCoding/week15_production_graphrag/kg_mastery/part3_graphrag/05_fastmcp_server.py"
 #       ],
 #       "env": {
 #         "NEO4J_URI": "bolt://localhost:7687",

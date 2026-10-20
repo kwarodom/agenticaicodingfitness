@@ -6,7 +6,7 @@ for a contract signature and a laptop delivery, **resuming** from webhooks, and
 **never losing context** because state lives in a durable session store — not in
 the conversation history.
 
-> This is the live counterpart to `week17/checkpoints/` (which are offline
+> This is the live counterpart to `week17_long_running_distributed_agents/checkpoints/` (which are offline
 > teaching demos). Here the agent actually calls an LLM, persists every session
 > to SQLite, and runs as a long-lived FastAPI service you can restart mid-flow.
 
@@ -60,8 +60,8 @@ hr_onboarding/
 Two web views, both served with one command each:
 
 ```bash
-uv pip install -r week17/hr_onboarding/requirements.txt
-.venv/bin/python week17/hr_onboarding/tutorial_server.py    # → http://127.0.0.1:8070
+uv pip install -r week17_long_running_distributed_agents/hr_onboarding/requirements.txt
+.venv/bin/python week17_long_running_distributed_agents/hr_onboarding/tutorial_server.py    # → http://127.0.0.1:8070
 ```
 
 - **Interactive guide** (`tutorial_server.py`, port 8070) — click through every
@@ -81,7 +81,7 @@ Prefer the command line? The `Setup` / `Run it` sections below still apply.
 ## Setup
 
 ```bash
-uv pip install -r week17/hr_onboarding/requirements.txt
+uv pip install -r week17_long_running_distributed_agents/hr_onboarding/requirements.txt
 ```
 
 ### Pick a model (it's model-agnostic via LiteLlm)
@@ -111,15 +111,15 @@ The repo-root `.env` is auto-loaded (no python-dotenv needed).
 **Terminal 1 — the long-running service:**
 
 ```bash
-.venv/bin/python week17/hr_onboarding/server.py
+.venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py
 # or as a background process:
-nohup .venv/bin/python week17/hr_onboarding/server.py > /tmp/onboarding.log 2>&1 &
+nohup .venv/bin/python week17_long_running_distributed_agents/hr_onboarding/server.py > /tmp/onboarding.log 2>&1 &
 ```
 
 **Terminal 2 — drive a full onboarding:**
 
 ```bash
-.venv/bin/python week17/hr_onboarding/client.py
+.venv/bin/python week17_long_running_distributed_agents/hr_onboarding/client.py
 ```
 
 The client creates a session, kicks off onboarding (→ pauses at `WELCOME_SENT`),

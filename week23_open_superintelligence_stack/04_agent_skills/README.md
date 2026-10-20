@@ -5,7 +5,7 @@ Week 23 · The Open Superintelligence Stack, app 04 of 12. Teaches NVIDIA Agent 
 Launch the interactive explainer (REAL against your Spark/Ollama/build.nvidia.com endpoint, or SIM with no GPU):
 
 ```bash
-.venv/bin/python week23/04_agent_skills/tutorial_server.py   # → http://127.0.0.1:8103
+.venv/bin/python week23_open_superintelligence_stack/04_agent_skills/tutorial_server.py   # → http://127.0.0.1:8103
 ```
 
 Then do it yourself: **[TUTORIAL.md](TUTORIAL.md)** is the hands-on side — author a skill, load it into a live model, and drive it over MCP + A2A via the scripts in `labs/`.

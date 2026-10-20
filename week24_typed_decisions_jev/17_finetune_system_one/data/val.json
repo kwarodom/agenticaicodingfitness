@@ -1,0 +1,1082 @@
+[
+{
+"id": "en_hvac_noise_01",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "Sorry to bother you, the AC unit in 1718 is rattling loudly and we cannot sleep. Thank you.",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_02",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "Hello, there is a loud buzzing from the air vent in 425. Thanks.",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_03",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "There is a loud buzzing from the air vent in 820. Thank you.",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_04",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "Hi front desk, the AC unit in 1529 is rattling loudly and we cannot sleep. Thank you.",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_05",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "Hi front desk, the AC unit in 1920 is rattling loudly and we cannot sleep. Please send someone today.",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_06",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "Hi front desk, there is a loud buzzing from the air vent in 814. Could you look at it?",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_07",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "The AC unit in 1817 is rattling loudly and we cannot sleep. Thanks.",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_noise_08",
+"sid": "en_hvac_noise",
+"lang": "en",
+"text": "Guest message: The AC unit in 2415 is rattling loudly and we cannot sleep. Could you look at it?",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_hvac_ballroom_01",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Guest message: The ballroom on floor 20 is getting hotter by the minute and the event has 300 guests inside right now. Urgent!",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_02",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Hi, chiller seems down, the whole conference hall on floor 10 is overheating during the meeting. Urgent!",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_03",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Hello, chiller seems down, the whole conference hall on floor 8 is overheating during the meeting. Please hurry!",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_04",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Hello, the ballroom on floor 14 is getting hotter by the minute and the event has 300 guests inside right now. Please come right now.",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_05",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Guest message: Chiller seems down, the whole conference hall on floor 6 is overheating during the meeting.",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_06",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Sorry to bother you, chiller seems down, the whole conference hall on floor 15 is overheating during the meeting. Urgent!",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_07",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "Sorry to bother you, the ballroom on floor 24 is getting hotter by the minute and the event has 300 guests inside right now. Please hurry!",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hvac_ballroom_08",
+"sid": "en_hvac_ballroom",
+"lang": "en",
+"text": "The ballroom on floor 17 is getting hotter by the minute and the event has 300 guests inside right now. Urgent!",
+"queue": "hvac",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "en_hk_pillows_01",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "can i get an extra pillow and a blanket in 1507? thanks",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_02",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "Hi front desk, we would like two firm pillows for room 328 please. Whenever convenient.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_03",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "Note from the night shift: Can I get an extra pillow and a blanket in 301? No rush.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_04",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "Hi front desk, can I get an extra pillow and a blanket in 1226? Thank you!",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_05",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "Good evening. Can I get an extra pillow and a blanket in 1227? Thank you!",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_06",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "Can I get an extra pillow and a blanket in 1605? Thanks.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_07",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "We would like two firm pillows for room 630 please.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_pillows_08",
+"sid": "en_hk_pillows",
+"lang": "en",
+"text": "Good evening. We would like two firm pillows for room 1404 please. Thanks.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_01",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "Hi front desk, we need a baby cot in 214 for tonight.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_02",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "Good evening. We need a baby cot in 2516 for tonight.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_03",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "Good evening. Please set up a crib in room 2230 before 8pm. Thank you!",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_04",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "Hello, we need a baby cot in 1102 for tonight.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_05",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "Hi front desk, we need a baby cot in 1513 for tonight. Thank you!",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_06",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "Note from the night shift: Please set up a crib in room 2109 before 8pm. No rush.",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_07",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "good evening. we need a baby cot in 1901 for tonight. no rush",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_hk_cot_08",
+"sid": "en_hk_cot",
+"lang": "en",
+"text": "hi, we need a baby cot in 2018 for tonight. whenever convenient",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_01",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Note from the night shift: The bathroom tap in 421 drips a little, whenever someone is around.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_02",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Hi front desk, the bathroom tap in 2102 drips a little, whenever someone is around.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_03",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "hi, the bathroom tap in 230 drips a little, whenever someone is around. thank you!",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_04",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Note from the night shift: The bathroom tap in 2211 drips a little, whenever someone is around.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_05",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Hi, the bathroom tap in 1706 drips a little, whenever someone is around. Whenever convenient.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_06",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Hi front desk, the bathroom tap in 1824 drips a little, whenever someone is around. Thanks.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_07",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Guest message: Small drip from the basin tap in 828, nothing urgent. Thank you!",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_tap_08",
+"sid": "en_pl_tap",
+"lang": "en",
+"text": "Guest message: The bathroom tap in 808 drips a little, whenever someone is around. Thanks.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_pl_clog_01",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Our toilet in 1613 is clogged.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_02",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Our toilet in 710 is clogged.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_03",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Sorry to bother you, the toilet in 728 is blocked and will not flush. Thanks.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_04",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Hi front desk, the toilet in 612 is blocked and will not flush.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_05",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Good evening. Our toilet in 2202 is clogged. Thank you.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_06",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "hello, the toilet in 1917 is blocked and will not flush. thank you",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_07",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Hi front desk, our toilet in 329 is clogged. Could you look at it?",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_pl_clog_08",
+"sid": "en_pl_clog",
+"lang": "en",
+"text": "Guest message: The toilet in 708 is blocked and will not flush.",
+"queue": "plumbing",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_sf_panel_01",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Note from the night shift: There is smoke from the power panel next to room 615.",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_02",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Hello, smoke is coming from the electrical cupboard on floor 2. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_03",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Note from the night shift: There is smoke from the power panel next to room 1019. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_04",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "hi, there is smoke from the power panel next to room 1213. please come right now",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_05",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Guest message: Smoke is coming from the electrical cupboard on floor 24. Send someone immediately.",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_06",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Hello, there is smoke from the power panel next to room 1015. Urgent!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_07",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Smoke is coming from the electrical cupboard on floor 12. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_panel_08",
+"sid": "en_sf_panel",
+"lang": "en",
+"text": "Good evening. Smoke is coming from the electrical cupboard on floor 19. Send someone immediately.",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_01",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Hi, water is pooling under the extension cord behind the desk in 1122. Urgent!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_02",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Water is pooling under the extension cord behind the desk in 1303. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_03",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Water is pooling under the extension cord behind the desk in 517. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_04",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Hi front desk, there is a puddle of water around the minibar fridge plug in 1813. Send someone immediately.",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_05",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Water is pooling under the extension cord behind the desk in 1623. Please come right now.",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_06",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "There is a puddle of water around the minibar fridge plug in 1012. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_07",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Hello, water is pooling under the extension cord behind the desk in 1729. Please hurry!",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_sf_fridge_08",
+"sid": "en_sf_fridge",
+"lang": "en",
+"text": "Hi, there is a puddle of water around the minibar fridge plug in 2325. Please come right now.",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "en_fd_double_01",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "My card shows the deposit taken two times for room 1320. Thanks.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_02",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "hi, i was charged twice for breakfast, please refund one charge. room 1819. please send someone today",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_03",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "Guest message: I was charged twice for breakfast, please refund one charge. Room 406. Thank you.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_04",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "Hello, I was charged twice for breakfast, please refund one charge. Room 515. Please send someone today.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_05",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "Hi front desk, I was charged twice for breakfast, please refund one charge. Room 2212. Please send someone today.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_06",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "Guest message: I was charged twice for breakfast, please refund one charge. Room 1717.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_07",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "I was charged twice for breakfast, please refund one charge. Room 1722.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_double_08",
+"sid": "en_fd_double",
+"lang": "en",
+"text": "Good evening. I was charged twice for breakfast, please refund one charge. Room 1518.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "en_fd_move_01",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "We would prefer a quieter room away from the elevator than 304. No rush.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_02",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "Hi, we would prefer a quieter room away from the elevator than 1623. Thanks.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_03",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "Hello, we would prefer a quieter room away from the elevator than 2010. Thanks.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_04",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "Could we move from 1616 to a room with a sea view? No rush.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_05",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "hello, we would prefer a quieter room away from the elevator than 926. whenever convenient",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_06",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "Note from the night shift: We would prefer a quieter room away from the elevator than 1715. Whenever convenient.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_07",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "Hi, could we move from 230 to a room with a sea view? Whenever convenient.",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "en_fd_move_08",
+"sid": "en_fd_move",
+"lang": "en",
+"text": "Guest message: Could we move from 2228 to a room with a sea view? Thank you!",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hvac_remote_01",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "ขอแจ้งเรื่องหน่อยครับ รีโมทแอร์ห้อง 1801 กดไม่ติด หน้าจอไม่ขึ้นเลย ช่วยส่งคนมาดูวันนี้ด้วย",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_02",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "ข้อความจากแขก: ตั้งอุณหภูมิแอร์ห้อง 823 ไม่ได้ ค้างอยู่ที่ 30 องศา ช่วยส่งคนมาดูวันนี้ด้วย",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_03",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "ขอแจ้งเรื่องหน่อยครับ รีโมทแอร์ห้อง 2222 กดไม่ติด หน้าจอไม่ขึ้นเลย ครับ",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_04",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "สวัสดีครับ รีโมทแอร์ห้อง 809 กดไม่ติด หน้าจอไม่ขึ้นเลย ค่ะ",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_05",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "รีโมทแอร์ห้อง 829 กดไม่ติด หน้าจอไม่ขึ้นเลย ค่ะ",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_06",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "ตั้งอุณหภูมิแอร์ห้อง 521 ไม่ได้ ค้างอยู่ที่ 30 องศา ครับ",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_07",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "รีโมทแอร์ห้อง 1913 กดไม่ติด หน้าจอไม่ขึ้นเลย ค่ะ",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hvac_remote_08",
+"sid": "th_hvac_remote",
+"lang": "th",
+"text": "รีโมทแอร์ห้อง 510 กดไม่ติด หน้าจอไม่ขึ้นเลย ช่วยส่งคนมาดูวันนี้ด้วย",
+"queue": "hvac",
+"safety": false,
+"urgency": 1
+},
+{
+"id": "th_hk_water_01",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "รบกวนเติมน้ำเปล่ากับชาในห้อง 1307 ขอบคุณค่ะ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_02",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "ข้อความจากแขก: รบกวนเติมน้ำเปล่ากับชาในห้อง 2004 ค่ะ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_03",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "สวัสดีค่ะ น้ำดื่มกับกาแฟในห้อง 2320 หมดแล้ว ครับ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_04",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "รบกวนเติมน้ำเปล่ากับชาในห้อง 1228 ไม่รีบค่ะ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_05",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "รบกวนเติมน้ำเปล่ากับชาในห้อง 625 ค่ะ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_06",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "สวัสดีค่ะ รบกวนเติมน้ำเปล่ากับชาในห้อง 913 ครับ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_07",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "ข้อความจากแขก: น้ำดื่มกับกาแฟในห้อง 602 หมดแล้ว",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_hk_water_08",
+"sid": "th_hk_water",
+"lang": "th",
+"text": "สวัสดีครับ น้ำดื่มกับกาแฟในห้อง 427 หมดแล้ว ครับ",
+"queue": "housekeeping",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_pl_overflow_01",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "ชักโครกห้อง 1122 น้ำล้นออกมาเต็มพื้นห้องน้ำแล้ว มาเดี๋ยวนี้เลย",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_02",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "ชักโครกห้อง 1619 น้ำล้นออกมาเต็มพื้นห้องน้ำแล้ว ช่วยด้วยค่ะ",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_03",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "ข้อความจากแขก: น้ำในชักโครกห้อง 709 ไหลไม่หยุด ท่วมห้องน้ำแล้ว มาเดี๋ยวนี้เลย",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_04",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "ขอแจ้งเรื่องหน่อยครับ ชักโครกห้อง 814 น้ำล้นออกมาเต็มพื้นห้องน้ำแล้ว",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_05",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "สวัสดีค่ะ น้ำในชักโครกห้อง 707 ไหลไม่หยุด ท่วมห้องน้ำแล้ว มาเดี๋ยวนี้เลย",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_06",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "สวัสดีครับ น้ำในชักโครกห้อง 1718 ไหลไม่หยุด ท่วมห้องน้ำแล้ว รีบมาด่วนครับ",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_07",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "สวัสดีค่ะ น้ำในชักโครกห้อง 1708 ไหลไม่หยุด ท่วมห้องน้ำแล้ว",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_pl_overflow_08",
+"sid": "th_pl_overflow",
+"lang": "th",
+"text": "ชักโครกห้อง 2013 น้ำล้นออกมาเต็มพื้นห้องน้ำแล้ว ช่วยด้วยค่ะ",
+"queue": "plumbing",
+"safety": false,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_01",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "สวัสดีค่ะ กริ่งไฟไหม้ชั้น 5 ดัง เห็นควันที่ทางเดิน รีบมาด่วนครับ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_02",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "รบกวนหน่อยค่ะ กริ่งไฟไหม้ชั้น 6 ดัง เห็นควันที่ทางเดิน ด่วนค่ะ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_03",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "กริ่งไฟไหม้ชั้น 15 ดัง เห็นควันที่ทางเดิน ด่วนค่ะ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_04",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "ข้อความจากแขก: สัญญาณเตือนไฟไหม้ห้อง 1129 ดัง แล้วมีควันในห้อง ด่วนค่ะ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_05",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "กริ่งไฟไหม้ชั้น 4 ดัง เห็นควันที่ทางเดิน",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_06",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "รบกวนหน่อยค่ะ สัญญาณเตือนไฟไหม้ห้อง 1525 ดัง แล้วมีควันในห้อง ด่วนค่ะ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_07",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "กริ่งไฟไหม้ชั้น 18 ดัง เห็นควันที่ทางเดิน ช่วยด้วยค่ะ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_sf_alarm_08",
+"sid": "th_sf_alarm",
+"lang": "th",
+"text": "สวัสดีครับ สัญญาณเตือนไฟไหม้ห้อง 2015 ดัง แล้วมีควันในห้อง รีบมาด่วนครับ",
+"queue": "safety",
+"safety": true,
+"urgency": 2
+},
+{
+"id": "th_fd_late_01",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "ขอเช็คเอาท์ช้าเป็นบ่ายโมงได้ไหม ห้อง 1103 ไม่รีบค่ะ",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_02",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "ขอแจ้งเรื่องหน่อยครับ ขอเช็คเอาท์ช้าเป็นบ่ายโมงได้ไหม ห้อง 1607 ค่ะ",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_03",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "ขอแจ้งเรื่องหน่อยครับ ขอเช็คเอาท์ช้าเป็นบ่ายโมงได้ไหม ห้อง 1224 ขอบคุณค่ะ",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_04",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "ขอแจ้งเรื่องหน่อยครับ ห้อง 418 ขอเลื่อนเวลาเช็คเอาท์เป็นบ่ายสอง ครับ",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_05",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "รบกวนหน่อยค่ะ ขอเช็คเอาท์ช้าเป็นบ่ายโมงได้ไหม ห้อง 2120 ค่ะ",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_06",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "สวัสดีครับ ขอเช็คเอาท์ช้าเป็นบ่ายโมงได้ไหม ห้อง 1414",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_07",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "ข้อความจากแขก: ห้อง 722 ขอเลื่อนเวลาเช็คเอาท์เป็นบ่ายสอง ขอบคุณค่ะ",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+},
+{
+"id": "th_fd_late_08",
+"sid": "th_fd_late",
+"lang": "th",
+"text": "รบกวนหน่อยค่ะ ห้อง 2122 ขอเลื่อนเวลาเช็คเอาท์เป็นบ่ายสอง",
+"queue": "front_desk",
+"safety": false,
+"urgency": 0
+}
+]

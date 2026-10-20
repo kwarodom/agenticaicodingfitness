@@ -20,13 +20,13 @@
 | Need | Check | Why |
 |---|---|---|
 | This repo's Python | `.venv/bin/python --version` → 3.13 | runs the labs, policykit and the checker |
-| The laptop OpenShell CLI | `week26/.venv-openshell/bin/openshell --version` | the real parser every lab in this module asks |
+| The laptop OpenShell CLI | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` | the real parser every lab in this module asks |
 | The Module 02 claw (optional) | `ssh <spark> nemoclaw my-assistant status` | labs 03-1, 03-3 and 03-4 read and change its policy; without it they run DRY |
 | Your sandbox name | 🖥 Spark setup → `CLAW_SANDBOX` (default `my-assistant`) | every Spark command in this module uses it |
 
 ```bash
 # on: laptop
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 command -v nemoclaw || echo "nemoclaw: not on this laptop"
 ```
 
@@ -39,7 +39,7 @@ nemoclaw: not on this laptop
 
 That is correct. NemoClaw lives on the Spark. On the laptop, OpenShell **0.0.111** is only a parser: the labs run it against a gateway address where nothing listens (`127.0.0.1:9`). Anything the CLI checks by itself fails at once; anything that got past those checks fails with `Connection refused`, which proves it parsed. NemoClaw pins **0.0.116** on the Spark, and the latest release is **0.1.2**. When a flag differs on your unit, `--help` wins.
 
-> 📌 **policykit is a teaching model.** `week26/common/policykit.py` follows the rules the docs describe, so you can reason about a policy before you push it. It is not OpenShell. The enforcement is Landlock, seccomp and the proxy on the Spark. Where policykit and the real CLI disagree, this module shows both.
+> 📌 **policykit is a teaching model.** `week26_nemoclaw_claws/common/policykit.py` follows the rules the docs describe, so you can reason about a policy before you push it. It is not OpenShell. The enforcement is Landlock, seccomp and the proxy on the Spark. Where policykit and the real CLI disagree, this module shows both.
 
 ✓ Checkpoint: `openshell --version` prints 0.0.111 on the laptop, and you know which sandbox name the labs will use.
 
@@ -89,7 +89,7 @@ The trap the OpenShell playbook warns about: `--full` prepends a metadata header
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_1_read_policy.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_1_read_policy.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — step 5)
@@ -116,7 +116,7 @@ Without a Spark, steps 1–4 print EXAMPLE shapes, and the baseline table says `
 
 ## 3 · L2.2 — Anatomy of a policy file
 
-`week26/03_policy_as_code/policies/anatomy.yaml` is the research tutorial's annotated schema policy:
+`week26_nemoclaw_claws/03_policy_as_code/policies/anatomy.yaml` is the research tutorial's annotated schema policy:
 
 ```yaml
 version: 1
@@ -215,7 +215,7 @@ You can ask the real parser yourself. Point it at a dead gateway and read the la
 
 ```bash
 # on: laptop
-cd week26 && OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9 HOME=.runs/openshell-home \
+cd week26_nemoclaw_claws && OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9 HOME=.runs/openshell-home \
   .venv-openshell/bin/openshell policy set parse-probe --policy 03_policy_as_code/policies/anatomy.yaml
 ```
 
@@ -232,7 +232,7 @@ Error:   × transport error
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_2_policy_anatomy.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_2_policy_anatomy.py
 ```
 
 **Expected output** (captured on this Mac — steps 3 and 4, command echo lines trimmed)
@@ -320,7 +320,7 @@ Lab 03-3 feeds both grammars to the real CLI and to policykit, then runs the loo
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_3_iterate_loop.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_3_iterate_loop.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — steps 1 and 3, command echo lines trimmed)
@@ -531,7 +531,7 @@ Lab 03-5 runs the read-only checks, puts every change behind `change()`, and nev
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/labs/lab03_5_byo_vllm.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_5_byo_vllm.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — step 3 and the parser table of step 5)
@@ -592,7 +592,7 @@ Other sandbox flavours worth knowing: `--from base` (minimal Ubuntu, no agent), 
 
 ```bash
 # on: laptop
-.venv/bin/python week26/03_policy_as_code/exercises/ex03_alto_bms_preset.py
+.venv/bin/python week26_nemoclaw_claws/03_policy_as_code/exercises/ex03_alto_bms_preset.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled)

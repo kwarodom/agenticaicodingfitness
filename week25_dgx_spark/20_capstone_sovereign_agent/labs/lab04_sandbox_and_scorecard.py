@@ -11,7 +11,7 @@ only with SPARK_APPLY=1 / --yes.
 Step 4 is the capstone scorecard: the router's ship gate (Module 13), the agent scenarios (lab 20-3),
 the policy checks (this lab). The course is done when every row is ✓ on real Sparks.
 
-Run: .venv/bin/python week25/20_capstone_sovereign_agent/labs/lab04_sandbox_and_scorecard.py [--yes]
+Run: .venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab04_sandbox_and_scorecard.py [--yes]
 """
 import json
 import os
@@ -102,8 +102,8 @@ change("openshell inference set --provider capstone-gateway --model agent-brain 
 if where() == "dry" or APPLY:
     put(pol_path, "~/w25/capstone_policy.yaml")
 change(f"openshell sandbox create --name {SB} --from base --policy ~/w25/capstone_policy.yaml "
-       f"--upload {REPO}/week25/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true && "
-       f"openshell sandbox upload {SB} {REPO}/week25/20_capstone_sovereign_agent /sandbox/capstone",
+       f"--upload {REPO}/week25_dgx_spark/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true && "
+       f"openshell sandbox upload {SB} {REPO}/week25_dgx_spark/20_capstone_sovereign_agent /sandbox/capstone",
        example=f"✓ sandbox {SB} created · policy applied · phase: Ready")
 change(f"openshell sandbox exec -n {SB} -- python3 -m venv /sandbox/.venv-nat && "
        f"openshell sandbox exec -n {SB} -- /sandbox/.venv-nat/bin/pip install -q 'nvidia-nat[langchain]~=1.9' greenlet && "

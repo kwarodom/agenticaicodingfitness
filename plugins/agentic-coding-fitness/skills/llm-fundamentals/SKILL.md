@@ -59,7 +59,7 @@ print(f"\nTokens: {response.usage.input_tokens} in, {response.usage.output_token
 - `response.content` is a **list of blocks** — text is at `response.content[0].text`. (Later, tool calls show up as other block types — see the `tool-use` skill.)
 - `response.usage` tells you exactly what you paid: input tokens (your prompt) + output tokens (the reply).
 
-> 📁 Class repo: `week2/claudeapicall.py`
+> 📁 Class repo: `week02_claude_api_foundations/claudeapicall.py`
 
 ---
 
@@ -78,7 +78,7 @@ with client.messages.stream(
 print()
 ```
 
-> 📁 Class repo: `week2/claudestreamingapi.py`
+> 📁 Class repo: `week02_claude_api_foundations/claudestreamingapi.py`
 
 ---
 
@@ -105,7 +105,7 @@ print(chat("What's my name?"))   # it knows — because "Aom" is still in `messa
 
 If you forget to append the assistant's reply back into `messages`, the model gets amnesia on the next turn. Try it and watch it break — that's the lesson.
 
-> 📁 Class repo: `week2/claudemulti_turn.py` (note its `system="...mentor..."` prompt — the *same text* on every turn) and the interactive loop in `week7/agent.py`
+> 📁 Class repo: `week02_claude_api_foundations/claudemulti_turn.py` (note its `system="...mentor..."` prompt — the *same text* on every turn) and the interactive loop in `week07_mcp_and_skills/agent.py`
 
 > 💸 **Cost lever you'll want soon: prompt caching.** Notice that resending the whole history means you re-send (and re-pay for) the *same* opening tokens every turn — your `system` prompt, tool definitions, retrieved docs. Anthropic lets you mark that stable prefix as cached, and a *cache hit* costs roughly **90% less** than re-processing it. You don't need it on day one, but it's the single biggest cheap win once your conversations or contexts get long. The full cost economics (caching + model routing + context compaction) live in the `models-and-patterns` skill.
 

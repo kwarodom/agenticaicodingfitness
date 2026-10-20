@@ -1,7 +1,7 @@
 # Week 19 — Fine-tuning on a DGX (interactive tutorial + real/simulated demos)
 #
 # Install into the repo's uv-managed .venv (Python 3.13):
-#     uv pip install -r week19/dgx_finetune/requirements.txt
+#     uv pip install -r week19_sovereign_ai_dgx/dgx_finetune/requirements.txt
 #
 # The training LOOP is simulated (you can't train a 70B on a laptop). Dataset
 # prep + recipe generation are pure-Python and always real. The before/after

@@ -11,7 +11,7 @@ For each top-probability threshold t:
   accepted accuracy = correct / auto-routed       (higher = safer automation)
   wrong accepted    = auto-routed AND wrong       (the number to drive to zero)
 
-Run: .venv/bin/python week24/09_evaluate_and_cost/labs/lab02_threshold_sweep.py
+Run: .venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab02_threshold_sweep.py
 """
 import sys
 from pathlib import Path

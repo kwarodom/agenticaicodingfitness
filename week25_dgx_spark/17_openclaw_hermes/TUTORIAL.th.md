@@ -115,7 +115,7 @@ Lab 17-1 รัน Step 1 ของ Hermes playbook (`uname -a`, `curl --version
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/labs/lab17_1_preflight.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_1_preflight.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ ถ้ามี Spark คุณจะได้ค่าของเครื่องคุณเองพร้อม ✓ / ✕)
@@ -162,7 +162,7 @@ Lab 17-2 ทดสอบวงรอบนั้นด้วย probe เล็�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/labs/lab17_2_tool_probe.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_2_tool_probe.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: LAPTOP STAND-IN นี่คือโมเดลของแล็ปท็อป ไม่ใช่ของ Spark)
@@ -329,7 +329,7 @@ hermes -z "Reply exactly HERMES_OK"
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/labs/lab17_3_agent_configs.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_3_agent_configs.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ยังไม่ได้ตั้งค่า Spark; smoke test เป็น LAPTOP STAND-IN)
@@ -359,7 +359,7 @@ hermes -z "Reply exactly HERMES_OK"
 │ hermes config set model.base_url http://localhost:8000/v1
 │ hermes config set model.default nvidia/Qwen3.6-35B-A3B-NVFP4
 │ hermes -z "Reply exactly HERMES_OK"
-◆ written to week25/17_openclaw_hermes/.runs/
+◆ written to week25_dgx_spark/17_openclaw_hermes/.runs/
 
 ▣ STEP 3 · validate
 ✓ openclaw.models.json: local /v1 endpoint, placeholder key, ≥32K context
@@ -450,7 +450,7 @@ Lab 17-1 รันแบบ LIVE บน Spark ของคุณหรือแ�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 17 — โมเดลเดียว สองเอเจนต์** เปิด `week25/17_openclaw_hermes/exercises/ex17_agent_config.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 17 — โมเดลเดียว สองเอเจนต์** เปิด `week25_dgx_spark/17_openclaw_hermes/exercises/ex17_agent_config.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `openclaw_provider(base_url, model_id, context_window)`: entry `models.providers.vllm` ในรูปแบบของ playbook
 2. `hermes_commands(base_url, model_id)`: สี่คำสั่งของการตั้งค่าแบบ non-interactive ใน Hermes playbook
@@ -458,7 +458,7 @@ Lab 17-1 รันแบบ LIVE บน Spark ของคุณหรือแ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/exercises/ex17_agent_config.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/exercises/ex17_agent_config.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด บันทึกจาก Mac เครื่องนี้ด้วยเฉลยอ้างอิง)

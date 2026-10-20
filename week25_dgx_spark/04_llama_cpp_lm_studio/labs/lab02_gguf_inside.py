@@ -11,7 +11,7 @@ With no argument it opens a GGUF that Ollama already downloaded on THIS machine 
 model blobs are GGUF files). On the Spark, point it at the playbook's download:
   --path ~/.cache/huggingface/hub/models--unsloth--Qwen3.6-35B-A3B-MTP-GGUF/snapshots/*/*.gguf
 
-Run: .venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py [--path FILE.gguf]
+Run: .venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py [--path FILE.gguf]
 """
 import glob
 import json

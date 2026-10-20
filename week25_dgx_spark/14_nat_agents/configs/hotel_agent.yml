@@ -8,7 +8,7 @@
 # ${VAR:-default} is expanded by NAT when it loads the file. The defaults point at the LAPTOP STAND-IN
 # (Ollama on this Mac). On the Spark, set HOTEL_LLM_BASE_URL / HOTEL_LLM_MODEL (see TUTORIAL.md §3).
 #
-#   week25/.venv-nat/bin/nat run --config_file week25/14_nat_agents/configs/hotel_agent.yml \
+#   week25_dgx_spark/.venv-nat/bin/nat run --config_file week25_dgx_spark/14_nat_agents/configs/hotel_agent.yml \
 #       --input "Room 808 feels hot. Check it and open a ticket if something is wrong."
 
 general:

@@ -2,7 +2,7 @@
 """Exercise 07 · reference solution — build a 4-bit quantizer and a speculative-decoding planner yourself.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week25/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py
+    .venv/bin/python week25_dgx_spark/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py
 
 The checker is free and offline: it tests your functions against known answers, then
 uses them to quantize 4,096 numbers and to pick a draft length. Stuck? Compare with

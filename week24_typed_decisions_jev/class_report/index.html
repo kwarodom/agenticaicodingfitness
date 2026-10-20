@@ -1,0 +1,302 @@
+<title>Jev 1.14 Class Opener</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a projector-first report — one wide column of evidence (GIF → screenshots → numbers), the same dark
+   console world as the Jev Lab Runner it documents, so the captures sit on the page without a frame fighting them. */
+:root{
+  --bg:#0f1117; --panel:#161a23; --panel-2:#1c212c; --line:#2a3140; --fg:#e7e9ee; --muted:#9aa3b2;
+  --pink:#e255b8; --cyan:#4cc9d6; --green:#3fb950; --amber:#d9a43a; --red:#f0716b;
+  --display:"Familjen Grotesk","IBM Plex Sans",system-ui,sans-serif;
+  --body:"IBM Plex Sans","IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --w:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding-inline:20px;padding-block:0 64px}
+.wrap{max-width:var(--w);margin-inline:auto;display:flex;flex-direction:column;gap:72px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05}
+h2{font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.15}
+h3{font-size:1.15rem}
+p{margin:0;max-width:68ch}
+code,.mono{font-family:var(--mono);font-size:.88em}
+code{background:var(--panel-2);border:1px solid var(--line);border-radius:5px;padding:.05em .35em}
+a{color:var(--cyan)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+
+/* header */
+header{padding-top:48px;display:grid;gap:20px}
+.eyebrow{font:600 .78rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--pink)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch}
+.status{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:8px;font:500 .85rem/1 var(--mono);padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.chip.pass{border-color:color-mix(in srgb,var(--green) 55%,var(--line));color:var(--green)}
+
+/* media */
+figure{margin:0;display:grid;gap:10px;min-width:0}
+figure img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:zoom-in}
+figcaption{font-size:.9rem;color:var(--muted)}
+figcaption b{color:var(--fg);font-weight:600}
+.hero img{border-color:color-mix(in srgb,var(--pink) 45%,var(--line))}
+
+/* numbers */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.fact{background:var(--panel);padding:20px 22px;display:grid;gap:6px;align-content:start;min-width:0}
+.fact .n{font:700 2rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.fact .n small{font-size:.95rem;color:var(--muted);font-weight:500}
+.fact .k{font-size:.9rem;color:var(--muted)}
+.n.pink{color:var(--pink)}.n.cyan{color:var(--cyan)}.n.green{color:var(--green)}.n.amber{color:var(--amber)}
+
+/* sections */
+section{display:grid;gap:28px}
+.sechead{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:28px}
+.modtag{font:600 .8rem/1 var(--mono);color:var(--cyan);letter-spacing:.08em;text-transform:uppercase}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px}
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.learn div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:6px;min-width:0}
+.learn b{font-family:var(--display);font-size:1.02rem}
+.learn span{color:var(--muted);font-size:.95rem}
+.warn{border:1px solid color-mix(in srgb,var(--red) 55%,var(--line));background:color-mix(in srgb,var(--red) 9%,var(--panel));border-radius:10px;padding:16px 18px;display:grid;gap:6px}
+.warn b{color:var(--red);font-family:var(--display)}
+
+/* results */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .75rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--panel)}
+tr:last-child td{border-bottom:0}
+td.res{white-space:nowrap;font:600 .8rem/1.4 var(--mono)}
+td.res.ok{color:var(--green)} td.res.bad{color:var(--red)}
+td.det{color:var(--muted);font-family:var(--mono);font-size:.8rem;word-break:break-word}
+
+pre{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow-x:auto;font:400 .85rem/1.6 var(--mono)}
+footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:20px}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}
+dialog::backdrop{background:rgb(5 7 10 / .88)}
+dialog img{max-width:96vw;max-height:88vh;border-radius:8px;display:block}
+dialog p{color:var(--fg);text-align:center;margin:10px auto 0;font-size:.95rem}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Week 24 · Typed AI decisions with Jev · class opener</div>
+  <h1>Jev now sees photos, decision models run on your laptop, and you can fine-tune them</h1>
+  <p class="lede">Three new modules in the Jev Lab Runner, tested end to end in the browser on 2026-10-17 and 18: Module 15 covers Jev 1.14's images, Box and long context. Module 16 runs Laya, GLiNER and GLiNER2.5-Decide locally and measures them against Jev on the same tickets. Module 17 fine-tunes two of them on a Mac and grades the result against criteria locked before training.</p>
+  <div class="status">
+    <span class="chip pass"><span class="dot"></span>41 / 41 browser checks passed</span>
+    <span class="chip">17 modules · 64 labs · EN + ไทย</span>
+    <span class="chip">DRY replay ($0) + local models on Apple M4 Max</span>
+  </div>
+</header>
+
+<figure class="hero">
+  <img src="gifs/m15_box_lab.gif" alt="The Jev Lab Runner running Lab 15-3: Jev returns a bounding box for the puddle, ignores a box around an absent fire extinguisher, and checks the crop's edges" width="1000" height="594">
+  <figcaption><b>Lab 15-3 in the browser.</b> Jev 1.14 boxes the puddle, refuses to trust a box drawn around a fire extinguisher that isn't there (gate 0.09), then checks every edge of the crop.</figcaption>
+</figure>
+
+<div class="facts" aria-label="Headline numbers">
+  <div class="fact"><div class="n pink">≈ $0.0001</div><div class="k">per photo sent straight to Jev (one 1152×768 image ≈ 2.7k input tokens)</div></div>
+  <div class="fact"><div class="n cyan">~1 s <small>vs ~4 s</small></div><div class="k">Jev on the photo vs vision LLM → text → Jev, same answers on 3 of 3 photos</div></div>
+  <div class="fact"><div class="n green">18 · 16 · 12 <small>/ 18</small></div><div class="k">tickets routed correctly: Jev · GLiNER2.5-Decide · Laya (EN + TH, zero-shot)</div></div>
+  <div class="fact"><div class="n amber">62 ms <small>vs 476 ms</small></div><div class="k">Laya on the laptop's GPU vs Jev over the internet, median per ticket</div></div>
+</div>
+
+<section aria-labelledby="m15">
+  <div class="sechead">
+    <div class="modtag">Module 15 · 15_jev_sees_images</div>
+    <h2 id="m15">Jev sees images: photos, Box and long context</h2>
+    <p>Released 2026-10-14 as TypeSafe's "danger zone": an image can go anywhere text can go, a <code>box</code> question says where something is, and a header raises the context to 262k tokens. Students send photos without a vision LLM in between and measure when that helps.</p>
+  </div>
+  <div class="two">
+    <figure><img src="gifs/tour_m15.gif" alt="Paging through Module 15 in the runner: intro, what 1.14 adds, the first image call, the Box section with the drawn box, and the diagrams" loading="lazy" width="1000" height="594"><figcaption><b>A tour of the module.</b> Intro, what 1.14 adds, the Box section and the diagrams.</figcaption></figure>
+    <figure><img src="gifs/m15_ask_jev.gif" alt="Clicking Ask Jev on an inline request and watching the typed answers appear as probability bars" loading="lazy" width="1000" height="594"><figcaption><b>⚡ Ask Jev, inline.</b> Edit the request in the page, click once, read typed answers as bars.</figcaption></figure>
+  </div>
+  <div class="grid3">
+    <figure><img src="shots/02_m15_intro.jpg" alt="Module 15 introduction page in the runner" loading="lazy" width="1600" height="1000"><figcaption><b>Module 15 intro.</b> Time, difficulty and cost chips.</figcaption></figure>
+    <figure><img src="shots/03_m15_what_is_new.jpg" alt="Table of Jev 1.14 features" loading="lazy" width="1600" height="1000"><figcaption><b>What 1.14 adds.</b> Features, headers and status in one table.</figcaption></figure>
+    <figure><img src="shots/04_m15_box_section.jpg" alt="Box section showing the photo with a red box around the puddle" loading="lazy" width="1600" height="1000"><figcaption><b>Box section.</b> The box Jev drew around the puddle.</figcaption></figure>
+    <figure><img src="shots/05_m15_ask_jev.jpg" alt="Inline Ask Jev answer with probability bars" loading="lazy" width="1600" height="936"><figcaption><b>Ask Jev result.</b> Which unit raised the alarm: AHU-3, 1.00.</figcaption></figure>
+    <figure><img src="shots/06_m15_diagrams.jpg" alt="Module 15 architecture diagram" loading="lazy" width="1600" height="1000"><figcaption><b>Architecture.</b> Two evidence paths, one policy.</figcaption></figure>
+    <figure><img src="shots/07_m15_lab01.jpg" alt="Lab 15-1 terminal output" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 15-1.</b> First image call, the 400 without the header, the token bill.</figcaption></figure>
+    <figure><img src="shots/07_m15_lab02.jpg" alt="Lab 15-2 terminal output" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 15-2.</b> Images in state, instructions, criteria and frames.</figcaption></figure>
+    <figure><img src="shots/07_m15_lab04.jpg" alt="Lab 15-4 comparison table" loading="lazy" width="1600" height="1131"><figcaption><b>Lab 15-4.</b> Direct vs pipeline: 3/3 agree, ~4× faster.</figcaption></figure>
+    <figure><img src="shots/07_m15_lab05.jpg" alt="Lab 15-5 terminal output" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 15-5.</b> 1.13 vs 1.14, Thai, and a 47k-token log.</figcaption></figure>
+    <figure><img src="shots/08_m15_exercise.jpg" alt="Exercise 15 solution output" loading="lazy" width="1600" height="1098"><figcaption><b>Exercise 15 solution.</b> 12 offline checks, then one real frame.</figcaption></figure>
+  </div>
+  <div class="learn">
+    <div><b>Images work on 1.13 too</b><span>"Multimodal all along", but only with the header <code>TypeSafe-Danger-Zone-Images: true</code>. Without it: HTTP 400.</span></div>
+    <div><b>Box is 1.14 only</b><span>It always returns a box, even around nothing. Ask a yes/no question in the same request and let code ignore the box when it's low.</span></div>
+    <div><b>Jev still writes no text</b><span>It can say the thermostat is above 28 °C, but never "29.1". Exact numbers stay with a vision LLM or OCR, checked by code.</span></div>
+  </div>
+</section>
+
+<section aria-labelledby="m16">
+  <div class="sechead">
+    <div class="modtag">Module 16 · 16_local_system_one_models</div>
+    <h2 id="m16">Local System One models vs Jev, measured fairly</h2>
+    <p>systemonemodels.org lists 25+ decision models, nine with open weights. The labs run three on the laptop with no network, then put all engines through the same 18 English and Thai tickets with the same questions and the same scoring.</p>
+  </div>
+  <figure><img src="gifs/m16_bakeoff.gif" alt="Running the Lab 16-5 bake-off in the browser: 18 tickets through Jev, Laya and GLiNER2.5-Decide, then accuracy, speed, cost and calibration tables" loading="lazy" width="1000" height="594"><figcaption><b>Lab 16-5, the bake-off</b> (shown at 2× speed; the real run takes about 21 s, with both local models running on this Mac).</figcaption></figure>
+  <div class="grid3">
+    <figure><img src="shots/10_m16_intro.jpg" alt="Module 16 introduction page" loading="lazy" width="1600" height="1000"><figcaption><b>Module 16 intro.</b> Laya, GLiNER and GLiNER2.5-Decide.</figcaption></figure>
+    <figure><img src="shots/13_m16_lab01.jpg" alt="Lab 16-1 landscape tables" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 16-1.</b> The landscape and three scoreboards.</figcaption></figure>
+    <figure><img src="shots/13_m16_lab02.jpg" alt="Lab 16-2 terminal output" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 16-2.</b> Laya locally: 43 ms, then its Thai and truncation failures.</figcaption></figure>
+    <figure><img src="shots/13_m16_lab03.jpg" alt="Lab 16-3 terminal output with highlighted room numbers" loading="lazy" width="1600" height="1133"><figcaption><b>Lab 16-3.</b> GLiNER extracts, Jev decides, code highlights ⟦1203⟧.</figcaption></figure>
+    <figure><img src="shots/13_m16_lab04.jpg" alt="Lab 16-4 terminal output" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 16-4.</b> GLiNER2.5-Decide, English vs multilingual on Thai.</figcaption></figure>
+    <figure><img src="shots/12b_m16_charts.jpg" alt="Bar charts of bake-off accuracy and median time" loading="lazy" width="1600" height="1000"><figcaption><b>Bake-off charts.</b> Accuracy per question and time per ticket.</figcaption></figure>
+    <figure><img src="shots/12_m16_diagrams.jpg" alt="Module 16 architecture diagram" loading="lazy" width="1600" height="1000"><figcaption><b>Architecture.</b> pick_engine() keeps confidential text local.</figcaption></figure>
+    <figure><img src="shots/13_m16_lab05.jpg" alt="Lab 16-5 result tables" loading="lazy" width="1600" height="1073"><figcaption><b>Lab 16-5.</b> Accuracy, speed, cost and calibration.</figcaption></figure>
+    <figure><img src="shots/14_m16_exercise.jpg" alt="Exercise 16 solution output" loading="lazy" width="1600" height="1096"><figcaption><b>Exercise 16 solution.</b> Adapter + engine picker, then one local call.</figcaption></figure>
+  </div>
+  <div class="warn" role="note">
+    <b>Watch for this before trusting a local model on Thai</b>
+    <span>Laya's multilingual checkpoint sent "burning smell near the electrical cabinet" to <code>plumbing</code> with 0.95 confidence. The English-only GLiNER2.5-Decide made the same mistake; its multilingual sibling got <code>safety</code>. Confidence alone did not catch it. Testing the language you serve did.</span>
+  </div>
+  <div class="learn">
+    <div><b>Extract, then decide</b><span>Classic GLiNER finds every room number with offsets. Jev picks which one has the problem. In Thai, GLiNER also marked floor 3 as a room; Jev chose 1203 at 0.92.</span></div>
+    <div><b>Scoreboards measure different jobs</b><span>Independent index: Jev 60, Decide 9, Laya 4. Fastino's own suite: Decide 60.2, Jev 57.6. Laya fine-tuned on one task: 79.4 vs Jev 80.0. All true.</span></div>
+    <div><b>Confidential text stays local</b><span>The exercise's engine picker never sends confidential text to the cloud. An unsure local answer goes to a person, not to Jev.</span></div>
+  </div>
+</section>
+
+<section aria-labelledby="m17">
+  <div class="sechead">
+    <div class="modtag">Module 17 · 17_finetune_system_one</div>
+    <h2 id="m17">Fine-tune a local model, then let locked criteria decide</h2>
+    <p>Module 16 ended with base Laya routing 12 of 18 tickets. Here students fine-tune Laya (full, Apple GPU) and GLiNER2.5-multi-Decide (a 5.5 MB LoRA adapter and a full fine-tune, CPU) on 456 English and Thai tickets. They write seven pass/fail criteria before training, then grade every model on 66 hand-written tickets it never saw.</p>
+  </div>
+  <figure class="hero"><img src="gifs/m17_exam.gif" alt="Running Lab 17-6 in the browser: a scoreboard of eight engines on 66 held-out tickets with 95% intervals, then the paired comparison showing fixed and broken tickets" loading="lazy" width="880" height="523"><figcaption><b>Lab 17-6, the exam</b> (2× speed). Every engine on 66 held-out tickets with 95 % intervals, then which tickets each fine-tune fixed and broke.</figcaption></figure>
+  <div class="facts" aria-label="Module 17 headline numbers">
+    <div class="fact"><div class="n cyan">40 → 60 <small>/ 66</small></div><div class="k">GLiNER2.5-multi-Decide with a 5.5 MB LoRA adapter, held-out tickets. Broke none. Laya: 40 → 55</div></div>
+    <div class="fact"><div class="n amber">3.9 <small>min</small></div><div class="k">Laya fine-tune on the M4 Max's GPU. GLiNER trains on the CPU (its trainer has no Mac GPU path): 7.2 min LoRA, 6.7 min full</div></div>
+    <div class="fact"><div class="n pink">52 <small>/ 66</small></div><div class="k">ten lines of keyword rules, which beat every local model before fine-tuning (40 / 66)</div></div>
+    <div class="fact"><div class="n green">3 × HOLD</div><div class="k">all fail C3: each misses water reaching a switchboard room. The gate, not the +30 points, decides</div></div>
+  </div>
+  <div class="two">
+    <figure><img src="gifs/m17_gate.gif" alt="Running Lab 17-7: the criteria lock is checked, then each candidate is graded on C1 to C7 and shown as HOLD, and model cards are written" loading="lazy" width="880" height="523"><figcaption><b>Lab 17-7, ship or hold.</b> The lock is checked, C1–C7 are graded, and a model card is written for each candidate.</figcaption></figure>
+    <figure><img src="gifs/m17_charts.gif" alt="Scrolling the Module 17 diagrams: the fine-tuning loop, a Laya training sequence, and charts for held-out accuracy, validation loss per epoch, and safety recall versus false alarms" loading="lazy" width="880" height="523"><figcaption><b>The 📊 section.</b> The fine-tuning loop, one Laya run, and three charts drawn from the measured runs.</figcaption></figure>
+  </div>
+  <div class="grid3">
+    <figure><img src="shots/20_m17_intro.jpg" alt="Module 17 introduction page in the runner" loading="lazy" width="1600" height="1000"><figcaption><b>Module 17 intro.</b> What students do, and the time and cost.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab01_split.jpg" alt="Lab 17-1 output: a random split leaves 85% of validation with a near-copy in training, the split by situation 0%" loading="lazy" width="1600" height="1160"><figcaption><b>Lab 17-1.</b> A random split leaks 85 % of validation; splitting by situation leaks 0 %.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab02_memory.jpg" alt="Lab 17-2 output: devices each trainer uses and memory needed for full and LoRA fine-tunes" loading="lazy" width="1600" height="1160"><figcaption><b>Lab 17-2.</b> Mac or Spark: devices, memory from the weight files, timed passes.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab03_baselines.jpg" alt="Lab 17-3 output: baselines on 66 held-out tickets, keyword rules 52, zero-shot local models 40, Jev 66" loading="lazy" width="1600" height="1218"><figcaption><b>Lab 17-3.</b> Criteria locked, then the baselines to beat.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab04_before_after.jpg" alt="Lab 17-4 output: Laya before and after on validation, accuracy 0.614 to 0.889 and mean confidence 0.997" loading="lazy" width="1600" height="1160"><figcaption><b>Lab 17-4.</b> Laya: more accurate, and overconfident (mean confidence 0.997).</figcaption></figure>
+    <figure><img src="shots/25_m17_lab05_runs.jpg" alt="Lab 17-5 output: LoRA and full runs with validation loss per epoch and early stopping" loading="lazy" width="1600" height="1160"><figcaption><b>Lab 17-5.</b> LoRA vs full: early stopping keeps epoch 4 of 6.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab06_scoreboard.jpg" alt="Lab 17-6 scoreboard and paired comparison with McNemar p-values" loading="lazy" width="1600" height="1162"><figcaption><b>Lab 17-6.</b> Scoreboard with intervals, then fixed vs broke.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab06_safety.jpg" alt="Lab 17-6 safety recall, false alarms and the dangerous tickets each model missed" loading="lazy" width="1600" height="1162"><figcaption><b>Lab 17-6, safety.</b> Recall, false alarms, and the exact tickets missed.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab07_gate.jpg" alt="Lab 17-7 grading table: Laya fails C3 and C5, GLiNER LoRA fails C3" loading="lazy" width="1600" height="1160"><figcaption><b>Lab 17-7.</b> C1–C7 per candidate: why each is on HOLD.</figcaption></figure>
+    <figure><img src="shots/25_m17_lab08_plan.jpg" alt="Lab 17-8 output: the plan to run the same labs on a DGX Spark inside NVIDIA's PyTorch container, marked NOT RUN" loading="lazy" width="1600" height="1160"><figcaption><b>Lab 17-8.</b> The DGX Spark plan. The Spark column stays NOT RUN until measured.</figcaption></figure>
+    <figure><img src="shots/22_m17_charts.jpg" alt="Chart of dangerous tickets flagged versus false alarms per model" loading="lazy" width="1600" height="1000"><figcaption><b>Charts.</b> Recall next to false alarms: zero-shot GLiNER's 14/14 came with 31 false alarms.</figcaption></figure>
+    <figure><img src="shots/24_m17_exercise.jpg" alt="Exercise 17 solution output: 12 offline checks pass and the student's gate matches Lab 17-7" loading="lazy" width="1600" height="1096"><figcaption><b>Exercise 17 solution.</b> A leak-proof split and a ship gate; 12 checks.</figcaption></figure>
+  </div>
+  <div class="warn" role="note">
+    <b>Laya's confidence broke while its accuracy improved</b>
+    <span>After fine-tuning, Laya's mean confidence on validation was 0.997 while it was right 89 % of the time. Its own temperature fit "came back unchanged at 1.0", because the calibration slice came from training situations it already got 100 % right. A cut fitted on validation still let through 15 % errors on held-out tickets. Fine-tuned confidence needs checking on data the model has not seen.</span>
+  </div>
+  <div class="learn">
+    <div><b>Mac first, Spark when it grows</b><span>About 300M-parameter encoders need roughly 5 GB to fine-tune. A Mac does 456 tickets in minutes. The Spark earns its place above about 5k tickets, for repeated runs, or when GLiNER needs a CUDA GPU.</span></div>
+    <div><b>Lock the criteria first</b><span><code>criteria.json</code> is hashed before training. The gate refuses to grade if it changed or if a checkpoint is older than the lock.</span></div>
+    <div><b>A HOLD names the next step</b><span>Write training situations for the missed category, retrain, and then write fresh held-out tickets: once you've studied the old ones, they are spent.</span></div>
+  </div>
+</section>
+
+<section aria-labelledby="thai">
+  <div class="sechead">
+    <div class="modtag">Both languages</div>
+    <h2 id="thai">Every new section has a Thai twin</h2>
+    <p>The ไทย button swaps the course text. Code, labs and progress are shared, and a checker keeps every Thai code block byte-identical to the English one.</p>
+  </div>
+  <div class="grid3">
+    <figure><img src="shots/09_m15_thai.jpg" alt="Module 15 introduction in Thai" loading="lazy" width="1600" height="1000"><figcaption><b>Module 15 in Thai.</b></figcaption></figure>
+    <figure><img src="shots/09b_m16_thai_bakeoff.jpg" alt="Module 16 bake-off section in Thai" loading="lazy" width="1600" height="1000"><figcaption><b>Module 16 bake-off section in Thai.</b></figcaption></figure>
+    <figure><img src="shots/23_m17_thai.jpg" alt="Module 17 Laya fine-tuning section in Thai" loading="lazy" width="1600" height="1000"><figcaption><b>Module 17 Laya section in Thai.</b></figcaption></figure>
+  </div>
+</section>
+
+<section aria-labelledby="results">
+  <div class="sechead">
+    <div class="modtag">Browser test run · Playwright · Chromium headless</div>
+    <h2 id="results">41 of 41 checks passed</h2>
+    <p>Every lab and exercise in Modules 15, 16 and 17 was started from its ▶ Run button and had to exit 0 with its expected output. The runs also covered the inline Ask Jev block, the diagrams, the Thai toggle, a Module 01 regression lab, and the page's JavaScript console. Modules 15–16 were tested on 2026-10-17 (26 checks), Module 17 on 2026-10-18 (15 checks).</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th scope="col">Result</th><th scope="col">Check</th><th scope="col">What the browser saw</th></tr></thead>
+      <tbody>
+        <tr><td class="res ok">✓ pass</td><td>Course loads with 16 modules</td><td class="det">16 modules; last two: [&#x27;15_jev_sees_images&#x27;, &#x27;16_local_system_one_models&#x27;]</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>Model picker offers jev-1.14.0</td><td class="det">jev-1.13.0 · pinned · jev-1.14.0 · version · jev-latest · alias · jev-preview · alias</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>Header shows DRY mode ($0 replays)</td><td class="det">DRY · replay</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 intro renders with time/difficulty/cost chips</td><td class="det">⏱ ~40 min · 📶 intermediate · 💲 ≈ $0.004 live (images ≈ $0.0001 each, one long-context call ≈ $0.002) · $0 dry</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 §0 &#x27;what 1.14 adds&#x27; table renders</td><td class="det">—</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 §3 Box section shows the drawn-box photo</td><td class="det">media/puddle_box_example.jpg loaded</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 inline ⚡ Ask Jev returns typed answers</td><td class="det">RECORDED replay jev-1.13.0 · 472 input tok · $0.000020</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 📊 diagrams render (architecture · sequence · charts)</td><td class="det">4 SVG diagrams</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 lab01 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · found &#x27;input tok&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 lab02 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · found &#x27;haze_appeared&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 lab03 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · found &#x27;gate 0.09&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 lab04 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · found &#x27;3/3 photos&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 lab05 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · found &#x27;max_tokens_exceeded&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 exercise solution passes all checks</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 exercise starter stops before any API call</td><td class="det">starter shows ✕ TODO lines and spends nothing</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M15 Thai version renders (ไทย toggle)</td><td class="det">บทนำ อ่านส่วนหนึ่งของ Week 24 · การตัดสินใจแบบมีชนิด (typed decision) </td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 intro renders</td><td class="det">—</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 📊 diagrams render</td><td class="det">4 SVG diagrams</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 lab01 runs in the browser</td><td class="det">✓ exit 0 · 0.0s · DRY · 0.1s · offline/recorded · found &#x27;Jev Decision Index&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 lab02 runs in the browser</td><td class="det">✓ exit 0 · 5.1s · DRY · 5.3s · local models ran on this Mac · found &#x27;LOCAL (this machine)&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 lab03 runs in the browser</td><td class="det">✓ exit 0 · 7.9s · DRY · 8.3s · local models ran on this Mac · found &#x27;⟦1203⟧&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 lab04 runs in the browser</td><td class="det">✓ exit 0 · 14.0s · DRY · 14.4s · local models ran on this Mac · found &#x27;GLiNER2.5-multi-Decide&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 lab05 runs in the browser</td><td class="det">✓ exit 0 · 19.2s · DRY · 19.4s · local models ran on this Mac · found &#x27;18/18&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M16 exercise solution passes all checks</td><td class="det">✓ exit 0 · 8.0s · DRY · 8.3s</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>Regression: Module 01 lab still runs (updated Jev client)</td><td class="det">labs/lab01_first_call_raw.py · ✓ exit 0 · 0.0s · DRY</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>No JavaScript errors in the page</td><td class="det">—</td></tr>
+        <tr><th scope="rowgroup" colspan="3">Module 17 · 2026-10-18</th></tr>
+        <tr><td class="res ok">✓ pass</td><td>Course loads with 17 modules, Module 17 last</td><td class="det">17 modules</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 intro renders</td><td class="det">—</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 📊 diagrams + 3 charts render</td><td class="det">5 SVGs</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab01 runs in the browser</td><td class="det">✓ exit 0 · 0.5s · DRY · 0.9s · recorded · found &#x27;0/48&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab02 runs in the browser</td><td class="det">✓ exit 0 · 44.5s · DRY · 44.5s · LOCAL models · found &#x27;never mps&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab03 runs in the browser</td><td class="det">✓ exit 0 · 0.9s · DRY · 1.3s · LOCAL models · found &#x27;locked: sha256&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab04 runs in the browser</td><td class="det">✓ exit 0 · 0.6s · DRY · 0.8s · LOCAL models · found &#x27;55/66&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab05 runs in the browser</td><td class="det">✓ exit 0 · 7.1s · DRY · 7.3s · LOCAL models · found &#x27;108/120&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab06 runs in the browser</td><td class="det">✓ exit 0 · 20.2s · DRY · 20.4s · LOCAL models · found &#x27;McNemar&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab07 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · recorded · found &#x27;HOLD&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 lab08 runs in the browser</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s · recorded · found &#x27;NOT RUN&#x27;</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 exercise solution passes all 12 checks</td><td class="det">✓ exit 0 · 0.1s · DRY · 0.1s</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 exercise starter shows the TODOs</td><td class="det">starter fails with ✕ TODO lines</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>M17 Thai toggle shows the Thai lesson</td><td class="det">1445 Thai characters on §4 (Laya)</td></tr>
+        <tr><td class="res ok">✓ pass</td><td>No JavaScript errors in the page</td><td class="det">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <pre>.venv/bin/python week24_typed_decisions_jev/00_jev_lab_runner/tutorial_server.py          # → http://127.0.0.1:8124
+&lt;playwright venv&gt;/bin/python week24_typed_decisions_jev/class_report/e2e_frontend_tests.py &lt;out-dir&gt;   # re-run the Module 15–16 checks
+&lt;playwright venv&gt;/bin/python week24_typed_decisions_jev/class_report/e2e_module17_tests.py &lt;out-dir&gt;   # re-run the Module 17 checks</pre>
+</section>
+
+<footer>
+  Generated 2026-10-17 and 18 from the Jev Lab Runner (week24_typed_decisions_jev) in DRY mode: Jev answers replay real recordings at $0, and the local models run live on the laptop. Module 17's fine-tunes were trained on an Apple M4 Max on 2026-10-17; no DGX Spark run has been measured yet. Media and tickets are synthetic. Images, Box and long context are TypeSafe "danger zone" features: fine for prototypes, not yet vouched for in production.
+</footer>
+</div>
+
+<dialog id="lb" aria-label="Enlarged screenshot"><img id="lb-img" alt=""><p id="lb-cap"></p></dialog>
+<script>
+(function(){
+  var lb=document.getElementById("lb"),im=document.getElementById("lb-img"),cap=document.getElementById("lb-cap");
+  document.querySelectorAll("figure img").forEach(function(img){
+    img.tabIndex=0;
+    function open(){im.src=img.src;im.alt=img.alt;var fc=img.parentNode.querySelector("figcaption");cap.textContent=fc?fc.textContent:"";if(lb.showModal)lb.showModal();}
+    img.addEventListener("click",open);
+    img.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+  });
+  lb.addEventListener("click",function(){lb.close();});
+})();
+</script>

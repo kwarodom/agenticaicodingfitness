@@ -6,7 +6,7 @@ const START = { cwd: '/home/student', surface: 'terminal', isInteractive: true }
 const cmd = (command: string, args = '') =>
   ({ command, args, origin: { kind: 'composer' }, presentation: { isFullscreen: true, columns: 120 } }) as const
 
-// Run with: claude plugin test week29/reference/hello-mod
+// Run with: claude plugin test week29_claude_code_mods/reference/hello-mod
 // Every hook `on` adds here sits beneath the plugin and answers in Claude Code's place.
 
 function engine(on: On, saved: Record<string, unknown> = {}) {

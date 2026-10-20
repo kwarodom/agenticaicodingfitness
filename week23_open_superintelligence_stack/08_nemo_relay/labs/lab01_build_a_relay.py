@@ -7,7 +7,7 @@ another tool step — and a ~40-line relay records each as a span with REAL
 timing + token counts, prints the Phoenix-style tree, and writes the trace as
 OTel-shaped JSON that lab03 exports to a live Phoenix.
 
-Run:  cd <repo root> && .venv/bin/python week23/08_nemo_relay/labs/lab01_build_a_relay.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab01_build_a_relay.py
 """
 from __future__ import annotations
 

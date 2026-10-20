@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lab 14-1 · Install NeMo Agent Toolkit, register the hotel tools, and validate the workflow.
 
-NAT lives in its own venv (week25/.venv-nat, Python 3.12), separate from the repo .venv that runs
+NAT lives in its own venv (week25_dgx_spark/.venv-nat, Python 3.12), separate from the repo .venv that runs
 the labs, so this lab drives the `nat` CLI as a subprocess. It:
   1. finds the NAT CLI and prints its version,
   2. installs the course's plugin package (hotel_ops_nat) into that venv if it is not registered yet
@@ -10,7 +10,7 @@ the labs, so this lab drives the `nat` CLI as a subprocess. It:
   4. validates the four workflow YAML files with `nat validate` (offline: no LLM is called),
 then shows the matching install on the Spark (DRY unless a Spark is connected).
 
-Run: .venv/bin/python week25/14_nat_agents/labs/lab14_1_install_and_register.py
+Run: .venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_1_install_and_register.py
 """
 import json
 import os
@@ -23,7 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "common"))
 from sparkkit import WEEK, banner, note, ok, result, sh, step, table, warn  # noqa: E402
 
-MOD = Path(__file__).resolve().parents[1]                 # week25/14_nat_agents
+MOD = Path(__file__).resolve().parents[1]                 # week25_dgx_spark/14_nat_agents
 NAT = Path(os.environ.get("NAT_BIN", WEEK / ".venv-nat" / "bin" / "nat"))
 NAT_PY = NAT.parent / "python"
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
@@ -47,8 +47,8 @@ step(1, "find the NAT CLI")
 if not NAT.exists():
     warn(f"no NAT CLI at {NAT}")
     print("→ install it into a week25-local venv (Python 3.11–3.13; this course uses 3.12):")
-    print("$ uv venv -p 3.12 week25/.venv-nat")
-    print('$ uv pip install --python week25/.venv-nat/bin/python "nvidia-nat[langchain]~=1.9" greenlet "nvidia-nat-mcp~=1.9"')
+    print("$ uv venv -p 3.12 week25_dgx_spark/.venv-nat")
+    print('$ uv pip install --python week25_dgx_spark/.venv-nat/bin/python "nvidia-nat[langchain]~=1.9" greenlet "nvidia-nat-mcp~=1.9"')
     result("install NAT first, then run this lab again.")
     sys.exit(0)
 p = nat("--version", timeout=120)
@@ -60,7 +60,7 @@ probe = subprocess.run([str(NAT_PY), "-c", "import importlib.metadata as m; "
                         "print([e.value for e in m.entry_points(group='nat.components') if e.name=='hotel_ops_nat'])"],
                        capture_output=True, text=True, timeout=60)
 if "hotel_ops_nat.register" in probe.stdout:
-    ok("hotel_ops_nat is already installed in week25/.venv-nat (entry point nat.components → hotel_ops_nat.register)")
+    ok("hotel_ops_nat is already installed in week25_dgx_spark/.venv-nat (entry point nat.components → hotel_ops_nat.register)")
 else:
     uv = shutil.which("uv")
     cmd = ([uv, "pip", "install", "--python", str(NAT_PY), "--no-deps", "-e", str(MOD / "hotel_ops_nat")] if uv else
@@ -107,7 +107,7 @@ sh("mkdir -p ~/w25 && cd ~/w25 && python3 -m venv .venv-nat && "
    ".venv-nat/bin/pip install -q 'nvidia-nat[langchain]~=1.9' greenlet 'nvidia-nat-mcp~=1.9' && "
    ".venv-nat/bin/nat --version",
    example="nat, version 1.9.0", timeout=900)
-note("Then copy week25/14_nat_agents to the Spark (or git clone the repo there) and install hotel_ops_nat the same "
+note("Then copy week25_dgx_spark/14_nat_agents to the Spark (or git clone the repo there) and install hotel_ops_nat the same "
      "way. NAT itself is pure Python: nothing in it needs the GPU — the model server does.")
 
 result("NAT is installed, your two tools are registered as NAT functions, and all four workflow files validate. "

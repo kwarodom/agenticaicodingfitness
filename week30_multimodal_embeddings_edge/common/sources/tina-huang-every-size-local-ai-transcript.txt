@@ -1,0 +1,746 @@
+[00:00] Hello. Today we're going to be running
+[00:02] every size AI locally with [music] the
+[00:04] hardware that we have here and see what
+[00:05] we can do with it. Hopefully give you
+[00:07] guys some ideas for cool things that you
+[00:09] can build with local AI, too. Let's go.
+[00:11] A portion of this video is sponsored by
+[00:12] Crusoe.
+[00:16] So, I'm going to be grouping the
+[00:18] hardware that I have here into different
+[00:19] classes, different memory classes. So,
+[00:22] the first class are chips. So, chips, as
+[00:25] they are called, are literally just
+[00:26] chips, just computer chips. They have no
+[00:28] operating system, no file system, and no
+[00:30] separate memory stick, either. Literally
+[00:32] everything is just built into these
+[00:35] boards. So, when we try to run an AI
+[00:36] model on these, we're not even
+[00:37] installing it. We just literally stick
+[00:39] it on here and if it fits, it sits and
+[00:41] we can run it, or not. And in my case,
+[00:43] the smallest one that I have here is an
+[00:44] Arduino R4 Uno. It has only 32 kilobytes
+[00:48] of RAM. I will put the rest of the stats
+[00:50] on screen, which is big enough to fit,
+[00:52] drumroll, please, no models. That's
+[00:54] right, nothing fits on here. Alas.
+[00:56] >> [laughter]
+[00:57] >> I actually just got this Arduino Uno R4
+[01:00] as part of a set cuz I'm trying to learn
+[01:01] hardware and it unfortunately does not
+[01:03] fit any AI models, but do not be fooled.
+[01:06] That does not mean I cannot use this
+[01:07] with local AI. I actually can since it
+[01:09] has a Wi-Fi functionality, so I can
+[01:11] connect with some of my bigger devices.
+[01:12] But first, let's actually talk about
+[01:14] something that can actually fit an AI
+[01:16] model. Isn't this shocking? It is so
+[01:19] tiny. This is the ESP32-S3
+[01:22] and it has 8 megabytes of RAM. I will
+[01:24] put the rest of the stats on screen and
+[01:26] I got this for around $20 USD. Although
+[01:28] this one does come with a screen, so if
+[01:29] you get it without the screen, you're
+[01:31] looking at like two to five dollars, so
+[01:33] cheap. And you can actually run AI
+[01:35] models on here, two AI models, actually.
+[01:37] Both of them are called Tiny Stories
+[01:39] models, which, as its name suggests,
+[01:41] allows you to run Tiny Stories. Let me
+[01:43] show you what it looks like. So, this
+[01:44] one is the Tiny Stories 1 megabyte model
+[01:47] and then here is the Tiny Stories 3
+[01:50] megabyte model. You can run both of
+[01:52] these very comfortably. So, yes, I can
+[01:53] run the Tiny Stories 260K model and the
+[01:56] Tiny Stories 3M model very comfortably.
+[01:58] And honestly, this is just a start
+[01:59] getting a model running. You can make it
+[02:01] so much cooler by adding on different
+[02:03] modules to it. For example, you can make
+[02:05] it into a little game called scrambled
+[02:07] versus not scrambled. Might be useful if
+[02:09] you're learning English grammar. And you
+[02:10] can attach LED lights that represent the
+[02:12] mood of the story that's being produced.
+[02:14] So many cool things that you can do.
+[02:15] Maybe I will make another video
+[02:17] showcasing stuff that you can build
+[02:18] using these little devices. But alas, we
+[02:20] do not have time in this video. So here
+[02:22] is a summary slide for the models that
+[02:24] we can run on the ESP32 and some ideas
+[02:26] for AI projects that you can build. Take
+[02:28] a screenshot. In the free guide in the
+[02:29] description, I will also link a little
+[02:31] quick start guide for how to get started
+[02:32] building. So these tiny stories models
+[02:34] are only able to do the very basics of
+[02:36] predicting the next word in order to
+[02:38] form a coherent story, which is still
+[02:39] very impressive actually given how small
+[02:41] it is. And you can build some really
+[02:43] cool things on top of that, too. But it
+[02:44] is not capable of holding a conversation
+[02:46] like a chat. And it's not able to run
+[02:48] any multimodality models like audio,
+[02:50] music, video, or images. For that, we're
+[02:52] going to need to move on to the next
+[02:53] class of devices, which is the mini
+[02:56] computers category.
+[03:00] This is a Raspberry Pi, the Pi 5, and
+[03:03] this is my personal iPhone 16. Now,
+[03:06] these are proper computing devices. They
+[03:08] run an operating system. The Raspberry
+[03:10] Pi runs a Linux, and my iPhone runs the
+[03:12] iOS. And they're able to do things like
+[03:14] manage memory, file systems, and run
+[03:16] multiple programs. And so you can
+[03:17] actually have multiple models as long as
+[03:19] they fit into these devices. But what is
+[03:21] really interesting is that both of these
+[03:23] actually have 8 gigs of RAM. Yet, they
+[03:25] are not able to run the same kinds of
+[03:27] models. I'm going to give you guys a
+[03:29] quick lesson on AI hardware in just a
+[03:31] little bit. But first, I want to show
+[03:32] you what these guys can do. This is the
+[03:34] Raspberry Pi, the Pi 5. And even though
+[03:36] it looks very small, it is very mighty
+[03:38] because it is a full-blown mini
+[03:40] computer. Let me show you what you can
+[03:42] do with it.
+[03:44] What color is an octopus?
+[03:46] >> Octopuses come in a variety of colors,
+[03:48] but they are usually camouflage,
+[03:50] blending with their surroundings. They
+[03:52] can be blue, green, red, or even white,
+[03:55] depending on the species.
+[03:57] >> First is using a speech-to-text AI model
+[03:59] called Whisper in order to listen to it.
+[04:01] Then I have the Quiet and Three 1.7B
+[04:04] model. It's a large language model,
+[04:05] which is an LLM, to be able to interpret
+[04:07] it and then come out with a response.
+[04:08] And then the Piper model, which is a
+[04:10] tiny text-to-speech model, is able to
+[04:12] actually answer it out loud on the
+[04:14] speakers. Isn't that crazy? I'm able to
+[04:16] have full conversations with my Pi by
+[04:19] chaining together three different AI
+[04:21] models, all on this tiny little device.
+[04:23] But wait, that's not all. I can also
+[04:25] connect a webcam that grabs a frame,
+[04:27] takes a picture, and I can have a tiny
+[04:30] visual language model called Moondream
+[04:31] describe it. And the tiny text-to-speech
+[04:34] model Piper is able to describe what it
+[04:36] sees.
+[04:37] >> Here is the camera, the webcam,
+[04:40] attached to the Raspberry Pi.
+[04:42] >> The image features a woman sitting in a
+[04:43] chair looking at her cell phone. She is
+[04:46] wearing a black shirt and is surrounded
+[04:48] by a variety of books and other items.
+[04:50] There are at least 13 books scattered
+[04:52] around the room, some of which are
+[04:54] placed on a bookshelf. A backpack can be
+[04:56] seen near the woman. A potted plant is
+[04:59] located close to her. The scene suggests
+[05:01] that the woman might be engaged in
+[05:03] reading or studying, as she is
+[05:04] surrounded by numerous books and other
+[05:06] items.
+[05:08] >> So yeah, you can pretty much run
+[05:09] micro-to-small large language models
+[05:11] very easily on the Raspberry Pi, as well
+[05:13] as the tiny tier visual language models,
+[05:15] tiny text-to-speech models, and small
+[05:17] but decent speech-to-text models. It
+[05:19] does struggle to run mid-size large
+[05:20] language models, but if you really want
+[05:22] to, you kind of can do it. And it can
+[05:24] kind of barely run small code tier
+[05:26] models as well. But it really cannot do
+[05:28] image generation, music generation, or
+[05:30] video generation. Not actually because a
+[05:32] small image generation model wouldn't
+[05:33] fit on here. It does. The problem is
+[05:35] that it doesn't have any GPUs, so it's
+[05:37] just like painfully slow to do that. And
+[05:40] I will explain GPUs a little bit later.
+[05:42] But it does make up for it because you
+[05:44] can build using the Raspberry Pi. You
+[05:46] can add so many different types of
+[05:47] accessories and sensors to your
+[05:49] Raspberry Pi. In fact, I believe the
+[05:51] Hugging Face robots are running off a
+[05:53] Raspberry Pi as well. So, yes, I'm going
+[05:55] to put on a summary slide now, including
+[05:57] some ideas of things that you can build
+[05:58] with a Raspberry Pi. And please do check
+[06:00] out the free guide linked below for a
+[06:02] quick start guide. Now, let's talk about
+[06:03] the iPhone 16, which also has 8 gigs of
+[06:06] RAM, [music] same as the Raspberry Pi,
+[06:07] but it is so different. For one, because
+[06:10] it is running on iOS, Apple does limit
+[06:12] each app to only be able to use around 4
+[06:15] or 5 gigs of RAM. So, even though it
+[06:16] technically has 8 gigs of RAM, you
+[06:18] actually aren't able to run the mid-size
+[06:20] level of models from 7 to 14 B that you
+[06:22] can't do using the Raspberry Pi, because
+[06:24] like Apple just doesn't let you do it,
+[06:25] unfortunately. Also, because of Apple
+[06:27] reasons, you can't just be like putting
+[06:29] on things that you wish onto your
+[06:30] iPhone. You have to do it through
+[06:32] Apple's official system, in which you
+[06:34] need to install an app, and the app
+[06:35] allows you to download, install, and run
+[06:37] your local AI models. To get the Gemma 4
+[06:39] model, you need to download the AI Edge
+[06:42] Gallery from Google, and then download
+[06:43] the models locally on your phone. This
+[06:45] phone is able to run the small class
+[06:46] visual language models, meaning it can
+[06:48] analyze images of the 1 to 4 B range
+[06:51] very comfortably, since it's only 1.5
+[06:53] gigs. For the image generation, you need
+[06:54] to download an app called Draw Things,
+[06:56] and you can download and run any small
+[06:58] image generation models at around the 1
+[07:01] B range with no problem. The Stable
+[07:02] Diffusion 1.5, for example, is 2 gigs.
+[07:05] You can run it very comfortably. You can
+[07:06] also run medium and large speech text
+[07:08] models like the Whisper Large very
+[07:10] comfortably, and all text-to-speech
+[07:12] models, too. And finally, you can run a
+[07:14] model called detection model. It's
+[07:15] actually very cool. People don't really
+[07:16] talk about it very much for some reason.
+[07:18] You can download an app called
+[07:19] Ultralytics, and download and run
+[07:21] [music] the YOLO 11 N model. The YOLO 11
+[07:24] N model allows you to do object
+[07:25] recognition to understand the scene, and
+[07:27] it's the underlying technology behind
+[07:29] all things from facial recognition on
+[07:31] your devices to self-driving cars, cuz
+[07:33] you know, you got to be able to
+[07:34] recognize different objects as we're
+[07:36] driving. We don't really talk about this
+[07:37] class of models very much, these
+[07:39] detection models, but they're actually
+[07:40] very, very useful. Isn't that really
+[07:42] cool? I'm going to put on screen now a
+[07:43] summary slide including some ideas of
+[07:45] things that you can build using your
+[07:47] phone with local AI.
+[07:52] A small lesson on AI hardware. Now,
+[07:53] think about a device, any device.
+[07:57] It is like a restaurant kitchen.
+[07:58] Downstairs, we have a walk-in freezer
+[08:00] and a storage space. This is where we
+[08:02] store all the ingredients, all of the
+[08:03] things. Then we have the prep counter.
+[08:04] This is where we load up all the
+[08:06] ingredients that we need right now for
+[08:07] the dish that we want to make. Now,
+[08:08] let's talk about people who work in the
+[08:10] kitchen. We have the head chef. The head
+[08:12] chef is very advanced. They can make any
+[08:13] sort of dish, but just one head chef.
+[08:15] There is also a brigade of line cooks.
+[08:18] These line cooks are less experienced,
+[08:19] less versatile, but we have a lot of
+[08:21] them that can help us out. And finally,
+[08:22] we have specialized machines bolted to
+[08:25] the walls like say an onion machine that
+[08:27] only chops onions. Or like a noodle
+[08:28] slicing machine that just automatically
+[08:30] sizes noodles. I don't know if you guys
+[08:31] have seen those before, [music] but
+[08:33] basically these machines can only do one
+[08:34] thing. It does that one thing really
+[08:36] well and really fast and it uses almost
+[08:38] no electricity. Now, between the prep
+[08:39] counter and the chefs and the cooks and
+[08:41] the machines, there is a conveyor belt
+[08:43] passageway. This is how we get the
+[08:44] ingredients from the prep counter to the
+[08:46] chefs, cooks, and machines to process
+[08:48] them into hopefully a meal. So, say for
+[08:50] example, we want to prepare a salad.
+[08:52] Well, first got to go get all of the
+[08:53] salad stuff from a deep storage in the
+[08:55] freezer and put them onto prep counter
+[08:57] like your carrots, lettuce, olives,
+[08:59] [music] chicken, other salad stuff. Then
+[09:01] we put on the conveyor belt and it gets
+[09:02] passed through and the head chef starts
+[09:04] giving out orders. Tells all the line
+[09:05] cooks to be chopping up all the
+[09:07] vegetables and also starts up the onion
+[09:09] machine to be chopping up onions [music]
+[09:11] while he himself is only say like mixing
+[09:14] the sauce because that's like the tricky
+[09:15] part. And then after a few minutes,
+[09:17] everything comes together and voila, we
+[09:19] get a salad. Yay! Amazing. So, this is a
+[09:22] great analogy for how AI models work on
+[09:24] our devices. So, this time what we want
+[09:26] to be cooking is a model. So, we walk
+[09:28] down to our freezer downstairs except we
+[09:30] call it storage and we grab our model
+[09:32] and we put it onto our prep counter
+[09:34] which we call the RAM. Then we pass it
+[09:35] along the conveyor belt which we call a
+[09:37] memory bus, and hand it to our head
+[09:39] chef, call it the CPU, who then also
+[09:41] directs the line cooks to start cooking
+[09:44] up parts of the model. The line cooks
+[09:45] are called the GPU, and also start up
+[09:47] the little specialized bolted machines,
+[09:49] the onion machine, which we call the
+[09:51] NPU. And after all this cooking, your
+[09:53] model is able to produce something, like
+[09:56] respond to your question of, "Hi, how
+[09:57] are you?" The model then can say,
+[09:59] "Hello, I am good. How are you?" Okay,
+[10:01] make sense? So, every time we want to be
+[10:03] working with the model, we need to be
+[10:05] going through this entire process of
+[10:06] cooking. Great. Now you understand the
+[10:08] major components of hardware when it
+[10:10] comes to AI models. However, remember
+[10:11] the question that we asked earlier? Why
+[10:13] is it that a Raspberry Pi has 8 gigs of
+[10:15] RAM and an iPhone has 8 gigs of RAMs,
+[10:17] too, but they are so different? Models
+[10:20] run on iPhone are much faster, and it's
+[10:22] able to do image generation, while the
+[10:24] Raspberry Pi cannot. Well, that is
+[10:26] [music] because these two devices have
+[10:27] the same amount of RAM, which means that
+[10:29] the same amount of capacity, but they do
+[10:31] not have the same amount of bandwidth,
+[10:34] which is referring to the conveyor belt
+[10:36] between the prep counter [music]
+[10:38] and our cook and our chefs. You see, for
+[10:40] most large language models, they're
+[10:41] bottlenecked by how quickly you can
+[10:42] deliver them from the RAM, the prep
+[10:45] counter, to the chefs and the cooks to
+[10:46] and the machines to process the model
+[10:48] and get them to be running. On a
+[10:50] Raspberry Pi, this conveyor belt, the
+[10:51] memory bus, is quite narrow and slow.
+[10:53] So, it physically takes longer to be
+[10:56] able to be processed. And on top of
+[10:58] that, a Raspberry Pi only has a CPU
+[11:00] without any GPUs or NPUs. So, it's
+[11:03] basically like having a single head
+[11:04] chef, very capable, but only a single
+[11:06] pair of hands having to do everything to
+[11:08] run this model. That's why it is really,
+[11:10] really slow. While for the iPhone, it
+[11:11] has CPUs, GPUs, and NPUs. That's why
+[11:14] it's able to process things so much
+[11:15] faster. So, that explains why it is that
+[11:17] things run so slowly on the Pi, but run
+[11:19] so quickly on iPhone. But, what about
+[11:20] image generation? The Pi simply cannot
+[11:22] do image generation, and that again is
+[11:24] because of the lack of GPUs. You see,
+[11:26] when it comes to image, video, and music
+[11:28] generation, [music] it is really
+[11:29] processing heavy. So, if you just only
+[11:31] have CPUs, no matter how hard they work,
+[11:33] it's just not enough to be able to
+[11:35] generate music, images, and videos. So,
+[11:37] you really got to have some GPUs, like
+[11:39] the iPhone, to be able to do that. We
+[11:41] will return to this analogy a little bit
+[11:42] later as I explain more devices. But,
+[11:44] for now, amazing. You now have an
+[11:46] understanding of AI hardware. Yay! I'll
+[11:49] put on screen now a little pop quiz.
+[11:51] Answer these questions and put them into
+[11:53] the comments to make sure that you're
+[11:55] paying attention. Of course, what I said
+[11:56] about AI hardware is much more
+[11:58] simplified than it actually is. There's
+[12:00] concepts like VRAM, unified memory, like
+[12:02] so much more, which I'm not going to go
+[12:04] into too much more detail about in this
+[12:05] video, cuz I'm sure this video is
+[12:07] already very long. But, this is like the
+[12:08] general introduction that will help you
+[12:10] a lot in figuring out what kind of
+[12:11] models can run on what kind of devices.
+[12:13] So, as you guys can see from this video,
+[12:15] I have been a very into tinkering and
+[12:17] running open-source models. And the next
+[12:19] obvious step is also tinkering and
+[12:21] customizing the open-source models
+[12:23] themselves. For that, Crusoe
+[12:24] Intelligence Foundry has been amazing.
+[12:26] It primarily gives you two things:
+[12:28] serverless inference to run open models
+[12:30] without touching any of the underlying
+[12:32] GPU infra. And serverless fine-tuning to
+[12:34] customize the open models on your own
+[12:36] data without having to own or manage any
+[12:38] hardware. You can fine-tune a model,
+[12:40] deploy it in one click, and start
+[12:41] calling it with an API in minutes.
+[12:43] Seriously, the first time that I did
+[12:45] this, I almost shed a tear. There is no
+[12:47] cluster supervision or crazy long
+[12:49] setups. I cannot even explain how
+[12:51] painful this used to be. So, for today,
+[12:53] anybody that's building with open models
+[12:55] who don't want the infrastructure
+[12:56] overhead to eat into actual build time.
+[12:58] This is a really clean and easy path to
+[13:00] get started. And now, when you sign up,
+[13:01] you will get $5 of free credit. You can
+[13:03] now try out Crusoe, link is in the
+[13:04] description. Thank you so much, Crusoe,
+[13:06] for sponsoring this portion of the
+[13:07] video. Now, back to the video. Okay, now
+[13:09] let's move on to the next category of
+[13:11] devices, which is personal computers,
+[13:13] such as my MacBook Pro that I'm using
+[13:16] right now.
+[13:20] So, my MacBook Pro is 32 gigs, but of
+[13:22] course, there are other machines in this
+[13:23] category as well, like my older machine,
+[13:26] which is a MacBook Air, and of course
+[13:28] Windows laptops and Linux laptops, too.
+[13:30] They all belong these portable personal
+[13:32] computer personal machines category. So,
+[13:33] the reason why I got a MacBook Pro with
+[13:35] 32 gigs of RAM is because this is the
+[13:38] machine that pretty much allows me to
+[13:40] run any category of AI models. I can run
+[13:43] large language models, coding models,
+[13:45] visual language models for visual
+[13:47] analysis, image generation, video
+[13:49] generation, text-to-speech,
+[13:51] speech-to-text, audio generation, voice
+[13:53] cloning, and music generation.
+[13:57] >> [music]
+[14:01] >> All of this I can run locally. And not
+[14:03] only can I run each of these models
+[14:04] locally by itself, I'm also able to use
+[14:06] these models in different ways by using
+[14:08] it with different types software. For
+[14:10] example, with my Hermes agent, which I
+[14:11] use to run many aspects of my life and
+[14:14] my work, I can run pretty much any
+[14:16] mid-size to large-size local model, like
+[14:18] the Qwen 3 14B, 16B, 32B, some of my
+[14:22] go-tos in the Qwen family. And I can run
+[14:23] the Qwen 3 Coder 30B locally also an
+[14:26] open-source coding harness like Open
+[14:28] Code, and it works pretty good. My
+[14:29] favorite for image generation is Flux
+[14:31] Dev. I'm going to put a summary sign now
+[14:33] of all the different types of models
+[14:34] that you can run in this personal
+[14:36] computer personal machine category, as
+[14:38] well as some ideas of things that you
+[14:39] can build with these models. Now, I know
+[14:41] what you're thinking already, "But Tina,
+[14:42] I don't have a 32 gig MacBook Pro."
+[14:44] Understandable. It is really expensive.
+[14:46] I only got this machine because it is
+[14:48] literally my job to be testing out
+[14:50] models and things, right? Don't worry, I
+[14:51] got you. I'm also going to put on screen
+[14:52] now the models that you can run if you
+[14:54] have 8 gigs of RAM and 16 gigs of RAM.
+[14:56] These are the general RAM sizes of
+[14:58] laptops that most people have. But, if
+[15:00] you do have something that's not like 8
+[15:02] gigs or 16 gigs, literally you have
+[15:03] something smaller, bigger, something in
+[15:04] the middle, that is okay as well.
+[15:06] Because I'm also teach you a formula for
+[15:08] calculating roughly the size of model
+[15:10] that you can run on your machine giving
+[15:12] the amount of RAM that you have. Okay,
+[15:13] ready? The equation is that take the
+[15:15] total amount of RAM that your machine
+[15:17] says it has, subtract that by 25% of it,
+[15:20] because this is used up by like other
+[15:22] stuff. And the rest is the actual usable
+[15:24] amount of RAM that you have. Divided by
+[15:26] 0.6 and that equals the amount of
+[15:28] parameters that your model can have. For
+[15:30] example, my MacBook Pro says it has 32
+[15:32] gigs of RAM. So I subtract 25% of that,
+[15:35] which means I have 24 gigs of usable
+[15:36] RAM. Now I do 24 divided by 0.6 to get
+[15:40] 40. So my MacBook Pro can fit a model of
+[15:42] up to 40 billion parameters. That is a
+[15:44] very rough way of figuring it out. Of
+[15:46] course, you can also just ask one of
+[15:48] your favorite AI chatbots. Hey, this is
+[15:51] what kind of models can I fit on it? You
+[15:52] know, that works too. But in any case, I
+[15:54] hope that is helpful. I want to now move
+[15:56] on to the next category of devices, home
+[15:59] servers. The two that I have to demo
+[16:01] right now is the Mac Studio and the AMD
+[16:03] Ryzen AI Halo.
+[16:08] All right, the Mac Studio and the AMD
+[16:10] Ryzen. These are examples of the home
+[16:11] server class. There are a lot of other
+[16:13] machines that fit into this category. I
+[16:15] would say the cheapest entry-level here
+[16:17] would be a Mac Mini. Although those are
+[16:19] really hard to get these days. I
+[16:21] actually only got the Mac Studio because
+[16:23] I couldn't get a Mac Mini. Anyways, at
+[16:24] this tier, what is the most attractive
+[16:25] and why you would get something like
+[16:26] this is for two reasons. The first one
+[16:29] is that it is a dedicated always-on
+[16:31] machine. So unlike your laptop, which
+[16:33] you got to carry around and close and
+[16:34] stuff like that. And when you close it,
+[16:35] your, you know, your model stop working
+[16:37] in case you were doing something with
+[16:38] it. But the home servers, these machines
+[16:40] are always-on. They are designed to be
+[16:42] always-on. So they don't close down. You
+[16:43] can constantly doing stuff and running
+[16:45] your AI models 24/7. That's the first
+[16:46] attractive part. And the second reason
+[16:48] is that generally these home server
+[16:49] devices do have more capacity and
+[16:52] bandwidth. So it can run a bigger models
+[16:54] and do it faster. Let's first talk about
+[16:56] the Mac Studio here. It has 64 gigs of
+[16:58] RAM. Pop quiz. It says it has 64 gigs of
+[17:00] RAM. How much of it is actually usable?
+[17:03] And what is the largest model in
+[17:05] billions of parameters that can fit on
+[17:06] my Mac Studio? Were you paying
+[17:07] attention? Put it into the comments.
+[17:09] Amazing. Hope you got that. My Mac
+[17:11] Studio is where I like to run my local
+[17:13] models to use for my local AI agents and
+[17:15] also allow other devices. Remember this
+[17:18] device, the Arduino Uno R4? That
+[17:21] couldn't run anything by itself. I also
+[17:23] like to be able to connect this with my
+[17:24] Mac Studio, so I can use the models that
+[17:27] are being run on my Mac Studio. This
+[17:28] Arduino Uno is using the Qwen 3.6 35B
+[17:33] model on this Mac Studio in order to
+[17:36] display encouraging happy messages.
+[17:39] Write into the comments
+[17:41] what this says if you can read it. Yay!
+[17:43] That's really cool, right? Really with
+[17:44] this Mac Studio and all devices that are
+[17:46] bigger and more powerful than this, it's
+[17:47] not about unlocking new categories of AI
+[17:49] models at this point. It's just about
+[17:51] being able to run a bigger models,
+[17:52] higher quality things to get higher
+[17:54] quality responses, and faster. In the
+[17:56] case of the Mac Studio, I can run large
+[17:58] tier large language models between a 27
+[18:00] and 32 billion parameters, as well as
+[18:03] large code models, large image models,
+[18:06] and large music generation models.
+[18:07] >> [music]
+[18:15] >> For video generation, I can now run
+[18:17] mid-tier video generation, like the One
+[18:19] 2.2, but it is slow. It is really slow
+[18:23] still. I'm going to put a summary slide
+[18:24] now with all the models that you can run
+[18:26] with a Mac Studio, as well as some ideas
+[18:28] for things we can build. And let's move
+[18:29] on to the AMD Halo, which is 128 GB of
+[18:33] advertised RAM. Now, with 128 GB of
+[18:36] advertised RAM, around 96 GB of usable
+[18:39] RAM, it is now able to comfortably run
+[18:41] extra large models in the 70B range and
+[18:44] frontier models in the 100 to 250B
+[18:47] range. We can see that Llama 3.3 70B is
+[18:50] able to run fine, and GPT-OSS 120B is
+[18:53] also able to run fine. It's also able to
+[18:54] run extra large tier of coding models,
+[18:57] like the Deep Seek Coder V2. Great. So,
+[18:59] we can see that it can run bigger models
+[19:01] now. Makes sense. However, what I find
+[19:03] the most useful of having something like
+[19:06] this is the ability of having a lot of
+[19:07] different models loaded simultaneously
+[19:09] and working simultaneously because it
+[19:11] has that massive amount of memory,
+[19:12] right? So, I could be using a coding
+[19:14] agent, the large language models, and
+[19:16] doing like image video generation all at
+[19:17] the same time. I'm going to put on
+[19:18] screen now all the models that you can
+[19:19] run with a device like the AMD Halo and
+[19:22] ideas of what you can build. But, I do
+[19:24] want to make a caveat here though. This
+[19:25] machine, even though it has very large
+[19:27] capacity, it actually has pretty small
+[19:30] bandwidth, which means that it is slow,
+[19:32] especially when it comes to image,
+[19:34] video, and music generation. It can do
+[19:35] it. It's just going to do it really,
+[19:37] [music] really slow. Which is why I want
+[19:39] to introduce you to this final category
+[19:40] that we're going to cover today, which
+[19:42] is GPUs.
+[19:46] First, let me explain GPUs a little bit
+[19:48] more. Remember that analogy that we had
+[19:49] earlier, the restaurant kitchen analogy?
+[19:51] We said that a GPU is like having a
+[19:53] brigade of line cooks. Because we have
+[19:55] so many of them, they're able to work
+[19:56] really, really quickly and they do
+[19:57] compute very fast. Now, this matters the
+[19:59] most when it comes to music generation,
+[20:02] image generation, and video generation.
+[20:03] Cuz to be able to produce these, you
+[20:05] just need like a lot of processing
+[20:06] power. So, you need a lot of line cooks
+[20:08] in the kitchen. The bad news is that all
+[20:09] the devices that I went through earlier,
+[20:11] they do of course have GPUs, which is
+[20:13] why they can do things like music
+[20:14] generation, image generation, and video
+[20:16] generation, but they do it really,
+[20:17] really slowly cuz they're not
+[20:19] specialized at doing this. But, the good
+[20:21] news is that there is a way to be really
+[20:23] good at processing and be able to do
+[20:26] really fast and really good image,
+[20:27] music, and video generation. And that is
+[20:29] by getting more discrete GPUs. You see,
+[20:32] a GPU actually isn't just line cooks.
+[20:35] It's actually a bundle. When you get
+[20:36] another GPU, you get cooks, but they
+[20:38] also come with their own private prep
+[20:40] counters and a very wide conveyor belt,
+[20:43] the memory pass. So, when you get more
+[20:44] GPUs, you get more cooks who have their
+[20:46] own private counter and their very own
+[20:48] very wide conveyor belt, the memory
+[20:50] pass. So, they're able to get the
+[20:51] ingredients really fast. It's basically
+[20:53] like a boost for the line cooks. So,
+[20:54] you're able to process things really,
+[20:55] really quickly, cook your models really
+[20:57] quickly. I hope that analogy makes
+[20:59] sense. It's getting really late.
+[21:01] >> [laughter]
+[21:02] >> So, there are a few ways to get more
+[21:03] GPUs. Unfortunately, for all the devices
+[21:05] that we covered earlier, you cannot add
+[21:08] more GPUs to them. Just like they're not
+[21:10] built that way. But, if you had a gaming
+[21:12] PC, for example, that would have a GPU.
+[21:15] I I do not have a gaming PC, and I'm not
+[21:16] about to go buy one right now, cuz those
+[21:18] are expensive. But, if you do have one,
+[21:20] good news for you. You have a GPU, and
+[21:21] you can actually add more GPUs as well.
+[21:23] So, I'm going to cheat a little bit,
+[21:24] okay? Because I do want to show you what
+[21:26] it's like to run these multi-modality
+[21:27] generation models on these specialized
+[21:29] GPUs. So, I'm actually going to rent an
+[21:31] RTX 4090. This is a pretty high-end GPU
+[21:35] that you might have in a high-end gaming
+[21:37] set. Let's do this quickly, because it's
+[21:38] costing me by the hour. We're going to
+[21:40] log in here, and then I'm going to run
+[21:42] an image generation model.
+[21:47] You can see that it is really, really
+[21:49] quickly. And here is a video generation
+[21:51] as well.
+[21:57] Really, really quick. Now, the downside
+[21:58] of this GPU is that it only has 24 gigs
+[22:01] of memory. So, you can think about it
+[22:02] almost like the opposite of the AMD
+[22:03] device, because the AMD device has a lot
+[22:05] of memory, has very big capacity, but
+[22:07] low bandwidth. While the RTX 4090 has
+[22:10] smaller capacity, only 24 gigs, but much
+[22:12] larger bandwidth. So, in the end, you
+[22:14] end up being able to generate a lot of
+[22:15] these things and run these models, but
+[22:17] you can't really fit very large-size
+[22:19] models on it. All right, I'm going to
+[22:20] now put a summary slide for the models
+[22:22] that you can run on this device, [music]
+[22:24] and the things that you can build with
+[22:25] it. And that finally leads me to the
+[22:27] final boss, the 8X H100 GPU.
+[22:31] >> [music]
+[22:31] >> Now, this is top tier, 640 gigs of RAM,
+[22:34] massive capacity, and massive bandwidth.
+[22:37] Now, I really got to move fast on this
+[22:38] one, because it's [music] costing me so
+[22:41] much money every minute. But, for you
+[22:43] guys, it's worth it. On here, not only
+[22:45] can we run ultra-large tier large
+[22:47] language models up to 700 billion
+[22:49] parameter-plus ultra-large coding
+[22:51] models, 480 billion parameter-plus
+[22:54] visual language processing as well, and
+[22:56] all types of multi-modal generation.
+[22:57] Specifically, let's check out video
+[22:59] generation. Using the Minimax H3 model,
+[23:01] we can see that it's able to generate
+[23:03] minutes of video, and it does this so
+[23:05] quickly.
+[23:09] >> [music]
+[23:14] [music]
+[23:20] >> This is pretty much what you can run
+[23:22] assuming that you're not like a literal
+[23:24] model development company or just have
+[23:26] like a lot of money. But, it really is
+[23:28] comparable at this point to the frontier
+[23:30] models that you're paying for through
+[23:32] cloud APIs. You see everything up to
+[23:34] this GPU is kind of just forcing you to
+[23:36] choose between like capacity and
+[23:37] bandwidth, right? Like the AMD Halo is
+[23:39] all about big capacity but low
+[23:41] bandwidth, and the RTX 4090 is all about
+[23:43] small capacity and large bandwidth. But,
+[23:45] this is when you get both. You get very
+[23:47] big capacity and very big bandwidth. And
+[23:49] now for the 8 H100 rented, I'm going to
+[23:52] put a summary slide now of the models
+[23:54] that you can run with it and the things
+[23:56] that you can build. This is like
+[23:58] aspirational class. Great. Amazing. Wow.
+[24:01] Thank you so much for watching until the
+[24:02] end of this video. I hope this was
+[24:04] insightful, interesting, helpful, and it
+[24:06] has inspired you to want to build things
+[24:09] with local AI as well. I'm going to put
+[24:10] on screen now a little quiz. Please
+[24:12] answer these questions in the comments
+[24:14] below to help you retain all of the
+[24:16] information that we have covered today.
+[24:18] Thank you so much, and I will see you
+[24:19] guys in the next video or live stream.

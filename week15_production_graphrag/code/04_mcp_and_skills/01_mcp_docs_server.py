@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 04.1 — Use an MCP server via the Claude Agent SDK.
 
-Run:  python week15/code/04_mcp_and_skills/01_mcp_docs_server.py
+Run:  python week15_production_graphrag/code/04_mcp_and_skills/01_mcp_docs_server.py
 Needs: pip install claude-agent-sdk  (+ network access)
 
 MCP = "USB-C for AI tools". Instead of hand-coding tools (folder 02), you

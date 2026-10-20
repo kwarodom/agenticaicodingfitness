@@ -22,12 +22,12 @@ ladder** with hard guardrails.
 ## Quick start
 
 ```bash
-uv pip install -r week21/10_self_evolving_ops/requirements.txt
-.venv/bin/python week21/10_self_evolving_ops/tutorial_server.py   # → http://127.0.0.1:8209
+uv pip install -r week21_physical_ai_digital_twins/10_self_evolving_ops/requirements.txt
+.venv/bin/python week21_physical_ai_digital_twins/10_self_evolving_ops/tutorial_server.py   # → http://127.0.0.1:8209
 ```
 
 Every chapter runs in **SIM** with no GPU, $0. Run any demo standalone:
-`.venv/bin/python week21/10_self_evolving_ops/demos/step01_tripartite_memory.py`.
+`.venv/bin/python week21_physical_ai_digital_twins/10_self_evolving_ops/demos/step01_tripartite_memory.py`.
 
 **REAL-mode upgrades:** an Ollama / vLLM / NIM / DGX endpoint (🔌 Connection panel or
 `DGX_BASE_URL`) makes Ch 5's postmortem a genuine agent-written note; `pip install sinergym`
@@ -41,7 +41,7 @@ returns) and **Week 23 App 11** (the data flywheel) — same loops, now wearing 
 
 ## Sources
 
-- Week 18 `week18/` (self-evolving agents) · Week 23 [`week23/11_data_flywheel/`](../../week23/11_data_flywheel/)
+- Week 18 `week18_self_evolving_sovereign_edge/` (self-evolving agents) · Week 23 [`week23_open_superintelligence_stack/11_data_flywheel/`](../../week23_open_superintelligence_stack/11_data_flywheel/)
 - [Sinergym](https://github.com/ugr-sail/sinergym) · [BOPTEST](https://ibpsa.github.io/project1-boptest/) (the sim rungs)
 - ASHRAE Guideline 36 (the high-performance sequences the fallback runs)
 - DeepMind × Google data-center cooling (the canonical bounded-autonomy story)

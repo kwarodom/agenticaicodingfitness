@@ -10,7 +10,7 @@ GPU ($0 either way).
 ## Launch
 
 ```bash
-.venv/bin/python week23/00_lab_runner/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/00_lab_runner/tutorial_server.py
 # → http://127.0.0.1:8113   (auto-picks a free port; override with LAB_GUIDE_PORT)
 ```
 

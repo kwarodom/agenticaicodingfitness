@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 11 — NeMo Data Flywheel
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/11_data_flywheel/tutorial_server.py` → http://127.0.0.1:8110. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/tutorial_server.py` → http://127.0.0.1:8110. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Generate real "production traces" by hitting your own endpoint, so you have logs to curate.
@@ -55,11 +55,11 @@ curl -s "${DGX_BASE_URL:-http://localhost:11434/v1}/models" | head -c 300
 One goal: see the whole loop once before you build its pieces by hand.
 
 ```bash
-.venv/bin/python week23/11_data_flywheel/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/tutorial_server.py
 # → open http://127.0.0.1:8110 and click Run on Ch 2–5
 # or run the same chapters headless:
-.venv/bin/python week23/11_data_flywheel/demos/step01_the_loop.py
-.venv/bin/python week23/11_data_flywheel/demos/step04_evaluate_promote.py
+.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/demos/step01_the_loop.py
+.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/demos/step04_evaluate_promote.py
 ```
 
 **Expected output** (step04, abbreviated)
@@ -85,20 +85,20 @@ You can't curate what you didn't log. Fire three real requests and append them t
 ```bash
 BASE="${DGX_BASE_URL:-http://localhost:11434/v1}"
 MODEL=$(curl -s "$BASE/models" | python3 -c "import sys,json;print(json.load(sys.stdin)['data'][0]['id'])")
-mkdir -p week23/11_data_flywheel/.sandbox
+mkdir -p week23_open_superintelligence_stack/11_data_flywheel/.sandbox
 for Q in "Is breakfast included?" "AC in 305 is rattling" "Late checkout for room 210?"; do
   curl -s "$BASE/chat/completions" -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${DGX_API_KEY:-dgx}" \
     -d "{\"model\":\"$MODEL\",\"messages\":[{\"role\":\"user\",\"content\":\"$Q\"}],\"max_tokens\":80}" \
     | python3 -c "import sys,json;r=json.load(sys.stdin);print(json.dumps({'prompt':'$Q','answer':r['choices'][0]['message']['content'][:200],'ok':True}))" \
-    >> week23/11_data_flywheel/.sandbox/raw_logs.jsonl
+    >> week23_open_superintelligence_stack/11_data_flywheel/.sandbox/raw_logs.jsonl
 done
-wc -l week23/11_data_flywheel/.sandbox/raw_logs.jsonl
+wc -l week23_open_superintelligence_stack/11_data_flywheel/.sandbox/raw_logs.jsonl
 ```
 
 **Expected output**
 ```
-       3 week23/11_data_flywheel/.sandbox/raw_logs.jsonl
+       3 week23_open_superintelligence_stack/11_data_flywheel/.sandbox/raw_logs.jsonl
 ```
 
 C-path with no endpoint: skip this step — lab01 ships 14 built-in raw traces, so nothing downstream is blocked.
@@ -110,7 +110,7 @@ C-path with no endpoint: skip this step — lab01 ships 14 built-in raw traces, 
 The demo prints a static 1M→62k funnel; this lab runs a real one on real rows.
 
 ```bash
-.venv/bin/python week23/11_data_flywheel/labs/lab01_curate_logs.py
+.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab01_curate_logs.py
 ```
 
 **Expected output** (abbreviated)
@@ -132,8 +132,8 @@ The demo prints a static 1M→62k funnel; this lab runs a real one on real rows.
 Distillation = fine-tune a small student on (prompt → big-teacher answer) pairs. This lab harvests the teacher side live and writes the training file.
 
 ```bash
-.venv/bin/python week23/11_data_flywheel/labs/lab02_distill_dataset.py
-cat week23/11_data_flywheel/.sandbox/train.jsonl | python3 -m json.tool --json-lines | head -12
+.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab02_distill_dataset.py
+cat week23_open_superintelligence_stack/11_data_flywheel/.sandbox/train.jsonl | python3 -m json.tool --json-lines | head -12
 ```
 
 **Expected output** (abbreviated)
@@ -147,7 +147,7 @@ cat week23/11_data_flywheel/.sandbox/train.jsonl | python3 -m json.tool --json-l
 ✓ wrote 3 training rows → …/.sandbox/train.jsonl
 ```
 
-A-path, the real fine-tune: the runbook's verdict is that PEFT/LoRA on the Spark works for **≤12B students** (week19's `dgx_finetune` path); Nano-30B LoRA is borderline on one Spark, 2 Sparks (TP=2) beyond that. Full NeMo Customizer wants NeMo microservices on datacenter GPUs.
+A-path, the real fine-tune: the runbook's verdict is that PEFT/LoRA on the Spark works for **≤12B students** (week19_sovereign_ai_dgx's `dgx_finetune` path); Nano-30B LoRA is borderline on one Spark, 2 Sparks (TP=2) beyond that. Full NeMo Customizer wants NeMo microservices on datacenter GPUs.
 
 ✓ Checkpoint: you should now have a `train.jsonl` where every row is `{"messages": [system, user, assistant]}` with the teacher's answer as the label — the exact input shape a LoRA/SFT job consumes.
 
@@ -158,7 +158,7 @@ One goal: make an actual promotion decision between two live models, the way NeM
 ```bash
 # best with two models on the endpoint — e.g. on local Ollama:
 ollama pull gemma3:4b   # a small "student" alongside your workhorse   (A/C)
-.venv/bin/python week23/11_data_flywheel/labs/lab03_eval_gate.py
+.venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab03_eval_gate.py
 ```
 
 **Expected output** (abbreviated)
@@ -196,11 +196,11 @@ The runbook marks the NeMo-microservices health probe `GET {url}/v1/models` as *
 
 ## Labs (run these)
 
-**labs/lab01_curate_logs.py** — runs a genuine four-stage curation pipeline (dedup → quality filter → PII scrub → LLM-judge label) on 14 messy bundled traces and writes `.sandbox/curated.jsonl`. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/11_data_flywheel/labs/lab01_curate_logs.py`. Look for: the row count dropping at each stage and `<EMAIL>`/`<PHONE>`/`<SECRET>` tags replacing real PII. Modify it: add a fourth PII pattern for room numbers (`r"room \d{3}"` → `<ROOM>`) and decide whether that helps or destroys the training signal — it's the classic over-scrubbing tradeoff.
+**labs/lab01_curate_logs.py** — runs a genuine four-stage curation pipeline (dedup → quality filter → PII scrub → LLM-judge label) on 14 messy bundled traces and writes `.sandbox/curated.jsonl`. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab01_curate_logs.py`. Look for: the row count dropping at each stage and `<EMAIL>`/`<PHONE>`/`<SECRET>` tags replacing real PII. Modify it: add a fourth PII pattern for room numbers (`r"room \d{3}"` → `<ROOM>`) and decide whether that helps or destroys the training signal — it's the classic over-scrubbing tradeoff.
 
-**labs/lab02_distill_dataset.py** — calls your live model as the teacher on 3 domain prompts and writes `.sandbox/train.jsonl` in Customizer/PEFT messages format, plus prints Spark fit-math for the fine-tune. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/11_data_flywheel/labs/lab02_distill_dataset.py`. Look for: the assistant turn in each row being the teacher's actual words — that IS the distillation label. Modify it: replace the hardcoded `PROMPTS` with prompts read from lab01's `curated.jsonl`, closing the curate→customize pipe for real.
+**labs/lab02_distill_dataset.py** — calls your live model as the teacher on 3 domain prompts and writes `.sandbox/train.jsonl` in Customizer/PEFT messages format, plus prints Spark fit-math for the fine-tune. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab02_distill_dataset.py`. Look for: the assistant turn in each row being the teacher's actual words — that IS the distillation label. Modify it: replace the hardcoded `PROMPTS` with prompts read from lab01's `curated.jsonl`, closing the curate→customize pipe for real.
 
-**labs/lab03_eval_gate.py** — picks a teacher and a student from your endpoint, answers 2 golden questions with both, has a blind LLM-judge score each pair, then applies the hard promotion rule (tie-or-win on ALL items and cheaper). Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/11_data_flywheel/labs/lab03_eval_gate.py`. Look for: the judge verdicts, the latency-based cost proxy, and the gate's stated reason. Modify it: the judge always sees the student as "B" — randomize A/B order per question and see whether verdicts change (position bias is a real LLM-judge failure mode).
+**labs/lab03_eval_gate.py** — picks a teacher and a student from your endpoint, answers 2 golden questions with both, has a blind LLM-judge score each pair, then applies the hard promotion rule (tie-or-win on ALL items and cheaper). Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab03_eval_gate.py`. Look for: the judge verdicts, the latency-based cost proxy, and the gate's stated reason. Modify it: the judge always sees the student as "B" — randomize A/B order per question and see whether verdicts change (position bias is a real LLM-judge failure mode).
 
 ## Try it yourself
 

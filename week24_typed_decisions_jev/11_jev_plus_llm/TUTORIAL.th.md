@@ -40,7 +40,7 @@ guest message ─► Jev: department · urgency · wants refund?     (typed, ~0.
 
 ## 1 · รู้จักผู้ให้บริการ (providers)
 
-ผู้ให้บริการทุกรายด้านล่างเรียกผ่านคำสั่งเดียวกันคือ `llmkit.generate()` ใน `week24/common/llmkit.py` Claude ใช้ Messages API ของ Anthropic ส่วนรายอื่นใช้ API แบบ `/chat/completions` ที่เข้ากันได้กับ OpenAI ดังนั้นการสลับโมเดลเปลี่ยนแค่คำเดียว
+ผู้ให้บริการทุกรายด้านล่างเรียกผ่านคำสั่งเดียวกันคือ `llmkit.generate()` ใน `week24_typed_decisions_jev/common/llmkit.py` Claude ใช้ Messages API ของ Anthropic ส่วนรายอื่นใช้ API แบบ `/chat/completions` ที่เข้ากันได้กับ OpenAI ดังนั้นการสลับโมเดลเปลี่ยนแค่คำเดียว
 
 | id | ผู้ให้บริการ | ตัวอย่างโมเดล (ตรวจสด 2026-09-27) | ชื่อตัวแปร key | ขอ key ที่ |
 |---|---|---|---|---|
@@ -65,7 +65,7 @@ guest message ─► Jev: department · urgency · wants refund?     (typed, ~0.
 Lab 01 พิมพ์ตารางนี้สำหรับเครื่อง *ของคุณ* โดยบอกเพียงว่าพบ key ที่ไหน ไม่เคยแสดงค่า key:
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab01_pick_your_llm.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab01_pick_your_llm.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -101,7 +101,7 @@ Lab 01 พิมพ์ตารางนี้สำหรับเครื่�
 **ห้ามวาง key ลงในไฟล์ `.py` notebook หรือบทเรียนเด็ดขาด** แล็บจะค้นหา key ตามลำดับนี้:
 
 1. **environment** ของ process (เช่น `export OPENAI_API_KEY=…` ใน shell)
-2. **`week24/.env.local`** ซึ่งกล่อง **🔑 Keys** ของ Lab Runner เขียนให้ (อยู่ใน .gitignore และอ่านได้เฉพาะคุณ)
+2. **`week24_typed_decisions_jev/.env.local`** ซึ่งกล่อง **🔑 Keys** ของ Lab Runner เขียนให้ (อยู่ใน .gitignore และอ่านได้เฉพาะคุณ)
 3. **`.env` ที่รากของ repo** (อยู่ใน .gitignore)
 
 **ถ้าคุณ clone repo นี้มา** เลือกวิธีใดวิธีหนึ่ง:
@@ -110,9 +110,9 @@ Lab 01 พิมพ์ตารางนี้สำหรับเครื่�
 - คัดลอกแม่แบบแล้วกรอกเอง:
 
 ```bash
-cp -n week24/.env.example .env   # -n = never overwrite an .env you already have
+cp -n week24_typed_decisions_jev/.env.example .env   # -n = never overwrite an .env you already have
 # then edit .env — set only the keys you have, leave the rest empty
-# already have a .env? copy just the lines you need from week24/.env.example into it
+# already have a .env? copy just the lines you need from week24_typed_decisions_jev/.env.example into it
 ```
 
 ทั้งสองไฟล์อยู่ใน `.gitignore` จึงไม่มีทาง commit key ขึ้นไปโดยไม่ตั้งใจ คุณต้องการเพียง `TYPESAFE_API_KEY` สำหรับ Jev และ key ของ LLM **หนึ่ง** ราย (Ollama ไม่ต้องใช้ key)
@@ -120,8 +120,8 @@ cp -n week24/.env.example .env   # -n = never overwrite an .env you already have
 **การเลือก LLM:** หัวของ Lab Runner มีตัวเลือก **LLM** (provider + model) ทุกครั้งที่กด ▶ Run ตัวเลือกของคุณจะถูกส่งให้แล็บเป็น `JEV_LLM_PROVIDER` และ `JEV_LLM_MODEL` ถ้ารันใน terminal ให้ตั้งเอง:
 
 ```bash
-JEV_LLM_PROVIDER=gemini .venv/bin/python week24/11_jev_plus_llm/labs/lab01_pick_your_llm.py
-JEV_LLM_PROVIDER=glm JEV_LLM_MODEL=glm-5.3-flash .venv/bin/python week24/11_jev_plus_llm/labs/lab02_route_then_write.py
+JEV_LLM_PROVIDER=gemini .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab01_pick_your_llm.py
+JEV_LLM_PROVIDER=glm JEV_LLM_MODEL=glm-5.3-flash .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab02_route_then_write.py
 ```
 
 ลองใช้ LLM ได้ตรงนี้เลย บล็อกด้านล่างจะใช้ provider ที่เลือกไว้บนหัวหน้า:
@@ -150,7 +150,7 @@ JEV_LLM_PROVIDER=glm JEV_LLM_MODEL=glm-5.3-flash .venv/bin/python week24/11_jev_
 
 ## 3 · Jev จัดเส้นทาง → โค้ดเลือก prompt ที่อนุมัติแล้ว → LLM เขียน
 
-`week24/11_jev_plus_llm/pipeline.py` เก็บ pipeline ทั้งหมดไว้ในโค้ดราว 150 บรรทัดที่อ่านเข้าใจง่าย ขั้นแรก Jev จัดเส้นทางข้อความของแขก ลองเรียกได้ตรงนี้:
+`week24_typed_decisions_jev/11_jev_plus_llm/pipeline.py` เก็บ pipeline ทั้งหมดไว้ในโค้ดราว 150 บรรทัดที่อ่านเข้าใจง่าย ขั้นแรก Jev จัดเส้นทางข้อความของแขก ลองเรียกได้ตรงนี้:
 
 ```jev
 {
@@ -189,7 +189,7 @@ JEV_LLM_PROVIDER=glm JEV_LLM_MODEL=glm-5.3-flash .venv/bin/python week24/11_jev_
 Lab 02 รันข้อความสามแบบ (อังกฤษ ไทย และลูกค้าโกรธขอเงินคืน) ผ่านทั้งเส้นทางด้วย LLM ที่คุณเลือก:
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab02_route_then_write.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab02_route_then_write.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -230,7 +230,7 @@ Lab 02 รันข้อความสามแบบ (อังกฤษ ไ�
 Lab 03 ให้ Jev จัดเส้นทางแต่ละข้อความ **ครั้งเดียว** แล้วให้ทุก provider ที่มี key เขียนคำตอบเดียวกันพร้อมกัน (แบบขนาน แล็บจึงเสร็จเร็ว) จากนั้นพิมพ์ latency จำนวน token ที่ตอบ ความยาว แขกไทยได้คำตอบภาษาไทยไหม และร่างจบประโยคครบหรือเปล่า
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab03_compare_models.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab03_compare_models.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -301,7 +301,7 @@ LLM เขียนได้ลื่นไหล ข้อผิดพลาด
 Lab 04 นำร่างจริงจาก LLM ของคุณกับร่างแย่ที่เราจงใจใส่ไว้ ผ่านการตรวจ:
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab04_jev_checks_the_draft.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab04_jev_checks_the_draft.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -358,7 +358,7 @@ Lab 04 นำร่างจริงจาก LLM ของคุณกับ�
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 11: ป้องกันคำตอบด้วยตัวเอง** เปิด `week24/11_jev_plus_llm/exercises/ex11_guarded_reply.py` มี TODO สองข้อ:
+**แบบฝึกหัด 11: ป้องกันคำตอบด้วยตัวเอง** เปิด `week24_typed_decisions_jev/11_jev_plus_llm/exercises/ex11_guarded_reply.py` มี TODO สองข้อ:
 
 1. `MY_CHECKS`: คำถาม Jev สี่ข้อเกี่ยวกับร่าง (noul สามข้อ choice หนึ่งข้อ) ครอบด้วย `guarded({...})`
 2. `my_review()`: นโยบาย เพิ่มเหตุผลหนึ่งข้อต่อกฎที่ไม่ผ่าน กฎเลขห้องเขียนเป็นโค้ดธรรมดา และ `execute` เป็น `False` เสมอ
@@ -366,7 +366,7 @@ Lab 04 นำร่างจริงจาก LLM ของคุณกับ�
 ตัวตรวจจะรันกรณีทดสอบแบบออฟไลน์ห้ากรณีก่อน (ฟรี) เมื่อผ่านทั้งหมด LLM ที่คุณเลือกจะเขียนร่างจริงสองฉบับ เพิ่มร่างแย่ที่จงใจใส่ไว้ แล้วให้การตรวจของคุณตัดสินแต่ละฉบับ
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/exercises/ex11_guarded_reply.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/exercises/ex11_guarded_reply.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

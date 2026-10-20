@@ -2,7 +2,7 @@
 """Exercise 13 · Write the ship gate that decides whether a fine-tune goes live.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/13_finetune_to_serve/exercises/ex13_ship_gate.py
+    .venv/bin/python week25_dgx_spark/13_finetune_to_serve/exercises/ex13_ship_gate.py
 
 The checker is free and offline. It feeds your functions real-looking model outputs (clean JSON,
 fenced JSON, chatter, broken JSON, a reply that invents a time) and then two whole evaluation runs,

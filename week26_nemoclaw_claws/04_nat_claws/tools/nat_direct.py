@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a NAT workflow's pieces WITHOUT an LLM and call them directly (runs under week26/.venv-nat/bin/python).
+"""Build a NAT workflow's pieces WITHOUT an LLM and call them directly (runs under week26_nemoclaw_claws/.venv-nat/bin/python).
 
     nat_direct.py tool  <config.yml> <function> '<json args>' ['<json args>' …]   → call a function, print its output
     nat_direct.py group <config.yml> <group>                                        → what an agent would get from a group

@@ -1,0 +1,51 @@
+# A design change, as a threat-model delta: "guests can now chat with the hotel on LINE".
+# Lab 03-3 merges this into v1 (data/threat_model.yaml) to make v2, then diffs v1 → v2 and gates the change.
+# Everything is simulated: LINE user ids below are fictional, and nothing talks to a real LINE account.
+#
+# The new component is a channel, not an agent: a webhook receives chat messages and hands them to the
+# orchestrator. The question the threat model has to answer is WHO a LINE message is from.
+
+version: 2
+
+components:
+  - {id: line_channel, layer: L7, kind: integration, trust: external}   # any LINE user can message the hotel
+
+mitigations:
+  - {id: M-LINE-BIND, title: Bind a LINE user to a room at check-in, defense: principal_authz,
+     control: "an unbound LINE user id is external content; it becomes guest:<room> only after the front desk binds it"}
+  - {id: M-LINE-RATE, title: Per-user rate limit on the LINE webhook,
+     control: "at most 20 messages per LINE user per 10 minutes; drop the rest before the orchestrator"}
+
+threats:
+  - id: T16
+    title: Any LINE user acts as an in-house guest
+    layers: [L7, L6]
+    components: [line_channel, orchestrator, energy]
+    maestro: [L7.T3, L7.T7, X3]
+    owasp: [ASI03]
+    likelihood: 4          # the hotel's LINE account is public; anyone can add it and type "Room 1203 is too hot"
+    impact: 4              # room changes, guest lookups and emails on behalf of someone who is not a guest
+    mitigations: [M-LINE-BIND]
+    status: open
+
+  - id: T17
+    title: Goal hijack arriving through LINE
+    layers: [L1, L7]
+    components: [line_channel, brain, energy]
+    maestro: [L7.T5, L1.T1]
+    owasp: [ASI01]
+    likelihood: 4          # same as T01, through a new door
+    impact: 2              # T01's mitigations already sit behind this door (bounds + authz); impact is what gets past them
+    mitigations: [M-LINE-BIND]
+    status: open
+
+  - id: T18
+    title: Message flood through the LINE webhook
+    layers: [L4]
+    components: [line_channel, runtime]
+    maestro: [L4.T4, L1.T7]
+    owasp: [ASI08]
+    likelihood: 2          # needs many accounts or a script
+    impact: 3              # real guests wait while the model is busy
+    mitigations: [M-LINE-RATE]
+    status: open

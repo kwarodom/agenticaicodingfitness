@@ -16,7 +16,7 @@ export is a real `.usda` that opens in usdview / USD Composer.
 ## Run the web tutorial
 
 ```bash
-cd week21/04_scene_assembly
+cd week21_physical_ai_digital_twins/04_scene_assembly
 pip install -r requirements.txt
 python tutorial_server.py            # → http://127.0.0.1:8203  (env: TWIN_GUIDE_PORT)
 ```

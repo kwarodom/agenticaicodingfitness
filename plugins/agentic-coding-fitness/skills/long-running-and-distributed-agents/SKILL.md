@@ -20,13 +20,13 @@ This skill is the **L3 fleet layer** above `multi-agent-systems`. Week 9/15 ran 
      outlive a single token)
 ```
 
-> ✅ **Grounded & runnable.** Built on `week17/` — the `checkpoints/` run **offline** (no key, no network; they construct the real ADK agents and mock only the LLM call), and `week17/hr_onboarding/` + `week17/authmd_adk/` are **live FastAPI services** you can drive end-to-end. Based on Google's *"Build long-running AI agents that pause, resume, and never lose context with ADK"* and WorkOS's `auth.md` protocol.
+> ✅ **Grounded & runnable.** Built on `week17_long_running_distributed_agents/` — the `checkpoints/` run **offline** (no key, no network; they construct the real ADK agents and mock only the LLM call), and `week17_long_running_distributed_agents/hr_onboarding/` + `week17_long_running_distributed_agents/authmd_adk/` are **live FastAPI services** you can drive end-to-end. Based on Google's *"Build long-running AI agents that pause, resume, and never lose context with ADK"* and WorkOS's `auth.md` protocol.
 
 ---
 
 ## Part A — Why stateless chatbots break over days
 
-A long-running workflow (onboard a hire over weeks; run a maintenance work-order that waits days for a vendor part) cannot lean on conversation history. Three failure modes (from `week17/REFERENCE.md`):
+A long-running workflow (onboard a hire over weeks; run a maintenance work-order that waits days for a vendor part) cannot lean on conversation history. Three failure modes (from `week17_long_running_distributed_agents/REFERENCE.md`):
 
 | Failure mode | What goes wrong if state = chat history |
 |---|---|
@@ -37,7 +37,7 @@ A long-running workflow (onboard a hire over weeks; run a maintenance work-order
 **The cure — a durable state machine.** Behaviour is driven by an explicit `current_step` that is *persisted* and *interpolated into the instruction*, never re-derived from history:
 
 ```python
-class OnboardingStep(str, Enum):          # week17/hr_onboarding/onboarding_steps.py
+class OnboardingStep(str, Enum):          # week17_long_running_distributed_agents/hr_onboarding/onboarding_steps.py
     START = "START"
     WELCOME_SENT = "WELCOME_SENT"          # ⏸ paused — waiting on a signed contract
     DOCUMENTS_SIGNED = "DOCUMENTS_SIGNED"
@@ -52,7 +52,7 @@ The ⏸ states are **pause gates**: the agent must *refuse to advance* through t
 
 ## Part B — The four ADK building blocks (the long-running engine)
 
-Google ADK gives you exactly four primitives. Memorize the mapping — everything in `week17/checkpoints/` is these four:
+Google ADK gives you exactly four primitives. Memorize the mapping — everything in `week17_long_running_distributed_agents/checkpoints/` is these four:
 
 | Need | ADK primitive | Where you see it |
 |---|---|---|
@@ -89,8 +89,8 @@ async def document_signed():
         ...
 ```
 
-> 📁 `week17/checkpoints/checkpoint1_state_machine.py` … `checkpoint3_webhook_resume.py` — durable state → restart-survival → webhook resume, each offline and self-asserting.
-> 📁 `week17/hr_onboarding/server.py` — the live version: `/onboard`, `/chat`, `/webhooks/document_signed`, `/webhooks/hardware_delivered`, `/status`, plus a web visualizer.
+> 📁 `week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py` … `checkpoint3_webhook_resume.py` — durable state → restart-survival → webhook resume, each offline and self-asserting.
+> 📁 `week17_long_running_distributed_agents/hr_onboarding/server.py` — the live version: `/onboard`, `/chat`, `/webhooks/document_signed`, `/webhooks/hardware_delivered`, `/status`, plus a web visualizer.
 
 ---
 
@@ -101,12 +101,12 @@ Durable *state* is only half of "survive for days." The other half is durable *a
 > **The rule:** store the **durable grant, not the token**. Re-mint a fresh, scoped, short-lived credential **every time the agent wakes**.
 
 ```python
-# week17/authmd_adk/authmd_client.py — the seam between the two halves
+# week17_long_running_distributed_agents/authmd_adk/authmd_client.py — the seam between the two halves
 grant = AuthGrant(...)                 # durable, token-FREE; THIS is what lives in session state
 token = await AuthMdClient().acquire(grant, scope="sites.read")   # minted fresh at wake time
 ```
 
-This composes existing OAuth RFCs (RFC 9728 discovery; no new crypto). The teaching points from `week17/authmd_adk/`:
+This composes existing OAuth RFCs (RFC 9728 discovery; no new crypto). The teaching points from `week17_long_running_distributed_agents/authmd_adk/`:
 
 - **Store the grant in session state** (`auth_grants`), alongside `current_step` — both are durable, neither is a secret that expires.
 - **Re-mint per wake** via a `before_tool_callback` (`AuthInjector`) that calls `acquire()` and injects a fresh token just-in-time.
@@ -115,7 +115,7 @@ This composes existing OAuth RFCs (RFC 9728 discovery; no new crypto). The teach
 - **Revocable.** A `/revoke` + logout token kills access immediately; the next `acquire()` fails closed.
 
 > ⚠️ **Honest framing (from the deck's reality-check):** the **ADK foundation is solid and production-grade**; **auth.md is real but early** (a WorkOS-authored open protocol in early access — adoption is thin, the spec may move). Design around the **generic auth-grant abstraction** (`AuthGrant` / `acquire()`) so you use auth.md where a service publishes one and fall back to a plain OAuth refresh exchange everywhere else.
-> 📁 `week17/authmd_adk/run_authmd_demo.py` — the entire protocol offline (discovery → verified token → **wake-time re-mint** → OTP gate → least-privilege 403 → revoke → audit log). `run_full_demo.py` — the same gate driven by a live ADK agent.
+> 📁 `week17_long_running_distributed_agents/authmd_adk/run_authmd_demo.py` — the entire protocol offline (discovery → verified token → **wake-time re-mint** → OTP gate → least-privilege 403 → revoke → audit log). `run_full_demo.py` — the same gate driven by a live ADK agent.
 
 ---
 
@@ -138,7 +138,7 @@ MaintenanceCoordinator (ADK · durable session, pauses for days)
 ```
 
 > **Climb to A2A only when the team must span services or organizations.** Below that bar, an in-process `sub_agent` is the right, cheaper tool. Week 17 is about recognizing the boundary and crossing it *cleanly*.
-> 📁 `week17/checkpoints/checkpoint4_sub_agents.py` (the wall: a vendor you can't import) → `checkpoint5_a2a_cards.py` (cards + lifecycle) → `checkpoint6_fleet.py` (long-running + distributed, end-to-end).
+> 📁 `week17_long_running_distributed_agents/checkpoints/checkpoint4_sub_agents.py` (the wall: a vendor you can't import) → `checkpoint5_a2a_cards.py` (cards + lifecycle) → `checkpoint6_fleet.py` (long-running + distributed, end-to-end).
 
 ---
 

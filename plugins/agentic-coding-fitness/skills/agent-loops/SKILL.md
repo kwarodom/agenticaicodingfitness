@@ -120,9 +120,9 @@ from langgraph.prebuilt import create_react_agent
 agent = create_react_agent(llm, tools=[search, calculate])   # = our Agent class
 ```
 
-Hand-rolling it once (`week5/autoagent.py`) is how you *understand* `create_react_agent()`; reach for the framework version once you trust the loop. (More on ReAct as Pattern 12 in `models-and-patterns`.)
+Hand-rolling it once (`week05_agent_loop/autoagent.py`) is how you *understand* `create_react_agent()`; reach for the framework version once you trust the loop. (More on ReAct as Pattern 12 in `models-and-patterns`.)
 
-> 📁 Class repo: `week5/autoagent.py` — the full class plus a **Code Review Agent** that reads a file, lints it, fixes bugs, rewrites it, and runs it to verify. `week5/sample.py` is the buggy file it fixes.
+> 📁 Class repo: `week05_agent_loop/autoagent.py` — the full class plus a **Code Review Agent** that reads a file, lints it, fixes bugs, rewrites it, and runs it to verify. `week05_agent_loop/sample.py` is the buggy file it fixes.
 
 ---
 
@@ -193,7 +193,7 @@ The difference is **who decides the order**:
 
 Real systems mix both. (Week 4 also drove a **DJI Tello drone** — the same "decide → act → observe" idea, but the "act" was a physical flight command.)
 
-> 📁 Class repo: `week4/pipeline.py` (autonomous research pipeline), `week4/dronecontrol.py` (physical actions).
+> 📁 Class repo: `week04_autonomous_pipelines/pipeline.py` (autonomous research pipeline), `week04_autonomous_pipelines/dronecontrol.py` (physical actions).
 
 ---
 
@@ -214,9 +214,9 @@ Above those sits the **per-tenant daily cap** — the single most effective cont
 Two of these are exactly what you already saw in Week 11 exercises — *bounded loops in graph form*:
 
 - **Bounded retry / self-healing:** a validate → heal → re-validate cycle that stops after **3 retries** and pages an alert instead of looping forever. That `retries >= 3` guard is no-progress detection wired into a LangGraph conditional edge.
-  > 📁 Class repo: `week11/exercises/ex10_langgraph_self_healing/ex10_langgraph_self_healing.py`
+  > 📁 Class repo: `week11_models_and_patterns/exercises/ex10_langgraph_self_healing/ex10_langgraph_self_healing.py`
 - **Planner → Researcher → Critic with bounded autonomy:** an iteration counter walks a fixed plan, a Critic reflects on quality, and the counter caps the run so it can't loop endlessly — the **planner-executor-critic** shape.
-  > 📁 Class repo: `week11/exercises/ex13_autonomous_research/ex13_autonomous_research.py`
+  > 📁 Class repo: `week11_models_and_patterns/exercises/ex13_autonomous_research/ex13_autonomous_research.py`
 
 The deeper treatment of cost-per-task, alerting, and circuit breakers lives in `production-and-observability`; the muscle-memory reps for building these caps from scratch live in `agent-drills`.
 
@@ -251,7 +251,7 @@ async for msg in query(
     print(msg)        # AssistantMessage (REASON/ACT) · ToolResult (OBSERVE) · ResultMessage
 ```
 
-> 📁 Class repo: `week18/agent_loop/` — a clickable, streaming web app (`tutorial_server.py` → `http://127.0.0.1:8090`) plus 9 runnable demos, one per tutorial part: `step01_hello_agent` (smallest real loop) → `step03_builtin_tools` (permissions) → `step04_custom_tool` (custom `@tool`) → `step05_hooks_safety` (PreToolUse gate denies `rm -rf`) → `step06_sessions` (resume) → `step07_multi_agent` (subagents) → `step08_usecase_triage` (clear a support queue) → `step09_production` (`max_budget_usd` stops a runaway). Full write-up: `week18/agent_loop/README.md` + `week18/agent_loop_comprehensive_tutorial.pdf`. A whole click-through costs a few cents; if the `claude` CLI isn't signed in, the app still loads and prints install hints instead of calling the model.
+> 📁 Class repo: `week18_self_evolving_sovereign_edge/agent_loop/` — a clickable, streaming web app (`tutorial_server.py` → `http://127.0.0.1:8090`) plus 9 runnable demos, one per tutorial part: `step01_hello_agent` (smallest real loop) → `step03_builtin_tools` (permissions) → `step04_custom_tool` (custom `@tool`) → `step05_hooks_safety` (PreToolUse gate denies `rm -rf`) → `step06_sessions` (resume) → `step07_multi_agent` (subagents) → `step08_usecase_triage` (clear a support queue) → `step09_production` (`max_budget_usd` stops a runaway). Full write-up: `week18_self_evolving_sovereign_edge/agent_loop/README.md` + `week18_self_evolving_sovereign_edge/agent_loop_comprehensive_tutorial.pdf`. A whole click-through costs a few cents; if the `claude` CLI isn't signed in, the app still loads and prints install hints instead of calling the model.
 
 **The throughline:** the loop you bounded with `max_iterations` in Week 5 is the *same* loop — Week 18 just wires it to real tools, real safety gates, real sessions, and a real cost cap. Hooks here are the SDK-native form of the Week 5 guardrail table: *hard stops live in code (a PreToolUse hook), never in the prompt.*
 
@@ -270,7 +270,7 @@ Read the `Agent.run()` loop above and answer out loud:
 
 ### Skill Drill A — Build a ReAct agent from a 6-TODO skeleton (15–30 min, $0)
 
-Fill in the six `TODO`s so the loop runs. A tiny **MockLLM** stands in for the real API, so it runs with **no API key and $0** — the loop logic is identical to `week5/autoagent.py`.
+Fill in the six `TODO`s so the loop runs. A tiny **MockLLM** stands in for the real API, so it runs with **no API key and $0** — the loop logic is identical to `week05_agent_loop/autoagent.py`.
 
 ```python
 import json
@@ -352,8 +352,8 @@ Fixes: add `for i in range(max_iterations)`, correct the stop condition to `stop
 
 ### Stretch
 
-- Swap `MockLLM` for the real `client.messages.create(...)` from `week5/autoagent.py` and re-run the calculator goal *"Find the temperature in Bangkok and Tokyo, then tell me which is hotter"* — watch the real `💭`/`🔧`/`📋` trace.
+- Swap `MockLLM` for the real `client.messages.create(...)` from `week05_agent_loop/autoagent.py` and re-run the calculator goal *"Find the temperature in Bangkok and Tokyo, then tell me which is hotter"* — watch the real `💭`/`🔧`/`📋` trace.
 - Add a deliberate self-reflection turn (the 4-failure-mode prompt above) to your code agent and confirm it catches an "unintended edit."
-- Discuss when to choose a fixed *pipeline* (`week4/pipeline.py`) vs. a free-running *agent* — predictability vs. flexibility.
+- Discuss when to choose a fixed *pipeline* (`week04_autonomous_pipelines/pipeline.py`) vs. a free-running *agent* — predictability vs. flexibility.
 
 End by framing the next step: "one agent is powerful; in Week 9 we run *several* agents together — that's `multi-agent-systems`."

@@ -18,7 +18,7 @@ Providers (all but Claude speak the OpenAI-compatible /chat/completions API):
     openrouter  OpenRouter      OPENROUTER_API_KEY  (one key, hundreds of models)
     ollama      local Ollama    (no key)  — $0, runs on your machine
 
-Keys are looked up, in order: the process environment → week24/.env.local
+Keys are looked up, in order: the process environment → week24_typed_decisions_jev/.env.local
 (what the Lab Runner's 🔑 Keys dialog saves; gitignored) → the repo-root .env
 (gitignored). Keys are never printed, logged, recorded or sent to a browser.
 
@@ -127,12 +127,12 @@ def _read_env_file(path: Path) -> dict[str, str]:
 
 
 def _lookup(name: str) -> tuple[str, str]:
-    """(value, source) for one variable; source ∈ env | week24/.env.local | repo .env | ''."""
+    """(value, source) for one variable; source ∈ env | week24_typed_decisions_jev/.env.local | repo .env | ''."""
     if os.environ.get(name, "").strip():
         return os.environ[name].strip(), "env"
     v = _read_env_file(LOCAL_KEYS).get(name, "")
     if v:
-        return v, "week24/.env.local"
+        return v, "week24_typed_decisions_jev/.env.local"
     v = _read_env_file(ROOT / ".env").get(name, "")
     if v:
         return v, "repo .env"
@@ -192,7 +192,7 @@ def providers() -> list[dict]:
 
 
 def save_local_key(provider: str, value: str) -> str:
-    """Write/replace this provider's first key name in week24/.env.local (0600). '' deletes it."""
+    """Write/replace this provider's first key name in week24_typed_decisions_jev/.env.local (0600). '' deletes it."""
     name = PROVIDERS[provider]["keys"][0] if PROVIDERS[provider]["keys"] else None
     if not name:
         raise LLMError(f"{provider} needs no key")

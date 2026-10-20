@@ -5,7 +5,7 @@ Five synthetic inquiries → solution family (choice) + buying stage (score) +
 missing scope (noul) → a queue proposal and a follow-up checklist.
 No email is sent, no price is quoted, no savings are promised.
 
-Run: .venv/bin/python week24/08_leads_rag_points/labs/lab01_lead_routing.py
+Run: .venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab01_lead_routing.py
 """
 import json
 import sys

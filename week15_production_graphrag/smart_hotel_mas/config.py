@@ -62,5 +62,5 @@ def check_neo4j():
         print("⚠️  Cannot reach Neo4j.")
         print(f"   ({type(e).__name__}: {e})")
         print(f"   Expected at {NEO4J_URI} (user {NEO4J_USER}). Start it with:")
-        print("   docker compose -f week15/smart_hotel_mas/docker-compose.yml up -d")
+        print("   docker compose -f week15_production_graphrag/smart_hotel_mas/docker-compose.yml up -d")
         return False

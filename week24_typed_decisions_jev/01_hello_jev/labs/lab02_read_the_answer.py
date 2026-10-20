@@ -5,7 +5,7 @@ One request, three question types (choice, noul, score) about one guest
 message. Then plain Python turns the typed answers into a routing proposal.
 Jev supplies judgments; YOUR code owns the decision.
 
-Run: .venv/bin/python week24/01_hello_jev/labs/lab02_read_the_answer.py
+Run: .venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab02_read_the_answer.py
 """
 import sys
 from pathlib import Path

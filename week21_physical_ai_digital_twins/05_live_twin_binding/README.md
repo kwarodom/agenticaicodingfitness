@@ -14,7 +14,7 @@ pure stdlib and run offline; Ch 3 upgrades to REAL OpenUSD with `usd-core`.
 ## Run the web tutorial
 
 ```bash
-cd week21/05_live_twin_binding
+cd week21_physical_ai_digital_twins/05_live_twin_binding
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8204  (env TWIN_GUIDE_PORT)
 ```

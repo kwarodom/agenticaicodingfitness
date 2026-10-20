@@ -1,7 +1,7 @@
 {
   "architecture": {
     "title": "Jev decides, your LLM writes, Jev checks — code owns every rule",
-    "caption": "Jev makes the fast typed decisions (route, then verify the draft). Code keeps exact facts (language, room number), picks the approved prompt and applies the review policy. The LLM you choose in the runner's LLM picker only writes prose. Keys are read server-side (env → week24/.env.local → repo .env) and never reach the browser.",
+    "caption": "Jev makes the fast typed decisions (route, then verify the draft). Code keeps exact facts (language, room number), picks the approved prompt and applies the review policy. The LLM you choose in the runner's LLM picker only writes prose. Keys are read server-side (env → week24_typed_decisions_jev/.env.local → repo .env) and never reach the browser.",
     "lanes": [
       {"id": "in", "label": "Guest message"},
       {"id": "jev", "label": "Jev — System One (typed)"},

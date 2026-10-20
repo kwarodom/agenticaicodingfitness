@@ -1,9 +1,9 @@
-# Lab 04-4 (research tutorial L3.6) — NAT as an MCP CLIENT of the mock BMS (week26/common/bms_mcp_server.py).
+# Lab 04-4 (research tutorial L3.6) — NAT as an MCP CLIENT of the mock BMS (week26_nemoclaw_claws/common/bms_mcp_server.py).
 # The lab sets BMS_MCP_URL to the port it started the mock on; the default is the tutorial's port.
 functions:
   chiller_kpi:
     _type: chiller_kpi
-    csv_path: week26/common/data/chiller_plant.csv
+    csv_path: week26_nemoclaw_claws/common/data/chiller_plant.csv
     kw_per_rt_alarm: 0.80
 function_groups:
   bms_tools:

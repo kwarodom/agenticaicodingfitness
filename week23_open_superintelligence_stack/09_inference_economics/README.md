@@ -5,7 +5,7 @@ The meter on the whole stack: tokens are the unit of AI work, so this app teache
 Launch:
 
 ```bash
-.venv/bin/python week23/09_inference_economics/tutorial_server.py   # → http://127.0.0.1:8108
+.venv/bin/python week23_open_superintelligence_stack/09_inference_economics/tutorial_server.py   # → http://127.0.0.1:8108
 ```
 
 Hands-on side: **[TUTORIAL.md](TUTORIAL.md)** — measure your own tok/s, do the $/M-token math on your wall power, and run the three labs in `labs/` (streamed tok/s → $/Mtok, a live goodput bench, and an LLM-judge you score against ground truth).

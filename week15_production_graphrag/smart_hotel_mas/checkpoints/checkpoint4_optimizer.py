@@ -6,7 +6,7 @@ occupancy (Prophet) and feed those probabilities into a linear program (PuLP)
 that picks per-room HVAC setpoints minimising energy cost while respecting
 comfort bounds. (smart_hotel_mas.pdf §CP4)
 
-Run:  python week15/smart_hotel_mas/checkpoints/checkpoint4_optimizer.py
+Run:  python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint4_optimizer.py
 
 LP formulation (per optimisation horizon):
 

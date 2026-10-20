@@ -1,6 +1,6 @@
 # Week 17 — HR onboarding: a long-running ADK agent with persistent sessions.
 #
-# Unlike the week17/checkpoints (offline demos), this is a REAL, runnable ADK
+# Unlike the week17_long_running_distributed_agents/checkpoints (offline demos), this is a REAL, runnable ADK
 # service. It needs one model credential. This repo ships an ANTHROPIC_API_KEY,
 # so by default the agent runs on Claude via ADK's LiteLlm. To use Gemini (the
 # blog's model) instead, set GOOGLE_API_KEY and ONBOARDING_MODEL=gemini-2.0-flash.
@@ -16,4 +16,4 @@ uvicorn[standard]>=0.27
 httpx>=0.27
 pydantic>=2.6
 
-# install:  uv pip install -r week17/hr_onboarding/requirements.txt
+# install:  uv pip install -r week17_long_running_distributed_agents/hr_onboarding/requirements.txt

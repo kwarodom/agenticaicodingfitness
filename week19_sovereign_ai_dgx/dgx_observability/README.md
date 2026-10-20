@@ -26,7 +26,7 @@ GPU and no Phoenix install, yet the span **shape** is exactly what real Phoenix 
 ## Quick start
 
 ```bash
-uv pip install -r week19/dgx_observability/requirements.txt
+uv pip install -r week19_sovereign_ai_dgx/dgx_observability/requirements.txt
 
 # optional: a live model makes the agent real
 ollama run qwen3.6:35b-a3b-q8_0      # gemma4:12b on a Mac
@@ -36,7 +36,7 @@ pip install arize-phoenix openinference-instrumentation-openai
 python -m phoenix.server.main serve  # → http://localhost:6006
 
 # the interactive web app
-.venv/bin/python week19/dgx_observability/tutorial_server.py
+.venv/bin/python week19_sovereign_ai_dgx/dgx_observability/tutorial_server.py
 # → open http://127.0.0.1:8094
 ```
 
@@ -47,7 +47,7 @@ Env overrides: `DGX_BASE_URL`, `DGX_MODEL`, `DGX_MODE=sim|real`, `PHOENIX_ENDPOI
 ## Layout
 
 ```
-week19/dgx_observability/
+week19_sovereign_ai_dgx/dgx_observability/
 ├── README.md · requirements.txt · config.py
 ├── tracer.py           → dependency-free OTel-shaped span tracer + Phoenix render
 ├── obsview.py          → the traced HVAC agent (real tool-calling or simulated)

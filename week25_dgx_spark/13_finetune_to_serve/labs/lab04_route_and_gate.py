@@ -12,7 +12,7 @@ response headers. Clients never change: they always ask for "hotel-router".
 Part 2 puts the saved prediction files side by side (baseline from lab 13-1, fine-tune from lab 13-2)
 and applies the ship gate. The proxy is always stopped on exit.
 
-Run: .venv/bin/python week25/13_finetune_to_serve/labs/lab04_route_and_gate.py [--n 5]
+Run: .venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab04_route_and_gate.py [--n 5]
 """
 import sys
 from pathlib import Path

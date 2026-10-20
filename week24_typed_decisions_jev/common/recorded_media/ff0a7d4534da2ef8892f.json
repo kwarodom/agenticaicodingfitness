@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "see",
+  "provider": "claude",
+  "model": "claude-sonnet-5",
+  "prompt": "You are helping a hotel engineering team. Describe what is visible in 2-3 sentences, focusing on any safety or maintenance issue. Then add one sentence starting 'Unsure:' saying what you cannot tell from the image.",
+  "media": "leak_under_ahu.jpg"
+ },
+ "response": {
+  "text": "This image shows a large gray mechanical unit (likely an air handling unit or similar HVAC equipment) in a utility/basement area, with overhead piping and ductwork running along the ceiling. A significant water leak is visible, with liquid pooling extensively on the concrete floor beneath and in front of the unit, indicating a possible drain pan overflow, condensate line blockage, or pipe leak that requires prompt attention to prevent water damage or slip hazards.\n\nUnsure: I cannot determine the exact source of the leak (whether it's from the unit itself, a connecting pipe, or condensate drainage), how long the leak has been occurring, or whether it poses an electrical hazard given the unit's proximity to the standing water.",
+  "provider": "claude",
+  "model": "claude-sonnet-5",
+  "usage": {
+   "input_tokens": 1260,
+   "output_tokens": 238
+  },
+  "latency_ms": 4279.9
+ }
+}

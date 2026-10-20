@@ -11,7 +11,7 @@ Ollama on this laptop, labelled LAPTOP STAND-IN: the numbers are real but they a
 Ollama batches differently from vLLM (it serves OLLAMA_NUM_PARALLEL requests at a time and queues the rest).
 Never compare the two machines' numbers; compare the SHAPE of each curve.
 
-Run: .venv/bin/python week25/05_vllm/labs/lab03_continuous_batching.py [--levels 1,2,4,8] [--max-tokens 64]
+Run: .venv/bin/python week25_dgx_spark/05_vllm/labs/lab03_continuous_batching.py [--levels 1,2,4,8] [--max-tokens 64]
 """
 import argparse
 import sys

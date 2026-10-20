@@ -17,7 +17,7 @@ Safety: model-written code runs in a fresh temp dir, in a subprocess, with a 20 
 timeout, after a simple screen that refuses os/subprocess/socket/open/eval. That is a
 guard rail, not a sandbox — Module 15 (OpenShell) is the real sandbox.
 
-Run: .venv/bin/python week25/18_coding_agents/labs/lab02_tool_call_probe.py [--models a,b] [--trials 1]
+Run: .venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab02_tool_call_probe.py [--models a,b] [--trials 1]
 """
 import argparse
 import json

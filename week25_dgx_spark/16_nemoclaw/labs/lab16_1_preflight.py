@@ -9,7 +9,7 @@ install, the ports NemoClaw uses, and whether a vLLM server already answers on :
 Nothing here installs or changes anything. The last step tells you which onboarding
 path fits (Express / managed vLLM, or "Existing vLLM").
 
-Run: .venv/bin/python week25/16_nemoclaw/labs/lab16_1_preflight.py
+Run: .venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_1_preflight.py
 """
 import re
 import sys

@@ -1,7 +1,7 @@
 # Week 19 — Observability on a DGX (Phoenix + NeMo Agent Toolkit)
 #
 # Install into the repo's uv-managed .venv (Python 3.13):
-#     uv pip install -r week19/dgx_observability/requirements.txt
+#     uv pip install -r week19_sovereign_ai_dgx/dgx_observability/requirements.txt
 #
 # The tracer is dependency-free (teaching-sized OTel), so the whole app runs in
 # SIM with no GPU and no Phoenix install. In REAL mode the agent calls a live

@@ -9,7 +9,7 @@ inference, and credentials. Finally it sorts the layers into hot-reloadable vs l
 policykit.decide() is NOT OpenShell — the real enforcement is Landlock, seccomp and the proxy on the Spark.
 It follows the semantics the docs describe so you can reason about a policy before you push it.
 
-Run: .venv/bin/python week26/01_what_is_a_claw/labs/lab01_2_five_layers.py
+Run: .venv/bin/python week26_nemoclaw_claws/01_what_is_a_claw/labs/lab01_2_five_layers.py
 """
 import re
 import sys

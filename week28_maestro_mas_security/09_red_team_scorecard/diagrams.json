@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "title": "The red-team harness — one suite, every combination of controls, two numbers",
+    "caption": "The suite (week28_maestro_mas_security/common/redteam.py) holds 12 attack and 8 benign scenarios, each tagged with MAESTRO layers and OWASP ASI ids (the course's mapping). Each scenario runs on a fresh simulated hotel with a chosen Defenses set and a brain: SIM (deterministic teaching model) or LIVE (local Ollama, gemma4:12b, a shared budget of 6 calls). The world reports harms; benign scenarios report whether the job got done. The scorecard turns that into attack success rate and utility; the matrix, cost and minimal-set labs reuse the same runs.",
+    "lanes": [
+      {"id": "suite", "label": "Scenario suite"},
+      {"id": "run", "label": "One run"},
+      {"id": "score", "label": "Scoring"},
+      {"id": "decide", "label": "Decisions (Module 10)"}
+    ],
+    "nodes": [
+      {"id": "attacks", "label": "12 attacks A01–A12", "lane": "suite", "sub": "tagged L1–L7 · ASI01–ASI10 (no ASI05)", "accent": "red"},
+      {"id": "benign", "label": "8 benign B01–B08 + 3 probes", "lane": "suite", "sub": "utility · the probes find hidden costs", "accent": "green"},
+      {"id": "defenses", "label": "Defenses", "lane": "run", "sub": "13 switches · 8192 combinations", "accent": "amber"},
+      {"id": "brain", "label": "brain", "lane": "run", "sub": "SIM (default) · LIVE gemma4:12b (≤ 6 calls)", "accent": "violet"},
+      {"id": "world", "label": "simulated hotel", "lane": "run", "sub": "world.harms() · success(e)", "accent": "cyan"},
+      {"id": "card", "label": "scorecard", "lane": "score", "sub": "ASR · utility", "accent": "cyan"},
+      {"id": "matrix", "label": "matrix + cost", "lane": "score", "sub": "what each switch stops · what it breaks · approvals", "accent": "amber"},
+      {"id": "minimal", "label": "minimal sets + knock-out", "lane": "score", "sub": "smallest ≠ best: count single failures", "accent": "red"},
+      {"id": "choice", "label": "chosen defense set", "lane": "decide", "sub": "overlap you want · cost you accept", "accent": "green"}
+    ],
+    "edges": [
+      {"from": "attacks", "to": "world", "label": "setup + steps", "animated": true},
+      {"from": "benign", "to": "world", "label": "setup + steps"},
+      {"from": "defenses", "to": "world", "label": "PEP switches"},
+      {"from": "brain", "to": "world", "label": "who decides"},
+      {"from": "world", "to": "card", "label": "harms · done", "animated": true},
+      {"from": "card", "to": "matrix", "label": "one switch at a time"},
+      {"from": "card", "to": "minimal", "label": "all combinations"},
+      {"from": "matrix", "to": "choice", "label": "costs"},
+      {"from": "minimal", "to": "choice", "label": "redundancy"}
+    ]
+  },
+  "sequence": {
+    "title": "Exhaustive search: one combination, with early exit",
+    "caption": "Lab 09-3 tries each of the 8192 combinations by running the hardest attacks first (A04, A09, A12 have a single blocker) and stopping at the first failure. Captured on this Mac: 26,944 scenario runs instead of 163,840, 8.7 s in total, 672 passing combinations, the smallest of size 5.",
+    "actors": [
+      {"id": "search", "label": "search loop"},
+      {"id": "d", "label": "Defenses(combo)"},
+      {"id": "atk", "label": "attacks (hardest first)"},
+      {"id": "ben", "label": "benign tasks"},
+      {"id": "out", "label": "passing sets"}
+    ],
+    "steps": [
+      {"from": "search", "to": "d", "label": "next of 8192 combinations", "kind": "call"},
+      {"from": "d", "to": "atk", "label": "run A04 → A09 → A12 → A08 → …", "kind": "call"},
+      {"from": "atk", "to": "search", "label": "first harm → stop, next combination", "kind": "return"},
+      {"from": "d", "to": "ben", "label": "all 12 blocked → run B01…B08", "kind": "call"},
+      {"from": "ben", "to": "search", "label": "a task broken → stop", "kind": "return"},
+      {"from": "search", "to": "out", "label": "ASR 0 % and utility 100 % → keep", "kind": "call"},
+      {"from": "out", "to": "search", "label": "smallest size = 5 · six such sets", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Attacks stopped by each switch on its own (of 12)",
+      "type": "hbars",
+      "unit": "attacks blocked",
+      "labels": ["principal_authz", "forward_summary", "param_bounds", "hitl", "egress_allowlist", "signed_messages", "spotlight", "signed_cards", "memory_gate", "sop_integrity", "audit_chain", "circuit_breaker", "tool_allowlist"],
+      "series": [
+        {"name": "blocked alone", "values": [7, 6, 4, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0], "color": "cyan"}
+      ],
+      "caption": "Lab 09-2 step 1, captured on this Mac (SIM brain). No switch alone reaches 12; tool_allowlist alone stops nothing because each attack is routed to the agent that holds the tool."
+    },
+    {
+      "title": "Combinations that reach ASR 0 % with utility 100 %, by size",
+      "type": "bars",
+      "unit": "passing combinations",
+      "labels": ["5", "6", "7", "8", "9", "10", "11", "12", "13"],
+      "series": [
+        {"name": "passing sets", "values": [6, 39, 110, 176, 175, 111, 44, 10, 1], "color": "green"}
+      ],
+      "caption": "Lab 09-3 step 2, captured on this Mac (SIM brain): 672 of 8192 combinations pass; none with fewer than 5 switches."
+    },
+    {
+      "title": "Attacks that come back when ONE control fails",
+      "type": "bars",
+      "unit": "attacks reopened",
+      "labels": ["param_bounds", "principal_authz", "signed_messages", "audit_chain", "circuit_breaker"],
+      "series": [
+        {"name": "minimal set #4 (5 switches)", "values": [1, 4, 2, 1, 1], "color": "red"},
+        {"name": "all 13 switches on", "values": [0, 1, 1, 1, 0], "color": "green"}
+      ],
+      "caption": "Lab 09-3 step 4, captured on this Mac (SIM brain). In the minimal set every control is the last blocker of something; with all 13 on, only A04, A09 and A12 still depend on one control."
+    }
+  ]
+}

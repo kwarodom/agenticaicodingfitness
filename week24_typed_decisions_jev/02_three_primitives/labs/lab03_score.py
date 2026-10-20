@@ -9,7 +9,7 @@ average), plus the probability of each level and a `legend` echoing your text.
   • write each level as a concrete situation, lowest first
   • use it for thresholds ("≥ 2 means escalate"), never to interpolate numbers
 
-Run: .venv/bin/python week24/02_three_primitives/labs/lab03_score.py
+Run: .venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab03_score.py
 """
 import sys
 from pathlib import Path

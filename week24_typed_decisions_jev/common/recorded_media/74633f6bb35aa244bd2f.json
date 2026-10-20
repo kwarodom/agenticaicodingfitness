@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "watch",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "prompt": "In two sentences: is anything unusual or unsafe happening in this plant-room clip?",
+  "media": "cctv_plantroom.mp4"
+ },
+ "response": {
+  "text": "Yes, around five seconds into the clip, a significant leak of steam or vapor suddenly begins venting from the blue chiller unit on the left. This indicates a potentially hazardous equipment failure or pipe rupture that quickly fills the room, posing an unsafe condition.",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "usage": {
+   "input_tokens": 618,
+   "output_tokens": 49
+  },
+  "latency_ms": 3531.7
+ }
+}

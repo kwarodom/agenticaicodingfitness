@@ -9,7 +9,7 @@ from 0 (no) to 1 (yes). Three lessons, each in one batched call:
   3. a statement and its negation are asked separately — nothing forces
      p(yes) + p(not yes) = 1, so ask each decision ONE way in production
 
-Run: .venv/bin/python week24/02_three_primitives/labs/lab02_noul.py
+Run: .venv/bin/python week24_typed_decisions_jev/02_three_primitives/labs/lab02_noul.py
 """
 import sys
 from pathlib import Path

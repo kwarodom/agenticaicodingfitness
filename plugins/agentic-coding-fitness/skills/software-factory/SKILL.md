@@ -1,6 +1,6 @@
 ---
 name: software-factory
-description: "Teach how to build an AI SOFTWARE FACTORY — Week 27: a kanban of linted tickets drained by unattended Build → QA → Review lanes (one Claude Code skill per lane, one worktree per issue, state kept only in GitHub issues/PRs), a merge gate that merges only at the reviewed SHA unless a human-only label (money/auth/schema, plus AltoTech's control/tenant/pdpa) is present, deterministic PreToolUse guard hooks (exit 2 blocks), behavioural `claude plugin eval` cases with WITH/W-OUT deltas, and the self-improving loop: Sentry/PostHog signals → a fresh verifier per candidate (file | drop-fixed | drop-stale | drop-noise | duplicate | needs-triage) → tickets, plus a lookback that proposes one change to CLAUDE.md/skills/guards/evals. Grounded in week27/ (Alto Mini target app, the factory/ starter kit, exercises with tests) and Eric Tech's open-source super-board. Use when someone asks 'how do I make agents ship PRs unattended?', 'what is a software factory / agentic SDLC?', mentions super-board, StrongDM's factory, Factory.ai, test-gap ledgers, review-remembers, adversarial truth-checks, merge gates, guard hooks, plugin evals, telemetry-to-tickets, or is reviewing Week 27."
+description: "Teach how to build an AI SOFTWARE FACTORY — Week 27: a kanban of linted tickets drained by unattended Build → QA → Review lanes (one Claude Code skill per lane, one worktree per issue, state kept only in GitHub issues/PRs), a merge gate that merges only at the reviewed SHA unless a human-only label (money/auth/schema, plus AltoTech's control/tenant/pdpa) is present, deterministic PreToolUse guard hooks (exit 2 blocks), behavioural `claude plugin eval` cases with WITH/W-OUT deltas, and the self-improving loop: Sentry/PostHog signals → a fresh verifier per candidate (file | drop-fixed | drop-stale | drop-noise | duplicate | needs-triage) → tickets, plus a lookback that proposes one change to CLAUDE.md/skills/guards/evals. Grounded in week27_software_factory/ (Alto Mini target app, the factory/ starter kit, exercises with tests) and Eric Tech's open-source super-board. Use when someone asks 'how do I make agents ship PRs unattended?', 'what is a software factory / agentic SDLC?', mentions super-board, StrongDM's factory, Factory.ai, test-gap ledgers, review-remembers, adversarial truth-checks, merge gates, guard hooks, plugin evals, telemetry-to-tickets, or is reviewing Week 27."
 when_to_use: "Learner wants to go from 'one agent in a terminal' to a pipeline of unattended agents that take a ticket to a merged, QA'd, reviewed PR — or asks about ticket formats, Build/QA/Review lanes, worktrees, merge gates, guard hooks, plugin evals, the loop from production telemetry to tickets, or is catching up on Week 27."
 ---
 
@@ -35,10 +35,10 @@ This builds on `agent-loops` (the loop being multiplied), `agent-evaluation` (th
 
 ---
 
-## Runnable code in this repo (`week27/`)
+## Runnable code in this repo (`week27_software_factory/`)
 
 ```bash
-cd week27/00_alto_mini && make seed && make test       # the target app: 6 tests, 4 seeded, ticketable gaps
+cd week27_software_factory/00_alto_mini && make seed && make test       # the target app: 6 tests, 4 seeded, ticketable gaps
 cd ../factory && python3 -m pytest -q tests            # five PreToolUse guard hooks, offline
 python3 scripts/collect_sentry.py --since 14d          # 3 file · 1 drop-fixed · 1 drop-noise · 1 duplicate
 cd .. && python3 -m pytest -q 0*/exercises/solutions   # ticket linter, ledger, min-confidence, verifier
@@ -46,12 +46,12 @@ cd .. && python3 -m pytest -q 0*/exercises/solutions   # ticket linter, ledger, 
 
 | Piece | Path | Lane |
 |---|---|---|
-| Ticket format + lint rules | `week27/factory/docs/agents/issue-tracker.md` | all |
-| Builder / Tester / Reviewer / Collect / Lookback | `week27/factory/skills/fitness-*/SKILL.md` | one skill per lane |
-| Guards (`exit 2` blocks): secrets, worktree path, protected push (refspec-aware: catches `HEAD:main`), delete-outside, key literals | `week27/factory/.claude/hooks/guard-*.py` + `tests/test_hooks.py` | all |
-| Headless drain + merge gate | `week27/factory/scripts/factory-run.sh`, `merge-gate.sh` | Build/QA/Review |
-| Evals (test-gap · review-remembers · ponytail-overengineering) with an offline `gh` stub | `week27/factory/evals/` | QA, Review, Build |
-| Labs 01–07 | `week27/0N_*/TUTORIAL.md` | — |
+| Ticket format + lint rules | `week27_software_factory/factory/docs/agents/issue-tracker.md` | all |
+| Builder / Tester / Reviewer / Collect / Lookback | `week27_software_factory/factory/skills/fitness-*/SKILL.md` | one skill per lane |
+| Guards (`exit 2` blocks): secrets, worktree path, protected push (refspec-aware: catches `HEAD:main`), delete-outside, key literals | `week27_software_factory/factory/.claude/hooks/guard-*.py` + `tests/test_hooks.py` | all |
+| Headless drain + merge gate | `week27_software_factory/factory/scripts/factory-run.sh`, `merge-gate.sh` | Build/QA/Review |
+| Evals (test-gap · review-remembers · ponytail-overengineering) with an offline `gh` stub | `week27_software_factory/factory/evals/` | QA, Review, Build |
+| Labs 01–07 | `week27_software_factory/0N_*/TUTORIAL.md` | — |
 
 Reference implementation: [EricTechPro/super-board](https://github.com/EricTechPro/super-board) (MIT; 8 skills, 6 guards, 3 evals; Haiku router → Sonnet/Opus ladder; Codex via `--codex`). Install it in Lab 01 and read its comment trail before building your own.
 
@@ -59,7 +59,7 @@ Reference implementation: [EricTechPro/super-board](https://github.com/EricTechP
 
 ## Guided lab — the kata (≈ 45 min, $0)
 
-**Warm-up (10 min).** Lint this ticket by hand against the five rules, then with `week27/02_ticket_and_builder/exercises/solutions/ex02_ticket_lint.py`:
+**Warm-up (10 min).** Lint this ticket by hand against the five rules, then with `week27_software_factory/02_ticket_and_builder/exercises/solutions/ex02_ticket_lint.py`:
 
 ```
 ## Problem  kWh rollup crashes when a sensor drops out
@@ -75,12 +75,12 @@ Reference implementation: [EricTechPro/super-board](https://github.com/EricTechP
 **Drill (25 min).** Run the guard fuzz and make it hurt:
 
 ```bash
-cd week27/05_guards_and_evals/exercises && python3 ex05_hook_fuzz.py
+cd week27_software_factory/05_guards_and_evals/exercises && python3 ex05_hook_fuzz.py
 ```
 
-Add five commands you believe slip through (`python -c "open('.env')"`, a `git push` with a refspec, a `find … -delete` under `..`). For each slip: add a case to `week27/factory/tests/test_hooks.py`, fix the regex, re-run. **Pass threshold:** 0 slipped-through, 0 false-blocks on the allowed set.
+Add five commands you believe slip through (`python -c "open('.env')"`, a `git push` with a refspec, a `find … -delete` under `..`). For each slip: add a case to `week27_software_factory/factory/tests/test_hooks.py`, fix the regex, re-run. **Pass threshold:** 0 slipped-through, 0 false-blocks on the allowed set.
 
-**Endurance (10 min).** Implement the four-step verifier (`week27/06_telemetry_to_tickets/exercises/ex06_verifier.py`) until the 7 tests in `solutions/test_ex06.py` pass against your file. Then break one fixture (move S-104's `last_seen` after its merge date) and explain why `drop-fixed` must become `file`.
+**Endurance (10 min).** Implement the four-step verifier (`week27_software_factory/06_telemetry_to_tickets/exercises/ex06_verifier.py`) until the 7 tests in `solutions/test_ex06.py` pass against your file. Then break one fixture (move S-104's `last_seen` after its merge date) and explain why `drop-fixed` must become `file`.
 
 ---
 
@@ -103,6 +103,6 @@ Add five commands you believe slip through (`python -c "open('.env')"`, a `git p
 
 ## Honest limits
 
-- The `week27/factory` skills, scripts and evals are **not yet run against a live Claude Code CLI**; flag names (`claude -p …`) and eval grader `type`s are from the docs as of 10 Oct 2026. Lab 05 makes the first live run part of the lab.
+- The `week27_software_factory/factory` skills, scripts and evals are **not yet run against a live Claude Code CLI**; flag names (`claude -p …`) and eval grader `type`s are from the docs as of 10 Oct 2026. Lab 05 makes the first live run part of the lab.
 - Evidence is mixed: Anthropic reports ~80 % of merged code written by Claude under shadow-mode reviewers and sampled approvals; DORA describes a J-curve; METR withdrew its RCT as unreliable. Teach the metrics, not the slogans.
-- Brief and sources: `week27/Software Factory — Research Brief and Week 27 Tutorials.md` (video, super-board, StrongDM/Willison, O'Reilly, Factory.ai, Builder.io, Microsoft, Dagger, Claude Code docs, Anthropic SDLC, DORA, METR, JetBrains ponytail).
+- Brief and sources: `week27_software_factory/Software Factory — Research Brief and Week 27 Tutorials.md` (video, super-board, StrongDM/Willison, O'Reilly, Factory.ai, Builder.io, Microsoft, Dagger, Claude Code docs, Anthropic SDLC, DORA, METR, JetBrains ponytail).

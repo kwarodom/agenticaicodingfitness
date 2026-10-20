@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Maintainer tool: every REFERENCE a lab prints must really be in an NVIDIA playbook (or quoted verbatim
-in the week26 research tutorial, which cites the NemoClaw / OpenShell / NAT docs).
+in the week26_nemoclaw_claws research tutorial, which cites the NemoClaw / OpenShell / NAT docs).
 
 Also checks TUTORIAL.md code blocks introduced by "**Expected output** (REFERENCE …)" — blocks whose whole
 content claims to be a quote (a captured DRY run that merely CONTAINS reference values is not checked).
@@ -9,8 +9,8 @@ script finds every such string (and module-level *_REF / REF_* constants passed 
 each non-trivial line against the local clone at <repo>/dgx-spark-playbooks/ (whitespace-normalised).
 Lines not found are listed so a human can either fix the quote or relabel it as example=.
 
-    .venv/bin/python week26/common/audit_references.py            # all modules
-    .venv/bin/python week26/common/audit_references.py 03_policy_as_code
+    .venv/bin/python week26_nemoclaw_claws/common/audit_references.py            # all modules
+    .venv/bin/python week26_nemoclaw_claws/common/audit_references.py 03_policy_as_code
 """
 import ast
 import re
@@ -101,7 +101,7 @@ def main() -> None:
     if not PLAYBOOKS.is_dir():
         sys.exit(f"clone the playbooks first: git clone https://github.com/NVIDIA/dgx-spark-playbooks {PLAYBOOKS.parent}")
     text = corpus()
-    only = {Path(a.rstrip("/")).name for a in sys.argv[1:]}      # accept "03_policy_as_code" or "week26/03_policy_as_code/"
+    only = {Path(a.rstrip("/")).name for a in sys.argv[1:]}      # accept "03_policy_as_code" or "week26_nemoclaw_claws/03_policy_as_code/"
     unknown = only - {p.name for p in WEEK.glob("[0-9][0-9]_*")}
     if unknown:
         sys.exit(f"✕ no such module folder: {', '.join(sorted(unknown))}")

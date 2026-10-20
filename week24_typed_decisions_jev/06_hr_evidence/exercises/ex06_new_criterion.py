@@ -15,7 +15,7 @@ TODO 2 — write `checklist_row(answers)`: return a dict
          Rules: every record goes to "recruiter_review" (never "reject"),
          and the dict must NOT contain any score, rank or total.
 
-Run: .venv/bin/python week24/06_hr_evidence/exercises/ex06_new_criterion.py
+Run: .venv/bin/python week24_typed_decisions_jev/06_hr_evidence/exercises/ex06_new_criterion.py
 """
 import sys
 from pathlib import Path

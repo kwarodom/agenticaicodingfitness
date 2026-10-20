@@ -80,7 +80,7 @@ docker info --format '{{.ServerVersion}}'
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_1_preflight.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_1_preflight.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ ถ้ามี Spark คุณจะได้ค่าของเครื่องคุณเองพร้อม ✓ / ✕)
@@ -276,7 +276,7 @@ Lab 16-2 รันครึ่งที่อ่านอย่างเดี�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_2_status_and_logs.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_2_status_and_logs.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้ บรรทัด 403 มาจาก playbook ที่เหลือเป็นรูปแบบ EXAMPLE)
@@ -321,7 +321,7 @@ Lab 16-3 สร้างไฟล์บนแล็ปท็อปของค�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_3_policy_preset.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_3_policy_preset.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ยังไม่ได้ตั้งค่า Spark)
@@ -353,7 +353,7 @@ network_policies:
       - { path: /usr/local/bin/node }
       - { path: /usr/bin/node }
       - { path: /usr/bin/curl }
-◆ written to week25/16_nemoclaw/.runs/news-sources.yaml
+◆ written to week25_dgx_spark/16_nemoclaw/.runs/news-sources.yaml
 
 ▣ STEP 2 · parse it back and validate
 ✓ no findings: valid shape, least-privilege checks pass
@@ -391,7 +391,7 @@ list `binaries` เป็นส่วนหนึ่งของหลัก lea
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/labs/lab16_4_inference_route.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_4_inference_route.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: LAPTOP STAND-IN ความเร็วของแล็ปท็อป ไม่ใช่ตัวเลขของ Spark)
@@ -611,7 +611,7 @@ Lab 16-1 และ 16-2 รันแบบ LIVE บน Spark ของคุณ�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 16 — preset แบบ least-privilege และตัวตรวจของมัน** เปิด `week25/16_nemoclaw/exercises/ex16_policy_preset.py` ในไฟล์มี `TODO` สี่จุด:
+**แบบฝึกหัด 16 — preset แบบ least-privilege และตัวตรวจของมัน** เปิด `week25_dgx_spark/16_nemoclaw/exercises/ex16_policy_preset.py` ในไฟล์มี `TODO` สี่จุด:
 
 1. `is_rfc1123(name)`: ชื่อ preset เป็น label แบบ RFC 1123 ที่เป็นตัวพิมพ์เล็กคั่นด้วยขีดกลางหรือไม่?
 2. `endpoint(host)`: HTTPS endpoint หนึ่งตัวพร้อม access mode ที่ proxy ต้องการ
@@ -620,7 +620,7 @@ Lab 16-1 และ 16-2 รันแบบ LIVE บน Spark ของคุณ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/16_nemoclaw/exercises/ex16_policy_preset.py
+.venv/bin/python week25_dgx_spark/16_nemoclaw/exercises/ex16_policy_preset.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสี่จุด บันทึกจาก Mac เครื่องนี้ด้วยเฉลยอ้างอิง)

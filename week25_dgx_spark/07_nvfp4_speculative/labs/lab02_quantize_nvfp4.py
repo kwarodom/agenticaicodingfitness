@@ -8,8 +8,8 @@ reads hf_quant_config.json, and compares the checkpoint size with the arithmetic
 The quantization itself takes 45–90 minutes, so it is started only when you ask, in the
 background with nohup (the runner kills foreground labs after 900 s):
 
-    .venv/bin/python week25/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py --start
-    .venv/bin/python week25/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py          # status, any time
+    .venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py --start
+    .venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py          # status, any time
 
 Without a Spark (DRY) you see every command and an illustrative output shape, labelled EXAMPLE.
 """

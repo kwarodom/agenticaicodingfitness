@@ -5,7 +5,7 @@ Parses data/sample.eml with Python's email package, keeps ONLY the plain-text
 body plus the subject, and never follows URLs or opens attachments. Then it
 classifies the email with the same questions and policy as lab 05-1.
 
-Run: .venv/bin/python week24/05_email_triage/labs/lab02_eml_to_state.py
+Run: .venv/bin/python week24_typed_decisions_jev/05_email_triage/labs/lab02_eml_to_state.py
 """
 import re
 import sys

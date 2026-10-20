@@ -18,15 +18,15 @@
 | Need | Check | Why |
 |---|---|---|
 | This repo's Python | `.venv/bin/python --version` → 3.13 | runs the labs and the Reef Lab Runner |
-| The Week 26 laptop tools | `week26/.venv-nat/bin/nat --version` and `week26/.venv-openshell/bin/openshell --version` | NAT agents and the OpenShell policy parser run on your laptop in Modules 03–08 |
+| The Week 26 laptop tools | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` and `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` | NAT agents and the OpenShell policy parser run on your laptop in Modules 03–08 |
 | A DGX Spark (optional) | `ssh -o BatchMode=yes <spark> true` | Modules 02–03 install and drive a real claw; without one they run DRY |
 
-If the two laptop tools are missing, `week26/README.md` has the two `uv` commands that create them.
+If the two laptop tools are missing, `week26_nemoclaw_claws/README.md` has the two `uv` commands that create them.
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 ```
 
 **Expected output** (captured on this Mac)
@@ -149,9 +149,9 @@ The fourth option this week is **your own claw**. A NAT workflow you write in Mo
 | 07 · hardening | Part 6 | a threat model, a production policy, custom blueprints, remote gateways |
 | 08 · capstone | Capstone | Alto Ops Claw v1, documented and graded |
 
-The running example is **Alto Ops Claw**: a hotel-operations assistant that reads chiller-plant CSV exports, answers energy questions, and calls a (mock) BMS over MCP. Its data lives in `week26/common/data/chiller_plant.csv`. The data is **synthetic**: seven days of 15-minute rows, with a degraded last six hours so the alarm path has something to find.
+The running example is **Alto Ops Claw**: a hotel-operations assistant that reads chiller-plant CSV exports, answers energy questions, and calls a (mock) BMS over MCP. Its data lives in `week26_nemoclaw_claws/common/data/chiller_plant.csv`. The data is **synthetic**: seven days of 15-minute rows, with a degraded last six hours so the alarm path has something to find.
 
-> 🪸 **The Reef.** The runner's **🪸 Reef** button shows the claw stack at a glance: the gateway as a lighthouse, one enclosure per sandbox, and the services as landmarks. Every value comes from a real command (`openshell status`, `openshell sandbox list`, `openshell inference get`) or an HTTP probe, shown with its exit code and time. With no Spark connected, the island stays empty and says why. It never shows invented state. The full visual app it grew from is in `week26/alto-reef/`.
+> 🪸 **The Reef.** The runner's **🪸 Reef** button shows the claw stack at a glance: the gateway as a lighthouse, one enclosure per sandbox, and the services as landmarks. Every value comes from a real command (`openshell status`, `openshell sandbox list`, `openshell inference get`) or an HTTP probe, shown with its exit code and time. With no Spark connected, the island stays empty and says why. It never shows invented state. The full visual app it grew from is in `week26_nemoclaw_claws/alto-reef/`.
 
 ✓ Checkpoint: you opened **🪸 Reef** once and can say what it shows when no Spark is connected.
 
@@ -171,7 +171,7 @@ The running example is **Alto Ops Claw**: a hotel-operations assistant that read
 
 ```bash
 # on: laptop
-.venv/bin/python week26/01_what_is_a_claw/exercises/ex01_claw_basics.py
+.venv/bin/python week26_nemoclaw_claws/01_what_is_a_claw/exercises/ex01_claw_basics.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled)
@@ -200,8 +200,8 @@ Look for the harness whose observability plugin gets its keys as OpenShell crede
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| `week26/.venv-nat/bin/nat: No such file or directory` | the NAT venv was not created | run the two `uv` lines in `week26/README.md` |
-| `openshell --version` prints nothing on the laptop | a newer `openshell` wheel (0.0.116 / 0.1.2) is the Python SDK only, with no CLI | install `openshell==0.0.111` into `week26/.venv-openshell` |
+| `week26_nemoclaw_claws/.venv-nat/bin/nat: No such file or directory` | the NAT venv was not created | run the two `uv` lines in `week26_nemoclaw_claws/README.md` |
+| `openshell --version` prints nothing on the laptop | a newer `openshell` wheel (0.0.116 / 0.1.2) is the Python SDK only, with no CLI | install `openshell==0.0.111` into `week26_nemoclaw_claws/.venv-openshell` |
 | 🪸 Reef says "no Spark configured" | `SPARK_HOST` is empty | open 🖥 Spark setup, or keep going in DRY mode |
 | Lab 01-1 shows `◈ EXAMPLE` for every Spark row | DRY mode: nothing ran on the Spark | connect a Spark and switch to ⚡ Live |
 

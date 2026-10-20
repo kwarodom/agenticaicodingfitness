@@ -29,7 +29,7 @@ The course research frames context as **six layers**, each one inheriting from t
 | 5. **Conversation history** | last ~5–10 turns; older turns summarized | the loop, `agent-loops` |
 | 6. **Current task** | the immediate request | placed **last** for recency |
 
-`CLAUDE.md` is your handle on **Layer 2**. The repo's `week6/CLAUDE.md` is a clean, minimal example of the shape:
+`CLAUDE.md` is your handle on **Layer 2**. The repo's `week06_fullstack_agent_app/CLAUDE.md` is a clean, minimal example of the shape:
 
 ```markdown
 ## Project Overview      ## Code Conventions          ## Important Context
@@ -44,7 +44,7 @@ The course research frames context as **six layers**, each one inheriting from t
 
 H2 sections, bullet rules, the commands the agent needs to run itself. A focused **~400-token file beats a sprawling 4,000-token one** — precision beats volume when you're directing attention.
 
-> 📁 Class repo: `week6/CLAUDE.md` — the canonical minimal context file (Overview / Conventions / Context / File Structure / Commands).
+> 📁 Class repo: `week06_fullstack_agent_app/CLAUDE.md` — the canonical minimal context file (Overview / Conventions / Context / File Structure / Commands).
 
 ### Nested layering — the real power move
 
@@ -61,7 +61,7 @@ Claude Code reads `CLAUDE.md`/`AGENTS.md` with nested directory scoping, so a fi
 
 ### A real-repo gotcha: copied context drifts
 
-> ⚠️ **Teachable failure (real in this repo):** `AgentMemoryDemo/CLAUDE.md` is a **DJI Tello drone dashboard** project — but its body still says JWT auth, *Stripe for payments*, and "Redis cache on port 6379," because it was copy-pasted from `week6/CLAUDE.md` (an e-commerce dashboard) and never re-grounded. A drifted context file is *worse than none*: it confidently lies to the agent. **Audit your `CLAUDE.md` whenever the project changes.**
+> ⚠️ **Teachable failure (real in this repo):** `AgentMemoryDemo/CLAUDE.md` is a **DJI Tello drone dashboard** project — but its body still says JWT auth, *Stripe for payments*, and "Redis cache on port 6379," because it was copy-pasted from `week06_fullstack_agent_app/CLAUDE.md` (an e-commerce dashboard) and never re-grounded. A drifted context file is *worse than none*: it confidently lies to the agent. **Audit your `CLAUDE.md` whenever the project changes.**
 
 > 📁 Class repo: `AgentMemoryDemo/CLAUDE.md` — same template as Week 6, **stale** for its actual project. Use it to teach "context drift."
 

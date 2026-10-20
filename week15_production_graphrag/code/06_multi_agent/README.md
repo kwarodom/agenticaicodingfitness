@@ -18,8 +18,8 @@ Router:      classify → (billing | technical | general)
 ```
 
 These use the **raw Anthropic SDK** so they always run. The class repo shows
-the framework versions: `week9/ex1_crewai_sequential.py` (CrewAI),
-`week9/ex2_LangGraphSupportGraph.py` (LangGraph), `week9/ex3_ParallelSwarm.py`.
+the framework versions: `week09_multi_agent_systems/ex1_crewai_sequential.py` (CrewAI),
+`week09_multi_agent_systems/ex2_LangGraphSupportGraph.py` (LangGraph), `week09_multi_agent_systems/ex3_ParallelSwarm.py`.
 
 ### Don't over-build
 Multi-agent adds latency, cost, and coordination bugs. Reach for it only when

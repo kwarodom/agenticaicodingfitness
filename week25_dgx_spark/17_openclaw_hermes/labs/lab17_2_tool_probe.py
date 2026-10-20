@@ -13,7 +13,7 @@ back. So before you install either one, probe the endpoint with five small tests
 On the Spark it probes vLLM on :8000. Without a Spark it probes Ollama on THIS laptop for
 real, labelled LAPTOP STAND-IN, one model after another (small requests; ~5 calls per model).
 
-Run: .venv/bin/python week25/17_openclaw_hermes/labs/lab17_2_tool_probe.py [--models gemma4:12b,gemma3:4b]
+Run: .venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_2_tool_probe.py [--models gemma4:12b,gemma3:4b]
 """
 import argparse
 import json

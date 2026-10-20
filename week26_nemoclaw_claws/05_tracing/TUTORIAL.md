@@ -18,17 +18,17 @@
 
 | Need | Check | Why |
 |---|---|---|
-| The NAT laptop venv | `week26/.venv-nat/bin/nat --version` → 1.9.0 | every agent trace in this module comes from a real NAT run |
+| The NAT laptop venv | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` → 1.9.0 | every agent trace in this module comes from a real NAT run |
 | Laptop Ollama with `nemotron-3-nano:latest` | `curl -s localhost:11434/v1/models` | the LAPTOP STAND-IN model behind Alto Ops Claw (about 10–20 s per LLM call) |
-| The OpenShell laptop CLI | `week26/.venv-openshell/bin/openshell --version` → 0.0.111 | parses the policy-plane commands offline |
+| The OpenShell laptop CLI | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` → 0.0.111 | parses the policy-plane commands offline |
 | Docker daemon (optional) | `docker info` | only for Phoenix and the OTel collector on the laptop; without it those parts are skipped, never faked |
 | A DGX Spark (optional) | `ssh -o BatchMode=yes <spark> true` | the sandboxed claw's policy logs; without one they run DRY |
 
-Module 04 built Alto Ops Claw: a NAT `tool_calling_agent` with a `chiller_kpi` tool. This module watches it work. Every lab writes its files to `week26/05_tracing/.runs/`.
+Module 04 built Alto Ops Claw: a NAT `tool_calling_agent` with a `chiller_kpi` tool. This module watches it work. Every lab writes its files to `week26_nemoclaw_claws/05_tracing/.runs/`.
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
 curl -s localhost:11434/v1/models | head -c 200
 docker info --format '{{.ServerVersion}}'
 ```
@@ -57,7 +57,7 @@ Start with what NAT 1.9 has installed. Exporter names are the `_type` values you
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat info components -t tracing
+week26_nemoclaw_claws/.venv-nat/bin/nat info components -t tracing
 ```
 
 **Expected output** (captured on this Mac, lab 05-1 step 1)
@@ -93,24 +93,24 @@ The research tutorial's telemetry block adds a `phoenix` exporter and a `file_ba
 │ max_files        5                          
 │ cleanup_on_init  False                      
 ◆ required in 1.9.0: output_path, project — the research tutorial's `file_backup: {_type: file}` has neither (its comment says only `# path etc.`)
-$ nat validate --config_file week26/05_tracing/.runs/lab05_1_tutorial_block.yml   [this laptop]
+$ nat validate --config_file week26_nemoclaw_claws/05_tracing/.runs/lab05_1_tutorial_block.yml   [this laptop]
 ✕ research tutorial's block → exit 1 · Invalid configuration: general: Field required; general: Field required
-$ nat validate --config_file week26/05_tracing/configs/workflow.traced.yml   [this laptop]
+$ nat validate --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml   [this laptop]
 ✓ course block (output_path + project + mode) → exit 0
 ```
 
-The course's block lives in `week26/05_tracing/configs/workflow.traced.yml`. It is the Module 04 laptop config plus this `general` section:
+The course's block lives in `week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml`. It is the Module 04 laptop config plus this `general` section:
 
 ```yaml
 general:
   telemetry:
     logging:
       console: { _type: console, level: WARN }
-      file:    { _type: file, path: week26/05_tracing/.runs/alto_ops.log, level: DEBUG }
+      file:    { _type: file, path: week26_nemoclaw_claws/05_tracing/.runs/alto_ops.log, level: DEBUG }
     tracing:
       file_backup:
         _type: file
-        output_path: week26/05_tracing/.runs/traces/alto_ops_trace.jsonl
+        output_path: week26_nemoclaw_claws/05_tracing/.runs/traces/alto_ops_trace.jsonl
         project: alto-ops-claw
         mode: overwrite          # 1.9 default is append: one file would collect every run
 ```
@@ -120,7 +120,7 @@ general:
 ```bash
 # on: laptop
 docker run -d --name phoenix-nat -p 6006:6006 -p 4317:4317 arizephoenix/phoenix:latest
-week26/.venv-nat/bin/nat run --config_file week26/05_tracing/configs/workflow.phoenix.yml --input "Plant status last 6 hours?"
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.phoenix.yml --input "Plant status last 6 hours?"
 # open http://localhost:6006 → project alto-ops-claw
 ```
 
@@ -128,7 +128,7 @@ Now trace one real run. The file exporter is the path that always works:
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat run --config_file week26/05_tracing/configs/workflow.traced.yml --input "Plant status last 6 hours?"
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml --input "Plant status last 6 hours?"
 ```
 
 The file is **raw**. Each line is one `IntermediateStep` event, not a finished OpenTelemetry span. Most lines are `LLM_NEW_TOKEN` (one per streamed token). A span is a `*_START` and a `*_END` that share one UUID. The course's `tracekit.py` pairs them:
@@ -189,8 +189,8 @@ An OpenTelemetry collector is a normal OTLP endpoint. NAT, OpenClaw diagnostics 
 
 ```bash
 # on: laptop
-cat week26/05_tracing/configs/otelcollectorconfig.yaml
-cd week26/05_tracing/.runs/otel
+cat week26_nemoclaw_claws/05_tracing/configs/otelcollectorconfig.yaml
+cd week26_nemoclaw_claws/05_tracing/.runs/otel
 docker run -d -v $(pwd)/otelcollectorconfig.yaml:/etc/otelcol-contrib/config.yaml \
   -p 4318:4318 -v $(pwd)/otellogs:/otellogs/ otel/opentelemetry-collector-contrib:0.128.0
 ```
@@ -225,7 +225,7 @@ Lab 05-2 validates this config for real. Then it checks the Docker daemon. On th
 **Expected output** (captured on this Mac, lab 05-2 steps 2–3)
 
 ```
-$ nat validate --config_file week26/05_tracing/.runs/otel/workflow.otel.yml   [this laptop]
+$ nat validate --config_file week26_nemoclaw_claws/05_tracing/.runs/otel/workflow.otel.yml   [this laptop]
 ✓ nat validate → exit 0
 $ docker info --format '{{.ServerVersion}}'   [this laptop]
 ⚠ the Docker daemon is not running here (client only, or not installed) → the collector is NOT started, and no collector output is shown. Start Docker Desktop and run this lab again to see it for real.
@@ -376,7 +376,7 @@ Now join the planes for one request. The research tutorial's recipe:
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat serve --config_file week26/05_tracing/configs/workflow.traced.yml --port 8001
+week26_nemoclaw_claws/.venv-nat/bin/nat serve --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml --port 8001
 ```
 
 Leave it running, and in a second terminal send the request:
@@ -397,12 +397,12 @@ What the live NAT 1.9.0 server on this Mac does with that request (checked again
 | `filter_steps=none` | 0 `intermediate_data:` lines, the same answer lines |
 | `… \| grep -c '"type":"LLM_END"'` | `2` — so the Spark check below works as written |
 
-`nat serve` needs the `greenlet` package in `week26/.venv-nat`: NAT 1.9.0's FastAPI front end imports its async job store (SQLAlchemy asyncio) at start-up. Without it the server exits before it is ready. Install it once with `uv pip install --python week26/.venv-nat/bin/python greenlet`. If `nat serve` still fails, lab 05-5 says why and falls back to calling the same route function (`generate_streaming_response_full`) in-process through `week26/05_tracing/fullstream.py`, labelled as such.
+`nat serve` needs the `greenlet` package in `week26_nemoclaw_claws/.venv-nat`: NAT 1.9.0's FastAPI front end imports its async job store (SQLAlchemy asyncio) at start-up. Without it the server exits before it is ready. Install it once with `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet`. If `nat serve` still fails, lab 05-5 says why and falls back to calling the same route function (`generate_streaming_response_full`) in-process through `week26_nemoclaw_claws/05_tracing/fullstream.py`, labelled as such.
 
 **Expected output** (captured on this Mac, lab 05-5 steps 1–3, excerpt · LAPTOP STAND-IN model)
 
 ```
-$ nat serve --config_file week26/05_tracing/.runs/lab05_5_workflow.yml --port 8001 &   [this laptop, background → lab05_5_nat_serve.log]
+$ nat serve --config_file week26_nemoclaw_claws/05_tracing/.runs/lab05_5_workflow.yml --port 8001 &   [this laptop, background → lab05_5_nat_serve.log]
 ✓ ready in 7.4s → http://localhost:8001/docs
 $ curl -s -X POST 'http://localhost:8001/v1/workflow/full?filter_steps=LLM_END,TOOL_END' -H 'Content-Type: application/json' -d '{"input_message": "Plant status last 6 hours?"}'   [this laptop]
 ■ stopped nat (pid 12931)
@@ -467,7 +467,7 @@ Write the mapping down. It is the start of the audit story you will tell a hotel
 
 ```bash
 # on: laptop
-.venv/bin/python week26/05_tracing/exercises/ex05_telemetry.py
+.venv/bin/python week26_nemoclaw_claws/05_tracing/exercises/ex05_telemetry.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled)
@@ -494,7 +494,7 @@ OTLP/HTTP is a POST. A `read-only` access preset allows GET, HEAD and OPTIONS. E
 
 <details><summary>Hint — the decorator</summary>
 
-The research tutorial names `@track_function` in `nat.plugins.profiler.decorators.function_tracking`. In NAT 1.9.0 that path is still right. Look in `week26/.venv-nat/lib/python3.12/site-packages/nat/plugins/profiler/decorators/function_tracking.py` for the `IntermediateStepType.` values it pushes. The same file also has `track_unregistered_function`, which adds scope management.
+The research tutorial names `@track_function` in `nat.plugins.profiler.decorators.function_tracking`. In NAT 1.9.0 that path is still right. Look in `week26_nemoclaw_claws/.venv-nat/lib/python3.12/site-packages/nat/plugins/profiler/decorators/function_tracking.py` for the `IntermediateStepType.` values it pushes. The same file also has `track_unregistered_function`, which adds scope management.
 
 </details>
 
@@ -507,7 +507,7 @@ The research tutorial names `@track_function` in `nat.plugins.profiler.decorator
 | `nat validate`: `Invalid configuration: general: Field required` | the `file` tracing exporter is missing `output_path` and/or `project` (NAT 1.9) | add both keys (Section 2) |
 | the trace file has START lines with no END, or fewer `LLM_END` than LLM calls | a short-lived `nat run` exited before NAT's exporter finished writing | count `LLM_START`, or trace a long-lived `nat serve` (lab 05-5) |
 | one trace file keeps growing | the file exporter's `mode` defaults to `append` | set `mode: overwrite`, or one `output_path` per run |
-| `nat serve`: `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | `greenlet` is missing from `week26/.venv-nat` (NAT 1.9.0's FastAPI front end imports SQLAlchemy asyncio at start-up) | install it: `uv pip install --python week26/.venv-nat/bin/python greenlet`, then run lab 05-5 again (until then it falls back to the in-process twin, labelled as such) |
+| `nat serve`: `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | `greenlet` is missing from `week26_nemoclaw_claws/.venv-nat` (NAT 1.9.0's FastAPI front end imports SQLAlchemy asyncio at start-up) | install it: `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet`, then run lab 05-5 again (until then it falls back to the in-process twin, labelled as such) |
 | `/v1/workflow/full` returns `422` "Either messages or input_message must be provided" | the JSON body uses another key | send `{"input_message": "…"}` |
 | lab 05-1 says Phoenix SKIPPED | nothing answers on localhost:6006 | start Phoenix (Section 2) and run the lab again |
 | lab 05-2 says the Docker daemon is not running | Docker Desktop is closed (the client alone cannot run containers) | start Docker Desktop, or read the rest of the lab offline |

@@ -1,8 +1,8 @@
 # Neo4j 5.x with APOC + Graph Data Science for the KG Mastery course.
-#   docker compose -f week15/kg_mastery/docker-compose.yml up -d
+#   docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d
 # Browser UI: http://localhost:7474   (login: neo4j / mas_memory_2024)
 # Bolt:       bolt://localhost:7687
-# Stop:       docker compose -f week15/kg_mastery/docker-compose.yml down
+# Stop:       docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml down
 services:
   neo4j:
     image: neo4j:5.18-community

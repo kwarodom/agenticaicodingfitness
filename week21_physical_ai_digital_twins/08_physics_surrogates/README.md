@@ -15,7 +15,7 @@ cloud endpoint, else a faithful **SIM** (`sim.py`). Ch 2–4 are pure stdlib, of
 ## Run the web tutorial
 
 ```bash
-cd week21/08_physics_surrogates
+cd week21_physical_ai_digital_twins/08_physics_surrogates
 pip install -r requirements.txt
 python tutorial_server.py            # → http://127.0.0.1:8207  (env: TWIN_GUIDE_PORT)
 ```
@@ -58,4 +58,4 @@ of an uncalibrated model is a fast wrong answer). Feeds App 9 (RL) and App 12 (c
 - [NVIDIA PhysicsNeMo](https://github.com/NVIDIA/physicsnemo) (Apache-2.0; renamed from Modulus at GTC 2025)
 - [earth2studio](https://github.com/NVIDIA/earth2studio) — the Earth-2 AI weather/climate stack in Python
 - [Omniverse DSX Blueprint (AI-factory digital twins)](https://blogs.nvidia.com/blog/omniverse-dsx-blueprint/)
-- Week 21 overview and the full twin stack: [`week21/README.md`](../README.md)
+- Week 21 overview and the full twin stack: [`week21_physical_ai_digital_twins/README.md`](../README.md)

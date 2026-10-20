@@ -1,0 +1,345 @@
+{
+ "laya:en01": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": 0.0034,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 191.370333021041,
+  "ckpt": "english"
+ },
+ "decide:en01": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 175.85658398456872
+ },
+ "laya:en02": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": 0.0279,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 67.33037499361672,
+  "ckpt": "english"
+ },
+ "decide:en02": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 151.63783298339695
+ },
+ "laya:en03": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": 0.2317,
+   "safety": false,
+   "urgency": 2
+  },
+  "ms": 69.31795799755491,
+  "ckpt": "english"
+ },
+ "decide:en03": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 2
+  },
+  "ms": 148.00370900775306
+ },
+ "laya:en04": {
+  "a": {
+   "queue": "safety",
+   "safety_p": 0.7961,
+   "safety": true,
+   "urgency": 2
+  },
+  "ms": 60.98912499146536,
+  "ckpt": "english"
+ },
+ "decide:en04": {
+  "a": {
+   "queue": "safety",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 2
+  },
+  "ms": 147.31974998721853
+ },
+ "laya:en05": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": 0.074,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 65.63387499772944,
+  "ckpt": "english"
+ },
+ "decide:en05": {
+  "a": {
+   "queue": "front_desk",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 157.0298750011716
+ },
+ "laya:en06": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": 0.8312,
+   "safety": true,
+   "urgency": 2
+  },
+  "ms": 70.828416995937,
+  "ckpt": "english"
+ },
+ "decide:en06": {
+  "a": {
+   "queue": "safety",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 2
+  },
+  "ms": 145.5584589857608
+ },
+ "laya:en07": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": 0.0328,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 59.50837500859052,
+  "ckpt": "english"
+ },
+ "decide:en07": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 152.02283399412408
+ },
+ "laya:en08": {
+  "a": {
+   "queue": "safety",
+   "safety_p": 0.8159,
+   "safety": true,
+   "urgency": 1
+  },
+  "ms": 60.64362500910647,
+  "ckpt": "english"
+ },
+ "decide:en08": {
+  "a": {
+   "queue": "safety",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 2
+  },
+  "ms": 146.48600001237355
+ },
+ "laya:en09": {
+  "a": {
+   "queue": "front_desk",
+   "safety_p": 0.0262,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 60.664249991532415,
+  "ckpt": "english"
+ },
+ "decide:en09": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 158.37633301271126
+ },
+ "laya:en10": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": 0.028,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 56.79329202394001,
+  "ckpt": "english"
+ },
+ "decide:en10": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 151.21266600908712
+ },
+ "laya:en11": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": 0.0728,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 199.06983300461434,
+  "ckpt": "english"
+ },
+ "decide:en11": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 2
+  },
+  "ms": 157.03724999912083
+ },
+ "laya:en12": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": 0.0549,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 57.313333003548905,
+  "ckpt": "english"
+ },
+ "decide:en12": {
+  "a": {
+   "queue": "safety",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 2
+  },
+  "ms": 152.34500000951812
+ },
+ "laya:th01": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": 0.0907,
+   "safety": false,
+   "urgency": 0
+  },
+  "ms": 62.09470902103931,
+  "ckpt": "multilingual"
+ },
+ "decide:th01": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 1
+  },
+  "ms": 65.1974169886671
+ },
+ "laya:th02": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": 0.0211,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 173.38270801701583,
+  "ckpt": "multilingual"
+ },
+ "decide:th02": {
+  "a": {
+   "queue": "housekeeping",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 65.32745799631812
+ },
+ "laya:th03": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": 0.0508,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 43.95391599973664,
+  "ckpt": "multilingual"
+ },
+ "decide:th03": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 1
+  },
+  "ms": 65.49099998665042
+ },
+ "laya:th04": {
+  "a": {
+   "queue": "plumbing",
+   "safety_p": 0.764,
+   "safety": true,
+   "urgency": 1
+  },
+  "ms": 166.7344160086941,
+  "ckpt": "multilingual"
+ },
+ "decide:th04": {
+  "a": {
+   "queue": "safety",
+   "safety_p": null,
+   "safety": true,
+   "urgency": 1
+  },
+  "ms": 66.58616699860431
+ },
+ "laya:th05": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": 0.0005,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 32.0508340082597,
+  "ckpt": "multilingual"
+ },
+ "decide:th05": {
+  "a": {
+   "queue": "safety",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 65.63854200066999
+ },
+ "laya:th06": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": 0.0423,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 32.009582995669916,
+  "ckpt": "multilingual"
+ },
+ "decide:th06": {
+  "a": {
+   "queue": "hvac",
+   "safety_p": null,
+   "safety": false,
+   "urgency": 1
+  },
+  "ms": 64.29670902434736
+ },
+ "_recorded_at": "2026-10-17"
+}

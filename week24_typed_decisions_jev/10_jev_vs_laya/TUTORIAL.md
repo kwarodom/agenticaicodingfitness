@@ -30,6 +30,8 @@
 
 Start from the **data boundary and the quality target**, then pick the infrastructure. Don't start from the lowest advertised milliseconds.
 
+> **Update, October 2026.** Laya is now one of nine open-weights System One models listed on systemonemodels.org, next to GLiNER2.5-Decide, Kev, H2O-Lightning and others. Hosted rivals to Jev include pplx-decider, Clef and Microsoft-Decision-1. [Lab 16 — local System One models](../16_local_system_one_models/TUTORIAL.md) runs Laya, GLiNER and GLiNER2.5-Decide on your laptop and compares them with Jev on the same tickets.
+
 ✓ Checkpoint: you can name one AltoTech workload where the privacy boundary argues for local inference, and one where Jev's larger context argues for the hosted API.
 
 ## 1 · Laya is three checkpoints, not one model
@@ -75,7 +77,7 @@ The *untuned* English Laya checkpoint scored **0.362** on that same test. A spec
 A benchmark is software, and software has bugs. Before comparing models, prove offline that the harness sends both models **byte-identical input**, counts failures, and refuses truncation.
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab01_benchmark_offline_tests.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab01_benchmark_offline_tests.py
 ```
 
 **Expected output**
@@ -101,7 +103,7 @@ A benchmark is software, and software has bugs. Before comparing models, prove o
 `plan` builds the corpus, hashes it, counts the calls and shows one example request. It sends nothing.
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab02_benchmark_plan.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab02_benchmark_plan.py
 ```
 
 **Expected output**
@@ -125,14 +127,14 @@ Notice that `state` is a **JSON string**, not an object: the runner serializes t
 This is the real harness on the real API: 28 fictional rows covering all seven lab schemas, in EN, TH and mixed. It takes about 15 seconds and costs about a tenth of a cent. Results go to a **new** folder every time; the runner refuses to overwrite evidence.
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab03_jev_only_benchmark.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab03_jev_only_benchmark.py
 ```
 
 The same run by hand, for your own terminal:
 
 ```bash
 set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a
-cd week24/jev_lab
+cd week24_typed_decisions_jev/jev_lab
 ../../.venv/bin/python jev_laya_benchmark.py init --dir /tmp/bench_data
 ../../.venv/bin/python jev_laya_benchmark.py run --input /tmp/bench_data/smoke.jsonl \
   --providers jev --live-jev --limit 28 --out /tmp/bench-run-01
@@ -171,7 +173,7 @@ Also note **p95 = 1,304 ms** while p50 = 442 ms. The tail matters for user exper
 Laya's repository documents a negated cancellation request that still selected "cancel", with high confidence. TypeSafe documents that Jev reads instructions *literally*. Either way, you test it yourself before a classifier goes anywhere near equipment.
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab04_negation_probe.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab04_negation_probe.py
 ```
 
 **Expected output**
@@ -244,10 +246,10 @@ identity + tenant policy resolved in code
 
 ## 8 · Optional — run Laya locally
 
-Laya needs a separate environment, a PyTorch runtime and a model download on first use. That is why it is optional. The demo script is saved at `week24/10_jev_vs_laya/optional/laya_demo.py`, and its default mode is a dry run that imports nothing:
+Laya needs a separate environment, a PyTorch runtime and a model download on first use. That is why it is optional. (Lab 16 sets that environment up for you: `week24_typed_decisions_jev/.venv-local`.) The demo script is saved at `week24_typed_decisions_jev/10_jev_vs_laya/optional/laya_demo.py`, and its default mode is a dry run that imports nothing:
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/optional/laya_demo.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/optional/laya_demo.py
 ```
 
 To actually run it, use an isolated folder so the course `.venv` stays clean:
@@ -256,7 +258,7 @@ To actually run it, use an isolated folder so the course `.venv` stays clean:
 mkdir -p ~/laya-tutorial && cd ~/laya-tutorial
 python3 -m venv .venv && source .venv/bin/activate
 python -m pip install "laya==0.3.20" && python -m pip check
-cp /Users/altodev/Desktop/agenticaicodingfitness/week24/10_jev_vs_laya/optional/laya_demo.py .
+cp /Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/10_jev_vs_laya/optional/laya_demo.py .
 python laya_demo.py --run            # first run downloads the multilingual checkpoint
 python laya_demo.py --run --offline  # proves it works from the local cache
 ```
@@ -279,13 +281,13 @@ Labs 01 and 02 never call an API. Lab 03 replays a recorded real run in DRY mode
 
 ## Try it yourself
 
-**Exercise 10 — be the referee.** Open `week24/10_jev_vs_laya/exercises/ex10_fair_pilot.py`. It is fully offline:
+**Exercise 10 — be the referee.** Open `week24_typed_decisions_jev/10_jev_vs_laya/exercises/ex10_fair_pilot.py`. It is fully offline:
 
 1. **TODO 1** — fill `PILOT_PLAN`: splits, languages, metrics, where thresholds are tuned, whether to start in shadow mode, and the hybrid-fallback rule.
 2. **TODO 2** — implement `is_fair_comparison(run_a, run_b)`. It returns one problem string per broken rule (R1–R7 in the file's docstring), and an empty list when the runs are comparable.
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/exercises/ex10_fair_pilot.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/exercises/ex10_fair_pilot.py
 ```
 
 **Expected output**

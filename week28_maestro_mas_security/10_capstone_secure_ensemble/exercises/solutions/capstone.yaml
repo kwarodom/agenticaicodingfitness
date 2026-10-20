@@ -1,0 +1,24 @@
+# Hotel Ops Ensemble — production defense configuration · REFERENCE SOLUTION (one of several that pass)
+#
+# 9 controls, 15 of 16 points. Every critical-impact threat has two independent controls. HITL is left off:
+# at 5 points it is the dearest control, and every threat it would stop has cheaper automated controls that stop
+# it too. The careful approver is still the trained behaviour, in case HITL is switched on later.
+
+human: careful
+
+live_spot_check: A01
+
+defenses:
+  spotlight:        {use: "",    why: ""}
+  forward_summary:  {use: false, why: ""}
+  tool_allowlist:   {use: true,  why: "Least agency keeps the blast radius small if any other check has a bug; the suite cannot measure that, so it is a judgement call."}
+  param_bounds:     {use: true,  why: "No request from anyone may push a room outside 20–26 °C or the chiller outside 6–9 °C."}
+  principal_authz:  {use: true,  why: "Every action is authorised for the person it is really for, however many agents it passed through."}
+  hitl:             {use: false, why: ""}
+  egress_allowlist: {use: true,  why: "Guest data can only be emailed to the hotel or to the guest's own on-file address."}
+  signed_cards:     {use: false, why: ""}
+  signed_messages:  {use: true,  why: "Vendor replies must be signed by the pinned key, fresh and used once, so look-alikes and replays fail."}
+  memory_gate:      {use: true,  why: "Only staff write the shared memory every agent trusts."}
+  sop_integrity:    {use: true,  why: "An SOP that does not match the signed manifest is withheld, not read to an agent."}
+  audit_chain:      {use: true,  why: "A deleted or edited audit row is detected against a witness kept outside the log."}
+  circuit_breaker:  {use: true,  why: "A request that keeps forwarding itself stops at 4 hops instead of at the runtime's hard cap."}

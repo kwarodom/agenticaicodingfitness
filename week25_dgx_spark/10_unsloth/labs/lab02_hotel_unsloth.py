@@ -10,8 +10,8 @@ the run inside the playbook container under nohup. Lab 03 watches it and compare
 
 Opt in with  --launch  or  SPARK_APPLY=1.  Add  --qlora  to load the base in 4 bits instead.
 
-Run: .venv/bin/python week25/10_unsloth/labs/lab02_hotel_unsloth.py
-     SPARK_APPLY=1 .venv/bin/python week25/10_unsloth/labs/lab02_hotel_unsloth.py
+Run: .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab02_hotel_unsloth.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab02_hotel_unsloth.py
 """
 import hashlib
 import json
@@ -40,7 +40,7 @@ banner("Lab 10-2 · the hotel dataset on Unsloth — same data, same numbers as 
 step(1, "derive the Unsloth config from Module 09's YAML")
 src = M09 / "configs" / "hotel_lora_sft.yaml"
 if not src.is_file():
-    sys.exit("✕ Module 09's configs/hotel_lora_sft.yaml is missing — run week25/09_llama_factory/labs/lab03 first.")
+    sys.exit("✕ Module 09's configs/hotel_lora_sft.yaml is missing — run week25_dgx_spark/09_llama_factory/labs/lab03 first.")
 lf = yaml.safe_load(src.read_text(encoding="utf-8"))
 cfg = {
     "model": lf["model_name_or_path"],
@@ -145,4 +145,4 @@ if not all(put(local, remote) for local, remote in uploads) and where() != "dry"
     warn("upload failed — check ssh/scp")
     sys.exit(1)
 sh(launch, example="Collecting transformers\n…")
-result(f"Unsloth run '{KIND}' started under nohup. Watch and compare: .venv/bin/python week25/10_unsloth/labs/lab03_compare_frameworks.py")
+result(f"Unsloth run '{KIND}' started under nohup. Watch and compare: .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab03_compare_frameworks.py")

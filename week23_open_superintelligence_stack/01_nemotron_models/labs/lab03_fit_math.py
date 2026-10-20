@@ -9,7 +9,7 @@ Week 23 runbook uses: usable = mem_gb * 0.9, weights = params_B * GB_per_B * 1.1
 Part B (endpoint up): a miniature of the 1M-context promise — bury one anomalous
 line in a haystack of log noise and see if the model retrieves it.
 
-Run:  cd <repo root> && .venv/bin/python week23/01_nemotron_models/labs/lab03_fit_math.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/01_nemotron_models/labs/lab03_fit_math.py
 """
 from __future__ import annotations
 

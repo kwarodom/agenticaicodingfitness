@@ -11,7 +11,7 @@ honestly, and refuses unfair runs. This lab runs, fully offline:
 
 No key, no model download, no cost.
 
-Run: .venv/bin/python week24/10_jev_vs_laya/labs/lab01_benchmark_offline_tests.py
+Run: .venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab01_benchmark_offline_tests.py
 """
 import json
 import os
@@ -20,7 +20,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-JEV_LAB = Path(__file__).resolve().parents[2] / "jev_lab"   # …/week24/jev_lab
+JEV_LAB = Path(__file__).resolve().parents[2] / "jev_lab"   # …/week24_typed_decisions_jev/jev_lab
 
 print("━" * 72)
 print("━━ Lab 10-1 · offline tests for the Jev/Laya benchmark harness")

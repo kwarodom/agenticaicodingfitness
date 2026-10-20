@@ -24,7 +24,7 @@ Endpoints
   POST /api/reset              wipe memory (amnesiac slate)
 
 Run:
-    .venv/bin/python week18/self_evolving_agent/server.py        # → http://127.0.0.1:8088
+    .venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/server.py        # → http://127.0.0.1:8088
 """
 from __future__ import annotations
 

@@ -101,7 +101,7 @@ for e in mem.recall_recent():
 
 Run it tomorrow, next week — the facts are still there. That's durable memory.
 
-> 📁 Class repo: `week14/agent_memory.py` (the full class), `week14/lab1_hotel_mas.py` (a 2-agent hotel crew that reads/writes this memory), `week14/lab1_hotel_memory.py`.
+> 📁 Class repo: `week14_agent_memory_knowledge_graphs/agent_memory.py` (the full class), `week14_agent_memory_knowledge_graphs/lab1_hotel_mas.py` (a 2-agent hotel crew that reads/writes this memory), `week14_agent_memory_knowledge_graphs/lab1_hotel_memory.py`.
 
 ---
 
@@ -124,7 +124,7 @@ RETURN r.name, overrides ORDER BY overrides DESC
 
 - `MATCH` = the pattern to find · `WHERE` = filter · `RETURN` = what to output · `MERGE` = create-if-absent (idempotent).
 
-> 📁 Class repo: `week14/NEO4J_TUTORIAL.md` — full Cypher walkthrough with hotel scenarios.
+> 📁 Class repo: `week14_agent_memory_knowledge_graphs/NEO4J_TUTORIAL.md` — full Cypher walkthrough with hotel scenarios.
 
 ---
 
@@ -154,7 +154,7 @@ Under the hood: NL question → LLM writes Cypher → Neo4j runs it → LLM turn
 ## Shared graph = multi-agent coordination
 When several agents read and write the *same* graph, it becomes their shared world model. A sensor agent writes `TEMPERATURE_ALERT`; an optimizer agent reads it, decides, and writes `HVAC_SETPOINT_CHANGED`. No direct messaging needed — the graph is the blackboard. (This is the Week 14 hotel energy-optimization lab: 300 rooms, multiple agents, one graph.)
 
-> 📁 Class repo: `week14/6.hotel_kg_builder.py` (builds the hotel graph), `week14/NEO4J_WEBAPP_INTEGRATION.md` (wiring a graph into a real backend).
+> 📁 Class repo: `week14_agent_memory_knowledge_graphs/6.hotel_kg_builder.py` (builds the hotel graph), `week14_agent_memory_knowledge_graphs/NEO4J_WEBAPP_INTEGRATION.md` (wiring a graph into a real backend).
 
 ---
 
@@ -167,7 +167,7 @@ pip install neo4j langchain-neo4j langchain-anthropic
 # Browser UI at http://localhost:7474  ·  Bolt driver at bolt://localhost:7687
 ```
 
-> 📁 Class repo: `week14/1.docker-compose.yml`, `week14/2.neo4j_connect.py`.
+> 📁 Class repo: `week14_agent_memory_knowledge_graphs/1.docker-compose.yml`, `week14_agent_memory_knowledge_graphs/2.neo4j_connect.py`.
 
 ---
 
@@ -232,7 +232,7 @@ print(MockLLM().answer("What happened in Room 301?", hvac.recall_related("Room",
 Swap the dict for the real graph and watch the same API light up nodes you can *see*.
 
 1. **Start Neo4j** (Docker command above) and open the browser UI at `http://localhost:7474`.
-2. **Run the real class.** Import `AgentMemory` from `week14/agent_memory.py`; replay the same `store_event` calls. Refresh the browser — watch nodes/edges appear. *This is the moment it clicks.*
+2. **Run the real class.** Import `AgentMemory` from `week14_agent_memory_knowledge_graphs/agent_memory.py`; replay the same `store_event` calls. Refresh the browser — watch nodes/edges appear. *This is the moment it clicks.*
 3. **Recall + restart.** Call `recall_recent()`, then kill the script and run a *fresh* process and recall again — the facts survived (contrast with the Week-2 `messages` list, which would be empty).
 4. **GraphRAG, then make it safe.** Build the chain (`build_graphrag_chain`) and ask "what happened in Room 301?" in English; peek at the generated Cypher. Then prove the caveat above: create a **read-only Neo4j role**, reconnect, and confirm a model-written `DELETE` is *refused* by the DB.
 5. **Two agents, one graph.** Spin up `AgentMemory("sensor-01")` writing alerts; show `hvac-01` can query what the sensor wrote — coordination via shared memory, no direct messaging.
@@ -248,6 +248,6 @@ Swap the dict for the real graph and watch the same API light up nodes you can *
 
 **Pass threshold: 4 / 5 criteria.** (Criterion 1 alone is the $0 floor — no learner should leave without it.)
 
-**Stretch:** point them at `week14/lab1_hotel_mas.py` (a 2-agent hotel crew on shared memory) and the `multi-agent-systems` skill to combine a swarm with graph memory; then the `agent-evaluation` skill to *measure* whether the GraphRAG answers are actually correct (recall vs. hallucination), and `knowledge-graph-mastery` for the production GraphRAG + RAGAS version.
+**Stretch:** point them at `week14_agent_memory_knowledge_graphs/lab1_hotel_mas.py` (a 2-agent hotel crew on shared memory) and the `multi-agent-systems` skill to combine a swarm with graph memory; then the `agent-evaluation` skill to *measure* whether the GraphRAG answers are actually correct (recall vs. hallucination), and `knowledge-graph-mastery` for the production GraphRAG + RAGAS version.
 
 End by tying the whole course together: "Week 2 gave the model a sentence of memory; Week 14 gives a team of agents a memory that outlives them."

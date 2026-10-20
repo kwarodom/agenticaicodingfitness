@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 01.1 — The single call: the atom of everything.
 
-Run:  python week15/code/01_llm_fundamentals/01_single_call.py
+Run:  python week15_production_graphrag/code/01_llm_fundamentals/01_single_call.py
 
 What to notice:
   - `messages` is a list of turns; each has a role + content.

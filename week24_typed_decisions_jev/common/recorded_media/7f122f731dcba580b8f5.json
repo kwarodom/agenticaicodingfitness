@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "hear",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "media": "voicemail_burning_th.wav"
+ },
+ "response": {
+  "text": "สวัสดีค่ะ ห้อง 1223 นะคะ แอร์ไม่เย็นเลยตั้งแต่เมื่อคืน แล้วตอนนี้มีกลิ่นไหม้ออกมาจากช่องแอร์ด้วย ช่วยส่งช่างมาดูด่วนเลยนะคะ",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "usage": {
+   "input_tokens": 319,
+   "output_tokens": 41
+  },
+  "latency_ms": 2570.8
+ }
+}

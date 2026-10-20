@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 04 — Guards: deny, hold and catch
 
-> ส่วนหนึ่งของ Week 29 · Claude Code mods คุณจะเรียนวิธีเปลี่ยนหน้าตาและพฤติกรรมของ Claude Code เอง จากในเทอร์มินัลที่คุณเขียนโค้ดอยู่ทุกวัน บทเรียนชุดนี้คือฉบับยาว ส่วน **🏋 Mod Gym** ซึ่งเป็น panel ใน Claude Code คือฉบับสั้นที่มีการตรวจงานให้ ตลอดบทเรียนคุณจะค่อย ๆ สร้าง lab mod ตัวเดียวชื่อ `hello-mod` ฉบับที่เสร็จสมบูรณ์อยู่ที่ `week29/reference/hello-mod`
+> ส่วนหนึ่งของ Week 29 · Claude Code mods คุณจะเรียนวิธีเปลี่ยนหน้าตาและพฤติกรรมของ Claude Code เอง จากในเทอร์มินัลที่คุณเขียนโค้ดอยู่ทุกวัน บทเรียนชุดนี้คือฉบับยาว ส่วน **🏋 Mod Gym** ซึ่งเป็น panel ใน Claude Code คือฉบับสั้นที่มีการตรวจงานให้ ตลอดบทเรียนคุณจะค่อย ๆ สร้าง lab mod ตัวเดียวชื่อ `hello-mod` ฉบับที่เสร็จสมบูรณ์อยู่ที่ `week29_claude_code_mods/reference/hello-mod`
 
 > 💬 หมายเหตุภาษา: เนื้อหาบทเรียนเป็นภาษาไทย แต่ผลลัพธ์ที่โปรแกรมพิมพ์ออกเทอร์มินัล (และโค้ดทั้งหมด) เป็นภาษาอังกฤษ ตัวอย่างผลลัพธ์ในกล่องโค้ดจึงเป็นภาษาอังกฤษตรงกับที่คุณจะเห็นจริง
 
@@ -26,7 +26,7 @@
 แล็บสร้างไว้ใน repo แล้ว สามตัวในนั้น **ตั้งใจให้ fail**: เพื่อแสดงบั๊ก
 
 ```text
-week29/04_guards/
+week29_claude_code_mods/04_guards/
   labs/guard-without-catch/   a guard with no .catch            (test fails: the push runs)
   labs/guard-before/          observer with .catch, then guard  (test fails: the push runs)
   labs/guard-after/           guard first, observer without it  (test passes)
@@ -100,7 +100,7 @@ test('a force push is refused when no one can answer the question', async ($, on
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/guard-without-catch
+claude plugin test week29_claude_code_mods/04_guards/labs/guard-without-catch
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้; แล็บนี้ตั้งใจให้ fail)
@@ -145,7 +145,7 @@ validate จะบอกว่า gating hook ตัวไหนมี handler:
 
 ```bash
 # on: laptop
-claude plugin validate week29/04_guards/labs/guard-after
+claude plugin validate week29_claude_code_mods/04_guards/labs/guard-after
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้; ตัดบรรทัดของ manifest ออก)
@@ -202,7 +202,7 @@ guard มี `.catch` แบบ fail closed ของมันแล้ว ใ�
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/guard-before
+claude plugin test week29_claude_code_mods/04_guards/labs/guard-before
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้; แล็บนี้ตั้งใจให้ fail)
@@ -247,7 +247,7 @@ counter's .catch says "next(e)" → the Bash call goes on without the guard's re
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/guard-after
+claude plugin test week29_claude_code_mods/04_guards/labs/guard-after
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้)
@@ -261,13 +261,13 @@ tests/guard.test.ts:
 Ran 1 test across 1 file. [0.15s]
 ```
 
-ให้ใช้ A วิธี B แสดงให้เห็นว่า `.catch` ของ observer ไม่ได้เพิ่มอะไรเลย: hook ที่ throw ถูกข้ามอยู่แล้ว observer จึง fail open ได้เองโดยไม่ต้องมีมัน วิธี C ใช้ได้ แต่ต้องอาศัยว่าคุณรู้ทุก `$` call ที่ guard ทุกตัวทำ ทั้ง `week29/reference/hello-mod` และตัว Mod Gym เองใช้แบบ A: guard ลงทะเบียนก่อน และ observer แบบรับทุกอย่างไม่มี `.catch`
+ให้ใช้ A วิธี B แสดงให้เห็นว่า `.catch` ของ observer ไม่ได้เพิ่มอะไรเลย: hook ที่ throw ถูกข้ามอยู่แล้ว observer จึง fail open ได้เองโดยไม่ต้องมีมัน วิธี C ใช้ได้ แต่ต้องอาศัยว่าคุณรู้ทุก `$` call ที่ guard ทุกตัวทำ ทั้ง `week29_claude_code_mods/reference/hello-mod` และตัว Mod Gym เองใช้แบบ A: guard ลงทะเบียนก่อน และ observer แบบรับทุกอย่างไม่มี `.catch`
 
 **อีกกรณีที่วัดได้: guard สองตัวบน tool เดียว** `labs/two-guards` เพิ่ม guard ตัวที่สองบน Bash (ปฏิเสธการลบแบบ recursive นอกโฟลเดอร์แล็บ) ลงทะเบียนไว้เหนือ guard กัน force push โดยทั้งคู่มี handler แบบ fail closed:
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/two-guards
+claude plugin test week29_claude_code_mods/04_guards/labs/two-guards
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้; ตัดบางส่วน)
@@ -355,7 +355,7 @@ test('wide recursive deletes are refused, lab deletes run', async ($, on) => {
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/exercises/solutions/one-guard
+claude plugin test week29_claude_code_mods/04_guards/exercises/solutions/one-guard
 ```
 
 **Expected output** (จับจากเครื่อง Mac เครื่องนี้)

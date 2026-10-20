@@ -1,23 +1,18 @@
 import math
 import random
-import requests
 from datetime import datetime
+
+import requests
 
 
 def calculate_area(radius):
-    pi = math.pi
-    area = pi * radius * radius
-    return area
+    """Return the area of a circle for the given radius."""
+    return math.pi * radius ** 2
 
 
 def process_data(data_list):
-    result = []
-    for item in data_list:
-        if item > 10:
-            result.append(item * 2)
-        else:
-            result.append(item)
-    return result
+    """Double items greater than 10; leave others unchanged."""
+    return [item * 2 if item > 10 else item for item in data_list]
 
 
 class UserAccount:
@@ -28,23 +23,27 @@ class UserAccount:
 
     def deactivate(self):
         self.is_active = False
-        print("User " + self.username + " deactivated.")
+        print(f"User {self.username} deactivated.")
 
 
 def fetch_user_data(user_id):
+    """Fetch user data from the remote API.
+
+    Returns the parsed JSON dict on success, or an empty dict on failure.
+    """
     try:
         response = requests.get(f"https://api.example.com/users/{user_id}")
-        data = response.json()
-        return data
-    except Exception as e:
-        print("Error fetching data:", str(e))
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print("Error fetching data:", e)
+        return {}
 
 
 def main():
     print("Starting application...")
 
-    current_time = datetime.now()
-    print("Time:", current_time)
+    print("Time:", datetime.now())
 
     area = calculate_area(5)
     print("Calculated area:", area)

@@ -1,7 +1,7 @@
 # Week 19 — Self-Evolving Agent v2 (sovereign, on a DGX)
 #
 # Install into the repo's uv-managed .venv (Python 3.13):
-#     uv pip install -r week19/self_evolving_agent_v2/requirements.txt
+#     uv pip install -r week19_sovereign_ai_dgx/self_evolving_agent_v2/requirements.txt
 #
 # The agent has a SWITCHABLE BRAIN (set with the BRAIN env var):
 #   BRAIN=local   → a local OpenAI-compatible model (Ollama / vLLM on a DGX). Sovereign.

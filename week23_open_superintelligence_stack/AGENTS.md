@@ -24,7 +24,7 @@ Orchestration principles used:
   API contract (endpoints, JSON shapes, NDJSON streaming protocol) with strict file ownership
   (backend owns `*.py` + JSON; frontend owns `static/guide.html`) so they can't conflict.
 - **QA owns everything at the end** — one agent launches the server, tests every endpoint in SIM
-  and REAL mode, fixes bugs directly, and integrates the app into the week23 README.
+  and REAL mode, fixes bugs directly, and integrates the app into the week23_open_superintelligence_stack README.
 
 ---
 
@@ -52,11 +52,11 @@ Orchestration principles used:
 
 | | |
 |---|---|
-| **Role** | Codebase archaeologist: extracts the week23 "house style" and audits existing content for inconsistencies. |
+| **Role** | Codebase archaeologist: extracts the week23_open_superintelligence_stack "house style" and audits existing content for inconsistencies. |
 | **Can do** | Deep-read `tutorial_server.py` / `config.py` / `guide.html` of existing apps; document CSS tokens, FastAPI patterns, port auto-pick, SIM/REAL badge UX; cross-check README tables against actual code. |
 | **Responsibility** | Author `research/house_style.md` (build spec so the new app is indistinguishable in style) and `research/audit_findings.md` (README-vs-code mismatches, missing per-app READMEs — report only, no fixes). |
-| **Has done** | Read app 01 in full (server 343 + config 326 + guide.html 768 lines) and app 02's `view.py`/`sim.py`; documented the exact CSS `:root` tokens (dark olive + NVIDIA green `#76b900`), FastAPI/streaming patterns, connection-panel UX, the inline-SVG viz toolkit, and requirements. Audit found: all 12 ports match the README ✓, but 8 apps printed a wrong `DGX_GUIDE_PORT` busy-port hint, 10–12 apps carry stale week19 docstrings, 5 apps lack READMEs, app 01 drifts on naming (`ntsim`/`ntview`) and requirements, and `week23/reference/` is cited but gitignored. |
-| **Needs later** | Unfixed findings held for human judgment (see QA row): stale week19 docstrings, 5 missing per-app READMEs, app-01 naming drift, and adding app 00 to the 12 apps' TUTS prev/next cycle (requires touching all 12 `guide.html` files). |
+| **Has done** | Read app 01 in full (server 343 + config 326 + guide.html 768 lines) and app 02's `view.py`/`sim.py`; documented the exact CSS `:root` tokens (dark olive + NVIDIA green `#76b900`), FastAPI/streaming patterns, connection-panel UX, the inline-SVG viz toolkit, and requirements. Audit found: all 12 ports match the README ✓, but 8 apps printed a wrong `DGX_GUIDE_PORT` busy-port hint, 10–12 apps carry stale week19_sovereign_ai_dgx docstrings, 5 apps lack READMEs, app 01 drifts on naming (`ntsim`/`ntview`) and requirements, and `week23_open_superintelligence_stack/reference/` is cited but gitignored. |
+| **Needs later** | Unfixed findings held for human judgment (see QA row): stale week19_sovereign_ai_dgx docstrings, 5 missing per-app READMEs, app-01 naming drift, and adding app 00 to the 12 apps' TUTS prev/next cycle (requires touching all 12 `guide.html` files). |
 
 ## 4 · Backend Agent
 
@@ -84,9 +84,9 @@ Orchestration principles used:
 |---|---|
 | **Role** | Test engineer with fix authority over the whole app. |
 | **Can do** | Launch the server (SIM via `DGX_MODE=sim`, REAL against local Ollama if up), curl every endpoint incl. streaming (`curl -N`), JS syntax check via node, sovereignty grep (no external `<script src>`/fetch), port-collision and content cross-checks — then fix and re-test until green. |
-| **Responsibility** | End-to-end verification; kill all test servers; wire app 00 into `week23/README.md` as the recommended entry point; apply only trivially-safe doc fixes from the audit findings. |
-| **Has done** | **All green.** SIM launch on :8112: every endpoint passed (stack integrity, 12 app cards, dead-URL probe < 1 s, 4 node runs streaming meta→tokens→done, unknown-node error line, run-lock, path-traversal blocked). REAL smoke on :8113 against local Ollama streamed 46 tokens incl. reasoning channel. **Found + fixed 1 real bug**: the frontend ignored `channel:"reasoning"` tokens, burying answers in thinking text — now rendered as dim `〔thinking〕` spans. Live-probed build.nvidia.com `/models` (102 models), which **validated the research agents' uncertain IDs** (`nemotron-3-nano-30b-a3b`, `-super-120b-a12b`, `-ultra-550b-a55b`, nemoguard) for free. Integrated "Phase 0 · The hub" into `week23/README.md` + Quick start; fixed the wrong port-busy hint in 8 apps and the `week23/reference/` note. Killed all servers, cleaned scratch files. |
-| **Needs later** | REAL-mode test against the actual DGX Spark (`DGX_CONN=tunnel`) and a live nvapi- key run; real-browser visual pass. Skipped-by-design audit items: stale week19 docstrings (10–12 apps), 5 missing per-app READMEs, app-01 naming drift, TUTS cycle integration. NemoClaw GitHub URL still unverified. |
+| **Responsibility** | End-to-end verification; kill all test servers; wire app 00 into `week23_open_superintelligence_stack/README.md` as the recommended entry point; apply only trivially-safe doc fixes from the audit findings. |
+| **Has done** | **All green.** SIM launch on :8112: every endpoint passed (stack integrity, 12 app cards, dead-URL probe < 1 s, 4 node runs streaming meta→tokens→done, unknown-node error line, run-lock, path-traversal blocked). REAL smoke on :8113 against local Ollama streamed 46 tokens incl. reasoning channel. **Found + fixed 1 real bug**: the frontend ignored `channel:"reasoning"` tokens, burying answers in thinking text — now rendered as dim `〔thinking〕` spans. Live-probed build.nvidia.com `/models` (102 models), which **validated the research agents' uncertain IDs** (`nemotron-3-nano-30b-a3b`, `-super-120b-a12b`, `-ultra-550b-a55b`, nemoguard) for free. Integrated "Phase 0 · The hub" into `week23_open_superintelligence_stack/README.md` + Quick start; fixed the wrong port-busy hint in 8 apps and the `week23_open_superintelligence_stack/reference/` note. Killed all servers, cleaned scratch files. |
+| **Needs later** | REAL-mode test against the actual DGX Spark (`DGX_CONN=tunnel`) and a live nvapi- key run; real-browser visual pass. Skipped-by-design audit items: stale week19_sovereign_ai_dgx docstrings (10–12 apps), 5 missing per-app READMEs, app-01 naming drift, TUTS cycle integration. NemoClaw GitHub URL still unverified. |
 
 ---
 
@@ -101,7 +101,7 @@ A second workflow pipelined all 12 folders through **one author + one verifier e
 |---|---|
 | **Tutorial authors ×12** | Wrote `TUTORIAL.md` per folder (uniform template: Path A 🖥️ DGX Spark / B ☁️ build.nvidia.com / C 💻 laptop; numbered steps with copy-paste commands + expected output + ✓ checkpoints; exercises with hidden solutions; troubleshooting incl. the 404/401/`/v1` pitfalls) and **36 lab scripts** (`labs/`, 3 per folder) that do real inference through each folder's `config.py` connection switch, degrade gracefully with no endpoint, and self-terminate < 60 s. Runbook `[UNCERTAIN]` items stay hedged ("verify with `GET /v1/models` first"). |
 | **Lab verifiers ×12** | Actually executed every lab against live Ollama (real inference) AND endpoint-less; fixed real bugs — e.g. 01: wrong Super fit-verdict, reasoning eating token budgets; 07: bare `except` swallowing timeouts → false-positive guardrail blocks + reasoning leaking as answers; 08: stacked cold-load timeouts → added whole-lab deadline; verified OTLP export against a live Phoenix. |
-| **Consistency editor ×1** | All 12 TUTORIALs exist, `## Next` chain 01→…→12→README verified, zero structure drift, all 36 labs cross-referenced with no orphans; added the hands-on track to `week23/README.md` (How-to-use + Quick start). |
+| **Consistency editor ×1** | All 12 TUTORIALs exist, `## Next` chain 01→…→12→README verified, zero structure drift, all 36 labs cross-referenced with no orphans; added the hands-on track to `week23_open_superintelligence_stack/README.md` (How-to-use + Quick start). |
 
 Run notes: the first run hit the org spend limit at 22/25 agents; resumed with
 `resumeFromRunId` — cached agents replayed free, only the 3 failed ones re-ran.
@@ -122,7 +122,7 @@ Mission 1) built **`00_lab_runner/` (port 8113, env `LAB_GUIDE_PORT`)**.
 |---|---|
 | **Backend** | FastAPI server that parses all 12 `TUTORIAL.md` at startup (fence-aware H2 scanner; re-reads on mtime change so edits show on reload) into `/api/course` (141 sections, 36 labs), `/api/source` (strict allowlisted lab source), and `POST /api/run` — spawns the real `labs/*.py` with the house `__EXIT__`-sentinel streaming pattern, whitelisting only the 4 `DGX_*` env keys, 150 s cap, run-lock. |
 | **Frontend** | Single-file `guide.html`: course-tree sidebar with per-folder progress rings, continuous prev/next across folder boundaries, bespoke markdown renderer (✓-checkpoint lines become persisted checkboxes; Expected-output blocks auto-dimmed; copy buttons), Path A/B/C switch that injects the matching `DGX_*` env into each run, streamed terminal per lab with house colorize. |
-| **QA** | All contract endpoints tested live incl. a REAL lab run over Ollama (genuine inference, `__EXIT__ 0`), traversal attacks 404'd, env-whitelist and run-lock proven, JS node-checked + DOM-stub render test against real tutorial content; integrated port 8113 into `week23/README.md`. |
+| **QA** | All contract endpoints tested live incl. a REAL lab run over Ollama (genuine inference, `__EXIT__ 0`), traversal attacks 404'd, env-whitelist and run-lock proven, JS node-checked + DOM-stub render test against real tutorial content; integrated port 8113 into `week23_open_superintelligence_stack/README.md`. |
 
 **Needs later:** real-browser visual pass (all rendering verified via node DOM-stub); `###`
 headings render one level demoted (currently unexercised); no per-checkpoint sync across

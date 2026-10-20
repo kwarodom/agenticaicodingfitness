@@ -30,7 +30,7 @@ Requires:
   - pip install (none extra; uses stdlib + common.get_driver)
   - Neo4j optional: if reachable, real sample queries run through the wrapper.
 
-Run:  python week15/kg_mastery/part4_evaluation/04_production_monitoring.py
+Run:  python week15_production_graphrag/kg_mastery/part4_evaluation/04_production_monitoring.py
 """
 import sys
 import time

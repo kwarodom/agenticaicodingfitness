@@ -16,7 +16,7 @@ tutorial's answer to Part 6 exercise 5 into a runnable pack:
 The log line format used here is an EXAMPLE shape. No course source prints a real `openshell logs` line, so
 the checker tells you how many lines it could NOT parse. Zero parsed lines is never "zero leaks".
 
-Run: .venv/bin/python week26/07_hardening/labs/lab07_4_sovereign_evidence.py
+Run: .venv/bin/python week26_nemoclaw_claws/07_hardening/labs/lab07_4_sovereign_evidence.py
 """
 import ipaddress
 import json

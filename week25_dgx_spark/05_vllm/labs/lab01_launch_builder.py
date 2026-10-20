@@ -9,7 +9,7 @@ and prints a ready-to-paste `docker run` built from the playbook's base configur
 Numbers are estimates, not measurements: NVFP4/FP8 checkpoints keep a few layers at higher precision, and
 the real KV size is printed by vLLM at start-up. Use this to pick sensible flags before you download 40 GB.
 
-Run: .venv/bin/python week25/05_vllm/labs/lab01_launch_builder.py [--pick 3] [--ctx 32768] [--util 0.8] [--kv fp8]
+Run: .venv/bin/python week25_dgx_spark/05_vllm/labs/lab01_launch_builder.py [--pick 3] [--ctx 32768] [--util 0.8] [--kv fp8]
 """
 import argparse
 import math

@@ -2,7 +2,7 @@
 """Exercise 06 · Benchmark math — reference solution.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week26/06_benchmarking/exercises/ex06_bench_math.py
+    .venv/bin/python week26_nemoclaw_claws/06_benchmarking/exercises/ex06_bench_math.py
 
 The checker is free and offline. Stuck? Compare with exercises/solutions/.
 """

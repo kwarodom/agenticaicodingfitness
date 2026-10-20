@@ -38,7 +38,7 @@ Python 3.13.13
 OpenSSH_10.2p1, LibreSSL 3.3.6
 ```
 
-> 🔐 ไม่มีส่วนไหนในคอร์สนี้เก็บรหัสผ่าน SSH ใช้ **คีย์ (key)** ส่วนโทเค็นที่คุณเพิ่มภายหลัง (Hugging Face, NGC) จะถูกเก็บฝั่งเซิร์ฟเวอร์ใน `week25/.env.local` ซึ่งอยู่ใน gitignore และไม่เคยถูกส่งไปที่เบราว์เซอร์
+> 🔐 ไม่มีส่วนไหนในคอร์สนี้เก็บรหัสผ่าน SSH ใช้ **คีย์ (key)** ส่วนโทเค็นที่คุณเพิ่มภายหลัง (Hugging Face, NGC) จะถูกเก็บฝั่งเซิร์ฟเวอร์ใน `week25_dgx_spark/.env.local` ซึ่งอยู่ใน gitignore และไม่เคยถูกส่งไปที่เบราว์เซอร์
 
 ✓ Checkpoint: `ssh -V` พิมพ์เวอร์ชันออกมา และคุณรู้ hostname ของ Spark (พิมพ์อยู่บนการ์ด quick-start เช่น `spark-abcd`)
 
@@ -165,11 +165,11 @@ Lab Runner ไม่เคยเดา host เอง เปิด **🖥 Spark 
 | `SPARK_HOST2` | `spark-b` | โมดูลที่ใช้ Spark สองเครื่อง (02, 05, 11) |
 | `SPARK_API_HOST` | เว้นว่าง หรือ `localhost` เมื่อคุณทำ tunnel พอร์ต (ส่วนที่ 6) | แล็บที่ใช้ HTTP (serving, gateway, เอเจนต์) |
 
-การตั้งค่าถูกบันทึกลง `week25/.env.local` (อยู่ใน gitignore, สิทธิ์ 0600) หรือจะ export ในเชลล์ก็ได้ จากนั้นถาม `sparkkit` ว่าคำสั่งจะไปรันที่ไหน:
+การตั้งค่าถูกบันทึกลง `week25_dgx_spark/.env.local` (อยู่ใน gitignore, สิทธิ์ 0600) หรือจะ export ในเชลล์ก็ได้ จากนั้นถาม `sparkkit` ว่าคำสั่งจะไปรันที่ไหน:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/common/sparkkit.py
+.venv/bin/python week25_dgx_spark/common/sparkkit.py
 ```
 
 **Expected output** (แล็ปท็อปที่ยังไม่ได้ตั้งค่า Spark บันทึกจาก Mac เครื่องนี้)
@@ -208,7 +208,7 @@ Lab Runner ไม่เคยเดา host เอง เปิด **🖥 Spark 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/labs/lab01_spark_doctor.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab01_spark_doctor.py
 ```
 
 **Expected output** (โหมด DRY บันทึกจากแล็ปท็อป ถ้ามี Spark คุณจะได้ค่าของเครื่องคุณเองพร้อม ✓ / ✕)
@@ -232,7 +232,7 @@ NVIDIA GB10, 580.95.05
 ═ DRY run: REFERENCE rows are what the playbooks state, EXAMPLE rows are illustrative. Connect a Spark (🖥 Spark setup) to check yours.
 ```
 
-playbook ระบุค่าขั้นต่ำไว้ (driver 580.95.05 ขึ้นไป, CUDA 13.0) แต่ไม่ได้พิมพ์บรรทัดเหล่านี้ตรง ๆ แล็บจึงแสดงเป็น EXAMPLE เฉพาะข้อความที่ยกมาคำต่อคำจาก playbook เท่านั้นที่ติดป้าย REFERENCE ซึ่ง `week25/common/audit_references.py` ตรวจเรื่องนี้ให้ทุกแล็บ
+playbook ระบุค่าขั้นต่ำไว้ (driver 580.95.05 ขึ้นไป, CUDA 13.0) แต่ไม่ได้พิมพ์บรรทัดเหล่านี้ตรง ๆ แล็บจึงแสดงเป็น EXAMPLE เฉพาะข้อความที่ยกมาคำต่อคำจาก playbook เท่านั้นที่ติดป้าย REFERENCE ซึ่ง `week25_dgx_spark/common/audit_references.py` ตรวจเรื่องนี้ให้ทุกแล็บ
 
 แต่ละการตรวจป้องกันปัญหาอะไรในภายหลัง:
 
@@ -269,7 +269,7 @@ ssh -N -L 11000:localhost:11000 spark-a
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/labs/lab03_ports_and_tunnels.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab03_ports_and_tunnels.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ที่ยังไม่ได้ตั้งค่า Spark: มีแค่ Ollama ของแล็ปท็อปเองที่ตอบ)
@@ -322,7 +322,7 @@ Lab 02 นำสูตรไปใช้กับโมเดลเปิด (op
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/labs/lab02_memory_budget.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab02_memory_budget.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -377,7 +377,7 @@ Lab 01 รันแบบ LIVE บน Spark ของคุณหรือแบ
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 01 — เครื่องคิดเลข "ใส่ได้ไหม?"** เปิด `week25/01_meet_your_spark/exercises/ex01_will_it_fit.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 01 — เครื่องคิดเลข "ใส่ได้ไหม?"** เปิด `week25_dgx_spark/01_meet_your_spark/exercises/ex01_will_it_fit.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `weights_gb(params_b, bits)`: ขนาดของ weights เป็น GB
 2. `kv_cache_gb(layers, kv_heads, head_dim, ctx, batch, bytes_per)`: ขนาด KV cache เป็น GB
@@ -387,7 +387,7 @@ Lab 01 รันแบบ LIVE บน Spark ของคุณหรือแบ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/exercises/ex01_will_it_fit.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/exercises/ex01_will_it_fit.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด)

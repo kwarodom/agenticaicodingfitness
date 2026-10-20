@@ -14,7 +14,7 @@ Then two things a real RAG system needs:
 The multi-agent chatbot's search_documents tool does the same job with Qwen3-Embedding
 vectors in Milvus (k=8, chunks of 1000 characters, overlap 200).
 
-Run: .venv/bin/python week25/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py [--ask "..."] [--no-llm]
+Run: .venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py [--ask "..."] [--no-llm]
 """
 import argparse
 import math

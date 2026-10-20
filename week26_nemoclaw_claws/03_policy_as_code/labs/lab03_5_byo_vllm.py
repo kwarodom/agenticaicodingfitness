@@ -11,7 +11,7 @@ This is the DGX Spark OpenShell playbook as ordered steps — what `nemoclaw onb
     agent must call inference.local, and the real CLI 0.0.111 parsing the exact command lines (plus a guard
     for the one mistake the parser does not catch: `--policy` with `--from openclaw`).
 
-Run: .venv/bin/python week26/03_policy_as_code/labs/lab03_5_byo_vllm.py
+Run: .venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_5_byo_vllm.py
 """
 import ipaddress
 import shlex

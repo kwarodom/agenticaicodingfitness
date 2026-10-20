@@ -9,7 +9,7 @@ We ask Jev numeric/date/counting questions that sit near the edges, then
 compare with the exact answers computed in code. Then we show the right
 pattern: compute the flag in code, and give Jev only the judgment.
 
-Run: .venv/bin/python week24/03_question_design/labs/lab03_math_in_code.py
+Run: .venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab03_math_in_code.py
 """
 import sys
 from datetime import date

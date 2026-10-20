@@ -4,7 +4,7 @@
 Lab 01 authored `hotel-telemetry` as files. Here a real model on YOUR endpoint
 (Spark/Ollama/build.nvidia.com) discovers it, invokes its tools, answers — timed.
 
-Run:  .venv/bin/python week23/04_agent_skills/labs/lab02_load_skill_live.py
+Run:  .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab02_load_skill_live.py
 Endpoint via config.py (DGX_CONN=local|tunnel|cloud + DGX_BASE_URL / DGX_API_KEY);
 no endpoint → real setup commands plus a labeled expected-output sample.
 """

@@ -1,0 +1,75 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "My daughter is allergic to feathers, could you swap the duvet and pillows in 904 for synthetic ones before tonight?"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets, showers",
+     "safety": "smoke, burning smell, fire, sparks, or water near electricity",
+     "front_desk": "check-in, check-out, billing, room changes, stay extensions"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   },
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is `message`?",
+    "criteria": [
+     "routine — whenever convenient, or nothing needs doing",
+     "today — a problem that should be fixed today",
+     "immediate — danger or damage happening now"
+    ]
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "housekeeping",
+    "confidence": 0.99,
+    "probabilities": {
+     "hvac": 0.0,
+     "housekeeping": 0.99,
+     "plumbing": 0.0,
+     "safety": 0.0,
+     "front_desk": 0.01
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.0
+   },
+   "urgency": {
+    "type": "score",
+    "score": 1.0,
+    "confidence": 0.98,
+    "legend": {
+     "0": "routine — whenever convenient, or nothing needs doing",
+     "1": "today — a problem that should be fixed today",
+     "2": "immediate — danger or damage happening now"
+    },
+    "probabilities": {
+     "0": 0.0,
+     "1": 0.99,
+     "2": 0.01
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 514,
+   "output_tokens": 98
+  }
+ }
+}

@@ -18,7 +18,7 @@ endpoint, else a faithful **SIM** (`sim.py`).
 ## Run the web tutorial
 
 ```bash
-cd week21/07_whatif_scenarios
+cd week21_physical_ai_digital_twins/07_whatif_scenarios
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8206  (env TWIN_GUIDE_PORT)
 ```

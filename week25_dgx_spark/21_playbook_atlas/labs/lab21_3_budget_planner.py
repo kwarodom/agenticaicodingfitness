@@ -7,8 +7,8 @@ lists what you must bring besides the Spark: accounts, tokens, a second Spark, a
 All numbers come from the READMEs (first figure, upper end of a range). Missing figures are shown as
 missing, never guessed. Arithmetic only — runs anywhere.
 
-Run:  .venv/bin/python week25/21_playbook_atlas/labs/lab21_3_budget_planner.py
-      .venv/bin/python week25/21_playbook_atlas/labs/lab21_3_budget_planner.py comfyui vss isaac --free-gb 300
+Run:  .venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_3_budget_planner.py
+      .venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_3_budget_planner.py comfyui vss isaac --free-gb 300
 """
 from __future__ import annotations
 

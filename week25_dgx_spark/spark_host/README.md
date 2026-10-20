@@ -16,11 +16,11 @@ this Spark over the tailnet in two ways:
 
 ```bash
 cd ~/Documents/agenticaicodingfitness
-sudo week25/spark_host/setup_sparklab_user.sh             # sparklab account, key-only ssh, docker+GPU, hf CLI
+sudo week25_dgx_spark/spark_host/setup_sparklab_user.sh             # sparklab account, key-only ssh, docker+GPU, hf CLI
 sudo -u sparklab -H bash -lc '~/.local/bin/hf auth login' # a READ-only HF token (gated Llama models)
 sudo -u sparklab -H docker login nvcr.io -u '$oauthtoken' # password = NGC API key
-week25/spark_host/prefetch.sh pull                        # Ollama models + images (~150 GB, shared)
-week25/spark_host/prefetch.sh hf                          # HF weights into sparklab's cache
+week25_dgx_spark/spark_host/prefetch.sh pull                        # Ollama models + images (~150 GB, shared)
+week25_dgx_spark/spark_host/prefetch.sh hf                          # HF weights into sparklab's cache
 ```
 
 **Tailnet (your org tailnet).** Invite each student to the tailnet. The tailnet also holds the Alto IoT nodes,
@@ -42,7 +42,7 @@ the grant above only reaches tagged nodes.
 **Each laptop's key.** Collect `~/.ssh/id_ed25519.pub` from every laptop:
 
 ```bash
-sudo week25/spark_host/add_key.sh alice.pub bob.pub     # --list / --remove alice
+sudo week25_dgx_spark/spark_host/add_key.sh alice.pub bob.pub     # --list / --remove alice
 ```
 
 With two Sparks, run the same `add_key.sh` on **both**: every two-Spark lab ssh-es into Spark B as `sparklab` too.
@@ -50,13 +50,13 @@ With two Sparks, run the same `add_key.sh` on **both**: every two-Spark lab ssh-
 ## Instructor: every class
 
 ```bash
-week25/spark_host/lab_mode.sh on       # stops nemotron-lightning (~100 GB), supabase-kong (:8000), alto-backend (:8001)
-week25/spark_host/lab_mode.sh status   # all lab ports free, ~110 GB available
+week25_dgx_spark/spark_host/lab_mode.sh on       # stops nemotron-lightning (~100 GB), supabase-kong (:8000), alto-backend (:8001)
+week25_dgx_spark/spark_host/lab_mode.sh status   # all lab ports free, ~110 GB available
 # … class …
-week25/spark_host/lab_mode.sh off      # restarts exactly what `on` stopped (vLLM servers last)
+week25_dgx_spark/spark_host/lab_mode.sh off      # restarts exactly what `on` stopped (vLLM servers last)
 ```
 
-**Two Sparks.** Put `SPARK_B_ADMIN=altoaidev@<spark-b>` in `week25/.env.local` on Spark A. The same three commands
+**Two Sparks.** Put `SPARK_B_ADMIN=altoaidev@<spark-b>` in `week25_dgx_spark/.env.local` on Spark A. The same three commands
 then also run on Spark B over ssh (the script is piped there, so B needs no copy of the repo), where they stop
 and restart B's own day job (the `altoace` stack, ~94 GB). Run `on` before **every** class that
 uses Spark B: the two-Spark labs need most of both Sparks' memory, and a 16 GB NCCL test against B's day job
@@ -90,7 +90,7 @@ The two-Spark labs follow the same rule, more strictly, since there is only one 
    ```bash
    git clone https://github.com/kwarodom/agenticaicodingfitness.git && cd agenticaicodingfitness
    uv venv -p 3.13 .venv && uv pip install -p .venv fastapi uvicorn pyyaml pillow
-   .venv/bin/python week25/00_spark_lab_runner/tutorial_server.py      # → http://127.0.0.1:8125
+   .venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py      # → http://127.0.0.1:8125
    ```
 4. **Connect:** open **🖥 Spark setup** and set `SPARK_HOST = sparklab@<spark>.<tailnet>.ts.net`. Leave
    the HTTP host empty. The **Spark A** chip should turn green.

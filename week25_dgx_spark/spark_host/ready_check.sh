@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Is the classroom ready? Read-only checks of both Sparks, as the `sparklab` account students use.
-#   week25/spark_host/ready_check.sh          # run on Spark A (or any machine with ssh to both)
-# Spark A/B ssh targets come from SPARK_HOST / SPARK_HOST2 (env or week25/.env.local), like the runner.
+#   week25_dgx_spark/spark_host/ready_check.sh          # run on Spark A (or any machine with ssh to both)
+# Spark A/B ssh targets come from SPARK_HOST / SPARK_HOST2 (env or week25_dgx_spark/.env.local), like the runner.
 # ✓ ready · ⚠ fine for single-Spark labs or fix before class · ✕ a lab will fail
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 cfg() { local v=${!1:-}; [[ -n $v ]] && { echo "$v"; return; }; sed -n "s/^$1=//p" "$HERE/../.env.local" 2>/dev/null | tail -1; }
 A=$(cfg SPARK_HOST); B=$(cfg SPARK_HOST2)
-[[ -n $A ]] || { echo "✕ SPARK_HOST is not set (week25/.env.local or env)"; exit 1; }
+[[ -n $A ]] || { echo "✕ SPARK_HOST is not set (week25_dgx_spark/.env.local or env)"; exit 1; }
 bad=0; ok() { echo "  ✓ $*"; }; warn() { echo "  ⚠ $*"; }; no() { echo "  ✕ $*"; bad=1; }
 
 # One ssh per Spark; the remote side prints key=value facts, the checks below read them.
@@ -44,13 +44,13 @@ check_spark() {  # $1 = A|B, $2 = target, $3 = array name
   echo "━━ Spark $1 · $2"
   [[ -n ${F[host]:-} ]] || { no "ssh as $2 failed: key, tailnet, or the Spark is off"; return; }
   ok "ssh works → ${F[host]} as ${F[user]}"
-  local k=${F[keys]}; ((k > 1)) && ok "$k keys can log in as sparklab" || warn "only $k key(s) for sparklab: add the students' with sudo week25/spark_host/add_key.sh on BOTH Sparks"
+  local k=${F[keys]}; ((k > 1)) && ok "$k keys can log in as sparklab" || warn "only $k key(s) for sparklab: add the students' with sudo week25_dgx_spark/spark_host/add_key.sh on BOTH Sparks"
   [[ ${F[hf]} == yes ]] && ok "Hugging Face login" || no "no Hugging Face login: sudo -u sparklab -H bash -lc '~/.local/bin/hf auth login'"
-  [[ ${F[ngc]} == yes ]] && ok "nvcr.io login" || warn "no nvcr.io login (only Module 06 NIM needs it): week25/spark_host/ngc_login.sh"
+  [[ ${F[ngc]} == yes ]] && ok "nvcr.io login" || warn "no nvcr.io login (only Module 06 NIM needs it): week25_dgx_spark/spark_host/ngc_login.sh"
   [[ ${F[tags]} == *tag:dgx-spark* ]] && ok "tailnet tag tag:dgx-spark" || warn "not tagged tag:dgx-spark: students' tailnet grant won't reach it (admin console → Machines → Edit ACL tags)"
   ((${F[mem]:-0} >= 100)) && ok "${F[mem]} GB memory available" || warn "${F[mem]} GB available: run lab_mode.sh on before the GPU labs"
   for i in vllm/vllm-openai:latest nvcr.io/nvidia/vllm:26.05-py3 nvcr.io/nvidia/pytorch:25.11-py3; do
-    [[ ${F[img_$i]:-no} == yes ]] && ok "image $i" || warn "image $i missing: week25/spark_host/prefetch.sh pull"
+    [[ ${F[img_$i]:-no} == yes ]] && ok "image $i" || warn "image $i missing: week25_dgx_spark/spark_host/prefetch.sh pull"
   done
 }
 
@@ -58,7 +58,7 @@ probe "$A" FA; [[ -n $B ]] && probe "$B" FB
 check_spark A "$A" FA
 gb() { local v=${1:-0}; ((v >= $2)); }
 gb "${FA[model_meta-llama--Llama-3.3-70B-Instruct]:-0}" 130 && ok "Llama 3.3 70B cached (Modules 05 §6, 11 §6)" || warn "Llama 3.3 70B not cached (two-Spark Modules 05 §6, 11 §6 need it on both)"
-gb "${FA[model_nvidia--Qwen3.6-35B-A3B-NVFP4]:-0}" 15 && ok "Qwen3.6-35B-A3B NVFP4 cached (capstone brain)" || no "Qwen3.6 NVFP4 not cached: sudo week25/spark_host/prefetch.sh hf"
+gb "${FA[model_nvidia--Qwen3.6-35B-A3B-NVFP4]:-0}" 15 && ok "Qwen3.6-35B-A3B NVFP4 cached (capstone brain)" || no "Qwen3.6 NVFP4 not cached: sudo week25_dgx_spark/spark_host/prefetch.sh hf"
 if [[ -z $B ]]; then
   echo; echo "━━ Spark B · not configured (set SPARK_HOST2): single-Spark course only"
 else
@@ -81,5 +81,5 @@ else
   fi
 fi
 echo
-((bad)) && echo "═ fix the ✕ lines, then run this again" || echo "═ ready. Before class: week25/spark_host/lab_mode.sh on"
+((bad)) && echo "═ fix the ✕ lines, then run this again" || echo "═ ready. Before class: week25_dgx_spark/spark_host/lab_mode.sh on"
 exit $bad

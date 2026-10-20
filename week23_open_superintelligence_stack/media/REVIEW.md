@@ -1,7 +1,7 @@
 # Week 23 Media Integration — Cold-Read Review
 
 Reviewer: critic (team week23-media, task #4) · 2026-08-04
-Scope: `week23/README.md`, `week23/SLIDES.md`, `week23/media/` (manifest, plan, assets, .gitignore, git status).
+Scope: `week23_open_superintelligence_stack/README.md`, `week23_open_superintelligence_stack/SLIDES.md`, `week23_open_superintelligence_stack/media/` (manifest, plan, assets, .gitignore, git status).
 
 ## Verdict: PASS
 
@@ -16,8 +16,8 @@ folders, and placed after (never inside) the tables they illustrate.
 
 | Check | Result |
 |---|---|
-| Every `src`/media `href` in README.md + SLIDES.md resolves from the file's own dir | PASS — 15 unique image paths, all exist under `week23/media/` |
-| Relative-path correctness (both files live at `week23/`, all refs `media/...`) | PASS |
+| Every `src`/media `href` in README.md + SLIDES.md resolves from the file's own dir | PASS — 15 unique image paths, all exist under `week23_open_superintelligence_stack/media/` |
+| Relative-path correctness (both files live at `week23_open_superintelligence_stack/`, all refs `media/...`) | PASS |
 | HTML sanity | PASS — README: 8/8 `<p>` pairs, 15/15 `<img>` with alt, 13/13 `<a>` pairs; SLIDES: 1/1, 4/4 alt, no `<a>` |
 | Embedded .jpg sizes | PASS — all 15 between 154 KB and 283 KB (< 500 KB); nothing embedded > 5 MB |
 | Visual spot-check (Read tool on the actual pixels) | PASS — 03 dynamo: two server banks (green intake / cyan output) + luminous transfer conduits + router node above, exactly per caption & plan. 07 openshell: green agent core inside translucent hex containment shell, gated aperture beaming light out. hero-banner: green crystal core wrapped in harness rings over stacked slabs, clean negative space up top. 12 capstone: isometric hotel cutaway, basement AI core, Bangkok skyline. Zero legible/garbled baked-in text in any of the four. |
@@ -30,7 +30,7 @@ folders, and placed after (never inside) the tables they illustrate.
 ### Minor
 
 - **M1 — `media/intro-video.mp4` (13.8 MB) is committed but referenced by nothing.**
-  `week23/README.md` and `week23/SLIDES.md` never embed or link it (grep: zero hits outside
+  `week23_open_superintelligence_stack/README.md` and `week23_open_superintelligence_stack/SLIDES.md` never embed or link it (grep: zero hits outside
   `media/manifest.md`). It will be the single largest object added to git this week while being
   invisible to learners. **Recommendation (structural, not fixed):** either add a one-line link
   in README's Media footer (`README.md:202-204`) — note GitHub won't inline-play a repo-relative
@@ -43,12 +43,12 @@ folders, and placed after (never inside) the tables they illustrate.
   retitle the column "Master filename (in `originals/`)" or list both names. (Not fixed — manifest
   is outside this task's allowed edit set.)
 
-- **M3 — `git status --short week23/` shows far more than the expected README/SLIDES/media diff:**
+- **M3 — `git status --short week23_open_superintelligence_stack/` shows far more than the expected README/SLIDES/media diff:**
   8 modified `tutorial_server.py` files, untracked `TUTORIAL.md`/`labs/` in every app,
   `00_stack_navigator/`, `AGENTS.md`, `issues/`. None of these are media-task changes — they
   appear to be parallel work by other teams/sessions. Not a media defect, but the media work
-  cannot be committed in isolation without deliberate pathspec staging (`week23/README.md
-  week23/SLIDES.md week23/media/`). `originals/` is correctly invisible (ignored inside the
+  cannot be committed in isolation without deliberate pathspec staging (`week23_open_superintelligence_stack/README.md
+  week23_open_superintelligence_stack/SLIDES.md week23_open_superintelligence_stack/media/`). `originals/` is correctly invisible (ignored inside the
   untracked `media/` dir).
 
 ### Nit

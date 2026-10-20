@@ -12,7 +12,7 @@ the numbers that decide whether a router may act on its own:
 The answers are saved to .runs/intent_answers.json so Lab 09-2 can re-threshold
 them WITHOUT calling Jev again.
 
-Run: .venv/bin/python week24/09_evaluate_and_cost/labs/lab01_smoke_eval.py
+Run: .venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/labs/lab01_smoke_eval.py
 """
 import sys
 from pathlib import Path
@@ -22,7 +22,7 @@ import evalkit as ev                                          # noqa: E402
 from jevkit import banner, step, table                        # noqa: E402
 
 banner("Lab 09-1 · smoke evaluation of the intent router",
-       "12 labeled rows · same 7 questions as week24/jev_lab/jev_lab.py intent")
+       "12 labeled rows · same 7 questions as week24_typed_decisions_jev/jev_lab/jev_lab.py intent")
 
 # ── 1. the labeled data ─────────────────────────────────────────────────────
 step(1, "load the human-labeled test rows")

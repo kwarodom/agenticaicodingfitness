@@ -1,0 +1,43 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "Line 0: chiller CH-1 supply 6.0 C, status normal. Line 1: chiller CH-2 supply 6.1 C, status normal. Line 2: chiller CH-3 supply 6.2 C, status normal. Line 3: chiller CH-1 supply 6.3 C, status normal. Line 4: chiller CH-2 supply 6.4 C, status normal. Line 5: chiller CH-3 supply 6.5 C, status normal. Line 6: chiller CH-1 supply 6.6 C, status normal. Line 7: chiller CH-2 supply 6.7 C, status normal. Line 8: chiller CH-3 supply 6.8 C, status normal. Line 9: chiller CH-1 supply 6.0 C, status normal. Line 10: chiller CH-2 supply 6.1 C, status normal. Line 11: chiller CH-3 supply 6.2 C, status normal. Line 12: chiller CH-1 supply 6.3 C, status normal. Line 13: chiller CH-2 supply 6.4 C, status normal. Line 14: chiller CH-3 supply 6.5 C, status normal. Line 15: chiller CH-1 supply 6.6 C, status normal. Line 16: chiller CH-2 supply 6.7 C, status normal. Line 17: chiller CH-3 supply 6.8 C, status normal. Line 18: chiller CH-1 supply 6.0 C, status normal. Line 19: chiller CH-2 supply 6.1 C, status normal. Line 20: chiller CH-3 supply 6.2 C, status normal. Line 21: chiller CH-1 supply 6.3 C, status normal. Line 22: chiller CH-2 supply 6.4 C, status normal. Line 23: chiller CH-3 supply 6.5 C, status normal. Line 24: chiller CH-1 supply 6.6 C, status normal. Line 25: chiller CH-2 supply 6.7 C, status normal. Line 26: chiller CH-3 supply 6.8 C, status normal. Line 27: chiller CH-1 supply 6.0 C, status normal. Line 28: chiller CH-2 supply 6.1 C, status normal. Line 29: chiller CH-3 supply 6.2 C, status normal. Line 30: chiller CH-1 supply 6.3 C, status normal. Line 31: chiller CH-2 supply 6.4 C, status normal. Line 32: chiller CH-3 supply 6.5 C, status normal. Line 33: chiller CH-1 supply 6.6 C, status normal. Line 34: chiller CH-2 supply 6.7 C, status normal. Line 35: chiller CH-3 supply 6.8 C, status normal. Line 36: chiller CH-1 supply 6.0 C, status normal. Line 37: chiller CH-2 supply 6.1 C, status normal. Line 38: chiller CH-3 supply 6.2 C, status normal. Line 39: chiller CH-1 supply 6.3 C, status normal. Line 40: chiller CH-2 supply 6.4 C, status normal. Line 41: chiller CH-3 supply 6.5 C, status normal. Line 42: chiller CH-1 supply 6.6 C, status normal. Line 43: chiller CH-2 supply 6.7 C, status normal. Line 44: chiller CH-3 supply 6.8 C, status normal. Line 45: chiller CH-1 supply 6.0 C, status normal. Line 46: chiller CH-2 supply 6.1 C, status normal. Line 47: chiller CH-3 supply 6.2 C, status normal. Line 48: chiller CH-1 supply 6.3 C, status normal. Line 49: chiller CH-2 supply 6.4 C, status normal. Line 50: chiller CH-3 supply 6.5 C, status normal. Line 51: chiller CH-1 supply 6.6 C, status normal. Line 52: chiller CH-2 supply 6.7 C, status normal. Line 53: chiller CH-3 supply 6.8 C, status normal. Line 54: chiller CH-1 supply 6.0 C, status normal. Line 55: chiller CH-2 supply 6.1 C, status normal. Line 56: chiller CH-3 supply 6.2 C, status normal. Line 57: chiller CH-1 supply 6.3 C, status normal. Line 58: chiller CH-2 supply 6.4 C, status normal. Line 59: chiller CH-3 supply 6.5 C, status normal. FINAL NOTE: there is visible smoke coming from the electrical panel in room 1203."
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets",
+     "safety": "smoke, burning smell, fire, electrical danger",
+     "front_desk": "check-in, check-out, billing, room changes"
+    }
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "safety",
+    "confidence": 1.0,
+    "probabilities": {
+     "hvac": 0.0,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 1.0,
+     "front_desk": 0.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 1603,
+   "output_tokens": 64
+  }
+ }
+}

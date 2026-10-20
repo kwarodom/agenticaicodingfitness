@@ -13,4 +13,4 @@ langchain-anthropic>=0.2.0
 
 # Note: Lessons 05 (RAG) and 06 (multi-agent) use only the core deps above —
 # they implement retrieval and orchestration in plain Python so they always run.
-# The class repo's week9/ shows the CrewAI + LangGraph versions if you want frameworks.
+# The class repo's week09_multi_agent_systems/ shows the CrewAI + LangGraph versions if you want frameworks.

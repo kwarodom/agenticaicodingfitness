@@ -112,26 +112,35 @@ code_review_tools = [
     }
 ]
 
+import sys
+
 def execute_code_tool(name, inputs):
+    path = inputs.get("path", "")
+    if path and not os.path.exists(path):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        alt_path = os.path.join(script_dir, path)
+        if os.path.exists(alt_path):
+            path = alt_path
+
     if name == "read_file":
         try:
-            with open(inputs["path"]) as f:
+            with open(path) as f:
                 return f.read()
         except FileNotFoundError:
-            return f"Error: File not found: {inputs['path']}"
+            return f"Error: File not found: {path}"
     elif name == "write_file":
-        with open(inputs["path"], "w") as f:
+        with open(path, "w") as f:
             f.write(inputs["content"])
-        return f"Written to {inputs['path']}"
+        return f"Written to {path}"
     elif name == "run_python":
         result = subprocess.run(
-            ["python", inputs["path"]],
+            [sys.executable, path],
             capture_output=True, text=True, timeout=10
         )
         return f"STDOUT: {result.stdout}\nSTDERR: {result.stderr}\nReturn code: {result.returncode}"
     elif name == "run_lint":
         result = subprocess.run(
-            ["python", "-m", "flake8", inputs["path"]],
+            [sys.executable, "-m", "flake8", path],
             capture_output=True, text=True
         )
         return result.stdout or "No lint issues found!"

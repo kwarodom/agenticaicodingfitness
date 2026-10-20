@@ -20,6 +20,6 @@ Layout
 - `evals/` — three `claude plugin eval` cases with graders and an offline `gh` stub
 - `tests/test_hooks.py` — offline tests for the guards (`python3 -m pytest tests`)
 
-Install into a repo (Lab 02 §0 does this for week27/00_alto_mini)
-    cp -r week27/factory/skills/* <repo>/.claude/skills/ ; cp -r week27/factory/.claude/hooks <repo>/.claude/ ; merge .claude/settings.json
-    cp -r week27/factory/{scripts,docs,evals,telemetry} <repo>/ ; edit CLAUDE.md
+Install into a repo (Lab 02 §0 does this for week27_software_factory/00_alto_mini)
+    cp -r week27_software_factory/factory/skills/* <repo>/.claude/skills/ ; cp -r week27_software_factory/factory/.claude/hooks <repo>/.claude/ ; merge .claude/settings.json
+    cp -r week27_software_factory/factory/{scripts,docs,evals,telemetry} <repo>/ ; edit CLAUDE.md

@@ -113,7 +113,7 @@ Lab 17-1 runs the Hermes playbook's Step 1 (`uname -a`, `curl --version`, `git -
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/labs/lab17_1_preflight.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_1_preflight.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac; with a Spark you get your own values and ✓ / ✕)
@@ -160,7 +160,7 @@ Lab 17-2 tests that loop with five small probes. It runs against vLLM on the Spa
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/labs/lab17_2_tool_probe.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_2_tool_probe.py
 ```
 
 **Expected output** (captured on this Mac: LAPTOP STAND-IN, these are the laptop's models, not the Spark's)
@@ -327,7 +327,7 @@ The two agents store the same three facts (endpoint, model handle, context size)
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/labs/lab17_3_agent_configs.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/labs/lab17_3_agent_configs.py
 ```
 
 **Expected output** (captured on this Mac, no Spark configured; the smoke test is a LAPTOP STAND-IN)
@@ -357,7 +357,7 @@ The two agents store the same three facts (endpoint, model handle, context size)
 │ hermes config set model.base_url http://localhost:8000/v1
 │ hermes config set model.default nvidia/Qwen3.6-35B-A3B-NVFP4
 │ hermes -z "Reply exactly HERMES_OK"
-◆ written to week25/17_openclaw_hermes/.runs/
+◆ written to week25_dgx_spark/17_openclaw_hermes/.runs/
 
 ▣ STEP 3 · validate
 ✓ openclaw.models.json: local /v1 endpoint, placeholder key, ≥32K context
@@ -448,7 +448,7 @@ Lab 17-1 runs LIVE on your Spark or DRY. Labs 17-2 and 17-3 run for real on the 
 
 ## Try it yourself
 
-**Exercise 17 — one model, two agents.** Open `week25/17_openclaw_hermes/exercises/ex17_agent_config.py`. It has three `TODO`s:
+**Exercise 17 — one model, two agents.** Open `week25_dgx_spark/17_openclaw_hermes/exercises/ex17_agent_config.py`. It has three `TODO`s:
 
 1. `openclaw_provider(base_url, model_id, context_window)`: the `models.providers.vllm` entry in the playbook's shape.
 2. `hermes_commands(base_url, model_id)`: the four commands of the Hermes playbook's non-interactive setup.
@@ -456,7 +456,7 @@ Lab 17-1 runs LIVE on your Spark or DRY. Labs 17-2 and 17-3 run for real on the 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/17_openclaw_hermes/exercises/ex17_agent_config.py
+.venv/bin/python week25_dgx_spark/17_openclaw_hermes/exercises/ex17_agent_config.py
 ```
 
 **Expected output** (once all three TODOs are done; captured on this Mac with the reference solution)

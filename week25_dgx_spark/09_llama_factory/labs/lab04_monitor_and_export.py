@@ -12,9 +12,9 @@ does. Step 5 runs the follow-ups you ask for:
   --predict   llamafactory-cli train configs/hotel_predict.yaml → generated_predictions.jsonl (nohup)
   --export    llamafactory-cli export configs/hotel_merge.yaml → one merged model for vLLM (nohup)
 
-Run: .venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py
-     .venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py --export
-     .venv/bin/python week25/09_llama_factory/labs/lab04_monitor_and_export.py --log my_trainer_log.jsonl
+Run: .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py
+     .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py --export
+     .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab04_monitor_and_export.py --log my_trainer_log.jsonl
 """
 import ast
 import json

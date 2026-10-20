@@ -9,7 +9,7 @@ a deterministic policy decides: staff approval, or human review.
   A · a real draft from your chosen LLM          (usually passes)
   B · a deliberately bad draft we planted        (must be caught)
 
-Run: .venv/bin/python week24/11_jev_plus_llm/labs/lab04_jev_checks_the_draft.py
+Run: .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab04_jev_checks_the_draft.py
 """
 import sys
 from pathlib import Path

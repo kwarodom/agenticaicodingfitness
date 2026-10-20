@@ -117,7 +117,7 @@ Lab 06-3 รัน Step 6 และ 7 ของ playbook จาก Python: ค�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/labs/lab03_sglang_features.py
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab03_sglang_features.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: ไม่มี Spark จึงใช้ Ollama แทน ไม่ใช่ SGLang)
@@ -428,7 +428,7 @@ Lab 06-1 ใช้กฎเหล่านี้กับทุก engine ที
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/labs/lab01_engine_bakeoff.py
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab01_engine_bakeoff.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: ไม่มี Spark ทุก endpoint บน Spark จึงล่ม และมีแค่แถวของแล็ปท็อปที่ได้รัน)
@@ -465,7 +465,7 @@ Lab 06-1 ใช้กฎเหล่านี้กับทุก engine ที
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/labs/lab02_which_engine.py --need tools,two-sparks
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab02_which_engine.py --need tools,two-sparks
 ```
 
 **Expected output** (ออฟไลน์ ผลลัพธ์เหมือนกันทุกเครื่อง)
@@ -515,7 +515,7 @@ Lab 01 และ 03 เรียก engine บน Spark ของคุณ ห�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 06 — วางแผนการประชันที่ยุติธรรม** เปิด `week25/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py` ในไฟล์มี `TODO` สี่จุด:
+**แบบฝึกหัด 06 — วางแผนการประชันที่ยุติธรรม** เปิด `week25_dgx_spark/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py` ในไฟล์มี `TODO` สี่จุด:
 
 1. `PORTS`: พอร์ต OpenAI ของแต่ละ engine ตาม playbook (รวมถึงสูตร TensorRT-LLM ของ Nemotron Super)
 2. `port_conflicts(ports)`: ทุกคู่ของ engine ที่ใช้พอร์ตเดียวกัน
@@ -524,7 +524,7 @@ Lab 01 และ 03 เรียก engine บน Spark ของคุณ ห�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py
+.venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสี่จุด บันทึกจาก Mac เครื่องนี้)

@@ -27,7 +27,7 @@ There's no "best model," only the best fit on four axes:
 - **Mix models in one system:** a frontier model plans, cheap models execute. This is a standard cost-control move.
 - **Open/alternative providers** (OpenRouter, z.ai/GLM, Qwen) appear across the course — the message: your code shouldn't be married to one vendor.
 
-> 📁 Class repo: `week11/README.md` — an interactive **LLM Model Atlas**, a **Pick-the-Right-Model wizard**, and a **capability radar** comparing models. `week4/openrouterfreemodel.py` routes to a free OpenRouter model (vendor-agnostic, $0 to run).
+> 📁 Class repo: `week11_models_and_patterns/README.md` — an interactive **LLM Model Atlas**, a **Pick-the-Right-Model wizard**, and a **capability radar** comparing models. `week04_autonomous_pipelines/openrouterfreemodel.py` routes to a free OpenRouter model (vendor-agnostic, $0 to run).
 
 ### Cost economics — the part everyone skips
 
@@ -98,7 +98,7 @@ Almost every agent you build is some mix of these twelve. They organize into thr
 | # | Pattern | What it does | Course link |
 |---|---|---|---|
 | 9 | **Evaluator-Optimizer** | **Distinct from Reflection:** a *separate* generator and evaluator, with a **rubric** that emits pass/fail + feedback. Use different models so they don't share blind spots. | `agent-evaluation`, RAGAS (W15) |
-| 10 | **Human-in-the-Loop** | Pause for human approval on risky/irreversible actions (Part E). | `week10/solutions/03_checkpointing_solution.py` |
+| 10 | **Human-in-the-Loop** | Pause for human approval on risky/irreversible actions (Part E). | `week10_production_observability/solutions/03_checkpointing_solution.py` |
 | 11 | **Topology** | The wiring of a multi-agent team: Chain / Star / Mesh (Part D). | `multi-agent-systems` (W9) |
 | 12 | **ReAct** | Reason → Act → Observe → repeat. The default single-agent loop when the path isn't known in advance. | `agent-loops` (W5) |
 
@@ -127,7 +127,7 @@ Not every framework does every pattern equally — *native* means built-in primi
 
 **LangGraph** leads on native coverage (graph foundation). **CrewAI** is the fastest idea→prototype for collaboration. **AutoGen** pioneered conversational multi-agent. **Claude SDK** wins on MCP integration. See `multi-agent-systems` for the deep dive.
 
-> 📁 Class repo: `week11/README.md` includes a **Pattern Library**, a topology **Playground** (sequential/parallel/router/swarm/reflection), and a 25-question **mastery quiz**. `week11/exercises/README.md` maps 14 runnable MAS exercises to these patterns.
+> 📁 Class repo: `week11_models_and_patterns/README.md` includes a **Pattern Library**, a topology **Playground** (sequential/parallel/router/swarm/reflection), and a 25-question **mastery quiz**. `week11_models_and_patterns/exercises/README.md` maps 14 runnable MAS exercises to these patterns.
 
 ---
 
@@ -211,9 +211,9 @@ Start an agent supervised and graduate it as its measured error rate stays low (
 | **MONITORED** | Agent acts freely; humans watch dashboards and can intervene. |
 | **FULL** | Agent runs autonomously within hard bounds. |
 
-A `risk_score` (delete = +0.8, write = +0.3, irreversible = +0.5) decides which actions trip the gate. This is exactly what `week10/solutions/03_checkpointing_solution.py` demonstrates: a LangGraph `interrupt()` pauses the ticket agent for human **approve / edit / reject**, and the state survives a process restart via the SQLite checkpointer.
+A `risk_score` (delete = +0.8, write = +0.3, irreversible = +0.5) decides which actions trip the gate. This is exactly what `week10_production_observability/solutions/03_checkpointing_solution.py` demonstrates: a LangGraph `interrupt()` pauses the ticket agent for human **approve / edit / reject**, and the state survives a process restart via the SQLite checkpointer.
 
-> 📁 Class repo: `week10/solutions/03_checkpointing_solution.py` — `interrupt()` + human approval + durable checkpointing. Kill the script after the draft step, rerun, and watch it resume from the DB.
+> 📁 Class repo: `week10_production_observability/solutions/03_checkpointing_solution.py` — `interrupt()` + human approval + durable checkpointing. Kill the script after the draft step, rerun, and watch it resume from the DB.
 
 ### The 4-layer guardrail stack (OWASP-ASI)
 
@@ -313,6 +313,6 @@ for q in ["fix my invoice", "debug prod outage", "danger: drop database"]:
 **Pass = 4 / 5 criteria (≥ 75%).**
 
 ### Stretch
-Open `week11/README.md` in a browser and run the model wizard, the topology playground, and the 25-question quiz. Then open `week10/solutions/03_checkpointing_solution.py` and replace the `MockLLM` gate with a real `interrupt()` + checkpointer.
+Open `week11_models_and_patterns/README.md` in a browser and run the model wizard, the topology playground, and the 25-question quiz. Then open `week10_production_observability/solutions/03_checkpointing_solution.py` and replace the `MockLLM` gate with a real `interrupt()` + checkpointer.
 
 End with the meta-lesson: "frameworks and models change every few months; the *patterns*, the *cost discipline*, and the *judgment* are what you keep."

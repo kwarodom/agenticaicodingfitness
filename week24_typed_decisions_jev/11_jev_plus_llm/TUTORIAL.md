@@ -40,7 +40,7 @@ guest message ─► Jev: department · urgency · wants refund?     (typed, ~0.
 
 ## 1 · Meet the providers
 
-Every provider below works with the same `llmkit.generate()` call in `week24/common/llmkit.py`. Claude uses Anthropic's Messages API; the others speak the OpenAI-compatible `/chat/completions` API, so switching is one word.
+Every provider below works with the same `llmkit.generate()` call in `week24_typed_decisions_jev/common/llmkit.py`. Claude uses Anthropic's Messages API; the others speak the OpenAI-compatible `/chat/completions` API, so switching is one word.
 
 | id | Provider | Example models (checked live 2026-09-27) | Key variable | Get a key |
 |---|---|---|---|---|
@@ -65,7 +65,7 @@ Notes that matter in practice:
 Lab 01 prints this table for *your* machine, showing only where each key was found, never the key itself:
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab01_pick_your_llm.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab01_pick_your_llm.py
 ```
 
 **Expected output**
@@ -101,7 +101,7 @@ A fresh clone shows `·` and `missing — set ANTHROPIC_API_KEY` on every row un
 **Never paste a key into a `.py` file, a notebook or a tutorial.** The labs look it up, in this order:
 
 1. the **environment** of the process (e.g. `export OPENAI_API_KEY=…` in your shell)
-2. **`week24/.env.local`**, which the Lab Runner's **🔑 Keys** dialog writes (gitignored, readable only by you)
+2. **`week24_typed_decisions_jev/.env.local`**, which the Lab Runner's **🔑 Keys** dialog writes (gitignored, readable only by you)
 3. the **repo-root `.env`** (gitignored)
 
 **If you cloned this repo**, pick one way:
@@ -110,9 +110,9 @@ A fresh clone shows `·` and `missing — set ANTHROPIC_API_KEY` on every row un
 - copy the template and fill it in:
 
 ```bash
-cp -n week24/.env.example .env   # -n = never overwrite an .env you already have
+cp -n week24_typed_decisions_jev/.env.example .env   # -n = never overwrite an .env you already have
 # then edit .env — set only the keys you have, leave the rest empty
-# already have a .env? copy just the lines you need from week24/.env.example into it
+# already have a .env? copy just the lines you need from week24_typed_decisions_jev/.env.example into it
 ```
 
 Both files are in `.gitignore`, so a key can never be committed by accident. You only need `TYPESAFE_API_KEY` for Jev plus **one** LLM key; Ollama needs none.
@@ -120,8 +120,8 @@ Both files are in `.gitignore`, so a key can never be committed by accident. You
 **Choosing the LLM.** The Lab Runner header has an **LLM** picker (provider + model). Every ▶ Run passes your choice to the lab as `JEV_LLM_PROVIDER` and `JEV_LLM_MODEL`. In a terminal, set them yourself:
 
 ```bash
-JEV_LLM_PROVIDER=gemini .venv/bin/python week24/11_jev_plus_llm/labs/lab01_pick_your_llm.py
-JEV_LLM_PROVIDER=glm JEV_LLM_MODEL=glm-5.3-flash .venv/bin/python week24/11_jev_plus_llm/labs/lab02_route_then_write.py
+JEV_LLM_PROVIDER=gemini .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab01_pick_your_llm.py
+JEV_LLM_PROVIDER=glm JEV_LLM_MODEL=glm-5.3-flash .venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab02_route_then_write.py
 ```
 
 Try the LLM right here. The block below uses the provider picked in the header:
@@ -140,7 +140,7 @@ Experiment: switch the LLM picker to another provider and ask again. Then change
 
 ## 3 · Jev routes → code picks the approved prompt → your LLM writes
 
-`week24/11_jev_plus_llm/pipeline.py` holds the whole pipeline in about 150 readable lines. First Jev routes the guest message. Try that call here:
+`week24_typed_decisions_jev/11_jev_plus_llm/pipeline.py` holds the whole pipeline in about 150 readable lines. First Jev routes the guest message. Try that call here:
 
 ```jev
 {
@@ -179,7 +179,7 @@ Then **code** (not the LLM) does three things:
 Lab 02 runs three messages (English, Thai, and an angry refund demand) through the whole path with your chosen LLM:
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab02_route_then_write.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab02_route_then_write.py
 ```
 
 **Expected output**
@@ -220,7 +220,7 @@ Look at step 3: the guest demands a refund (`wants_compensation` 0.98), and the 
 Lab 03 routes each message **once** with Jev, then asks every provider that has a key to write the same reply, in parallel so the lab stays fast. It prints latency, output tokens, length, whether a Thai guest got a Thai answer, and whether the draft ended cleanly.
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab03_compare_models.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab03_compare_models.py
 ```
 
 **Expected output**
@@ -291,7 +291,7 @@ Experiment: delete the refund sentence and ask again. Which noul drops? Then rem
 Lab 04 runs a real draft from your LLM and the planted bad one through the checks:
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/labs/lab04_jev_checks_the_draft.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/labs/lab04_jev_checks_the_draft.py
 ```
 
 **Expected output**
@@ -348,7 +348,7 @@ Choose the writer with the header's **LLM** picker before ▶ Run. Every lab als
 
 ## Try it yourself
 
-**Exercise 11 — guard the reply yourself.** Open `week24/11_jev_plus_llm/exercises/ex11_guarded_reply.py`. Two TODOs:
+**Exercise 11 — guard the reply yourself.** Open `week24_typed_decisions_jev/11_jev_plus_llm/exercises/ex11_guarded_reply.py`. Two TODOs:
 
 1. `MY_CHECKS`: the four Jev questions about the draft (three nouls, one choice), wrapped in `guarded({...})`.
 2. `my_review()`: the policy. One reason per failed rule, the room-number rule in plain code, and `execute` always `False`.
@@ -356,7 +356,7 @@ Choose the writer with the header's **LLM** picker before ▶ Run. Every lab als
 The checker runs five offline cases first (free). When they all pass, your chosen LLM writes two real drafts, the planted bad draft is added, and your checks decide each one.
 
 ```bash
-.venv/bin/python week24/11_jev_plus_llm/exercises/ex11_guarded_reply.py
+.venv/bin/python week24_typed_decisions_jev/11_jev_plus_llm/exercises/ex11_guarded_reply.py
 ```
 
 **Expected output**

@@ -10,8 +10,8 @@ It changes nothing unless you run it from a shell with SPARK_APPLY=1, and even t
 only with passwordless sudo (`sudo -n`, it never asks for a password) and only when
 /etc/netplan/40-cx7.yaml does not exist yet. The Lab Runner's ▶ button never sets SPARK_APPLY.
 
-Run: .venv/bin/python week25/02_two_sparks_nccl/labs/lab02_netplan_plan.py
-     SPARK_APPLY=1 .venv/bin/python week25/02_two_sparks_nccl/labs/lab02_netplan_plan.py   # apply
+Run: .venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab02_netplan_plan.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab02_netplan_plan.py   # apply
 """
 import os
 import re
@@ -150,7 +150,7 @@ note("The file names only the ConnectX-7 interfaces, not your management interfa
 step(5, "apply?")
 if not APPLY:
     result("not applied — nothing changed. To apply from a shell: SPARK_APPLY=1 .venv/bin/python "
-           "week25/02_two_sparks_nccl/labs/lab02_netplan_plan.py (needs passwordless sudo), "
+           "week25_dgx_spark/02_two_sparks_nccl/labs/lab02_netplan_plan.py (needs passwordless sudo), "
            "or paste the step-4 commands into the ⌨ terminal.")
     sys.exit(0)
 for which, p in plans.items():

@@ -79,7 +79,7 @@ authorized input ──► (code: filter, compute) ──► Jev: typed judgment
 3. ส่ง `"Hi, what does your company do with AI?"` — `unknown` ควรชนะ
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/labs/lab01_lead_routing.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab01_lead_routing.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -121,7 +121,7 @@ def route(a):
 **ก่อน** ทั้งหมดนี้ เอกสารที่ค้นได้ต้องถูกกรองตาม tenant, project และนโยบายสิทธิ์การเข้าถึงในโค้ดมาแล้ว ตัวจัดประเภทอาจ *ปฏิเสธ* passage ที่มีสิทธิ์เข้าถึงอยู่แล้วเพราะไม่มีประโยชน์ได้ แต่ **ห้ามขยาย** สิ่งที่ผู้ใช้มองเห็นได้เด็ดขาด
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/labs/lab02_rag_filter.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab02_rag_filter.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -176,7 +176,7 @@ def route(a):
 การนำอาคารเข้าสู่ building graph คือการจับคู่ชื่อ point อ่านยากนับพัน (`AHU-3 SAT`, `RM-214 ZN-T`) เข้ากับความหมาย Jev เสนอ **semantic kind ภายใน** — ตั้งใจ *ไม่ให้* เป็น ontology URI ที่มันอาจแต่งขึ้นเอง — พร้อมสัญญาณความกำกวม ส่วนที่เหลือเป็นงานของ curator
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/labs/lab03_point_mapping.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/labs/lab03_point_mapping.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -249,7 +249,7 @@ questions = {"p1": noul("Does `passages[0]` help answer `query`?"),
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 08 — จัดอันดับใหม่ในการเรียกครั้งเดียว** เปิด `week24/08_leads_rag_points/exercises/ex08_rerank.py`
+**แบบฝึกหัด 08 — จัดอันดับใหม่ในการเรียกครั้งเดียว** เปิด `week24_typed_decisions_jev/08_leads_rag_points/exercises/ex08_rerank.py`
 
 1. **TODO 1** — `passage_question(i)`: คืนค่า `noul` ที่ถามว่า `` `passages[i]` `` (ใช้ index จริง) ช่วยตอบ `` `query` `` ได้หรือไม่
 2. **TODO 2** — `select_top(scores, k, min_score)`: เรียงคะแนนสูงสุดก่อน ตัดคะแนนที่ต่ำกว่า `min_score` ออก และถ้าคะแนนเท่ากันให้ตัดสินด้วย id
@@ -257,7 +257,7 @@ questions = {"p1": noul("Does `passages[0]` help answer `query`?"),
 การตรวจแบบออฟไลน์จะรันก่อน จากนั้นเรียก live หนึ่งครั้งเพื่อให้คะแนน passage ทั้งห้าพร้อมกัน
 
 ```bash
-.venv/bin/python week24/08_leads_rag_points/exercises/ex08_rerank.py
+.venv/bin/python week24_typed_decisions_jev/08_leads_rag_points/exercises/ex08_rerank.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

@@ -1,0 +1,75 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "Guest in room 1408 says the AC has been out since yesterday and they want to move to another room tonight."
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets",
+     "safety": "smoke, burning smell, fire, electrical danger",
+     "front_desk": "check-in, check-out, billing, room changes"
+    }
+   },
+   "wants_move": {
+    "type": "noul",
+    "instructions": "Does the guest in `message` ask to move to another room?"
+   },
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is `message`?",
+    "criteria": [
+     "routine",
+     "today",
+     "immediate"
+    ]
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "front_desk",
+    "confidence": 0.5,
+    "probabilities": {
+     "hvac": 0.4,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 0.0,
+     "front_desk": 0.6
+    }
+   },
+   "wants_move": {
+    "type": "noul",
+    "noul": 0.99
+   },
+   "urgency": {
+    "type": "score",
+    "score": 1.42,
+    "confidence": 0.35,
+    "legend": {
+     "0": "routine",
+     "1": "today",
+     "2": "immediate"
+    },
+    "probabilities": {
+     "0": 0.01,
+     "1": 0.57,
+     "2": 0.42
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 480,
+   "output_tokens": 97
+  }
+ }
+}

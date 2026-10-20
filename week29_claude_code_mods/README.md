@@ -16,7 +16,7 @@ You need **Claude Code 2.1.287 or newer** (`claude --version`; this course was b
 
 ```bash
 # on: laptop, from the repo root — install Mod Gym from this folder
-claude plugin marketplace add ./week29
+claude plugin marketplace add ./week29_claude_code_mods
 claude plugin install mod-gym@fitness-week29
 ```
 
@@ -65,7 +65,7 @@ Commands: `/mod-gym [open|next|prev|1-8|check|status|lab <path>|band on|off|rese
 ## What is where
 
 ```text
-week29/
+week29_claude_code_mods/
   mod-gym/                        the Mod Gym plugin (a mod): panel, band, status, /mod-gym, gym_status tool
     hooks/register.tsx            the hooks module — itself the course's running example
     hooks/lessons.ts              the 8 lessons as data: body, checks, the "Ask Claude" question
@@ -83,10 +83,10 @@ week29/
 
 ```bash
 # on: laptop, from the repo root
-claude plugin validate week29/mod-gym
-claude plugin test week29/mod-gym                 # 5 pass
-claude plugin validate week29/reference/hello-mod
-claude plugin test week29/reference/hello-mod     # 5 pass
+claude plugin validate week29_claude_code_mods/mod-gym
+claude plugin test week29_claude_code_mods/mod-gym                 # 5 pass
+claude plugin validate week29_claude_code_mods/reference/hello-mod
+claude plugin test week29_claude_code_mods/reference/hello-mod     # 5 pass
 ```
 
 ## Safety

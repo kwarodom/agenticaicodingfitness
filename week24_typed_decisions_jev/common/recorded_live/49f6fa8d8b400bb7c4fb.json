@@ -1,0 +1,48 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences.\nCall reference: L14-1.",
+  "audio": null,
+  "text": "Hello, what time is breakfast?"
+ },
+ "response": {
+  "heard": "",
+  "said": "Breakfast is typically served from 6:30 to 9:30am. If you’d like, I can also tell you the location—just let me know.",
+  "events": [
+   [
+    1.19,
+    "session",
+    "session updated"
+   ],
+   [
+    1.19,
+    "caller_stopped",
+    "audio committed"
+   ],
+   [
+    1.81,
+    "first_output",
+    "model started answering"
+   ],
+   [
+    2.03,
+    "said",
+    "Breakfast is typically served from 6:30 to 9:30am. If you’d like, I can also tell you the location—just let me know."
+   ],
+   [
+    2.03,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 1.19,
+   "first_output": 1.81,
+   "total": 4.29
+  },
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini"
+ }
+}

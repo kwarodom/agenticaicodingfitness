@@ -21,7 +21,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-MODULE = Path(__file__).resolve().parent                 # …/week26/05_tracing
+MODULE = Path(__file__).resolve().parent                 # …/week26_nemoclaw_claws/05_tracing
 RUNS = MODULE / ".runs"
 CONFIGS = MODULE / "configs"
 TRACES = RUNS / "traces"

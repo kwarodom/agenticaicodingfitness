@@ -2,7 +2,7 @@
 """Exercise 17 · reference solution — point OpenClaw and Hermes at the same local model, and catch the unsafe configs.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/17_openclaw_hermes/exercises/ex17_agent_config.py
+    .venv/bin/python week25_dgx_spark/17_openclaw_hermes/exercises/ex17_agent_config.py
 
 The checker is free and offline: it compares your functions with the shapes the OpenClaw
 and Hermes playbooks document, then throws five broken configs at your reviewer.

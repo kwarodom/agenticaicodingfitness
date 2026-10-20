@@ -67,7 +67,7 @@
       "series": [
         {"name": "kW/RT", "values": [0.901, 0.903, 0.902, 0.902, 0.901, 0.821, 0.744, 0.703, 0.680, 0.672, 0.662], "color": "red"}
       ],
-      "caption": "Computed by capkit.kpi() from week26/common/data/chiller_plant.csv with chiller_kpi's own arithmetic (the last hours × 4 rows). SYNTHETIC data: the last 6 h are degraded on purpose, so 1–8 h are above the 0.80 alarm and 12 h and longer are OK."
+      "caption": "Computed by capkit.kpi() from week26_nemoclaw_claws/common/data/chiller_plant.csv with chiller_kpi's own arithmetic (the last hours × 4 rows). SYNTHETIC data: the last 6 h are degraded on purpose, so 1–8 h are above the 0.80 alarm and 12 h and longer are OK."
     },
     {
       "title": "Laptop stand-in — the first 3 capstone questions",

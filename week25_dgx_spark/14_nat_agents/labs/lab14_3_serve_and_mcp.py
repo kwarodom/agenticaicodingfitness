@@ -7,7 +7,7 @@ LiteLLM, your own code) can talk to the agent as if it were a model. Part B publ
 tools as an MCP server on :9901 and calls them with `nat mcp client` — no LLM involved, so Part B runs
 even when no model server is up. Both servers are stopped at the end.
 
-Run: .venv/bin/python week25/14_nat_agents/labs/lab14_3_serve_and_mcp.py
+Run: .venv/bin/python week25_dgx_spark/14_nat_agents/labs/lab14_3_serve_and_mcp.py
 """
 import json
 import os

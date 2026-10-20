@@ -29,5 +29,5 @@ pristine.
 Everything needs Neo4j running (with the APOC + GDS plugins):
 
 ```bash
-docker compose -f week15/kg_mastery/docker-compose.yml up -d
+docker compose -f week15_production_graphrag/kg_mastery/docker-compose.yml up -d
 ```

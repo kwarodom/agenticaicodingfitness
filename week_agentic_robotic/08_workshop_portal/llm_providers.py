@@ -64,6 +64,9 @@ def _complete_openai_compatible(settings, system, messages, tools, max_tokens):
     client = OpenAI(
         api_key=settings.get("api_key") or "local",
         base_url=_base_url(settings),
+        # Some gateways (e.g. ThaiLLM) run a WAF that blocks the default
+        # "OpenAI/Python" User-Agent. Send a neutral UA so custom endpoints work.
+        default_headers={"User-Agent": "agentic-robotics-portal/1.0"},
     )
     request = {
         "model": settings["model"],
@@ -199,6 +202,9 @@ def _label_openai_compatible(settings, encoded, prompt):
     client = OpenAI(
         api_key=settings.get("api_key") or "local",
         base_url=_base_url(settings),
+        # Some gateways (e.g. ThaiLLM) run a WAF that blocks the default
+        # "OpenAI/Python" User-Agent. Send a neutral UA so custom endpoints work.
+        default_headers={"User-Agent": "agentic-robotics-portal/1.0"},
     )
     request = {
         "model": settings["model"],
@@ -259,6 +265,13 @@ def _base_url(settings):
         base_url = (settings.get("base_url") or "").strip().rstrip("/")
         if not base_url:
             raise ValueError("a base URL is required for a custom provider")
+        # Be forgiving: users often paste the full completions URL. The OpenAI
+        # SDK appends "/chat/completions" itself, so a pasted suffix would
+        # double up and 404. Strip it back to the API root.
+        for suffix in ("/chat/completions", "/completions"):
+            if base_url.endswith(suffix):
+                base_url = base_url[: -len(suffix)]
+                break
         return base_url
     return PROVIDER_BASE_URLS[settings["provider"]]
 

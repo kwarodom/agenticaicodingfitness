@@ -8,7 +8,7 @@ Step 3 sorts every L1.4 verb into read-only / change / interactive / streaming /
 change gate: a snapshot and a restart go through clawkit.change(), so they run only in LIVE mode with
 🔓 Allow changes on. Step 5 explains why the lab never prints `dashboard-url` or `gateway-token` output.
 
-Run: .venv/bin/python week26/02_first_claw/labs/lab02_3_lifecycle.py
+Run: .venv/bin/python week26_nemoclaw_claws/02_first_claw/labs/lab02_3_lifecycle.py
 """
 import sys
 from pathlib import Path

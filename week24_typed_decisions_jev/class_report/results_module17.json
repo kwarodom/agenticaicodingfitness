@@ -1,0 +1,118 @@
+[
+ {
+  "test": "Course loads with 17 modules, Module 17 last",
+  "pass": true,
+  "detail": "17 modules",
+  "shots": []
+ },
+ {
+  "test": "M17 intro renders",
+  "pass": true,
+  "detail": "",
+  "shots": [
+   "m17_01_intro.png"
+  ]
+ },
+ {
+  "test": "M17 📊 diagrams + 3 charts render",
+  "pass": true,
+  "detail": "5 SVGs",
+  "shots": [
+   "m17_05_diagrams.png"
+  ]
+ },
+ {
+  "test": "M17 lab01 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.5s · DRY · 0.9s · recorded · found '0/48'",
+  "shots": [
+   "m17_lab_lab01.png"
+  ]
+ },
+ {
+  "test": "M17 lab02 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 44.5s · DRY · 44.5s · LOCAL models · found 'never mps'",
+  "shots": [
+   "m17_lab_lab02.png"
+  ]
+ },
+ {
+  "test": "M17 lab03 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.9s · DRY · 1.3s · LOCAL models · found 'locked: sha256'",
+  "shots": [
+   "m17_lab_lab03.png"
+  ]
+ },
+ {
+  "test": "M17 lab04 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.6s · DRY · 0.8s · LOCAL models · found '55/66'",
+  "shots": [
+   "m17_lab_lab04.png"
+  ]
+ },
+ {
+  "test": "M17 lab05 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 7.1s · DRY · 7.3s · LOCAL models · found '108/120'",
+  "shots": [
+   "m17_lab_lab05.png"
+  ]
+ },
+ {
+  "test": "M17 lab06 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 20.2s · DRY · 20.4s · LOCAL models · found 'McNemar'",
+  "shots": [
+   "m17_lab_lab06.png"
+  ]
+ },
+ {
+  "test": "M17 lab07 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · recorded · found 'HOLD'",
+  "shots": [
+   "m17_lab_lab07.png"
+  ]
+ },
+ {
+  "test": "M17 lab08 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · recorded · found 'NOT RUN'",
+  "shots": [
+   "m17_lab_lab08.png"
+  ]
+ },
+ {
+  "test": "M17 exercise solution passes all 12 checks",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s",
+  "shots": [
+   "m17_ex_solution.png"
+  ]
+ },
+ {
+  "test": "M17 exercise starter shows the TODOs",
+  "pass": true,
+  "detail": "starter fails with ✕ TODO lines",
+  "shots": [
+   "m17_ex_starter.png"
+  ]
+ },
+ {
+  "test": "M17 Thai toggle shows the Thai lesson",
+  "pass": true,
+  "detail": "1445 Thai characters on §4 (Laya)",
+  "shots": [
+   "m17_th_laya.png"
+  ]
+ },
+ {
+  "test": "No JavaScript errors in the page",
+  "pass": true,
+  "detail": "",
+  "shots": []
+ }
+]

@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "see",
+  "provider": "chatgpt",
+  "model": "gpt-5.4-mini",
+  "prompt": "Read this thermostat display exactly. Reply on ONE line in this format: room=<room>; measured_c=<number>; setpoint_c=<number>; mode=<mode>. If any value is unreadable, write unreadable for it.",
+  "media": "thermostat_room1203.png"
+ },
+ "response": {
+  "text": "room=1203; measured_c=29.1; setpoint_c=24.0; mode=cool",
+  "provider": "chatgpt",
+  "model": "gpt-5.4-mini-2026-03-17",
+  "usage": {
+   "input_tokens": 388,
+   "output_tokens": 64
+  },
+  "latency_ms": 1653.7
+ }
+}

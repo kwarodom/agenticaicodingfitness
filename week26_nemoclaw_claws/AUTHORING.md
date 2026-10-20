@@ -1,9 +1,9 @@
 # Week 26 · authoring guide (for maintainers and agents adding modules)
 
-Week 26 turns the research tutorial **`week26/NemoClaw on DGX Spark — Beginner to Expert Tutorial with NAT.md`**
+Week 26 turns the research tutorial **`week26_nemoclaw_claws/NemoClaw on DGX Spark — Beginner to Expert Tutorial with NAT.md`**
 (Parts 0–6 + Capstone, lab ids L1.1 … L6.3) into one hands-on course run by the **Reef Lab Runner**
-(`week26/00_reef_lab_runner/`, port 8126), in the style of Week 25. The runner's design comes from
-`week26/Alto Reef — Web Lab Runner Spec and Frontier-Model Build Brief.md` (§4.4 security, §4.5 honesty, §6 lab
+(`week26_nemoclaw_claws/00_reef_lab_runner/`, port 8126), in the style of Week 25. The runner's design comes from
+`week26_nemoclaw_claws/Alto Reef — Web Lab Runner Spec and Frontier-Model Build Brief.md` (§4.4 security, §4.5 honesty, §6 lab
 mapping). **Module 01 (`01_what_is_a_claw/`) is the reference implementation — copy its shape exactly.**
 
 ## The module list (folder · title · research tutorial part · lab ids)
@@ -26,12 +26,12 @@ Next points back to `../01_what_is_a_claw/TUTORIAL.md` or to "what to build next
 
 | resource | path | what it is |
 |---|---|---|
-| NAT 1.9.0 + extras | `week26/.venv-nat/` (`bin/nat`, `bin/python`) | `nvidia-nat[langchain,mcp,profiler,phoenix,opentelemetry,eval,ragas]` + pandas + greenlet (nat serve needs it). Evaluators: ragas, trajectory, avg_llm_latency, avg_num_llm_calls, avg_tokens_per_llm_end, avg_workflow_runtime. Tracing exporters: phoenix, otelcollector, file, langfuse … `nat sizing calc`, `nat mcp serve/client`, `nat serve`, `nat eval` all exist. |
-| Alto Ops package | `week26/common/alto_ops/` (installed editable in .venv-nat) | NAT tools `chiller_kpi` (research Lab 3.4) and `request_setpoint_change` (ticket only, validates `work_order_id`), configs in `src/alto_ops/configs/`: `workflow.laptop.yml` (laptop Ollama, **verified working**, ~20 s per question with `nemotron-3-nano:latest`), `workflow.spark.yml` (vLLM on the Spark), `workflow.sandbox.yml` (`https://inference.local/v1`) |
-| data | `week26/common/data/chiller_plant.csv` | SYNTHETIC, 672 rows, 15-min `ts,kw,rt`; last 6 h degraded → `chiller_kpi(hours=6)` = `kw_per_rt=0.901 status=ALARM`; 24 h = 0.703 OK |
-| mock BMS over MCP | `week26/common/bms_mcp_server.py` | FastMCP streamable-http on `http://localhost:${BMS_MCP_PORT:-8443}/mcp`; tools `read_point`, `list_alarms`, `get_trend`, `write_setpoint` (never writes) |
-| OpenShell CLI | `week26/.venv-openshell/bin/openshell` (0.0.111) | the last PyPI release with a macOS binary. **Offline parser only**: `clawkit.openshell_offline(args)` runs it against a dead gateway; argument/YAML errors come back immediately, anything that parsed fails with "Connection refused" (`clawkit.parsed_ok(r)`). NemoClaw pins 0.0.116 on the Spark; latest is 0.1.2 (SDK-only wheels on PyPI). |
-| policy model | `week26/common/policykit.py` | `validate`, `decide` (fs / process / L4 / REST / **MCP** / SSRF / audit vs enforce), `parse_endpoint_spec`, `parse_rule_spec`, `harden` (§6.2 checklist). A TEACHING MODEL — say so. |
+| NAT 1.9.0 + extras | `week26_nemoclaw_claws/.venv-nat/` (`bin/nat`, `bin/python`) | `nvidia-nat[langchain,mcp,profiler,phoenix,opentelemetry,eval,ragas]` + pandas + greenlet (nat serve needs it). Evaluators: ragas, trajectory, avg_llm_latency, avg_num_llm_calls, avg_tokens_per_llm_end, avg_workflow_runtime. Tracing exporters: phoenix, otelcollector, file, langfuse … `nat sizing calc`, `nat mcp serve/client`, `nat serve`, `nat eval` all exist. |
+| Alto Ops package | `week26_nemoclaw_claws/common/alto_ops/` (installed editable in .venv-nat) | NAT tools `chiller_kpi` (research Lab 3.4) and `request_setpoint_change` (ticket only, validates `work_order_id`), configs in `src/alto_ops/configs/`: `workflow.laptop.yml` (laptop Ollama, **verified working**, ~20 s per question with `nemotron-3-nano:latest`), `workflow.spark.yml` (vLLM on the Spark), `workflow.sandbox.yml` (`https://inference.local/v1`) |
+| data | `week26_nemoclaw_claws/common/data/chiller_plant.csv` | SYNTHETIC, 672 rows, 15-min `ts,kw,rt`; last 6 h degraded → `chiller_kpi(hours=6)` = `kw_per_rt=0.901 status=ALARM`; 24 h = 0.703 OK |
+| mock BMS over MCP | `week26_nemoclaw_claws/common/bms_mcp_server.py` | FastMCP streamable-http on `http://localhost:${BMS_MCP_PORT:-8443}/mcp`; tools `read_point`, `list_alarms`, `get_trend`, `write_setpoint` (never writes) |
+| OpenShell CLI | `week26_nemoclaw_claws/.venv-openshell/bin/openshell` (0.0.111) | the last PyPI release with a macOS binary. **Offline parser only**: `clawkit.openshell_offline(args)` runs it against a dead gateway; argument/YAML errors come back immediately, anything that parsed fails with "Connection refused" (`clawkit.parsed_ok(r)`). NemoClaw pins 0.0.116 on the Spark; latest is 0.1.2 (SDK-only wheels on PyPI). |
+| policy model | `week26_nemoclaw_claws/common/policykit.py` | `validate`, `decide` (fs / process / L4 / REST / **MCP** / SSRF / audit vs enforce), `parse_endpoint_spec`, `parse_rule_spec`, `harden` (§6.2 checklist). A TEACHING MODEL — say so. |
 | playbooks | repo-root `dgx-spark-playbooks/nvidia/` | `playbook-nemoclaw`, `playbook-openshell`, `playbook-openclaw`, `playbook-hermes-agent`, `playbook-nemoclaw-applications`, `station-*` |
 | laptop Ollama | `http://localhost:11434/v1` | `nemotron-3-nano:latest` (tool calling works with NAT), `gemma4:12b`, `gemma3:4b` |
 | Docker | the Docker **client** is installed; the daemon is usually **not running** on this Mac | labs that want Phoenix/OTel containers must detect that and fall back (NAT `file` exporter) |
@@ -100,13 +100,13 @@ NN_folder/
    the Spark. Laptop servers run inside `with clawkit.background([...], ready_url=…, log=RUNS/…):` and pick
    their port with `free_port(<documented port>)` (other labs may be running) — print the port you got.
    The runner kills a lab after 900 s: keep laptop LLM calls few (≤ 6 per lab, eval datasets ≤ 5 rows).
-7. **Self-audit before you report:** `.venv/bin/python week26/common/audit_references.py <module>` must print
-   `0 not found verbatim`, and `.venv/bin/python week26/common/check_translation.py <module>` must pass.
+7. **Self-audit before you report:** `.venv/bin/python week26_nemoclaw_claws/common/audit_references.py <module>` must print
+   `0 not found verbatim`, and `.venv/bin/python week26_nemoclaw_claws/common/check_translation.py <module>` must pass.
 8. Secrets: never print or interpolate tokens into a command line (`sh()` echoes commands). Credential flows
    (Langfuse, Telegram, provider keys) are shown with placeholders (`pk-lf-...`, `<your-key>`) and the lesson
    is that the runner and the sandbox never see the raw key.
 
-## clawkit (week26/common/clawkit.py) — read it, do not edit it
+## clawkit (week26_nemoclaw_claws/common/clawkit.py) — read it, do not edit it
 
 Week 25's sparkkit API (`banner(title, sub, status=True)` · `step` · `ok/warn/note/result` · `table` · `bar` ·
 `check` · `sh(cmd, reference=, example=, timeout=)` → `Result(code, out, source)` · `put` · `url(kind)` · `up` ·

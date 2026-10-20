@@ -7,7 +7,7 @@ This lab calls your live model as the teacher, writes .sandbox/train.jsonl in
 the messages format NeMo Customizer / PEFT expect, and prints the Spark
 fit-math that decides whether the fine-tune runs on-box.
 
-Run:  .venv/bin/python week23/11_data_flywheel/labs/lab02_distill_dataset.py
+Run:  .venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab02_distill_dataset.py
 """
 from __future__ import annotations
 
@@ -113,7 +113,7 @@ def main() -> None:
     print("  [SPARK] git clone https://github.com/NVIDIA-AI-Blueprints/data-flywheel")
     print("          # blueprint = NeMo microservices on k8s + DC GPUs — study it,")
     print("          # don't expect it to run on one ARM64 Spark (runbook §2.11).")
-    print("  [SPARK] PEFT/LoRA on a ≤12B student — week19's dgx_finetune path —")
+    print("  [SPARK] PEFT/LoRA on a ≤12B student — week19_sovereign_ai_dgx's dgx_finetune path —")
     print("          pointing its dataset arg at this train.jsonl.")
     print("\n  Takeaway — 'fine-tuning data' is not exotic: it's your curated logs")
     print("  with the teacher's answers attached. Next: lab03 gates the student.")

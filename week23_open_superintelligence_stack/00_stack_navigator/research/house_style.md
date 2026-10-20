@@ -1,6 +1,6 @@
 # Week 23 house style — build spec for a new hub app (Stack Navigator)
 
-Extracted from `week23/01_nemotron_models` (read in full) and `week23/02_nim_microservices`
+Extracted from `week23_open_superintelligence_stack/01_nemotron_models` (read in full) and `week23_open_superintelligence_stack/02_nim_microservices`
 (view.py/sim.py). Follow this exactly and the new app is indistinguishable from the other 12.
 
 ---
@@ -90,7 +90,7 @@ App + endpoints (all present in every app):
 ## 3. config.py — the connection switch: **copy config.py from 01_nemotron_models and adapt**
 
 Do NOT rewrite it. It is 326 lines and identical in structure across all 12 apps. Copy
-`week23/01_nemotron_models/config.py` into the new folder verbatim; the only adaptation
+`week23_open_superintelligence_stack/01_nemotron_models/config.py` into the new folder verbatim; the only adaptation
 normally needed is the docstring (all 12 currently still say "Week 19" — fix yours) and,
 if the app wants different model preferences, the `_PREFERRED` list. What it provides:
 
@@ -124,8 +124,8 @@ uvicorn[standard]>=0.29
 openai>=1.30
 ```
 (01 differs: a comment header + `openai>=1.40`, `fastapi>=0.110`, `uvicorn>=0.29`.)
-The root README launch recipe: `uv pip install -r week23/<folder>/requirements.txt` then
-`.venv/bin/python week23/<folder>/tutorial_server.py`.
+The root README launch recipe: `uv pip install -r week23_open_superintelligence_stack/<folder>/requirements.txt` then
+`.venv/bin/python week23_open_superintelligence_stack/<folder>/tutorial_server.py`.
 
 ## 5. Content/simulation factoring (from 02_nim_microservices)
 

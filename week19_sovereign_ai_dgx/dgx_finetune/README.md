@@ -26,8 +26,8 @@ leave hardware you control.
 ## Quick start
 
 ```bash
-uv pip install -r week19/dgx_finetune/requirements.txt
-.venv/bin/python week19/dgx_finetune/tutorial_server.py      # → http://127.0.0.1:8093
+uv pip install -r week19_sovereign_ai_dgx/dgx_finetune/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/dgx_finetune/tutorial_server.py      # → http://127.0.0.1:8093
 ```
 
 Then in the web app:
@@ -47,7 +47,7 @@ Then in the web app:
 ## Layout
 
 ```
-week19/dgx_finetune/
+week19_sovereign_ai_dgx/dgx_finetune/
 ├── README.md · requirements.txt · config.py   (SSH + connection state)
 ├── ftssh.py            → runs real commands on the DGX over ssh/scp, streams output
 ├── ftview.py           → framing + the eval engine (real over the connection)

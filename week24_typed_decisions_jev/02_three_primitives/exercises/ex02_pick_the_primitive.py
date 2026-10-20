@@ -7,7 +7,7 @@ fits: "choice", "noul" or "score"? Fill QUIZ below.
 Part B (live): write three questions for hotel guest messages —
   department (choice) · mentions_refund (noul) · anger (score)
 
-Run: .venv/bin/python week24/02_three_primitives/exercises/ex02_pick_the_primitive.py
+Run: .venv/bin/python week24_typed_decisions_jev/02_three_primitives/exercises/ex02_pick_the_primitive.py
 Stuck? Compare with exercises/solutions/ex02_pick_the_primitive.py.
 """
 import sys

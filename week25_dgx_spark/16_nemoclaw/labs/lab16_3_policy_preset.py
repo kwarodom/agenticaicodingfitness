@@ -12,7 +12,7 @@ playbook documents, plus two this course adds) and shows each one caught.
 With a Spark, the file is copied to ~/w25/nemoclaw/ (a plain copy). Applying it to the
 sandbox changes live policy, so that only happens with --apply.
 
-Run: .venv/bin/python week25/16_nemoclaw/labs/lab16_3_policy_preset.py [--host blogs.example.org] [--apply]
+Run: .venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_3_policy_preset.py [--host blogs.example.org] [--apply]
 """
 import argparse
 import re
@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "common"))
 from sparkkit import banner, cfg, check, note, put, result, sh, step, table, where  # noqa: E402
 
 HERE = Path(__file__).resolve().parents[1]
-OUT = HERE / ".runs"                                   # gitignored (week25/.gitignore: **/.runs/)
+OUT = HERE / ".runs"                                   # gitignored (week25_dgx_spark/.gitignore: **/.runs/)
 
 # From the playbook's News Digest recipe: the three example sources and the four binaries.
 PLAYBOOK_HOSTS = ["developer.nvidia.com", "blogs.nvidia.com", "news.ycombinator.com"]

@@ -2,7 +2,7 @@
 # offline evaluator. Shape copied from `nat workflow create` (NAT 1.9): the entry point in the
 # 'nat.components' group is how `nat run` / `nat serve` / `nat eval` discover the tools.
 #
-#   uv pip install --python week25/.venv-nat/bin/python --no-deps -e week25/14_nat_agents/hotel_ops_nat
+#   uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat
 
 [build-system]
 build-backend = "setuptools.build_meta"

@@ -6,7 +6,7 @@ temperature 1.0, score each with a deterministic verifier, then compute
 advantage = reward − group mean. You'll see exactly which rollouts a policy
 update would reinforce (↑) and which it would suppress (↓).
 
-Run:  cd <repo root> && .venv/bin/python week23/10_nemo_gym_rl/labs/lab02_rollout_group_grpo.py
+Run:  cd <repo root> && .venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab02_rollout_group_grpo.py
 """
 from __future__ import annotations
 

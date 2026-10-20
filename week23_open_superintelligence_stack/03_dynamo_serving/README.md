@@ -6,12 +6,12 @@ economical — disaggregated prefill/decode, KV-cache-aware routing, an SLO Plan
 NIXL for fast cross-GPU KV transfer — across 1 or many DGX Sparks.
 
 Runs **dual-mode**: **REAL** against a NIM / Ollama / vLLM endpoint, or **SIM** with no
-GPU (`week23/03_dynamo_serving/sim.py`).
+GPU (`week23_open_superintelligence_stack/03_dynamo_serving/sim.py`).
 
 ## Run the web tutorial
 
 ```bash
-cd week23/dynamo_serving
+cd week23_open_superintelligence_stack/dynamo_serving
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8102
 ```

@@ -1,0 +1,75 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "ขอแจ้งเรื่องหน่อยครับ ได้กลิ่นไหม้แรงมากที่ทางเดินชั้น 24 มาเดี๋ยวนี้เลย"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets, showers",
+     "safety": "smoke, burning smell, fire, sparks, or water near electricity",
+     "front_desk": "check-in, check-out, billing, room changes, stay extensions"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   },
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is `message`?",
+    "criteria": [
+     "routine — whenever convenient, or nothing needs doing",
+     "today — a problem that should be fixed today",
+     "immediate — danger or damage happening now"
+    ]
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "safety",
+    "confidence": 1.0,
+    "probabilities": {
+     "hvac": 0.0,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 1.0,
+     "front_desk": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.93
+   },
+   "urgency": {
+    "type": "score",
+    "score": 2.0,
+    "confidence": 1.0,
+    "legend": {
+     "0": "routine — whenever convenient, or nothing needs doing",
+     "1": "today — a problem that should be fixed today",
+     "2": "immediate — danger or damage happening now"
+    },
+    "probabilities": {
+     "0": 0.0,
+     "1": 0.0,
+     "2": 1.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 560,
+   "output_tokens": 97
+  }
+ }
+}

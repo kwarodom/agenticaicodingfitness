@@ -12,7 +12,7 @@ It then shows what FSDP sends over the QSFP link for each forward + backward pas
 
 Every number is arithmetic, not a measurement. Lab 03 reads what your Spark really used.
 
-Run: .venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab01_finetune_memory.py
+Run: .venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab01_finetune_memory.py
 """
 import sys
 from pathlib import Path

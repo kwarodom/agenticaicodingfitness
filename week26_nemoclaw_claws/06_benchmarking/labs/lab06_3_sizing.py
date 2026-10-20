@@ -9,7 +9,7 @@ and p95 workflow runtime, fits a straight line (time vs concurrency) and turns a
   4. `--offline_mode`: re-fit against a new target without running anything.
 Two points always fit a line perfectly (R² = 1). That is the lesson, not a result. LAPTOP STAND-IN numbers are noisy.
 
-Run: .venv/bin/python week26/06_benchmarking/labs/lab06_3_sizing.py
+Run: .venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_3_sizing.py
 """
 import json
 import sys
@@ -54,7 +54,7 @@ step(2, f"LAPTOP STAND-IN — nat sizing calc at concurrency 1 and 2, one pass (
 if not up(LAPTOP_OLLAMA):
     warn("laptop Ollama is not answering on :11434 — start it, then re-run")
     sys.exit(0)
-if not (ROOT / "week26/06_benchmarking/data/alto_ops_eval.jsonl").is_file():
+if not (ROOT / "week26_nemoclaw_claws/06_benchmarking/data/alto_ops_eval.jsonl").is_file():
     warn("data/alto_ops_eval.jsonl is missing — run lab 06-2 first (it builds the dataset from the CSV)")
     sys.exit(0)
 argv = [NAT, "sizing", "calc", "--config_file", rel(CFG), "--calc_output_dir", rel(CALC),

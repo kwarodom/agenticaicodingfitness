@@ -8,7 +8,7 @@ claims empirically: stream a SHORT prompt and a ~850-token LONG prompt against
 the same endpoint and compare TTFT (the prefill proxy) vs decode tok/s.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/03_dynamo_serving/labs/lab01_prefill_vs_decode.py
+      .venv/bin/python week23_open_superintelligence_stack/03_dynamo_serving/labs/lab01_prefill_vs_decode.py
 
 Works against whatever config.py resolves: local Ollama, a DGX Spark over a
 tunnel, or build.nvidia.com (DGX_CONN=cloud + nvapi- key).

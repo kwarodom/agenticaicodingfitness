@@ -9,8 +9,8 @@ Run the lab again at any time: it only reports progress.
 
 Opt in with  --yes  or  SPARK_APPLY=1.  Nothing is ever deleted.
 
-Run: .venv/bin/python week25/09_llama_factory/labs/lab01_factory_setup.py
-     SPARK_APPLY=1 .venv/bin/python week25/09_llama_factory/labs/lab01_factory_setup.py
+Run: .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab01_factory_setup.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab01_factory_setup.py
 """
 import os
 import re

@@ -9,7 +9,7 @@ A label like "evidenced" is hard to audit. So:
 Jev never writes a quotation, so it can never invent one. The recruiter sees
 real words they can check in seconds.
 
-Run: .venv/bin/python week24/06_hr_evidence/labs/lab02_sentence_evidence.py
+Run: .venv/bin/python week24_typed_decisions_jev/06_hr_evidence/labs/lab02_sentence_evidence.py
 """
 import re
 import sys

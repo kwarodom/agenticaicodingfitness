@@ -13,7 +13,7 @@ LLM call — **REAL** against an Ollama / vLLM / NIM / DGX endpoint, or a faithf
 ## Run the web tutorial
 
 ```bash
-cd week21/06_energy_simulation
+cd week21_physical_ai_digital_twins/06_energy_simulation
 pip install -r requirements.txt
 python tutorial_server.py            # → http://127.0.0.1:8205  (TWIN_GUIDE_PORT to change)
 ```

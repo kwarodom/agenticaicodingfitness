@@ -12,7 +12,7 @@ agent loop. This lab runs that loop once:
 With vLLM up on your Spark it talks to that server; otherwise it uses a tool-capable model on this laptop's
 Ollama, labelled LAPTOP STAND-IN. The client code is identical either way — that is the point.
 
-Run: .venv/bin/python week25/05_vllm/labs/lab04_tool_calling.py [--model nvidia/Qwen3.6-35B-A3B-NVFP4]
+Run: .venv/bin/python week25_dgx_spark/05_vllm/labs/lab04_tool_calling.py [--model nvidia/Qwen3.6-35B-A3B-NVFP4]
 """
 import argparse
 import json

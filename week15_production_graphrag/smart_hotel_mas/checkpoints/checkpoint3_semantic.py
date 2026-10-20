@@ -6,7 +6,7 @@ rather than exact keys. We embed each sensor event into ChromaDB and query it
 with natural language ("room temperature too high HVAC problem"), getting back
 the most semantically similar past events. (smart_hotel_mas.pdf §CP3)
 
-Run:  python week15/smart_hotel_mas/checkpoints/checkpoint3_semantic.py
+Run:  python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint3_semantic.py
 
 Requires a running ChromaDB server (see docker-compose.yml) on CHROMA_PORT.
 """
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         print("⚠️  Cannot reach ChromaDB.")
         print(f"   ({type(e).__name__}: {e})")
         print(f"   Expected at {CHROMA_HOST}:{CHROMA_PORT}. Start it with:")
-        print("   docker compose -f week15/smart_hotel_mas/docker-compose.yml up -d")
+        print("   docker compose -f week15_production_graphrag/smart_hotel_mas/docker-compose.yml up -d")
         sys.exit(1)
 
     print("── Storing sensor events into semantic memory ──")

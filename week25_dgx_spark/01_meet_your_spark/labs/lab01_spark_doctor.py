@@ -8,7 +8,7 @@ see what NVIDIA's playbooks document (REFERENCE) or an illustrative shape (EXAMP
 
 Nothing here changes the machine. The fixes are printed, never run.
 
-Run: .venv/bin/python week25/01_meet_your_spark/labs/lab01_spark_doctor.py
+Run: .venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab01_spark_doctor.py
 """
 import re
 import sys

@@ -1,0 +1,45 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "ได้กลิ่นไหม้แถวตู้ไฟชั้น 3 รีบมาดูด่วน"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets",
+     "safety": "smoke, burning smell, fire, electrical danger",
+     "front_desk": "check-in, check-out, billing, room changes",
+     "no_action": "the guest says nothing needs to be done (any more)"
+    }
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "safety",
+    "confidence": 1.0,
+    "probabilities": {
+     "hvac": 0.0,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 1.0,
+     "front_desk": 0.0,
+     "no_action": 0.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 455,
+   "output_tokens": 72
+  }
+ }
+}

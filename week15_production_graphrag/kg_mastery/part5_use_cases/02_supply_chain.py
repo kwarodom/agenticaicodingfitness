@@ -23,7 +23,7 @@ Queries demonstrated:
   2. Alternative suppliers       — other suppliers for the same components.
   3. Single-supplier dependencies — components with exactly one supplier (risk).
 
-Run:  python week15/kg_mastery/part5_use_cases/02_supply_chain.py
+Run:  python week15_production_graphrag/kg_mastery/part5_use_cases/02_supply_chain.py
 """
 import sys
 from pathlib import Path

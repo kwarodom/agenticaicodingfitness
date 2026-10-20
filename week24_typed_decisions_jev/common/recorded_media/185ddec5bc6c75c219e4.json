@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "hear",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-transcribe",
+  "media": "request_towels_en.wav"
+ },
+ "response": {
+  "text": "Hello, could someone bring two extra towels to room 812 when you have a moment? No rush.",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-transcribe",
+  "usage": {
+   "input_tokens": 88,
+   "output_tokens": 23
+  },
+  "latency_ms": 1236.3
+ }
+}

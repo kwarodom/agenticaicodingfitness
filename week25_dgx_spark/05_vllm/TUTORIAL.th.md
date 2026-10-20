@@ -131,7 +131,7 @@ Lab 05-2 ทำทั้งหมดนี้ในรอบเดียว ม�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab02_first_server.py          # add --yes to really start it
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab02_first_server.py          # add --yes to really start it
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY: ยังไม่ได้ตั้งค่า Spark ขั้นที่ 4 จึงใช้ตัวแทนบนแล็ปท็อป)
@@ -183,7 +183,7 @@ Lab 05-1 คำนวณผลรวมนี้ให้โมเดลจา�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab01_launch_builder.py
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab01_launch_builder.py
 ```
 
 **Expected output** (เป็นการคำนวณ ผลเหมือนกันทุกเครื่อง)
@@ -293,7 +293,7 @@ Lab 05-4 รันวงรอบเอเจนต์ครบหนึ่ง�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab04_tool_calling.py
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab04_tool_calling.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: ไม่มี Spark จึงใช้โมเดลบนแล็ปท็อปที่รองรับ tool เป็นตัวแทน)
@@ -329,7 +329,7 @@ Lab 05-3 ส่งคำขอแบบเดียวกันทีละ 1, 2
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab03_continuous_batching.py
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab03_continuous_batching.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้กับ Ollama: LAPTOP STAND-IN ไม่ใช่ Spark และไม่ใช่ vLLM)
@@ -639,7 +639,7 @@ Lab 01 เป็นการคำนวณและรันได้ทุก�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 05 — เขียนคำสั่งเปิด vLLM ให้ถูกต้อง** เปิด `week25/05_vllm/exercises/ex05_launch_command.py` ในไฟล์มี `TODO` สี่จุด แต่ละจุดคืนค่าเป็น list ของ token บรรทัดคำสั่ง (หรือตัวเลข):
+**แบบฝึกหัด 05 — เขียนคำสั่งเปิด vLLM ให้ถูกต้อง** เปิด `week25_dgx_spark/05_vllm/exercises/ex05_launch_command.py` ในไฟล์มี `TODO` สี่จุด แต่ละจุดคืนค่าเป็น list ของ token บรรทัดคำสั่ง (หรือตัวเลข):
 
 1. `docker_flags()`: flag ของ container จากการตั้งค่าพื้นฐาน: GPU, `--ipc host`, พอร์ต 8000 และ HF cache
 2. `max_full_length_seqs(weights_gb, kv_gb_per_seq, util)`: จำนวน sequence แบบ context เต็มที่ใส่ได้ ซึ่งจะกลายเป็น `--max-num-seqs`
@@ -650,7 +650,7 @@ Lab 01 เป็นการคำนวณและรันได้ทุก�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/exercises/ex05_launch_command.py
+.venv/bin/python week25_dgx_spark/05_vllm/exercises/ex05_launch_command.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสี่จุด บันทึกจาก Mac เครื่องนี้ คำสั่งสองชุดที่พิมพ์ออกมาถูกตัดให้สั้นลงที่นี่)

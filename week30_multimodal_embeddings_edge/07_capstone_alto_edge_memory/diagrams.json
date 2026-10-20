@@ -1,0 +1,204 @@
+{
+ "architecture": {
+  "title": "Alto Edge Memory",
+  "caption": "Notes, photos, voicemails, CCTV and incident records in one 512-d SQLite memory; a local Gemma 4 agent searches it per kind with search_memory; a grader scores the evidence in .runs/. 0 connections left the machine.",
+  "lanes": [
+   {
+    "id": "ing",
+    "label": "ingest (Lab 07-1)"
+   },
+   {
+    "id": "mem",
+    "label": "memory"
+   },
+   {
+    "id": "ag",
+    "label": "agent (Lab 07-2)"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "n",
+    "label": "18 notes",
+    "lane": "ing",
+    "sub": "",
+    "accent": "cyan"
+   },
+   {
+    "id": "md",
+    "label": "6 photos · 3 voicemails · 1 CCTV",
+    "lane": "ing",
+    "sub": "SYNTHETIC",
+    "accent": "amber"
+   },
+   {
+    "id": "r",
+    "label": "2 incident records",
+    "lane": "ing",
+    "sub": "interleaved",
+    "accent": "amber"
+   },
+   {
+    "id": "db",
+    "label": "edge_memory.sqlite",
+    "lane": "mem",
+    "sub": "30 items · 52 KiB · 512-d",
+    "accent": "green"
+   },
+   {
+    "id": "t",
+    "label": "search_memory",
+    "lane": "ag",
+    "sub": "per-kind top hits",
+    "accent": "violet"
+   },
+   {
+    "id": "l",
+    "label": "gemma4:12b",
+    "lane": "ag",
+    "sub": "answers with [source]",
+    "accent": "green"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n",
+    "to": "db",
+    "label": ""
+   },
+   {
+    "from": "md",
+    "to": "db",
+    "label": ""
+   },
+   {
+    "from": "r",
+    "to": "db",
+    "label": ""
+   },
+   {
+    "from": "l",
+    "to": "t",
+    "label": "tool call",
+    "animated": true
+   },
+   {
+    "from": "t",
+    "to": "db",
+    "label": "per kind"
+   }
+  ]
+ },
+ "sequence": {
+  "title": "One agent turn",
+  "caption": "The LLM calls search_memory, reads per-kind hits with sources, and answers with citations. Lab 07-2 used 4 LLM calls for 2 questions.",
+  "actors": [
+   {
+    "id": "u",
+    "label": "night shift"
+   },
+   {
+    "id": "l",
+    "label": "local LLM"
+   },
+   {
+    "id": "t",
+    "label": "search_memory"
+   }
+  ],
+  "steps": [
+   {
+    "from": "u",
+    "to": "l",
+    "label": "question (EN / TH)",
+    "kind": "call"
+   },
+   {
+    "from": "l",
+    "to": "t",
+    "label": "search_memory(query)",
+    "kind": "call"
+   },
+   {
+    "from": "t",
+    "to": "l",
+    "label": "best 2 of each kind + sources",
+    "kind": "return"
+   },
+   {
+    "from": "l",
+    "to": "u",
+    "label": "answer with [source] citations",
+    "kind": "return"
+   },
+   {
+    "from": "u",
+    "to": "u",
+    "label": "grader: evidence only — and its blind spot",
+    "kind": "note"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "Capstone grade (Lab 07-3)",
+   "type": "bars",
+   "unit": "points",
+   "labels": [
+    "index",
+    "retrieval",
+    "sovereignty",
+    "agent"
+   ],
+   "series": [
+    {
+     "name": "scored",
+     "values": [
+      20,
+      25,
+      20,
+      35
+     ],
+     "color": "green"
+    },
+    {
+     "name": "max",
+     "values": [
+      20,
+      25,
+      20,
+      35
+     ],
+     "color": "cyan"
+    }
+   ],
+   "caption": "Measured on this Mac. 100/100 — but Section 4 shows what the grader did not check."
+  },
+  {
+   "title": "Memory contents",
+   "type": "donut",
+   "unit": "items",
+   "labels": [
+    "notes",
+    "images",
+    "audio",
+    "video",
+    "records"
+   ],
+   "series": [
+    {
+     "name": "items",
+     "values": [
+      18,
+      6,
+      3,
+      1,
+      2
+     ],
+     "color": "violet"
+    }
+   ],
+   "caption": "From Lab 07-1's manifest.json."
+  }
+ ]
+}

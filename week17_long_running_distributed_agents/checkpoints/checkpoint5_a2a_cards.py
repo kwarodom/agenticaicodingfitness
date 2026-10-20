@@ -27,7 +27,7 @@ shown at the bottom as guarded, illustrative code.
 
 (Week 17 · fleet orchestration · A2A skill: cards + six-state lifecycle)
 
-Run:  python week17/checkpoints/checkpoint5_a2a_cards.py
+Run:  python week17_long_running_distributed_agents/checkpoints/checkpoint5_a2a_cards.py
 """
 import json
 import sys

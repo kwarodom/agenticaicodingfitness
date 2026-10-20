@@ -8,7 +8,7 @@ On THIS laptop the same loop runs for real against a `nat serve` of Alto Ops Cla
 research tutorial's `sort | awk` nearest-rank line, which is coarse at small n.
 Then the four layers side by side, from the summaries labs 06-1 to 06-4 left in .runs/ (LAPTOP STAND-IN).
 
-Run: .venv/bin/python week26/06_benchmarking/labs/lab06_5_harness_bench.py [--tasks 5]
+Run: .venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_5_harness_bench.py [--tasks 5]
 """
 import argparse
 import json
@@ -51,7 +51,7 @@ if not up(LAPTOP_OLLAMA):
     sys.exit(0)
 port = free_port(PORTS["nat"])
 print(f"◆ nat serve port: {port}" + ("" if port == PORTS["nat"] else f" (:{PORTS['nat']} is busy — another lab's server)"))
-cfg = "week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml"
+cfg = "week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml"
 times, answers = [], []
 with background([NAT, "serve", "--config_file", cfg, "--host", "127.0.0.1", "--port", str(port)],
                 ready_url=f"http://127.0.0.1:{port}/docs", log=RUNS / "nat_serve.log", env=nat_serve_env(), cwd=ROOT,

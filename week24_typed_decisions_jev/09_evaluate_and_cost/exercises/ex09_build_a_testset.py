@@ -8,7 +8,7 @@ TODO 2 — implement macro_f1(): the mean per-class F1 score.
 The checker is FREE and runs first (no API call): it validates your rows and
 tests macro_f1() against fixtures. Only then does it ask Jev about your rows.
 
-Run: .venv/bin/python week24/09_evaluate_and_cost/exercises/ex09_build_a_testset.py
+Run: .venv/bin/python week24_typed_decisions_jev/09_evaluate_and_cost/exercises/ex09_build_a_testset.py
 """
 import sys
 from pathlib import Path
@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import evalkit as ev                            # noqa: E402
 from jevkit import banner, check, step, table   # noqa: E402
 
-# Allowed labels (from the intent question in week24/jev_lab/jev_lab.py):
+# Allowed labels (from the intent question in week24_typed_decisions_jev/jev_lab/jev_lab.py):
 #   hvac, energy_mv, facility_ops, sustainability, coding, general, unknown
 
 # ── TODO 1 ── at least 6 rows. Copy the shape of the example and add more.

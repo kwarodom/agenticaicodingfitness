@@ -33,18 +33,18 @@ over time** — and whose mind *and* memories never leave the building.
 ## Quick start
 
 ```bash
-uv pip install -r week19/self_evolving_agent_v2/requirements.txt
+uv pip install -r week19_sovereign_ai_dgx/self_evolving_agent_v2/requirements.txt
 
 # pick a brain (or rely on auto):
 ollama run qwen3.6:35b-a3b-q8_0          # then BRAIN=local (sovereign)
 # export ANTHROPIC_API_KEY=...           # then BRAIN=claude
 # (nothing running → BRAIN=sim, $0)
 
-.venv/bin/python week19/self_evolving_agent_v2/tutorial_server.py
+.venv/bin/python week19_sovereign_ai_dgx/self_evolving_agent_v2/tutorial_server.py
 # → open http://127.0.0.1:8095   (run Ch 3→4→5→6 in order to watch it evolve)
 
 # or a single demo
-BRAIN=local .venv/bin/python week19/self_evolving_agent_v2/demos/step03_consolidate.py
+BRAIN=local .venv/bin/python week19_sovereign_ai_dgx/self_evolving_agent_v2/demos/step03_consolidate.py
 ```
 
 The 🧹 button (or `POST /api/cleanup`) wipes `.memory/` so you can watch the agent
@@ -55,7 +55,7 @@ grow from amnesiac to expert again.
 ## Layout
 
 ```
-week19/self_evolving_agent_v2/
+week19_sovereign_ai_dgx/self_evolving_agent_v2/
 ├── README.md · requirements.txt · config.py
 ├── brain.py            → the SWITCHABLE BRAIN (local DGX / Claude / sim)
 ├── memory.py           → tripartite memory on the DGX + consolidation + recall

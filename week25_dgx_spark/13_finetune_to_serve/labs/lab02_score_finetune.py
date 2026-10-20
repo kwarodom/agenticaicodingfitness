@@ -8,7 +8,7 @@ This lab reads that file over ssh (read-only), scores it with exactly the rules 
 baseline, and saves a local copy in .runs/ for lab 13-4. In DRY mode there is no fine-tune to score,
 so it says so and scores the baseline file instead, labelled as such, to show what the report looks like.
 
-Run: .venv/bin/python week25/13_finetune_to_serve/labs/lab02_score_finetune.py [--file path.jsonl]
+Run: .venv/bin/python week25_dgx_spark/13_finetune_to_serve/labs/lab02_score_finetune.py [--file path.jsonl]
 """
 import sys
 from pathlib import Path

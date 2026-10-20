@@ -13,7 +13,7 @@ turned into seven runnable modules plus the [`factory/`](factory/) starter kit.
 
 ```bash
 # once — the target app
-cd week27/00_alto_mini && make seed && make test        # 6 passed
+cd week27_software_factory/00_alto_mini && make seed && make test        # 6 passed
 make dev                                                 # http://127.0.0.1:8127
 
 # once — the kit's offline checks (no Claude Code needed)
@@ -41,7 +41,7 @@ Each module has `TUTORIAL.md` and `exercises/` (with `solutions/` and tests).
 ## What is where
 
 ```text
-week27/
+week27_software_factory/
   00_alto_mini/        the target: FastAPI + static page, SQLite seed, 6 tests, Makefile (dev/seed/test/e2e)
                        seeded gaps: None-reading TypeError · setpoint 31 → 500 · tz KeyError · "—" for no-data
   factory/             the starter kit (also shipped as a zip in class):

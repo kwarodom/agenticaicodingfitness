@@ -40,7 +40,7 @@ class Agent:
             system=self.system_prompt(),
             messages=[{"role": "user", "content": task}],
         )
-        return resp.content[0].text
+        return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text")
 
 
 researcher = Agent(

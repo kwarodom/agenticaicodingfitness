@@ -6,7 +6,7 @@ production traces (dupes, junk, PII and all) go through the same four stages
 NeMo Curator applies — dedup → quality filter → PII scrub → LLM-judge label —
 and the survivors land in .sandbox/curated.jsonl, ready for lab02.
 
-Run:  .venv/bin/python week23/11_data_flywheel/labs/lab01_curate_logs.py
+Run:  .venv/bin/python week23_open_superintelligence_stack/11_data_flywheel/labs/lab01_curate_logs.py
 """
 from __future__ import annotations
 

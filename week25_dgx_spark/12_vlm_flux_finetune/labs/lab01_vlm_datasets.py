@@ -14,7 +14,7 @@ tested on a clearly labelled EXAMPLE file — and shows how the notebook resolve
 
 Runs on this laptop (PIL; ffprobe if installed). No Spark, no network.
 
-Run: .venv/bin/python week25/12_vlm_flux_finetune/labs/lab01_vlm_datasets.py
+Run: .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab01_vlm_datasets.py
 """
 import json
 import random

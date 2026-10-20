@@ -62,7 +62,7 @@ def fresh_state() -> HotelState:
 
 
 # ── SOP corpus — the "NeMo Retriever RAG" skill retrieves from this ───────────
-# (excerpted from week15/code/05_rag/sample_docs — kept sovereign, on-box)
+# (excerpted from week15_production_graphrag/code/05_rag/sample_docs — kept sovereign, on-box)
 SOP = [
     ("comfort", "Guest rooms target 23°C when occupied; the lobby is kept at 24°C by day "
                 "and may drift to 26°C overnight to save energy. Function halls pre-cool to 22°C."),

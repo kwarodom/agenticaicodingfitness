@@ -2,7 +2,7 @@
 """Exercise 18 · reference solution — grade a coding agent's reply, the way an eval harness does.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/18_coding_agents/exercises/ex18_grade_agent_reply.py
+    .venv/bin/python week25_dgx_spark/18_coding_agents/exercises/ex18_grade_agent_reply.py
 
 The checker is free and offline. Its fixtures follow the reply shapes lab 02 met on
 a Mac's Ollama (a clean tool call, a failed edit, a tool call printed as text, a server

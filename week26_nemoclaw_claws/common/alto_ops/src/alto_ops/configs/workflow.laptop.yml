@@ -1,9 +1,9 @@
 # Alto Ops Claw on THIS LAPTOP — NAT 1.9 + the laptop's Ollama (a stand-in for vLLM on the Spark).
-# Run from the repo root:  week26/.venv-nat/bin/nat run --config_file week26/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --input "…"
+# Run from the repo root:  week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/common/alto_ops/src/alto_ops/configs/workflow.laptop.yml --input "…"
 functions:
   chiller_kpi:
     _type: chiller_kpi
-    csv_path: week26/common/data/chiller_plant.csv
+    csv_path: week26_nemoclaw_claws/common/data/chiller_plant.csv
     kw_per_rt_alarm: 0.80
   current_datetime:
     _type: current_datetime

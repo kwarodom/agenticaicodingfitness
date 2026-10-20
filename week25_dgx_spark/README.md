@@ -17,7 +17,7 @@ cloud involved.
 ## Launch the course (web app)
 
 ```bash
-.venv/bin/python week25/00_spark_lab_runner/tutorial_server.py
+.venv/bin/python week25_dgx_spark/00_spark_lab_runner/tutorial_server.py
 # → http://127.0.0.1:8125   (auto-picks a free port; override with SPARK_GUIDE_PORT)
 ```
 
@@ -30,7 +30,7 @@ The **Spark Lab Runner** has the same shape as the Week 24 Jev Lab Runner:
 - **⚡ Ask the Spark** blocks: edit a chat request in the page and send it to an engine on your Spark,
   with TTFT and tok/s shown
 - a **🖥 Spark setup** dialog: Spark hostnames plus `HF_TOKEN` / `NGC_API_KEY` / `NVIDIA_API_KEY`, saved
-  server-side to `week25/.env.local` (gitignored, mode 0600) and never sent to the browser
+  server-side to `week25_dgx_spark/.env.local` (gitignored, mode 0600) and never sent to the browser
 - a **⌨ terminal** that runs each command on this Mac, on Spark A, or on Spark B. Code blocks start with
   `# on: spark` / `# on: spark-b` / `# on: laptop`, and ▶ run picks the matching target.
 
@@ -42,7 +42,7 @@ The **Spark Lab Runner** has the same shape as the Week 24 Jev Lab Runner:
 | **DRY** | Nothing runs. You see each command plus one of three clearly labelled outputs: **RECORDED** (captured from a real Spark with `SPARK_RECORD=1`), **REFERENCE** (quoted word-for-word from the NVIDIA playbook), or **EXAMPLE** (an illustrative shape, not a measurement) |
 | **💻 laptop stand-in** | For HTTP labs only. When a Spark endpoint is down, the client-side ideas (streaming, tool calls, gateways, agents) run against Ollama on your laptop. The output is labelled `LAPTOP STAND-IN`, and its speed is never presented as a Spark number |
 
-`week25/common/audit_references.py` checks that every REFERENCE in every lab really appears in a playbook.
+`week25_dgx_spark/common/audit_references.py` checks that every REFERENCE in every lab really appears in a playbook.
 
 ## The modules
 
@@ -95,7 +95,7 @@ normal Thai requests urgent. That is the fine-tune's job to fix.
 1. **Your Spark:** Module 01 walks through key-based SSH (`ssh -o BatchMode=yes spark-a true` must
    work), Tailscale for access from anywhere, and the `ssh -L` tunnel for localhost-only services.
 2. **The runner:** open **🖥 Spark setup** and set `SPARK_HOST` (plus `SPARK_HOST2` for the two-Spark
-   modules). Or copy `week25/.env.example` into `week25/.env.local`.
+   modules). Or copy `week25_dgx_spark/.env.example` into `week25_dgx_spark/.env.local`.
 3. **Gated downloads:** log in **on the Spark** once, with `hf auth login` for Hugging Face and
    `docker login nvcr.io` for NGC. No lab puts a Hugging Face or NGC token on a command line. The one
    documented exception is the capstone's gateway key (Module 20 §6), which also names the safer alternative.
@@ -105,24 +105,24 @@ Local tool environments (all gitignored, created with `uv`):
 | Path | What | Used by |
 |---|---|---|
 | repo `.venv` | Python 3.13, FastAPI, PyYAML | the runner and every lab |
-| `week25/.venv-nat` | `nvidia-nat[langchain]` 1.9.0 (Python 3.12) | Modules 14, 20 |
-| `week25/.venv-litellm` | `litellm[proxy]` 1.89.0 | Modules 08, 13, 20 |
-| `week25/15_openshell_sandbox/.venv-openshell` | the OpenShell CLI (pip), used only to parse policies on the laptop | Module 15 |
+| `week25_dgx_spark/.venv-nat` | `nvidia-nat[langchain]` 1.9.0 (Python 3.12) | Modules 14, 20 |
+| `week25_dgx_spark/.venv-litellm` | `litellm[proxy]` 1.89.0 | Modules 08, 13, 20 |
+| `week25_dgx_spark/15_openshell_sandbox/.venv-openshell` | the OpenShell CLI (pip), used only to parse policies on the laptop | Module 15 |
 | `dgx-spark-playbooks/` (repo root) | a clone of NVIDIA's playbooks | Module 21, `audit_references.py` |
 
 ```bash
 # recreate them
-uv venv -p 3.12 week25/.venv-nat && uv pip install -p week25/.venv-nat/bin/python "nvidia-nat[langchain]==1.9.0" greenlet "nvidia-nat-mcp~=1.9"
-uv venv week25/.venv-litellm && uv pip install -p week25/.venv-litellm/bin/python "litellm[proxy]==1.89.0" openai pyyaml
-uv pip install -p week25/.venv-nat/bin/python --no-deps -e week25/14_nat_agents/hotel_ops_nat \
-  -e week25/20_capstone_sovereign_agent/hotel_capstone_nat          # the NAT plugins (Modules 14, 20)
+uv venv -p 3.12 week25_dgx_spark/.venv-nat && uv pip install -p week25_dgx_spark/.venv-nat/bin/python "nvidia-nat[langchain]==1.9.0" greenlet "nvidia-nat-mcp~=1.9"
+uv venv week25_dgx_spark/.venv-litellm && uv pip install -p week25_dgx_spark/.venv-litellm/bin/python "litellm[proxy]==1.89.0" openai pyyaml
+uv pip install -p week25_dgx_spark/.venv-nat/bin/python --no-deps -e week25_dgx_spark/14_nat_agents/hotel_ops_nat \
+  -e week25_dgx_spark/20_capstone_sovereign_agent/hotel_capstone_nat          # the NAT plugins (Modules 14, 20)
 git clone --depth 1 https://github.com/NVIDIA/dgx-spark-playbooks.git dgx-spark-playbooks
 ```
 
 ## Layout
 
 ```text
-week25/
+week25_dgx_spark/
   00_spark_lab_runner/   the web app (tutorial_server.py + static/guide.html), port 8125
   common/sparkkit.py     ~600-line stdlib helper: sh() on Spark A/B or DRY, chat_any(), memory math
   common/audit_references.py   every REFERENCE must be verbatim in a playbook
@@ -137,15 +137,15 @@ week25/
 Run any lab without the web app:
 
 ```bash
-.venv/bin/python week25/01_meet_your_spark/labs/lab02_memory_budget.py            # arithmetic, runs anywhere
-SPARK_HOST=spark-a .venv/bin/python week25/01_meet_your_spark/labs/lab01_spark_doctor.py
-SPARK_MODE=dry .venv/bin/python week25/05_vllm/labs/lab01_launch_builder.py       # $0, no Spark
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab02_memory_budget.py            # arithmetic, runs anywhere
+SPARK_HOST=spark-a .venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab01_spark_doctor.py
+SPARK_MODE=dry .venv/bin/python week25_dgx_spark/05_vllm/labs/lab01_launch_builder.py       # $0, no Spark
 ```
 
 Record real Spark output for DRY replays (maintainers):
 
 ```bash
-SPARK_RECORD=1 SPARK_HOST=spark-a .venv/bin/python week25/NN_module/labs/labNN_x.py
+SPARK_RECORD=1 SPARK_HOST=spark-a .venv/bin/python week25_dgx_spark/NN_module/labs/labNN_x.py
 ```
 
 ## Status and honesty note

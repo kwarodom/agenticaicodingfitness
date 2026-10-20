@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "see",
+  "provider": "claude",
+  "model": "claude-sonnet-5",
+  "prompt": "You are helping a hotel engineering team. Describe what is visible in 2-3 sentences, focusing on any safety or maintenance issue. Then add one sentence starting 'Unsure:' saying what you cannot tell from the image.",
+  "media": "leak_under_ahu.jpg"
+ },
+ "response": {
+  "text": "A large gray mechanical unit (likely an air handling unit or similar HVAC equipment) sits on a raised metal frame in a utility/mechanical room, surrounded by overhead ductwork and piping. There is a significant water puddle pooled on the concrete floor directly beneath the unit, with staining visible on the support frame suggesting this is an active or recurring leak rather than a one-time spill. This standing water presents both a slip hazard for personnel walking through the area and a potential sign of a condensate drain issue, refrigerant leak, or plumbing failure that should be inspected promptly.\n\nUnsure: I cannot determine the exact source of the leak (condensate line, coil, or pipe connection), how long the water has been accumulating, or whether the unit is currently operating.",
+  "provider": "claude",
+  "model": "claude-sonnet-5",
+  "usage": {
+   "input_tokens": 1260,
+   "output_tokens": 253
+  },
+  "latency_ms": 5074.4
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "en": [
+  {
+   "start": 17,
+   "end": 21,
+   "text": "1203",
+   "label": "room number",
+   "score": 0.833
+  },
+  {
+   "start": 25,
+   "end": 29,
+   "text": "1408",
+   "label": "room number",
+   "score": 0.802
+  },
+  {
+   "start": 30,
+   "end": 40,
+   "text": "last night",
+   "label": "time",
+   "score": 0.709
+  },
+  {
+   "start": 46,
+   "end": 48,
+   "text": "AC",
+   "label": "equipment",
+   "score": 0.329
+  },
+  {
+   "start": 52,
+   "end": 56,
+   "text": "1408",
+   "label": "room number",
+   "score": 0.812
+  },
+  {
+   "start": 77,
+   "end": 93,
+   "text": "bathroom ceiling",
+   "label": "equipment",
+   "score": 0.405
+  },
+  {
+   "start": 97,
+   "end": 101,
+   "text": "1203",
+   "label": "room number",
+   "score": 0.78
+  },
+  {
+   "start": 135,
+   "end": 140,
+   "text": "floor",
+   "label": "floor",
+   "score": 0.536
+  },
+  {
+   "start": 165,
+   "end": 168,
+   "text": "3pm",
+   "label": "time",
+   "score": 0.94
+  }
+ ],
+ "th": [
+  {
+   "start": 25,
+   "end": 26,
+   "text": "3",
+   "label": "room number",
+   "score": 0.595
+  },
+  {
+   "start": 36,
+   "end": 40,
+   "text": "1203",
+   "label": "room number",
+   "score": 0.643
+  }
+ ],
+ "_recorded_at": "2026-10-17"
+}

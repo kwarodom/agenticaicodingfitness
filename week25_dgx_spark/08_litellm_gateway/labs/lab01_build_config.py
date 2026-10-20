@@ -9,7 +9,7 @@ environment. Then it validates the file twice: with PyYAML, and with LiteLLM's o
 
 Runs on the laptop, offline. Without a Spark the hosts are the placeholders spark-a / spark-b.
 
-Run: .venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py
+Run: .venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py
      add --on-spark [--laptop-url http://<laptop>:11434/v1] to also write the variant for a gateway
      that runs ON Spark A (Spark A's engines on localhost), and copy it to ~/w25/litellm/ when LIVE.
 """

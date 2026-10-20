@@ -6,8 +6,8 @@ Week 25 turns NVIDIA's official DGX Spark playbooks (<https://build.nvidia.com/s
 
 Local resources: the playbooks are cloned at the repo root in `dgx-spark-playbooks/` (gitignored; the
 newest versions are `nvidia/playbook-<name>/README.md`, older twins without the prefix). NeMo Agent
-Toolkit 1.9.0 is installed in `week25/.venv-nat/` (gitignored; `week25/.venv-nat/bin/nat`). PyYAML is in the repo `.venv`. The LiteLLM proxy (1.89, with the `[proxy]` extra) is in
-`week25/.venv-litellm/` (gitignored; `week25/.venv-litellm/bin/litellm`) because the repo `.venv` copy lacks the proxy deps. This Mac runs Ollama at `http://localhost:11434` (laptop stand-in).
+Toolkit 1.9.0 is installed in `week25_dgx_spark/.venv-nat/` (gitignored; `week25_dgx_spark/.venv-nat/bin/nat`). PyYAML is in the repo `.venv`. The LiteLLM proxy (1.89, with the `[proxy]` extra) is in
+`week25_dgx_spark/.venv-litellm/` (gitignored; `week25_dgx_spark/.venv-litellm/bin/litellm`) because the repo `.venv` copy lacks the proxy deps. This Mac runs Ollama at `http://localhost:11434` (laptop stand-in).
 Install extra Python packages only into a week25-local venv (never globally, never with sudo, no
 `curl | sh` installers).
 
@@ -90,7 +90,7 @@ NN_folder/
    Read-only checks, `docker run` of playbook containers, and downloads are fine but print what they do.
    Long jobs (training, big pulls) are started with `nohup … > ~/w25/logs/<name>.log 2>&1 < /dev/null &` (without `< /dev/null` the ssh session can hang) and a
    separate lab or command tails the log — the runner kills foreground labs after 900 s.
-6. **Self-audit before you report:** `.venv/bin/python week25/common/audit_references.py <your_module>` must
+6. **Self-audit before you report:** `.venv/bin/python week25_dgx_spark/common/audit_references.py <your_module>` must
    print `0 not found verbatim`. It checks every `reference=` string, `("ref", …)` tuple and `REF_*` constant
    word-for-word against the playbooks, plus TUTORIAL.md blocks marked `**Expected output** (REFERENCE …)`. A value you composed from a playbook's stated minimum ("driver
    580.95.05 or higher") is an EXAMPLE, not a REFERENCE.
@@ -99,7 +99,7 @@ NN_folder/
    `hf auth login` (Hugging Face) or `docker login nvcr.io` (NGC) once **on the Spark**. Labs may check
    `bool(cfg("HF_TOKEN"))` to print a hint, nothing more.
 
-## sparkkit (week25/common/sparkkit.py) — read it, do not edit it
+## sparkkit (week25_dgx_spark/common/sparkkit.py) — read it, do not edit it
 
 `banner(title, sub, status=True)` · `step(n, text)` · `ok/warn/note/result(msg)` · `table(rows, headers)` ·
 `bar(v, vmax)` · `check(cond, good, bad)` · `sh(cmd, which="a"|"b", reference=, example=, timeout=)` →

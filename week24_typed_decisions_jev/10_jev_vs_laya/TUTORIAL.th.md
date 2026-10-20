@@ -30,6 +30,8 @@
 
 เริ่มจาก **ขอบเขตของข้อมูลและเป้าหมายด้านคุณภาพ** แล้วค่อยเลือกโครงสร้างพื้นฐาน อย่าเริ่มจากตัวเลขมิลลิวินาทีที่โฆษณาว่าต่ำที่สุด
 
+> **อัปเดต ตุลาคม 2026:** ตอนนี้ Laya เป็นหนึ่งในเก้าโมเดล System One แบบ open weights ที่ systemonemodels.org รวบรวมไว้ เคียงข้าง GLiNER2.5-Decide, Kev, H2O-Lightning และอื่น ๆ ส่วนคู่แข่งแบบ hosted ของ Jev มี pplx-decider, Clef และ Microsoft-Decision-1 [Lab 16 — โมเดล System One แบบรันในเครื่อง](../16_local_system_one_models/TUTORIAL.th.md) รัน Laya, GLiNER และ GLiNER2.5-Decide บนแล็ปท็อปของคุณ และเทียบกับ Jev บน ticket ชุดเดียวกัน
+
 ✓ Checkpoint: คุณยกตัวอย่างงานหนึ่งของ AltoTech ที่ขอบเขตความเป็นส่วนตัวสนับสนุนให้ทำ inference ในเครื่อง และอีกงานหนึ่งที่ context ขนาดใหญ่ของ Jev สนับสนุนให้ใช้ API แบบ hosted ได้
 
 ## 1 · Laya คือสาม checkpoint ไม่ใช่โมเดลเดียว
@@ -75,7 +77,7 @@ checkpoint ภาษาอังกฤษของ Laya ที่ *ยังไ�
 benchmark ก็คือซอฟต์แวร์ และซอฟต์แวร์มีบั๊ก ก่อนเปรียบเทียบโมเดล ให้พิสูจน์แบบออฟไลน์ว่า harness ส่ง **input ที่เหมือนกันทุกไบต์** ให้ทั้งสองโมเดล นับความล้มเหลว และปฏิเสธการตัดข้อความ
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab01_benchmark_offline_tests.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab01_benchmark_offline_tests.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -101,7 +103,7 @@ benchmark ก็คือซอฟต์แวร์ และซอฟต์แ
 `plan` สร้าง corpus คำนวณ hash นับจำนวนการเรียก และแสดงตัวอย่าง request หนึ่งรายการ โดยไม่ส่งอะไรออกไปเลย
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab02_benchmark_plan.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab02_benchmark_plan.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -125,14 +127,14 @@ benchmark ก็คือซอฟต์แวร์ และซอฟต์แ
 นี่คือ harness จริงบน API จริง: 28 แถวสมมติที่ครอบคลุม schema ของทั้งเจ็ดแล็บ ทั้ง EN, TH และภาษาผสม ใช้เวลาประมาณ 15 วินาที และเสียค่าใช้จ่ายราวหนึ่งในสิบของหนึ่งเซนต์ ผลลัพธ์จะถูกเขียนลงโฟลเดอร์ **ใหม่** ทุกครั้ง runner ไม่ยอมเขียนทับหลักฐานเดิม
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab03_jev_only_benchmark.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab03_jev_only_benchmark.py
 ```
 
 การรันแบบเดียวกันด้วยมือ ในเทอร์มินัลของคุณเอง:
 
 ```bash
 set -a; source <(grep '^TYPESAFE_API_KEY=' .env); set +a
-cd week24/jev_lab
+cd week24_typed_decisions_jev/jev_lab
 ../../.venv/bin/python jev_laya_benchmark.py init --dir /tmp/bench_data
 ../../.venv/bin/python jev_laya_benchmark.py run --input /tmp/bench_data/smoke.jsonl \
   --providers jev --live-jev --limit 28 --out /tmp/bench-run-01
@@ -171,7 +173,7 @@ cd week24/jev_lab
 repository ของ Laya บันทึกกรณีคำขอยกเลิกแบบปฏิเสธ ที่ยังถูกจัดเป็น "cancel" ด้วยความมั่นใจสูง ส่วน TypeSafe บันทึกว่า Jev อ่าน instruction *ตามตัวอักษร* ไม่ว่าแบบไหน คุณต้องทดสอบเองก่อนให้ตัวจัดประเภทเข้าใกล้อุปกรณ์จริง
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/labs/lab04_negation_probe.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/labs/lab04_negation_probe.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -244,10 +246,10 @@ identity + tenant policy resolved in code
 
 ## 8 · ทางเลือกเสริม — รัน Laya ในเครื่อง
 
-Laya ต้องใช้ environment แยก, PyTorch runtime และต้องดาวน์โหลดโมเดลตอนใช้งานครั้งแรก จึงเป็นทางเลือกเสริม สคริปต์เดโมบันทึกไว้ที่ `week24/10_jev_vs_laya/optional/laya_demo.py` และโหมดเริ่มต้นเป็น dry run ที่ไม่ import อะไรเลย:
+Laya ต้องใช้ environment แยก, PyTorch runtime และต้องดาวน์โหลดโมเดลตอนใช้งานครั้งแรก จึงเป็นทางเลือกเสริม (Lab 16 ตั้งค่า environment นี้ให้: `week24_typed_decisions_jev/.venv-local`) สคริปต์เดโมบันทึกไว้ที่ `week24_typed_decisions_jev/10_jev_vs_laya/optional/laya_demo.py` และโหมดเริ่มต้นเป็น dry run ที่ไม่ import อะไรเลย:
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/optional/laya_demo.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/optional/laya_demo.py
 ```
 
 ถ้าจะรันจริง ให้ใช้โฟลเดอร์แยก เพื่อให้ `.venv` ของคอร์สสะอาดอยู่เสมอ:
@@ -256,7 +258,7 @@ Laya ต้องใช้ environment แยก, PyTorch runtime และต�
 mkdir -p ~/laya-tutorial && cd ~/laya-tutorial
 python3 -m venv .venv && source .venv/bin/activate
 python -m pip install "laya==0.3.20" && python -m pip check
-cp /Users/altodev/Desktop/agenticaicodingfitness/week24/10_jev_vs_laya/optional/laya_demo.py .
+cp /Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/10_jev_vs_laya/optional/laya_demo.py .
 python laya_demo.py --run            # first run downloads the multilingual checkpoint
 python laya_demo.py --run --offline  # proves it works from the local cache
 ```
@@ -279,13 +281,13 @@ label ที่แนะนำ (โดยคน) สำหรับตัวอ�
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 10 — เป็นกรรมการ** เปิด `week24/10_jev_vs_laya/exercises/ex10_fair_pilot.py` แบบฝึกหัดนี้ทำงานออฟไลน์ทั้งหมด:
+**แบบฝึกหัด 10 — เป็นกรรมการ** เปิด `week24_typed_decisions_jev/10_jev_vs_laya/exercises/ex10_fair_pilot.py` แบบฝึกหัดนี้ทำงานออฟไลน์ทั้งหมด:
 
 1. **TODO 1** — เติม `PILOT_PLAN`: split, ภาษา, metric, ตำแหน่งที่ปรับจูน threshold, จะเริ่มด้วย shadow mode (รันคู่ขนานเงียบ ๆ) หรือไม่ และกฎการ fallback ของระบบไฮบริด
 2. **TODO 2** — เขียน `is_fair_comparison(run_a, run_b)` ให้คืนข้อความปัญหาหนึ่งข้อต่อหนึ่งกฎที่ถูกละเมิด (R1–R7 ใน docstring ของไฟล์) และคืน list ว่างเมื่อผลรันทั้งสองเปรียบเทียบกันได้
 
 ```bash
-.venv/bin/python week24/10_jev_vs_laya/exercises/ex10_fair_pilot.py
+.venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/exercises/ex10_fair_pilot.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

@@ -8,9 +8,9 @@ when_to_use: "Learner wants to build agents with the NVIDIA NeMo Agent Toolkit s
 
 > **The one idea:** Weeks 2–15 you *hand-wrote* the agent loop, the tool wiring, and the orchestration. The **NVIDIA NeMo Agent Toolkit (NAT)** is the factory floor: you **register** tools and agents once, **compose** them in a YAML workflow, and the framework handles instantiation, the ReAct loop, tool-binding, multi-agent routing, and observability. It's the jump from "I built *an* agent" to "I can compose, deploy, and monitor *a system of* agents."
 
-> ✅ **Grounded & runnable** in `week16/` — two progressive Jupyter notebooks from NVIDIA's 8-tutorial NAT series (Hello World → Tools → MCP → Multi-Agent → Observability → Optimizer). Running the live notebooks needs the NAT package + an NVIDIA NIM endpoint (an `NVIDIA_API_KEY`); the **guided lab below is a $0 `MockLLM`** that teaches the registration + orchestration *shape* with no install.
+> ✅ **Grounded & runnable** in `week16_nemo_agent_toolkit/` — two progressive Jupyter notebooks from NVIDIA's 8-tutorial NAT series (Hello World → Tools → MCP → Multi-Agent → Observability → Optimizer). Running the live notebooks needs the NAT package + an NVIDIA NIM endpoint (an `NVIDIA_API_KEY`); the **guided lab below is a $0 `MockLLM`** that teaches the registration + orchestration *shape* with no install.
 
-NVIDIA's framing (`week16/README.md`):
+NVIDIA's framing (`week16_nemo_agent_toolkit/README.md`):
 > *"…use the NVIDIA NeMo Agent Toolkit to build, connect, evaluate, profile, and deploy an agentic system… the building blocks that make up the agentic system, including **tools, agents, workflows, and observability**."*
 
 ---
@@ -35,7 +35,7 @@ The discipline that makes this "production": **logic and instantiation are separ
 A NAT tool is a config class + a registered factory. The `@register_function` decorator publishes it so any workflow can reference it by name:
 
 ```python
-# week16/adding_tools_to_agents.ipynb (shape)
+# week16_nemo_agent_toolkit/adding_tools_to_agents.ipynb (shape)
 from nat.builder.builder import Builder
 from nat.builder.function_info import FunctionInfo
 from nat.cli.register_workflow import register_function
@@ -74,7 +74,7 @@ workflow:
   tools: [sales, product_docs]
 ```
 
-> 📁 `week16/adding_tools_to_agents.ipynb` — builds custom tools (sales aggregation, outlier detection) + a LlamaIndex RAG tool, registers them, and runs via `nat workflow create` + YAML.
+> 📁 `week16_nemo_agent_toolkit/adding_tools_to_agents.ipynb` — builds custom tools (sales aggregation, outlier detection) + a LlamaIndex RAG tool, registers them, and runs via `nat workflow create` + YAML.
 
 ---
 
@@ -95,10 +95,10 @@ Key ideas the notebook demonstrates:
 - **HITL approval** — interactive prompts (NAT's interactive data models) pause for a human before the agent commits — the same gate as `production-and-observability`'s `interrupt()`, here as config.
 - **Graph summarization** — the orchestrator condenses sub-agent outputs instead of carrying every transcript (the artifact-not-transcript discipline from `multi-agent-systems`).
 
-NVIDIA's framing (`week16/multi_agent_orchestration.ipynb`):
+NVIDIA's framing (`week16_nemo_agent_toolkit/multi_agent_orchestration.ipynb`):
 > *"…how an orchestration agent can call tools and sub-agents to facilitate complex tasks… notably runtime and token efficiency."*
 
-> 📁 `week16/multi_agent_orchestration.ipynb` — a supervisor routing to 3 specialists with HITL and graph summarization.
+> 📁 `week16_nemo_agent_toolkit/multi_agent_orchestration.ipynb` — a supervisor routing to 3 specialists with HITL and graph summarization.
 
 ---
 
@@ -120,7 +120,7 @@ You've now seen four ways to build multi-agent systems. NAT's distinguishing bet
 
 ## 🧪 Guided lab (offer this): *register two tools, route between them*
 
-**You'll need:** nothing — no NAT install, no NIM key. A `MockLLM` + a tiny registry reproduce NAT's *register → compose → route* shape at **$0**. (When you're ready for the real thing, run `week16/adding_tools_to_agents.ipynb` with the NAT package + an `NVIDIA_API_KEY`.)
+**You'll need:** nothing — no NAT install, no NIM key. A `MockLLM` + a tiny registry reproduce NAT's *register → compose → route* shape at **$0**. (When you're ready for the real thing, run `week16_nemo_agent_toolkit/adding_tools_to_agents.ipynb` with the NAT package + an `NVIDIA_API_KEY`.)
 
 ### Warm-up (5–10 min, pass/fail)
 Answer out loud:

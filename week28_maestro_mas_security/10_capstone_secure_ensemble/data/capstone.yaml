@@ -1,0 +1,30 @@
+# Hotel Ops Ensemble — production defense configuration (Module 10, deliverable a)
+#
+# This is what the previous team planned to ship: least agency plus a human approval step, with the night shift
+# approving whatever the gate shows. Lab 10-1 shows what that stops (spoiler: nothing in the suite).
+#
+#   TODO 1  turn on the switches you will run in production. Each `use` is true/false (spotlight: "" | static | nonce).
+#   TODO 2  give every switch that is on a one-line `why` in plain words a GM would accept.
+#   TODO 3  pick the approver behaviour you will train and audit: careful | rubber_stamp
+#   TODO 4  stay within the GM's budget (16 points, the course's price list — lab10_1 prints it).
+#
+# The grader (exercises/ex10_capstone_grade.py) also needs the threat model in threat_model.yaml.
+
+human: rubber_stamp          # what the night shift does today: approve everything
+
+live_spot_check: A01         # the one scenario lab10_2 reruns on a real model when the runner is on 🦙 LIVE
+
+defenses:
+  spotlight:        {use: "",    why: ""}
+  forward_summary:  {use: false, why: ""}
+  tool_allowlist:   {use: true,  why: "Each agent only gets the tools its job needs."}
+  param_bounds:     {use: false, why: ""}
+  principal_authz:  {use: false, why: ""}
+  hitl:             {use: true,  why: "A person approves anything that touches the chiller or orders parts."}
+  egress_allowlist: {use: false, why: ""}
+  signed_cards:     {use: false, why: ""}
+  signed_messages:  {use: false, why: ""}
+  memory_gate:      {use: false, why: ""}
+  sop_integrity:    {use: false, why: ""}
+  audit_chain:      {use: false, why: ""}
+  circuit_breaker:  {use: false, why: ""}

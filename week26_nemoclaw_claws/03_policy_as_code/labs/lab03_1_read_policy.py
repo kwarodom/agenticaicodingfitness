@@ -9,7 +9,7 @@ EXAMPLE shape (labelled), and nothing is counted as found.
 On THIS laptop it runs the real OpenShell CLI (0.0.111) as an offline parser to show the one export trap the
 DGX Spark OpenShell playbook warns about: a `--full` dump carries a `Version` header that `policy set` refuses.
 
-Run: .venv/bin/python week26/03_policy_as_code/labs/lab03_1_read_policy.py
+Run: .venv/bin/python week26_nemoclaw_claws/03_policy_as_code/labs/lab03_1_read_policy.py
 """
 import sys
 from pathlib import Path
@@ -72,8 +72,8 @@ note("The research tutorial spells it `policy list`; the DGX Spark NemoClaw play
 sh(f"nemoclaw {S} policy list 2>/dev/null || nemoclaw {S} policy-list", example=EX_LIST, timeout=60)
 
 step(2, "NemoClaw's export — the policy as YAML, credentials stripped")
-res = sh(f"mkdir -p ~/week26 && nemoclaw {S} policy get > ~/week26/current-policy.yaml && "
-         "head -40 ~/week26/current-policy.yaml", example=EX_GET, timeout=60)
+res = sh(f"mkdir -p ~/week26_nemoclaw_claws && nemoclaw {S} policy get > ~/week26_nemoclaw_claws/current-policy.yaml && "
+         "head -40 ~/week26_nemoclaw_claws/current-policy.yaml", example=EX_GET, timeout=60)
 note("`nemoclaw <s> policy get` strips metadata and replaces any literal credential with "
      "[STRIPPED_BY_MIGRATION] (needs OpenShell 0.0.72+). Lab 03-3 pushes this file back with `policy set`.")
 
@@ -83,7 +83,7 @@ sh(f"openshell policy get {S} --full | head -12", example=EX_FULL, timeout=60)
 sh(f"openshell policy list {S}", example=EX_REVS, timeout=60)
 
 step(4, "do you recognise the baseline? (the NemoClaw network-policies reference names six entries)")
-exported = sh("cat ~/week26/current-policy.yaml", quiet=True, timeout=60) if res.live and res.ok else None
+exported = sh("cat ~/week26_nemoclaw_claws/current-policy.yaml", quiet=True, timeout=60) if res.live and res.ok else None
 live = bool(exported and exported.ok)
 rows = []
 for name, what in BASELINE.items():

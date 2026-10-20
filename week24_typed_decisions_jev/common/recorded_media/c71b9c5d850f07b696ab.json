@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "speak",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-tts",
+  "voice": "coral",
+  "text": "Thank you for your message about room 1507. Our plumbing team has been notified and a staff member will contact you shortly."
+ },
+ "response": {
+  "text": "Thank you for your message about room 1507. Our plumbing team has been notified and a staff member will contact you shortly.",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-tts",
+  "voice": "coral",
+  "file": "/Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/13_multimodal_jev/.runs/reply_voicemail_flood_en.wav",
+  "bytes": 376844,
+  "latency_ms": 2225.4
+ }
+}

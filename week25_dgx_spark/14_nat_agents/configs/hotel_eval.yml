@@ -1,6 +1,6 @@
 # Week 25 · Module 14 — `nat eval` for the hotel agent: three questions, one offline evaluator.
 # `base:` makes NAT load hotel_agent.yml first and merge this file on top (NAT 1.9 config inheritance).
-# Run from week25/14_nat_agents:
+# Run from week25_dgx_spark/14_nat_agents:
 #
 #   ../.venv-nat/bin/nat eval --config_file configs/hotel_eval.yml
 

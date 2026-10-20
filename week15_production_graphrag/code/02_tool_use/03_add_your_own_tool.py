@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 02.3 — Write your OWN third tool (the Week 3 homework).
 
-Run:  python week15/code/02_tool_use/03_add_your_own_tool.py
+Run:  python week15_production_graphrag/code/02_tool_use/03_add_your_own_tool.py
 
 This adds a `roll_dice` tool to the previous two. The rhythm to internalize:
     schema  →  implementation  →  register  →  run  →  observe the 🔧 calls

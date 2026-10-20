@@ -9,7 +9,7 @@ code use only the relevant answers.
 
 We measure it: 6 separate calls vs 1 batched call, same state, same questions.
 
-Run: .venv/bin/python week24/03_question_design/labs/lab02_fanout_one_call.py
+Run: .venv/bin/python week24_typed_decisions_jev/03_question_design/labs/lab02_fanout_one_call.py
 """
 import sys
 import time

@@ -18,7 +18,7 @@ Requires:
   - pip install google-adk
   - Google credentials for an actual run (GOOGLE_API_KEY or Vertex AI ADC)
 
-Run:  python week15/kg_mastery/part3_graphrag/04_google_adk_agent.py
+Run:  python week15_production_graphrag/kg_mastery/part3_graphrag/04_google_adk_agent.py
 """
 import json
 import sys

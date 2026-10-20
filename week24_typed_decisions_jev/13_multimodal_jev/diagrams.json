@@ -1,0 +1,74 @@
+{
+  "architecture": {
+    "title": "The model perceives, Jev judges, code decides — one policy for every modality",
+    "caption": "Photos, voicemails and CCTV clips go to a multimodal model that writes TEXT. Code pulls exact facts from that text (regex numbers, invoice arithmetic, caller-ID room). Jev makes typed judgments on the text in ~0.5 s. One policy turns every modality into a proposal, alert or human review — execute: False. Jev can also run FIRST as a gatekeeper, deciding from the report text whether the slow perception call is needed at all.",
+    "lanes": [
+      {"id": "media", "label": "Media (synthetic)"},
+      {"id": "perceive", "label": "Multimodal model — perceive"},
+      {"id": "code", "label": "Your code — exact facts · policy"},
+      {"id": "jev", "label": "Jev — judge the text"},
+      {"id": "out", "label": "People"}
+    ],
+    "nodes": [
+      {"id": "img", "label": "Photo / scan", "lane": "media", "sub": "thermostat · leak · invoice", "accent": "cyan"},
+      {"id": "aud", "label": "Voicemail", "lane": "media", "sub": "EN flood · TH burning smell · towels", "accent": "cyan"},
+      {"id": "vid", "label": "CCTV clip", "lane": "media", "sub": "plant room, haze after ~4 s", "accent": "cyan"},
+      {"id": "gate", "label": "Jev gatekeeper", "lane": "jev", "sub": "report text → look at the media?", "accent": "violet"},
+      {"id": "see", "label": "see · hear · watch", "lane": "perceive", "sub": "gemini · gpt · claude · gemma4 (local)", "accent": "amber"},
+      {"id": "facts", "label": "Exact facts", "lane": "code", "sub": "regex numbers · VAT maths · caller-ID room", "accent": "green"},
+      {"id": "judge", "label": "Jev on the text", "lane": "jev", "sub": "queue · safety · suspicious · hedged", "accent": "violet"},
+      {"id": "policy", "label": "One policy()", "lane": "code", "sub": "safety ≥ 0.30 · finance · confirm room", "accent": "green"},
+      {"id": "speak", "label": "speak (TTS)", "lane": "perceive", "sub": "approved template → .runs/*.wav", "accent": "amber"},
+      {"id": "staff", "label": "Staff review", "lane": "out", "sub": "execute: False", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "img", "to": "gate", "label": "report text first"},
+      {"from": "aud", "to": "gate", "label": "report text first"},
+      {"from": "vid", "to": "gate", "label": "report text first"},
+      {"from": "gate", "to": "see", "label": "only if needed", "animated": true},
+      {"from": "see", "to": "facts", "label": "text", "animated": true},
+      {"from": "facts", "to": "judge", "label": "text + facts"},
+      {"from": "judge", "to": "policy", "label": "typed answers", "animated": true},
+      {"from": "policy", "to": "speak", "label": "approved reply"},
+      {"from": "policy", "to": "staff", "label": "proposal / alert"}
+    ]
+  },
+  "sequence": {
+    "title": "Lab 13-3 — a Thai voicemail becomes a safe ticket",
+    "caption": "Measured live on 2026-09-27. The guest said ห้อง 1203; both transcribers wrote 1223. Code keeps the caller-ID room, flags the mismatch, and Jev still gets the meaning right (hvac, safety 0.93).",
+    "actors": [
+      {"id": "lab", "label": "lab03 (your code)"},
+      {"id": "hear", "label": "gpt-4o-mini-transcribe"},
+      {"id": "jev", "label": "Jev"},
+      {"id": "tts", "label": "gpt-4o-mini-tts"}
+    ],
+    "steps": [
+      {"from": "lab", "to": "hear", "label": "voicemail_burning_th.wav", "kind": "call"},
+      {"from": "hear", "to": "lab", "label": "“ห้องหนึ่งสองสองสาม … กลิ่นไหม้” (≈2.5 s)", "kind": "return"},
+      {"from": "lab", "to": "lab", "label": "code: room heard 1223 ≠ caller-ID 1203 → confirm", "kind": "note"},
+      {"from": "lab", "to": "jev", "label": "transcript → department · urgency · safety", "kind": "call"},
+      {"from": "jev", "to": "lab", "label": "hvac · 2.97 · safety 0.93 (≈0.4 s)", "kind": "return"},
+      {"from": "lab", "to": "lab", "label": "policy → safety_review, room 1203 from caller-ID", "kind": "note"},
+      {"from": "lab", "to": "tts", "label": "approved Thai reply template", "kind": "call"},
+      {"from": "tts", "to": "lab", "label": ".runs/reply_voicemail_burning_th.wav", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Perception vs decision — one call each",
+      "type": "hbars",
+      "unit": "seconds",
+      "labels": ["see (gemini-3.5-flash)", "watch (gemini-3.8-flash)", "speak (gpt-4o-mini-tts)", "hear (gpt-4o-mini-transcribe)", "Jev decide (jev-1.13.0)"],
+      "series": [{"name": "latency", "values": [4.03, 2.59, 2.11, 1.24, 0.44], "color": "violet"}],
+      "caption": "Measured by labs/lab01_capability_map.py on 2026-09-27, single observations. Across all runs Jev took 0.4–0.7 s; perception 1.2–5 s in the cloud, ~12 s for local gemma4 on a cold start, and one TTS call once took over 2 minutes."
+    },
+    {
+      "title": "Same image, four vision models",
+      "type": "bars",
+      "unit": "seconds",
+      "labels": ["gemini-3.5-flash", "gpt-5.4-mini", "claude-sonnet-5", "gemma4 (local, warm)"],
+      "series": [{"name": "thermostat read", "values": [2.1, 1.7, 1.9, 0.7], "color": "cyan"}],
+      "caption": "labs/lab02_image_to_decision.py step 4. All four read room 1203 / 29.1 °C / 24.0 °C; the three cloud models read mode COOL, local gemma4 read FAN — code flags the disagreement for a person."
+    }
+  ]
+}

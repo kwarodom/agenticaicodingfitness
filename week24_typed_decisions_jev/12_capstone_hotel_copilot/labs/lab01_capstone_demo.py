@@ -8,7 +8,7 @@ including a safety case, a negation, an angry guest and a vague "hello?"):
     →   code: policy (safety override, uncertainty gate, priority)
     →   code: ticket JSON + templated reply draft   ·   execute: False
 
-Run: .venv/bin/python week24/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py
+Run: .venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py
 """
 import json
 import sys

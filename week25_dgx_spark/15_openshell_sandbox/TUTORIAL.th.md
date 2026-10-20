@@ -6,7 +6,7 @@
 
 **สิ่งที่คุณจะได้ลงมือทำ**
 - เรียนรู้ส่วนประกอบของ OpenShell: gateway บน Spark, sandbox, provider, เส้นทาง `inference.local` และ policy แบบ YAML
-- ติดตั้ง OpenShell บน Spark ตามที่ playbook ทำทุกประการ และติดตั้ง CLI บนแล็ปท็อปจาก venv ภายใน week25
+- ติดตั้ง OpenShell บน Spark ตามที่ playbook ทำทุกประการ และติดตั้ง CLI บนแล็ปท็อปจาก venv ภายใน week25_dgx_spark
 - route การเรียกโมเดลของ sandbox ไปที่ vLLM บน Spark ของคุณ โดยไม่มี API key ออกจากเครื่อง
 - เขียน policy ให้เอเจนต์โรงแรม NAT จาก Module 14 แล้วตรวจสองวิธี: ด้วย parser จริงของ OpenShell และ validator ที่คอร์สสร้างขึ้น
 - ถามว่า "policy นี้จะอนุญาตอะไรบ้าง?" กับรายการการกระทำของเอเจนต์ และดูล่วงหน้าว่าการเปลี่ยน policy จะเปิดอะไรเพิ่ม
@@ -20,11 +20,11 @@
 
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
-| ทำ Module 14 เสร็จแล้ว | `week25/.venv-nat/bin/nat --version` | เอเจนต์ที่คุณจะใส่ใน sandbox |
+| ทำ Module 14 เสร็จแล้ว | `week25_dgx_spark/.venv-nat/bin/nat --version` | เอเจนต์ที่คุณจะใส่ใน sandbox |
 | ทำ Module 05 บน Spark เสร็จแล้ว | vLLM ตอบที่ `:8000` โดยเริ่มด้วย `--host 0.0.0.0` | โมเดลที่ sandbox จะ route ไปหา |
 | Docker โดยไม่ต้อง sudo บน Spark พร้อม NVIDIA runtime | `docker ps` บน Spark | OpenShell รันคลัสเตอร์ k3s ภายใน Docker |
 | Python ≥ 3.12 บน Spark | `python3 --version` | เป็น prerequisite ของ playbook |
-| clone repo นี้ไว้บน Spark | `ls ~/agenticaicodingfitness/week25` | lab 15-4 อัปโหลดโมดูล NAT จากที่นั่นเข้าไปใน sandbox |
+| clone repo นี้ไว้บน Spark | `ls ~/agenticaicodingfitness/week25_dgx_spark` | lab 15-4 อัปโหลดโมดูล NAT จากที่นั่นเข้าไปใน sandbox |
 
 > ⚠ คำสั่งแรกของ playbook: **ใช้ environment ที่สะอาด** รันเอเจนต์บน Spark (หรือ VM) ที่ไม่มีข้อมูลส่วนตัว บัญชีจริง หรือ credential ของ production OpenShell ลดความเสี่ยงในการรันเอเจนต์ แต่ไม่ได้ขจัดความเสี่ยงออกไปทั้งหมด
 
@@ -95,15 +95,15 @@ sudo loginctl enable-linger $USER
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-uv venv -p 3.12 week25/15_openshell_sandbox/.venv-openshell
-uv pip install --python week25/15_openshell_sandbox/.venv-openshell/bin/python "openshell==0.0.111"
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_1_install_and_gateway.py
+uv venv -p 3.12 week25_dgx_spark/15_openshell_sandbox/.venv-openshell
+uv pip install --python week25_dgx_spark/15_openshell_sandbox/.venv-openshell/bin/python "openshell==0.0.111"
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_1_install_and_gateway.py
 ```
 
 **Expected output** (ครึ่งฝั่งแล็ปท็อป บันทึกจาก Mac เครื่องนี้ ส่วนครึ่งฝั่ง Spark เป็น DRY ในที่นี้)
 
 ```
-▣ STEP B1 · the OpenShell CLI on this laptop (openshell==0.0.111 in week25/15_openshell_sandbox/.venv-openshell)
+▣ STEP B1 · the OpenShell CLI on this laptop (openshell==0.0.111 in week25_dgx_spark/15_openshell_sandbox/.venv-openshell)
 $ openshell --version   [this laptop]
 openshell 0.0.111
 …
@@ -206,11 +206,11 @@ network_policies:                                          # a MAP of groups, ne
 | ทุก endpoint มี `host` และ `port` | แถวเดียวกัน | gateway ตอน push |
 | แต่ละ group ต้องมี `binaries` และแต่ละ endpoint ต้องมี access mode ไม่เช่นนั้นการเรียกจะล้มเหลวด้วย `CONNECT tunnel failed, response 403` | NemoClaw-applications | ไม่มีใครตรวจ — apply ผ่านเรียบร้อยแล้วค่อยปฏิเสธ |
 
-Lab 15-2 สร้าง policy จาก spec ภาษา Python สั้น ๆ แล้วตรวจมันและรุ่นที่เสียแปดแบบด้วย **policykit** (`week25/15_openshell_sandbox/policykit.py` ซึ่งเป็น validator ที่คอร์สสร้างขึ้นสำหรับกฎข้างต้น) และด้วย **parser จริงของ OpenShell** เคล็ดลับคือ: `openshell policy set` parse ไฟล์บนแล็ปท็อปของคุณก่อนจะติดต่อ gateway ดังนั้นการชี้ไปที่พอร์ตที่ปิดอยู่ (`OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9`) จะแยก "parse error" ออกจาก "parse ผ่าน แล้วเชื่อมต่อไม่ได้" ได้ — ไม่ต้องมี gateway
+Lab 15-2 สร้าง policy จาก spec ภาษา Python สั้น ๆ แล้วตรวจมันและรุ่นที่เสียแปดแบบด้วย **policykit** (`week25_dgx_spark/15_openshell_sandbox/policykit.py` ซึ่งเป็น validator ที่คอร์สสร้างขึ้นสำหรับกฎข้างต้น) และด้วย **parser จริงของ OpenShell** เคล็ดลับคือ: `openshell policy set` parse ไฟล์บนแล็ปท็อปของคุณก่อนจะติดต่อ gateway ดังนั้นการชี้ไปที่พอร์ตที่ปิดอยู่ (`OPENSHELL_GATEWAY_ENDPOINT=http://127.0.0.1:9`) จะแยก "parse error" ออกจาก "parse ผ่าน แล้วเชื่อมต่อไม่ได้" ได้ — ไม่ต้องมี gateway
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_2_policy_builder.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_2_policy_builder.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ ตัดให้สั้นลง)
@@ -247,7 +247,7 @@ Lab 15-2 สร้าง policy จาก spec ภาษา Python สั้น 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_3_what_would_it_allow.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_3_what_would_it_allow.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ เป็นแบบจำลองของ policykit ไม่ใช่ OpenShell)
@@ -303,10 +303,10 @@ openshell logs hotel-agent --tail --source sandbox
 
 ```bash
 # on: spark
-cd ~/agenticaicodingfitness/week25
+cd ~/agenticaicodingfitness/week25_dgx_spark
 mkdir -p ~/w25 && cp 15_openshell_sandbox/policies/hotel_agent_policy.yaml ~/w25/
 openshell sandbox create --name hotel-agent --from base --policy ~/w25/hotel_agent_policy.yaml \
-  --upload ~/agenticaicodingfitness/week25/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true
+  --upload ~/agenticaicodingfitness/week25_dgx_spark/14_nat_agents:/sandbox/14_nat_agents --keep --no-tty -- true
 openshell sandbox exec -n hotel-agent -- python3 -m venv /sandbox/.venv-nat
 openshell sandbox exec -n hotel-agent -- /sandbox/.venv-nat/bin/pip install -q 'nvidia-nat[langchain]~=1.9' greenlet
 openshell sandbox exec -n hotel-agent -- /sandbox/.venv-nat/bin/pip install -q --no-deps -e /sandbox/14_nat_agents/hotel_ops_nat
@@ -322,7 +322,7 @@ openshell sandbox exec -n hotel-agent -- curl -s --max-time 5 https://api.openai
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/labs/lab15_4_sandbox_the_nat_agent.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/labs/lab15_4_sandbox_the_nat_agent.py
 ```
 
 **Expected output** (EXAMPLE — รูปแบบเพื่อประกอบคำอธิบาย ไม่ใช่ค่าที่วัดได้)
@@ -402,7 +402,7 @@ Lab 15-2 และ 15-3 ทำงานแบบออฟไลน์และ�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 15 — ล็อกเอเจนต์ให้แน่นหนา** หลังตั้งค่าเสร็จ เอเจนต์ NAT ไม่ต้องใช้ package index อีก: ต้องการแค่ไฟล์ของมันและโมเดลของมัน เปิด `week25/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py` แล้วเขียน policy สำหรับ **ช่วงรันจริง (runtime)** ใน `TODO` สามจุด:
+**แบบฝึกหัด 15 — ล็อกเอเจนต์ให้แน่นหนา** หลังตั้งค่าเสร็จ เอเจนต์ NAT ไม่ต้องใช้ package index อีก: ต้องการแค่ไฟล์ของมันและโมเดลของมัน เปิด `week25_dgx_spark/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py` แล้วเขียน policy สำหรับ **ช่วงรันจริง (runtime)** ใน `TODO` สามจุด:
 
 1. `filesystem()`: OS อ่านได้ มีแค่ `/sandbox`, `/tmp` และ `/dev/null` ที่เขียนได้
 2. `network_policies()`: มี group เดียวเท่านั้นคือ `inference` สำหรับ `inference.local:443` และ Python ของ venv ของ NAT
@@ -412,7 +412,7 @@ Lab 15-2 และ 15-3 ทำงานแบบออฟไลน์และ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py
+.venv/bin/python week25_dgx_spark/15_openshell_sandbox/exercises/ex15_lock_down_the_agent.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด บันทึกจาก Mac เครื่องนี้ ตัดให้สั้นลง)

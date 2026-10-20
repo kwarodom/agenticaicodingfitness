@@ -2,12 +2,12 @@
 """A MOCK BMS exposed over MCP — the "bms.alto.local" of the research tutorial, running on this laptop.
 
 Four tools, the ones the tutorial's policies name: read_point, list_alarms, get_trend, write_setpoint.
-Values come from week26/common/data/chiller_plant.csv (synthetic). write_setpoint NEVER changes anything:
+Values come from week26_nemoclaw_claws/common/data/chiller_plant.csv (synthetic). write_setpoint NEVER changes anything:
 it refuses without a work_order_id and otherwise answers "simulated" — it exists so policies (Module 03/07)
 and NAT's mcp_client (Module 04) have a dangerous tool to deny.
 
-    week26/.venv-nat/bin/python week26/common/bms_mcp_server.py            # → http://localhost:8443/mcp
-    week26/.venv-nat/bin/nat mcp client tool list --url http://localhost:8443/mcp
+    week26_nemoclaw_claws/.venv-nat/bin/python week26_nemoclaw_claws/common/bms_mcp_server.py            # → http://localhost:8443/mcp
+    week26_nemoclaw_claws/.venv-nat/bin/nat mcp client tool list --url http://localhost:8443/mcp
 """
 import csv
 import os

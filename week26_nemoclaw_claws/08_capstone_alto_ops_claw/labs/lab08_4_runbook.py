@@ -7,7 +7,7 @@ Docker and Ollama versions on this Mac. The Spark half is one read-only version 
 "not checked". Before anything goes into the runbook, every `openshell` command in it is run through the laptop's
 0.0.111 CLI as an offline parser. A typo in a runbook is found now, not during an incident.
 
-No LLM calls. Run: .venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_4_runbook.py
+No LLM calls. Run: .venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_4_runbook.py
 """
 import json
 import shutil
@@ -33,7 +33,7 @@ r = laptop([NAT, "--version"], quiet=True, env=env, show="nat --version")
 v["nat"] = next((ln.strip() for ln in r.out.splitlines() if ln.startswith("nat")), "missing")
 r = laptop([OPENSHELL, "--version"], quiet=True, show="openshell --version")
 v["openshell (parser)"] = (r.out.strip().splitlines() or ["missing"])[-1]
-r = laptop([ROOT / "week26/.venv-nat/bin/python", "--version"], quiet=True, show="week26/.venv-nat/bin/python --version")
+r = laptop([ROOT / "week26_nemoclaw_claws/.venv-nat/bin/python", "--version"], quiet=True, show="week26_nemoclaw_claws/.venv-nat/bin/python --version")
 v["python (NAT venv)"] = r.out.strip() or "missing"
 if shutil.which("docker"):
     r = laptop(["docker", "--version"], quiet=True, show="docker --version")
@@ -94,7 +94,7 @@ print(("✓ " if all_parsed else "✕ ") + f"{len(parse_rows)} openshell command
       f"(the Spark runs {OPENSHELL_PINNED}: re-check any flag with --help there)")
 
 # ── 4 · write RUNBOOK.md ───────────────────────────────────────────────────────────────────────────────────
-step(4, "write the one-page runbook → week26/08_capstone_alto_ops_claw/.runs/RUNBOOK.md")
+step(4, "write the one-page runbook → week26_nemoclaw_claws/08_capstone_alto_ops_claw/.runs/RUNBOOK.md")
 man = ck.load_json(ck.BUNDLE / "MANIFEST.json")
 man_sha = ck.sha256(ck.BUNDLE / "MANIFEST.json")[:16] if man else "— (run lab 08-1 first)"
 spark_line = (f"measured {time.strftime('%Y-%m-%d')} on {label()} ({rs.source}):\n\n```\n{spark_v}\n```" if spark_v else

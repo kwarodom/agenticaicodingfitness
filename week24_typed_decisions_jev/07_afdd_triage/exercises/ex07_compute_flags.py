@@ -12,7 +12,7 @@ Implement compute_flags(reading) so it returns a dict with EXACTLY these keys:
 
 (Teaching thresholds only — real sites load approved thresholds per equipment.)
 
-Run: .venv/bin/python week24/07_afdd_triage/exercises/ex07_compute_flags.py
+Run: .venv/bin/python week24_typed_decisions_jev/07_afdd_triage/exercises/ex07_compute_flags.py
 The offline asserts run first (free). Then your flags feed a live Jev triage.
 """
 import json

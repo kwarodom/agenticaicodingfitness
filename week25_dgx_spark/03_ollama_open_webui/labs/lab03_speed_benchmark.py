@@ -8,7 +8,7 @@ and compares the measured speed with Module 01's ceiling: memory bandwidth ÷ by
 token. Spark numbers are compared with the Spark's 273 GB/s; laptop stand-in numbers only with
 the laptop's own bandwidth (set LAPTOP_BW_GBS), never with the Spark.
 
-Run: .venv/bin/python week25/03_ollama_open_webui/labs/lab03_speed_benchmark.py
+Run: .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab03_speed_benchmark.py
      LAPTOP_BW_GBS=410 .venv/bin/python …   # your laptop's memory bandwidth, from its spec sheet
 """
 import os

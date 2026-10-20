@@ -11,7 +11,7 @@ When neither the Spark nor a local server answers, the chat falls back to the la
 Ollama (labelled) so you still see the OpenAI request and response shape. Small requests
 only (≤ 120 tokens).
 
-Run: .venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab04_llama_server_lm_studio.py
+Run: .venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab04_llama_server_lm_studio.py
 """
 import json
 import sys

@@ -66,7 +66,7 @@ answer = client.messages.create(
 
 That instruction — *"use ONLY the context, say 'I don't know' otherwise"* — is what kills hallucination. The model is now a librarian reading from your shelf, not a know-it-all.
 
-> 📁 Class repo: `week8/Week8_RAG_Knowledge_Agents_Lab.pdf` — the full lab walkthrough.
+> 📁 Class repo: `week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf` — the full lab walkthrough.
 
 ---
 
@@ -120,7 +120,7 @@ print(results.to_pandas()[["faithfulness", "answer_relevancy",
                            "context_precision", "context_recall"]])
 ```
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/01_ragas_eval.py` — runs all four metrics over two hotel examples and prints the per-question scores.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/01_ragas_eval.py` — runs all four metrics over two hotel examples and prints the per-question scores.
 
 ### Part B — The golden testset (your regression net)
 
@@ -130,7 +130,7 @@ You can't score a change without questions to score it *against*. A **golden tes
 - **Score EVERY change.** Re-run the whole suite on every prompt/retriever/model edit — same inputs, before and after.
 - **Hand-writing is slow and biased** toward cases you already thought of. RAGAS can *read your source docs* and synthesize a diverse set for you, mixing **simple** lookups, **reasoning** (inference across facts), and **multi_context** (stitch multiple chunks — the case GraphRAG wins). The course weights them **40 / 40 / 20** to bias toward the harder, graph-favoring questions, then you **spot-check the CSV** and drop any leaking or unanswerable rows before trusting it.
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/02_testset_generation.py` — generates a synthetic testset with that 40/40/20 mix and writes `hotel_kg_testset.csv` (columns: `user_input`, `reference_contexts`, `reference`, `query_style`, `synthesizer_name`, …).
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/02_testset_generation.py` — generates a synthetic testset with that 40/40/20 mix and writes `hotel_kg_testset.csv` (columns: `user_input`, `reference_contexts`, `reference`, `query_style`, `synthesizer_name`, …).
 
 ### Part C — The regression-guard: a CI/CD threshold gate
 
@@ -148,7 +148,7 @@ sys.exit(0 if scores["passed"] else 1)   # non-zero → the PR check goes red
 
 Wire that one script into a GitHub Actions workflow (`on: pull_request`) and a prompt tweak that tanks faithfulness fails the PR instead of reaching production. The contract is deliberately tiny — `rag_function(question) -> {"answer", "contexts"}` — so you swap in your real pipeline and nothing else changes.
 
-> 📁 Class repo: `week15/kg_mastery/part4_evaluation/03_cicd_gate.py` — the `THRESHOLDS` dict, the score → `sys.exit` gate, a dummy pipeline so it runs end-to-end, and the full `.github/workflows/graphrag_eval.yml` at the bottom.
+> 📁 Class repo: `week15_production_graphrag/kg_mastery/part4_evaluation/03_cicd_gate.py` — the `THRESHOLDS` dict, the score → `sys.exit` gate, a dummy pipeline so it runs end-to-end, and the full `.github/workflows/graphrag_eval.yml` at the bottom.
 
 **Want the general (not RAG-specific) version of all this?** See `agent-evaluation` — golden datasets, LLM-as-judge bias and calibration, and the multi-gate agent CI/CD pipeline apply to *any* agent, not just retrieval. For RAG over a **graph** (where context_recall lives or dies on your traversal), see `knowledge-graph-mastery`.
 

@@ -1,0 +1,190 @@
+{
+ "architecture": {
+  "title": "Where the data is understood decides who controls it",
+  "caption": "Three deployments of the same hotel search. Cloud: documents, questions and vectors leave the building. Residency: they stay in-country but the vendor runs the stack. Sovereign edge: the embedding model, the index and the LLM run on hardware the hotel controls, so nothing has to leave. Definitions: RESEARCH.md §3.",
+  "lanes": [
+   {
+    "id": "site",
+    "label": "Hotel (your control)"
+   },
+   {
+    "id": "region",
+    "label": "In-country vendor region"
+   },
+   {
+    "id": "cloud",
+    "label": "Foreign cloud"
+   }
+  ],
+  "nodes": [
+   {
+    "id": "data",
+    "label": "photos · voicemails · notes",
+    "lane": "site",
+    "sub": "personal data (PDPA)",
+    "accent": "amber"
+   },
+   {
+    "id": "edge",
+    "label": "EmbeddingGemma 2 + index",
+    "lane": "site",
+    "sub": "270M–740M · on a laptop / Pi / gateway",
+    "accent": "green"
+   },
+   {
+    "id": "llm",
+    "label": "local LLM (Ollama)",
+    "lane": "site",
+    "sub": "gemma4:12b on this Mac",
+    "accent": "green"
+   },
+   {
+    "id": "res",
+    "label": "vendor-run embedding API",
+    "lane": "region",
+    "sub": "residency, not sovereignty",
+    "accent": "violet"
+   },
+   {
+    "id": "api",
+    "label": "cloud embedding API",
+    "lane": "cloud",
+    "sub": "data + vectors leave",
+    "accent": "red"
+   }
+  ],
+  "edges": [
+   {
+    "from": "data",
+    "to": "edge",
+    "label": "stays here",
+    "animated": true
+   },
+   {
+    "from": "edge",
+    "to": "llm",
+    "label": "top notes"
+   },
+   {
+    "from": "data",
+    "to": "res",
+    "label": "residency"
+   },
+   {
+    "from": "data",
+    "to": "api",
+    "label": "cloud"
+   }
+  ]
+ },
+ "sequence": {
+  "title": "The kitchen: one forward pass",
+  "caption": "Tina Huang's analogy. The model moves from storage (freezer) to RAM (prep counter), then over the memory bus (conveyor belt) to the CPU (head chef), GPU (line cooks) and NPU (single-purpose machine). Capacity decides what fits; bandwidth decides how fast it runs.",
+  "actors": [
+   {
+    "id": "ssd",
+    "label": "storage"
+   },
+   {
+    "id": "ram",
+    "label": "RAM"
+   },
+   {
+    "id": "bus",
+    "label": "memory bus"
+   },
+   {
+    "id": "gpu",
+    "label": "CPU / GPU / NPU"
+   }
+  ],
+  "steps": [
+   {
+    "from": "ssd",
+    "to": "ram",
+    "label": "load the model once",
+    "kind": "call"
+   },
+   {
+    "from": "ram",
+    "to": "bus",
+    "label": "stream weights + inputs",
+    "kind": "call"
+   },
+   {
+    "from": "bus",
+    "to": "gpu",
+    "label": "compute",
+    "kind": "call"
+   },
+   {
+    "from": "gpu",
+    "to": "ram",
+    "label": "vector / token",
+    "kind": "return"
+   },
+   {
+    "from": "gpu",
+    "to": "gpu",
+    "label": "chat: repeat per token · embedding: one pass",
+    "kind": "note"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "title": "Max model size by Tina Huang's rule (usable RAM ÷ 0.6)",
+   "type": "hbars",
+   "unit": "billion params",
+   "labels": [
+    "Raspberry Pi 5",
+    "iPhone 16 (app)",
+    "MacBook Pro 32 GB",
+    "Mac Studio 64 GB",
+    "RTX 4090",
+    "AMD Ryzen AI Halo"
+   ],
+   "series": [
+    {
+     "name": "max params",
+     "values": [
+      10,
+      5.6,
+      40,
+      80,
+      30,
+      160
+     ],
+     "color": "cyan"
+    }
+   ],
+   "caption": "Arithmetic from the video's rule (Lab 01-1). Memory figures as quoted in the video."
+  },
+  {
+   "title": "Memory bandwidth: measured here vs vendor peaks",
+   "type": "bars",
+   "unit": "GB/s",
+   "labels": [
+    "Pi 5 (peak)",
+    "this Mac CPU copy",
+    "this Mac GPU copy",
+    "M4 Max (peak)",
+    "RTX 4090 (peak)"
+   ],
+   "series": [
+    {
+     "name": "GB/s",
+     "values": [
+      17,
+      139,
+      314,
+      410,
+      1008
+     ],
+     "color": "green"
+    }
+   ],
+   "caption": "This Mac's two bars were measured by Lab 01-2 (1 GiB copy). Peaks are vendor specs (RESEARCH.md §4)."
+  }
+ ]
+}

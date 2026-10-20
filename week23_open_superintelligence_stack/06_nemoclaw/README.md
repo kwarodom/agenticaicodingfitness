@@ -5,7 +5,7 @@ This app teaches NVIDIA's NemoClaw pattern for building specialized agents by co
 Launch:
 
 ```bash
-.venv/bin/python week23/06_nemoclaw/tutorial_server.py   # → http://127.0.0.1:8105
+.venv/bin/python week23_open_superintelligence_stack/06_nemoclaw/tutorial_server.py   # → http://127.0.0.1:8105
 ```
 
 Hands-on side: see **[TUTORIAL.md](TUTORIAL.md)** for the copy-paste walkthrough and the three lab scripts in `labs/` (author + lint a spec, naive-vs-gated policy runtime, fleet routing + right-sizing).

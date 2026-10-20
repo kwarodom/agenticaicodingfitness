@@ -19,16 +19,16 @@
 | Need | Check | Why |
 |---|---|---|
 | Modules 03 and 04 | you can read a policy and you know the Alto Ops Claw | this module hardens both |
-| The laptop OpenShell CLI | `week26/.venv-openshell/bin/openshell --version` → 0.0.111 | the real policy parser (no gateway behind it) |
-| The NAT venv | `week26/.venv-nat/bin/python -c "import mcp"` | runs the mock BMS in lab 07-2 |
+| The laptop OpenShell CLI | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` → 0.0.111 | the real policy parser (no gateway behind it) |
+| The NAT venv | `week26_nemoclaw_claws/.venv-nat/bin/python -c "import mcp"` | runs the mock BMS in lab 07-2 |
 | `openssl` | `openssl version` | lab 07-3 makes a throwaway CA for the blueprint |
 | A DGX Spark (optional) | `ssh -o BatchMode=yes <spark> true` | apply the policy, run the blueprint runner, collect real evidence |
 
 ```bash
 # on: laptop
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 openssl version
-week26/.venv-nat/bin/python -c "import mcp; print('mcp ok')"
+week26_nemoclaw_claws/.venv-nat/bin/python -c "import mcp; print('mcp ok')"
 ```
 
 **Expected output** (captured on this Mac)
@@ -204,7 +204,7 @@ Lab 07-2 runs it through three checkers. The real CLI parses it offline and stop
 **Expected output** (captured on this Mac, DRY mode)
 
 ```
-$ openshell policy set alto-ops --policy week26/07_hardening/policies/prod.yaml --wait   [this laptop]
+$ openshell policy set alto-ops --policy week26_nemoclaw_claws/07_hardening/policies/prod.yaml --wait   [this laptop]
 Error:   × transport error
   ├─▶ tcp connect error
   ├─▶ tcp connect error
@@ -259,7 +259,7 @@ Next, the lab starts the **real** mock BMS on this laptop and asks it for its to
 
 ```
 ◆ mock BMS on port 8443 (documented 8443). The policy talks about bms.alto.local:8443; here the same server runs on localhost, and the course gate evaluates each call as if it went to bms.alto.local:8443.
-$ python week26/common/bms_mcp_server.py  # port 8443 &   [this laptop, background → bms_mcp.log]
+$ python week26_nemoclaw_claws/common/bms_mcp_server.py  # port 8443 &   [this laptop, background → bms_mcp.log]
 ✓ ready in 3.0s → http://localhost:8443/mcp
 ✓ tools/list from the REAL mock server: read_point, list_alarms, get_trend, write_setpoint
 ■ stopped python (pid 93280)
@@ -285,7 +285,7 @@ openshell policy list alto-ops
 **Expected output** (captured on this Mac, DRY mode)
 
 ```
-$ scp prod.yaml <spark>:~/week26/07_hardening/prod.yaml   [DRY]
+$ scp prod.yaml <spark>:~/week26_nemoclaw_claws/07_hardening/prod.yaml   [DRY]
 $ openshell policy get alto-ops   [DRY]
 ◈ EXAMPLE — illustrative shape only (not a playbook quote, not a measurement):
 version: 1
@@ -294,7 +294,7 @@ filesystem_policy:
   ...
 network_policies:
   <the entries your sandbox has today>
-$ cd ~/week26/07_hardening && openshell policy set alto-ops --policy prod.yaml --wait   [DRY]
+$ cd ~/week26_nemoclaw_claws/07_hardening && openshell policy set alto-ops --policy prod.yaml --wait   [DRY]
 ◈ (dry run — the change above would be applied here)
 ```
 
@@ -442,8 +442,8 @@ On the Spark, the real runner does these checks. Both commands are read-only: `p
 
 ```bash
 # on: spark
-NEMOCLAW_BLUEPRINT_PATH=$HOME/week26/07_hardening/blueprint nemoclaw-blueprint-runner plan
-NEMOCLAW_BLUEPRINT_PATH=$HOME/week26/07_hardening/blueprint nemoclaw-blueprint-runner status --external-target
+NEMOCLAW_BLUEPRINT_PATH=$HOME/week26_nemoclaw_claws/07_hardening/blueprint nemoclaw-blueprint-runner plan
+NEMOCLAW_BLUEPRINT_PATH=$HOME/week26_nemoclaw_claws/07_hardening/blueprint nemoclaw-blueprint-runner status --external-target
 ```
 
 The tutorial writes `NEMOCLAW_BLUEPRINT_PATH=/abs/path/blueprint` and does not say whether it wants the folder or the file. Check `nemoclaw-blueprint-runner --help`.
@@ -533,7 +533,7 @@ The leaky month fails on an `allow` marked as an audit violation. That is `enfor
 
 ```bash
 # on: laptop
-.venv/bin/python week26/07_hardening/exercises/ex07_approvals_endpoint.py
+.venv/bin/python week26_nemoclaw_claws/07_hardening/exercises/ex07_approvals_endpoint.py
 ```
 
 > ✏ **Corrected from the research tutorial.** Its solution prints the deny rule as `{ method: "", path: "/api/v1/tickets//approve" }`: an empty method and a double slash. Most likely two asterisks were eaten as Markdown emphasis. As printed, the rule never matches a real approve URL, so it is dead code, and only the allow-list stops an approval. The course solution uses `{ method: "*", path: "/api/v1/tickets/*/approve" }`. The checker tests that your deny rule really matches `POST /api/v1/tickets/42/approve`.
@@ -586,7 +586,7 @@ Run the checker with `method: POST`. The "approve with a GET link" row fails. In
 | `error: unrecognized subcommand 'start'` on the laptop | the laptop CLI 0.0.111 has no `gateway start` | run it with the OpenShell the playbook installs; check `openshell gateway --help` |
 | `mTLS certificates for gateway 'openshell' were not found` | `gateway add --remote` needs the client TLS material the gateway provisions | provision the gateway first (`gateway start --remote`), then add it |
 | `unknown field 'Version'` from `policy set` | you fed it `policy get --full` output, which has a metadata header | export with `openshell policy get <sandbox>` (no `--full`) |
-| lab 07-2 skips the mock BMS step | port or venv problem | read `week26/07_hardening/.runs/bms_mcp.log` |
+| lab 07-2 skips the mock BMS step | port or venv problem | read `week26_nemoclaw_claws/07_hardening/.runs/bms_mcp.log` |
 | lab 07-3 says the CA file is missing | `openssl` is not on the PATH | install it, or read the other rows: they do not need it |
 | the evidence checker parses 0 lines of a real log | the course pattern matches the EXAMPLE shape, not your format | adapt `LINE` in lab 07-4 to your log lines |
 

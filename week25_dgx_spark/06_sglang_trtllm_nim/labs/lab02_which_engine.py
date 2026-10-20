@@ -5,8 +5,8 @@ Offline, no Spark needed. Each engine gets a short profile built only from what 
 say (support tables, launch notes, "pending validation" warnings). A workload is a set of needs; the lab
 scores every engine against it, rules out engines that cannot meet a hard need, and prints why.
 
-Run: .venv/bin/python week25/06_sglang_trtllm_nim/labs/lab02_which_engine.py
-     .venv/bin/python week25/06_sglang_trtllm_nim/labs/lab02_which_engine.py --need tools,two-sparks
+Run: .venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab02_which_engine.py
+     .venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/labs/lab02_which_engine.py --need tools,two-sparks
 """
 import argparse
 import sys

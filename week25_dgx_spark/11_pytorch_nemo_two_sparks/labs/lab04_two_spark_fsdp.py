@@ -12,10 +12,10 @@ are safe to automate:
   3. print the exact playbook commands for the steps that need sudo or change cluster state
      (daemon.json, swarm init/join, stack deploy, launch) — you run those in the ⌨ terminal.
 
-The generated files go to week25/11_pytorch_nemo_two_sparks/.runs/ (gitignored); in LIVE mode they
+The generated files go to week25_dgx_spark/11_pytorch_nemo_two_sparks/.runs/ (gitignored); in LIVE mode they
 are also copied into ~/w25/dgx-spark-playbooks/…/configs/ on each Spark (the playbook's "edit the YAML").
 
-Run: .venv/bin/python week25/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py [--config lora|full]
+Run: .venv/bin/python week25_dgx_spark/11_pytorch_nemo_two_sparks/labs/lab04_two_spark_fsdp.py [--config lora|full]
 """
 import argparse
 import re

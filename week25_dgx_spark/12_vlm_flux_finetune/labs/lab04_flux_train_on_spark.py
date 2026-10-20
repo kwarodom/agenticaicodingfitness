@@ -11,8 +11,8 @@
 
 Opt in with  --yes  or  SPARK_APPLY=1.
 
-Run: .venv/bin/python week25/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py
-     SPARK_APPLY=1 .venv/bin/python week25/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py --epochs 25 --hotel
+Run: .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py
+     SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab04_flux_train_on_spark.py --epochs 25 --hotel
 """
 import os
 import re

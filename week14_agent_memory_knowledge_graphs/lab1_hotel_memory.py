@@ -8,7 +8,7 @@ can later ask relational questions like:
     "Which rooms get the most HVAC actions?"  (predictive-maintenance signal)
 
 Run:
-    ./.venv/bin/python week14/lab1_hotel_memory.py        # from repo root
+    ./.venv/bin/python week14_agent_memory_knowledge_graphs/lab1_hotel_memory.py        # from repo root
 
 Prerequisites:
     - Neo4j running at bolt://localhost:7687 (docker compose up -d)
@@ -17,7 +17,7 @@ Prerequisites:
 import os
 import sys
 
-# Make agent_memory importable whether run from repo root or from week14/.
+# Make agent_memory importable whether run from repo root or from week14_agent_memory_knowledge_graphs/.
 sys.path.insert(0, os.path.dirname(__file__))
 from agent_memory import AgentMemory
 

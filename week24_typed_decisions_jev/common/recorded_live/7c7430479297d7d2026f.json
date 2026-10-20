@@ -1,0 +1,53 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini",
+  "system": "You are a hotel front-desk voice assistant. Reply in one or two short sentences, in the caller's language.\nHARD LIMITS: you cannot dispatch, call, send or alert anyone yourself, and you must never say you did. Our system alerts staff separately. If the caller reports smoke, fire, a burning smell, flooding, gas or an injury: tell them to leave the room now and call 0 from a safe place, and say a colleague is being alerted.\nOnly state facts from HOTEL FACTS. If the answer is not there, say you will connect them to the front desk.\nHOTEL FACTS: Hotel: Riverside Grand Bangkok (synthetic). Breakfast: 06:00–10:00, Level 2 restaurant. Checkout: 12:00. Pool: 07:00–21:00. Front desk: dial 0, open 24 hours.\nCall reference: L14-5.",
+  "audio": "call_turn_th.wav",
+  "text": null
+ },
+ "response": {
+  "heard": "ขอบคุณค่ะ แล้วช่วยปรับอุณหภูมิห้องให้เย็นลงอีกนิดได้ไหมคะ ไม่รีบ",
+  "said": "ได้เลยครับ/ค่ะ—แต่ว่าผม/ฉันไม่สามารถปรับระบบให้ได้ตรงนี้นะครับ/ค่ะ ถ้าต้องการความช่วยเหลือด้านการบริการเพิ่มเติม ติดต่อฝ่ายต้อนรับที่เบอร์ 0 ได้เลยค่ะ (เปิด 24 ชั่วโมง)",
+  "events": [
+   [
+    1.53,
+    "session",
+    "session updated"
+   ],
+   [
+    3.63,
+    "caller_stopped",
+    "audio committed"
+   ],
+   [
+    4.45,
+    "heard",
+    "ขอบคุณค่ะ แล้วช่วยปรับอุณหภูมิห้องให้เย็นลงอีกนิดได้ไหมคะ ไม่รีบ"
+   ],
+   [
+    4.5,
+    "first_output",
+    "model started answering"
+   ],
+   [
+    4.74,
+    "said",
+    "ได้เลยครับ/ค่ะ—แต่ว่าผม/ฉันไม่สามารถปรับระบบให้ได้ตรงนี้นะครับ/ค่ะ ถ้าต้องการความช่วยเหลือด้านการบริการเพิ่มเติม ติดต่อฝ่ายต้อนรับที่เบอร์ 0 ได้เลยค่ะ (เปิด 24 ชั่วโมง)"
+   ],
+   [
+    4.74,
+    "turn_complete",
+    ""
+   ]
+  ],
+  "timing": {
+   "speech_end": 3.63,
+   "first_output": 4.5,
+   "total": 6.99
+  },
+  "provider": "chatgpt",
+  "model": "gpt-realtime-2.1-mini"
+ }
+}

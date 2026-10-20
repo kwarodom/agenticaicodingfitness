@@ -1,0 +1,19 @@
+{
+ "recorded_at": "2026-09-27",
+ "request": {
+  "capability": "hear",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-transcribe",
+  "media": "voicemail_burning_th.wav"
+ },
+ "response": {
+  "text": "สวัสดีค่ะ ห้องหนึ่งสองสองสามนะคะ แอร์ไม่เย็นเลยตั้งแต่มาคืนแล้วตอนนี้มีกลิ่นไหม้ออกมาจากช่องแอร์ด้วย ช่วยส่งช่างมาดูด่วนเลยนะคะ",
+  "provider": "chatgpt",
+  "model": "gpt-4o-mini-transcribe",
+  "usage": {
+   "input_tokens": 121,
+   "output_tokens": 58
+  },
+  "latency_ms": 2453.7
+ }
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 02.1 — Tool use with a single tool.
 
-Run:  python week15/code/02_tool_use/01_calculator_only.py
+Run:  python week15_production_graphrag/code/02_tool_use/01_calculator_only.py
 
 The model can't run code itself. It emits a `tool_use` block asking YOU to run
 `calculate(...)`. You run it and hand back a `tool_result`. The model decides

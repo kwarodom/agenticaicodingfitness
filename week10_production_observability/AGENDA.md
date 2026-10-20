@@ -121,6 +121,6 @@ flowchart TD
 - [ ] Merge any Ex challenge PRs students opened
 - [ ] Post Show & Tell highlights to team channel
 - [ ] Send `HOMEWORK.md` to LINE group
-- [ ] Update `agenticaicodingfitness` repo `week10/` with final code
+- [ ] Update `agenticaicodingfitness` repo `week10_production_observability/` with final code
 - [ ] Write 3-bullet retro: what worked / what broke / what to change for W11
 - [ ] Book a room for W11 Swarm

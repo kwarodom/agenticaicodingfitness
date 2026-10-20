@@ -1,0 +1,312 @@
+{
+  "architecture": {
+    "title": "The fine-tuning loop: data you can trust, criteria you locked, an exam you did not train on",
+    "caption": "Situations become a generated pool, split BY SITUATION so validation is honest. The hand-written held-out set never touches training. Criteria are locked before the first run. Laya fine-tunes on the Mac's GPU (MPS); GLiNER2's trainer is CUDA-or-CPU, so on a Mac it runs on the CPU and a DGX Spark gives it a GPU. Every candidate is graded on held-out against the locked criteria; only a SHIP gets a model card and a shadow deployment.",
+    "lanes": [
+      {
+        "id": "data",
+        "label": "Data (synthetic, EN + TH)"
+      },
+      {
+        "id": "code",
+        "label": "Your code — split · lock · gate"
+      },
+      {
+        "id": "mac",
+        "label": "Train on the Mac (M4 Max)"
+      },
+      {
+        "id": "spark",
+        "label": "…or on a DGX Spark (CUDA)"
+      },
+      {
+        "id": "out",
+        "label": "Exam + release"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "sit",
+        "label": "72 situations",
+        "lane": "data",
+        "sub": "datagen.py · labels once",
+        "accent": "cyan"
+      },
+      {
+        "id": "held",
+        "label": "66 held-out tickets",
+        "lane": "data",
+        "sub": "48 hand-written + Module 16's 18",
+        "accent": "red"
+      },
+      {
+        "id": "split",
+        "label": "split by situation",
+        "lane": "code",
+        "sub": "456 train · 120 val · 0 % near-copies",
+        "accent": "green"
+      },
+      {
+        "id": "lock",
+        "label": "criteria.lock",
+        "lane": "code",
+        "sub": "C1–C7 written before training",
+        "accent": "green"
+      },
+      {
+        "id": "laya",
+        "label": "laya.train.finetune",
+        "lane": "mac",
+        "sub": "multilingual 322M · full · MPS",
+        "accent": "amber"
+      },
+      {
+        "id": "gl",
+        "label": "GLiNER2 ExtractorTrainer",
+        "lane": "mac",
+        "sub": "multi-Decide 287M · LoRA / full · CPU",
+        "accent": "amber"
+      },
+      {
+        "id": "sp",
+        "label": "same labs in NGC PyTorch",
+        "lane": "spark",
+        "sub": "cuda + bf16 · 128 GB",
+        "accent": "violet"
+      },
+      {
+        "id": "exam",
+        "label": "Lab 17-6 exam",
+        "lane": "out",
+        "sub": "CI · fixed/broke · calibration · forgetting",
+        "accent": "cyan"
+      },
+      {
+        "id": "gate",
+        "label": "ship_decision()",
+        "lane": "out",
+        "sub": "SHIP → model card + shadow",
+        "accent": "red"
+      }
+    ],
+    "edges": [
+      {
+        "from": "sit",
+        "to": "split",
+        "label": "576 tickets"
+      },
+      {
+        "from": "split",
+        "to": "laya",
+        "label": "Laya JSONL",
+        "animated": true
+      },
+      {
+        "from": "split",
+        "to": "gl",
+        "label": "GLiNER JSONL",
+        "animated": true
+      },
+      {
+        "from": "split",
+        "to": "sp",
+        "label": "rsync"
+      },
+      {
+        "from": "laya",
+        "to": "exam",
+        "label": "checkpoint"
+      },
+      {
+        "from": "gl",
+        "to": "exam",
+        "label": "adapter / checkpoint"
+      },
+      {
+        "from": "sp",
+        "to": "exam",
+        "label": "run files"
+      },
+      {
+        "from": "held",
+        "to": "exam",
+        "label": "never trained on"
+      },
+      {
+        "from": "lock",
+        "to": "gate",
+        "label": "same criteria"
+      },
+      {
+        "from": "exam",
+        "to": "gate",
+        "label": "metrics"
+      }
+    ]
+  },
+  "sequence": {
+    "title": "Lab 17-4 — one Laya fine-tune, start to finish",
+    "caption": "Measured on 2026-10-17, Apple M4 Max, laya 0.4.8. finetune() scores the base checkpoint on validation first, trains, fits temperatures on a 12 % calibration slice, scores again and saves. The calibration slice comes from training situations the model now gets 100 % right — so the temperatures stayed at 1.0 and Laya said so.",
+    "actors": [
+      {
+        "id": "lab",
+        "label": "lab04 (your code)"
+      },
+      {
+        "id": "laya",
+        "label": "laya.train"
+      },
+      {
+        "id": "gpu",
+        "label": "Apple GPU (MPS)"
+      }
+    ],
+    "steps": [
+      {
+        "from": "lab",
+        "to": "laya",
+        "label": "finetune(train.jsonl, 'multilingual', eval_data=val.jsonl)",
+        "kind": "call"
+      },
+      {
+        "from": "laya",
+        "to": "gpu",
+        "label": "base on 360 val items → accuracy 0.614",
+        "kind": "call"
+      },
+      {
+        "from": "laya",
+        "to": "gpu",
+        "label": "3 epochs · 1,204 items · 228 updates",
+        "kind": "call"
+      },
+      {
+        "from": "gpu",
+        "to": "laya",
+        "label": "loss 0.40 → 0.19 → 0.05 (≈ 3.9 min)",
+        "kind": "return"
+      },
+      {
+        "from": "laya",
+        "to": "laya",
+        "label": "fit temperatures on 164 calibration items → unchanged at 1.0 ⚠",
+        "kind": "note"
+      },
+      {
+        "from": "laya",
+        "to": "lab",
+        "label": "val accuracy 0.889 · mean confidence 0.997 · saved 1.3 GB",
+        "kind": "return"
+      }
+    ]
+  },
+  "charts": [
+    {
+      "title": "Held-out exam — queue correct out of 66 tickets never trained on",
+      "type": "hbars",
+      "unit": "",
+      "labels": [
+        "majority label",
+        "keyword rules",
+        "Laya zero-shot (Router)",
+        "Laya fine-tuned",
+        "GLiNER2.5-multi-Decide zero-shot",
+        "GLiNER + LoRA (5.5 MB)",
+        "GLiNER full fine-tune",
+        "Jev 1.13 (hosted)"
+      ],
+      "series": [
+        {
+          "name": "queue correct",
+          "values": [
+            15,
+            52,
+            40,
+            55,
+            40,
+            60,
+            57,
+            66
+          ],
+          "color": "cyan"
+        }
+      ],
+      "caption": "labs/lab06_evaluate.py on 2026-10-17 (48 hand-written + Module 16's 18 tickets). Every fine-tune beats its zero-shot base by 23–30 points (McNemar p ≤ 0.003), and the LoRA adapter beats the keyword rules. All three are still on HOLD: none flags every dangerous ticket (C3)."
+    },
+    {
+      "title": "Validation loss per epoch — the LoRA run overfits after epoch 4",
+      "type": "line",
+      "unit": "loss",
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "series": [
+        {
+          "name": "LoRA r=8 (early-stopped at 6)",
+          "values": [
+            0.306,
+            0.16,
+            0.24,
+            0.154,
+            0.246,
+            0.48
+          ],
+          "color": "violet"
+        },
+        {
+          "name": "full fine-tune (4 epochs)",
+          "values": [
+            0.246,
+            0.167,
+            0.189,
+            0.169
+          ],
+          "color": "amber"
+        }
+      ],
+      "caption": "labs/lab05_finetune_gliner.py, CPU on an Apple M4 Max. save_best keeps the lowest point (LoRA epoch 4, full epoch 2); early stopping ends LoRA after two epochs without a new best."
+    },
+    {
+      "title": "Dangerous tickets flagged (of 14) vs false alarms (of 52 safe)",
+      "type": "bars",
+      "unit": "",
+      "labels": [
+        "Laya ft",
+        "GLiNER base",
+        "GLiNER LoRA",
+        "GLiNER full",
+        "Jev"
+      ],
+      "series": [
+        {
+          "name": "dangerous flagged",
+          "values": [
+            10,
+            14,
+            13,
+            12,
+            13
+          ],
+          "color": "green"
+        },
+        {
+          "name": "false alarms",
+          "values": [
+            2,
+            31,
+            3,
+            2,
+            7
+          ],
+          "color": "red"
+        }
+      ],
+      "caption": "Recall alone flatters the zero-shot GLiNER (14/14 by saying yes to almost everything). The fine-tunes cut false alarms to 2–3 but each still misses at least one water-near-electricity ticket."
+    }
+  ]
+}

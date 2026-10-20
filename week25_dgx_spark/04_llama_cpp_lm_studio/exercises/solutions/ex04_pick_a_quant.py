@@ -2,7 +2,7 @@
 """Exercise 04 · reference solution — pick a GGUF quant that fits.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week25/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py
+    .venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py
 
 The checker is free and offline: it checks your functions against ggml's block sizes (the
 same ones lab 02 verified against a real GGUF file), then picks a quant for three models

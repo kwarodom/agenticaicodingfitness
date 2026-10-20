@@ -197,7 +197,7 @@ export DGX_CONN=tunnel
 export DGX_TUNNEL_URL=https://dgx:choose-a-strong-password@a1b2c3d4.ngrok-free.app/v1
 
 # launch any tutorial — the pill should read "REAL · tunnel · qwen3.6…"
-.venv/bin/python week19/sovereign_dgx/tutorial_server.py     # → http://127.0.0.1:8092
+.venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py     # → http://127.0.0.1:8092
 ```
 
 That's it — every Week 19 app now runs its real inference on your remote DGX. (If you skipped `--basic-auth`, just use `https://a1b2c3d4.ngrok-free.app/v1` with no `user:pass@`.)
@@ -279,8 +279,8 @@ pattern five times:
 
 ```bash
 # 💻 LAPTOP
-uv pip install -r week19/<app>/requirements.txt          # deps into the repo .venv (3.13)
-.venv/bin/python week19/<app>/tutorial_server.py         # then open the printed http://127.0.0.1:PORT
+uv pip install -r week19_sovereign_ai_dgx/<app>/requirements.txt          # deps into the repo .venv (3.13)
+.venv/bin/python week19_sovereign_ai_dgx/<app>/tutorial_server.py         # then open the printed http://127.0.0.1:PORT
 ```
 
 In every app's web page: pick a chapter on the left → read the **concept** → click
@@ -304,8 +304,8 @@ together. Budget ~30–45 min per app.
 
 ```bash
 # 💻 LAPTOP — launch the tutorial here
-uv pip install -r week19/sovereign_dgx/requirements.txt
-.venv/bin/python week19/sovereign_dgx/tutorial_server.py     # → http://127.0.0.1:8092
+uv pip install -r week19_sovereign_ai_dgx/sovereign_dgx/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/sovereign_dgx/tutorial_server.py     # → http://127.0.0.1:8092
 ```
 
 > In this app especially, the chapters print lots of **🖥️ DGX Spark** commands
@@ -337,8 +337,8 @@ training data never leaves the building.
 
 ```bash
 # 💻 LAPTOP — launch the tutorial here
-uv pip install -r week19/dgx_finetune/requirements.txt
-.venv/bin/python week19/dgx_finetune/tutorial_server.py      # → http://127.0.0.1:8093
+uv pip install -r week19_sovereign_ai_dgx/dgx_finetune/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/dgx_finetune/tutorial_server.py      # → http://127.0.0.1:8093
 ```
 
 > Training a real model is a **🖥️ DGX Spark** job — the chapters print the actual
@@ -367,8 +367,8 @@ Toolkit.
 
 ```bash
 # 💻 LAPTOP — launch the tutorial here
-uv pip install -r week19/dgx_observability/requirements.txt
-.venv/bin/python week19/dgx_observability/tutorial_server.py # → http://127.0.0.1:8094
+uv pip install -r week19_sovereign_ai_dgx/dgx_observability/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/dgx_observability/tutorial_server.py # → http://127.0.0.1:8094
 ```
 
 > The tracing runs on your laptop with no extra installs. To send traces to a **real
@@ -397,8 +397,8 @@ smarter with use. **Run Ch 3 → 4 → 5 → 6 in order** — they build shared 
 
 ```bash
 # 💻 LAPTOP — launch the tutorial here
-uv pip install -r week19/self_evolving_agent_v2/requirements.txt
-.venv/bin/python week19/self_evolving_agent_v2/tutorial_server.py  # → http://127.0.0.1:8095
+uv pip install -r week19_sovereign_ai_dgx/self_evolving_agent_v2/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/self_evolving_agent_v2/tutorial_server.py  # → http://127.0.0.1:8095
 # pick a brain:  BRAIN=local (DGX/Ollama) · BRAIN=claude (needs ANTHROPIC_API_KEY) · BRAIN=sim
 ```
 
@@ -426,8 +426,8 @@ production serving layer of the sovereign stack.
 
 ```bash
 # 💻 LAPTOP — launch the tutorial here
-uv pip install -r week19/dgx_litellm/requirements.txt
-.venv/bin/python week19/dgx_litellm/tutorial_server.py       # → http://127.0.0.1:8096
+uv pip install -r week19_sovereign_ai_dgx/dgx_litellm/requirements.txt
+.venv/bin/python week19_sovereign_ai_dgx/dgx_litellm/tutorial_server.py       # → http://127.0.0.1:8096
 ```
 
 > The **real LiteLLM proxy** is a **🖥️ DGX** service — the chapters print

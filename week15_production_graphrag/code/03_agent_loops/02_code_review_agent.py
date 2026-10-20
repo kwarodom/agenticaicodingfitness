@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lesson 03.2 — The Code Review Agent (Week 5's flagship example).
 
-Run:  python week15/code/03_agent_loops/02_code_review_agent.py
+Run:  python week15_production_graphrag/code/03_agent_loops/02_code_review_agent.py
 
 Same Agent class, different tools + playbook. It reads a buggy file, fixes it,
 writes the fix, and runs it to verify — looping until it works. The SYSTEM

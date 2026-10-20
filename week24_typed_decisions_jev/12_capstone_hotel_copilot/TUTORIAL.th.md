@@ -134,7 +134,7 @@ guest message
 `copilot_reference.py` คือคำตอบฉบับสมบูรณ์ ประมาณ 150 บรรทัดที่อ่านง่าย แล็บ 01 รันมันกับข้อความสมมติเก้าข้อความ รวมถึงกรณียาก ๆ
 
 ```bash
-.venv/bin/python week24/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py
+.venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab01_capstone_demo.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -217,7 +217,7 @@ threshold (0.20 / 0.70 / 0.20) เป็น **ค่าตัวอย่าง�
 ก่อนที่ router ใหม่จะแตะต้องแขกจริง มันต้องรัน **อยู่ในเงา** ระบบปัจจุบันยังจัดเส้นทางต่อไป และคุณแค่บันทึกว่าระบบใหม่ *จะ* ทำอะไร ในที่นี้ระบบเดิมคือ router แบบ keyword ทั่วไปที่ใช้ keyword แรกที่เจอ
 
 ```bash
-.venv/bin/python week24/12_capstone_hotel_copilot/labs/lab02_shadow_mode.py
+.venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab02_shadow_mode.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -281,7 +281,7 @@ threshold (0.20 / 0.70 / 0.20) เป็น **ค่าตัวอย่าง�
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 12 — สร้าง copilot** เปิด `week24/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py` มี TODO สี่ข้อ แต่ละข้อถูกตรวจ **แบบออฟไลน์** ก่อนเรียก API ใด ๆ:
+**แบบฝึกหัด 12 — สร้าง copilot** เปิด `week24_typed_decisions_jev/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py` มี TODO สี่ข้อ แต่ละข้อถูกตรวจ **แบบออฟไลน์** ก่อนเรียก API ใด ๆ:
 
 1. **TODO 1 — `QUESTIONS`**: คำถามห้าข้อ พร้อม key ที่ตรงเป๊ะ ตัวเลือกของ department ต้องมีห้าทีมบวก `unknown`
 2. **TODO 2 — `extract_room()`**: regex ที่หา `room 1203`, `Room 402.`, `ห้อง 815` และ `— 610.` ที่อยู่โดด ๆ ได้ แต่ไม่จับ `40 minutes`, `29 degrees`, `1500 baht` หรือ `11:30`
@@ -289,7 +289,7 @@ threshold (0.20 / 0.70 / 0.20) เป็น **ค่าตัวอย่าง�
 4. **TODO 4 — `build_ticket()`**: ข้อเสนอ พร้อม `follow_ups` และ `execute: False`
 
 ```bash
-.venv/bin/python week24/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py
+.venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/exercises/ex12_build_the_copilot.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -344,7 +344,9 @@ threshold (0.20 / 0.70 / 0.20) เป็น **ค่าตัวอย่าง�
 
 ## ถัดไป
 
-คุณเรียน Week 24 จบแล้ว สิ่งที่ควรสร้างต่อ:
+คุณเรียนแกนหลักของ Week 24 จบแล้ว **เส้นทางขั้นสูง ไปไกลกว่าข้อความ:** ต่อด้วย [Lab 13 — ภาพ เสียง และวิดีโอ](../13_multimodal_jev/TUTORIAL.th.md) ซึ่งโมเดล multimodal เป็นผู้รับรู้และ Jev เป็นผู้ตัดสิน และ [Lab 14 — เสียงสดแบบ real-time](../14_live_realtime_jev/TUTORIAL.th.md) ซึ่ง Jev ทำหน้าที่กรรมการในทุกเทิร์นของการสนทนาสด
+
+สิ่งที่ควรสร้างต่อ:
 
 - **นำไปรันแบบ shadow ที่ทำงาน** เลือกคิวงานจริงของ AltoTech หนึ่งคิว (ที่ลบข้อมูลระบุตัวตนแล้ว เช่น router ของ Copilot หรือ inbox ที่ใช้ร่วมกัน) แล้วรันการประเมินจากแล็บ 09 บนตัวอย่างที่มี label สักสองสามร้อยตัวต่อภาษา
 - **อ่าน pattern ที่ตอนนี้คุณมีชิ้นส่วนครบแล้ว:** [confidence-gated routing](https://docs.typesafe.ai/patterns/confidence-routing.md), [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md), [composite scoring](https://docs.typesafe.ai/patterns/composite-scoring.md) และ [intent routing](https://docs.typesafe.ai/patterns/intent-routing.md)

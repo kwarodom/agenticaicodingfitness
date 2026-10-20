@@ -1,11 +1,11 @@
 # Lab 06-2 · Alto Ops Claw eval on THIS LAPTOP — NAT 1.9.0 + laptop Ollama (a stand-in for vLLM on the Spark).
 # = common/alto_ops/src/alto_ops/configs/workflow.laptop.yml + the research tutorial's Lab 5.2 `eval:` block,
 #   trimmed for a laptop: 4 questions, max_concurrency 2, and the cheap runtime evaluators instead of LLM judges.
-# Run from the repo root:  week26/.venv-nat/bin/nat eval --config_file week26/06_benchmarking/configs/eval_config.yml
+# Run from the repo root:  week26_nemoclaw_claws/.venv-nat/bin/nat eval --config_file week26_nemoclaw_claws/06_benchmarking/configs/eval_config.yml
 functions:
   chiller_kpi:
     _type: chiller_kpi
-    csv_path: week26/common/data/chiller_plant.csv
+    csv_path: week26_nemoclaw_claws/common/data/chiller_plant.csv
     kw_per_rt_alarm: 0.80
   current_datetime:
     _type: current_datetime
@@ -24,11 +24,11 @@ workflow:
   handle_tool_errors: true
 eval:
   general:
-    output_dir: week26/06_benchmarking/.runs/eval/alto_ops/
+    output_dir: week26_nemoclaw_claws/06_benchmarking/.runs/eval/alto_ops/
     max_concurrency: 2
     dataset:
       _type: jsonl
-      file_path: week26/06_benchmarking/data/alto_ops_eval.jsonl
+      file_path: week26_nemoclaw_claws/06_benchmarking/data/alto_ops_eval.jsonl
     profiler:                       # every key below exists in NAT 1.9.0's ProfilerConfig
       token_uniqueness_forecast: true
       workflow_runtime_forecast: true

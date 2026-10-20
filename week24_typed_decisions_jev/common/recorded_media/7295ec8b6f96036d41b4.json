@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "capability": "see",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "prompt": "You are helping a hotel engineering team. Describe what is visible in 2-3 sentences, focusing on any safety or maintenance issue. Then add one sentence starting 'Unsure:' saying what you cannot tell from the image.",
+  "media": "plantroom_normal.jpg"
+ },
+ "response": {
+  "text": "This mechanical room features two large chillers and smaller associated water pumps connected to overhead piping. The space appears clean with clear walkways, but the exposed, uninsulated blue and grey piping could present a condensation or thermal safety risk depending on operating temperatures. Additionally, the floor-mounted pump assembly in the foreground creates a potential tripping hazard along the main path.\n\nUnsure: whether these chillers are currently operational or if pressure and temperature readings are within normal parameters.",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "usage": {
+   "input_tokens": 1126,
+   "output_tokens": 92
+  },
+  "latency_ms": 3741.7
+ }
+}

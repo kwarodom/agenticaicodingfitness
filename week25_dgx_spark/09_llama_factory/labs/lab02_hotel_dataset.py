@@ -6,7 +6,7 @@ of JSON — which department handles it, how urgent it is, and a short polite re
 language (English or Thai). That output is easy to check by code, which Module 13 uses to score the
 fine-tune.
 
-This lab writes three files into week25/09_llama_factory/data/ (deterministic: same files every run):
+This lab writes three files into week25_dgx_spark/09_llama_factory/data/ (deterministic: same files every run):
   hotel_ops.json        training records   (Alpaca: instruction · input · output · system)
   hotel_ops_eval.json   held-out records, built from request templates the model never trains on
   dataset_info.json     the registry LLaMA Factory reads to find a dataset by name
@@ -14,7 +14,7 @@ This lab writes three files into week25/09_llama_factory/data/ (deterministic: s
 Then it validates them the way a trainer would fail on them — before you spend GPU time.
 Runs on this laptop. No Spark, no network, no cost.
 
-Run: .venv/bin/python week25/09_llama_factory/labs/lab02_hotel_dataset.py
+Run: .venv/bin/python week25_dgx_spark/09_llama_factory/labs/lab02_hotel_dataset.py
 """
 import json
 import random
@@ -297,5 +297,5 @@ note(f"priority in train: normal {prio['normal']} · urgent {prio['urgent']} —
 if not good:
     result("✕ fix the dataset before training — every ✕ above would waste a GPU run.")
     sys.exit(1)
-result(f"dataset ready: {len(train)} train + {len(evalset)} eval records in week25/09_llama_factory/data/. "
+result(f"dataset ready: {len(train)} train + {len(evalset)} eval records in week25_dgx_spark/09_llama_factory/data/. "
        "Lab 03 writes the training YAML that points at 'hotel_ops' and uploads both to the Spark.")

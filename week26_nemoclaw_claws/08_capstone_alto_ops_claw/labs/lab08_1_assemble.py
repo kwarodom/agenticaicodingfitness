@@ -10,7 +10,7 @@ against the policy. The last step copies the bundle to your Spark. The sandbox c
 you to run in the ⌨ terminal: it attaches to a long-running `nat serve`, so a lab never runs it in the
 foreground. The data upload and the port forward go through change().
 
-No LLM calls. Run: .venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_1_assemble.py
+No LLM calls. Run: .venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_1_assemble.py
 """
 import json
 import shutil
@@ -32,7 +32,7 @@ T0 = time.time()
 banner("Lab 08-1 · assemble Alto Ops Claw v1", "the bundle, validated offline · then copied to your Spark (or DRY)")
 
 # ── 1 · generate the bundle ────────────────────────────────────────────────────────────────────────────────
-step(1, "generate the bundle → week26/08_capstone_alto_ops_claw/.runs/alto-ops-claw-v1/")
+step(1, "generate the bundle → week26_nemoclaw_claws/08_capstone_alto_ops_claw/.runs/alto-ops-claw-v1/")
 B = ck.BUNDLE
 if B.exists():
     shutil.rmtree(B)

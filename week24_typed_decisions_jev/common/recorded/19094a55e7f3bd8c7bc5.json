@@ -1,0 +1,53 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.14.0",
+  "state": {
+   "frame": "img-5b45482c172d2986"
+  },
+  "questions": {
+   "visible": {
+    "type": "noul",
+    "instructions": "Is there smoke, steam or haze in `frame`?"
+   },
+   "where": {
+    "type": "box",
+    "instructions": "the densest cloud of smoke, steam or haze in `frame`"
+   }
+  },
+  "assets": {
+   "img-5b45482c172d2986": {
+    "type": "image",
+    "format": "jpg",
+    "sha256": "ad7131efe6f0f507",
+    "base64_chars": 111616
+   }
+  },
+  "headers": [
+   "TypeSafe-Danger-Zone-Images"
+  ]
+ },
+ "response": {
+  "model": "jev-1.14.0",
+  "answers": {
+   "visible": {
+    "type": "noul",
+    "noul": 0.96
+   },
+   "where": {
+    "type": "box",
+    "box": {
+     "top": 0.05,
+     "bottom": 0.48,
+     "left": 0.19,
+     "right": 0.43
+    },
+    "confidence": 0.33
+   }
+  },
+  "usage": {
+   "input_tokens": 1935,
+   "output_tokens": 36
+  }
+ }
+}

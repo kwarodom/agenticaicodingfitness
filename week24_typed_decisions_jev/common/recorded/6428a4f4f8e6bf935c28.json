@@ -1,0 +1,75 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "model": "jev-1.13.0",
+  "state": {
+   "message": "ได้กลิ่นไหม้แถวตู้ไฟชั้น 3 ใกล้ห้อง 1203 รีบมาดูด่วนค่ะ"
+  },
+  "questions": {
+   "queue": {
+    "type": "choice",
+    "instructions": "Which team should handle `message`?",
+    "criteria": {
+     "hvac": "air conditioning, heating, temperature",
+     "housekeeping": "towels, cleaning, amenities",
+     "plumbing": "water leaks, drains, toilets",
+     "safety": "smoke, burning smell, fire, electrical danger",
+     "front_desk": "check-in, check-out, billing, room changes"
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "instructions": "Does `message` describe smoke, burning, fire, sparks or water near electricity?"
+   },
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is `message`?",
+    "criteria": [
+     "routine",
+     "today",
+     "immediate"
+    ]
+   }
+  }
+ },
+ "response": {
+  "model": "jev-1.13.0",
+  "answers": {
+   "queue": {
+    "type": "choice",
+    "choice": "safety",
+    "confidence": 1.0,
+    "probabilities": {
+     "hvac": 0.0,
+     "housekeeping": 0.0,
+     "plumbing": 0.0,
+     "safety": 1.0,
+     "front_desk": 0.0
+    }
+   },
+   "safety": {
+    "type": "noul",
+    "noul": 0.94
+   },
+   "urgency": {
+    "type": "score",
+    "score": 2.0,
+    "confidence": 1.0,
+    "legend": {
+     "0": "routine",
+     "1": "today",
+     "2": "immediate"
+    },
+    "probabilities": {
+     "0": 0.0,
+     "1": 0.0,
+     "2": 1.0
+    }
+   }
+  },
+  "usage": {
+   "input_tokens": 512,
+   "output_tokens": 97
+  }
+ }
+}

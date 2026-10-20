@@ -62,7 +62,7 @@ Two design choices matter. **Small blocks (16):** one outlier only spoils the pr
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab01_nvfp4_simulator.py
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab01_nvfp4_simulator.py
 ```
 
 **Expected output** (captured on this Mac: pure Python with a fixed seed, so every machine prints the same numbers)
@@ -142,8 +142,8 @@ It takes 45–90 minutes (the playbook's estimate), longer than the Lab Runner l
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py --start   # launch (LIVE only)
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py           # status, any time
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py --start   # launch (LIVE only)
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab02_quantize_nvfp4.py           # status, any time
 ```
 
 **Expected output** (DRY mode, captured on this Mac. The outputs are EXAMPLE shapes, not a Spark's)
@@ -228,8 +228,8 @@ Lab 03 starts the server and times one request:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start nvfp4
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label nvfp4
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start nvfp4
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label nvfp4
 ```
 
 **Expected output** (captured on this Mac with no Spark: the timing is Ollama on THIS laptop, labelled, and says nothing about a Spark)
@@ -273,9 +273,9 @@ A quantized model is only useful if it is smaller **and** still right. Measure b
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label nvfp4
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start bf16
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label bf16
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label nvfp4
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start bf16
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --quality --label bf16
 ```
 
 **Expected output** (captured on this Mac with no Spark: the LAPTOP STAND-IN runs the same six questions on gemma3:4b, to show the harness)
@@ -312,7 +312,7 @@ Because single-stream decode on a Spark is **memory-bound**. One forward pass st
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab04_speculative_calculator.py
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab04_speculative_calculator.py
 ```
 
 **Expected output** (captured on this Mac: arithmetic and a seeded simulation, the same everywhere)
@@ -423,18 +423,18 @@ The playbook's command has no `--port`, so it serves on `trtllm-serve`'s default
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start baseline
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label baseline
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start eagle3
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label eagle3
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --stop
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start baseline
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label baseline
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --start eagle3
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --label eagle3
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py --stop
 ```
 
 Each measurement sends the playbook's own EAGLE-3 test prompt (the train word problem) with `max_tokens: 300` at temperature 0, and saves tok/s under its label. Divide eagle3 by baseline for your speed-up, then let lab 04 back out the acceptance rate it implies:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/labs/lab04_speculative_calculator.py --measured 1.8
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab04_speculative_calculator.py --measured 1.8
 ```
 
 **Expected output** (captured on this Mac for an example input of 1.8×, not a Spark measurement: put in your own)
@@ -465,7 +465,7 @@ Labs 01 and 04 run on the laptop. Labs 02 and 03 run LIVE on your Spark or DRY. 
 
 ## Try it yourself
 
-**Exercise 07 — a 4-bit quantizer and a draft-length planner.** Open `week25/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py`. It has four `TODO`s:
+**Exercise 07 — a 4-bit quantizer and a draft-length planner.** Open `week25_dgx_spark/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py`. It has four `TODO`s:
 
 1. `e2m1_round(x)`: the nearest E2M1 value, with sign, saturating at ±6.
 2. `quantize_block(block)`: scale = max |value| ÷ 6, then the decoded values.
@@ -474,7 +474,7 @@ Labs 01 and 04 run on the laptop. Labs 02 and 03 run LIVE on your Spark or DRY. 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py
+.venv/bin/python week25_dgx_spark/07_nvfp4_speculative/exercises/ex07_fp4_and_speculation.py
 ```
 
 **Expected output** (once all four TODOs are done. Captured on this Mac from the reference solution)

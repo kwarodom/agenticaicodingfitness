@@ -9,7 +9,7 @@
 # CAPSTONE_GATEWAY=http://host.openshell.internal:4000/v1 (the router tool's only other way out).
 # The gateway key is read from the environment (HOTEL_GATEWAY_KEY), never written here.
 #
-#   HOTEL_GATEWAY_KEY=sk-… week25/.venv-nat/bin/nat run --config_file week25/20_capstone_sovereign_agent/configs/capstone_agent.yml \
+#   HOTEL_GATEWAY_KEY=sk-… week25_dgx_spark/.venv-nat/bin/nat run --config_file week25_dgx_spark/20_capstone_sovereign_agent/configs/capstone_agent.yml \
 #       --input "Guest in room 808: it's really hot in here and the AC is just blowing air."
 
 general:

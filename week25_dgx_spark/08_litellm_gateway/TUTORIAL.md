@@ -17,7 +17,7 @@
 
 | Need | Check | Why |
 |---|---|---|
-| LiteLLM proxy 1.89 in `week25/.venv-litellm` | `week25/.venv-litellm/bin/litellm --version` | the repo `.venv` has the LiteLLM library but not the `[proxy]` extras the server needs |
+| LiteLLM proxy 1.89 in `week25_dgx_spark/.venv-litellm` | `week25_dgx_spark/.venv-litellm/bin/litellm --version` | the repo `.venv` has the LiteLLM library but not the `[proxy]` extras the server needs |
 | Ollama on the laptop, two small models | `ollama list` shows `gemma3:4b` and `nemotron-3-nano:latest` | the laptop fallbacks every lab calls |
 | Port 4000 free | `lsof -iTCP:4000 -sTCP:LISTEN` prints nothing | the labs use the next free port if 4000 is taken, and say so |
 | Modules 03–07 (optional) | `curl http://spark-a:8000/v1/models` | with engines running, the Spark aliases answer for real |
@@ -25,7 +25,7 @@
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-week25/.venv-litellm/bin/litellm --version
+week25_dgx_spark/.venv-litellm/bin/litellm --version
 ollama list | grep -E "gemma3:4b|nemotron-3-nano"
 ```
 
@@ -38,17 +38,17 @@ nemotron-3-nano:latest           b725f1117407    24 GB     8 weeks ago
 gemma3:4b                        a2af6cc3eb7f    3.3 GB    8 weeks ago
 ```
 
-If `week25/.venv-litellm` is missing, create it (a week25-local venv, nothing global):
+If `week25_dgx_spark/.venv-litellm` is missing, create it (a week25-local venv, nothing global):
 
 ```bash
 # on: laptop
-uv venv week25/.venv-litellm --python 3.13
-uv pip install --python week25/.venv-litellm/bin/python 'litellm[proxy]==1.89.0' openai pyyaml
+uv venv week25_dgx_spark/.venv-litellm --python 3.13
+uv pip install --python week25_dgx_spark/.venv-litellm/bin/python 'litellm[proxy]==1.89.0' openai pyyaml
 ```
 
 > ⚠ `.venv/bin/litellm` (the repo venv) exits with `ImportError: Missing dependency No module named 'backoff'. Run pip install 'litellm[proxy]'`. That is why this module uses its own venv for the proxy. The labs themselves still run with `.venv/bin/python`.
 
-✓ Checkpoint: `week25/.venv-litellm/bin/litellm --version` prints 1.89.0, and both laptop models are listed.
+✓ Checkpoint: `week25_dgx_spark/.venv-litellm/bin/litellm --version` prints 1.89.0, and both laptop models are listed.
 
 ## 1 · Why a gateway?
 
@@ -76,11 +76,11 @@ Clients only ever see **aliases** (`model_name` in the config). Each alias maps 
 
 ## 2 · Build the config from your Spark settings: lab 01
 
-Lab 01 reads the same settings as every Week 25 lab (`SPARK_HOST`, `SPARK_API_HOST`, Module 01). It asks each engine that answers which model it serves (`GET /v1/models`) and falls back to the course's default model ids. Then it writes one file, `week25/08_litellm_gateway/.runs/litellm.config.yaml` (gitignored), and validates it with PyYAML **and** with LiteLLM's own `Router`.
+Lab 01 reads the same settings as every Week 25 lab (`SPARK_HOST`, `SPARK_API_HOST`, Module 01). It asks each engine that answers which model it serves (`GET /v1/models`) and falls back to the course's default model ids. Then it writes one file, `week25_dgx_spark/08_litellm_gateway/.runs/litellm.config.yaml` (gitignored), and validates it with PyYAML **and** with LiteLLM's own `Router`.
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py
 ```
 
 **Expected output** (captured on this Mac with no Spark configured, so the hosts are the placeholders `spark-a` / `spark-b`)
@@ -158,7 +158,7 @@ Lab 02 starts the proxy as a child process, exactly as you would by hand:
 ```bash
 # on: laptop
 export LITELLM_MASTER_KEY="sk-$(openssl rand -hex 16)"      # a fresh key; keep it out of files and shell history
-week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/litellm.config.yaml \
+week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/litellm.config.yaml \
   --host 127.0.0.1 --port 4000 --telemetry False
 ```
 
@@ -166,14 +166,14 @@ week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/litell
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab02_gateway_live.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab02_gateway_live.py
 ```
 
 **Expected output** (captured on this Mac: a real LiteLLM proxy, real calls to the laptop's Ollama, labelled LAPTOP STAND-IN)
 
 ```
 ▣ STEP 1 · start LiteLLM with lab 01's config
-$ LITELLM_MASTER_KEY=sk-w25-… week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/litellm.config.yaml --host 127.0.0.1 --port 4000 --telemetry False
+$ LITELLM_MASTER_KEY=sk-w25-… week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/litellm.config.yaml --host 127.0.0.1 --port 4000 --telemetry False
 ◆ gateway up on http://127.0.0.1:4000 after 2.1 s (pid 41369, log 08_litellm_gateway/.runs/litellm-4000.log)
 
 ▣ STEP 2 · GET /v1/models — the aliases, not the engines' model ids
@@ -238,7 +238,7 @@ Lab 03 adds two demo aliases to lab 01's config: `one-spark-down` (Spark A's vLL
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab03_fallback_and_balance.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab03_fallback_and_balance.py
 ```
 
 **Expected output** (captured on this Mac with no Spark configured: the "Spark" deployments are down, the laptop answers, LAPTOP STAND-IN)
@@ -300,9 +300,9 @@ Lab 01 writes the Spark A variant too. Spark A's engines become `localhost`. The
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py --on-spark
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py --on-spark
 # or keep the laptop fallback, via the tailnet (the laptop must run: OLLAMA_HOST=0.0.0.0 ollama serve)
-.venv/bin/python week25/08_litellm_gateway/labs/lab01_build_config.py --on-spark --laptop-url http://<laptop-tailnet-name>:11434/v1
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/labs/lab01_build_config.py --on-spark --laptop-url http://<laptop-tailnet-name>:11434/v1
 ```
 
 **Expected output** (captured on this Mac, DRY: nothing copied)
@@ -370,7 +370,7 @@ All three run on the laptop. Labs 02 and 03 start a real proxy and always stop i
 
 ## Try it yourself
 
-**Exercise 08 — complete the gateway.** Open `week25/08_litellm_gateway/exercises/ex08_complete_the_gateway.py`. The YAML at the top has one `chat` deployment on Spark A and four `TODO`s:
+**Exercise 08 — complete the gateway.** Open `week25_dgx_spark/08_litellm_gateway/exercises/ex08_complete_the_gateway.py`. The YAML at the top has one `chat` deployment on Spark A and four `TODO`s:
 
 1. A second `chat` deployment: the same model on Spark B (load balancing).
 2. `fallbacks`: `chat` → `laptop-fast`.
@@ -379,7 +379,7 @@ All three run on the laptop. Labs 02 and 03 start a real proxy and always stop i
 
 ```bash
 # on: laptop
-.venv/bin/python week25/08_litellm_gateway/exercises/ex08_complete_the_gateway.py
+.venv/bin/python week25_dgx_spark/08_litellm_gateway/exercises/ex08_complete_the_gateway.py
 ```
 
 **Expected output** (once all four TODOs are done. Captured on this Mac from the reference solution)
@@ -391,9 +391,9 @@ All three run on the laptop. Labs 02 and 03 start a real proxy and always stop i
 ✓ TODO 4: master_key comes from the environment, not from the file
 ✓ LiteLLM Router loaded it: 3 deployments, aliases ['chat', 'laptop-fast']
 
-═ saved to week25/08_litellm_gateway/.runs/ex08.config.yaml. Try it live (it will fall back to your laptop):
+═ saved to week25_dgx_spark/08_litellm_gateway/.runs/ex08.config.yaml. Try it live (it will fall back to your laptop):
   export LITELLM_MASTER_KEY=sk-$(openssl rand -hex 12)
-  week25/.venv-litellm/bin/litellm --config week25/08_litellm_gateway/.runs/ex08.config.yaml --port 4000
+  week25_dgx_spark/.venv-litellm/bin/litellm --config week25_dgx_spark/08_litellm_gateway/.runs/ex08.config.yaml --port 4000
 ```
 
 Starting the saved file that way and asking for `chat` returned HTTP 200 on this Mac, with `x-litellm-model-group: laptop-fast` and `x-litellm-attempted-fallbacks: 1`.
@@ -422,7 +422,7 @@ Add a fallback `spark-a/ollama: [spark-b/ollama, laptop-fast]` to lab 01's confi
 
 | Symptom | Fix |
 |---|---|
-| `ImportError: Missing dependency No module named 'backoff'` | You ran `.venv/bin/litellm`. Use `week25/.venv-litellm/bin/litellm` (Section 0) |
+| `ImportError: Missing dependency No module named 'backoff'` | You ran `.venv/bin/litellm`. Use `week25_dgx_spark/.venv-litellm/bin/litellm` (Section 0) |
 | `port 4000 is taken on this laptop — using 4001 instead` | Something else listens on 4000 (maybe another gateway). The labs pick the next free port. By hand: `lsof -iTCP:4000 -sTCP:LISTEN` |
 | `Authentication Error, No api key passed in.` (401) | Send `Authorization: Bearer $LITELLM_MASTER_KEY` |
 | `No connected db.` (400) | The key is not the master key. Without a database, only the master key works |

@@ -1,0 +1,147 @@
+SOURCE: https://docs.modulos.ai/frameworks/owasp-top-10-agentic
+
+OWASP Top 10 for Agentic Applications (2026) — Modulos Governance Guide | Modulos Docs
+Skip to content          Menu    Return to top
+Are you an LLM? You can read better optimized documentation at /frameworks/owasp-top-10-agentic.md for this page in Markdown format
+OWASP Top 10 for Agentic Applications (2026)  ​
+The  OWASP Top 10 for Agentic Applications  is a community-developed taxonomy of the ten most critical security risks for systems where AI agents plan, use tools, persist memory, and coordinate with other agents. The 2026 edition was announced on  9 December 2025  by the  OWASP GenAI Security Project  under the OWASP Foundation. The ten categories use the prefix  ASI01–ASI10 .
+This page is a Modulos governance guide. The ten OWASP designations are referenced as factual taxonomic labels; everything else — definitions, governance implications, cross-mappings, and Modulos product references — is independently authored.
+Quick decision  ​
+Building or operating an autonomous agent →  the OWASP Top 10 for Agentic Applications is the primary security-risk taxonomy. Use it for threat modeling, red-team scoping, and runtime monitoring design.
+Building a chatbot or RAG system without tool use or multi-agent coordination →  the  OWASP Top 10 for LLM Applications  is enough on its own; the Agentic list does not add coverage you need.
+Using a third-party agent framework (MCP servers, agent platforms) →  apply both lists. ASI04 (supply chain) and ASI07 (inter-agent communication) are the categories most affected by framework choice.
+Subject to the EU AI Act →  treat ASI categories as technical evidence sources for the  Article 15  cybersecurity, accuracy, and robustness obligations, the Article 9 risk-management system, and the Article 14 human-oversight design obligation for high-risk providers. Compliance is determined by the Regulation, not by the OWASP list.
+TL;DR  ​
+The  OWASP Top 10 for Agentic Applications 2026  ranks ten security risks specific to agentic AI: planning, tool use, identity, supply chain, code execution, memory, inter-agent communication, cascading failures, human–agent trust, and rogue agents. Designations:  ASI01  through  ASI10 .
+Announced on 9 December 2025 by the  OWASP GenAI Security Project  under  Creative Commons Attribution-ShareAlike 4.0 . Voluntary; no legal status by itself.
+The list extends — it does not replace — the  OWASP Top 10 for LLM Applications . Most agent systems are also LLM applications and inherit the LLM-side risks.
+The list does  not  cover classical web vulnerabilities or general AI-governance obligations (those sit in  NIST AI RMF ,  ISO/IEC 42001 , and the  EU AI Act ).
+Consequence:  an enterprise agent program typically applies the Agentic list as the security-risk vocabulary, the LLM list as the underlying language-model risk vocabulary, and a management framework on top of both.
+Primary source
+OWASP Top 10 for Agentic Applications 2026 — resource page  ·  Announcement (2025-12-09)
+How the OWASP Top 10 for Agentic Applications fits into AI governance  ​
+The Agentic Top 10 sits one layer below the management frameworks.  NIST AI RMF  and  ISO/IEC 42001  describe the  system  that manages AI risk; the Agentic Top 10 names the specific  risks  that system is expected to evaluate and treat for agentic deployments. In a complete program:
+the  management framework  provides the loop — identification, measurement, treatment, monitoring;
+the  Agentic Top 10  plus the  LLM Top 10  populate that loop with named risks, observable mitigations, and shared test categories;
+the   EU AI Act   and other regulations impose the legal obligations the loop must demonstrably satisfy.
+That layering is why each category below maps to specific NIST subcategories, ISO 42001 Annex A themes, and EU AI Act Articles.
+The 10 Agentic risk categories at a glance  ​
+OWASP Top 10 for Agentic Applications 2026
+ASI01: Agent Goal Hijack  adversary redirects the agent's plan or objective
+ASI02: Tool Misuse  the agent invokes tools in a way they were not authorized for
+ASI03: Identity & Privilege Abuse  the agent's identity or permissions are misused or escalated
+ASI04: Agentic Supply Chain Vulnerabilities  third-party tools, frameworks, registries, and agent components carry exposure
+ASI05: Unexpected Code Execution  agent or sandbox boundary fails and arbitrary code runs
+ASI06: Memory & Context Poisoning  persistent memory, retrieval, or context is shaped to mislead future steps
+ASI07: Insecure Inter-Agent Communication  messages between agents are spoofed, replayed, or unauthenticated
+ASI08: Cascading Failures  an error or compromise in one agent fans out across the system
+ASI09: Human-Agent Trust Exploitation  humans over-trust or are deceived by agent outputs into harmful actions
+ASI10: Rogue Agents  an agent operates outside policy — by design failure, drift, or compromise
+ASI01: Agent Goal Hijack  ​
+In Modulos's words:  an adversary supplies input — directly or through a document, tool response, or message from another agent — that redirects the agent away from the operator's intended objective toward an attacker-controlled one.
+Governance implications:  goal hijack is the agentic counterpart of prompt injection — the same channel exposure, with action consequences. The governance question is which steps and tool calls sit downstream of an attacker-controllable input, and what containment exists when the plan deviates. Hard caps on autonomous loops, plan-validation checkpoints, and approval gates on irreversible actions are the typical defenses.
+Cross-framework mapping:   NIST AI RMF  MEASURE 2.7 (secure and resilient) and MAP 5 (impacts);  ISO/IEC 42001  Annex A controls on AI system operation, monitoring, and information security;  EU AI Act  Article 15 (accuracy, robustness, cybersecurity) and Article 14 (human oversight design) for high-risk providers.
+Relevant Modulos surfaces:  record the goal-hijack test suite in Runtime Inspection, link results to ASI01 as a requirement, and document plan-validation checkpoints through reviews.
+ASI02: Tool Misuse  ​
+In Modulos's words:  the agent invokes a legitimate tool — file write, API call, code execution, database query — with parameters or in a sequence outside its authorized use, producing a harmful side effect.
+Governance implications:  tool misuse is the action-time consequence of weak scoping. Every tool an agent can call belongs to the production attack surface and should be reviewed the way a service-to-service API call would be: parameter validation at the boundary, permission-aware scopes per caller, idempotency where possible, and approval gates on irreversible operations. Governance keeps the tool inventory and its scopes visible at all times, not after an incident.
+Cross-framework mapping:   NIST AI RMF  GOVERN 1 (policies) and MANAGE 1 (treatment);  ISO/IEC 42001  Annex A controls on AI system operation and information security;  EU AI Act  Article 15 (cybersecurity) and Article 14 (human oversight design).
+Relevant Modulos surfaces:  document the tool inventory and per-tool scope as evidence, link approval-gate decisions to ASI02, and track changes through reviews.
+ASI03: Identity & Privilege Abuse  ​
+In Modulos's words:  the agent's identity, credentials, or delegated permissions are reused, escalated, or impersonated — by the agent itself, by another agent, or by a human acting through the agent — to access resources beyond the originator's intent.
+Governance implications:  agents introduce identity questions classical service-to-service models do not answer cleanly: whose authority the agent acts under, whether it carries the originator's identity or its own, whether the delegation chain is auditable. Governance should require explicit answers per agent before deployment and apply the separation-of-duties principles already used for human operators. Token scoping, short lifetimes, and per-call identity assertions are the basic primitives.
+Cross-framework mapping:   NIST AI RMF  GOVERN 1 and MANAGE 1;  ISO/IEC 42001  Annex A controls on AI system roles, responsibilities, and information security;  EU AI Act  Article 14 (human oversight design) and Article 15.
+Relevant Modulos surfaces:  document the agent identity and delegation model, link identity-abuse test results to ASI03, and track design decisions through reviews.
+ASI04: Agentic Supply Chain Vulnerabilities  ​
+In Modulos's words:  a third-party agent framework, tool, MCP server, registry, prompt library, or pre-built agent in the deployment carries an exposure that the application inherits at runtime.
+Governance implications:  the agentic supply chain expands faster than classical software supply chains: every new tool, MCP server, or agent skill is a dependency with its own permissions, prompts, and side effects. Vendor due-diligence needs to cover not only code provenance but also tool capabilities, system prompts, and any built-in identity. Pinning, signing, and re-review at every upgrade are the operational equivalents.
+Cross-framework mapping:   NIST AI RMF  GOVERN 6 (third-party risk) and MANAGE 3;  ISO/IEC 42001  Annex A controls on supplier relationships and third-party AI;  EU AI Act  Article 25 (value-chain responsibility and provider reclassification) and Articles 51–56 (GPAI regime, especially Art 53 and, for systemic-risk GPAI models, Art 55).
+Relevant Modulos surfaces:  record the agent supply-chain inventory as evidence, link vendor reviews to ASI04, and document re-review cadence at upgrades.
+ASI05: Unexpected Code Execution  ​
+In Modulos's words:  the agent's sandbox, code-execution tool, or runtime escapes its intended boundary and runs arbitrary code on the host, in another tenant, or against an external system.
+Governance implications:  agents that can write or run code are running an interpreter on behalf of untrusted input. The control posture should match: isolation by default (containers, ephemeral runtimes, no shared file systems), least-privilege network egress, no implicit credentials in the runtime, and explicit allow-lists for what the code-execution tool can touch. Governance should treat any agentic code-execution capability as a privileged-access feature with explicit review at deployment.
+Cross-framework mapping:   NIST AI RMF  MEASURE 2.7 (secure and resilient) and MANAGE 2 (treatment);  ISO/IEC 42001  Annex A controls on AI system operation and information security;  EU AI Act  Article 15 (cybersecurity).
+Relevant Modulos surfaces:  document the code-execution boundary in architecture evidence, link sandbox-escape test results to ASI05, and track approval-gate decisions through reviews.
+ASI06: Memory & Context Poisoning  ​
+In Modulos's words:  persistent memory, retrieval stores, or session context an agent depends on is shaped by an adversary so that later steps in the plan — possibly in unrelated sessions — execute under attacker-controlled assumptions.
+Governance implications:  memory poisoning is the agentic version of data poisoning, but consequences appear at runtime rather than training time. Anything an agent can write to memory and read back is a one-way channel from input to action. Governance should require provenance metadata on every memory write, tenancy separation, deliberate forgetting windows, and periodic evaluation against ground truth.
+Cross-framework mapping:   NIST AI RMF  MAP 4 (data) and MEASURE 2.7 / 2.10 (secure and resilient, privacy-enhanced);  ISO/IEC 42001  Annex A controls on data for AI systems and AI system lifecycle;  EU AI Act  Article 10 (data governance) and Article 15.
+Relevant Modulos surfaces:  document the memory architecture and provenance metadata as evidence, evaluate memory-poisoning regression in Runtime Inspection, and link results to ASI06.
+ASI07: Insecure Inter-Agent Communication  ​
+In Modulos's words:  messages passed between agents — direct, brokered, or via a registry — are unauthenticated, unencrypted, replayable, or accepted without origin checks, and become a channel for impersonation, replay, or injection.
+Governance implications:  as soon as more than one agent is in the picture, inter-agent communication is part of the trust boundary. Authentication of agent identity, signed messages, replay protection, and explicit policies on which agents may speak to which are the minimum design controls. Governance should require the same threat-modeling rigour the team would apply to a microservices communication layer in production.
+Cross-framework mapping:   NIST AI RMF  MEASURE 2.7 (secure and resilient) and MANAGE 2;  ISO/IEC 42001  Annex A controls on AI system operation and information security;  EU AI Act  Article 15 (cybersecurity).
+Relevant Modulos surfaces:  document the inter-agent communication architecture as evidence, evaluate message-spoofing and replay tests in Runtime Inspection, and link results to ASI07.
+ASI08: Cascading Failures  ​
+In Modulos's words:  an error, compromise, or abnormal output in one agent propagates through downstream agents, tools, or systems faster than human operators can detect or interrupt it.
+Governance implications:  cascading failure is a systems-engineering concern more than a security one, but the mitigations overlap: rate limits at every agent boundary, circuit breakers on tool calls, blast-radius caps per agent, and observability that surfaces fan-out patterns. The governance question is how quickly an unhealthy agent can be contained — not whether one can ever go unhealthy.
+Cross-framework mapping:   NIST AI RMF  MEASURE 2.5 (valid and reliable), MEASURE 2.6 (safe), and MEASURE 2.7 (secure and resilient);  ISO/IEC 42001  Annex A controls on AI system operation, monitoring, and incident management;  EU AI Act  Article 15 (robustness).
+Relevant Modulos surfaces:  document blast-radius and rate-limit policies as evidence, evaluate fan-out anomaly signals in Runtime Inspection, and link incident records to ASI08.
+ASI09: Human-Agent Trust Exploitation  ​
+In Modulos's words:  an agent's outputs — confident, plausible, or impersonating a trusted source — induce a human operator or end user to take an action they should not have taken, including approvals, payments, disclosures, or further automation.
+Governance implications:  this is a user-experience risk with security consequences. Confidence calibration, visible source attribution, friction on irreversible actions, and explicit "AI-generated" markers reduce the surface. Where the EU AI Act applies, Article 50 (transparency to natural persons) and Article 14 (human oversight design) directly intersect with the surface mitigations.
+Cross-framework mapping:   NIST AI RMF  MEASURE 2.6 (safe), MEASURE 2.8 (accountable and transparent), and MEASURE 2.9 (explainable and interpretable);  ISO/IEC 42001  Annex A controls on information for interested parties and AI system operation;  EU AI Act  Articles 50 (transparency to natural persons) and 14 (human oversight design).
+Relevant Modulos surfaces:  document UI risk-communication decisions as evidence, link user-deception test results to ASI09, and track approval-gate design through reviews.
+ASI10: Rogue Agents  ​
+In Modulos's words:  an agent operates outside policy — through design failure, drift over time, or compromise — and behaves as an internal adversary against the system it sits within.
+Governance implications:  the rogue-agent category treats the agent itself as a potential threat actor inside the trust boundary. The mitigations are organizational as much as technical: per-agent telemetry, behavior baselines, anomaly alerts, kill switches any operator can pull, and a defined deprovisioning process. The governance question is whether the team can detect and contain an agent operating outside policy in minutes rather than days.
+Cross-framework mapping:   NIST AI RMF  MEASURE 2.7 (secure and resilient), GOVERN 1 (policies), and MANAGE 1 (treatment);  ISO/IEC 42001  Annex A controls on AI system operation, monitoring, and incident management;  EU AI Act  Article 14 (human oversight design) and Article 15.
+Relevant Modulos surfaces:  document per-agent telemetry and kill-switch design as evidence, evaluate rogue-behavior anomaly signals in Runtime Inspection, and link incident records to ASI10.
+How to operationalize OWASP Top 10 for Agentic Applications in Modulos  ​
+In Modulos, the Agentic taxonomy lands as named requirements with linked evidence and supporting evaluations. The team records categories, links the evidence that supports each one, evaluates the corresponding tests, documents the design decisions, and tracks remediation loops when results regress.
+A typical setup:
+Requirements  — each Agentic category ( ASI01  through  ASI10 ) is recorded as a requirement on the agent-system project. Status reflects whether supporting controls and evidence are in place.
+Controls  — mitigation patterns are documented as named controls: goal-hijack regression suite, per-tool scope and approval gate, identity and delegation policy, agent supply-chain inventory, sandbox-escape tests, memory-provenance metadata, inter-agent authentication, fan-out rate limits, transparency and approval friction, per-agent telemetry and kill switch.
+Evidence  — agent architecture documents, threat models, tool inventories, identity/delegation models, supply-chain inventories, and incident postmortems are recorded once and linked to multiple controls.
+Runtime Inspection  — goal-hijack tests, tool-misuse fuzzing, sandbox-escape probes, memory-poisoning regression, inter-agent message spoofing, and rogue-behavior anomaly signals are evaluated through Runtime Inspection. Results attach to the corresponding requirements and feed remediation loops when they regress.
+Reviews  — approval and exception decisions are documented as reviews against the requirement, with reviewer, rationale, and effective date recorded.
+Framework mapping
+Four layers, one reusable column.
+Frameworks
+EU AI Act  Regulatory
+ISO 42001  Standard
+Requirements
+Art. 9.1  Risk management
+Art. 10.2  Data governance
+6.1.1  Risk assessment
+Components
+Risk identification
+Impact analysis
+Evidence
+Risk register  Document
+Test results  Artifact
+Controls
+The reusable column
+One control satisfies many requirements across many frameworks, and groups the components and evidence beneath them.
+Risk assessment process
+Data validation checks
+Reusable
+Edge from any layer card crosses into the  Controls  column — the same control may serve a regulatory article, a standards clause, a downstream component, and the evidence that closes it.
+Evidence linked to an Agentic category may also support selected  NIST AI RMF  or  ISO/IEC 42001  objectives, subject to scope, system classification, and assessor judgment.
+See it in Modulos
+Modulos lets enterprise teams record Agentic categories as requirements, link evidence, evaluate Runtime Inspection results, document reviews, and track remediation loops across agent fleets.
+Request a demo
+Cross-framework mapping (preview)  ​
+Agentic cluster  NIST AI RMF (selected)  ISO/IEC 42001 (thematic)  EU AI Act (selected)
+Goal integrity and tool boundaries (ASI01, ASI02, ASI05)  MEASURE 2.7 (secure and resilient), MAP 5, MANAGE 2  AI system operation, monitoring, information security  Art 15 (accuracy, robustness, cybersecurity), Art 14 (human oversight design)
+Identity, delegation, and rogue behavior (ASI03, ASI10)  GOVERN 1, MANAGE 1  Roles, responsibilities, operation, incident management  Art 14, Art 15
+Supply chain (ASI04)  GOVERN 6, MANAGE 3  Supplier relationships, third-party AI  Art 25 (value-chain responsibility and provider reclassification); Arts 51–56 (GPAI regime, especially Art 53 and, for systemic-risk GPAI models, Art 55)
+Memory and context (ASI06)  MAP 4, MEASURE 2.7 / 2.10 (secure and resilient, privacy-enhanced)  Data for AI systems; AI system lifecycle  Art 10 (data governance), Art 15
+Inter-agent communication and cascading failures (ASI07, ASI08)  MEASURE 2.5 (valid and reliable), MEASURE 2.6 (safe), MEASURE 2.7 (secure and resilient)  Operation, monitoring, incident management  Art 15 (robustness)
+Human–agent trust (ASI09)  MEASURE 2.6 (safe), MEASURE 2.8 (accountable and transparent), MEASURE 2.9 (explainable and interpretable)  Information for interested parties; operation  Art 50 (transparency to natural persons), Art 14
+Cross-framework references are conditional on role, system classification, and applicable obligations. For the full pairwise treatment see the  framework comparison hub .
+Related pages  ​
+OWASP for AI security (hub)
+The OWASP GenAI Security Project hub — LLM and Agentic Top 10 together
+OWASP Top 10 for LLM Applications
+The companion taxonomy (LLM01:2025–LLM10:2025) that most agent systems also inherit
+NIST AI RMF — Measure
+The NIST function where Agentic categories appear as evaluation targets
+NIST AI RMF — Manage
+Where treatment decisions and operational controls are recorded
+EU AI Act guide
+Where Article 15 cybersecurity and Article 14 oversight obligations land
+Source attribution  ​
+The  OWASP Top 10 for Agentic Applications 2026  is published by the  OWASP GenAI Security Project  under the OWASP Foundation, licensed under  Creative Commons Attribution-ShareAlike 4.0 . The ten category designations ( ASI01 – ASI10 ) are referenced on this page as factual taxonomic labels. All definitions, governance implications, cross-framework mappings, and Modulos product references on this page are independently authored and are not derivative of OWASP descriptive text. "OWASP" and "OWASP Top 10" are trademarks of the OWASP Foundation; references on this page are descriptive use and do not imply endorsement, certification, or affiliation.
+Disclaimer
+This page is for general informational purposes and does not constitute legal advice or security advice. References to the OWASP Top 10 for Agentic Applications reflect the publicly available text at the time of writing; for binding interpretation in your jurisdiction, consult the primary source at  genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/  and qualified counsel. The page links to the OWASP project under CC BY-SA 4.0 for source clarity; no endorsement, certification, or affiliation by the OWASP Foundation is claimed.

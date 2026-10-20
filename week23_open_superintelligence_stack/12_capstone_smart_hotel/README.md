@@ -16,8 +16,8 @@ endpoint gives you a production-shaped autonomous building.
 ## Run it
 
 ```bash
-uv pip install -r week23/12_capstone_smart_hotel/requirements.txt
-.venv/bin/python week23/12_capstone_smart_hotel/tutorial_server.py     # → http://127.0.0.1:8111
+uv pip install -r week23_open_superintelligence_stack/12_capstone_smart_hotel/requirements.txt
+.venv/bin/python week23_open_superintelligence_stack/12_capstone_smart_hotel/tutorial_server.py     # → http://127.0.0.1:8111
 ```
 
 Open the URL and click the six chapters. With no GPU it runs in **SIM** (a deterministic
@@ -26,7 +26,7 @@ at a Nemotron **NIM / DGX** endpoint (local / tunnel / cloud) to run the special
 real model with native tool-calling. Every demo is also runnable standalone:
 
 ```bash
-cd week23/capstone_smart_hotel
+cd week23_open_superintelligence_stack/capstone_smart_hotel
 DGX_MODE=sim ../../.venv/bin/python demos/step02_critical_alarm.py
 ```
 

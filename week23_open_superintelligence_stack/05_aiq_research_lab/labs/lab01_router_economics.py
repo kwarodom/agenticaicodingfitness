@@ -7,7 +7,7 @@ scores accuracy, and computes the blended-cost saving — the honest version of
 NVIDIA's "~50% cheaper" routing claim, on your own traffic mix.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness
-      .venv/bin/python week23/05_aiq_research_lab/labs/lab01_router_economics.py
+      .venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab01_router_economics.py
 """
 from __future__ import annotations
 

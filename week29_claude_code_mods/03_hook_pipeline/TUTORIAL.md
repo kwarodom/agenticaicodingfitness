@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 03 — The hook pipeline: observe, rewrite, wrap, answer
 
-> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. These tutorials are the long form; **🏋 Mod Gym**, the panel inside Claude Code, is the short form with checks. Through the lessons you grow one lab mod, `hello-mod`; the finished version is in `week29/reference/hello-mod`.
+> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. These tutorials are the long form; **🏋 Mod Gym**, the panel inside Claude Code, is the short form with checks. Through the lessons you grow one lab mod, `hello-mod`; the finished version is in `week29_claude_code_mods/reference/hello-mod`.
 
 **What you'll actually do**
 - Read every hook as `($, e, next)` and learn the four things a hook can do with `next`: **observe**, **rewrite**, **wrap**, **answer**.
@@ -25,7 +25,7 @@
 The labs for this lesson are already built in the repo, so you can compare your mod with them:
 
 ```text
-week29/03_hook_pipeline/
+week29_claude_code_mods/03_hook_pipeline/
   labs/hello-mod-l03/              hello-mod as it stands after this lesson, with tests
   labs/order-demo/                 three hooks on one event, to measure the order
   exercises/solutions/heavy-set/   the exercise solution
@@ -103,7 +103,7 @@ Validate it. The `hooks:` line is what the engine will hook, and `calls:` is eve
 
 ```bash
 # on: laptop
-claude plugin validate week29/03_hook_pipeline/labs/hello-mod-l03
+claude plugin validate week29_claude_code_mods/03_hook_pipeline/labs/hello-mod-l03
 ```
 
 **Expected output** (captured on this Mac, Claude Code 2.1.292; the manifest lines are trimmed)
@@ -156,7 +156,7 @@ Two things that trip people up:
 
 ```bash
 # on: laptop
-claude plugin test week29/03_hook_pipeline/labs/hello-mod-l03
+claude plugin test week29_claude_code_mods/03_hook_pipeline/labs/hello-mod-l03
 ```
 
 **Expected output** (captured on this Mac)
@@ -209,7 +209,7 @@ test('the first hook registered is the outermost', async ($, on) => {
 
 ```bash
 # on: laptop
-claude plugin test week29/03_hook_pipeline/labs/order-demo
+claude plugin test week29_claude_code_mods/03_hook_pipeline/labs/order-demo
 ```
 
 **Expected output** (captured on this Mac)
@@ -258,7 +258,7 @@ Mod Gym is built from the same four patterns. Its `claude plugin validate` outpu
 
 ```bash
 # on: laptop
-claude plugin validate week29/mod-gym
+claude plugin validate week29_claude_code_mods/mod-gym
 ```
 
 **Expected output** (captured on this Mac; the first two `❯ ./` lines, and the later ones trimmed)
@@ -277,7 +277,7 @@ claude plugin validate week29/mod-gym
 Now watch it live:
 
 1. Type `/mod-gym 3` (jumps to this lesson), then `/mod-gym` to open the panel.
-2. Press **2** for the *Events* tab and send any prompt that makes Claude use a tool, e.g. "list the files in week29".
+2. Press **2** for the *Events* tab and send any prompt that makes Claude use a tool, e.g. "list the files in week29_claude_code_mods".
 3. Read the rows: `◦` is observe, `⟳` is wrap, `◆` is answer. Each `tool.call` row shows the time the tool took **inside** Mod Gym's `await next(e)`.
 4. Press **1**, then **c**. Mod Gym checks that your `register.ts` hooks `tool.call`, awaits `next(`, rewrites `prompt.submit`, and that `claude plugin validate` lists `tool.call`.
 5. Press **a** to put a coaching question in your prompt. It asks Claude to label each of your hooks with its pattern.
@@ -336,7 +336,7 @@ test('a turn with 6 tool calls raises one toast', async ($, on) => {
 
 ```bash
 # on: laptop
-claude plugin test week29/03_hook_pipeline/exercises/solutions/heavy-set
+claude plugin test week29_claude_code_mods/03_hook_pipeline/exercises/solutions/heavy-set
 ```
 
 **Expected output** (captured on this Mac)

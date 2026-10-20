@@ -1,0 +1,204 @@
+[
+ {
+  "test": "Course loads with 16 modules",
+  "pass": true,
+  "detail": "16 modules; last two: ['15_jev_sees_images', '16_local_system_one_models']",
+  "shots": [
+   "01_home.png"
+  ]
+ },
+ {
+  "test": "Model picker offers jev-1.14.0",
+  "pass": true,
+  "detail": "jev-1.13.0 · pinned · jev-1.14.0 · version · jev-latest · alias · jev-preview · alias",
+  "shots": []
+ },
+ {
+  "test": "Header shows DRY mode ($0 replays)",
+  "pass": true,
+  "detail": "DRY · replay",
+  "shots": []
+ },
+ {
+  "test": "M15 intro renders with time/difficulty/cost chips",
+  "pass": true,
+  "detail": "⏱ ~40 min · 📶 intermediate · 💲 ≈ $0.004 live (images ≈ $0.0001 each, one long-context call ≈ $0.002) · $0 dry",
+  "shots": [
+   "02_m15_intro.png"
+  ]
+ },
+ {
+  "test": "M15 §0 'what 1.14 adds' table renders",
+  "pass": true,
+  "detail": "",
+  "shots": [
+   "03_m15_what_is_new.png"
+  ]
+ },
+ {
+  "test": "M15 §3 Box section shows the drawn-box photo",
+  "pass": true,
+  "detail": "media/puddle_box_example.jpg loaded",
+  "shots": [
+   "04_m15_box_section.png"
+  ]
+ },
+ {
+  "test": "M15 inline ⚡ Ask Jev returns typed answers",
+  "pass": true,
+  "detail": "RECORDED replay jev-1.13.0 · 472 input tok · $0.000020",
+  "shots": [
+   "05_m15_ask_jev.png"
+  ]
+ },
+ {
+  "test": "M15 📊 diagrams render (architecture · sequence · charts)",
+  "pass": true,
+  "detail": "4 SVG diagrams",
+  "shots": [
+   "06_m15_diagrams.png"
+  ]
+ },
+ {
+  "test": "M15 lab01 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · found 'input tok'",
+  "shots": [
+   "07_m15_lab01.png"
+  ]
+ },
+ {
+  "test": "M15 lab02 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · found 'haze_appeared'",
+  "shots": [
+   "07_m15_lab02.png"
+  ]
+ },
+ {
+  "test": "M15 lab03 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · found 'gate 0.09'",
+  "shots": [
+   "07_m15_lab03.png"
+  ]
+ },
+ {
+  "test": "M15 lab04 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · found '3/3 photos'",
+  "shots": [
+   "07_m15_lab04.png"
+  ]
+ },
+ {
+  "test": "M15 lab05 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s · found 'max_tokens_exceeded'",
+  "shots": [
+   "07_m15_lab05.png"
+  ]
+ },
+ {
+  "test": "M15 exercise solution passes all checks",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.1s · DRY · 0.1s",
+  "shots": [
+   "08_m15_exercise.png"
+  ]
+ },
+ {
+  "test": "M15 exercise starter stops before any API call",
+  "pass": true,
+  "detail": "starter shows ✕ TODO lines and spends nothing",
+  "shots": [
+   "08b_m15_exercise_starter.png"
+  ]
+ },
+ {
+  "test": "M15 Thai version renders (ไทย toggle)",
+  "pass": true,
+  "detail": "บทนำ อ่านส่วนหนึ่งของ Week 24 · การตัดสินใจแบบมีชนิด (typed decision) ",
+  "shots": [
+   "09_m15_thai.png"
+  ]
+ },
+ {
+  "test": "M16 intro renders",
+  "pass": true,
+  "detail": "",
+  "shots": [
+   "10_m16_intro.png"
+  ]
+ },
+ {
+  "test": "M16 📊 diagrams render",
+  "pass": true,
+  "detail": "4 SVG diagrams",
+  "shots": [
+   "12_m16_diagrams.png"
+  ]
+ },
+ {
+  "test": "M16 lab01 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 0.0s · DRY · 0.1s · offline/recorded · found 'Jev Decision Index'",
+  "shots": [
+   "13_m16_lab01.png"
+  ]
+ },
+ {
+  "test": "M16 lab02 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 5.1s · DRY · 5.3s · local models ran on this Mac · found 'LOCAL (this machine)'",
+  "shots": [
+   "13_m16_lab02.png"
+  ]
+ },
+ {
+  "test": "M16 lab03 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 7.9s · DRY · 8.3s · local models ran on this Mac · found '⟦1203⟧'",
+  "shots": [
+   "13_m16_lab03.png"
+  ]
+ },
+ {
+  "test": "M16 lab04 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 14.0s · DRY · 14.4s · local models ran on this Mac · found 'GLiNER2.5-multi-Decide'",
+  "shots": [
+   "13_m16_lab04.png"
+  ]
+ },
+ {
+  "test": "M16 lab05 runs in the browser",
+  "pass": true,
+  "detail": "✓ exit 0 · 19.2s · DRY · 19.4s · local models ran on this Mac · found '18/18'",
+  "shots": [
+   "13_m16_lab05.png"
+  ]
+ },
+ {
+  "test": "M16 exercise solution passes all checks",
+  "pass": true,
+  "detail": "✓ exit 0 · 8.0s · DRY · 8.3s",
+  "shots": [
+   "14_m16_exercise.png"
+  ]
+ },
+ {
+  "test": "Regression: Module 01 lab still runs (updated Jev client)",
+  "pass": true,
+  "detail": "labs/lab01_first_call_raw.py · ✓ exit 0 · 0.0s · DRY",
+  "shots": [
+   "15_m01_regression.png"
+  ]
+ },
+ {
+  "test": "No JavaScript errors in the page",
+  "pass": true,
+  "detail": "",
+  "shots": []
+ }
+]

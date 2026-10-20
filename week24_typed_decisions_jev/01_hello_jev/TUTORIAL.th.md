@@ -107,7 +107,7 @@ curl -s https://api.typesafe.ai/v1/systemone \
 Lab 01 ทำแบบเดียวกับ curl ด้านบนเป๊ะ ๆ โดยใช้แค่ standard library ของ Python — ไม่มีตัวช่วย ไม่มี SDK — และพิมพ์ทั้งคำขอและคำตอบดิบ ให้คุณเห็นทุกไบต์ เปิดดูได้ด้วย **view source** ในส่วน 🧪 Labs หรือรันตรงนี้:
 
 ```bash
-.venv/bin/python week24/01_hello_jev/labs/lab01_first_call_raw.py
+.venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab01_first_call_raw.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -226,7 +226,7 @@ Jev รับข้อความภาษาไทยได้เช่นก�
 Lab 02 เรียกแบบสามคำถามเดียวกันผ่าน `jevkit` (ตัวช่วยเล็ก ๆ ที่แล็บถัด ๆ ไปใช้ทั้งหมด) พิมพ์ผลพร้อมแถบ probability แล้วแสดงให้เห็นว่า **โค้ดของคุณ** เปลี่ยนคำตอบแบบมีชนิดให้เป็นการตัดสินใจได้อย่างไร — เป็นกฎการส่งต่อ (routing rule) ที่คุณอ่าน ทดสอบ และแก้ได้โดยไม่ต้องแตะโมเดล
 
 ```bash
-.venv/bin/python week24/01_hello_jev/labs/lab02_read_the_answer.py
+.venv/bin/python week24_typed_decisions_jev/01_hello_jev/labs/lab02_read_the_answer.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)
@@ -250,7 +250,7 @@ Lab 02 เรียกแบบสามคำถามเดียวกัน�
 ═ execute: False — this lab never pages anyone; it prints the proposal.
 ```
 
-`jevkit` คือ Python ธรรมดาประมาณ 350 บรรทัดใน `week24/common/jevkit.py`: `ask()` ส่งคำขอ `show()` พิมพ์แถบ และ `choice()/noul()/score()` สร้างคำถาม ไม่มีอะไรลึกลับ — เปิดอ่านได้เลย
+`jevkit` คือ Python ธรรมดาประมาณ 350 บรรทัดใน `week24_typed_decisions_jev/common/jevkit.py`: `ask()` ส่งคำขอ `show()` พิมพ์แถบ และ `choice()/noul()/score()` สร้างคำถาม ไม่มีอะไรลึกลับ — เปิดอ่านได้เลย
 
 ✓ Checkpoint: คุณชี้ได้ว่าคำสั่ง `if` บรรทัดไหนใน lab 02 ที่เปลี่ยนคำตอบของ Jev ให้เป็นระดับความสำคัญ (priority)
 
@@ -264,7 +264,7 @@ Lab 02 เรียกแบบสามคำถามเดียวกัน�
 
 ## ลองทำเอง
 
-**แบบฝึกหัด 01 — คำถามชุดแรกของคุณ** เปิด `week24/01_hello_jev/exercises/ex01_my_first_questions.py` ในเอดิเตอร์ ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 01 — คำถามชุดแรกของคุณ** เปิด `week24_typed_decisions_jev/01_hello_jev/exercises/ex01_my_first_questions.py` ในเอดิเตอร์ ในไฟล์มี `TODO` สามจุด:
 
 1. เขียน `noul` ถามว่าข้อความจากแขกเป็น **คำร้องเรียน (complaint)** หรือไม่
 2. เขียน `choice` ที่มี **บริเวณในห้องพัก** อย่างน้อยสามแห่ง (`bathroom`, `bedroom`, `balcony` และตัวเลือกทางออก (escape option))
@@ -273,7 +273,7 @@ Lab 02 เรียกแบบสามคำถามเดียวกัน�
 บันทึกไฟล์ แล้วกด **▶ Run** บนการ์ดแบบฝึกหัดด้านล่าง (หรือรันคำสั่ง) ตัวตรวจในตัวจะตรวจคำถามของคุณ *ก่อน* เสียเงินแม้แต่เซ็นต์เดียว จากนั้นถาม Jev เกี่ยวกับข้อความทดสอบสามข้อและพิมพ์คำตอบ
 
 ```bash
-.venv/bin/python week24/01_hello_jev/exercises/ex01_my_first_questions.py
+.venv/bin/python week24_typed_decisions_jev/01_hello_jev/exercises/ex01_my_first_questions.py
 ```
 
 **Expected output** (ผลลัพธ์ที่ควรเห็น)

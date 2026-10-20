@@ -1,0 +1,71 @@
+{
+  "architecture": {
+    "title": "Inter-agent trust — where the hotel decides who Acme is",
+    "caption": "The maintenance agent finds its parts vendor by name in a public directory, where anyone can publish a card. With signed_cards, Directory.resolve() accepts a card only if its Ed25519 signature verifies AND its key matches the fingerprint the hotel pinned at onboarding. With signed_messages, every reply that reaches the hotel's A2A endpoint must be signed by that pinned key, fresh (|now − ts| ≤ 300 s), never seen before (nonce) and addressed to this hotel (aud). principal_authz still decides what a vendor's words may trigger. (week28_maestro_mas_security/common/ensemble.py — simulated.)",
+    "lanes": [
+      {"id": "hotel", "label": "AltoTech Grand (the hotel)"},
+      {"id": "registry", "label": "Public directory"},
+      {"id": "vendors", "label": "Vendor agents (other companies)"}
+    ],
+    "nodes": [
+      {"id": "maint", "label": "maintenance agent", "lane": "hotel", "sub": "place_order(vendor=\"Acme HVAC Parts\")", "accent": "cyan"},
+      {"id": "pins", "label": "pinned fingerprints", "lane": "hotel", "sub": "set once, out of band, at onboarding", "accent": "green"},
+      {"id": "inbox", "label": "A2A endpoint (receive_a2a)", "lane": "hotel", "sub": "signature · freshness · nonce · aud", "accent": "green"},
+      {"id": "pep", "label": "PEP · principal_authz", "lane": "hotel", "sub": "vendor text = trust 1", "accent": "amber"},
+      {"id": "dir", "label": "Directory", "lane": "registry", "sub": "anyone can publish any name", "accent": "violet"},
+      {"id": "acme", "label": "Acme HVAC Parts", "lane": "vendors", "sub": "a2a.acme-hvac.example · key ce45dc83…", "accent": "green"},
+      {"id": "look", "label": "look-alike \"Acme HVAC Parts\"", "lane": "vendors", "sub": "a2a.acme-hvac-parts.example · key 5eeb6bd0…", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "acme", "to": "dir", "label": "publishes signed card"},
+      {"from": "look", "to": "dir", "label": "publishes self-signed card"},
+      {"from": "maint", "to": "dir", "label": "resolve by name"},
+      {"from": "pins", "to": "maint", "label": "key must match pin"},
+      {"from": "maint", "to": "acme", "label": "order over A2A", "animated": true},
+      {"from": "acme", "to": "inbox", "label": "signed confirmation", "animated": true},
+      {"from": "inbox", "to": "pep", "label": "reply text, origin vendor:…"}
+    ]
+  },
+  "sequence": {
+    "title": "One parts order with signed_cards + signed_messages, and a replay",
+    "caption": "The look-alike's card is refused before the hotel says anything to it. The genuine confirmation passes all four checks once; the same bytes sent again are refused because their nonce was already seen (scenario A09). Lab 06-2 steps 2 and 4, Lab 06-3 steps 1–2.",
+    "actors": [
+      {"id": "maint", "label": "maintenance"},
+      {"id": "dir", "label": "directory + pins"},
+      {"id": "acme", "label": "Acme (genuine)"},
+      {"id": "atk", "label": "attacker"}
+    ],
+    "steps": [
+      {"from": "maint", "to": "dir", "label": "resolve(\"Acme HVAC Parts\")", "kind": "call"},
+      {"from": "dir", "to": "dir", "label": "look-alike: signature ✓ but key ≠ pin → skip", "kind": "note"},
+      {"from": "dir", "to": "maint", "label": "genuine card · key matches pin ce45dc83…", "kind": "return"},
+      {"from": "maint", "to": "acme", "label": "order 2 compressor relays", "kind": "call"},
+      {"from": "acme", "to": "maint", "label": "confirmation {ts, nonce, aud} + signature", "kind": "return"},
+      {"from": "maint", "to": "maint", "label": "sig vs pinned key ✓ · fresh ✓ · nonce new ✓ · aud ✓ → book 1 order", "kind": "note"},
+      {"from": "atk", "to": "maint", "label": "the same confirmation, re-sent", "kind": "call"},
+      {"from": "maint", "to": "atk", "label": "refused: nonce already seen (replay)", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "One captured confirmation, re-sent 4 times — orders booked",
+      "type": "bars",
+      "unit": "orders",
+      "labels": ["no defenses", "signed_messages"],
+      "series": [
+        {"name": "orders booked", "values": [4, 1], "color": "red"}
+      ],
+      "caption": "Lab 06-3 step 1 (captured on this Mac, SIM brain): every copy carries a valid Acme signature, so only the nonce check tells them apart."
+    },
+    {
+      "title": "Seven hand-made messages at a signed_messages hotel — what decided each one",
+      "type": "donut",
+      "unit": "messages",
+      "labels": ["accepted", "signature vs pinned key", "freshness (ts)", "nonce (replay)", "audience (aud)"],
+      "series": [
+        {"name": "messages", "values": [1, 2, 2, 1, 1], "color": "cyan"}
+      ],
+      "caption": "Lab 06-3 step 2 (captured on this Mac, SIM brain): tampered and look-alike messages fail the signature; expired and future-dated ones fail freshness; the replay fails the nonce; the other hotel's message fails aud."
+    }
+  ]
+}

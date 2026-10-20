@@ -19,7 +19,7 @@ Rules the referee must enforce (one problem string per broken rule):
 
 No API call is ever made — this is pure reasoning about experiments.
 
-Run: .venv/bin/python week24/10_jev_vs_laya/exercises/ex10_fair_pilot.py
+Run: .venv/bin/python week24_typed_decisions_jev/10_jev_vs_laya/exercises/ex10_fair_pilot.py
 """
 import sys
 from pathlib import Path

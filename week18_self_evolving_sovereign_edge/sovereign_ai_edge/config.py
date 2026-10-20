@@ -35,7 +35,7 @@ DEFAULT_MAX_TOKENS = 1024      # thinking models need room to reason + answer
 FAST_MAX_TOKENS = 320          # for short, direct answers
 
 # ── paths ─────────────────────────────────────────────────────────────────────
-PKG = Path(__file__).resolve().parent          # …/week18/sovereign_ai_edge
+PKG = Path(__file__).resolve().parent          # …/week18_self_evolving_sovereign_edge/sovereign_ai_edge
 SANDBOX = PKG / ".sandbox"                      # scratch space for generated artifacts
 
 

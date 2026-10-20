@@ -14,7 +14,7 @@ Either way cloud cost is $0.00.
 
 Launch (auto-picks a free port if 8205 is taken):
 
-    .venv/bin/python week21/06_energy_simulation/tutorial_server.py
+    .venv/bin/python week21_physical_ai_digital_twins/06_energy_simulation/tutorial_server.py
     # → http://127.0.0.1:8205
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week21/06_energy_simulation
+PKG = Path(__file__).resolve().parent                 # …/week21_physical_ai_digital_twins/06_energy_simulation
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():

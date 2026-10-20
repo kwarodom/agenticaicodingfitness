@@ -127,7 +127,7 @@ Two stacks, thirteen host ports and six GPU services, on a machine where you alr
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab01_stack_map.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab01_stack_map.py
 ```
 
 **Expected output** (captured on this Mac, parsed from `dgx-spark-playbooks@3410c65`; Step 4's Spark commands print EXAMPLE shapes in DRY mode)
@@ -213,7 +213,7 @@ Lab 02 is txt2kg in one screen of Python. The input is the "Basic idea" section 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab02_txt2kg_mini.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab02_txt2kg_mini.py
 ```
 
 **Expected output** (captured on this Mac, LAPTOP STAND-IN `gemma4:12b`, not txt2kg's `llama3.1:8b` on a Spark. Extraction is sampled, so your triples will differ.)
@@ -241,7 +241,7 @@ Lab 02 is txt2kg in one screen of Python. The input is the "Basic idea" section 
 ◆ entities that appear in more than one playbook: playbook
 ◆ connected components: 11 (1 would mean every fact is reachable from every other)
 → no multi-hop path between the top hubs: the extracted facts do not share entity names
-→ wrote week25/19_multi_agent_rag_kg/.runs/triples.json and triples.cypher
+→ wrote week25_dgx_spark/19_multi_agent_rag_kg/.runs/triples.json and triples.cypher
 ```
 
 The triples read well. The *graph* is poor: 22 facts in 11 islands, and the only entity that links two documents is the useless word "playbook". Two runs on this Mac gave the same pattern. That is the real lesson of txt2kg, and you can see it here in a minute rather than after an hour of uploads:
@@ -274,8 +274,8 @@ Every RAG system is "retrieve, then generate", and retrieval sets the ceiling on
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py
-.venv/bin/python week25/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py --ask "serve a VLM for live video" --no-llm
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/labs/lab03_playbook_finder.py --ask "serve a VLM for live video" --no-llm
 ```
 
 **Expected output** (captured on this Mac. Retrieval is arithmetic and identical everywhere. The answer is from the LAPTOP STAND-IN.)
@@ -326,7 +326,7 @@ Lab 01 is offline apart from its read-only Spark step. Labs 02 and 03 use the Sp
 
 ## Try it yourself
 
-**Exercise 19 — the graph behind GraphRAG.** Open `week25/19_multi_agent_rag_kg/exercises/ex19_graph_context.py`. Its 13 triples describe the chatbot's wiring (Section 2), with the messy casing and duplicates an extractor produces. It has three `TODO`s:
+**Exercise 19 — the graph behind GraphRAG.** Open `week25_dgx_spark/19_multi_agent_rag_kg/exercises/ex19_graph_context.py`. Its 13 triples describe the chatbot's wiring (Section 2), with the messy casing and duplicates an extractor produces. It has three `TODO`s:
 
 1. `normalise(triple)`: lowercase, strip, collapse inner whitespace.
 2. `build_graph(triples)`: de-duplicate in first-seen order, and build neighbour sets in both directions.
@@ -334,7 +334,7 @@ Lab 01 is offline apart from its read-only Spark step. Labs 02 and 03 use the Sp
 
 ```bash
 # on: laptop
-.venv/bin/python week25/19_multi_agent_rag_kg/exercises/ex19_graph_context.py
+.venv/bin/python week25_dgx_spark/19_multi_agent_rag_kg/exercises/ex19_graph_context.py
 ```
 
 **Expected output** (once all three TODOs are done)

@@ -35,8 +35,8 @@ run **sovereignly** — video, models and decisions never leave GPUs the city ow
 ## Quick start
 
 ```bash
-uv pip install -r week21/13_capstone_smart_city/requirements.txt
-.venv/bin/python week21/13_capstone_smart_city/tutorial_server.py   # → http://127.0.0.1:8212
+uv pip install -r week21_physical_ai_digital_twins/13_capstone_smart_city/requirements.txt
+.venv/bin/python week21_physical_ai_digital_twins/13_capstone_smart_city/tutorial_server.py   # → http://127.0.0.1:8212
 ```
 
 Everything runs in **SIM**, deterministic, $0. An Ollama / vLLM / NIM / DGX endpoint

@@ -19,7 +19,7 @@ Requires:
   - ANTHROPIC_API_KEY in your environment / repo-root .env
   - pip install crewai crewai-tools
 
-Run:  python week15/kg_mastery/part3_graphrag/03_crewai_crew.py
+Run:  python week15_production_graphrag/kg_mastery/part3_graphrag/03_crewai_crew.py
 """
 import json
 import os

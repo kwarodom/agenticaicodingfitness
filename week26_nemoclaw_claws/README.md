@@ -13,17 +13,17 @@ turned into eight runnable modules, served by the **🪸 Reef Lab Runner**. The 
 
 ```bash
 # once — laptop tools (NAT 1.9 + the Alto Ops package; the OpenShell CLI used as an offline policy parser)
-uv venv --python 3.12 week26/.venv-nat
-uv pip install --python week26/.venv-nat/bin/python 'nvidia-nat[langchain,mcp,profiler,phoenix,opentelemetry,eval,ragas]==1.9.0' pandas greenlet   # greenlet: nat serve needs it
-uv pip install --python week26/.venv-nat/bin/python -e week26/common/alto_ops
-uv venv --python 3.12 week26/.venv-openshell
-uv pip install --python week26/.venv-openshell/bin/python openshell==0.0.111
+uv venv --python 3.12 week26_nemoclaw_claws/.venv-nat
+uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python 'nvidia-nat[langchain,mcp,profiler,phoenix,opentelemetry,eval,ragas]==1.9.0' pandas greenlet   # greenlet: nat serve needs it
+uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python -e week26_nemoclaw_claws/common/alto_ops
+uv venv --python 3.12 week26_nemoclaw_claws/.venv-openshell
+uv pip install --python week26_nemoclaw_claws/.venv-openshell/bin/python openshell==0.0.111
 
 # every time
-.venv/bin/python week26/00_reef_lab_runner/tutorial_server.py      # → http://127.0.0.1:8126
+.venv/bin/python week26_nemoclaw_claws/00_reef_lab_runner/tutorial_server.py      # → http://127.0.0.1:8126
 ```
 
-Point it at your Spark with **🖥 Spark setup** (`SPARK_HOST`, key-based ssh; a host saved in week25 is reused).
+Point it at your Spark with **🖥 Spark setup** (`SPARK_HOST`, key-based ssh; a host saved in week25_dgx_spark is reused).
 Without a Spark everything runs **DRY**: Spark commands are shown with labelled RECORDED / REFERENCE / EXAMPLE
 output. Laptop labs (NAT agents on your Ollama, `nat serve`, MCP, eval, the policy parser) run for real either way.
 
@@ -48,7 +48,7 @@ RECORDED on our two Sparks). Modules 01, 03 and 08 point to it.
 ## What is where
 
 ```text
-week26/
+week26_nemoclaw_claws/
   00_reef_lab_runner/    tutorial_server.py (FastAPI, :8126) + static/guide.html — course, ▶ labs, ⌨ terminal,
                          🔓 Allow changes (CLAW_APPLY), 🪸 Reef (/api/reef: read-only stack status with provenance)
   common/clawkit.py      the lab helper: sh() LIVE/DRY, change() opt-in mutations, laptop(), background(), chat_any()

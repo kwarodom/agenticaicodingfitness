@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Switch this Spark between its day job and the Week 25 classroom.
-#   week25/spark_host/lab_mode.sh on       # stop the containers that hold lab ports / GPU memory
-#   week25/spark_host/lab_mode.sh off      # start exactly the ones `on` stopped
-#   week25/spark_host/lab_mode.sh status   # ports, memory, tailnet URL — run before class
-#   week25/spark_host/lab_mode.sh fix-perms  # give back files lab containers left root-owned (also run by on/off)
-# Two Sparks: set SPARK_B_ADMIN=altoaidev@<spark-b> (env or week25/.env.local) on Spark A and on|off|status
+#   week25_dgx_spark/spark_host/lab_mode.sh on       # stop the containers that hold lab ports / GPU memory
+#   week25_dgx_spark/spark_host/lab_mode.sh off      # start exactly the ones `on` stopped
+#   week25_dgx_spark/spark_host/lab_mode.sh status   # ports, memory, tailnet URL — run before class
+#   week25_dgx_spark/spark_host/lab_mode.sh fix-perms  # give back files lab containers left root-owned (also run by on/off)
+# Two Sparks: set SPARK_B_ADMIN=altoaidev@<spark-b> (env or week25_dgx_spark/.env.local) on Spark A and on|off|status
 # also run on Spark B: this script is piped to B over ssh, so B always runs Spark A's copy.
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" 2>/dev/null && pwd || pwd)
@@ -73,7 +73,7 @@ case "$MODE" in
     cat "$STATE.new" >>"$STATE"; rm -f "$STATE.new"; sort -u -o "$STATE" "$STATE"
     ollama ps 2>/dev/null | awk 'NR>1{print $1}' | xargs -r -n1 ollama stop 2>/dev/null || true
     echo "▪ repairing file ownership"; fix_perms
-    echo "✓ lab mode ON — run 'week25/spark_host/lab_mode.sh off' after class"; status_report ;;
+    echo "✓ lab mode ON — run 'week25_dgx_spark/spark_host/lab_mode.sh off' after class"; status_report ;;
   off)
     if [[ ! -s $STATE ]]; then echo "nothing to restore on $(hostname) (lab mode was not switched on by this script)"
     else

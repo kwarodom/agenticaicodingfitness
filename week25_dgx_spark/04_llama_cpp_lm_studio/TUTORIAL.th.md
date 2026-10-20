@@ -97,8 +97,8 @@ playbook บอกว่าการคอมไพล์ "usually takes on the 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py            # read-only checks
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py --build    # start the build
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py            # read-only checks
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab01_build_llama_cpp.py --build    # start the build
 ```
 
 **Expected output** (โหมด DRY บันทึกจาก Mac เครื่องนี้โดยไม่ใส่ `--build`)
@@ -150,7 +150,7 @@ GGML quantize weights เป็น **บล็อก (block)** แต่ละ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py
 ```
 
 ถ้าไม่ใส่ argument มันจะเปิด GGUF ที่เล็กที่สุดที่ Ollama ดาวน์โหลดไว้บนเครื่องคุณ มันอ่านแค่ header (ไม่กี่ MB) ไม่เคยอ่าน weights
@@ -198,7 +198,7 @@ GGML quantize weights เป็น **บล็อก (block)** แต่ละ�
 ```bash
 # on: spark
 cd ~/agenticaicodingfitness      # wherever you cloned this repo on the Spark
-python3 week25/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py \
+python3 week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py \
   --path '~/.cache/huggingface/hub/models--unsloth--Qwen3.6-35B-A3B-MTP-GGUF/snapshots/*/*.gguf'
 ```
 
@@ -210,7 +210,7 @@ python3 week25/04_llama_cpp_lm_studio/labs/lab02_gguf_inside.py \
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab03_quant_tradeoffs.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab03_quant_tradeoffs.py
 ```
 
 **Expected output** (เป็นการคำนวณที่ใช้ random seed คงที่: ได้ผลเหมือนกันทุกเครื่อง)
@@ -326,7 +326,7 @@ Lab 04 เรียกแบบเดียวกันจาก Python มั�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/labs/lab04_llama_server_lm_studio.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/labs/lab04_llama_server_lm_studio.py
 ```
 
 **Expected output** (LAPTOP STAND-IN — โมเดล 0.5B บน Mac เครื่องนี้ ความเร็วเหล่านี้ไม่ได้บอกอะไรเกี่ยวกับ Spark)
@@ -439,7 +439,7 @@ Lab 01 รันแบบ LIVE บน Spark ของคุณหรือแบ
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 04 — เลือก quant ที่ใส่ได้** เปิด `week25/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 04 — เลือก quant ที่ใส่ได้** เปิด `week25_dgx_spark/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `bits_per_weight(block_bytes, block_weights)`: ต้นทุนของบล็อก GGML หนึ่งชนิด
 2. `gguf_gb(params_b, bpw)`: ขนาดของไฟล์ GGUF
@@ -447,7 +447,7 @@ Lab 01 รันแบบ LIVE บน Spark ของคุณหรือแบ
 
 ```bash
 # on: laptop
-.venv/bin/python week25/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py
+.venv/bin/python week25_dgx_spark/04_llama_cpp_lm_studio/exercises/ex04_pick_a_quant.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด)

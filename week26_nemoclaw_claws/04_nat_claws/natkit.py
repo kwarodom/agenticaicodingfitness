@@ -87,7 +87,7 @@ def nat(args: list, *, show: str = "", env: dict | None = None, timeout: float =
     """Run `nat <args>` on this laptop for real. Returns (Result, seconds). Full log → .runs/<log>."""
     RUNS.mkdir(parents=True, exist_ok=True)
     argv = (prefix or [NAT]) + [str(a) for a in args]
-    shown = show or "week26/.venv-nat/bin/nat " + " ".join(
+    shown = show or "week26_nemoclaw_claws/.venv-nat/bin/nat " + " ".join(
         (f"'{rel(a)}'" if (" " in rel(a) or "?" in rel(a)) else rel(a)) for a in args)
     t0 = time.perf_counter()
     r = laptop(argv, quiet=True, timeout=timeout, env={**QUIET_ENV, **(env or {})}, cwd=ROOT, show=shown)
@@ -135,24 +135,24 @@ def error_kind(out: str) -> str:
 def greenlet_env() -> tuple[dict | None, str]:
     """`nat serve` in NAT 1.9.0 imports SQLAlchemy's asyncio extension, which needs `greenlet`.
 
-    Returns (env, how): {} when week26/.venv-nat already has greenlet; a PYTHONPATH shim when a matching
-    greenlet exists in week25/.venv-nat (same Python 3.12); None when neither — the caller prints the fix."""
+    Returns (env, how): {} when week26_nemoclaw_claws/.venv-nat already has greenlet; a PYTHONPATH shim when a matching
+    greenlet exists in week25_dgx_spark/.venv-nat (same Python 3.12); None when neither — the caller prints the fix."""
     import subprocess
     probe = subprocess.run([str(NAT_PY), "-c", "import greenlet"], capture_output=True, text=True)
     if probe.returncode == 0:
-        return {}, "week26/.venv-nat has greenlet"
-    donor = WEEK.parent / "week25" / ".venv-nat" / "lib" / "python3.12" / "site-packages" / "greenlet"
+        return {}, "week26_nemoclaw_claws/.venv-nat has greenlet"
+    donor = WEEK.parent / "week25_dgx_spark" / ".venv-nat" / "lib" / "python3.12" / "site-packages" / "greenlet"
     if donor.is_dir():
         shim = RUNS / "pyshim"
         shim.mkdir(parents=True, exist_ok=True)
         link = shim / "greenlet"
         if not link.exists():
             os.symlink(donor, link)
-        return {"PYTHONPATH": str(shim)}, "borrowed greenlet from week25/.venv-nat via .runs/pyshim"
+        return {"PYTHONPATH": str(shim)}, "borrowed greenlet from week25_dgx_spark/.venv-nat via .runs/pyshim"
     return None, "missing"
 
 
-GREENLET_FIX = "uv pip install --python week26/.venv-nat/bin/python greenlet"
+GREENLET_FIX = "uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet"
 
 
 def post(url: str, body: dict, *, timeout: float = 300) -> tuple[bytes, float]:

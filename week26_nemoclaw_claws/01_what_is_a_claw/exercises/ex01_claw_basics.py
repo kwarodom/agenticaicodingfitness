@@ -2,7 +2,7 @@
 """Exercise 01 · Claw basics: two speeds, three harnesses, one honest paragraph.
 
 Fill in the three TODOs, save, then run:
-    .venv/bin/python week26/01_what_is_a_claw/exercises/ex01_claw_basics.py
+    .venv/bin/python week26_nemoclaw_claws/01_what_is_a_claw/exercises/ex01_claw_basics.py
 
 The checker is free and offline. Stuck? Compare with exercises/solutions/.
 """

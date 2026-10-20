@@ -9,7 +9,7 @@ All prompts below are **exact, self-contained Higgsfield prompts** — copy verb
 
 ## 1 · STYLE GUIDE — one visual language for every asset
 
-The course apps share a "sovereign terminal" identity (see `week23/SLIDES.md` §2 and every
+The course apps share a "sovereign terminal" identity (see `week23_open_superintelligence_stack/SLIDES.md` §2 and every
 `static/guide.html`): near-black `#0c0f0a` background, `#13160f` panels with 1px `#2c3322`
 hairlines, NVIDIA-green `#76b900` as the single dominant accent, cyan `#56d4dd` for data-in-motion,
 amber `#d29922` for warnings, violet `#bc8cff` for advanced topics, and inline-SVG schematic
@@ -50,7 +50,7 @@ subject, black everywhere else.
 
 ## 2 · ASPECT RATIOS & FILENAMES
 
-| Asset | Ratio | Target filename (in `week23/media/`) |
+| Asset | Ratio | Target filename (in `week23_open_superintelligence_stack/media/`) |
 |---|---|---|
 | Hero banner | **21:9** (fallback 16:9 if unsupported) | `hero-banner.png` |
 | Module cards 00–12 | **16:9** | `00-stack-navigator.png` `01-nemotron-models.png` `02-nim-microservices.png` `03-dynamo-serving.png` `04-agent-skills.png` `05-aiq-research-lab.png` `06-nemoclaw.png` `07-guardrails-openshell.png` `08-nemo-relay.png` `09-inference-economics.png` `10-nemo-gym-rl.png` `11-data-flywheel.png` `12-capstone-smart-hotel.png` |
@@ -134,4 +134,4 @@ Model → Harness → Agent.
    style prefix is what keeps the set coherent; do not paraphrase it.
 4. Reject and regenerate any output containing legible text, letters, or logos — the negative
    clause reduces but does not eliminate this.
-5. Save with the exact filenames in §2, all inside `week23/media/`.
+5. Save with the exact filenames in §2, all inside `week23_open_superintelligence_stack/media/`.

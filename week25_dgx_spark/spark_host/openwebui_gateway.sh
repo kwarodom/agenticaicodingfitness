@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Open WebUI on Spark A, chatting through the capstone's LiteLLM gateway (START_HERE.md 5c).
-#   week25/spark_host/openwebui_gateway.sh start   # after lab 20-2 --launch: models agent-brain + hotel-router
-#   week25/spark_host/openwebui_gateway.sh stop
+#   week25_dgx_spark/spark_host/openwebui_gateway.sh start   # after lab 20-2 --launch: models agent-brain + hotel-router
+#   week25_dgx_spark/spark_host/openwebui_gateway.sh stop
 # Runs on Spark A as the instructor. The container runs as SPARK_HOST's user (sparklab), binds 127.0.0.1:12000
 # only (so it can run without a login), and gets the gateway's master key on the Spark; the key is never printed.
 set -euo pipefail

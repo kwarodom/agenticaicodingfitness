@@ -26,7 +26,7 @@ Queries demonstrated:
   1. Fraud-ring detection  — circular TRANSFERS_TO paths over a min amount.
   2. Counterparty risk     — entities reachable via OWNS|CONTROLLED_BY|AFFILIATED_WITH.
 
-Run:  python week15/kg_mastery/part5_use_cases/04_financial_fraud.py
+Run:  python week15_production_graphrag/kg_mastery/part5_use_cases/04_financial_fraud.py
 """
 import sys
 from pathlib import Path

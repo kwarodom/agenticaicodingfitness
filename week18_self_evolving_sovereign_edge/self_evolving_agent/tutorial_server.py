@@ -12,7 +12,7 @@ A small CONTROL PLANE that:
 
 Launch it and open the printed URL (auto-picks a free port if 8090 is taken):
 
-    .venv/bin/python week18/self_evolving_agent/tutorial_server.py
+    .venv/bin/python week18_self_evolving_sovereign_edge/self_evolving_agent/tutorial_server.py
     # → http://127.0.0.1:8090
 """
 from __future__ import annotations
@@ -31,7 +31,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week18/self_evolving_agent
+PKG = Path(__file__).resolve().parent                 # …/week18_self_evolving_sovereign_edge/self_evolving_agent
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():
@@ -70,7 +70,7 @@ STEPS = [
              "the claude CLI) is available. Every checkpoint runs OFFLINE regardless.",
      "kind": "run", "cwd": str(ROOT),
      "cmd": [PY, "-c",
-             "import sys; sys.path.insert(0,'week18'); "
+             "import sys; sys.path.insert(0,'week18_self_evolving_sovereign_edge'); "
              "from self_evolving_agent import config; "
              "print('package import ✓'); "
              "print('LIVE mode (real LLM) available:', config.sdk_available()); "
@@ -153,7 +153,7 @@ STEPS = [
      "desc": "Wipe MEMORY.md, USER.md, the skill library, and the episodic DB — re-watch "
              "the agent learn from zero.",
      "kind": "run", "cwd": str(ROOT),
-     "cmd": [PY, "-c", "import sys; sys.path.insert(0,'week18'); "
+     "cmd": [PY, "-c", "import sys; sys.path.insert(0,'week18_self_evolving_sovereign_edge'); "
              "from self_evolving_agent import config; "
              "print('removed:', config.wipe_memory())"]},
     {"id": "cdemo", "group": "Cleanup & teardown", "title": "Start over (demolish)",
@@ -347,7 +347,7 @@ async def run_step(req: RunRequest):
 async def cleanup() -> dict:
     for srv in SERVERS.values():
         srv.stop()
-    sys.path.insert(0, str(ROOT / "week18"))
+    sys.path.insert(0, str(ROOT / "week18_self_evolving_sovereign_edge"))
     from self_evolving_agent import config
     removed = config.wipe_memory()
     return {"messages": ["stopped the visualizer", f"wiped memory: {removed}"],

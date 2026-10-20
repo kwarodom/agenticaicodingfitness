@@ -2,7 +2,7 @@
 """Exercise 16 · Write a least-privilege NemoClaw network preset, and the checker that guards it.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week25/16_nemoclaw/exercises/ex16_policy_preset.py
+    .venv/bin/python week25_dgx_spark/16_nemoclaw/exercises/ex16_policy_preset.py
 
 The checker is free and offline: it compares your functions with the rules the NemoClaw
 applications playbook documents, then prints the preset YAML you built. Stuck? Compare

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Lesson 06.2 — Parallel swarm (fan-out, then aggregate).
 
-Run:  python week15/code/06_multi_agent/02_parallel_swarm.py
+Run:  python week15_production_graphrag/code/06_multi_agent/02_parallel_swarm.py
 
 Five specialists audit a building AT THE SAME TIME using asyncio.gather, then
 we report the speedup vs. doing them one-by-one. This is distributed sensing +
 stigmergy: independent workers writing into shared results.
 
-Mirrors the class repo's week9/ex3_ParallelSwarm.py. Uses Haiku on purpose —
+Mirrors the class repo's week09_multi_agent_systems/ex3_ParallelSwarm.py. Uses Haiku on purpose —
 cheap + fast is right for many parallel calls.
 """
 import asyncio

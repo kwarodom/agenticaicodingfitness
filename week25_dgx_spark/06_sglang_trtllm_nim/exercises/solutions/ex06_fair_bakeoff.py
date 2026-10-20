@@ -2,7 +2,7 @@
 """Exercise 06 · reference solution — plan a fair engine bake-off: ports, clashes, fairness rules, and honest summaries.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week25/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py
+    .venv/bin/python week25_dgx_spark/06_sglang_trtllm_nim/exercises/ex06_fair_bakeoff.py
 
 The checker is free and offline. It tests your port map against the playbooks, finds engines that cannot
 run at the same time, rejects unfair comparisons, and summarises repeated runs the honest way.

@@ -8,7 +8,7 @@ it, feeds the observation back, and gets a grounded final answer. Then it prints
 NeMo Agent Toolkit workflow.yml this maps to, and the real `nat` commands.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness
-      .venv/bin/python week23/05_aiq_research_lab/labs/lab03_tool_bus.py
+      .venv/bin/python week23_open_superintelligence_stack/05_aiq_research_lab/labs/lab03_tool_bus.py
 """
 from __future__ import annotations
 

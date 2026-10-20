@@ -33,10 +33,10 @@ capstone นำโมดูลก่อนหน้ากลับมาใช�
 
 ```bash
 # on: laptop
-uv pip install --python week25/.venv-nat/bin/python --no-deps \
-  -e week25/14_nat_agents/hotel_ops_nat -e week25/20_capstone_sovereign_agent/hotel_capstone_nat
-week25/.venv-nat/bin/nat info components -t function | grep -E "route_guest|room_temp|maintenance"
-ls week25/.venv-litellm/bin/litellm
+uv pip install --python week25_dgx_spark/.venv-nat/bin/python --no-deps \
+  -e week25_dgx_spark/14_nat_agents/hotel_ops_nat -e week25_dgx_spark/20_capstone_sovereign_agent/hotel_capstone_nat
+week25_dgx_spark/.venv-nat/bin/nat info components -t function | grep -E "route_guest|room_temp|maintenance"
+ls week25_dgx_spark/.venv-litellm/bin/litellm
 ```
 
 ✓ Checkpoint: `nat info components` แสดง `route_guest_message`, `room_temperature` และ `create_maintenance_ticket` และมีไฟล์ binary ของ LiteLLM อยู่
@@ -71,7 +71,7 @@ ls week25/.venv-litellm/bin/litellm
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab01_plan_and_preflight.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY: แผนงานเป็นการคำนวณ แถวของ Spark เป็นค่า EXAMPLE)
@@ -106,8 +106,8 @@ Lab 20-2 พิมพ์ลำดับคำสั่งเปิดเซิ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab02_bring_up.py            # plan + config
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab02_bring_up.py --launch   # start all three
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab02_bring_up.py            # plan + config
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab02_bring_up.py --launch   # start all three
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ในโหมด DRY บรรทัดแรก ๆ)
@@ -174,7 +174,7 @@ Lab 20-3 เปิด gateway (alias ทั้งสองตัวพร้อ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab03_agent_end_to_end.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab03_agent_end_to_end.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้: NAT 1.9 และ LiteLLM 1.89 ของจริง; ไม่มี Spark alias ทั้งสองจึง fallback ไปที่ gemma4:12b เป็น LAPTOP STAND-IN รันเต็มสองรอบได้ผลตัดสินเหมือนกัน)
@@ -253,7 +253,7 @@ sandbox policy สร้างด้วย `policykit` ของ Module 15 แ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/labs/lab04_sandbox_and_scorecard.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/labs/lab04_sandbox_and_scorecard.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้; ขั้นที่ 2 เป็นแบบจำลองเพื่อการสอนของ policykit ไม่ใช่ OpenShell)
@@ -327,7 +327,7 @@ capstone จะเสร็จสมบูรณ์เมื่อทุกแ�
 
 ## Try it yourself — ลองทำเอง
 
-**แบบฝึกหัด 20 — ตัวตัดสินการยอมรับ (acceptance judge)** เปิด `week25/20_capstone_sovereign_agent/exercises/ex20_acceptance.py` ในไฟล์มี `TODO` สามจุด:
+**แบบฝึกหัด 20 — ตัวตัดสินการยอมรับ (acceptance judge)** เปิด `week25_dgx_spark/20_capstone_sovereign_agent/exercises/ex20_acceptance.py` ในไฟล์มี `TODO` สามจุด:
 
 1. `judge(scenario, calls, tickets)`: เรียก router ก่อน แผนกถูกต้อง กฎเรื่อง ticket (เปิด ticket เฉพาะงานของฝ่ายช่างและฝ่ายรักษาความปลอดภัย) และระดับความสำคัญเมื่อควรมี ticket
 2. `THAI_SCENARIO`: ข้อความภาษาไทยเรื่องปัญหางานช่างทั่วไปที่ไม่ด่วน ซึ่งเป็นสถานการณ์ที่จับบั๊กที่ lab 20-3 พบได้
@@ -335,7 +335,7 @@ capstone จะเสร็จสมบูรณ์เมื่อทุกแ�
 
 ```bash
 # on: laptop
-.venv/bin/python week25/20_capstone_sovereign_agent/exercises/ex20_acceptance.py
+.venv/bin/python week25_dgx_spark/20_capstone_sovereign_agent/exercises/ex20_acceptance.py
 ```
 
 **Expected output** (เมื่อทำ TODO ครบทั้งสามจุด)
@@ -357,7 +357,7 @@ capstone จะเสร็จสมบูรณ์เมื่อทุกแ�
 
 <details><summary>ท้าทายเพิ่ม — ปิดวงรอบให้ครบจริง</summary>
 
-เพิ่มข้อความภาษาไทยที่มีความสำคัญระดับปกติสิบข้อลงในข้อมูลเทรนของ Module 09 (`week25/09_llama_factory/data/hotel_ops.json`) เทรนใหม่บน Spark B ให้คะแนนด้วย Module 13 lab 02 และถ้าผ่านด่านตรวจ ให้สลับโฟลเดอร์ adapter แล้วรีสตาร์ต container ของ router จากนั้นรัน lab 20-3 ใหม่ นี่คือทั้งสัปดาห์ในวงรอบเดียว: data → fine-tune → gate → serve → agent → acceptance
+เพิ่มข้อความภาษาไทยที่มีความสำคัญระดับปกติสิบข้อลงในข้อมูลเทรนของ Module 09 (`week25_dgx_spark/09_llama_factory/data/hotel_ops.json`) เทรนใหม่บน Spark B ให้คะแนนด้วย Module 13 lab 02 และถ้าผ่านด่านตรวจ ให้สลับโฟลเดอร์ adapter แล้วรีสตาร์ต container ของ router จากนั้นรัน lab 20-3 ใหม่ นี่คือทั้งสัปดาห์ในวงรอบเดียว: data → fine-tune → gate → serve → agent → acceptance
 
 </details>
 

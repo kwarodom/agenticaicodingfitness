@@ -14,12 +14,12 @@ tools, memory, and network. Three layers of defense:
   perimeter); non-sensitive traffic may use a larger model. Controls *where data goes*.
 
 Runs **dual-mode**: **REAL** against a local NIM / Ollama / vLLM OpenAI endpoint, or
-**SIM** with no GPU (`week23/07_guardrails_openshell/sim.py`).
+**SIM** with no GPU (`week23_open_superintelligence_stack/07_guardrails_openshell/sim.py`).
 
 ## Run the web tutorial
 
 ```bash
-cd week23/07_guardrails_openshell
+cd week23_open_superintelligence_stack/07_guardrails_openshell
 pip install -r requirements.txt
 python tutorial_server.py            # → http://localhost:8106
 ```

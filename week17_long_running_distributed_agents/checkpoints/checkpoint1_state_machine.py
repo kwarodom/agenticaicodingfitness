@@ -16,7 +16,7 @@ What this demonstrates (offline, no Gemini needed):
 
 (Week 17 · long-running agents · ADK blog: "durable state machines")
 
-Run:  python week17/checkpoints/checkpoint1_state_machine.py
+Run:  python week17_long_running_distributed_agents/checkpoints/checkpoint1_state_machine.py
 """
 import sys
 from pathlib import Path

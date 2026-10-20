@@ -21,7 +21,7 @@ These rooms get ids like X101 (not the R1xx curated dataset) and an extra
 
     MATCH (r:Room:Imported) DETACH DELETE r
 
-Run:  python week15/kg_mastery/part2_building/01_load_csv.py
+Run:  python week15_production_graphrag/kg_mastery/part2_building/01_load_csv.py
 """
 import csv
 import sys

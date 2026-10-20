@@ -38,7 +38,7 @@ Python 3.13.13
 ollama version is 0.34.4
 ```
 
-> 🔐 The labs never write to `~/.claude`, `~/.codex`, `~/.config/opencode` or `~/.continue`. Lab 03 writes every generated file under `week25/18_coding_agents/.runs/` (gitignored), then checks that your global config files were not changed.
+> 🔐 The labs never write to `~/.claude`, `~/.codex`, `~/.config/opencode` or `~/.continue`. Lab 03 writes every generated file under `week25_dgx_spark/18_coding_agents/.runs/` (gitignored), then checks that your global config files were not changed.
 
 ✓ Checkpoint: you can reach your Spark over SSH, or you have Ollama running on the laptop to use as the stand-in.
 
@@ -233,7 +233,7 @@ Lab 01 checks all of them, plus the model's `tools` capability from `/api/show`,
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab01_endpoint_preflight.py
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab01_endpoint_preflight.py
 ```
 
 **Expected output** (captured on this Mac with no Spark configured: LAPTOP STAND-IN, so the Spark rows are EXAMPLE shapes and the model is the laptop's)
@@ -281,7 +281,7 @@ The first call took 10 s because it loaded the model, which is cold-start time a
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab02_tool_call_probe.py            # --trials 5 for a real verdict
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab02_tool_call_probe.py            # --trials 5 for a real verdict
 ```
 
 **Expected output** (captured on this Mac, LAPTOP STAND-IN: three laptop models, one trial each. Your run will differ, because sampling is random.)
@@ -307,7 +307,7 @@ The first call took 10 s because it loaded the model, which is cold-start time a
 │ nemotron-3-nano:latest  2/3        2/3         1/3           1/3             15.1s
 │ gemma4:12b              3/3        3/3         3/3           3/3             13.2s
 │ gemma3:4b               0/3        0/3         0/3           0/3             —
-→ wrote week25/18_coding_agents/.runs/lab02_scorecard.json
+→ wrote week25_dgx_spark/18_coding_agents/.runs/lab02_scorecard.json
 ```
 
 Three runs on this Mac gave the same shape. `gemma4:12b` passed 9 of 9. `nemotron-3-nano` passed `add` every time, fixed `slugify` after the repair turn once in three, and printed its `parse_duration` tool call as text (`<tool_call><function=write_file>…`) all three times. `gemma3:4b` has no `tools` capability, so the server rejects the request outright. That gives you three lessons:
@@ -337,8 +337,8 @@ The three COURSE files are wiring for when `ollama launch` is not an option. Lab
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py            # placeholder host
-.venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel   # http://localhost:21434
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py            # placeholder host
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel   # http://localhost:21434
 ```
 
 **Expected output** (captured on this Mac, no Spark configured, so the playbook's `YOUR_HARDWARE_IP` placeholder stays)
@@ -353,7 +353,7 @@ The three COURSE files are wiring for when `ollama launch` is not an option. Lab
 │ claude-code-direct.env  COURSE      387 B  ✓ 3 variables
 │ opencode.json           COURSE      386 B  ✓ valid JSON
 │ codex-home/config.toml  COURSE      407 B  ✓ valid TOML · provider defined
-→ all files in week25/18_coding_agents/.runs/agent-config/
+→ all files in week25_dgx_spark/18_coding_agents/.runs/agent-config/
 …
 ▣ STEP 4 · prove your global agent config was not touched
 ✓ ~/.claude/settings.json            unchanged
@@ -367,8 +367,8 @@ Applying them is a choice you make, one agent at a time. For example, Claude Cod
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel
-( set -a; . week25/18_coding_agents/.runs/agent-config/claude-code-direct.env; set +a; \
+.venv/bin/python week25_dgx_spark/18_coding_agents/labs/lab03_agent_config_generator.py --tunnel
+( set -a; . week25_dgx_spark/18_coding_agents/.runs/agent-config/claude-code-direct.env; set +a; \
   cd ~/cli-agent-demo && claude --model qwen3.6:35b-a3b-mtp-q4_K_M )
 ```
 
@@ -386,7 +386,7 @@ Labs 01 and 02 use the Spark's Ollama when it answers, else the laptop's (labell
 
 ## Try it yourself
 
-**Exercise 18 — grade an agent's reply.** An eval harness has to turn a raw model reply into a verdict. Open `week25/18_coding_agents/exercises/ex18_grade_agent_reply.py`. It has three `TODO`s:
+**Exercise 18 — grade an agent's reply.** An eval harness has to turn a raw model reply into a verdict. Open `week25_dgx_spark/18_coding_agents/exercises/ex18_grade_agent_reply.py`. It has three `TODO`s:
 
 1. `tool_args(tool_call)`: the arguments as a dict, whether the server sent a JSON string or a dict.
 2. `safe_path(path)`: refuse absolute paths, `~`, `..` and backslashes, so an agent can't write outside the workspace.
@@ -396,7 +396,7 @@ The fixtures follow the reply shapes lab 02 met on this Mac, plus three hand-mad
 
 ```bash
 # on: laptop
-.venv/bin/python week25/18_coding_agents/exercises/ex18_grade_agent_reply.py
+.venv/bin/python week25_dgx_spark/18_coding_agents/exercises/ex18_grade_agent_reply.py
 ```
 
 **Expected output** (once all three TODOs are done)

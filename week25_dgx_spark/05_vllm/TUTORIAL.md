@@ -129,7 +129,7 @@ Lab 05-2 does all of this in one go. It only starts the container when you pass 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab02_first_server.py          # add --yes to really start it
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab02_first_server.py          # add --yes to really start it
 ```
 
 **Expected output** (captured on this Mac, DRY mode: no Spark configured, so step 4 used the laptop stand-in)
@@ -181,7 +181,7 @@ Lab 05-1 does that sum for models from the playbook's support matrix and prints 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab01_launch_builder.py
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab01_launch_builder.py
 ```
 
 **Expected output** (arithmetic, the same on every machine)
@@ -291,7 +291,7 @@ Lab 05-4 runs the whole agent loop once: the model asks for a tool, the lab runs
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab04_tool_calling.py
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab04_tool_calling.py
 ```
 
 **Expected output** (captured on this Mac: no Spark, so a tool-capable laptop model stood in)
@@ -327,7 +327,7 @@ Lab 05-3 sends the same kind of request 1, 2, 4 and 8 at a time and measures two
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/labs/lab03_continuous_batching.py
+.venv/bin/python week25_dgx_spark/05_vllm/labs/lab03_continuous_batching.py
 ```
 
 **Expected output** (captured on this Mac against Ollama: LAPTOP STAND-IN, not a Spark, and not vLLM)
@@ -637,7 +637,7 @@ Lab 01 is arithmetic and runs anywhere. Lab 02 drives the Spark over SSH (DRY wi
 
 ## Try it yourself
 
-**Exercise 05 — write a correct vLLM launch command.** Open `week25/05_vllm/exercises/ex05_launch_command.py`. It has four `TODO`s, each returning a list of command-line tokens (or a number):
+**Exercise 05 — write a correct vLLM launch command.** Open `week25_dgx_spark/05_vllm/exercises/ex05_launch_command.py`. It has four `TODO`s, each returning a list of command-line tokens (or a number):
 
 1. `docker_flags()`: the container flags from the base configuration: GPU, `--ipc host`, port 8000, the HF cache.
 2. `max_full_length_seqs(weights_gb, kv_gb_per_seq, util)`: how many full-context sequences fit, which becomes `--max-num-seqs`.
@@ -648,7 +648,7 @@ The offline checker tests each function, then assembles two full commands (the a
 
 ```bash
 # on: laptop
-.venv/bin/python week25/05_vllm/exercises/ex05_launch_command.py
+.venv/bin/python week25_dgx_spark/05_vllm/exercises/ex05_launch_command.py
 ```
 
 **Expected output** (once all four TODOs are done, captured on this Mac; the two printed commands are trimmed here)

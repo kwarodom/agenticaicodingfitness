@@ -443,7 +443,7 @@ FEW_SHOT   = "Example 1: ... Example 2: ...  Now analyze: ..."
 COT        = "Think step by step: 1) calculate kWh 2) ROI 3) rank"
 ROLE_BASED = "You are a certified energy auditor with 15 years..."
 # Test all four with Sonnet, Haiku, GPT — score accuracy/completeness/usefulness`,
-    files:["week2/claudeapicall.py (used as setup)"],
+    files:["week02_claude_api_foundations/claudeapicall.py (used as setup)"],
     tip:"Few-shot beats zero-shot for STRUCTURED tasks. Chain-of-thought beats both for REASONING tasks. Role-based beats all for NUANCED tasks. Pick the pattern to fit the task.",
     takeaway:"Prompt engineering is the steering wheel of AI — every agentic system starts with well-crafted prompts.",
   },
@@ -469,7 +469,7 @@ def chat(user):
     reply = r.content[0].text
     messages.append({"role":"assistant","content":reply})
     return reply, r.usage.input_tokens, r.usage.output_tokens`,
-    files:["week2/claudeapicall.py","week2/claudemulti_turn.py","week2/claudestreamingapi.py"],
+    files:["week02_claude_api_foundations/claudeapicall.py","week02_claude_api_foundations/claudemulti_turn.py","week02_claude_api_foundations/claudestreamingapi.py"],
     tip:"Always cap history (last 20 turns) — context windows are big but cost grows linearly in tokens.",
     takeaway:"APIs are the bridge between human ideas and AI execution — everything agentic builds on this foundation.",
   },
@@ -494,7 +494,7 @@ while True:
             messages.append({"role":"user","content":[{
               "type":"tool_result","tool_use_id":block.id,
               "content":str(result)}]})`,
-    files:["week3/toolsuse.py","week3/buildsmartassistant3tools.py","week3/hwadd4thtool.py","week3/hwadd5thtool.py"],
+    files:["week03_tool_use/toolsuse.py","week03_tool_use/buildsmartassistant3tools.py","week03_tool_use/hwadd4thtool.py","week03_tool_use/hwadd5thtool.py"],
     tip:"Tool descriptions are the spec. Write them like docstrings for a junior engineer — Claude treats them exactly the same way.",
     takeaway:"Tool use gives AI hands and eyes — without tools, an LLM is just a brain in a jar.",
   },
@@ -514,7 +514,7 @@ def inspect(image_b64):
           messages=[{"role":"user","content":"Write full incident report."}])
         return report.content[0].text
     return "OK — no defect detected."`,
-    files:["week4/dronecontrol.py","week4/droneeyes.py","week4/openrouterfreemodel.py","week4/pipeline.py","week4/final_report.md"],
+    files:["week04_autonomous_pipelines/dronecontrol.py","week04_autonomous_pipelines/droneeyes.py","week04_autonomous_pipelines/openrouterfreemodel.py","week04_autonomous_pipelines/pipeline.py","week04_autonomous_pipelines/final_report.md"],
     tip:"Downsample images to 1024px max edge — quality plateaus there and cost drops 4–10× compared to 4K input.",
     takeaway:"Pipelines are the skeleton of agentic systems — agents are pipelines that can modify themselves.",
   },
@@ -532,7 +532,7 @@ for step in range(MAX_STEPS):
     obs  = execute(plan)             # tool / browse / compute
     scratch.append((plan, obs))
 print("Final:", plan)`,
-    files:["week5/autoagent.py","week5/sample.py"],
+    files:["week05_agent_loop/autoagent.py","week05_agent_loop/sample.py"],
     tip:"Always set MAX_STEPS and MAX_USD. An autonomous loop without a budget is a science experiment.",
     takeaway:"An agent is a loop with judgment — once you understand this loop, everything else is just scale.",
   },
@@ -557,7 +557,7 @@ npm run dev / test / build / migrate
 ## Code Review Checklist
 - [ ] No console.log
 - [ ] Error handling implemented`,
-    files:["week6/AGENTS.md","week6/CLAUDE.md","week6/memory-notes.md","week6/src/...","AgentMemoryDemo/"],
+    files:["week06_fullstack_agent_app/AGENTS.md","week06_fullstack_agent_app/CLAUDE.md","week06_fullstack_agent_app/memory-notes.md","week06_fullstack_agent_app/src/...","AgentMemoryDemo/"],
     tip:"Treat CLAUDE.md as a living README for your AI teammate. If it gets stale, the agent gets stale.",
     takeaway:"Claude Code is your AI development team in a terminal — learn to direct, not micromanage.",
   },
@@ -580,7 +580,7 @@ def forecast(city: str) -> str:
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")`,
-    files:["week7/mcpserver.py","week7/mcpfilesystem.py","week7/agent.py","week7/agenttooldt.py","week7/skill.md","week7/claudeapi-tool-search.py","week7/claudeapi-poe.py"],
+    files:["week07_mcp_and_skills/mcpserver.py","week07_mcp_and_skills/mcpfilesystem.py","week07_mcp_and_skills/agent.py","week07_mcp_and_skills/agenttooldt.py","week07_mcp_and_skills/skill.md","week07_mcp_and_skills/claudeapi-tool-search.py","week07_mcp_and_skills/claudeapi-poe.py"],
     tip:"If you have >5 tools, use tool search (retrieve top-k schemas per query) instead of injecting all schemas — token cost adds up fast.",
     takeaway:"MCP is the USB port for AI agents — standardized connectivity to any tool or data source.",
   },
@@ -597,7 +597,7 @@ def answer(q):
     ctx  = "\\n---\\n".join(f"[{i}] {h.text}" for i,h in enumerate(hits))
     out  = llm(f"Use ONLY this context. Cite sources [n].\\n{ctx}\\nQ:{q}")
     return out, hits   # return citations alongside answer`,
-    files:["week8/Week8_RAG_Knowledge_Agents_Lab.pdf"],
+    files:["week08_rag_knowledge_agents/Week8_RAG_Knowledge_Agents_Lab.pdf"],
     tip:"If RAG is bad, 80% of the time the chunks are wrong. Print the top-5 retrieved chunks for any failing query BEFORE tuning the LLM.",
     takeaway:"RAG gives agents a library — they stop making things up when they can look things up.",
   },
@@ -618,7 +618,7 @@ t2 = Task(description="Write 1-page exec summary",
           agent=writer, context=[t1], expected_output="markdown")
 Crew(agents=[researcher,writer], tasks=[t1,t2],
      process=Process.sequential).kickoff()`,
-    files:["week9/ex1_crewai_sequential.py","week9/crewai_test.py","week9/ag2_test.py","week9/anthropic_test.py","week9/ex1_output.md"],
+    files:["week09_multi_agent_systems/ex1_crewai_sequential.py","week09_multi_agent_systems/crewai_test.py","week09_multi_agent_systems/ag2_test.py","week09_multi_agent_systems/anthropic_test.py","week09_multi_agent_systems/ex1_output.md"],
     tip:"More agents ≠ better. 80% of real CrewAI value comes from just 2-3 well-defined roles + 1 critic. Don't over-engineer.",
     takeaway:"CrewAI teaches you to think in teams, not individuals — the right agent for the right job.",
   },
@@ -643,7 +643,7 @@ g.add_conditional_edges("classify",
 g.add_edge("billing", END)
 g.add_edge("tech",    END)
 app = g.compile(checkpointer=MemorySaver())`,
-    files:["week9/ex2_LangGraphSupportGraph.py","week9/ex3_ParallelSwarm.py","week9/langraph_test.py"],
+    files:["week09_multi_agent_systems/ex2_LangGraphSupportGraph.py","week09_multi_agent_systems/ex3_ParallelSwarm.py","week09_multi_agent_systems/langraph_test.py"],
     tip:"Use LangGraph when you have CYCLES (reflection loops) or BRANCHES (router → specialists). For purely linear flows, CrewAI is simpler.",
     takeaway:"LangGraph gives you a blueprint for agent architecture — when agents get complex, graphs keep them sane.",
   },

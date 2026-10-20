@@ -15,7 +15,7 @@ Either way cloud cost is $0.00.
 
 Launch (auto-picks a free port if 8113 is taken):
 
-    .venv/bin/python week23/00_lab_runner/tutorial_server.py
+    .venv/bin/python week23_open_superintelligence_stack/00_lab_runner/tutorial_server.py
     # → http://127.0.0.1:8113
 """
 from __future__ import annotations
@@ -38,14 +38,14 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week23/00_lab_runner
-WEEK20 = PKG.parent                                   # …/week23
+PKG = Path(__file__).resolve().parent                 # …/week23_open_superintelligence_stack/00_lab_runner
+WEEK20 = PKG.parent                                   # …/week23_open_superintelligence_stack
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():
     PY = sys.executable
 STATIC = PKG / "static"
-MEDIA = WEEK20 / "media"                              # …/week23/media
+MEDIA = WEEK20 / "media"                              # …/week23_open_superintelligence_stack/media
 MEDIA_RE = re.compile(r"^[a-z0-9-]+\.(jpg|png|mp4)$")
 
 GUIDE_PORT = int(os.environ.get("LAB_GUIDE_PORT", "8113"))
@@ -316,7 +316,7 @@ async def index():
         "  GET  /api/source?folder=<folder>&lab=<labNN_x.py>\n"
         "  POST /api/run      — {\"folder\",\"lab\",\"env\"} → streamed output\n"
         "  GET  /api/status   — REAL/SIM connection status\n"
-        "  GET  /media/<f>    — week23/media images & clips (allowlisted)\n")
+        "  GET  /media/<f>    — week23_open_superintelligence_stack/media images & clips (allowlisted)\n")
 
 
 @app.get("/static/{fname:path}")
@@ -330,7 +330,7 @@ async def static_file(fname: str):
 
 @app.get("/media/{fname}")
 async def media_file(fname: str):
-    """Serve week23/media assets — strict allowlist, traversal-safe, cacheable."""
+    """Serve week23_open_superintelligence_stack/media assets — strict allowlist, traversal-safe, cacheable."""
     if not MEDIA_RE.match(fname):
         raise HTTPException(status_code=404, detail="not found")
     base = MEDIA.resolve()
@@ -451,7 +451,7 @@ async def api_run(req: RunRequest):
             yield "⚠  another lab is already running — wait for it to finish.\n__EXIT__ 1 0\n"
             return
         async with _run_lock:
-            yield f"$ {Path(PY).name} week23/{req.folder}/labs/{req.lab}\n\n"
+            yield f"$ {Path(PY).name} week23_open_superintelligence_stack/{req.folder}/labs/{req.lab}\n\n"
             async for chunk in _stream_lab(req.folder, req.lab, extra_env):
                 yield chunk
     return StreamingResponse(body(), media_type="text/plain")

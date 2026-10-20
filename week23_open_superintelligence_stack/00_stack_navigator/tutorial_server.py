@@ -15,7 +15,7 @@ Two modes, auto-detected (see config.py):
 
 Launch (auto-picks a free port if 8112 is taken):
 
-    .venv/bin/python week23/00_stack_navigator/tutorial_server.py
+    .venv/bin/python week23_open_superintelligence_stack/00_stack_navigator/tutorial_server.py
     # → http://127.0.0.1:8112
 """
 from __future__ import annotations
@@ -40,7 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import config  # noqa: E402
 import sim  # noqa: E402
 
-PKG = Path(__file__).resolve().parent                 # …/week23/00_stack_navigator
+PKG = Path(__file__).resolve().parent                 # …/week23_open_superintelligence_stack/00_stack_navigator
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 STATIC = PKG / "static"
 
@@ -69,8 +69,14 @@ for _layer in STACK.get("layers", []):
         NODE_BY_ID[_node["id"]] = _node
 
 
+# Lab Runner — this hub's hands-on twin; no stack node maps to it, so it is
+# prepended to the apps strip by hand.
+LAB_RUNNER = {"num": "00", "folder": "00_lab_runner", "port": 8113,
+              "title": "Lab Runner — the hands-on track"}
+
+
 def _build_apps() -> list[dict]:
-    """The 12 Week 23 apps, titled from the stack nodes that map to them.
+    """Lab Runner + the 12 Week 23 apps, titled from the stack nodes that map to them.
 
     Two node pairs share one app (NAT + AI-Q → 05; Guardrails + OpenShell → 07),
     so duplicate app mappings are folded into one entry with a joined title.
@@ -85,9 +91,10 @@ def _build_apps() -> list[dict]:
                 "num": a["num"], "folder": a["folder"], "port": a["port"], "titles": []})
             if node["name"] not in e["titles"]:
                 e["titles"].append(node["name"])
-    return [{"num": e["num"], "folder": e["folder"], "port": e["port"],
-             "title": " + ".join(e["titles"])}
-            for e in sorted(by_num.values(), key=lambda x: x["num"])]
+    return [dict(LAB_RUNNER)] + [
+        {"num": e["num"], "folder": e["folder"], "port": e["port"],
+         "title": " + ".join(e["titles"])}
+        for e in sorted(by_num.values(), key=lambda x: x["num"])]
 
 
 APPS = _build_apps()

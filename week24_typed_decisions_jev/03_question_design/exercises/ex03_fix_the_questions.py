@@ -10,7 +10,7 @@ Write a good version of each (TODO 1-3). The checker asks the bad AND the good
 questions in the same batched call per message (they are independent), then
 scores both against the human labels. Aim: good ≥ bad on every question.
 
-Run: .venv/bin/python week24/03_question_design/exercises/ex03_fix_the_questions.py
+Run: .venv/bin/python week24_typed_decisions_jev/03_question_design/exercises/ex03_fix_the_questions.py
 """
 import sys
 from pathlib import Path

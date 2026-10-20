@@ -8,7 +8,7 @@ new one WOULD have done. Disagreements are the interesting rows.
 Here the "current system" is a typical keyword router. The candidate is the
 Jev copilot from Lab 12-1. The human-labeled "right team" lets us score both.
 
-Run: .venv/bin/python week24/12_capstone_hotel_copilot/labs/lab02_shadow_mode.py
+Run: .venv/bin/python week24_typed_decisions_jev/12_capstone_hotel_copilot/labs/lab02_shadow_mode.py
 """
 import sys
 from pathlib import Path

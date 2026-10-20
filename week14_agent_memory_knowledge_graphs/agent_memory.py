@@ -2,7 +2,7 @@
 
 Drop-in memory layer for any agent in this repo:
 
-    from week14.agent_memory import AgentMemory          # from repo root
+    from week14_agent_memory_knowledge_graphs.agent_memory import AgentMemory          # from repo root
     # or copy file next to your agent and import directly
 
     mem = AgentMemory("my-agent-id")

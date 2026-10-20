@@ -25,15 +25,15 @@ WHERE a command runs (decided per call, printed on every line of output):
                      REFERENCE output quoted from NVIDIA's playbooks, or an EXAMPLE shape written for the
                      course. All three are clearly labelled; none of them is your machine.
   • ON THIS LAPTOP — `laptop(argv)` runs the course's local tools for real: the NAT CLI
-                     (week26/.venv-nat) and the OpenShell CLI parser (week26/.venv-openshell).
+                     (week26_nemoclaw_claws/.venv-nat) and the OpenShell CLI parser (week26_nemoclaw_claws/.venv-openshell).
 
 HTTP endpoints of a claw on the Spark: vLLM :8000 · Ollama :11434 · NAT REST :8001 · NAT MCP :9901 ·
 Phoenix :6006 · OTel collector :4318 · OpenClaw Control UI :18789 · Hermes API :8642 · OpenShell gateway :8080.
 When the Spark endpoint is down, `chat_any()` may use Ollama on THIS laptop as a labelled
 "LAPTOP STAND-IN" so client-side ideas (tool calls, NAT agents, MCP) still run for real.
 
-Configuration lookup order (never printed): process env → week26/.env.local (the runner's 🖥 Spark dialog
-writes it, gitignored) → week25/.env.local (reuse the Spark hosts you set up last week) → repo-root .env.
+Configuration lookup order (never printed): process env → week26_nemoclaw_claws/.env.local (the runner's 🖥 Spark dialog
+writes it, gitignored) → week25_dgx_spark/.env.local (reuse the Spark hosts you set up last week) → repo-root .env.
 """
 from __future__ import annotations
 
@@ -50,9 +50,9 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-COMMON = Path(__file__).resolve().parent            # …/week26/common
-WEEK = COMMON.parent                                # …/week26
-PREV = WEEK.parent / "week25"                       # last week: its .env.local holds your Spark hosts
+COMMON = Path(__file__).resolve().parent            # …/week26_nemoclaw_claws/common
+WEEK = COMMON.parent                                # …/week26_nemoclaw_claws
+PREV = WEEK.parent / "week25_dgx_spark"                       # last week: its .env.local holds your Spark hosts
 ROOT = WEEK.parent                                  # …/agenticaicodingfitness
 RECORDED = COMMON / "recorded"                      # real Spark transcripts, replayed in DRY mode
 
@@ -103,7 +103,7 @@ def _file_value(path: Path, name: str) -> str:
 
 
 def cfg(name: str, default: str = "") -> str:
-    """env → week26/.env.local → week25/.env.local → repo-root .env → default."""
+    """env → week26_nemoclaw_claws/.env.local → week25_dgx_spark/.env.local → repo-root .env → default."""
     v = os.environ.get(name, "").strip()
     return (v or _file_value(WEEK / ".env.local", name) or _file_value(PREV / ".env.local", name)
             or _file_value(ROOT / ".env", name) or default)
@@ -113,9 +113,9 @@ def cfg_source(name: str) -> str:
     if os.environ.get(name, "").strip():
         return "environment"
     if _file_value(WEEK / ".env.local", name):
-        return "week26/.env.local"
+        return "week26_nemoclaw_claws/.env.local"
     if _file_value(PREV / ".env.local", name):
-        return "week25/.env.local"
+        return "week25_dgx_spark/.env.local"
     if _file_value(ROOT / ".env", name):
         return "repo-root .env"
     return ""
@@ -701,7 +701,7 @@ def laptop(argv: list, *, timeout: float = 600, env: dict | None = None, cwd: st
     print `nat` instead of the full venv path).
     """
     argv = [str(a) for a in argv]
-    shown = show or " ".join(shlex.quote(a) for a in argv).replace(str(WEEK) + "/", "week26/")
+    shown = show or " ".join(shlex.quote(a) for a in argv).replace(str(WEEK) + "/", "week26_nemoclaw_claws/")
     print(f"$ {shown}   [this laptop]")
     if not shutil.which(argv[0]) and not Path(argv[0]).exists():
         warn(f"{Path(argv[0]).name} is not installed on this laptop — see the module's '0 · Before you start'")
@@ -773,7 +773,7 @@ class background:
 
     def __enter__(self):
         self.log.parent.mkdir(parents=True, exist_ok=True)
-        shown = self.show or " ".join(shlex.quote(a) for a in self.argv).replace(str(WEEK) + "/", "week26/")
+        shown = self.show or " ".join(shlex.quote(a) for a in self.argv).replace(str(WEEK) + "/", "week26_nemoclaw_claws/")
         print(f"$ {shown} &   [this laptop, background → {self.log.name}]")
         fh = self.log.open("w", encoding="utf-8")
         self.proc = subprocess.Popen(self.argv, stdout=fh, stderr=subprocess.STDOUT, cwd=str(self.cwd or ROOT),
@@ -822,5 +822,5 @@ if __name__ == "__main__":                          # python clawkit.py → wher
         u = url(k)
         print(f"│ {k:9s} {u or '(no host)':42s} {'● up' if (up(u, 1.5) if k in OPENAI_KINDS else False) else '○ down / not probed'}")
     print(f"│ laptop    {LAPTOP_OLLAMA:42s} {', '.join(laptop_models()[:4]) or '○ none'}")
-    print(f"│ NAT CLI   {'week26/.venv-nat/bin/nat':42s} {'✓' if NAT.exists() else '✕ missing'}")
-    print(f"│ OpenShell {'week26/.venv-openshell/bin/openshell':42s} {'✓' if OPENSHELL.exists() else '✕ missing'}")
+    print(f"│ NAT CLI   {'week26_nemoclaw_claws/.venv-nat/bin/nat':42s} {'✓' if NAT.exists() else '✕ missing'}")
+    print(f"│ OpenShell {'week26_nemoclaw_claws/.venv-openshell/bin/openshell':42s} {'✓' if OPENSHELL.exists() else '✕ missing'}")

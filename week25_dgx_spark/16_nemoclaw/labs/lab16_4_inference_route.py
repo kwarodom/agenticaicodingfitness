@@ -13,7 +13,7 @@ It runs against vLLM on your Spark when :8000 answers. Without a Spark it runs f
 REAL against Ollama on this laptop, labelled LAPTOP STAND-IN: the API shape is the
 same, the speed is not the Spark's.
 
-Run: .venv/bin/python week25/16_nemoclaw/labs/lab16_4_inference_route.py
+Run: .venv/bin/python week25_dgx_spark/16_nemoclaw/labs/lab16_4_inference_route.py
 """
 import json
 import sys

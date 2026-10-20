@@ -9,7 +9,7 @@ what each model really is: parameters, quantization, context length and capabili
 Pulling a model is a big download, so it only starts with --pull (in the background, with
 a log you can tail). Everything else only reads.
 
-Run: .venv/bin/python week25/03_ollama_open_webui/labs/lab01_ollama_models.py [--pull]
+Run: .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab01_ollama_models.py [--pull]
 """
 import sys
 from pathlib import Path

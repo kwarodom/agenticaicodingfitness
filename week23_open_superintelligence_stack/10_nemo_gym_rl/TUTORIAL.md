@@ -1,6 +1,6 @@
 # ▶ Hands-on Lab 10 — NeMo Gym + NeMo RL: verifiable rewards, rollouts, GRPO
 
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/10_nemo_gym_rl/tutorial_server.py` → http://127.0.0.1:8109. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/tutorial_server.py` → http://127.0.0.1:8109. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Write a verifiable-reward **environment** (task + deterministic `reward_fn`) and use it to score REAL model rollouts — the exact 1.0/0.0 signal GRPO trains on
@@ -25,7 +25,7 @@ Get the concept map in your head first: environment = task + verifier; NeMo Gym 
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/10_nemo_gym_rl/tutorial_server.py
+.venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/tutorial_server.py
 ```
 
 Expected output:
@@ -82,7 +82,7 @@ An environment is ~15 lines: a task sampler and a `reward_fn` that returns 1.0 o
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/10_nemo_gym_rl/labs/lab01_build_verifier.py
+.venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab01_build_verifier.py
 ```
 
 Expected output (abbreviated):
@@ -104,7 +104,7 @@ Expected output (abbreviated):
 This is one GRPO step minus the weight update: G=4 completions of ONE prompt at temperature 1.0, each scored, then advantage = reward − group mean.
 
 ```bash
-.venv/bin/python week23/10_nemo_gym_rl/labs/lab02_rollout_group_grpo.py
+.venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab02_rollout_group_grpo.py
 ```
 
 Expected output (abbreviated — your rewards will differ, that's the point):
@@ -144,7 +144,7 @@ Two things the runbook flags: **NeMo RL has no serving port** — it's a batch j
 
 **C — no GPU:** run the SIM training curve instead — same loop, honest about being simulated:
 ```bash
-.venv/bin/python week23/10_nemo_gym_rl/demos/step03_grpo_training.py
+.venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/demos/step03_grpo_training.py
 ```
 
 Expected output:
@@ -161,7 +161,7 @@ Expected output:
 Training on ONE verifier overfits to it. Lab 03 measures pass-rate across three environments with three different verifiers (math exact-match, JSON tool-call check, output constraint) and applies a promotion gate — the measurement that decides base vs trained.
 
 ```bash
-.venv/bin/python week23/10_nemo_gym_rl/labs/lab03_multienv_passrate.py
+.venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab03_multienv_passrate.py
 ```
 
 Expected output (abbreviated):
@@ -184,17 +184,17 @@ Tasks run ROUND-ROBIN (task 1 of every env, then task 2, …), so even a slow or
 ## Labs (run these)
 
 **labs/lab01_build_verifier.py** — builds a two-task environment with a deterministic `reward_fn`, proves determinism on canned answers, then scores 2 real rollouts from your endpoint.
-Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/10_nemo_gym_rl/labs/lab01_build_verifier.py`
+Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab01_build_verifier.py`
 Look for: the same canned answer always getting the same reward, then live rollouts collapsing to a bare 1.0/0.0.
 Modify it: change one task's `gold` to a wrong value and re-run — watch a "correct" model answer score 0.0. A verifier bug IS a reward-hacking surface; this is why verifiers get code review.
 
 **labs/lab02_rollout_group_grpo.py** — samples G=4 rollouts of one prompt at temperature 1.0, scores each, prints reward − mean advantages with ↑/↓ marks.
-Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/10_nemo_gym_rl/labs/lab02_rollout_group_grpo.py`
+Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab02_rollout_group_grpo.py`
 Look for: whether your group is MIXED (nonzero advantages = a learning signal) or uniform (all-zero = nothing to learn).
 Modify it: swap `TASK` for a much harder multiplication (e.g. 4-digit × 4-digit) and re-run — an all-fail group shows why task difficulty must track model ability.
 
 **labs/lab03_multienv_passrate.py** — a mini eval harness: 3 environments × 2 tasks, per-env pass-rate, overall score, PROMOTE/HOLD gate at 60%.
-Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/10_nemo_gym_rl/labs/lab03_multienv_passrate.py`
+Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/10_nemo_gym_rl/labs/lab03_multienv_passrate.py`
 Look for: which environment your model is weakest in — that's where GRPO training data should come from.
 Modify it: raise `GATE` to 0.9 and re-run — most base models now HOLD, which is exactly the honest state before post-training.
 

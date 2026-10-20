@@ -1,0 +1,194 @@
+{
+ "seconds": 233.0,
+ "device": "mps",
+ "chip": "Apple M4 Max",
+ "torch": "2.14.1",
+ "log": "eval items 360 from /Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/17_finetune_system_one/data/laya_val.jsonl (skipped {}, 0 overlapping training/calibration items)\ntrain items 1204, calibration items 164, eval items 360 (/Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/17_finetune_system_one/data/laya_val.jsonl), skipped {}, device mps\noptimizer budget: 1204 train item(s), effective batch up to 16 (micro_batch 8 x grad_accum 2), 228 optimizer updates over 3 epoch(s)\nepoch 1/3 step 100 loss -0.1385\nepoch 1/3 mean loss 0.4041\nepoch 2/3 step 100 loss -0.0000\nepoch 2/3 mean loss 0.1941\nepoch 3/3 step 100 loss -0.0000\nepoch 3/3 mean loss 0.0478\n\n=== Evaluation (before vs after fine-tuning on 360 held-out items from /Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/17_finetune_system_one/data/laya_val.jsonl) ===\nMetric                 Before         After          Delta         \n-----------------------------------------------------------------\nAccuracy               0.6139         0.8889         +0.2750       \nLoss                   1.3637         2.0804         +0.7167       \nECE                    0.2045         0.1088         -0.0957       \nBrier (multi-class)    0.5733         0.2143         -0.3590       \nBrier (top-1)          0.2670         0.1071         -0.1599       \nMean Confidence        0.8184         0.9971         +0.1787       \n-----------------------------------------------------------------\n\n",
+ "warnings": [
+  "laya.train: choice calibration: the fit came back unchanged at 1.0 (accuracy 1.00, mean confidence 1.000 on the calibration items), which usually means they gave it nothing to correct; this type's confidences are uncalibrated",
+  "laya.train: noul calibration: the fit came back unchanged at 1.0 (accuracy 1.00, mean confidence 1.000 on the calibration items), which usually means they gave it nothing to correct; this type's confidences are uncalibrated",
+  "laya.train: score calibration: the fit came back unchanged at 1.0 (accuracy 1.00, mean confidence 1.000 on the calibration items), which usually means they gave it nothing to correct; this type's confidences are uncalibrated"
+ ],
+ "epoch_loss": [
+  0.40408027967721816,
+  0.1941314486089773,
+  0.04782668137013147
+ ],
+ "train_items": 1204,
+ "calibration_items": 164,
+ "temperature": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "abstention_thresholds": {
+  "score:3-5": 1.0,
+  "noul:2": 1.0,
+  "choice:3-5": 1.0
+ },
+ "report": {
+  "eval_source": "/Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/17_finetune_system_one/data/laya_val.jsonl",
+  "eval_mode": "held_out",
+  "is_held_out": true,
+  "eval_items": 360,
+  "note": "Metrics reflect independent held-out evaluation.",
+  "before": {
+   "items": 360,
+   "loss": 1.3637,
+   "accuracy": 0.6139,
+   "mean_confidence": 0.8184,
+   "ece": 0.2045,
+   "brier": 0.5733,
+   "brier_top1": 0.267,
+   "by_type": {
+    "choice": {
+     "items": 120,
+     "loss": 2.7325,
+     "accuracy": 0.4833,
+     "mean_confidence": 0.8397,
+     "ece": 0.3646,
+     "brier": 0.8553,
+     "brier_top1": 0.3896
+    },
+    "score": {
+     "items": 120,
+     "loss": 1.0868,
+     "accuracy": 0.4667,
+     "mean_confidence": 0.7041,
+     "ece": 0.2518,
+     "brier": 0.7031,
+     "brier_top1": 0.3306
+    },
+    "noul": {
+     "items": 120,
+     "loss": 0.2716,
+     "accuracy": 0.8917,
+     "mean_confidence": 0.9113,
+     "ece": 0.0655,
+     "brier": 0.1616,
+     "brier_top1": 0.0808
+    }
+   }
+  },
+  "after": {
+   "items": 360,
+   "loss": 2.0804,
+   "accuracy": 0.8889,
+   "mean_confidence": 0.9971,
+   "ece": 0.1088,
+   "brier": 0.2143,
+   "brier_top1": 0.1071,
+   "by_type": {
+    "choice": {
+     "items": 120,
+     "loss": 3.4669,
+     "accuracy": 0.8,
+     "mean_confidence": 0.9923,
+     "ece": 0.1923,
+     "brier": 0.376,
+     "brier_top1": 0.188
+    },
+    "score": {
+     "items": 120,
+     "loss": 2.1878,
+     "accuracy": 0.8917,
+     "mean_confidence": 0.9999,
+     "ece": 0.1083,
+     "brier": 0.2166,
+     "brier_top1": 0.1083
+    },
+    "noul": {
+     "items": 120,
+     "loss": 0.5866,
+     "accuracy": 0.975,
+     "mean_confidence": 0.999,
+     "ece": 0.0259,
+     "brier": 0.0502,
+     "brier_top1": 0.0251
+    }
+   }
+  },
+  "comparison": {
+   "delta_accuracy": 0.275,
+   "delta_loss": 0.7167,
+   "delta_ece": -0.0957,
+   "delta_brier": -0.359,
+   "delta_brier_top1": -0.1599,
+   "delta_mean_confidence": 0.1787
+  },
+  "calibration": {
+   "choice": {
+    "items": 60,
+    "temperature": 1.0,
+    "issues": [
+     "the fit came back unchanged at 1.0 (accuracy 1.00, mean confidence 1.000 on the calibration items), which usually means they gave it nothing to correct; this type's confidences are uncalibrated"
+    ],
+    "accuracy": 1.0,
+    "mean_confidence": 0.9999999938023033
+   },
+   "score": {
+    "items": 50,
+    "temperature": 1.0,
+    "issues": [
+     "the fit came back unchanged at 1.0 (accuracy 1.00, mean confidence 1.000 on the calibration items), which usually means they gave it nothing to correct; this type's confidences are uncalibrated"
+    ],
+    "accuracy": 1.0,
+    "mean_confidence": 0.9999999999990752
+   },
+   "noul": {
+    "items": 54,
+    "temperature": 1.0,
+    "issues": [
+     "the fit came back unchanged at 1.0 (accuracy 1.00, mean confidence 1.000 on the calibration items), which usually means they gave it nothing to correct; this type's confidences are uncalibrated"
+    ],
+    "accuracy": 1.0,
+    "mean_confidence": 0.9999999999898103
+   }
+  },
+  "abstention_thresholds": {
+   "score:3-5": 1.0,
+   "noul:2": 1.0,
+   "choice:3-5": 1.0
+  },
+  "training": {
+   "epochs": 3,
+   "micro_batch": 8,
+   "grad_accum": 2,
+   "encoder_lr": 2.5e-05,
+   "head_lr": 0.0001,
+   "min_lr": 1e-06,
+   "weight_decay": 0.01,
+   "grad_clip": 1.0,
+   "loss": "rlcd",
+   "rl_samples": 4,
+   "sigma_start": 0.4,
+   "sigma_end": 0.1,
+   "w_sph": 0.75,
+   "w_rps": 1.0,
+   "shuffle_options": [
+    "choice"
+   ],
+   "option_layout": null,
+   "freeze_encoder": false,
+   "calib_max": 400,
+   "calib_frac": 0.12,
+   "calib_seed": 20260922,
+   "seed": 0,
+   "max_len": null,
+   "head_max_len": null,
+   "amp": null,
+   "gradient_checkpointing": null,
+   "log_every": 100,
+   "label_smoothing": 0.0,
+   "text_column": "text",
+   "label_column": "label",
+   "question_id": "label",
+   "instructions": null,
+   "eval_data": "/Users/altodev/Desktop/agenticaicodingfitness/week24_typed_decisions_jev/17_finetune_system_one/data/laya_val.jsonl",
+   "target_error": 0.05,
+   "min_abstain_n": 10
+  }
+ },
+ "trained": "2026-10-17 23:24",
+ "_recorded_at": "2026-10-17"
+}

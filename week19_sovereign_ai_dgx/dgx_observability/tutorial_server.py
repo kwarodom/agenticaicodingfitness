@@ -3,7 +3,7 @@
 tracing a sovereign agent with Phoenix + OpenTelemetry, and running a NeMo Agent
 Toolkit (NAT) workflow against the local DGX model.
 
-    .venv/bin/python week19/dgx_observability/tutorial_server.py
+    .venv/bin/python week19_sovereign_ai_dgx/dgx_observability/tutorial_server.py
     # → http://127.0.0.1:8094
 """
 from __future__ import annotations

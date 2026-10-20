@@ -1,7 +1,7 @@
 # Week 19 — Sovereign AI on a DGX (interactive tutorial + real/simulated demos)
 #
 # Install into the repo's uv-managed .venv (Python 3.13):
-#     uv pip install -r week19/sovereign_dgx/requirements.txt
+#     uv pip install -r week19_sovereign_ai_dgx/sovereign_dgx/requirements.txt
 #
 # The demos run in two modes (auto-detected):
 #   • REAL — a live OpenAI-compatible endpoint (Ollama / vLLM / llama.cpp on this

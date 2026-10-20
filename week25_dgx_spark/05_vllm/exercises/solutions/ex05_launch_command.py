@@ -2,7 +2,7 @@
 """Exercise 05 · reference solution — write a correct vLLM launch command: memory, tool calling, and a LoRA adapter.
 
 Fill in the four TODOs, save, then run:
-    .venv/bin/python week25/05_vllm/exercises/ex05_launch_command.py
+    .venv/bin/python week25_dgx_spark/05_vllm/exercises/ex05_launch_command.py
 
 The checker is free and offline. It builds a full `docker run … vllm serve …` command from your
 functions, parses it like a shell would, and checks it against the vLLM playbook's rules and Module 01's

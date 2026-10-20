@@ -6,7 +6,7 @@ runs: scan the catalog dir, read ONLY the frontmatter metadata, and load the ful
 body on demand. The point is progressive disclosure — you measure the token cost
 of metadata-vs-body yourself, with the ~4 chars/token rule the course uses.
 
-Run:  .venv/bin/python week23/04_agent_skills/labs/lab01_author_a_skill.py
+Run:  .venv/bin/python week23_open_superintelligence_stack/04_agent_skills/labs/lab01_author_a_skill.py
 Needs: nothing — no endpoint, no GPU. Pure files, like real skills.
 """
 from __future__ import annotations

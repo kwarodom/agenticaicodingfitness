@@ -1,0 +1,43 @@
+{
+  "_about": "SYNTHETIC Alto hotel operations knowledge base for Week 30 retrieval labs. 18 short documents with titles, 18 queries, each query's gold document index. Two documents and two queries are Thai. Invented content — no real hotel, guest or vendor.",
+  "docs": [
+    {"title": "Chiller plant efficiency alarm", "text": "If the chiller plant runs above 0.85 kW per refrigeration ton for more than 30 minutes, raise a P2 work order and check condenser water temperature and tube fouling first."},
+    {"title": "AHU condensate leak", "text": "Water pooling under an air handling unit usually means a blocked condensate drain pan or trap. Isolate the unit, put out wet-floor signs and clear the drain before restarting."},
+    {"title": "Smoke in the plant room", "text": "Any smoke or haze in a plant room is a fire event: press the nearest call point, evacuate, call security on extension 2222 and do not try to find the source yourself."},
+    {"title": "Guest room too hot", "text": "When a guest reports the room is too warm, check the thermostat setpoint and fan coil status on the BMS, then send an engineer within 15 minutes if the room is above 26 degrees."},
+    {"title": "Towel and amenity requests", "text": "Housekeeping handles towel, pillow and toiletry requests. Log them in the guest app and deliver within 20 minutes; no engineer is needed."},
+    {"title": "Supplier bank detail changes", "text": "Never pay an invoice that asks you to change the supplier's bank account. Call the supplier on the number already on file and get finance director approval first."},
+    {"title": "Bathroom flooding", "text": "For water flooding a guest bathroom, send an engineer immediately, shut the room's isolation valve and offer the guest a room move."},
+    {"title": "Cooling tower water treatment", "text": "Cooling tower water is dosed against Legionella every week. Keep the biocide log signed and test conductivity before each blowdown."},
+    {"title": "Pool pump trip", "text": "If the swimming pool circulation pump trips, reset it once at the MCC panel. If it trips again, close the pool and call the pool contractor."},
+    {"title": "Lift entrapment", "text": "When a guest is stuck in a lift, keep talking to them on the intercom, call the lift company's 24-hour line and never try to open the doors yourself."},
+    {"title": "Kitchen exhaust grease", "text": "Kitchen exhaust hoods and ducts must be degreased every three months to reduce fire risk; keep the cleaning certificate in the fire file."},
+    {"title": "Generator weekly test", "text": "Run the standby generator on load for 30 minutes every Monday morning and record oil pressure, coolant temperature and fuel level."},
+    {"title": "Guest Wi-Fi outage", "text": "If guest Wi-Fi is down across several floors, restart the core switch only after IT approval and post a notice in the lobby."},
+    {"title": "Noise complaint at night", "text": "For noise complaints after 10 pm, the duty manager calls the noisy room first, then visits with security if it continues."},
+    {"title": "Energy saving in unsold rooms", "text": "Unsold rooms are set back to 28 degrees and lights off through the BMS; occupancy sensors restore comfort within ten minutes of check-in."},
+    {"title": "Fire alarm false activation", "text": "Steam from showers can trigger room smoke detectors. Security confirms the cause on site before the fire panel is reset."},
+    {"title": "แอร์มีกลิ่นไหม้", "text": "ถ้าแขกแจ้งว่าแอร์มีกลิ่นไหม้ ให้ปิดเครื่องทันที ย้ายแขกออกจากห้อง และส่งช่างไฟฟ้าตรวจพัดลมและมอเตอร์ก่อนเปิดใช้อีกครั้ง"},
+    {"title": "น้ำรั่วจากเพดาน", "text": "น้ำหยดจากฝ้าเพดานมักมาจากท่อน้ำเย็นของระบบแอร์ที่มีหยดน้ำเกาะ ให้วางถังรองน้ำ แจ้งช่าง และตรวจฉนวนหุ้มท่อ"}
+  ],
+  "queries": [
+    {"q": "the chillers are using too much power per ton", "gold": 0},
+    {"q": "there is water on the floor under the air handler", "gold": 1},
+    {"q": "I can see haze in the mechanical room, what do I do?", "gold": 2},
+    {"q": "guest says room 1203 is boiling hot", "gold": 3},
+    {"q": "room 812 wants two more towels", "gold": 4},
+    {"q": "a vendor emailed new bank details with their invoice", "gold": 5},
+    {"q": "the bathroom in 1507 is flooding", "gold": 6},
+    {"q": "how often do we treat cooling tower water for legionella", "gold": 7},
+    {"q": "pool pump keeps tripping", "gold": 8},
+    {"q": "someone is trapped in an elevator", "gold": 9},
+    {"q": "when should the kitchen hood ducts be cleaned", "gold": 10},
+    {"q": "backup generator test routine", "gold": 11},
+    {"q": "internet is down for guests on floors 5 to 9", "gold": 12},
+    {"q": "loud party in room 604 at midnight", "gold": 13},
+    {"q": "how do we save energy in empty rooms", "gold": 14},
+    {"q": "shower steam set off the smoke detector", "gold": 15},
+    {"q": "แขกบอกว่าแอร์ในห้องมีกลิ่นเหมือนอะไรไหม้", "gold": 16},
+    {"q": "มีน้ำหยดลงมาจากฝ้าในห้องพัก", "gold": 17}
+  ]
+}

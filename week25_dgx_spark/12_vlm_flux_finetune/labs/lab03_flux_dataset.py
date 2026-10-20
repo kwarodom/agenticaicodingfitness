@@ -9,7 +9,7 @@ data.toml with all three concepts. Step 4 validates that file the way a failed r
 
 Runs on this laptop. No Spark, no network. Lab 04 uploads the result and trains on the Spark.
 
-Run: .venv/bin/python week25/12_vlm_flux_finetune/labs/lab03_flux_dataset.py
+Run: .venv/bin/python week25_dgx_spark/12_vlm_flux_finetune/labs/lab03_flux_dataset.py
 """
 import math
 import random

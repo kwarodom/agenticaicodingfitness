@@ -1,0 +1,20 @@
+{
+ "recorded_at": "2026-10-17",
+ "request": {
+  "capability": "see",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "prompt": "You are helping a hotel engineering team. Describe what is visible in 2-3 sentences, focusing on any safety or maintenance issue. Then add one sentence starting 'Unsure:' saying what you cannot tell from the image.",
+  "media": "plantroom_smoke.jpg"
+ },
+ "response": {
+  "text": "The mechanical room contains two large chiller units and auxiliary pumps, with visible steam or smoke venting directly from the blue unit on the left. This presents a critical safety hazard, likely indicating an overheating motor, a severe pressurized pipe leak, or a potential fire condition. Immediate inspection and isolation of the affected equipment are required to prevent equipment damage or dangerous atmospheric conditions in the space. \n\nUnsure: whether the vapor is hot steam from a line rupture or smoke caused by an electrical failure in the motor housing.",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash",
+  "usage": {
+   "input_tokens": 1126,
+   "output_tokens": 101
+  },
+  "latency_ms": 3162.4
+ }
+}

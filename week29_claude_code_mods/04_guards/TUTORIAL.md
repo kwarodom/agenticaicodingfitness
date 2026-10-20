@@ -1,6 +1,6 @@
 # ▶ Mod Gym Lesson 04 — Guards: deny, hold and catch
 
-> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. These tutorials are the long form; **🏋 Mod Gym**, the panel inside Claude Code, is the short form with checks. Through the lessons you grow one lab mod, `hello-mod`; the finished version is in `week29/reference/hello-mod`.
+> Part of Week 29 · Claude Code mods. You learn to change how Claude Code itself looks and behaves, from inside the terminal you code in every day. These tutorials are the long form; **🏋 Mod Gym**, the panel inside Claude Code, is the short form with checks. Through the lessons you grow one lab mod, `hello-mod`; the finished version is in `week29_claude_code_mods/reference/hello-mod`.
 
 **What you'll actually do**
 - Stop a tool call before it runs by **answering** `tool.call` with `{ deny }`.
@@ -24,7 +24,7 @@
 The labs are already built in the repo. Three of them are **meant to fail**: they show the bug.
 
 ```text
-week29/04_guards/
+week29_claude_code_mods/04_guards/
   labs/guard-without-catch/   a guard with no .catch            (test fails: the push runs)
   labs/guard-before/          observer with .catch, then guard  (test fails: the push runs)
   labs/guard-after/           guard first, observer without it  (test passes)
@@ -98,7 +98,7 @@ test('a force push is refused when no one can answer the question', async ($, on
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/guard-without-catch
+claude plugin test week29_claude_code_mods/04_guards/labs/guard-without-catch
 ```
 
 **Expected output** (captured on this Mac; this lab is meant to fail)
@@ -143,7 +143,7 @@ Validate tells you which gating hooks have a handler:
 
 ```bash
 # on: laptop
-claude plugin validate week29/04_guards/labs/guard-after
+claude plugin validate week29_claude_code_mods/04_guards/labs/guard-after
 ```
 
 **Expected output** (captured on this Mac; the manifest lines are trimmed)
@@ -200,7 +200,7 @@ The guard has its fail-closed `.catch`. Same test as Section 3:
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/guard-before
+claude plugin test week29_claude_code_mods/04_guards/labs/guard-before
 ```
 
 **Expected output** (captured on this Mac; this lab is meant to fail)
@@ -245,7 +245,7 @@ Three fixes, each measured with the same test:
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/guard-after
+claude plugin test week29_claude_code_mods/04_guards/labs/guard-after
 ```
 
 **Expected output** (captured on this Mac)
@@ -259,13 +259,13 @@ tests/guard.test.ts:
 Ran 1 test across 1 file. [0.15s]
 ```
 
-Use A. B shows that the observer's `.catch` added nothing: a hook that throws is already skipped, so an observer already fails open without one. C works but depends on you knowing every `$` call every guard makes. `week29/reference/hello-mod` and Mod Gym itself both follow A: the guard is registered first, and the catch-all observers have no `.catch`.
+Use A. B shows that the observer's `.catch` added nothing: a hook that throws is already skipped, so an observer already fails open without one. C works but depends on you knowing every `$` call every guard makes. `week29_claude_code_mods/reference/hello-mod` and Mod Gym itself both follow A: the guard is registered first, and the catch-all observers have no `.catch`.
 
 **One more measured case: two guards on one tool.** `labs/two-guards` adds a second guard on Bash (refuse recursive deletes outside the lab), registered above the force-push guard, both with fail-closed handlers:
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/labs/two-guards
+claude plugin test week29_claude_code_mods/04_guards/labs/two-guards
 ```
 
 **Expected output** (captured on this Mac; trimmed)
@@ -353,7 +353,7 @@ test('wide recursive deletes are refused, lab deletes run', async ($, on) => {
 
 ```bash
 # on: laptop
-claude plugin test week29/04_guards/exercises/solutions/one-guard
+claude plugin test week29_claude_code_mods/04_guards/exercises/solutions/one-guard
 ```
 
 **Expected output** (captured on this Mac)

@@ -7,7 +7,7 @@ off both ways (native "think": false, OpenAI "reasoning_effort": "none") and cou
 tokens the thinking cost. Uses the Spark's Ollama when it answers, otherwise Ollama on this
 laptop as a labelled LAPTOP STAND-IN. Small requests only (≤ 200 tokens).
 
-Run: .venv/bin/python week25/03_ollama_open_webui/labs/lab02_native_vs_openai.py
+Run: .venv/bin/python week25_dgx_spark/03_ollama_open_webui/labs/lab02_native_vs_openai.py
 """
 import json
 import sys

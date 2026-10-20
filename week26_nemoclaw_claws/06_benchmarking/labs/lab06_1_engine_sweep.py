@@ -8,7 +8,7 @@ Layer 1 of 4 (research tutorial Part 5, Lab 5.1). Three parts:
      Other labs may share this Ollama, so its numbers are noisy. They teach the method; they are not Spark numbers.
 The third-party Spark figures from the research tutorial are printed with their sources, never as your results.
 
-Run: .venv/bin/python week26/06_benchmarking/labs/lab06_1_engine_sweep.py [--model gemma3:4b] [--max-tokens 96]
+Run: .venv/bin/python week26_nemoclaw_claws/06_benchmarking/labs/lab06_1_engine_sweep.py [--model gemma3:4b] [--max-tokens 96]
 """
 import argparse
 import sys

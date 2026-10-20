@@ -14,7 +14,7 @@ PROTOTYPE → ✅ SEE IT  (trace every step)
            → ✅ AFFORD IT (budget + circuit breaker)  → PRODUCTION
 ```
 
-> 📁 Class repo: `week10/README.md` — a 5-notebook Support Ticket Routing System that builds exactly this: supervisor → HITL → checkpointing → tracing → SDK hybrid.
+> 📁 Class repo: `week10_production_observability/README.md` — a 5-notebook Support Ticket Routing System that builds exactly this: supervisor → HITL → checkpointing → tracing → SDK hybrid.
 
 ---
 
@@ -47,7 +47,7 @@ if os.getenv("LANGSMITH_API_KEY"):
 
 That's it — every node's inputs, outputs, latency, token count, and state diff now show up in the LangSmith UI, no per-call wiring. The Week 10 lab uses this to diff a **weak** prompt against a **strong** one and *see* which tickets flipped category.
 
-> 📁 Class repo: `week10/notebooks/04_langsmith.py` — turn tracing on, run two prompts, compare runs. Solution `week10/solutions/04_langsmith_solution.py` adds a 20-ticket eval set and an accuracy report (links to `agent-evaluation`).
+> 📁 Class repo: `week10_production_observability/notebooks/04_langsmith.py` — turn tracing on, run two prompts, compare runs. Solution `week10_production_observability/solutions/04_langsmith_solution.py` adds a 20-ticket eval set and an accuracy report (links to `agent-evaluation`).
 
 ### OpenTelemetry GenAI conventions — the vendor-neutral standard
 
@@ -118,7 +118,7 @@ for c in memory.list(config):
 
 Kill the Python process after the interrupt fires, restart, re-invoke with the same `thread_id` — the graph resumes from the checkpoint. That is the difference between an in-memory toy and something you can run in production.
 
-> 📁 Class repo: `week10/notebooks/03_checkpointing.py` — draft → `human_approval` (interrupt) → send, persisted to `checkpoints.db`. Solution `week10/solutions/03_checkpointing_solution.py` adds the `edit` path, history inspection, and a restart-survival demo.
+> 📁 Class repo: `week10_production_observability/notebooks/03_checkpointing.py` — draft → `human_approval` (interrupt) → send, persisted to `checkpoints.db`. Solution `week10_production_observability/solutions/03_checkpointing_solution.py` adds the `edit` path, history inspection, and a restart-survival demo.
 
 > 💡 In-memory checkpointers lose everything on restart; `SqliteSaver` survives a single host. For workflows that span services or wait *days*, a durable-execution engine (Temporal, Postgres-backed savers) is the next rung — same idea, bigger blast radius.
 
@@ -292,4 +292,4 @@ run("clean up old rows")
 
 **Pass = 4 / 5 criteria.** (Criteria 1 and 2 are non-negotiable — a "production" agent that can neither be *stopped* nor *capped* fails regardless of the rest.)
 
-**Stretch:** swap the auto-reject `approve()` for a real LangGraph `interrupt()` + `SqliteSaver` using `week10/notebooks/03_checkpointing.py` as the template, then kill and restart the process to prove the run resumes from disk.
+**Stretch:** swap the auto-reject `approve()` for a real LangGraph `interrupt()` + `SqliteSaver` using `week10_production_observability/notebooks/03_checkpointing.py` as the template, then kill and restart the process to prove the run resumes from disk.

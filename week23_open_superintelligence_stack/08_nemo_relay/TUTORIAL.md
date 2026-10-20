@@ -1,5 +1,5 @@
 # ▶ Hands-on Lab 08 — NeMo Relay: observe, trace, right-size, export
-> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23/08_nemo_relay/tutorial_server.py` → http://127.0.0.1:8107. This lab is the DO-IT side: you type the commands, you see the output.
+> Part of Week 23 · The Open Superintelligence Stack. Companion explainer app: `.venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/tutorial_server.py` → http://127.0.0.1:8107. This lab is the DO-IT side: you type the commands, you see the output.
 
 **What you'll actually do**
 - Build a ~40-line relay that captures a REAL agent turn (tool + LLM calls) as telemetry spans with measured latency and token counts.
@@ -50,7 +50,7 @@ Goal: the demos *show* spans; here you *make* them — a mini agent turn (tool �
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/08_nemo_relay/labs/lab01_build_a_relay.py
+.venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab01_build_a_relay.py
 ```
 
 Expected output (abbreviated; your numbers WILL differ — they're measured):
@@ -63,7 +63,7 @@ Expected output (abbreviated; your numbers WILL differ — they're measured):
 ...
   │   llm · summarize              │ llm   │  2223 ms │ $0.000017 │
   │ hermes-turn                    │ agent │  2225 ms │ $0.000000 │
-✓ OTel-shaped trace written → .../week23/08_nemo_relay/.sandbox/trace_lab01.json
+✓ OTel-shaped trace written → .../week23_open_superintelligence_stack/08_nemo_relay/.sandbox/trace_lab01.json
 ```
 ✓ Checkpoint: you should now have `.sandbox/trace_lab01.json` — a real trace in OTel `resourceSpans` shape, with `gen_ai.usage.*` token counts pulled from the actual API response. Lab03 exports this file.
 
@@ -116,7 +116,7 @@ Goal: write the router instead of reading about it — a heuristic classifier pi
 ollama pull gemma3:12b     # any small direct-answer model works
 
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/08_nemo_relay/labs/lab02_rightsize_router.py
+.venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab02_rightsize_router.py
 ```
 
 Expected output (abbreviated, measured):
@@ -138,7 +138,7 @@ Goal: do one real leg of the exporter fan-out — POST lab01's trace to Phoenix 
 
 ```bash
 cd /Users/altodev/Desktop/agenticaicodingfitness
-.venv/bin/python week23/08_nemo_relay/labs/lab03_otel_export.py
+.venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab03_otel_export.py
 # Phoenix on another host?  PHOENIX_ENDPOINT=http://<spark>:6006 .venv/bin/python ...
 ```
 
@@ -154,9 +154,9 @@ Expected output (abbreviated):
 ✓ Checkpoint: you should now see your lab01 span tree inside the Phoenix UI (project *default*), plus curated JSONL lines on stdout. Swap the endpoint and the same OTLP doc would feed Datadog or LangSmith — one instrumentation, many backends, which is the entire Relay pitch.
 
 ## Labs (run these)
-- **labs/lab01_build_a_relay.py** — a minimal relay records a real tool→LLM→tool turn as spans, prints a Phoenix-style tree from measured numbers, and writes the trace as OTel JSON. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/08_nemo_relay/labs/lab01_build_a_relay.py`. Look for: the llm span dwarfing the tool spans, and `gen_ai.usage.*` tokens taken from the response, not guessed. **Modify it:** add a second `llm_step` with a different prompt and confirm two llm spans appear in the tree and in the JSON.
-- **labs/lab02_rightsize_router.py** — a heuristic router classifies easy/medium/hard, picks small/big backends from your live endpoint, makes the real calls, and prices routed vs always-big. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/08_nemo_relay/labs/lab02_rightsize_router.py`. Look for: which model each request was routed to and the cost delta. **Modify it:** add a fourth request that *should* be easy but contains the word "why" — watch the heuristic misroute it, then fix `route()`.
-- **labs/lab03_otel_export.py** — POSTs lab01's trace to Phoenix over OTLP-HTTP and curates slow/expensive spans into JSONL. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23/08_nemo_relay/labs/lab03_otel_export.py`. Look for: the HTTP 200 from Phoenix and which spans got flagged and why. **Modify it:** lower `SLOW_MS` to 100 and re-run — nearly every span becomes a "candidate", which is the curation-threshold lesson in one line.
+- **labs/lab01_build_a_relay.py** — a minimal relay records a real tool→LLM→tool turn as spans, prints a Phoenix-style tree from measured numbers, and writes the trace as OTel JSON. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab01_build_a_relay.py`. Look for: the llm span dwarfing the tool spans, and `gen_ai.usage.*` tokens taken from the response, not guessed. **Modify it:** add a second `llm_step` with a different prompt and confirm two llm spans appear in the tree and in the JSON.
+- **labs/lab02_rightsize_router.py** — a heuristic router classifies easy/medium/hard, picks small/big backends from your live endpoint, makes the real calls, and prices routed vs always-big. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab02_rightsize_router.py`. Look for: which model each request was routed to and the cost delta. **Modify it:** add a fourth request that *should* be easy but contains the word "why" — watch the heuristic misroute it, then fix `route()`.
+- **labs/lab03_otel_export.py** — POSTs lab01's trace to Phoenix over OTLP-HTTP and curates slow/expensive spans into JSONL. Run: `cd /Users/altodev/Desktop/agenticaicodingfitness && .venv/bin/python week23_open_superintelligence_stack/08_nemo_relay/labs/lab03_otel_export.py`. Look for: the HTTP 200 from Phoenix and which spans got flagged and why. **Modify it:** lower `SLOW_MS` to 100 and re-run — nearly every span becomes a "candidate", which is the curation-threshold lesson in one line.
 
 ## Try it yourself
 1. **Find the money span.** Run lab01 three times, then read `.sandbox/trace_lab01.json` and compute which span kind (tool vs llm) accounts for >90% of total latency.
@@ -166,7 +166,7 @@ Expected output (abbreviated):
    cd /Users/altodev/Desktop/agenticaicodingfitness
    .venv/bin/python - <<'PY'
    import json
-   doc = json.load(open("week23/08_nemo_relay/.sandbox/trace_lab01.json"))
+   doc = json.load(open("week23_open_superintelligence_stack/08_nemo_relay/.sandbox/trace_lab01.json"))
    for rs in doc["resourceSpans"]:
        for ss in rs["scopeSpans"]:
            for s in ss["spans"]:

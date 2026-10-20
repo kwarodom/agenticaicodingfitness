@@ -4,7 +4,7 @@
 Goal: a running Neo4j with 200 rooms, 400 devices, and 2000 sensor readings
 (30 days of history). Verify with 3 count queries. (smart_hotel_mas.pdf §CP1)
 
-Run:  python week15/smart_hotel_mas/checkpoints/checkpoint1_seed.py
+Run:  python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint1_seed.py
 
 Schema: constraints on Room/Device/Staff/Guest/Agent ids; indexes on
 SensorReading.ts and Alert(ts,severity). Rooms across 5 floors (40/floor),

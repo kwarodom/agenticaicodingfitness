@@ -15,7 +15,7 @@
 
 | Need | Check | Why |
 |---|---|---|
-| Module 09, labs 02–03 run on the laptop | `ls week25/09_llama_factory/data week25/09_llama_factory/configs` | this module reuses that dataset and YAML |
+| Module 09, labs 02–03 run on the laptop | `ls week25_dgx_spark/09_llama_factory/data week25_dgx_spark/09_llama_factory/configs` | this module reuses that dataset and YAML |
 | Docker with GPU support on the Spark | `docker info --format '{{json .Runtimes}}'` shows `nvidia` | the playbook runs in a container |
 | ~20 GB free on the Spark | `df -h ~` | the container image plus the models |
 | No other training job running | `pgrep -af llamafactory-cli`, `docker ps` | timings are only comparable one job at a time |
@@ -23,13 +23,13 @@
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-ls week25/09_llama_factory/data week25/09_llama_factory/configs
+ls week25_dgx_spark/09_llama_factory/data week25_dgx_spark/09_llama_factory/configs
 ```
 
 **Expected output** (captured on this Mac)
 
 ```
-week25/09_llama_factory/configs:
+week25_dgx_spark/09_llama_factory/configs:
 hotel_chat.yaml
 hotel_full_sft.yaml
 hotel_lora_sft.yaml
@@ -37,7 +37,7 @@ hotel_merge.yaml
 hotel_predict.yaml
 hotel_qlora_sft.yaml
 
-week25/09_llama_factory/data:
+week25_dgx_spark/09_llama_factory/data:
 dataset_info.json
 hotel_ops.json
 hotel_ops_eval.json
@@ -89,8 +89,8 @@ An interactive `-it` container does not work under `nohup`, because there is no 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/labs/lab01_unsloth_validate.py
-SPARK_APPLY=1 .venv/bin/python week25/10_unsloth/labs/lab01_unsloth_validate.py   # pull, then run (re-run to follow)
+.venv/bin/python week25_dgx_spark/10_unsloth/labs/lab01_unsloth_validate.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab01_unsloth_validate.py   # pull, then run (re-run to follow)
 ```
 
 **Expected output** (captured on this Mac, DRY mode)
@@ -126,7 +126,7 @@ A comparison is only worth something if the two runs differ in **one** thing: th
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/labs/lab02_hotel_unsloth.py
+.venv/bin/python week25_dgx_spark/10_unsloth/labs/lab02_hotel_unsloth.py
 ```
 
 **Expected output** (captured on this Mac)
@@ -167,7 +167,7 @@ Launch it when you are ready (one job at a time: the lab refuses if another trai
 
 ```bash
 # on: laptop
-SPARK_APPLY=1 .venv/bin/python week25/10_unsloth/labs/lab02_hotel_unsloth.py
+SPARK_APPLY=1 .venv/bin/python week25_dgx_spark/10_unsloth/labs/lab02_hotel_unsloth.py
 ```
 
 The command it runs on the Spark:
@@ -186,7 +186,7 @@ tail -f ~/w25/logs/m10_hotel_lora.log
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/labs/lab03_compare_frameworks.py
+.venv/bin/python week25_dgx_spark/10_unsloth/labs/lab03_compare_frameworks.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode: step 1 compares the real config files, step 4's scorer runs on an EXAMPLE — synthetic predictions edited by hand, not a model's output)
@@ -261,7 +261,7 @@ Lab 02 steps 1–3 and lab 03 steps 1, 2 and 4 run on the laptop for real. The r
 
 ## Try it yourself
 
-**Exercise 10 — make an unfair comparison fair.** Open `week25/10_unsloth/exercises/ex10_fair_comparison.py`. A teammate reported "Unsloth is 2× faster and has lower loss" from a run whose settings came from a notebook. Four settings differ from Module 09. The checker reads Module 09's **real** YAML and tells you which ones:
+**Exercise 10 — make an unfair comparison fair.** Open `week25_dgx_spark/10_unsloth/exercises/ex10_fair_comparison.py`. A teammate reported "Unsloth is 2× faster and has lower loss" from a run whose settings came from a notebook. Four settings differ from Module 09. The checker reads Module 09's **real** YAML and tells you which ones:
 
 1. LoRA `r` / `lora_alpha`.
 2. The effective batch (`per_device_train_batch_size × gradient_accumulation_steps`).
@@ -270,7 +270,7 @@ Lab 02 steps 1–3 and lab 03 steps 1, 2 and 4 run on the laptop for real. The r
 
 ```bash
 # on: laptop
-.venv/bin/python week25/10_unsloth/exercises/ex10_fair_comparison.py
+.venv/bin/python week25_dgx_spark/10_unsloth/exercises/ex10_fair_comparison.py
 ```
 
 **Expected output** (once all four TODOs are fixed; captured on this Mac)

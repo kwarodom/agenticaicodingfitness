@@ -23,4 +23,4 @@ max_tokens=256,
 messages=[{'role': 'user', 'content': 'Hello!'}],
 )
 
-print(resp.content[0].text)
+print("".join(b.text for b in resp.content if getattr(b, "type", None) == "text"))

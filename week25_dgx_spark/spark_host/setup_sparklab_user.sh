@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-time, on the Spark: create the shared `sparklab` account that every Spark Lab Runner laptop
 # ssh-es into (SPARK_HOST=sparklab@<spark>.<tailnet>.ts.net). Key-only login; docker + GPU access.
-#   sudo week25/spark_host/setup_sparklab_user.sh
+#   sudo week25_dgx_spark/spark_host/setup_sparklab_user.sh
 # NOTE: docker group membership is root-equivalent on this host. Only add keys of people you trust.
 set -euo pipefail
 [[ $EUID -eq 0 ]] || { echo "run with sudo" >&2; exit 1; }
@@ -39,4 +39,4 @@ echo
 echo "✓ $U ready. Next:"
 echo "  sudo -u $U -H bash -lc '~/.local/bin/hf auth login'        # read-only HF token"
 echo "  sudo -u $U -H docker login nvcr.io -u '\$oauthtoken'        # NGC API key as password"
-echo "  sudo week25/spark_host/add_key.sh <student.pub>             # once per laptop"
+echo "  sudo week25_dgx_spark/spark_host/add_key.sh <student.pub>             # once per laptop"

@@ -19,15 +19,15 @@ Capstone นี้ใช้ทุกอย่างจาก Module 02–07 แ�
 
 | ต้องมี | ตรวจด้วย | ใช้ทำอะไร |
 |---|---|---|
-| เครื่องมือ Week 26 บน laptop | `week26/.venv-nat/bin/nat --version` → 1.9.0 · `week26/.venv-openshell/bin/openshell --version` → 0.0.111 | `nat validate`, `nat eval`, `nat mcp client` และตัว parse policy แบบออฟไลน์ |
+| เครื่องมือ Week 26 บน laptop | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` → 1.9.0 · `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` → 0.0.111 | `nat validate`, `nat eval`, `nat mcp client` และตัว parse policy แบบออฟไลน์ |
 | Ollama บน laptop | pull `nemotron-3-nano:latest` ไว้แล้ว | agent ตัวแทนบน laptop ใน lab 08-2 (เรียก LLM ราว 6 ครั้ง) |
 | DGX Spark (สำหรับ 60 คะแนน) | ติดตั้ง NemoClaw แล้ว (Module 02), `openshell --version` → 0.0.116, vLLM จาก Lab 3.2 ที่ `:8000`, NAT บน host (Lab 3.1), Docker | sandbox, 403, Phoenix, eval บน Nano และ Super, sandbox tax |
 | IP ในวง LAN ของเครื่องต่าง ๆ | `hostname -I` บน Spark | policy ล็อก host ภายในไว้ที่ `/32` |
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
-week26/.venv-openshell/bin/openshell --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-openshell/bin/openshell --version
 curl -s http://localhost:11434/api/version
 ```
 
@@ -73,7 +73,7 @@ Capstone ใน research tutorial ให้คุณสร้างและจ�
 ทุกอย่างรวมอยู่ใน bundle เดียว ซึ่ง lab 08-1 สร้างให้:
 
 ```text
-week26/08_capstone_alto_ops_claw/.runs/alto-ops-claw-v1/        → ~/alto-ops-claw-v1 on the Spark
+week26_nemoclaw_claws/08_capstone_alto_ops_claw/.runs/alto-ops-claw-v1/        → ~/alto-ops-claw-v1 on the Spark
   Dockerfile                 Lab 3.8 + phoenix,ragas extras + the eval config baked in
   workflow.sandbox.yml       inference.local · chiller_kpi · request_setpoint_change · BMS over MCP · 3 exporters
   prod-policy.yaml           Lab 6.1 + a phoenix sink + /32 pins
@@ -105,7 +105,7 @@ Lab 08-1 ตรวจทั้งหมดนี้แบบออฟไลน�
 
 ```bash
 # on: laptop
-.venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_1_assemble.py
+.venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_1_assemble.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — excerpt) [ผลลัพธ์ที่ควรเห็น — บันทึกจาก Mac เครื่องนี้ในโหมด DRY, ตัดมาบางส่วน]
@@ -166,7 +166,7 @@ openshell sandbox list
 
 ```bash
 # on: laptop
-.venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_2_prove_the_boundary.py
+.venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_2_prove_the_boundary.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — excerpt) [ผลลัพธ์ที่ควรเห็น — บันทึกจาก Mac เครื่องนี้ในโหมด DRY, ตัดมาบางส่วน]
@@ -321,7 +321,7 @@ Lab 08-4 เขียน `.runs/RUNBOOK.md` มันวัดเวอร์ช
 
 ```bash
 # on: laptop
-.venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_4_runbook.py
+.venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_4_runbook.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — excerpt) [ผลลัพธ์ที่ควรเห็น — บันทึกจาก Mac เครื่องนี้ในโหมด DRY, ตัดมาบางส่วน]
@@ -366,11 +366,11 @@ Lab 08-4 เขียน `.runs/RUNBOOK.md` มันวัดเวอร์ช
 
 ## 8 · ให้คะแนนอย่างซื่อตรง และชุดหลักฐาน
 
-Lab 08-3 คือตัวตรวจ มันอ่านหลักฐานจาก laptop ใน `.runs/` (`assemble.json`, `laptop/boundary.json`, `runbook.json`) และตรวจว่า bundle ยังตรงกับ `MANIFEST.json` สำหรับรายการฝั่ง Spark มันจะรันคำสั่งอ่านอย่างเดียวหนึ่งคำสั่งในโหมด LIVE หรือหา transcript แบบ RECORDED ของคำสั่ง **เดียวกันทุกตัวอักษร** กับของ lab ใน `week26/common/recorded/` วิธีบันทึกคือรัน lab 08-1, 08-2 และ 08-4 บน Spark จริงพร้อม `SPARK_RECORD=1` EXAMPLE ไม่นับเป็นหลักฐาน:
+Lab 08-3 คือตัวตรวจ มันอ่านหลักฐานจาก laptop ใน `.runs/` (`assemble.json`, `laptop/boundary.json`, `runbook.json`) และตรวจว่า bundle ยังตรงกับ `MANIFEST.json` สำหรับรายการฝั่ง Spark มันจะรันคำสั่งอ่านอย่างเดียวหนึ่งคำสั่งในโหมด LIVE หรือหา transcript แบบ RECORDED ของคำสั่ง **เดียวกันทุกตัวอักษร** กับของ lab ใน `week26_nemoclaw_claws/common/recorded/` วิธีบันทึกคือรัน lab 08-1, 08-2 และ 08-4 บน Spark จริงพร้อม `SPARK_RECORD=1` EXAMPLE ไม่นับเป็นหลักฐาน:
 
 ```bash
 # on: laptop
-.venv/bin/python week26/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py
+.venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/labs/lab08_3_evidence_and_grade.py
 ```
 
 **Expected output** (captured on this Mac, DRY mode — excerpt) [ผลลัพธ์ที่ควรเห็น — บันทึกจาก Mac เครื่องนี้ในโหมด DRY, ตัดมาบางส่วน]
@@ -392,7 +392,7 @@ Lab 08-3 คือตัวตรวจ มันอ่านหลักฐา�
 
 Sovereign tier (§6.6) คือเหตุผลที่มี capstone นี้ ประเด็นที่ใช้คุยมีสามข้อ: ข้อมูลไม่ออกนอกอาคาร เพราะเส้นทาง inference มีทางเดียวคือ provider ในองค์กร ทุกการตัดสินใจด้านเครือข่ายถูกบันทึก และสิทธิ์การเขียนไม่มีอยู่ในโครงสร้างของ agent ตั้งแต่ต้น ทุกข้ออ้างต้องมีหลักฐานที่คนอื่นตรวจซ้ำได้ Exercise 08 สร้างรายการหลักฐานนั้น
 
-✓ Checkpoint: คุณอธิบายได้ว่าทำไมการรันแบบ DRY ได้ 30/90 และไม่ได้มากกว่านั้น และการรันบน Spark จริงต้องทิ้งไฟล์อะไรไว้ใน `week26/common/recorded/` จึงจะได้คะแนน
+✓ Checkpoint: คุณอธิบายได้ว่าทำไมการรันแบบ DRY ได้ 30/90 และไม่ได้มากกว่านั้น และการรันบน Spark จริงต้องทิ้งไฟล์อะไรไว้ใน `week26_nemoclaw_claws/common/recorded/` จึงจะได้คะแนน
 
 ## Labs — run them here
 
@@ -414,7 +414,7 @@ Sovereign tier (§6.6) คือเหตุผลที่มี capstone น�
 
 ```bash
 # on: laptop
-.venv/bin/python week26/08_capstone_alto_ops_claw/exercises/ex08_evidence_pack.py
+.venv/bin/python week26_nemoclaw_claws/08_capstone_alto_ops_claw/exercises/ex08_evidence_pack.py
 ```
 
 **Expected output** (captured on this Mac, all TODOs filled) [ผลลัพธ์ที่ควรเห็น — บันทึกจาก Mac เครื่องนี้ เมื่อทำ TODO ครบ]
@@ -471,5 +471,5 @@ Sandbox ที่สร้างด้วย `openshell sandbox create` ไม�
 จบคอร์สแล้ว: คุณมี claw ที่สร้างได้ กำหนดขอบเขตได้ สังเกตการทำงานได้ วัดผลได้ ดูแลได้ และตอบคำถามผู้ตรวจสอบได้ ต่อจากนี้ไปทางไหนได้บ้าง:
 
 - กลับไปที่ [Lab 01 — What is a claw?](../01_what_is_a_claw/TUTORIAL.md) แล้วอ่านย่อหน้า "sandboxed is not safe" อีกครั้ง ตอนนี้คุณแสดงหลักฐานได้ทั้งสองครึ่งแล้ว
-- เปิดแอป **Alto Reef** ใน `week26/alto-reef/` ซึ่งเป็น runner แบบภาพที่คอร์สนี้เติบโตมาจากมัน แล้วดู sandbox `alto-ops` ของคุณปรากฏขึ้นเมื่อเชื่อมต่อ Spark แล้ว
+- เปิดแอป **Alto Reef** ใน `week26_nemoclaw_claws/alto-reef/` ซึ่งเป็น runner แบบภาพที่คอร์สนี้เติบโตมาจากมัน แล้วดู sandbox `alto-ops` ของคุณปรากฏขึ้นเมื่อเชื่อมต่อ Spark แล้ว
 - สร้างส่วนที่ capstone ยังไม่ได้ทำ: บริการอนุมัติ (endpoint จากแบบฝึกหัดข้อ 4 ของ Part 6 ที่ออกได้แค่ ticket ไม่มีวันอนุมัติเอง), judge ที่แข็งกว่าบน Spark เครื่องที่สอง และ edge tier ใน §6.6 ด้วย claw แบบ Restricted ที่วางข้าง BMS

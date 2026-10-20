@@ -9,7 +9,7 @@
 - เรียนรู้กฎสี่ข้อที่ทำให้เทสแรกทุกตัวในคอร์สนี้ล้ม และข้อความที่บอกว่าคุณละเมิดข้อไหน
 - type-check mod ด้วยไฟล์ประกาศที่ Claude Code เขียนให้สำหรับ build ของคุณ
 - อ่าน `claude plugin validate` แบบผู้รีวิว เพิ่ม `marketplace.json` แล้วส่งมอบ: บรรทัดติดตั้งจาก GitHub, marketplace แบบโฟลเดอร์, การเพิ่มเวอร์ชัน
-- **Capstone:** เอา starter จากงานวิจัย `week29/mod-agentic-coding-fitness` มารันผ่าน test, validate และ `tsc` แล้วแก้สิ่งที่พังจริง ๆ
+- **Capstone:** เอา starter จากงานวิจัย `week29_claude_code_mods/mod-agentic-coding-fitness` มารันผ่าน test, validate และ `tsc` แล้วแก้สิ่งที่พังจริง ๆ
 
 **Time** ~75 นาที · **Difficulty** ระดับกลาง · **Hardware** ใช้แค่แล็ปท็อปเครื่องนี้
 
@@ -24,7 +24,7 @@
 | Node (สำหรับ `tsc`) | `npx --version` | หัวข้อ 4 รัน TypeScript ผ่าน `npx` |
 | GitHub repo (ไม่บังคับ) | `gh auth status` | ใช้แค่ตอนเผยแพร่ในหัวข้อ 6 |
 
-lab mod ที่ทำเสร็จแล้วพร้อมเทสอยู่ที่ `week29/reference/hello-mod` เปิดเทียบได้ทุกครั้งที่ติด
+lab mod ที่ทำเสร็จแล้วพร้อมเทสอยู่ที่ `week29_claude_code_mods/reference/hello-mod` เปิดเทียบได้ทุกครั้งที่ติด
 
 ## 1 · ชุดเทส: คุณรับบทเป็น Claude Code
 
@@ -72,7 +72,7 @@ test('reps saved by an earlier session are loaded from $.store', async ($, on) =
 claude plugin test ~/mod-gym-lab/hello-mod
 ```
 
-**Expected output** (บันทึกบน Mac เครื่องนี้กับ `week29/reference/hello-mod` ซึ่งมีเทสเพิ่มอีกสองตัว: guard และ context ของ prompt)
+**Expected output** (บันทึกบน Mac เครื่องนี้กับ `week29_claude_code_mods/reference/hello-mod` ซึ่งมีเทสเพิ่มอีกสองตัว: guard และ context ของ prompt)
 
 ```
 tests/hello-mod.test.ts:
@@ -136,7 +136,7 @@ test('a force push is refused when no one can answer the question (the guard fai
 
 ## 3 · เทส UI: mount pane แล้วกดปุ่มของมัน
 
-`$.ui.mount` วาด component ผ่าน plugin ของคุณบน surface ที่คุณระบุ แล้วให้คุณสั่งงานมันด้วย `key` เทสของ Mod Gym เอง (`week29/mod-gym/tests/mod-gym.test.ts`) วนผ่านสอง surface:
+`$.ui.mount` วาด component ผ่าน plugin ของคุณบน surface ที่คุณระบุ แล้วให้คุณสั่งงานมันด้วย `key` เทสของ Mod Gym เอง (`week29_claude_code_mods/mod-gym/tests/mod-gym.test.ts`) วนผ่านสอง surface:
 
 ```ts
 for (const surface of ['terminal', 'desktop'] as const) {
@@ -230,11 +230,11 @@ warning ไม่ทำให้ validate ล้ม error ทำ error อีก
 
 เขาตอบ `y` เพื่อเพิ่ม marketplace แล้วเลือก scope mod ที่มีแค่ hooks module จะทำงานทันที
 
-**จากโฟลเดอร์ (วิธีที่ Mod Gym ติดตั้งบนเครื่องของผู้สอน)** marketplace เป็นโฟลเดอร์ได้ `week29/.claude-plugin/marketplace.json` คือหนึ่งในนั้น มันระบุ `mod-gym` (`./mod-gym`) และ `hello-mod` ตัว reference (`./reference/hello-mod`):
+**จากโฟลเดอร์ (วิธีที่ Mod Gym ติดตั้งบนเครื่องของผู้สอน)** marketplace เป็นโฟลเดอร์ได้ `week29_claude_code_mods/.claude-plugin/marketplace.json` คือหนึ่งในนั้น มันระบุ `mod-gym` (`./mod-gym`) และ `hello-mod` ตัว reference (`./reference/hello-mod`):
 
 ```bash
 # on: laptop — do this once, from the repo root
-claude plugin marketplace add ./week29
+claude plugin marketplace add ./week29_claude_code_mods
 claude plugin install mod-gym@fitness-week29 --scope user
 claude plugin list
 ```
@@ -244,7 +244,7 @@ claude plugin list
 ```
   ❯ mod-gym@fitness-week29
     Version: 0.1.0
-    Read from: /Users/altodev/Desktop/agenticaicodingfitness/week29/mod-gym
+    Read from: /Users/altodev/Desktop/agenticaicodingfitness/week29_claude_code_mods/mod-gym
     Scope: user
     Status: ✔ enabled
 ```
@@ -256,7 +256,7 @@ claude plugin list
 **marketplace ของคลาส** `.claude-plugin/marketplace.json` ที่ root ของ repo (marketplace `agentic-coding-fitness` ตัวที่นักเรียนเพิ่มไว้แล้ว) ตอนนี้มีสอง plugin:
 
 ```
-[('agentic-coding-fitness', './plugins/agentic-coding-fitness'), ('mod-gym', './week29/mod-gym')]
+[('agentic-coding-fitness', './plugins/agentic-coding-fitness'), ('mod-gym', './week29_claude_code_mods/mod-gym')]
 ```
 
 เมื่อ push แล้ว นักเรียนรัน `/plugin marketplace update agentic-coding-fitness` แล้วตามด้วย `/plugin install mod-gym@agentic-coding-fitness`
@@ -267,11 +267,11 @@ claude plugin list
 
 ## 7 · Capstone: ตรวจ starter จากงานวิจัย
 
-`week29/mod-agentic-coding-fitness` คือ starter v3.0.0 จากงานวิจัยของสัปดาห์นี้: pane ติดตามความคืบหน้า `/fitness`, `/fitness-log`, `/fitness-grade`, tool `log_lab` และการบันทึกอัตโนมัติเมื่อ `pytest` รันผ่าน ผู้เขียนเขียนมันจากเอกสารและบอกไว้ตรง ๆ: *"The starter `register.js` and tests were not executed against a live Claude Code."* งานของคุณ: ทำให้มันผ่าน test, validate **และ** `tsc` โดยแก้เฉพาะสิ่งที่ผิดจริง ทำบนสำเนา ปล่อยต้นฉบับไว้ตามเดิม
+`week29_claude_code_mods/mod-agentic-coding-fitness` คือ starter v3.0.0 จากงานวิจัยของสัปดาห์นี้: pane ติดตามความคืบหน้า `/fitness`, `/fitness-log`, `/fitness-grade`, tool `log_lab` และการบันทึกอัตโนมัติเมื่อ `pytest` รันผ่าน ผู้เขียนเขียนมันจากเอกสารและบอกไว้ตรง ๆ: *"The starter `register.js` and tests were not executed against a live Claude Code."* งานของคุณ: ทำให้มันผ่าน test, validate **และ** `tsc` โดยแก้เฉพาะสิ่งที่ผิดจริง ทำบนสำเนา ปล่อยต้นฉบับไว้ตามเดิม
 
 ```bash
 # on: laptop
-cp -R week29/mod-agentic-coding-fitness ~/mod-gym-lab/starter && find ~/mod-gym-lab/starter -name .DS_Store -delete
+cp -R week29_claude_code_mods/mod-agentic-coding-fitness ~/mod-gym-lab/starter && find ~/mod-gym-lab/starter -name .DS_Store -delete
 claude plugin validate ~/mod-gym-lab/starter
 cd ~/mod-gym-lab/starter && claude plugin test .
 ```

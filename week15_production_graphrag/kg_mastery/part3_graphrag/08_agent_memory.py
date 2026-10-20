@@ -19,7 +19,7 @@ no LangChain — so you can see exactly what Cypher each memory operation runs.
 Requires:
   - (nothing beyond the project: neo4j driver via common.get_driver)
 
-Run:  python week15/kg_mastery/part3_graphrag/08_agent_memory.py
+Run:  python week15_production_graphrag/kg_mastery/part3_graphrag/08_agent_memory.py
 """
 import sys
 from pathlib import Path

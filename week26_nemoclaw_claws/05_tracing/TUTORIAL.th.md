@@ -20,17 +20,17 @@
 
 | สิ่งที่ต้องมี | วิธีตรวจ | ทำไม |
 |---|---|---|
-| venv ของ NAT บนแล็ปท็อป | `week26/.venv-nat/bin/nat --version` → 1.9.0 | agent trace ทุกอันในโมดูลนี้มาจากการรัน NAT จริง |
+| venv ของ NAT บนแล็ปท็อป | `week26_nemoclaw_claws/.venv-nat/bin/nat --version` → 1.9.0 | agent trace ทุกอันในโมดูลนี้มาจากการรัน NAT จริง |
 | Ollama บนแล็ปท็อปที่มี `nemotron-3-nano:latest` | `curl -s localhost:11434/v1/models` | โมเดล LAPTOP STAND-IN ที่อยู่เบื้องหลัง Alto Ops Claw (ประมาณ 10–20 วินาทีต่อการเรียก LLM หนึ่งครั้ง) |
-| CLI ของ OpenShell บนแล็ปท็อป | `week26/.venv-openshell/bin/openshell --version` → 0.0.111 | ใช้ parse คำสั่งของระนาบ policy แบบออฟไลน์ |
+| CLI ของ OpenShell บนแล็ปท็อป | `week26_nemoclaw_claws/.venv-openshell/bin/openshell --version` → 0.0.111 | ใช้ parse คำสั่งของระนาบ policy แบบออฟไลน์ |
 | Docker daemon (ไม่บังคับ) | `docker info` | ใช้เฉพาะ Phoenix และ OTel collector บนแล็ปท็อป ถ้าไม่มี ส่วนนั้นจะถูกข้ามไป ไม่มีการปลอมผลลัพธ์ |
 | DGX Spark (ไม่บังคับ) | `ssh -o BatchMode=yes <spark> true` | ดู policy log ของ claw ที่อยู่ใน sandbox ถ้าไม่มี Spark ก็รันแบบ DRY |
 
-Module 04 สร้าง Alto Ops Claw ไว้แล้ว: เป็น `tool_calling_agent` ของ NAT ที่มี tool ชื่อ `chiller_kpi` โมดูลนี้คือการเฝ้าดูมันทำงาน ทุกแล็บเขียนไฟล์ไว้ที่ `week26/05_tracing/.runs/`
+Module 04 สร้าง Alto Ops Claw ไว้แล้ว: เป็น `tool_calling_agent` ของ NAT ที่มี tool ชื่อ `chiller_kpi` โมดูลนี้คือการเฝ้าดูมันทำงาน ทุกแล็บเขียนไฟล์ไว้ที่ `week26_nemoclaw_claws/05_tracing/.runs/`
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat --version
+week26_nemoclaw_claws/.venv-nat/bin/nat --version
 curl -s localhost:11434/v1/models | head -c 200
 docker info --format '{{.ServerVersion}}'
 ```
@@ -59,7 +59,7 @@ observability ของ NAT ทำงานนอก hot path: `IntermediateStep
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat info components -t tracing
+week26_nemoclaw_claws/.venv-nat/bin/nat info components -t tracing
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้, lab 05-1 ขั้นที่ 1)
@@ -95,24 +95,24 @@ telemetry block ใน research tutorial เพิ่ม exporter `phoenix` ก�
 │ max_files        5                          
 │ cleanup_on_init  False                      
 ◆ required in 1.9.0: output_path, project — the research tutorial's `file_backup: {_type: file}` has neither (its comment says only `# path etc.`)
-$ nat validate --config_file week26/05_tracing/.runs/lab05_1_tutorial_block.yml   [this laptop]
+$ nat validate --config_file week26_nemoclaw_claws/05_tracing/.runs/lab05_1_tutorial_block.yml   [this laptop]
 ✕ research tutorial's block → exit 1 · Invalid configuration: general: Field required; general: Field required
-$ nat validate --config_file week26/05_tracing/configs/workflow.traced.yml   [this laptop]
+$ nat validate --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml   [this laptop]
 ✓ course block (output_path + project + mode) → exit 0
 ```
 
-block ของคอร์สอยู่ที่ `week26/05_tracing/configs/workflow.traced.yml` คือ config แล็ปท็อปจาก Module 04 บวกกับส่วน `general` นี้:
+block ของคอร์สอยู่ที่ `week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml` คือ config แล็ปท็อปจาก Module 04 บวกกับส่วน `general` นี้:
 
 ```yaml
 general:
   telemetry:
     logging:
       console: { _type: console, level: WARN }
-      file:    { _type: file, path: week26/05_tracing/.runs/alto_ops.log, level: DEBUG }
+      file:    { _type: file, path: week26_nemoclaw_claws/05_tracing/.runs/alto_ops.log, level: DEBUG }
     tracing:
       file_backup:
         _type: file
-        output_path: week26/05_tracing/.runs/traces/alto_ops_trace.jsonl
+        output_path: week26_nemoclaw_claws/05_tracing/.runs/traces/alto_ops_trace.jsonl
         project: alto-ops-claw
         mode: overwrite          # 1.9 default is append: one file would collect every run
 ```
@@ -122,7 +122,7 @@ general:
 ```bash
 # on: laptop
 docker run -d --name phoenix-nat -p 6006:6006 -p 4317:4317 arizephoenix/phoenix:latest
-week26/.venv-nat/bin/nat run --config_file week26/05_tracing/configs/workflow.phoenix.yml --input "Plant status last 6 hours?"
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.phoenix.yml --input "Plant status last 6 hours?"
 # open http://localhost:6006 → project alto-ops-claw
 ```
 
@@ -130,7 +130,7 @@ week26/.venv-nat/bin/nat run --config_file week26/05_tracing/configs/workflow.ph
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat run --config_file week26/05_tracing/configs/workflow.traced.yml --input "Plant status last 6 hours?"
+week26_nemoclaw_claws/.venv-nat/bin/nat run --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml --input "Plant status last 6 hours?"
 ```
 
 ไฟล์นี้เป็นแบบ **raw**: แต่ละบรรทัดคือ event `IntermediateStep` หนึ่งตัว ไม่ใช่ OpenTelemetry span ที่เสร็จสมบูรณ์ บรรทัดส่วนใหญ่เป็น `LLM_NEW_TOKEN` (หนึ่งบรรทัดต่อหนึ่ง token ที่ stream ออกมา) span หนึ่งตัวคือ `*_START` กับ `*_END` ที่ใช้ UUID เดียวกัน `tracekit.py` ของคอร์สจับคู่ให้:
@@ -191,8 +191,8 @@ OpenTelemetry collector คือ OTLP endpoint ธรรมดา NAT, OpenClaw
 
 ```bash
 # on: laptop
-cat week26/05_tracing/configs/otelcollectorconfig.yaml
-cd week26/05_tracing/.runs/otel
+cat week26_nemoclaw_claws/05_tracing/configs/otelcollectorconfig.yaml
+cd week26_nemoclaw_claws/05_tracing/.runs/otel
 docker run -d -v $(pwd)/otelcollectorconfig.yaml:/etc/otelcol-contrib/config.yaml \
   -p 4318:4318 -v $(pwd)/otellogs:/otellogs/ otel/opentelemetry-collector-contrib:0.128.0
 ```
@@ -227,7 +227,7 @@ lab 05-2 validate config นี้จริง แล้วตรวจว่า
 **Expected output** (บันทึกจาก Mac เครื่องนี้, lab 05-2 ขั้นที่ 2–3)
 
 ```
-$ nat validate --config_file week26/05_tracing/.runs/otel/workflow.otel.yml   [this laptop]
+$ nat validate --config_file week26_nemoclaw_claws/05_tracing/.runs/otel/workflow.otel.yml   [this laptop]
 ✓ nat validate → exit 0
 $ docker info --format '{{.ServerVersion}}'   [this laptop]
 ⚠ the Docker daemon is not running here (client only, or not installed) → the collector is NOT started, and no collector output is shown. Start Docker Desktop and run this lab again to see it for real.
@@ -378,7 +378,7 @@ lab 05-4 parse คำสั่งทั้งสี่ด้วย CLI ของ
 
 ```bash
 # on: laptop
-week26/.venv-nat/bin/nat serve --config_file week26/05_tracing/configs/workflow.traced.yml --port 8001
+week26_nemoclaw_claws/.venv-nat/bin/nat serve --config_file week26_nemoclaw_claws/05_tracing/configs/workflow.traced.yml --port 8001
 ```
 
 ปล่อยให้มันรันค้างไว้ แล้วส่ง request จากเทอร์มินัลที่สอง:
@@ -399,12 +399,12 @@ curl -s -X POST 'http://localhost:8001/v1/workflow/full?filter_steps=LLM_END,TOO
 | `filter_steps=none` | ไม่มีบรรทัด `intermediate_data:` เลย ส่วนบรรทัดคำตอบเหมือนเดิม |
 | `… \| grep -c '"type":"LLM_END"'` | `2` คำสั่งตรวจบน Spark ด้านล่างจึงใช้ได้ตามที่เขียนไว้ |
 
-`nat serve` ต้องมีแพ็กเกจ `greenlet` ใน `week26/.venv-nat` เพราะ FastAPI front end ของ NAT 1.9.0 import async job store (SQLAlchemy asyncio) ตั้งแต่ตอนเริ่ม ถ้าไม่มี เซิร์ฟเวอร์จะปิดตัวก่อนพร้อมใช้งาน ติดตั้งครั้งเดียวด้วย `uv pip install --python week26/.venv-nat/bin/python greenlet` ถ้า `nat serve` ยังเปิดไม่ขึ้น lab 05-5 จะบอกสาเหตุ แล้วเปลี่ยนไปเรียก function ของ route ตัวเดียวกัน (`generate_streaming_response_full`) แบบ in-process ผ่าน `week26/05_tracing/fullstream.py` และติดป้ายผลลัพธ์ไว้ตามนั้น
+`nat serve` ต้องมีแพ็กเกจ `greenlet` ใน `week26_nemoclaw_claws/.venv-nat` เพราะ FastAPI front end ของ NAT 1.9.0 import async job store (SQLAlchemy asyncio) ตั้งแต่ตอนเริ่ม ถ้าไม่มี เซิร์ฟเวอร์จะปิดตัวก่อนพร้อมใช้งาน ติดตั้งครั้งเดียวด้วย `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` ถ้า `nat serve` ยังเปิดไม่ขึ้น lab 05-5 จะบอกสาเหตุ แล้วเปลี่ยนไปเรียก function ของ route ตัวเดียวกัน (`generate_streaming_response_full`) แบบ in-process ผ่าน `week26_nemoclaw_claws/05_tracing/fullstream.py` และติดป้ายผลลัพธ์ไว้ตามนั้น
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้, lab 05-5 ขั้นที่ 1–3 บางส่วน · โมเดล LAPTOP STAND-IN)
 
 ```
-$ nat serve --config_file week26/05_tracing/.runs/lab05_5_workflow.yml --port 8001 &   [this laptop, background → lab05_5_nat_serve.log]
+$ nat serve --config_file week26_nemoclaw_claws/05_tracing/.runs/lab05_5_workflow.yml --port 8001 &   [this laptop, background → lab05_5_nat_serve.log]
 ✓ ready in 7.4s → http://localhost:8001/docs
 $ curl -s -X POST 'http://localhost:8001/v1/workflow/full?filter_steps=LLM_END,TOOL_END' -H 'Content-Type: application/json' -d '{"input_message": "Plant status last 6 hours?"}'   [this laptop]
 ■ stopped nat (pid 12931)
@@ -469,7 +469,7 @@ Alto Ops Claw ไม่มี tool สำหรับเว็บ บนแล�
 
 ```bash
 # on: laptop
-.venv/bin/python week26/05_tracing/exercises/ex05_telemetry.py
+.venv/bin/python week26_nemoclaw_claws/05_tracing/exercises/ex05_telemetry.py
 ```
 
 **Expected output** (บันทึกจาก Mac เครื่องนี้ เมื่อทำ TODO ครบทุกจุด)
@@ -496,7 +496,7 @@ OTLP/HTTP คือการ POST ส่วน preset แบบ `read-only` อ�
 
 <details><summary>Hint — decorator</summary>
 
-research tutorial ระบุ `@track_function` ใน `nat.plugins.profiler.decorators.function_tracking` ซึ่งใน NAT 1.9.0 path นี้ยังถูกต้อง ลองเปิด `week26/.venv-nat/lib/python3.12/site-packages/nat/plugins/profiler/decorators/function_tracking.py` แล้วหาค่า `IntermediateStepType.` ที่มันส่งออกมา ไฟล์เดียวกันยังมี `track_unregistered_function` ซึ่งเพิ่มการจัดการ scope ให้ด้วย
+research tutorial ระบุ `@track_function` ใน `nat.plugins.profiler.decorators.function_tracking` ซึ่งใน NAT 1.9.0 path นี้ยังถูกต้อง ลองเปิด `week26_nemoclaw_claws/.venv-nat/lib/python3.12/site-packages/nat/plugins/profiler/decorators/function_tracking.py` แล้วหาค่า `IntermediateStepType.` ที่มันส่งออกมา ไฟล์เดียวกันยังมี `track_unregistered_function` ซึ่งเพิ่มการจัดการ scope ให้ด้วย
 
 </details>
 
@@ -509,7 +509,7 @@ research tutorial ระบุ `@track_function` ใน `nat.plugins.profiler.de
 | `nat validate`: `Invalid configuration: general: Field required` | exporter แบบ `file` สำหรับ tracing ขาด `output_path` และ/หรือ `project` (NAT 1.9) | ใส่ทั้งสอง key (Section 2) |
 | ไฟล์ trace มีบรรทัด START ที่ไม่มี END หรือมี `LLM_END` น้อยกว่าจำนวนการเรียก LLM | `nat run` ที่รันสั้น ๆ จบก่อนที่ exporter ของ NAT จะเขียนเสร็จ | นับ `LLM_START` หรือ trace จาก `nat serve` ที่รันค้างไว้ (lab 05-5) |
 | ไฟล์ trace ไฟล์เดียวโตขึ้นเรื่อย ๆ | `mode` ของ exporter แบบ file มีค่าเริ่มต้นเป็น `append` | ตั้ง `mode: overwrite` หรือใช้ `output_path` แยกต่อการรัน |
-| `nat serve`: `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | ไม่มี `greenlet` ใน `week26/.venv-nat` (FastAPI front end ของ NAT 1.9.0 import SQLAlchemy asyncio ตั้งแต่ตอนเริ่ม) | ติดตั้ง: `uv pip install --python week26/.venv-nat/bin/python greenlet` แล้วรัน lab 05-5 อีกครั้ง (ระหว่างนี้แล็บจะใช้ตัวแทนแบบ in-process ที่ติดป้ายไว้) |
+| `nat serve`: `The SQLAlchemy asyncio module requires that the Python 'greenlet' library is installed` | ไม่มี `greenlet` ใน `week26_nemoclaw_claws/.venv-nat` (FastAPI front end ของ NAT 1.9.0 import SQLAlchemy asyncio ตั้งแต่ตอนเริ่ม) | ติดตั้ง: `uv pip install --python week26_nemoclaw_claws/.venv-nat/bin/python greenlet` แล้วรัน lab 05-5 อีกครั้ง (ระหว่างนี้แล็บจะใช้ตัวแทนแบบ in-process ที่ติดป้ายไว้) |
 | `/v1/workflow/full` ตอบ `422` "Either messages or input_message must be provided" | JSON body ใช้ key อื่น | ส่ง `{"input_message": "…"}` |
 | lab 05-1 บอกว่า Phoenix SKIPPED | ไม่มีอะไรตอบที่ localhost:6006 | เปิด Phoenix (Section 2) แล้วรันแล็บอีกครั้ง |
 | lab 05-2 บอกว่า Docker daemon ไม่ได้รัน | Docker Desktop ปิดอยู่ (มีแค่ client รัน container ไม่ได้) | เปิด Docker Desktop หรืออ่านส่วนที่เหลือของแล็บแบบออฟไลน์ |

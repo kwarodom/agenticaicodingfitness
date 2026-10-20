@@ -29,7 +29,7 @@ In this module **Spark A** is `SPARK_HOST` (the launcher, "node 1" in the playbo
 ```bash
 # on: laptop
 cd agenticaicodingfitness        # the root of your clone of this repo
-.venv/bin/python week25/common/sparkkit.py
+.venv/bin/python week25_dgx_spark/common/sparkkit.py
 ```
 
 **Expected output** (captured on this Mac with no Spark configured)
@@ -104,7 +104,7 @@ Lab 01 runs these checks on both Sparks at once. Run it now to see what is Up; r
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab01_link_check.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab01_link_check.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac. The lab fed itself the playbook's interface list, address and speed, plus illustrative text for the rest; the run above prints which is which)
@@ -151,18 +151,18 @@ Cluster Assistant configures the network only. It does not install or run NCCL, 
 
 Without Cluster Assistant you give the link interfaces static IPs yourself. The Connect Two Sparks playbook (Step 3, Option 1) writes one netplan file per Spark: port 1's two logical interfaces on two **different** /24 subnets, node 1 ending in `.10`, node 2 in `.11`. (Two interfaces on the same subnet cause routing ambiguity and NCCL failures, the switch playbook warns.)
 
-Lab 02 reads which interfaces are Up on each Spark, writes both files to `week25/02_two_sparks_nccl/.runs/` on your laptop (gitignored), validates them, and in LIVE mode copies each to `~/w25/40-cx7.yaml` on its Spark. It **changes nothing in `/etc`** unless you run it from a shell with `SPARK_APPLY=1`, and even then only with passwordless `sudo -n` and only if the link has no address yet. The Lab Runner's ▶ button never sets `SPARK_APPLY`.
+Lab 02 reads which interfaces are Up on each Spark, writes both files to `week25_dgx_spark/02_two_sparks_nccl/.runs/` on your laptop (gitignored), validates them, and in LIVE mode copies each to `~/w25/40-cx7.yaml` on its Spark. It **changes nothing in `/etc`** unless you run it from a shell with `SPARK_APPLY=1`, and even then only with passwordless `sudo -n` and only if the link has no address yet. The Lab Runner's ▶ button never sets `SPARK_APPLY`.
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab02_netplan_plan.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab02_netplan_plan.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac: generated from the playbook's interface list)
 
 ```
 ▣ STEP 3 · the two files
-── week25/02_two_sparks_nccl/.runs/40-cx7.spark-a.yaml
+── week25_dgx_spark/02_two_sparks_nccl/.runs/40-cx7.spark-a.yaml
 network:
   version: 2
   ethernets:
@@ -174,7 +174,7 @@ network:
       addresses:
         - 192.168.101.10/24
       dhcp4: no
-── week25/02_two_sparks_nccl/.runs/40-cx7.spark-b.yaml
+── week25_dgx_spark/02_two_sparks_nccl/.runs/40-cx7.spark-b.yaml
 …
 ✓ both files parse as YAML with network.version 2 and one entry per Up interface
 ✓ generated from the playbook's interface list, both files match the playbook's Step 3 files byte for byte
@@ -272,7 +272,7 @@ Now re-run lab 01. Its step 4 pings Spark B across the cable and runs `ssh -o Ba
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab01_link_check.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab01_link_check.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac; ping and ssh answers are EXAMPLE shapes)
@@ -327,7 +327,7 @@ Lab 03 checks the build on both Sparks, finds both management IPs, runs the play
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab03_nccl_bench.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab03_nccl_bench.py
 ```
 
 **Expected output** (DRY mode, captured on this Mac. The playbook prints no NCCL output, so the table is an EXAMPLE with numbers chosen to make the arithmetic visible, not a measurement)
@@ -384,7 +384,7 @@ With TP=2, each layer ends with **two all-reduces** of one hidden-state vector p
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab04_tp_link_cost.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab04_tp_link_cost.py
 ```
 
 **Expected output** (arithmetic, captured on this Mac; busbw = the playbook's 21.875 GB/s pass mark, weights sized for NVFP4)
@@ -457,7 +457,7 @@ Labs 01–03 run LIVE on two Sparks or DRY. Lab 04 is arithmetic and runs anywhe
 
 ## Try it yourself
 
-**Exercise 02 — read the link.** Open `week25/02_two_sparks_nccl/exercises/ex02_read_the_link.py`. It has three `TODO`s:
+**Exercise 02 — read the link.** Open `week25_dgx_spark/02_two_sparks_nccl/exercises/ex02_read_the_link.py`. It has three `TODO`s:
 
 1. `up_interfaces(text)`: the netdev names that `ibdev2netdev` reports `(Up)`.
 2. `bus_factor(op, n)`: the factor that turns algbw into busbw.
@@ -467,7 +467,7 @@ The checker is offline and free. It uses the real `ibdev2netdev` samples from th
 
 ```bash
 # on: laptop
-.venv/bin/python week25/02_two_sparks_nccl/exercises/ex02_read_the_link.py
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/exercises/ex02_read_the_link.py
 ```
 
 **Expected output** (once all three TODOs are done, captured on this Mac)

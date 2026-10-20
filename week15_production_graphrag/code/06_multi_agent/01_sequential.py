@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Lesson 06.1 — Sequential pipeline (assembly line).
 
-Run:  python week15/code/06_multi_agent/01_sequential.py
+Run:  python week15_production_graphrag/code/06_multi_agent/01_sequential.py
 
 Three specialist agents, each a focused system prompt. Output of one feeds the
 next: Researcher → Writer → Editor. This is CrewAI's Process.sequential, but
 implemented with the raw SDK so it runs with no extra installs.
 
-(The class repo's week9/ex1_crewai_sequential.py shows the CrewAI version.)
+(The class repo's week09_multi_agent_systems/ex1_crewai_sequential.py shows the CrewAI version.)
 """
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())

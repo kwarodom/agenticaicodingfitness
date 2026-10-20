@@ -15,7 +15,7 @@
       {"id": "eval-gate", "label": "A/B eval gate — lab03", "lane": "laptop", "sub": "blind LLM-judge · tie-or-win on ALL items AND cheaper", "accent": "amber"},
       {"id": "endpoint", "label": "Ollama :11434/v1 — teacher & student", "lane": "spark", "sub": "e.g. qwen3.6 teacher, gemma3:4b student"},
       {"id": "phoenix", "label": "Phoenix :6006 — fleet-scale OBSERVE", "lane": "spark", "sub": "App 08's Relay/Phoenix does step 3 at scale"},
-      {"id": "lora", "label": "LoRA/PEFT fine-tune", "lane": "spark", "sub": "≤12B students on 1 Spark (week19 dgx_finetune); Nano-30B borderline"},
+      {"id": "lora", "label": "LoRA/PEFT fine-tune", "lane": "spark", "sub": "≤12B students on 1 Spark (week19_sovereign_ai_dgx dgx_finetune); Nano-30B borderline"},
       {"id": "nemo-microservices", "label": "NeMo Customizer/Evaluator microservices", "lane": "datacenter", "sub": "runbook §2.11 verdict for one Spark: SIM", "accent": "violet"}
     ],
     "edges": [

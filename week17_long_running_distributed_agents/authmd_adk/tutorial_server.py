@@ -13,7 +13,7 @@ This is a small CONTROL PLANE that:
 It depends only on the OFFLINE subset (fastapi/uvicorn/httpx) so it can guide you
 even before google-adk is installed. Launch it and open the printed URL:
 
-    .venv/bin/python week17/authmd_adk/tutorial_server.py
+    .venv/bin/python week17_long_running_distributed_agents/authmd_adk/tutorial_server.py
     # → http://127.0.0.1:8080
 """
 from __future__ import annotations
@@ -32,7 +32,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 
-PKG = Path(__file__).resolve().parent                 # …/week17/authmd_adk
+PKG = Path(__file__).resolve().parent                 # …/week17_long_running_distributed_agents/authmd_adk
 ROOT = PKG.parents[1]                                 # …/agenticaicodingfitness
 PY = str(ROOT / ".venv" / "bin" / "python")
 if not Path(PY).exists():
@@ -180,7 +180,7 @@ STEPS = [
      "desc":"The whole protocol end to end in one offline script: discovery → verified token → "
             "wake-time re-mint → OTP gate → least privilege (403) → apply → revoke (401) → audit.",
      "kind":"run","cwd":str(ROOT),"env":{"AUTHMD_APP_PORT":str(OFFLINE_PORT)},
-     "cmd":[PY,"week17/authmd_adk/run_authmd_demo.py"]},
+     "cmd":[PY,"week17_long_running_distributed_agents/authmd_adk/run_authmd_demo.py"]},
     {"id":"srvA","group":"Part 1 · auth.md protocol (offline)","title":"Start the app server (Part A)",
      "desc":"Steps 2–9 poke the live Energy API. Start it (port 8088). It serves auth.md, the "
             "discovery docs, /agent/auth, and the protected resource.",
@@ -236,7 +236,7 @@ STEPS = [
      "desc":"The full lifecycle: analyze (autonomous sites.read) → park at ANALYZED → refuse to skip → "
             "approval emails an OTP → approve → re-mint control.write → apply → COMPLETED. (LLM; ~1 min.)",
      "kind":"run","cwd":str(ROOT),"requires":["app","agent"],
-     "cmd":[PY,"week17/authmd_adk/run_full_demo.py"]},
+     "cmd":[PY,"week17_long_running_distributed_agents/authmd_adk/run_full_demo.py"]},
     {"id":"s14","group":"Part 2 · long-running ADK agent","title":"Step 14 — Audit after the run",
      "desc":"Confirm the real auth flows fired over the wire during the agent run.",
      "kind":"run","cwd":str(PKG),"requires":["app"],"cmd":[PY,"-c",S_AUDIT]},

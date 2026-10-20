@@ -20,7 +20,7 @@ Q-learning / DQN background (the value the DQN approximates):
     so the agent is paid for keeping guests comfortable and charged for the
     energy each setpoint draws — it must learn to trade the two off.
 
-Run:  python week15/smart_hotel_mas/checkpoints/checkpoint5_rl_anomaly.py
+Run:  python week15_production_graphrag/smart_hotel_mas/checkpoints/checkpoint5_rl_anomaly.py
 """
 import sys
 from pathlib import Path

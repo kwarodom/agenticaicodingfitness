@@ -36,7 +36,7 @@ Python 3.13.13
 OpenSSH_10.2p1, LibreSSL 3.3.6
 ```
 
-> 🔐 Nothing in this course stores a password. SSH uses a **key**. Tokens you add later (Hugging Face, NGC) are saved server-side in `week25/.env.local`, which is gitignored and never sent to the browser.
+> 🔐 Nothing in this course stores a password. SSH uses a **key**. Tokens you add later (Hugging Face, NGC) are saved server-side in `week25_dgx_spark/.env.local`, which is gitignored and never sent to the browser.
 
 ✓ Checkpoint: `ssh -V` prints a version, and you know your Spark's hostname (it is printed on the quick-start card, e.g. `spark-abcd`).
 
@@ -163,11 +163,11 @@ The Lab Runner never guesses a host. Open **🖥 Spark setup** in the header and
 | `SPARK_HOST2` | `spark-b` | the two-Spark modules (02, 05, 11) |
 | `SPARK_API_HOST` | leave empty, or `localhost` when you tunnel ports (Section 6) | HTTP labs (serving, gateways, agents) |
 
-Settings are saved to `week25/.env.local` (gitignored, mode 0600). You can also export them in a shell. Then ask `sparkkit` where commands would run:
+Settings are saved to `week25_dgx_spark/.env.local` (gitignored, mode 0600). You can also export them in a shell. Then ask `sparkkit` where commands would run:
 
 ```bash
 # on: laptop
-.venv/bin/python week25/common/sparkkit.py
+.venv/bin/python week25_dgx_spark/common/sparkkit.py
 ```
 
 **Expected output** (a laptop with no Spark configured, captured on this Mac)
@@ -206,7 +206,7 @@ Before you download 200 GB of models, check the basics. Lab 01 runs eight **read
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/labs/lab01_spark_doctor.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab01_spark_doctor.py
 ```
 
 **Expected output** (DRY mode, captured on a laptop; with a Spark you get your own values and ✓ / ✕)
@@ -230,7 +230,7 @@ NVIDIA GB10, 580.95.05
 ═ DRY run: REFERENCE rows are what the playbooks state, EXAMPLE rows are illustrative. Connect a Spark (🖥 Spark setup) to check yours.
 ```
 
-The playbooks state the minimums (driver 580.95.05 or newer, CUDA 13.0) but do not print these exact lines, so the lab shows them as EXAMPLE. Only text quoted word-for-word from a playbook is labelled REFERENCE; `week25/common/audit_references.py` checks that for every lab.
+The playbooks state the minimums (driver 580.95.05 or newer, CUDA 13.0) but do not print these exact lines, so the lab shows them as EXAMPLE. Only text quoted word-for-word from a playbook is labelled REFERENCE; `week25_dgx_spark/common/audit_references.py` checks that for every lab.
 
 What each check protects you from later:
 
@@ -267,7 +267,7 @@ This week starts nine services. Lab 03 probes every port and writes one `ssh -L`
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/labs/lab03_ports_and_tunnels.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab03_ports_and_tunnels.py
 ```
 
 **Expected output** (captured on this Mac with no Spark configured: only the laptop's own Ollama answers)
@@ -320,7 +320,7 @@ Lab 02 applies them to six open models. It is pure arithmetic, so the output is 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/labs/lab02_memory_budget.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/labs/lab02_memory_budget.py
 ```
 
 **Expected output**
@@ -375,7 +375,7 @@ Lab 01 runs LIVE on your Spark or DRY. Labs 02 and 03 run on the laptop. Lab 03 
 
 ## Try it yourself
 
-**Exercise 01 — the "will it fit?" calculator.** Open `week25/01_meet_your_spark/exercises/ex01_will_it_fit.py`. It has three `TODO`s:
+**Exercise 01 — the "will it fit?" calculator.** Open `week25_dgx_spark/01_meet_your_spark/exercises/ex01_will_it_fit.py`. It has three `TODO`s:
 
 1. `weights_gb(params_b, bits)`: the size of the weights in GB.
 2. `kv_cache_gb(layers, kv_heads, head_dim, ctx, batch, bytes_per)`: the KV cache in GB.
@@ -385,7 +385,7 @@ The checker is offline and free. It compares your functions with known answers, 
 
 ```bash
 # on: laptop
-.venv/bin/python week25/01_meet_your_spark/exercises/ex01_will_it_fit.py
+.venv/bin/python week25_dgx_spark/01_meet_your_spark/exercises/ex01_will_it_fit.py
 ```
 
 **Expected output** (once all three TODOs are done)

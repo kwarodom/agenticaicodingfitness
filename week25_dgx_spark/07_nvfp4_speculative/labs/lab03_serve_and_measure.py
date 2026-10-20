@@ -16,7 +16,7 @@ on the same Spark — and a laptop stand-in number is never put next to a Spark 
     lab03_serve_and_measure.py --stop                 # docker stop w25-trtllm
     lab03_serve_and_measure.py [--label NAME]         # status + one timed measurement
 
-Run: .venv/bin/python week25/07_nvfp4_speculative/labs/lab03_serve_and_measure.py
+Run: .venv/bin/python week25_dgx_spark/07_nvfp4_speculative/labs/lab03_serve_and_measure.py
 """
 import json
 import re

@@ -3,12 +3,12 @@
 
 Reads the local clone of NVIDIA's playbooks (dgx-spark-playbooks/nvidia/playbook-*/README.md) and, for each
 one, pulls out the title, the "Estimated time" line, the "Supported hardware platforms" table and the disk
-figure from Prerequisites. Then it reads week25/AUTHORING.md to find which Week 25 module covers it.
+figure from Prerequisites. Then it reads week25_dgx_spark/AUTHORING.md to find which Week 25 module covers it.
 Everything not covered by Modules 01–20 belongs to this module, grouped into themes.
 
 Runs on the laptop, offline. It only reads files. The other labs and the exercise import its parser.
 
-Run: .venv/bin/python week25/21_playbook_atlas/labs/lab21_1_playbook_atlas.py
+Run: .venv/bin/python week25_dgx_spark/21_playbook_atlas/labs/lab21_1_playbook_atlas.py
 """
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def disk_gb(md: str) -> int | None:
 
 
 def course_map() -> dict[str, str]:
-    """playbook slug → 'NN' from the module table in week25/AUTHORING.md."""
+    """playbook slug → 'NN' from the module table in week25_dgx_spark/AUTHORING.md."""
     out = {}
     for ln in (WEEK / "AUTHORING.md").read_text(encoding="utf-8").splitlines():
         m = re.match(r"\|\s*(\d\d)\s*\|\s*`[^`]+`\s*\|[^|]*\|\s*(.+?)\s*\|\s*$", ln)

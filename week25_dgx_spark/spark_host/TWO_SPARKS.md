@@ -70,11 +70,11 @@ Run the same scripts as on Spark A:
 ```bash
 git clone https://github.com/kwarodom/agenticaicodingfitness.git ~/Documents/agenticaicodingfitness
 cd ~/Documents/agenticaicodingfitness
-sudo week25/spark_host/setup_sparklab_user.sh
+sudo week25_dgx_spark/spark_host/setup_sparklab_user.sh
 sudo -u sparklab -H bash -lc '~/.local/bin/hf auth login'     # token with Llama 3.3 access
-week25/spark_host/ngc_login.sh
-week25/spark_host/prefetch.sh pull
-week25/spark_host/prefetch.sh hf
+week25_dgx_spark/spark_host/ngc_login.sh
+week25_dgx_spark/spark_host/prefetch.sh pull
+week25_dgx_spark/spark_host/prefetch.sh hf
 sudo -u sparklab -H bash -lc '~/.local/bin/hf download meta-llama/Llama-3.3-70B-Instruct'   # Module 11 lab 04, ~140 GB
 ```
 
@@ -96,7 +96,7 @@ rsync -a <other-spark-link-ip>:.cache/huggingface/hub/models--meta-llama--Llama-
 **Student keys:** every laptop key that is on Spark A must also be on Spark B:
 
 ```bash
-sudo week25/spark_host/add_key.sh alice.pub bob.pub …        # same files you used on Spark A
+sudo week25_dgx_spark/spark_host/add_key.sh alice.pub bob.pub …        # same files you used on Spark A
 ```
 
 ## Step 3: cable and link addresses
@@ -134,7 +134,7 @@ sudo chmod 600 /etc/netplan/40-cx7.yaml && sudo netplan apply
 ```
 
 On Spark B (node 2), run the same with `.11`. If the cable is in **port 0**, use the `…f0np0` names that
-`ibdev2netdev` printed. `.venv/bin/python week25/02_two_sparks_nccl/labs/lab02_netplan_plan.py` generates both
+`ibdev2netdev` printed. `.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab02_netplan_plan.py` generates both
 files for you. To undo: `sudo rm /etc/netplan/40-cx7.yaml && sudo netplan apply`.
 
 > ⚠ Keep the console or a second SSH session open the first time. `netplan apply` can blip the network for a moment.
@@ -159,7 +159,7 @@ ssh -o BatchMode=yes 192.168.100.11 hostname        # → Spark B's hostname, no
 # on Spark A, for sparklab (key-only account, so add the key with add_key.sh on B)
 sudo -u sparklab -H bash -lc 'ls ~/.ssh/id_ed25519 || ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519'
 sudo cat /home/sparklab/.ssh/id_ed25519.pub         # copy this line …
-# … then on Spark B:  sudo week25/spark_host/add_key.sh "<that line>"
+# … then on Spark B:  sudo week25_dgx_spark/spark_host/add_key.sh "<that line>"
 sudo -u sparklab -H ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new 192.168.100.11 hostname
 ```
 
@@ -203,13 +203,13 @@ The status bar now shows **Spark A** and **Spark B** chips, both green. Hand out
 ## Step 7: verify, in this order
 
 ```bash
-.venv/bin/python week25/common/sparkkit.py                              # ▣ LIVE · Spark A … · Spark B …
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab01_link_check.py     # every line ✓ (port, subnets, MTU, 200 Gb/s, same user, ping + ssh)
-.venv/bin/python week25/02_two_sparks_nccl/labs/lab03_nccl_bench.py     # Avg bus bandwidth ≥ 21.875 GB/s
+.venv/bin/python week25_dgx_spark/common/sparkkit.py                              # ▣ LIVE · Spark A … · Spark B …
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab01_link_check.py     # every line ✓ (port, subnets, MTU, 200 Gb/s, same user, ping + ssh)
+.venv/bin/python week25_dgx_spark/02_two_sparks_nccl/labs/lab03_nccl_bench.py     # Avg bus bandwidth ≥ 21.875 GB/s
 ```
 
 Then the two-Spark labs, with lab mode on **on both Sparks** first. On Spark A, once:
-`echo 'SPARK_B_ADMIN=altoaidev@<spark-b>' >> week25/.env.local`. After that, `week25/spark_host/lab_mode.sh on`
+`echo 'SPARK_B_ADMIN=altoaidev@<spark-b>' >> week25_dgx_spark/.env.local`. After that, `week25_dgx_spark/spark_host/lab_mode.sh on`
 on Spark A also stops B's day job, and `off` restarts both (the script is piped to B over ssh).
 
 | Module | What it proves |

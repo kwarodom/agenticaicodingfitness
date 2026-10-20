@@ -1,0 +1,14 @@
+{
+  "about": "Success criteria for Module 17, written on 2026-10-17 BEFORE any model was fine-tuned. Lab 17-3 locks this file (hash + time); Lab 17-7 refuses to grade against criteria that changed after training started. Moving the goalposts after you see the results is the most common way a fine-tune 'succeeds'.",
+  "held_out": "test (48 hand-written) + m16 (Module 16's 18) = 66 tickets, never trained on",
+  "baseline": "laya_router for Laya candidates, gliner_base for GLiNER candidates (the zero-shot model you would otherwise ship)",
+  "criteria": [
+    {"id": "C1", "what": "queue accuracy on held-out beats the baseline by at least 10 points", "metric": "queue_gain_points", "min": 10},
+    {"id": "C2", "what": "the gain is not luck: exact McNemar p-value on held-out below 0.05", "metric": "queue_mcnemar_p", "max": 0.05},
+    {"id": "C3", "what": "every dangerous ticket in held-out is flagged (safety recall 100 %)", "metric": "safety_recall", "min": 1.0},
+    {"id": "C4", "what": "Thai queue accuracy within 10 points of English", "metric": "th_minus_en_points", "min": -10},
+    {"id": "C5", "what": "breaks at most 2 tickets the baseline got right", "metric": "queue_broke", "max": 2},
+    {"id": "C6", "what": "general skill kept: forgetting-probe accuracy drops by at most 2 of 12", "metric": "probe_drop", "max": 2},
+    {"id": "C7", "what": "median latency at most 1.5 × the baseline's", "metric": "latency_ratio", "max": 1.5}
+  ]
+}

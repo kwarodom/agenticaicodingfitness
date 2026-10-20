@@ -9,7 +9,7 @@ with the course's policykit model AND the real OpenShell 0.0.111 parser, and par
 Then L3.7: which code-execution sandbox NAT 1.9 really supports, and whether Docker is up here.
 
 No LLM calls.
-Run: .venv/bin/python week26/04_nat_claws/labs/lab04_5_nat_in_sandbox.py
+Run: .venv/bin/python week26_nemoclaw_claws/04_nat_claws/labs/lab04_5_nat_in_sandbox.py
 """
 import shutil
 import subprocess

@@ -13,7 +13,7 @@ This lab probes all three routes against whatever config.py resolved
 names what's serving you, then proves the contract with one real call.
 
 Run:  cd /Users/altodev/Desktop/agenticaicodingfitness && \
-      .venv/bin/python week23/02_nim_microservices/labs/lab01_fingerprint_endpoint.py
+      .venv/bin/python week23_open_superintelligence_stack/02_nim_microservices/labs/lab01_fingerprint_endpoint.py
 """
 from __future__ import annotations
 
