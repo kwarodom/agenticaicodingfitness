@@ -512,6 +512,8 @@ openshell sandbox delete "$SANDBOX_NAME"; openshell provider delete local-vllm
 
 `MODEL_HANDLE` is the DGX Spark model the OpenShell playbook recommends; any handle from the vLLM recipes for DGX Spark works. In the OpenClaw wizard choose **Custom Provider**, base URL `https://inference.local/v1`, any non-empty key (`not-needed`), **OpenAI-compatible**, and the same model id.
 
+Want a claw that can also **see** (a CPMS screenshot, a nameplate photo, a trend chart)? Serve **Nemotron 3.5 Super VL** instead, with the one-Spark recipe in [Module 06, Section 7](../06_benchmarking/TUTORIAL.md), and register it in step 3 with its served name, `nemotron-3.5-super-vl`, as the model. That recipe binds vLLM to `127.0.0.1`; a provider reaches it through the LAN IP, so change `--host` to `0.0.0.0` when you serve it for OpenShell. It takes ~70 GiB, so stop the Qwen server first.
+
 After step 4, the playbook tells you what to look for:
 
 **Expected output** (REFERENCE — quoted from the DGX Spark OpenShell playbook)

@@ -451,6 +451,8 @@ A sandbox made with `openshell sandbox create` has no NemoClaw tier. Its equival
 
 ✓ Checkpoint: all nine checker lines are ✓, and the list matches §5 of your runbook.
 
+**Stretch — give the claw eyes.** Operators already send screenshots of the CPMS. Route Alto Ops Claw's inference to Nemotron 3.5 Super VL (Module 06, Section 7) and add one capability: given a plant screen image, list each chiller's kW/RT and flag the worst one. Keep it read-only, put the image check from `06_benchmarking/tools/model_bakeoff.py` in your evidence pack, and add the system line from Section 7 so the final answer carries every value it read.
+
 ## Troubleshooting
 
 | Symptom | Cause | Fix |

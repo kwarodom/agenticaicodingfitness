@@ -488,6 +488,99 @@ done 2>&1 | sort -n | awk '{a[NR]=$1} END {print "p50",a[int(NR*0.5)],"p95",a[in
 
 ✓ Checkpoint: รายงานของคุณมีหนึ่งบรรทัดต่อหนึ่งชั้น แต่ละบรรทัดบอกแล็บที่มาและเวลาที่วัด และไม่มีบรรทัดของแล็ปท็อปวางอยู่ข้างตัวเลขของ Spark
 
+## 7 · ประชันโมเดลบน Spark เครื่องเดียว: Nemotron 3.5 Super VL กับตัวเลือก local อื่น
+
+หัวข้อ 2–6 วัดโมเดลทีละตัว หัวข้อนี้เทียบ **หลายโมเดล** บน Spark เดียวกันด้วยการตรวจชุดเดียวกัน เพื่อเลือกโมเดลที่ claw ของคุณจะใช้ ตัวใหม่คือ **Nemotron 3.5 Super VL** (ตุลาคม 2026): 120B พารามิเตอร์ ใช้งานจริง 12B ต่อ token เป็นไฮบริด Mamba/MoE/attention แบบเดียวกับ Nemotron 3 Super และมี vision encoder เพิ่ม อ่านได้ทั้งข้อความ ภาพ และวิดีโอ checkpoint แบบ NVFP4 (75 GB) ออกแบบมาให้รันบน DGX Spark **เครื่องเดียว**
+
+**เริ่มจากเลขเพดานในหัวข้อ 2** พารามิเตอร์ที่ใช้งาน 12B ที่ NVFP4 (~4.5 บิต) คืออ่านหน่วยความจำราว 6.8 GB ต่อ token ดังนั้น 273 GB/s ÷ 6.8 GB ≈ **40 tok/s** เป็นเพดานคร่าว ๆ เทียบกับ ~162 tok/s ของโมเดลที่ใช้งาน 3B อย่าง Nemotron 3.5 Lightning โมเดลใหญ่ช้ากว่าต่อสตรีมเสมอ speculative decoding ช่วยได้บางส่วน: NVIDIA มี drafter ขนาดเล็กสำหรับ Spark ชื่อ **LiLiCorr** ที่เสนอได้ถึง 7 token ให้โมเดลใหญ่ตรวจในขั้นเดียว
+
+**เสิร์ฟด้วยสูตร DGX Spark จาก model card** (vLLM `v0.32.0` ทีละหนึ่ง sequence พร้อม drafter LiLiCorr):
+
+```bash
+# on: spark
+docker run -d --name vl --gpus all --network host --ipc host \
+  -v ~/.cache/huggingface:/root/.cache/huggingface vllm/vllm-openai:v0.32.0 \
+  nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 \
+  --served-model-name nemotron-3.5-super-vl --host 127.0.0.1 --port 8000 \
+  --max-num-seqs 1 --trust-remote-code --gpu-memory-utilization 0.75 --max-num-batched-tokens 8192 \
+  --speculative_config.model nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4-LiLiCorr \
+  --speculative_config.num_speculative_tokens 7 --speculative_config.method dflash \
+  --mamba-backend flashinfer --mamba-ssm-cache-dtype float16 \
+  --enable-mamba-cache-stochastic-rounding --mamba-cache-philox-rounds 5 \
+  --enable-mamba-shared-prefix-checkpoint --video-pruning-rate 0.5 \
+  --media-io-kwargs '{"video": {"fps": 2, "num_frames": 256}}' --block-size 64 --prefix-match-unit 64 \
+  --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3
+```
+
+**Expected output** (RECORDED — Spark B, 2026-10-20; ตัด prefix ของ log ออก)
+
+```
+Model loading took 70.03 GiB memory and 452.443517 seconds
+GPU KV cache size: 2,459,119 tokens, Maximum concurrency for 1,048,576 tokens per request: 2.35x
+INFO:     Application startup complete.
+```
+
+จาก `docker run` จนพร้อมใช้ราว 13 นาที ส่วนใหญ่คือการอ่าน 70 GiB จากดิสก์และคอมไพล์ kernel context เต็ม 1M token ใส่ได้
+
+**จากนั้นรันการประชัน** `tools/model_bakeoff.py` ส่งคำขอชุดเดียวกันไปยังเซิร์ฟเวอร์ที่เข้ากันได้กับ OpenAI ทีละคำขอ temperature 0: ความเร็ว (มัธยฐานจาก 3 ครั้ง) คำถาม HVAC ห้าข้อใน `data/bakeoff_cases.json` ทั้งปิดและเปิด thinking (ตรวจที่ตัวเลข) การเรียก tool แบบ BMS สี่ครั้ง และถ้าใส่ `--vision` จะมีภาพโรงชิลเลอร์สังเคราะห์สามภาพที่รู้คำตอบแน่นอน (`data/vision/`)
+
+```bash
+# on: spark
+python3 week26/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
+  --url http://127.0.0.1:8000/v1 --model nemotron-3.5-super-vl --vision
+```
+
+**Expected output** (RECORDED — Spark B, 2026-10-20)
+
+```
+◆ speed: first token 0.31 s · 29.9 tok/s (one stream, median of 3)
+◆ knowledge, thinking off: 5/5 · avg 5.7 s
+◆ knowledge, thinking on : 5/5 · avg 14.8 s
+◆ tool calls: 4/4
+  ✓ plant_table.png (12.0 s): 'Based on the data in the image, here are the kW/RT calculations for each chiller (Power di'
+  ✓ chws_trend.png (6.5 s): '14, 9.5'
+  ✕ nameplate.png (11.9 s): '0.57 kW/RT'
+◆ vision: 2/3
+```
+
+เราตรวจชุดเดียวกันนี้กับสี่โมเดลบน Spark สองเครื่องของเรา แต่ละโมเดลรันเครื่องละตัว และใช้คำถามที่ยากกว่า 12 ข้อจากข้อสอบวิศวกรรม HVAC ภายใน แทนห้าข้อสาธารณะ (ชุดนั้นไม่เผยแพร่):
+
+**ผลที่บันทึกไว้** (RECORDED — Spark A และ Spark B, 2026-10-20; ทีละหนึ่งคำขอ)
+
+| โมเดล (checkpoint · drafter) | Engine | Weights | Tok/s | Token แรก | ข้อสอบ ปิด thinking | ข้อสอบ เปิด thinking | Tools | ภาพ |
+|---|---|---|---|---|---|---|---|---|
+| **Nemotron 3.5 Super VL** NVFP4 · LiLiCorr | vLLM v0.32.0 | 70.0 GiB | **30.5** | 0.36 s | 4/12 · 21.9 s | 5/12 · 72.4 s | 4/4 | 2/3 |
+| Nemotron 3 Super NVFP4 · MTP | vLLM cu130-nightly | 75.0 GiB | 22.4 | 0.45 s | 5/12 · 52.1 s | 5/12 · 103.6 s | 4/4 | — |
+| Gemma 4 26B-A4B-it BF16 | vLLM v0.32.0 | — | 22.2 | 0.21 s | 5/12 · 35.4 s | 4/12 · 101.6 s | 4/4 | 3/3 |
+| Nemotron 3.5 Lightning 30B-A3B NVFP4 · DSpark | vLLM v0.27.1 | 19.5 GiB | **93.3** | 0.14 s | 3/12 · 11.6 s | 5/12 · 26.8 s | 2/4 | — |
+
+อ่านตารางอย่างไร:
+
+- **ความเร็วตามพารามิเตอร์ที่ใช้งาน แล้วจึงตาม drafter** Lightning (ใช้งาน 3B) เร็วกว่าโมเดลที่ใช้งาน 12B ถึง 3 เท่า VL เร็วกว่า Nemotron 3 Super ~36 % ที่ขนาดเท่ากัน ส่วนใหญ่เพราะ LiLiCorr และยังอยู่ใต้เพดาน 40 tok/s
+- **สิบสองข้อเป็นข้อสอบที่เล็ก** หนึ่งข้อราว 8 คะแนน ดังนั้น 4/12 กับ 5/12 คือความผันผวน สิ่งที่ตารางบอกจริงคือ thinking ใช้เวลามากขึ้น 2–4 เท่าแต่ได้ผลเพิ่มน้อยในคำถามเชิงตัวเลขเหล่านี้ และโมเดล 3B ด้อยกว่าไม่มากในการจำความรู้
+- **การเรียก tool แยกโมเดลออกจากกัน** Lightning ถามกลับ ("ชื่อ BMS point คืออะไร?") แทนที่จะเรียก tool ใน 2 จาก 4 กรณี โมเดลที่ใหญ่กว่าเรียก tool ถูกทุกครั้ง
+- **มีแค่ VL กับ Gemma 4 ที่อ่านภาพได้** VL เร็วกว่า 2–4 เท่ากับภาพ (6–14 s เทียบ 22–37 s) แต่ตอบป้ายเครื่องเพียงบรรทัดเดียว และไม่ได้ใส่ค่าที่ถามสามในสี่ค่า
+
+**การพลาดเรื่องป้ายเครื่องเป็นปัญหาของ prompt และแก้ได้** เมื่อเปิด thinking VL เก็บรายละเอียดไว้ใน reasoning แล้วเขียนคำตอบสุดท้ายสั้นที่สุด system prompt บรรทัดเดียวแก้ได้ในการทดสอบของเรา และเมื่อปิด thinking คำตอบเต็มกลับมาใน 2.1 s:
+
+```text
+Answer every part of the user's question in your final answer, with the values you read.
+```
+
+ระวังอีกเรื่องเมื่อปิด thinking: หากไม่มีบรรทัดนั้น คำตอบของ VL ขึ้นต้นด้วย reasoning ของตัวเอง ("The user wants me to extract…") ให้ตรวจ `content` ที่แสดงต่อผู้ใช้ ไม่ใช่ดูแค่คะแนน
+
+**บทเรียนเรื่องหน่วยความจำจากวันเดียวกัน** model card เลือกค่า `--gpu-memory-utilization` สำหรับ Spark ที่ไม่ได้รันอย่างอื่น card ของ Lightning ระบุ 0.85 บน Spark ที่เป็นเดสก์ท็อปของใครบางคนด้วย มันไม่ยอมเริ่ม:
+
+**Expected output** (RECORDED — Spark A, 2026-10-20)
+
+```
+ValueError: Free memory on device cuda:0 (95.97/121.69 GiB) on startup is less than desired GPU memory utilization (0.85, 103.43 GiB). Decrease GPU memory utilization or reduce GPU memory used by other processes.
+```
+
+ลดเป็น 0.6 ก็ใช้ได้: เมื่อรับทีละหนึ่งคำขอ KV cache ที่เล็กลงไม่ทำให้เสียอะไร ด้วยเหตุผลเดียวกันเราจึงรัน Nemotron 3 Super NVFP4 ที่ 0.75 แทน 0.90 ของสูตรในคอร์ส
+
+✓ Checkpoint: คุณบอกได้ว่าจะให้ Alto Ops Claw ใช้โมเดลไหนในสี่ตัวสำหรับ (a) แชทที่ต้องรู้สึกตอบทันที (b) การอ่านภาพหน้าจอ CPMS และ (c) การเรียก tool ที่เชื่อถือได้ พร้อมยกแถวในตารางที่เป็นเหตุผลของแต่ละข้อ
+
 ## Labs — run them here
 
 **labs/lab06_1_engine_sweep.py** — เพดานแบนด์วิดท์, benchmark ของ vLLM บน Spark และ sweep ตัวแทนบนแล็ปท็อปของจริงที่ concurrency 1, 2 และ 4

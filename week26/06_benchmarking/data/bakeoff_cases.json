@@ -1,0 +1,12 @@
+[
+  {"id": "mixed-air-30pct", "prompt": "An AHU takes 30% outdoor air at 34 °C and 70% return air at 24 °C. What is the mixed-air temperature?",
+   "expect": [{"name": "mixed air 27 °C", "value": 27, "tolerance": 0.3}]},
+  {"id": "plant-kw-per-rt", "prompt": "A chiller plant draws 450 kW (chillers, pumps and towers) while delivering 600 RT of cooling. What is its plant efficiency in kW/RT?",
+   "expect": [{"name": "0.75 kW/RT", "value": 0.75, "tolerance": 0.01}]},
+  {"id": "tons-from-water-side", "prompt": "Chilled water flows at 400 US gpm with a 10 °F temperature difference. How many tons of refrigeration is that?",
+   "expect": [{"name": "about 166.7 RT", "value": 166.7, "tolerance": 1.0}]},
+  {"id": "cw-floor-th", "prompt": "Wet bulb ข้างนอก 26°C cooling tower ทำ approach ได้ 3°C น้ำออกจาก tower (condenser water supply) ต่ำสุดได้ประมาณกี่องศา",
+   "expect": [{"name": "29 °C", "value": 29, "tolerance": 0.3}]},
+  {"id": "rt-in-kw", "prompt": "How many kilowatts of cooling is one refrigeration ton?",
+   "expect": [{"name": "3.517 kW", "value": 3.517, "tolerance": 0.01}]}
+]

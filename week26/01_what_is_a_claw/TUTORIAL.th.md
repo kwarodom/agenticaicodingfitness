@@ -132,6 +132,8 @@ harness คือ agent loop ที่อยู่ภายใน sandbox NemoCl
 
 บน DGX Spark ปกติคุณจะไม่ได้ใช้ค่าเริ่มต้นของ NVIDIA Endpoints เพราะ Module 02 จะ route inference ไปยังโมเดล vLLM หรือ Ollama ที่รันอยู่ **บนเครื่อง** ทำให้ prompt และข้อมูลไม่ออกไปนอกอุปกรณ์
 
+> 💡 **ใหม่ในเดือนตุลาคม 2026: Nemotron 3.5 Super VL** ขนาดระดับเดียวกับ Nemotron 3 Super (120B ใช้งานจริง 12B) แต่อ่านภาพและวิดีโอได้ด้วย และ checkpoint แบบ NVFP4 รันบน Spark **เครื่องเดียว** Module 06 หัวข้อ 7 เสิร์ฟโมเดลนี้และวัดเทียบกับ Nemotron 3 Super, Nemotron 3.5 Lightning และ Gemma 4 บน Spark ของเรา
+
 ทางเลือกที่สี่ของสัปดาห์นี้คือ **claw ของคุณเอง** NAT workflow ที่คุณเขียนใน Module 04 จะรันอยู่ใน sandbox แบบเดียวกัน และเรียก `inference.local` ตัวเดียวกัน
 
 ✓ Checkpoint: คุณเลือก harness ได้สำหรับ (a) บอท concierge บน Telegram (b) เอเจนต์ refactor โค้ดใน repo ส่วนตัว (c) เอเจนต์ที่ส่ง trace ไปยัง Langfuse โดยไม่มี key ดิบอยู่ใน sandbox
