@@ -57,7 +57,7 @@ Open `.claude/skills/fitness-build/SKILL.md`. Map each step to what you saw supe
 
 ```bash
 # on: laptop, in week27_software_factory/00_alto_mini (board number from `gh project list --owner <you>`)
-export OWNER=<you> PROJECT_NUM=<n> MAX_WORKERS=2 MODEL=claude-sonnet-5
+export OWNER=<you> PROJECT_NUM=<n> MAX_WORKERS=2 MODEL=claude-sonnet-5-5
 gh project item-edit ...   # or drag T1 and T2 to Ready in the UI
 bash scripts/factory-run.sh build
 tail -f .claude/factory/logs/issue-*-build.err

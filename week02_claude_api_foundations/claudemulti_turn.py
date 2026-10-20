@@ -13,7 +13,7 @@ messages = []
 def chat(user_msg):
     messages.append({"role": "user", "content": user_msg})
     response = client.messages.create(
-        model="claude-sonnet-5",
+        model="claude-sonnet-5-5",
         max_tokens=1024,
         system="You are a helpful coding mentor. Be concise.",
         messages=messages

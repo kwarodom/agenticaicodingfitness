@@ -10,7 +10,7 @@ client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from env
 
 # === Basic single message ===
 response = client.messages.create(
-    model="claude-sonnet-5",
+    model="claude-sonnet-5-5",
     max_tokens=1024,
     messages=[
         {"role": "user", "content": "Explain agentic AI in 3 sentences."}

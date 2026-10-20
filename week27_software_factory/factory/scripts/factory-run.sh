@@ -3,7 +3,7 @@
 # Usage: PROJECT_NUM=3 OWNER=me scripts/factory-run.sh [build|qa|review]
 set -euo pipefail
 PROJECT_NUM=${PROJECT_NUM:?set PROJECT_NUM}; OWNER=${OWNER:?set OWNER}
-LANE=${1:-build}; MAX=${MAX_WORKERS:-3}; MODEL=${MODEL:-claude-sonnet-5}
+LANE=${1:-build}; MAX=${MAX_WORKERS:-3}; MODEL=${MODEL:-claude-sonnet-5-5}
 case "$LANE" in build) COL=Ready;; qa) COL=QA;; review) COL=Review;; *) echo "lane must be build|qa|review"; exit 64;; esac
 mkdir -p .claude/factory/logs
 cards=$(gh project item-list "$PROJECT_NUM" --owner "$OWNER" --format json --limit 200 \

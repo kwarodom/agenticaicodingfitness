@@ -205,7 +205,7 @@ Tests red after 3 attempts · size cap · missing env/secret · ambiguous AC →
 # Drain the Ready column: one headless Claude Code session per card, max 3 in parallel.
 set -euo pipefail
 PROJECT_NUM=${PROJECT_NUM:?}; OWNER=${OWNER:?}; LANE=${1:-build}; MAX=${MAX_WORKERS:-3}
-MODEL=${MODEL:-claude-sonnet-5}
+MODEL=${MODEL:-claude-sonnet-5-5}
 ready=$(gh project item-list "$PROJECT_NUM" --owner "$OWNER" --format json \
   | jq -r '.items[] | select(.status=="Ready") | .content.number')
 echo "$ready" | head -n "$MAX" | while read -r N; do

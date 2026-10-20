@@ -22,8 +22,8 @@ const llmProfiles = {
   },
   anthropic: {
     label: "Anthropic",
-    model: "claude-sonnet-5",
-    models: ["claude-sonnet-5", "claude-opus-4-8", "claude-haiku-4-5-20251001"],
+    model: "claude-sonnet-5-5",
+    models: ["claude-sonnet-5-5", "claude-opus-4-8", "claude-haiku-4-5-20251001"],
     help: "Connect directly to Claude through the Anthropic Messages API.",
   },
   glm: {
