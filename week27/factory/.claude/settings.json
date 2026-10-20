@@ -1,0 +1,13 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      { "matcher": "Bash", "hooks": [
+        { "type": "command", "command": "python3 .claude/hooks/guard-secrets.py" },
+        { "type": "command", "command": "python3 .claude/hooks/guard-worktree-path.py" },
+        { "type": "command", "command": "python3 .claude/hooks/guard-protected-push.py" },
+        { "type": "command", "command": "python3 .claude/hooks/guard-delete-outside.py" } ] },
+      { "matcher": "Write|Edit", "hooks": [
+        { "type": "command", "command": "python3 .claude/hooks/guard-key-literals.py" } ] }
+    ]
+  }
+}

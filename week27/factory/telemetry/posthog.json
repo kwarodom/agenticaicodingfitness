@@ -1,0 +1,5 @@
+{"generated": "2026-10-10", "signals": [
+ {"key": "funnel_drop_alerts_ack", "kind": "funnel", "title": "Alerts page: view → acknowledge drops 68% → 21%", "window": "14d", "trend": "worsening", "route": "/alerts", "sample_session": "ph-sess-9f1", "stopped": false},
+ {"key": "rage_click_setpoint_slider", "kind": "rage_click", "title": "Rage clicks on setpoint slider (mobile)", "window": "14d", "count": 23, "route": "/rooms/{id}", "sample_session": "ph-sess-2c7", "stopped": false},
+ {"key": "export_csv_errors", "kind": "error_event", "title": "CSV export error toast", "window": "14d", "count": 0, "route": "/dashboard", "stopped": true, "note": "zero hits since PR #44 merged 2026-09-29"}
+]}

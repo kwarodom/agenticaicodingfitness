@@ -15,7 +15,7 @@ We emphasize a **practice-first** approach (Vibe Coding). No long lectures, just
 
 ## 📚 Catching up? Install the Bootcamp Plugin
 
-Missed a session or want to review at your own pace? We packaged the **entire course (weeks 2–18)** into a shareable **Claude Code plugin** — **20 bite-sized skills** (one per concept) that teach the idea, show runnable code (pointing at the real `weekN/` files here), and walk you through a hands-on **$0 lab** (a tiny `MockLLM`, or fully offline checkpoints, so you need no API key to start). Just ask Claude in plain English and the right skill loads automatically.
+Missed a session or want to review at your own pace? We packaged the **entire course (weeks 2–18 and 27)** into a shareable **Claude Code plugin** — **21 bite-sized skills** (one per concept) that teach the idea, show runnable code (pointing at the real `weekN/` files here), and walk you through a hands-on **$0 lab** (a tiny `MockLLM`, or fully offline checkpoints, so you need no API key to start). Just ask Claude in plain English and the right skill loads automatically.
 
 **Install** (run these in any Claude Code session):
 
@@ -28,7 +28,7 @@ Then try: *"Recap the whole course and tell me which skill to start with."*
 
 ### 🔄 Already installed? Pull the latest version mid-session
 
-We ship new skills as the course grows (we're on **v2.2.0 — 20 skills**). To grab the newest version **without restarting**, run these three in your current session:
+We ship new skills as the course grows (we're on **v2.3.0 — 21 skills**). To grab the newest version **without restarting**, run these three in your current session:
 
 ```
 /plugin marketplace update agentic-coding-fitness                 # 1. refresh the catalog from GitHub
@@ -40,7 +40,7 @@ We ship new skills as the course grows (we're on **v2.2.0 — 20 skills**). To g
 
 **Prefer clicking?** Run `/plugin` for the interactive manager: **Marketplaces** tab → select *agentic-coding-fitness* → **Update**, then **Installed** tab → select the plugin → **Reinstall**, then `/reload-plugins`. (You can also toggle **Enable auto-update** on the marketplace so new versions are fetched at startup.)
 
-Covers: LLM basics · tool use · agent loops (now incl. the Week 18 Claude Agent SDK production loop) · MCP & skills · RAG · multi-agent systems · production & observability · agent evaluation/CI · knowledge-graph memory · production GraphRAG · choosing models & patterns · the NVIDIA NeMo Agent Toolkit · long-running & distributed agents (Google ADK durable sessions, pause/resume, auth.md, A2A fleets) · self-evolving agents (tripartite memory + consolidation) · sovereign AI at the edge (local/$0 inference) · sovereign & self-evolving AI on an NVIDIA DGX (serve/fine-tune/observe/gateway) · vibe-coding & security · the A2A protocol · skill-authoring. See [`plugins/agentic-coding-fitness/`](plugins/agentic-coding-fitness/) for details.
+Covers: LLM basics · tool use · agent loops (now incl. the Week 18 Claude Agent SDK production loop) · MCP & skills · RAG · multi-agent systems · production & observability · agent evaluation/CI · knowledge-graph memory · production GraphRAG · choosing models & patterns · the NVIDIA NeMo Agent Toolkit · long-running & distributed agents (Google ADK durable sessions, pause/resume, auth.md, A2A fleets) · self-evolving agents (tripartite memory + consolidation) · sovereign AI at the edge (local/$0 inference) · sovereign & self-evolving AI on an NVIDIA DGX (serve/fine-tune/observe/gateway) · the Week 27 software factory (unattended Build/QA/Review lanes, merge gates, guard hooks, plugin evals, telemetry → tickets) · vibe-coding & security · the A2A protocol · skill-authoring. See [`plugins/agentic-coding-fitness/`](plugins/agentic-coding-fitness/) for details.
 
 ## 📂 Repository Contents 
 
@@ -156,6 +156,14 @@ Build, sandbox, trace, benchmark and harden **claws**: always-on, tool-using age
 - 👉 **Start here:** `.venv/bin/python week26/00_reef_lab_runner/tutorial_server.py` → **http://127.0.0.1:8126** · [`week26/README.md`](week26/README.md) (one-time setup: the `week26/.venv-nat` and `week26/.venv-openshell` venvs)
 - 8 modules, EN + ไทย: what a claw is · your first claw · OpenShell policy as code · NAT claws (custom tools, REST, MCP both ways, in a sandbox) · tracing · benchmarking · hardening · the Alto Ops Claw capstone, graded on evidence.
 - The **🪸 Reef Lab Runner** reuses your Week 25 `SPARK_HOST`. Without a Spark, Spark steps run **DRY** with labelled output, and laptop labs (NAT on Ollama, `nat serve`, MCP, eval, the policy parser) run for real. Nothing changes your Spark unless you turn on **🔓 Allow changes**. The full React app from the spec is in [`week26/alto-reef/`](week26/alto-reef/).
+
+### Phase ⑦ The factory — agents that ship unattended
+
+#### 🔹 Week 27: Software Factory — an org chart made of loops
+Build the thing that builds the software: linted tickets on a kanban, drained by unattended **Build → QA → Review** lanes (one Claude Code skill each, one worktree per issue, state only in GitHub), a **merge gate** that merges at the reviewed SHA unless a human-only label is present, deterministic **guard hooks**, behavioural **plugin evals**, and a **telemetry → tickets** loop that makes it self-improving. Reference: Eric Tech's open-source super-board. → skill `software-factory`
+- 👉 **Start here:** `cd week27/00_alto_mini && make seed && make test && make dev` → **http://127.0.0.1:8127** · [`week27/README.md`](week27/README.md)
+- 7 labs: run someone else's factory · the ticket + Builder lane · the QA lane (test-gap ledger, red-first, forensics) · Review + merge gate (review remembers, adversarial truth-check) · guards + evals · telemetry to tickets · a 48-hour capstone graded on honest metrics.
+- **Alto Mini** (`week27/00_alto_mini/`) is the target app with seeded, ticketable bugs; [`week27/factory/`](week27/factory/) is the starter kit (lane skills, hooks + tests, `factory-run.sh`, `merge-gate.sh`, stub Sentry/PostHog collectors, three eval cases with an offline `gh` stub). Offline parts are tested; the live-CLI run is Lab 05's job.
 
 ### 🦾 Special track: Agentic Robotics (SO-ARM101)
 From a simulated SO-ARM101 arm to a tool-using robot agent, in numbered lessons: MuJoCo manual control → record/replay → kinematic pick-and-place → active perception with the wrist camera → semantic scene → **agentic manipulation** (safe robot tools for an LLM) → a guided full pipeline. A workshop portal (`08_workshop_portal/`, **http://127.0.0.1:8000**) operates the simulation or a safety-gated LeRobot path to the physical arm.

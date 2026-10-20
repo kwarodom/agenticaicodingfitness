@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Offline gh stub for evals. Logs every call; serves fixtures from .git/gh-fixture/; writes answer "ok".
+set -euo pipefail
+log="${EVAL_WORKSPACE:-$PWD}/.gh-log"; echo "$*" >> "$log"
+fx="${EVAL_WORKSPACE:-$PWD}/.git/gh-fixture"
+case "$1 $2" in
+  "pr view") f="$fx/pr.json";;
+  "pr diff") cat "$fx/diff.patch"; exit 0;;
+  "issue view") f="$fx/issue.json";;
+  "pr merge") echo "merge logged (no-op)"; exit 0;;
+  *) echo "ok"; exit 0;;
+esac
+jqexpr=""; for ((i=1;i<=$#;i++)); do [ "${!i}" = "--jq" ] && { j=$((i+1)); jqexpr="${!j}"; }; done
+if [ -n "$jqexpr" ]; then jq -r "$jqexpr" "$f"; else cat "$f"; fi

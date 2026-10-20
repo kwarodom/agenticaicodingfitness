@@ -5,18 +5,18 @@
     "name": "Agentic Coding Fitness @ Rust Tech Bar",
     "email": "kwarodom@altotech.ai"
   },
-  "description": "Learn-by-doing skills for building production agentic AI (course weeks 2–18): the fundamentals (LLM APIs, tool use, agent loops, MCP, RAG, multi-agent systems, knowledge-graph memory, production GraphRAG with evaluation) plus the 12-pattern taxonomy, production & observability, agent evaluation/CI gating, the NVIDIA NeMo Agent Toolkit, long-running & distributed agents (Google ADK, auth.md, A2A), Week 18's Claude Agent SDK production loop, self-evolving agents with tripartite memory, sovereign AI at the edge (local/$0 inference), a drill library, the curriculum, vibe-coding & security, and skill-authoring.",
-  "version": "2.2.0",
+  "description": "Learn-by-doing skills for building production agentic AI (course weeks 2–18 and 27): the fundamentals (LLM APIs, tool use, agent loops, MCP, RAG, multi-agent systems, knowledge-graph memory, production GraphRAG with evaluation) plus the 12-pattern taxonomy, production & observability, agent evaluation/CI gating, the NVIDIA NeMo Agent Toolkit, long-running & distributed agents (Google ADK, auth.md, A2A), Week 18's Claude Agent SDK production loop, self-evolving agents with tripartite memory, sovereign AI at the edge (local/$0 inference), the Week 27 software factory (unattended Build/QA/Review lanes, merge gates, guard hooks, plugin evals), a drill library, the curriculum, vibe-coding & security, and skill-authoring.",
+  "version": "2.3.0",
   "plugins": [
     {
       "name": "agentic-coding-fitness",
       "displayName": "Agentic Coding Fitness Bootcamp",
       "source": "./plugins/agentic-coding-fitness",
-      "description": "20 concept-and-practice skills that teach, demo, and run guided labs for the whole course (weeks 2–18): talking to LLMs, tool use, the agent loop, MCP & skills, RAG, multi-agent patterns, agent memory with Neo4j, production GraphRAG with RAGAS evaluation, choosing models/patterns (12-pattern taxonomy), production & observability (HITL, LangSmith, cost), agent evaluation with CI gates, the NVIDIA NeMo Agent Toolkit, long-running & distributed agents (Google ADK durable sessions, pause/resume, auth.md, A2A fleets), the Claude Agent SDK production loop, self-evolving agents with tripartite memory + consolidation, sovereign AI at the edge (local/on-device, $0-per-token), a drill library, the curriculum, vibe-coding & security, the A2A protocol, and authoring your own skills.",
-      "version": "2.2.0",
+      "description": "21 concept-and-practice skills that teach, demo, and run guided labs for the whole course (weeks 2–18 and 27): talking to LLMs, tool use, the agent loop, MCP & skills, RAG, multi-agent patterns, agent memory with Neo4j, production GraphRAG with RAGAS evaluation, choosing models/patterns (12-pattern taxonomy), production & observability (HITL, LangSmith, cost), agent evaluation with CI gates, the NVIDIA NeMo Agent Toolkit, long-running & distributed agents (Google ADK durable sessions, pause/resume, auth.md, A2A fleets), the Claude Agent SDK production loop, self-evolving agents with tripartite memory + consolidation, sovereign AI at the edge (local/on-device, $0-per-token), Week 27's software factory (ticket contracts, Build/QA/Review lanes, merge gates, guard hooks, plugin evals, telemetry-to-tickets), a drill library, the curriculum, vibe-coding & security, the A2A protocol, and authoring your own skills.",
+      "version": "2.3.0",
       "author": { "name": "Agentic Coding Fitness" },
       "license": "MIT",
-      "keywords": ["ai-agents", "multi-agent", "llm", "rag", "graphrag", "ragas", "knowledge-graph", "neo4j", "mcp", "a2a", "agent-card", "agent-patterns", "evaluation", "cicd", "observability", "production", "hitl", "long-running-agents", "google-adk", "nemo-agent-toolkit", "authmd", "claude-agent-sdk", "self-evolving-agents", "sovereign-ai", "edge-ai", "ollama", "local-llm", "vibe-coding", "curriculum", "drills", "skill-authoring", "education", "anthropic", "claude"],
+      "keywords": ["ai-agents", "multi-agent", "llm", "rag", "graphrag", "ragas", "knowledge-graph", "neo4j", "mcp", "a2a", "agent-card", "agent-patterns", "evaluation", "cicd", "observability", "production", "hitl", "long-running-agents", "google-adk", "nemo-agent-toolkit", "authmd", "claude-agent-sdk", "self-evolving-agents", "sovereign-ai", "edge-ai", "software-factory", "agentic-sdlc", "merge-gate", "guard-hooks", "plugin-evals", "ollama", "local-llm", "vibe-coding", "curriculum", "drills", "skill-authoring", "education", "anthropic", "claude"],
       "category": "education"
     }
   ]
