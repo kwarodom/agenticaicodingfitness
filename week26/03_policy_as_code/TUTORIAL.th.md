@@ -514,6 +514,8 @@ openshell sandbox delete "$SANDBOX_NAME"; openshell provider delete local-vllm
 
 `MODEL_HANDLE` คือโมเดลสำหรับ DGX Spark ที่ OpenShell playbook แนะนำ จะใช้ handle ตัวไหนจาก vLLM recipes สำหรับ DGX Spark ก็ได้ ใน OpenClaw wizard ให้เลือก **Custom Provider**, base URL `https://inference.local/v1`, key อะไรก็ได้ที่ไม่ว่าง (`not-needed`), **OpenAI-compatible** และ model id ตัวเดียวกัน
 
+อยากได้ claw ที่ **มองเห็น** ได้ด้วย (ภาพหน้าจอ CPMS รูปป้ายเครื่อง กราฟ trend)? ให้เสิร์ฟ **Nemotron 3.5 Super VL** แทน ด้วยสูตร Spark เครื่องเดียวใน [Module 06 หัวข้อ 7](../06_benchmarking/TUTORIAL.md) แล้วลงทะเบียนในขั้นที่ 3 โดยใช้ชื่อที่เสิร์ฟ `nemotron-3.5-super-vl` เป็น model สูตรนั้นผูก vLLM กับ `127.0.0.1` แต่ provider เข้าถึงผ่าน LAN IP จึงต้องเปลี่ยน `--host` เป็น `0.0.0.0` เมื่อเสิร์ฟให้ OpenShell ใช้ โมเดลใช้หน่วยความจำ ~70 GiB ให้หยุดเซิร์ฟเวอร์ Qwen ก่อน
+
 หลังขั้นที่ 4 playbook บอกว่าต้องดูอะไร:
 
 **Expected output** (REFERENCE — quoted from the DGX Spark OpenShell playbook) [อ้างอิงคำต่อคำจาก DGX Spark OpenShell playbook]

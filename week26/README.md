@@ -27,6 +27,11 @@ Point it at your Spark with **🖥 Spark setup** (`SPARK_HOST`, key-based ssh; a
 Without a Spark everything runs **DRY**: Spark commands are shown with labelled RECORDED / REFERENCE / EXAMPLE
 output. Laptop labs (NAT agents on your Ollama, `nat serve`, MCP, eval, the policy parser) run for real either way.
 
+**New (2026-10-20): Nemotron 3.5 Super VL on one Spark.** Module 06 Section 7 serves NVIDIA's new
+vision-language Nemotron with its DGX Spark recipe and compares it with Nemotron 3 Super, Nemotron 3.5 Lightning
+and Gemma 4 on speed, HVAC questions, tool calls and plant images (`06_benchmarking/tools/model_bakeoff.py`,
+RECORDED on our two Sparks). Modules 01, 03 and 08 point to it.
+
 ## Modules
 
 | # | module | research tutorial | you build |

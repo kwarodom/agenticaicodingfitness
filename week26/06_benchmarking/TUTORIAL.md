@@ -488,6 +488,99 @@ Look at the two percentile rows. The research tutorial's `awk a[int(NR*p)]` is a
 
 ✓ Checkpoint: your report has one line per layer, each with its source lab and the time it was measured, and none of the laptop lines sits next to a Spark figure.
 
+## 7 · Model bake-off on one Spark: Nemotron 3.5 Super VL and the local alternatives
+
+Sections 2–6 measure one model. This section compares **models** on the same Spark with the same checks, so you can pick the one your claw runs on. The newcomer is **Nemotron 3.5 Super VL** (October 2026): 120B parameters, 12B active per token, a Mamba/MoE/attention hybrid like Nemotron 3 Super, plus a vision encoder. It reads text, images and video, and its NVFP4 checkpoint (75 GB) is built to run on **one** DGX Spark.
+
+**Start with the ceiling arithmetic from Section 2.** 12B active parameters at NVFP4 (~4.5 bits) is about 6.8 GB read per token, so 273 GB/s ÷ 6.8 GB ≈ **40 tok/s** naive ceiling, versus ~162 tok/s for a 3B-active model like Nemotron 3.5 Lightning. A big model is always slower per stream. Speculative decoding claws some back: NVIDIA ships a small drafter for the Spark, **LiLiCorr**, which proposes up to 7 tokens that the big model verifies in one step.
+
+**Serve it with the model card's DGX Spark recipe** (vLLM `v0.32.0`; one sequence at a time; LiLiCorr drafter):
+
+```bash
+# on: spark
+docker run -d --name vl --gpus all --network host --ipc host \
+  -v ~/.cache/huggingface:/root/.cache/huggingface vllm/vllm-openai:v0.32.0 \
+  nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 \
+  --served-model-name nemotron-3.5-super-vl --host 127.0.0.1 --port 8000 \
+  --max-num-seqs 1 --trust-remote-code --gpu-memory-utilization 0.75 --max-num-batched-tokens 8192 \
+  --speculative_config.model nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4-LiLiCorr \
+  --speculative_config.num_speculative_tokens 7 --speculative_config.method dflash \
+  --mamba-backend flashinfer --mamba-ssm-cache-dtype float16 \
+  --enable-mamba-cache-stochastic-rounding --mamba-cache-philox-rounds 5 \
+  --enable-mamba-shared-prefix-checkpoint --video-pruning-rate 0.5 \
+  --media-io-kwargs '{"video": {"fps": 2, "num_frames": 256}}' --block-size 64 --prefix-match-unit 64 \
+  --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser nemotron_v3
+```
+
+**Expected output** (RECORDED — Spark B, 2026-10-20; log prefixes trimmed)
+
+```
+Model loading took 70.03 GiB memory and 452.443517 seconds
+GPU KV cache size: 2,459,119 tokens, Maximum concurrency for 1,048,576 tokens per request: 2.35x
+INFO:     Application startup complete.
+```
+
+About 13 minutes from `docker run` to ready, most of it reading 70 GiB from disk and compiling kernels. The full 1M-token context fits.
+
+**Then run the bake-off.** `tools/model_bakeoff.py` sends the same requests to any OpenAI-compatible server, one at a time, temperature 0: speed (median of 3), the five HVAC questions in `data/bakeoff_cases.json` with thinking off and on (numbers graded), four BMS tool calls, and with `--vision` three synthetic plant images whose answers are known exactly (`data/vision/`).
+
+```bash
+# on: spark
+python3 week26/06_benchmarking/tools/model_bakeoff.py --name "Nemotron 3.5 Super VL" \
+  --url http://127.0.0.1:8000/v1 --model nemotron-3.5-super-vl --vision
+```
+
+**Expected output** (RECORDED — Spark B, 2026-10-20)
+
+```
+◆ speed: first token 0.31 s · 29.9 tok/s (one stream, median of 3)
+◆ knowledge, thinking off: 5/5 · avg 5.7 s
+◆ knowledge, thinking on : 5/5 · avg 14.8 s
+◆ tool calls: 4/4
+  ✓ plant_table.png (12.0 s): 'Based on the data in the image, here are the kW/RT calculations for each chiller (Power di'
+  ✓ chws_trend.png (6.5 s): '14, 9.5'
+  ✕ nameplate.png (11.9 s): '0.57 kW/RT'
+◆ vision: 2/3
+```
+
+We ran the same checks on four models across our two Sparks, each alone on its Spark, with 12 harder questions from an internal HVAC engineering exam in place of the five public ones (that set is not published):
+
+**Recorded results** (RECORDED — Spark A and Spark B, 2026-10-20; one request at a time)
+
+| Model (checkpoint · drafter) | Engine | Weights | Tok/s | First token | Exam, thinking off | Exam, thinking on | Tools | Images |
+|---|---|---|---|---|---|---|---|---|
+| **Nemotron 3.5 Super VL** NVFP4 · LiLiCorr | vLLM v0.32.0 | 70.0 GiB | **30.5** | 0.36 s | 4/12 · 21.9 s | 5/12 · 72.4 s | 4/4 | 2/3 |
+| Nemotron 3 Super NVFP4 · MTP | vLLM cu130-nightly | 75.0 GiB | 22.4 | 0.45 s | 5/12 · 52.1 s | 5/12 · 103.6 s | 4/4 | — |
+| Gemma 4 26B-A4B-it BF16 | vLLM v0.32.0 | — | 22.2 | 0.21 s | 5/12 · 35.4 s | 4/12 · 101.6 s | 4/4 | 3/3 |
+| Nemotron 3.5 Lightning 30B-A3B NVFP4 · DSpark | vLLM v0.27.1 | 19.5 GiB | **93.3** | 0.14 s | 3/12 · 11.6 s | 5/12 · 26.8 s | 2/4 | — |
+
+How to read it:
+
+- **Speed follows active parameters, then the drafter.** Lightning (3B active) is 3× faster than the 12B-active models. VL beats Nemotron 3 Super by ~36 % at the same size, mostly thanks to LiLiCorr, and stays under its 40 tok/s ceiling.
+- **Twelve questions is a small exam.** One case is about 8 points, so 4/12 vs 5/12 is noise. What the table does show: thinking costs 2–4× the time and buys little on these numeric questions, and the 3B model is not worse by a lot on recall.
+- **Tool calls separate the models.** Lightning asked a clarifying question ("which BMS point name?") instead of calling a tool in 2 of 4 cases. The larger models called the right tool every time.
+- **Only VL and Gemma 4 read images.** VL was 2–4× faster on images (6–14 s vs 22–37 s) but gave a one-line answer on the nameplate and left out three of the four asked values.
+
+**The nameplate miss is a prompting problem, and it is fixable.** With thinking on, VL keeps the detail in its reasoning and writes a minimal final answer. One system line fixed it in our test, and with thinking off the full answer came back in 2.1 s:
+
+```text
+Answer every part of the user's question in your final answer, with the values you read.
+```
+
+Watch one more thing with thinking off: without that line, VL's answer began with its own reasoning ("The user wants me to extract…"). Check the `content` you show users, not only the score.
+
+**A memory lesson from the same day.** Model cards pick `--gpu-memory-utilization` for a Spark that runs nothing else. Lightning's card says 0.85; on a Spark that was also somebody's desktop it refused to start:
+
+**Expected output** (RECORDED — Spark A, 2026-10-20)
+
+```
+ValueError: Free memory on device cuda:0 (95.97/121.69 GiB) on startup is less than desired GPU memory utilization (0.85, 103.43 GiB). Decrease GPU memory utilization or reduce GPU memory used by other processes.
+```
+
+0.6 fixed it: with one request at a time, a smaller KV cache costs nothing. For the same reason we ran Nemotron 3 Super NVFP4 at 0.75 instead of the course recipe's 0.90.
+
+✓ Checkpoint: you can say which of the four models you would give Alto Ops Claw for (a) chat that must feel instant, (b) reading CPMS screenshots, and (c) reliable tool calls, and quote the row of the table behind each choice.
+
 ## Labs — run them here
 
 **labs/lab06_1_engine_sweep.py** — The bandwidth ceiling, vLLM's benchmark on the Spark, and a real laptop stand-in sweep at concurrency 1, 2 and 4.

@@ -130,6 +130,8 @@ A harness is the agent loop inside the sandbox. NemoClaw ships three, and all th
 
 On a DGX Spark you will usually not use the NVIDIA Endpoints defaults. Module 02 routes inference to a **local** vLLM or Ollama model, so prompts and data stay on the device.
 
+> 💡 **New in October 2026: Nemotron 3.5 Super VL.** Same size class as Nemotron 3 Super (120B, 12B active) but it also reads images and video, and its NVFP4 checkpoint runs on **one** Spark. Module 06 Section 7 serves it and measures it against Nemotron 3 Super, Nemotron 3.5 Lightning and Gemma 4 on our Sparks.
+
 The fourth option this week is **your own claw**. A NAT workflow you write in Module 04 runs inside the same kind of sandbox and calls the same `inference.local`.
 
 ✓ Checkpoint: you can pick a harness for (a) a Telegram concierge bot, (b) a refactoring agent on a private repo, (c) an agent whose traces go to Langfuse with no raw keys in the sandbox.
