@@ -1,0 +1,76 @@
+{
+  "architecture": {
+    "title": "The improvement library — one per domain × executor, read before each task, appended after",
+    "caption": "Each step reads the domain's library (INDEX.md first, then relevant entries), adapts proven components — re-verifying any workspace fact against the task's own evidence — and, after it commits, stores the whole adopted tree plus EXPERIENCE.md (edit rows, then at most one lesson or NO_ENTRY). Library.add refuses grader language. In the course's EXAMPLE design for Ops Assistant, tenant facts go to the knowledge graph, not to LongTermMEMORY.md. Course re-implementation on the SIM.",
+    "lanes": [
+      {"id": "task", "label": "This task"},
+      {"id": "library", "label": "Library (domain × executor)"},
+      {"id": "homes", "label": "Ops Assistant homes (EXAMPLE design)"}
+    ],
+    "nodes": [
+      {"id": "editor", "label": "INV + DOM editors", "lane": "task", "sub": "read the library before editing", "accent": "green"},
+      {"id": "reverify", "label": "re-verify copied facts", "lane": "task", "sub": "against this task's manual", "accent": "amber"},
+      {"id": "reflect", "label": "reflection", "lane": "task", "sub": "edit rows · ≤ 1 lesson · NO_ENTRY", "accent": "violet"},
+      {"id": "index", "label": "INDEX.md", "lane": "library", "sub": "one cue per task", "accent": "cyan"},
+      {"id": "entry", "label": "harnesses/<task>/", "lane": "library", "sub": "the WHOLE tree + EXPERIENCE.md", "accent": "cyan"},
+      {"id": "add", "label": "Library.add", "lane": "library", "sub": "refuses grader verdicts", "accent": "red"},
+      {"id": "skill", "label": "skills / scripts", "lane": "homes", "sub": "procedure that travels", "accent": "green"},
+      {"id": "kg", "label": "knowledge graph", "lane": "homes", "sub": "tenant facts · provenance · supersession", "accent": "amber"},
+      {"id": "mem", "label": "LongTermMEMORY.md", "lane": "homes", "sub": "short universal facts only, capped", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "index", "to": "editor", "label": "browse first"},
+      {"from": "entry", "to": "reverify", "label": "copy a component"},
+      {"from": "reverify", "to": "editor", "label": "fact checked"},
+      {"from": "editor", "to": "reflect", "label": "probe → compose"},
+      {"from": "reflect", "to": "add", "label": "tree + EXPERIENCE.md", "animated": true},
+      {"from": "add", "to": "entry", "label": "stored"},
+      {"from": "add", "to": "index", "label": "re-indexed"},
+      {"from": "reflect", "to": "skill", "label": "procedure"},
+      {"from": "reflect", "to": "kg", "label": "workspace facts (reviewed)"}
+    ]
+  },
+  "sequence": {
+    "title": "F1-CH40 at the second hotel — a 3.0 K fact copied unchecked",
+    "caption": "Captured from Lab 05-3 (SIM, seed 0, reverify=False). The editor adapts the fault-review skill from the Harbour View entry; it carries 'approach limit 3.0 K'. The agent uses it on a 3.4 K approach and calls condenser fouling at a hotel whose manual says 4.5 K. The trajectory looks healthy, so no contrast flags it; bench.judge, after the step, scores 80. With reverify=True the fact becomes 4.5 K and the score is 100.",
+    "actors": [
+      {"id": "index", "label": "INDEX.md (site 1)"},
+      {"id": "editor", "label": "SIM editor"},
+      {"id": "agent", "label": "HVAC Expert (SIM)"},
+      {"id": "judge", "label": "bench.judge"}
+    ],
+    "steps": [
+      {"from": "editor", "to": "index", "label": "browse: 'unit arithmetic' entry looks relevant", "kind": "call"},
+      {"from": "index", "to": "editor", "label": "skills/chiller_fault_review (limit 3.0 K) + scripts/energy_units.py", "kind": "return"},
+      {"from": "editor", "to": "editor", "label": "reverify=False: copied as is", "kind": "note"},
+      {"from": "editor", "to": "agent", "label": "composed tree", "kind": "call"},
+      {"from": "agent", "to": "agent", "label": "NOTE used a workspace fact: approach limit 3.0 K", "kind": "note"},
+      {"from": "agent", "to": "judge", "label": "diagnosis: condenser fouling (approach 3.4 K)", "kind": "return"},
+      {"from": "judge", "to": "judge", "label": "truth: low load cycling → 80 (after the step)", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Library on vs off — three shuffled streams, refine half (17 tasks)",
+      "type": "bars",
+      "unit": "mean score over three streams (bench.judge, after each step)",
+      "labels": ["sim-cloud", "sim-local"],
+      "series": [
+        {"name": "library on", "values": [94.3, 83.8], "color": "green"},
+        {"name": "library off", "values": [93.8, 83.9], "color": "amber"}
+      ],
+      "caption": "From Lab 05-2, SIM, captured on this Mac. SDs: sim-cloud 2.6 / 3.7, sim-local 0.6 / 1.5 — both differences (+0.5, −0.1) are within one SD, and on both executors the streams disagree in sign. No library effect is shown."
+    },
+    {
+      "title": "Second hotel, seed 0 — re-verified vs copied unchecked",
+      "type": "bars",
+      "unit": "score per task (bench.judge, after each step)",
+      "labels": ["F1-CH40", "F1-CH41", "F1-CH42", "F1-CH43", "F1-CH44", "F1-CH45"],
+      "series": [
+        {"name": "re-verified", "values": [100, 100, 100, 100, 100, 100], "color": "green"},
+        {"name": "unchecked", "values": [80, 100, 75, 100, 100, 100], "color": "red"}
+      ],
+      "caption": "From Lab 05-3, SIM, captured on this Mac. F1-CH40 (3.4 K) and F1-CH42 (4.2 K) sit between the hotels' limits (3.0 K, 4.5 K). Seeds 0–4: the unchecked arm lost points on seeds 0 and 4 only, always on a task that used the 3.0 K fact."
+    }
+  ]
+}

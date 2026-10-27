@@ -1,0 +1,67 @@
+{
+  "architecture": {
+    "title": "Capstone — from a Shadow week to a defended (or held) version",
+    "caption": "EXAMPLE design for this course, on the SIM agent, for the pilot family hvac_expert/fault_review/hotel_th. The plan is registered first. Four Shadow nights feed one capped weekly merge; a reviewer change gets its own refine-half probe; the gate requires the hash the reviewer read. Integrity tests and registered criteria run after the version is frozen, on the test half, and their verdicts go only into REVIEW.md at the gate.",
+    "lanes": [
+      {"id": "plan", "label": "Registration"},
+      {"id": "shadow", "label": "Shadow week (refine half)"},
+      {"id": "gate", "label": "Human gate"},
+      {"id": "defend", "label": "Defence (test half, after the runs)"}
+    ],
+    "nodes": [
+      {"id": "prereg", "label": "prereg_capstone.json", "lane": "plan", "sub": "cap 245 · quiet-task honesty · hash first", "accent": "red"},
+      {"id": "nights", "label": "4 nights × routine", "lane": "shadow", "sub": "N = 3 · k = 1 · no library", "accent": "green"},
+      {"id": "merge", "label": "weekly merge, capped", "lane": "shadow", "sub": "skills + scripts in, always-on lines refused", "accent": "amber"},
+      {"id": "change", "label": "reviewer change", "lane": "shadow", "sub": "CMMS rule → scripts/open_work_orders.py", "accent": "amber"},
+      {"id": "publish", "label": "publish v2 to Shadow", "lane": "gate", "sub": "409 on a stale hash · 200 on re-read", "accent": "violet"},
+      {"id": "suite", "label": "integrity suite (7)", "lane": "defend", "sub": "6 PASS · safety FAIL", "accent": "cyan"},
+      {"id": "criteria", "label": "registered criteria", "lane": "defend", "sub": "Quality · Honesty · Cost PASS; Safety FAIL", "accent": "cyan"},
+      {"id": "review", "label": "REVIEW.md", "lane": "gate", "sub": "hold v2 in Shadow", "accent": "violet"}
+    ],
+    "edges": [
+      {"from": "prereg", "to": "nights", "label": "before anything runs"},
+      {"from": "nights", "to": "merge", "label": "records"},
+      {"from": "merge", "to": "change", "label": "refused CMMS line"},
+      {"from": "change", "to": "publish", "label": "new definition hash"},
+      {"from": "publish", "to": "suite", "label": "frozen v2"},
+      {"from": "suite", "to": "criteria", "label": "Integrity criterion"},
+      {"from": "criteria", "to": "review", "label": "3/5 pass", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "The honest fix — test half finds it, refine half justifies it, a new registration re-tests it",
+    "caption": "Captured on this Mac (SIM): Lab 10-2 and the capstone checklist. The test half shows 3 approval_routed failures for v2; the same failure appears on the refine half (4 of 20 proposals), which justifies a C8 plugin; v3 is re-tested under its own registration and has no safety failure.",
+    "actors": [
+      {"id": "test", "label": "test half"},
+      {"id": "you", "label": "you (reviewer)"},
+      {"id": "refine", "label": "refine half"},
+      {"id": "reg", "label": "registration"}
+    ],
+    "steps": [
+      {"from": "test", "to": "you", "label": "v2: approval_routed fails 3 / 72 trials", "kind": "return"},
+      {"from": "you", "to": "refine", "label": "same failure on mirrored Shadow wakes?", "kind": "call"},
+      {"from": "refine", "to": "you", "label": "4 of 20 proposals, F1-02 and F1-05", "kind": "return"},
+      {"from": "you", "to": "you", "label": "ignored invariant → plugin/require_evidence.ts (C8, 0 always-on)", "kind": "note"},
+      {"from": "you", "to": "reg", "label": "register the v3 re-test first", "kind": "call"},
+      {"from": "you", "to": "test", "label": "v3 on F1: gain +16.5, safety failures 0", "kind": "call"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "The price of the cap — F1 test half",
+      "type": "bars",
+      "unit": "mean score over three seeds (bench.judge, after the runs)",
+      "labels": ["v1 (245 tokens)", "v2 capped + script (245)", "uncapped merge (311)"],
+      "series": [{"name": "F1 mean", "values": [78.6, 94.3, 96.8], "color": "green"}],
+      "caption": "From Lab 10-2, captured on this Mac (SIM). The cap costs 2.5 points against the uncapped merge and keeps every call's always-on prefix, and the prompt cache, unchanged."
+    },
+    {
+      "title": "approval_routed failures on the F1 test half (72 trials)",
+      "type": "hbars",
+      "unit": "failed trials",
+      "labels": ["v1", "v2", "v3 (v2 + plugin)"],
+      "series": [{"name": "failures", "values": [11, 3, 0], "color": "red"}],
+      "caption": "From Lab 10-2 and the capstone checklist, captured on this Mac (SIM). The registered rule is zero; v2 is held even though it beats v1."
+    }
+  ]
+}

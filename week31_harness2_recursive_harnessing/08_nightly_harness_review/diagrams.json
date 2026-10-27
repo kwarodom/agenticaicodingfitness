@@ -1,0 +1,78 @@
+{
+  "architecture": {
+    "title": "The nightly harness review routine — Shadow, a human gate, and the boundary in code",
+    "caption": "EXAMPLE design for this course (the fictional Ops Assistant), built in reviewkit.py on the SIM agent. The plain check is code over the event log: no weak signal, no model call. Human signals choose the wakes and travel to the domain editor as content, but never reach the anonymised selector. A draft becomes a version only through a named reviewer, and the approval boundary stays in the platform's enforcement point, outside every editable file.",
+    "lanes": [
+      {"id": "log", "label": "Event log (EXAMPLE)"},
+      {"id": "routine", "label": "Nightly routine (Shadow)"},
+      {"id": "human", "label": "Named humans"},
+      {"id": "platform", "label": "Platform code (not editable)"}
+    ],
+    "nodes": [
+      {"id": "wakes", "label": "today's wakes", "lane": "log", "sub": "approvals · ratings · helper status", "accent": "cyan"},
+      {"id": "plain", "label": "plain check", "lane": "routine", "sub": "code only · 0 model calls", "accent": "green"},
+      {"id": "select", "label": "select ≤ N = 3", "lane": "routine", "sub": "rejected > low rating > helper failed", "accent": "green"},
+      {"id": "step", "label": "Propose–Probe–Compose ×N", "lane": "routine", "sub": "k = 1 · read-only tools · sandbox", "accent": "amber"},
+      {"id": "draft", "label": "draft version + packet", "lane": "routine", "sub": "HARNESS.json · edit rows · EXPERIENCE · deltas", "accent": "amber"},
+      {"id": "reviewer", "label": "named reviewer", "lane": "human", "sub": "reads the hash · 403 / 409 / 200", "accent": "violet"},
+      {"id": "ladder", "label": "Shadow → Assist → Serve → Write-back", "lane": "human", "sub": "gates in code · rollback = pointer", "accent": "violet"},
+      {"id": "selector", "label": "anonymised selector (k > 1)", "lane": "routine", "sub": "request + sources + deliverables only", "accent": "cyan"},
+      {"id": "pep", "label": "policy enforcement point", "lane": "platform", "sub": "every write needs an approved ActionProposal", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "wakes", "to": "plain", "label": "02:00 schedule"},
+      {"from": "plain", "to": "select", "label": "weak signals only"},
+      {"from": "select", "to": "step", "label": "human reason as content"},
+      {"from": "step", "to": "selector", "label": "no human signal", "animated": true},
+      {"from": "step", "to": "draft", "label": "bench.promote"},
+      {"from": "draft", "to": "reviewer", "label": "send_to_user · notify only if a draft exists"},
+      {"from": "reviewer", "to": "ladder", "label": "publish to Shadow"},
+      {"from": "step", "to": "pep", "label": "any write attempt", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "Night 2 of Lab 08-1 — from four weak signals to a draft in Shadow",
+    "caption": "Captured on this Mac (SIM). Three wakes are harnessed at k = 1 (22 SIM executions and editor sessions); F7-00 waits because N = 3. The reviewer's first two publish attempts are refused: the routine cannot approve itself (403) and a stale hash is a 409.",
+    "actors": [
+      {"id": "log", "label": "event log"},
+      {"id": "routine", "label": "routine"},
+      {"id": "kit", "label": "h2kit.step ×3"},
+      {"id": "registry", "label": "harness_version"},
+      {"id": "reviewer", "label": "agent owner"}
+    ],
+    "steps": [
+      {"from": "routine", "to": "log", "label": "plain check: 10 wakes, 4 weak signals", "kind": "call"},
+      {"from": "routine", "to": "kit", "label": "F1-01 (rejected) · F2-00 · F3-00 (low rating)", "kind": "call"},
+      {"from": "kit", "to": "routine", "label": "3 × COMPOSED, each with an EXPERIENCE entry", "kind": "return"},
+      {"from": "routine", "to": "registry", "label": "draft v2 · always-on 245 → 320 · prefix CHANGED", "kind": "call"},
+      {"from": "routine", "to": "registry", "label": "publish as routine → 403", "kind": "note"},
+      {"from": "routine", "to": "reviewer", "label": "send_to_user notify=true, packet in .runs/packet_v2", "kind": "call"},
+      {"from": "reviewer", "to": "registry", "label": "publish with v1's hash → 409", "kind": "note"},
+      {"from": "reviewer", "to": "registry", "label": "publish with the draft's hash → 200, Shadow", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Cold prefixes in one day — three approvals",
+      "type": "bars",
+      "unit": "count",
+      "labels": ["ship when approved (mid-day)", "bundle at the 02:00 boundary"],
+      "series": [
+        {"name": "cold prefixes in work hours", "values": [3, 0], "color": "red"},
+        {"name": "versions seen by the day's wakes", "values": [4, 2], "color": "amber"}
+      ],
+      "caption": "From Lab 08-3, captured on this Mac (SIM). The waiting cost (an assumed 16 s per cold 30,000-token prefix for a smaller open-weight model on local hardware) is EXAMPLE arithmetic."
+    },
+    {
+      "title": "The ladder in the SIM — Assist proxies, A/B by day",
+      "type": "hbars",
+      "unit": "% of mirrored trials (bench, after the runs)",
+      "labels": ["rejection-rate proxy", "notification precision", "helper success"],
+      "series": [
+        {"name": "v1", "values": [56.0, 78.6, 75.0], "color": "cyan"},
+        {"name": "v2", "values": [3.6, 80.4, 82.1], "color": "green"}
+      ],
+      "caption": "From Lab 08-3, captured on this Mac (SIM). Proxies stand in for real approvals and ratings; they measure the teaching model, not a production agent. v2 then entered Serve and was rolled back by the 98 % regression trigger, which v1 also fails (81.2 %)."
+    }
+  ]
+}

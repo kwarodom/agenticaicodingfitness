@@ -1,0 +1,67 @@
+{
+  "architecture": {
+    "title": "The Harness Bench — two halves, three graders, a registered plan",
+    "caption": "EXAMPLE design for this course, run on the SIM agent. The nightly loop reads only the refine half. A version is frozen, then run three times per test task. Code graders and the safety graders run on every trial; the SIM judge grades one dimension at a time and routes Unknown to a human; the judge is accepted only above the human-agreement floor. The criteria are read back from a file written before any arm ran.",
+    "lanes": [
+      {"id": "loop", "label": "Loop (refine half only)"},
+      {"id": "freeze", "label": "Frozen version"},
+      {"id": "graders", "label": "Graders (after the run)"},
+      {"id": "decide", "label": "Decision"}
+    ],
+    "nodes": [
+      {"id": "refine", "label": "refine half (17)", "lane": "loop", "sub": "streamed in shuffled order ×3", "accent": "cyan"},
+      {"id": "promote", "label": "bench.promote", "lane": "loop", "sub": "one version per stream", "accent": "amber"},
+      {"id": "test", "label": "test half (17) × 3 trials", "lane": "freeze", "sub": "never enters the loop", "accent": "cyan"},
+      {"id": "code", "label": "code graders", "lane": "graders", "sub": "product checks · safety on the transcript", "accent": "green"},
+      {"id": "judge", "label": "SIM judge per dimension", "lane": "graders", "sub": "may say Unknown → human", "accent": "violet"},
+      {"id": "human", "label": "human labels", "lane": "graders", "sub": "calibration floor: engineer B vs A", "accent": "violet"},
+      {"id": "prereg", "label": "prereg_harness_bench.json", "lane": "decide", "sub": "written first · hash checked", "accent": "red"},
+      {"id": "criteria", "label": "8 criteria + stop rule", "lane": "decide", "sub": "PASS/FAIL, thresholds from the file", "accent": "amber"}
+    ],
+    "edges": [
+      {"from": "refine", "to": "promote", "label": "Propose–Probe–Compose per task"},
+      {"from": "promote", "to": "test", "label": "freeze"},
+      {"from": "test", "to": "code", "label": "every trial"},
+      {"from": "test", "to": "judge", "label": "request + sources + deliverable"},
+      {"from": "human", "to": "judge", "label": "accept only above the floor", "animated": true},
+      {"from": "prereg", "to": "criteria", "label": "thresholds read back"},
+      {"from": "code", "to": "criteria", "label": "scores, pass^3, safety"}
+    ]
+  },
+  "sequence": {
+    "title": "Lab 09-2 — the order of events is part of the code",
+    "caption": "Captured on this Mac (SIM). The plan is written and hashed before any arm runs; the criteria are graded from the file after its hash is re-checked. A file with a different plan stops the lab with ✕.",
+    "actors": [
+      {"id": "lab", "label": "lab"},
+      {"id": "file", "label": ".runs/prereg file"},
+      {"id": "arms", "label": "arms A–F"},
+      {"id": "bench", "label": "bench (after runs)"}
+    ],
+    "steps": [
+      {"from": "lab", "to": "file", "label": "write plan · hash 6b3b61bd2b9c", "kind": "call"},
+      {"from": "lab", "to": "arms", "label": "3 shuffled streams per arm", "kind": "call"},
+      {"from": "arms", "to": "bench", "label": "frozen versions × test half × 3 trials", "kind": "call"},
+      {"from": "bench", "to": "lab", "label": "per-task scores · pass^3 · safety", "kind": "return"},
+      {"from": "lab", "to": "file", "label": "re-read · hash unchanged", "kind": "call"},
+      {"from": "lab", "to": "lab", "label": "2 PASS · 6 FAIL · stop rule: do not stop", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Arms on the pilot family (F1, test half)",
+      "type": "bars",
+      "unit": "mean score over three streams (bench.judge, after the runs)",
+      "labels": ["A base", "B no library", "C library", "D k=5", "A·local", "C·local", "F same-model"],
+      "series": [{"name": "F1 mean", "values": [78.6, 96.8, 96.8, 96.8, 67.1, 93.1, 84.7], "color": "green"}],
+      "caption": "From Lab 09-2, captured on this Mac (SIM, version protocol). B = C = D because bench.promote merges every supported edit across the stream; that is a property of the teaching model, not of Harness². F same-model is 84.7 ± 13.0: one of its three streams missed the pilot fixes, so Local-tier fails (gap 8.4 > 2.0)."
+    },
+    {
+      "title": "Judge calibration against the human floor",
+      "type": "hbars",
+      "unit": "% agreement with engineer A (known items)",
+      "labels": ["careful judge", "engineer B (floor)", "sloppy judge"],
+      "series": [{"name": "agreement", "values": [98.9, 90.2, 86.8], "color": "violet"}],
+      "caption": "From Lab 09-1, captured on this Mac (SIM). 102 refine-half deliverables; 12 and 11 Unknowns routed to a human. The sloppy judge is rejected: it sits below two humans' agreement."
+    }
+  ]
+}

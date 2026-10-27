@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "title": "Where each failure enters a Harness² step, and the control that meets it",
+    "caption": "Attribution noise enters at the probes (one rollout per candidate), a shared premise enters at proposal (every candidate copies the same library fact), and blind selection enters when k finals are reduced to one. A rubric leak bypasses the loop: the executor reaches the grading criteria. Controls: repeated probes, re-verification and premise probes, selector audit and human review, an egress block plus the measurement-word ban and grader-verdict check. (Failure modes reported in the paper; controls are the course's EXAMPLE design plus the repository's EXPERIMENTS.md.)",
+    "lanes": [
+      {"id": "step", "label": "Inside the step"},
+      {"id": "fail", "label": "Failure mode"},
+      {"id": "control", "label": "Control"},
+      {"id": "measure", "label": "Measurement (outside the loop)"}
+    ],
+    "nodes": [
+      {"id": "propose", "label": "propose (library read)", "lane": "step", "sub": "INV + DOM editors", "accent": "green"},
+      {"id": "probe", "label": "probe", "lane": "step", "sub": "repeats per candidate", "accent": "green"},
+      {"id": "select", "label": "select (k > 1)", "lane": "step", "sub": "anonymised finals, no score", "accent": "green"},
+      {"id": "premise", "label": "premise caps the pool", "lane": "fail", "sub": "every candidate shares one wrong fact", "accent": "red"},
+      {"id": "noise", "label": "attribution noise", "lane": "fail", "sub": "one rollout behind a verdict", "accent": "red"},
+      {"id": "blind", "label": "blind selection", "lane": "fail", "sub": "a weaker final delivered", "accent": "red"},
+      {"id": "leak", "label": "rubric leak", "lane": "fail", "sub": "executor fetches its grading criteria", "accent": "red"},
+      {"id": "reverify", "label": "re-verify + premise probe", "lane": "control", "sub": "facts checked against this task's sources", "accent": "cyan"},
+      {"id": "repeat", "label": "repeat the probes", "lane": "control", "sub": "confounded until isolated", "accent": "cyan"},
+      {"id": "audit", "label": "selector audit + human review", "lane": "control", "sub": "under one in five weaker picks", "accent": "cyan"},
+      {"id": "egress", "label": "egress block · word ban · verdict check", "lane": "control", "sub": "network level, spec.py, library.py", "accent": "cyan"},
+      {"id": "judge", "label": "bench.judge after the fact", "lane": "measure", "sub": "graders unreadable by the loop", "accent": "amber"}
+    ],
+    "edges": [
+      {"from": "propose", "to": "premise", "label": "copied fact"},
+      {"from": "probe", "to": "noise", "label": "one rollout"},
+      {"from": "select", "to": "blind", "label": "k → 1"},
+      {"from": "premise", "to": "reverify", "label": "met by"},
+      {"from": "noise", "to": "repeat", "label": "met by"},
+      {"from": "blind", "to": "audit", "label": "met by"},
+      {"from": "leak", "to": "egress", "label": "met by"},
+      {"from": "leak", "to": "judge", "label": "inflates", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "F1-CH42 at the second hotel — a premise every candidate shares",
+    "caption": "Captured from Lab 07-2 (SIM, seed 2, k = 5). The Harbour View library's fault-review skill carries 'approach limit 3.0 K'. Copied unchecked, all five candidates diagnose fouling at 4.2 K and score 75; the selector has nothing better. A premise probe flags the fact against the task's own manual (4.5 K); re-verified, the pool's best is 100 again.",
+    "actors": [
+      {"id": "lib", "label": "Harbour View library"},
+      {"id": "editors", "label": "editors (×5)"},
+      {"id": "pool", "label": "pool of 5 finals"},
+      {"id": "sel", "label": "blind selector"},
+      {"id": "probe", "label": "premise probe"}
+    ],
+    "steps": [
+      {"from": "lib", "to": "editors", "label": "skill with 'approach limit 3.0 K'", "kind": "call"},
+      {"from": "editors", "to": "pool", "label": "5 candidates, all with 3.0 K (reverify=False)", "kind": "call"},
+      {"from": "pool", "to": "sel", "label": "5 × 'condenser fouling' — all agree", "kind": "call"},
+      {"from": "sel", "to": "sel", "label": "best available scores 75 (judged after the fact)", "kind": "note"},
+      {"from": "probe", "to": "pool", "label": "fact 3.0 K vs the manual's 4.5 K → FLAG ×5", "kind": "call"},
+      {"from": "probe", "to": "editors", "label": "re-verify: limit 4.5 K → finals 100 / 100 / 75 / 100 / 100", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Blind selection: share of steps that delivered a weaker final than one in the pool",
+      "type": "bars",
+      "unit": "% of 51 steps (judged after the fact)",
+      "labels": ["k = 3", "k = 5"],
+      "series": [
+        {"name": "sim-cloud", "values": [5.9, 19.6], "color": "cyan"},
+        {"name": "sim-local", "values": [19.6, 17.6], "color": "violet"}
+      ],
+      "caption": "From Lab 07-1, SIM, captured on this Mac (17 refine tasks × seeds 0–2). The course's EXAMPLE selector audit passes when fewer than one in five selections prefer the weaker deliverable; sim-cloud rises with k, sim-local does not. The paper reports a 55-over-95 selection as a known failure."
+    },
+    {
+      "title": "A premise that caps the pool: second-hotel fault reviews, k = 1",
+      "type": "bars",
+      "unit": "score (bench.judge, after the step)",
+      "labels": ["F1-CH40", "F1-CH41", "F1-CH42", "F1-CH43", "F1-CH44", "F1-CH45"],
+      "series": [
+        {"name": "facts copied unchecked", "values": [80, 100, 75, 100, 75, 100], "color": "red"},
+        {"name": "facts re-verified", "values": [100, 100, 100, 100, 100, 100], "color": "green"}
+      ],
+      "caption": "From Lab 07-2, SIM, captured on this Mac (seed 2). The copied Harbour View limit (3.0 K) is applied at a hotel whose manual says 4.5 K. The paper reports losses of 2–11 points from a propagated premise."
+    },
+    {
+      "title": "Attribution noise: edit rows that change verdict with two more probes",
+      "type": "donut",
+      "unit": "edit rows (of 101)",
+      "labels": ["unchanged", "confounded → helped", "helped → confounded", "no observed effect → confounded", "helped → hurt"],
+      "series": [{"name": "repeats 1 → 3", "values": [63, 17, 9, 11, 1], "color": "amber"}],
+      "caption": "From Lab 07-3, SIM, captured on this Mac (17 refine tasks × seeds 0–2 × both executors). 38 of 101 paired rows change verdict, in both directions."
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "architecture": {
+    "title": "One Propose–Probe–Compose step at k = 1 — who reads what",
+    "caption": "The reference run produces evidence of behaviour. Two scoped editors (INV, DOM) read the trajectory, the request and the sources and each write one candidate tree. Each candidate is probed on the same task; the composer keeps only edits whose own probe mitigated their failure and regressed nothing, or answers KEEP_BASE. Reflection writes edit rows and at most one EXPERIENCE.md entry. The judge reads hidden truth only after the step has committed. (Method from the Harness² paper and repository; the course's loop is common/h2kit.py, a teaching model.)",
+    "lanes": [
+      {"id": "run", "label": "Executions (SIM agent)"},
+      {"id": "edit", "label": "Editors and composer"},
+      {"id": "record", "label": "Record"},
+      {"id": "measure", "label": "Measurement (after the step)"}
+    ],
+    "nodes": [
+      {"id": "ref", "label": "reference run", "lane": "run", "sub": "current harness · behaviour, not correctness", "accent": "cyan"},
+      {"id": "pinv", "label": "probe inv1", "lane": "run", "sub": "same task, same model", "accent": "cyan"},
+      {"id": "pdom", "label": "probe dom1", "lane": "run", "sub": "same task, same model", "accent": "cyan"},
+      {"id": "inv", "label": "INV editor", "lane": "edit", "sub": "how the agent works", "accent": "amber"},
+      {"id": "dom", "label": "DOM editor", "lane": "edit", "sub": "what a practitioner knows", "accent": "amber"},
+      {"id": "comp", "label": "composer", "lane": "edit", "sub": "keep · drop · KEEP_BASE", "accent": "green"},
+      {"id": "rows", "label": "edit rows", "lane": "record", "sub": "helped · hurt · no observed effect · confounded", "accent": "violet"},
+      {"id": "exp", "label": "EXPERIENCE.md", "lane": "record", "sub": "cue · lesson · evidence · confidence, or NO_ENTRY", "accent": "violet"},
+      {"id": "judge", "label": "bench.judge", "lane": "measure", "sub": "reads Task.truth; never seen by the loop", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "ref", "to": "inv", "label": "trajectory + deliverable"},
+      {"from": "ref", "to": "dom", "label": "trajectory + reviewer's words (content)"},
+      {"from": "inv", "to": "pinv", "label": "candidate tree"},
+      {"from": "dom", "to": "pdom", "label": "candidate tree"},
+      {"from": "pinv", "to": "comp", "label": "contrast vs reference"},
+      {"from": "pdom", "to": "comp", "label": "contrast vs reference"},
+      {"from": "comp", "to": "rows", "label": "decisions with evidence"},
+      {"from": "rows", "to": "exp", "label": "at most one entry"},
+      {"from": "comp", "to": "judge", "label": "final run, after commit", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "F1-01, k = 1, seed 0 — the step Lab 02-2 prints",
+    "caption": "Captured from Lab 02-2 (SIM, sim-cloud, seed 0). The reference never calls cmms.work_orders and sums kW/ton by hand. The INV editor adds one tool-guidance line (it missed the hand arithmetic); the DOM editor adds the chiller_fault_review skill. Both probes call cmms.work_orders; the composer keeps both edits; always-on grows 245 → 288 tokens.",
+    "actors": [
+      {"id": "loop", "label": "h2kit.step"},
+      {"id": "agent", "label": "HVAC Expert (SIM)"},
+      {"id": "inv", "label": "INV editor"},
+      {"id": "dom", "label": "DOM editor"},
+      {"id": "comp", "label": "composer"},
+      {"id": "lib", "label": ".runs/ EXPERIENCE.md"}
+    ],
+    "steps": [
+      {"from": "loop", "to": "agent", "label": "reference on harness v1", "kind": "call"},
+      {"from": "agent", "to": "loop", "label": "no cmms call · kW/ton by hand · new work order proposed", "kind": "return"},
+      {"from": "loop", "to": "inv", "label": "observed: no_cmms, hand_arithmetic", "kind": "call"},
+      {"from": "inv", "to": "loop", "label": "tool_guidance.md: check work orders first", "kind": "return"},
+      {"from": "loop", "to": "dom", "label": "observed: no_analytic_move", "kind": "call"},
+      {"from": "dom", "to": "loop", "label": "skills/chiller_fault_review + trigger line", "kind": "return"},
+      {"from": "loop", "to": "agent", "label": "probe inv1 · probe dom1", "kind": "call"},
+      {"from": "agent", "to": "loop", "label": "both call cmms.work_orders; hand_arithmetic unchanged", "kind": "return"},
+      {"from": "loop", "to": "comp", "label": "two contrasts", "kind": "call"},
+      {"from": "comp", "to": "loop", "label": "keep tool_guidance.md · keep the skill", "kind": "return"},
+      {"from": "loop", "to": "lib", "label": "2 edit rows (helped) + 1 entry, confidence medium", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "KEEP_BASE rate — quiet tasks vs trap tasks (refine half, 3 seeds)",
+      "type": "bars",
+      "unit": "% of k = 1 steps that answered KEEP_BASE",
+      "labels": ["quiet · sim-cloud", "quiet · sim-local", "trap · sim-cloud", "trap · sim-local"],
+      "series": [{"name": "KEEP_BASE", "values": [100, 100, 25, 36], "color": "green"}],
+      "caption": "From Lab 02-3, SIM, captured on this Mac: quiet 15/15 and 15/15; trap 9/36 and 13/36. A teaching model shows the mechanism (no evidence → no edit), not a measurement of Harness²."
+    },
+    {
+      "title": "Why a trap task got KEEP_BASE",
+      "type": "hbars",
+      "unit": "k = 1 steps (3 seeds × 12 trap tasks per executor)",
+      "labels": ["reference showed nothing", "editors proposed nothing", "edits proposed, none supported"],
+      "series": [
+        {"name": "sim-cloud", "values": [7, 1, 1], "color": "cyan"},
+        {"name": "sim-local", "values": [5, 6, 2], "color": "amber"}
+      ],
+      "caption": "From Lab 02-3, SIM, captured on this Mac. One reference is one draw; the weaker editor misses more failures. KEEP_BASE is honest about the evidence it had."
+    }
+  ]
+}

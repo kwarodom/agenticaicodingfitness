@@ -1,0 +1,6 @@
+.runs/
+.run_history.json
+.quiz_history.json
+.progress.json
+vendor/
+__pycache__/

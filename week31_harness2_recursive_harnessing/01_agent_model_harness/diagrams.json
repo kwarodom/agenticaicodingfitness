@@ -1,0 +1,75 @@
+{
+  "architecture": {
+    "title": "Agent = Model + Harness — the eight components by how they reach the model",
+    "caption": "The model is frozen. Four components are always on: they enter the context on every call and are paid for on every run. Skills load on a trigger, scripts run via bash, subagents work in their own context, and a plugin is a hook inside the tool loop — the only component that enforces rather than instructs. The approval boundary sits outside the editable tree, in platform code. (Component list from the Harness² repository and paper; the approval boundary is EXAMPLE design for this course.)",
+    "lanes": [
+      {"id": "always", "label": "Always on (every call)"},
+      {"id": "model", "label": "Frozen model"},
+      {"id": "demand", "label": "On demand"},
+      {"id": "platform", "label": "Platform code (not editable)"}
+    ],
+    "nodes": [
+      {"id": "c1", "label": "C1 systemprompt.md", "lane": "always", "sub": "persona · top-level procedure", "accent": "amber"},
+      {"id": "c2", "label": "C2 guardrails.md", "lane": "always", "sub": "task constraints", "accent": "amber"},
+      {"id": "c3", "label": "C3 LongTermMEMORY.md", "lane": "always", "sub": "short universal facts", "accent": "amber"},
+      {"id": "c4", "label": "C4 tool_guidance.md", "lane": "always", "sub": "when and how to use each tool", "accent": "amber"},
+      {"id": "llm", "label": "model (weights fixed)", "lane": "model", "sub": "sim-cloud · sim-local in this course", "accent": "cyan"},
+      {"id": "c6", "label": "C6 skills/", "lane": "demand", "sub": "loads when its trigger fires", "accent": "green"},
+      {"id": "c7", "label": "C7 scripts/", "lane": "demand", "sub": "run via bash · output only", "accent": "green"},
+      {"id": "c5", "label": "C5 sub_agents/", "lane": "demand", "sub": "own context · returns a result", "accent": "green"},
+      {"id": "c8", "label": "C8 plugin/", "lane": "demand", "sub": "hook in the tool loop · enforces", "accent": "violet"},
+      {"id": "pep", "label": "approval boundary (PEP)", "lane": "platform", "sub": "named human approves every physical action", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "c1", "to": "llm", "label": "every call"},
+      {"from": "c2", "to": "llm", "label": "every call"},
+      {"from": "c3", "to": "llm", "label": "every call"},
+      {"from": "c4", "to": "llm", "label": "every call"},
+      {"from": "llm", "to": "c6", "label": "skill tool"},
+      {"from": "llm", "to": "c7", "label": "bash"},
+      {"from": "llm", "to": "c5", "label": "task tool"},
+      {"from": "c8", "to": "llm", "label": "blocks / warns", "animated": true},
+      {"from": "llm", "to": "pep", "label": "any write tool", "animated": true}
+    ]
+  },
+  "sequence": {
+    "title": "F1-01 on harness v1 + skill + script — where each component acts",
+    "caption": "Captured from Lab 01-2 (SIM, seed 0). The skill fires on the chiller alarm and names the maintenance check; the agent calls cmms.work_orders, finds WO-4472 already open, and proposes no duplicate. The kW/ton comes from the script, not from token-by-token arithmetic.",
+    "actors": [
+      {"id": "wake", "label": "nightly wake"},
+      {"id": "agent", "label": "HVAC Expert (SIM)"},
+      {"id": "skill", "label": "C6 skill"},
+      {"id": "tools", "label": "read-only tools"},
+      {"id": "script", "label": "C7 script"},
+      {"id": "human", "label": "chief engineer"}
+    ],
+    "steps": [
+      {"from": "wake", "to": "agent", "label": "CH-2 high kW/ton — review and propose", "kind": "call"},
+      {"from": "agent", "to": "skill", "label": "load chiller_fault_review (+209 tokens, this run only)", "kind": "call"},
+      {"from": "agent", "to": "tools", "label": "alarms.list · telemetry.query · docs.search", "kind": "call"},
+      {"from": "agent", "to": "tools", "label": "cmms.work_orders('CH-2')", "kind": "call"},
+      {"from": "tools", "to": "agent", "label": "WO-4472 PM condenser cleaning — open", "kind": "return"},
+      {"from": "agent", "to": "script", "label": "python scripts/energy_units.py", "kind": "call"},
+      {"from": "script", "to": "agent", "label": "kw_per_ton 0.708", "kind": "return"},
+      {"from": "agent", "to": "human", "label": "no new work order: add the finding to WO-4472", "kind": "return"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "One rule, two homes — always-on tokens",
+      "type": "hbars",
+      "unit": "≈ tokens on every call (ESTIMATE)",
+      "labels": ["v1 (base)", "rule as prose in systemprompt.md", "rule in a skill + 1 trigger line"],
+      "series": [{"name": "always-on", "values": [245, 321, 260], "color": "amber"}],
+      "caption": "From Lab 01-1, captured on this Mac. Tokens are characters ÷ 4. The skill's 91-token body loads only on runs that trigger it."
+    },
+    {
+      "title": "Same model, three harnesses — F1-01 (score measured after the run)",
+      "type": "bars",
+      "unit": "score 0–100 (bench.judge)",
+      "labels": ["v1 base", "v1 + skill", "v1 + skill + script"],
+      "series": [{"name": "sim-cloud, seed 0", "values": [40, 100, 100], "color": "green"}],
+      "caption": "From Lab 01-2, SIM, captured on this Mac. One task, one seed: a demonstration, not a measurement. The judge reads hidden truth that no editor sees."
+    }
+  ]
+}

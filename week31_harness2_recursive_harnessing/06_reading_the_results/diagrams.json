@@ -1,0 +1,268 @@
+{
+  "architecture": {
+    "title": "How a results table is made, and where it is read",
+    "caption": "The loop (Propose–Probe–Compose with a library) runs inside each stream and never sees a score. bench.judge scores each task's final deliverable after its step. Three streams in shuffled order give three means; the reading rule asks whether all three paired differences agree and whether the gap clears one SD. A promoted version is a different protocol: a fixed tree on the frozen test half, three trials, pass^3. (Protocol as reported in the paper; reading rule as the course's pre-registered criteria, EXAMPLE design, Module 09.)",
+    "lanes": [
+      {
+        "id": "loop",
+        "label": "Inside a stream (no scores)"
+      },
+      {
+        "id": "bench",
+        "label": "Measurement (after the fact)"
+      },
+      {
+        "id": "read",
+        "label": "Reading the table"
+      },
+      {
+        "id": "version",
+        "label": "Version protocol (Modules 09–10)"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "order",
+        "label": "3 shuffled task orders",
+        "lane": "loop",
+        "sub": "stream s uses order s for every arm",
+        "accent": "cyan"
+      },
+      {
+        "id": "step",
+        "label": "one step per task",
+        "lane": "loop",
+        "sub": "library read before, appended after",
+        "accent": "green"
+      },
+      {
+        "id": "judge",
+        "label": "bench.judge",
+        "lane": "bench",
+        "sub": "final deliverable · hidden truth",
+        "accent": "amber"
+      },
+      {
+        "id": "means",
+        "label": "3 stream means per arm",
+        "lane": "bench",
+        "sub": "mean ± SD",
+        "accent": "amber"
+      },
+      {
+        "id": "agree",
+        "label": "all three streams agree?",
+        "lane": "read",
+        "sub": "paired differences, same sign",
+        "accent": "violet"
+      },
+      {
+        "id": "sd",
+        "label": "gap > one SD?",
+        "lane": "read",
+        "sub": "larger of the two SDs",
+        "accent": "violet"
+      },
+      {
+        "id": "verdict",
+        "label": "beyond noise · direction only · within noise",
+        "lane": "read",
+        "sub": "'not shown' is not 'no effect'",
+        "accent": "red"
+      },
+      {
+        "id": "promote",
+        "label": "bench.promote",
+        "lane": "version",
+        "sub": "reviewer's merge, min_support",
+        "accent": "green"
+      },
+      {
+        "id": "evaluate",
+        "label": "bench.evaluate on the test half",
+        "lane": "version",
+        "sub": "3 trials · pass^3 · per executor",
+        "accent": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "from": "order",
+        "to": "step",
+        "label": "tasks in order"
+      },
+      {
+        "from": "step",
+        "to": "judge",
+        "label": "after the step committed",
+        "animated": true
+      },
+      {
+        "from": "judge",
+        "to": "means",
+        "label": "per task"
+      },
+      {
+        "from": "means",
+        "to": "agree",
+        "label": "pair by stream"
+      },
+      {
+        "from": "agree",
+        "to": "sd",
+        "label": "yes"
+      },
+      {
+        "from": "sd",
+        "to": "verdict",
+        "label": "label the row"
+      },
+      {
+        "from": "step",
+        "to": "promote",
+        "label": "step records"
+      },
+      {
+        "from": "promote",
+        "to": "evaluate",
+        "label": "frozen version"
+      }
+    ]
+  },
+  "sequence": {
+    "title": "Reading one row: generic editor vs Harness² k=1 on sim-cloud",
+    "caption": "Captured from Lab 06-2 (SIM). The three paired stream differences are −2.4, −4.1 and −3.2: all agree. The gap of 3.2 is larger than the larger SD (2.9). The row reads 'beyond noise'. The same arm on sim-local reads 'beyond noise' too: −4.6 / −6.8 / −10.1, a gap of 7.2 against a larger SD of 4.3.",
+    "actors": [
+      {
+        "id": "k1",
+        "label": "Harness² k=1 streams"
+      },
+      {
+        "id": "gen",
+        "label": "generic-editor streams"
+      },
+      {
+        "id": "rule",
+        "label": "reading rule"
+      },
+      {
+        "id": "reader",
+        "label": "reviewer"
+      }
+    ],
+    "steps": [
+      {
+        "from": "k1",
+        "to": "rule",
+        "label": "96.5 / 95.0 / 91.5 (94.3 ± 2.6)",
+        "kind": "call"
+      },
+      {
+        "from": "gen",
+        "to": "rule",
+        "label": "94.1 / 90.9 / 88.3 (91.1 ± 2.9)",
+        "kind": "call"
+      },
+      {
+        "from": "rule",
+        "to": "rule",
+        "label": "paired Δ −2.4 / −4.1 / −3.2 → all agree",
+        "kind": "note"
+      },
+      {
+        "from": "rule",
+        "to": "rule",
+        "label": "|Δ mean| 3.2 > larger SD 2.9",
+        "kind": "note"
+      },
+      {
+        "from": "rule",
+        "to": "reader",
+        "label": "beyond noise: one generic editor costs points here",
+        "kind": "return"
+      }
+    ]
+  },
+  "charts": [
+    {
+      "title": "Base vs one Harness² step, three shuffled streams (open-world streams protocol)",
+      "type": "bars",
+      "unit": "mean score of 3 streams (bench.judge)",
+      "labels": [
+        "sim-cloud",
+        "sim-local"
+      ],
+      "series": [
+        {
+          "name": "base harness v1",
+          "values": [
+            80.3,
+            72.2
+          ],
+          "color": "amber"
+        },
+        {
+          "name": "Harness² k=1",
+          "values": [
+            94.3,
+            85.0
+          ],
+          "color": "green"
+        }
+      ],
+      "caption": "From Lab 06-1, SIM, captured on this Mac. SDs: 4.1 / 2.6 (cloud), 3.7 / 4.3 (local). Both gains are beyond noise. The paper's own WorkBuddy-Bench averages (as reported in the paper): Gemini 3.5 Flash 72.4 → 77.5, GLM-5 64.2 → 75.7."
+    },
+    {
+      "title": "The SIM's ablation table on sim-cloud: Δ against Harness² k=1",
+      "type": "hbars",
+      "unit": "points (mean of 3 streams)",
+      "labels": [
+        "no library",
+        "generic editor",
+        "no composition",
+        "parallel k=3",
+        "parallel k=5",
+        "sequential k=3",
+        "sequential k=5"
+      ],
+      "series": [
+        {
+          "name": "Δ vs k=1",
+          "values": [
+            -0.5,
+            -3.2,
+            -0.2,
+            3.7,
+            0.9,
+            1.9,
+            2.1
+          ],
+          "color": "violet"
+        }
+      ],
+      "caption": "From Lab 06-2, SIM, captured on this Mac. Only 'generic editor' and 'parallel k=3' are beyond noise; the rest are within noise or direction only. The paper's ablations (as reported in the paper): no library −3.1/−1.8, no scoping −2.9/−3.7, no composition −1.6/−1.9."
+    },
+    {
+      "title": "pass@3 vs pass^3 for base v1 on sim-cloud (test half)",
+      "type": "bars",
+      "unit": "% of tasks",
+      "labels": [
+        "pass@3 if trials were independent",
+        "pass^3 if trials were independent",
+        "pass^3 observed"
+      ],
+      "series": [
+        {
+          "name": "base v1 · sim-cloud · per-trial p = 0.69",
+          "values": [
+            97,
+            32,
+            41
+          ],
+          "color": "red"
+        }
+      ],
+      "caption": "From Lab 06-3, SIM, captured on this Mac (seed 0). The formula assumes independent trials; observed pass^3 is higher because one task's trials are correlated. A worked example: 75% per trial gives about 42% across three trials."
+    }
+  ]
+}

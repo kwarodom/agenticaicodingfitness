@@ -1,0 +1,87 @@
+{
+  "architecture": {
+    "title": "Two scopes, one ladder — from an observed failure to the cheapest effective component",
+    "caption": "Every failure an editor can see is owned by one scope: INV (how the agent works) or DOM (what a practitioner knows). Each editor then walks the same ladder from prompts.py: skill, script, subagent, plugin, and always-on text last. A plugin needs repeated evidence that clear prose is skipped. Component choices shown are the course's SIM editors (common/h2kit.py), a teaching model of the repository's templates.",
+    "lanes": [
+      {"id": "seen", "label": "Observed in a trajectory"},
+      {"id": "scope", "label": "Scope"},
+      {"id": "ladder", "label": "Ladder (prefer, in this order)"}
+    ],
+    "nodes": [
+      {"id": "f_hand", "label": "hand arithmetic", "lane": "seen", "sub": "summed kW and tons by hand", "accent": "cyan"},
+      {"id": "f_seq", "label": "skipped step / tool error", "lane": "seen", "sub": "no_cmms · blind_retry", "accent": "cyan"},
+      {"id": "f_ev", "label": "rule skipped again", "lane": "seen", "sub": "no_evidence with the line present", "accent": "cyan"},
+      {"id": "f_dom", "label": "practitioner gap", "lane": "seen", "sub": "analytic move · contract · decision · encoding", "accent": "cyan"},
+      {"id": "inv", "label": "INV editor", "lane": "scope", "sub": "procedure, tool use, completion", "accent": "amber"},
+      {"id": "dom", "label": "DOM editor", "lane": "scope", "sub": "the practitioner model", "accent": "amber"},
+      {"id": "r1", "label": "1 · skill (C6)", "lane": "ladder", "sub": "+ one trigger line in C1", "accent": "green"},
+      {"id": "r2", "label": "2 · script (C7)", "lane": "ladder", "sub": "deterministic, run via bash", "accent": "green"},
+      {"id": "r4", "label": "4 · plugin (C8)", "lane": "ladder", "sub": "enforces; must not block valid completion", "accent": "violet"},
+      {"id": "r5", "label": "5 · always-on line", "lane": "ladder", "sub": "short, applies to every run", "accent": "red"}
+    ],
+    "edges": [
+      {"from": "f_hand", "to": "inv", "label": "mechanical repetition"},
+      {"from": "f_seq", "to": "inv", "label": "sequencing · tool error"},
+      {"from": "f_ev", "to": "inv", "label": "ignored invariant"},
+      {"from": "f_dom", "to": "dom", "label": "checkable rule"},
+      {"from": "inv", "to": "r2", "label": "scripts/energy_units.py"},
+      {"from": "inv", "to": "r5", "label": "one guidance line"},
+      {"from": "inv", "to": "r4", "label": "only after repeated evidence", "animated": true},
+      {"from": "dom", "to": "r1", "label": "skill + trigger"}
+    ]
+  },
+  "sequence": {
+    "title": "From prose to a plugin — sequential k = 2 on F1-02 (sim-local, seed 19)",
+    "caption": "Captured from Lab 03-3 (SIM). Round 1 sees an empty evidence list and adds one tool-guidance line. Round 2 edits the round-1 checkpoint; its reference still sends a proposal with no evidence, so the INV editor writes plugin/require_evidence.ts instead of more prose.",
+    "actors": [
+      {"id": "loop", "label": "h2kit.step (sequential)"},
+      {"id": "agent", "label": "HVAC Expert (SIM)"},
+      {"id": "inv", "label": "INV editor"},
+      {"id": "comp", "label": "composer"}
+    ],
+    "steps": [
+      {"from": "loop", "to": "agent", "label": "round 1 reference on v1", "kind": "call"},
+      {"from": "agent", "to": "loop", "label": "ActionProposal with evidence []", "kind": "return"},
+      {"from": "loop", "to": "inv", "label": "no_evidence", "kind": "call"},
+      {"from": "inv", "to": "loop", "label": "tool_guidance.md: every ActionProposal carries evidence links", "kind": "return"},
+      {"from": "comp", "to": "loop", "label": "keep the line — checkpoint 1", "kind": "return"},
+      {"from": "loop", "to": "agent", "label": "round 2 reference on checkpoint 1", "kind": "call"},
+      {"from": "agent", "to": "loop", "label": "evidence [] again — the line was skipped", "kind": "return"},
+      {"from": "loop", "to": "inv", "label": "no_evidence, line already present", "kind": "call"},
+      {"from": "inv", "to": "loop", "label": "plugin/require_evidence.ts (+0 always-on)", "kind": "return"},
+      {"from": "comp", "to": "loop", "label": "keep the plugin — final tree changes C4, C7, C8", "kind": "note"}
+    ]
+  },
+  "charts": [
+    {
+      "title": "Generic-editor ablation — score (three streams, refine half)",
+      "type": "bars",
+      "unit": "score 0–100, mean over three streams (bench.judge, after the run)",
+      "labels": ["base harness", "scoped INV + DOM", "one generic editor"],
+      "series": [
+        {"name": "sim-cloud", "values": [80.3, 93.8, 91.1], "color": "cyan"},
+        {"name": "sim-local", "values": [72.2, 81.8, 77.3], "color": "amber"}
+      ],
+      "caption": "From Lab 03-2, SIM, captured on this Mac (library off in both loop arms). SDs 2.9–4.5. All three streams agree on both executors. The scoped-vs-generic gap is within one SD on sim-cloud (+2.7, size not shown on 17 tasks) and larger than one SD on sim-local (+4.5, a SIM assumption, not a measurement); the direction matches the paper's reported −2.9 / −3.7."
+    },
+    {
+      "title": "Generic-editor ablation — always-on tokens added per composed step",
+      "type": "hbars",
+      "unit": "≈ tokens added to the always-on text (ESTIMATE: characters ÷ 4)",
+      "labels": ["scoped · sim-cloud", "generic · sim-cloud", "scoped · sim-local", "generic · sim-local"],
+      "series": [{"name": "mean Δ always-on", "values": [38.3, 100.9, 36.3, 105.7], "color": "red"}],
+      "caption": "From Lab 03-2, SIM, captured on this Mac. Every generic edit landed in C1 (systemprompt.md); the scoped editors spread theirs over C1 trigger lines, C4, C6 and C7."
+    },
+    {
+      "title": "Empty evidence lists — prose asks, a plugin enforces",
+      "type": "bars",
+      "unit": "proposals with an empty evidence list, out of 40",
+      "labels": ["v1 base", "+ prose line", "+ prose + plugin"],
+      "series": [
+        {"name": "sim-cloud", "values": [16, 2, 0], "color": "cyan"},
+        {"name": "sim-local", "values": [27, 11, 0], "color": "amber"}
+      ],
+      "caption": "From Lab 03-3, SIM, captured on this Mac (F1-02 and F1-05 × 20 seeds). The rates are the SIM's assumptions about prose-following, shown to make the mechanism visible — not a measurement of a real model."
+    }
+  ]
+}
