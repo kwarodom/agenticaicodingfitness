@@ -2,7 +2,16 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "extraKnownMarketplaces": {
+    "agentic-coding-fitness": {
+      "source": {
+        "source": "github",
+        "repo": "kwarodom/agenticaicodingfitness"
+      }
+    }
+  },
   "enabledPlugins": {
-    "agentic-coding-fitness@agentic-coding-fitness": true
+    "agentic-coding-fitness@agentic-coding-fitness": true,
+    "alto-belt@agentic-coding-fitness": true
   }
 }

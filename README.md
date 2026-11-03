@@ -46,12 +46,18 @@ Covers: LLM basics · tool use · agent loops (now incl. the Week 18 Claude Agen
 
 A Claude Code mod that scores how you work in any repository on eight competencies (verification, context hygiene, instruction design, automation, parallel work, multi-agent judgment, review design, safety), shows your belt live, and names the three changes that raise it fastest. Counts stay on your machine. Needs Claude Code 2.1.287+.
 
-```
-/plugin marketplace add kwarodom/agenticaicodingfitness
-/plugin install alto-belt@agentic-coding-fitness
-/reload-plugins
-/belt
-```
+Pick one way to install:
+
+- **Open this repo in Claude Code.** The repo's `.claude/settings.json` lists the course marketplace and enables Alto Belt, so Claude Code offers to install it when you trust the folder. Say yes, then type `/belt`. This enables it for this repo only.
+- **Script, for every repo you open** (user scope): `bash scripts/install-alto-belt.sh`, then `/reload-plugins` in Claude Code.
+- **By hand, in any Claude Code session:**
+
+  ```
+  /plugin marketplace add kwarodom/agenticaicodingfitness
+  /plugin install alto-belt@agentic-coding-fitness
+  /reload-plugins
+  /belt
+  ```
 
 Full instructions, the scoring rubric and troubleshooting: [`plugins/alto-belt/README.md`](plugins/alto-belt/README.md).
 
