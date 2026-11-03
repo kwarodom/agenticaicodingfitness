@@ -30,12 +30,16 @@ repository you open.
 
 `/belt help` lists the commands; if it does, the mod is loaded.
 
-From a clone of this repository instead:
+From a clone of this repository, one script does the same at user scope (it checks your Claude Code
+version first, and is safe to run again):
 
 ```bash
-claude plugin marketplace add .
-claude plugin install alto-belt@agentic-coding-fitness
+bash scripts/install-alto-belt.sh
 ```
+
+Or just open the clone in Claude Code: its `.claude/settings.json` lists this marketplace and enables
+Alto Belt, so Claude Code offers to install it once you trust the folder. That enables it for this
+repository only; use the script or the commands above to get `/belt` in your own repositories.
 
 To update later: `/plugin marketplace update agentic-coding-fitness`, then
 `/plugin install alto-belt@agentic-coding-fitness` again and `/reload-plugins`.
