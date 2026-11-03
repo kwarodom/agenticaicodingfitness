@@ -1,0 +1,30 @@
+{
+  "name": "alto-belt",
+  "displayName": "Alto Belt",
+  "version": "0.4.0",
+  "description": "Coaches you from White to Black belt on AltoTech's Claude Code rubric: a live score per repository from how you work (tests before commits, PR evidence, correction streaks, context fill, instructions, hooks, review setup), the next three changes, one quiet nudge when a habit slips, an animated belt page in your browser that updates live (/belt web), and the self-guided programme as a skill. Counts stay on your machine; no prompt text is kept",
+  "author": {
+    "name": "AltoTech Global"
+  },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "band": {
+      "type": "boolean",
+      "title": "Line above the prompt",
+      "description": "On: one line above the prompt when a habit slips. Off: nothing is drawn there.",
+      "default": true
+    },
+    "status": {
+      "type": "boolean",
+      "title": "Belt in the status line",
+      "description": "On: the status line shows your belt and score in this repository.",
+      "default": true
+    },
+    "coach_model": {
+      "type": "boolean",
+      "title": "Coach Claude too",
+      "description": "Off: Claude's instructions are unchanged. On: adds one short section asking Claude to request a verifier, show output before saying done, and suggest /clear after two failed corrections.",
+      "default": false
+    }
+  }
+}

@@ -42,6 +42,19 @@ We ship new skills as the course grows (we're on **v2.3.0 — 21 skills**). To g
 
 Covers: LLM basics · tool use · agent loops (now incl. the Week 18 Claude Agent SDK production loop) · MCP & skills · RAG · multi-agent systems · production & observability · agent evaluation/CI · knowledge-graph memory · production GraphRAG · choosing models & patterns · the NVIDIA NeMo Agent Toolkit · long-running & distributed agents (Google ADK durable sessions, pause/resume, auth.md, A2A fleets) · self-evolving agents (tripartite memory + consolidation) · sovereign AI at the edge (local/$0 inference) · sovereign & self-evolving AI on an NVIDIA DGX (serve/fine-tune/observe/gateway) · the Week 27 software factory (unattended Build/QA/Review lanes, merge gates, guard hooks, plugin evals, telemetry → tickets) · vibe-coding & security · the A2A protocol · skill-authoring. See [`plugins/agentic-coding-fitness/`](plugins/agentic-coding-fitness/) for details.
 
+## 🥋 Alto Belt: your Claude Code belt, White to Black
+
+A Claude Code mod that scores how you work in any repository on eight competencies (verification, context hygiene, instruction design, automation, parallel work, multi-agent judgment, review design, safety), shows your belt live, and names the three changes that raise it fastest. Counts stay on your machine. Needs Claude Code 2.1.287+.
+
+```
+/plugin marketplace add kwarodom/agenticaicodingfitness
+/plugin install alto-belt@agentic-coding-fitness
+/reload-plugins
+/belt
+```
+
+Full instructions, the scoring rubric and troubleshooting: [`plugins/alto-belt/README.md`](plugins/alto-belt/README.md).
+
 ## 📂 Repository Contents 
 
 The project is structured week-by-week as our complexity scales up — from a single API call to long-running distributed fleets, self-evolving memory, and sovereign agents running entirely on hardware you own. Each week maps to a plugin skill (above) that recaps it with a $0 lab.

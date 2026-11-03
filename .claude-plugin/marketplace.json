@@ -6,7 +6,7 @@
     "email": "kwarodom@altotech.ai"
   },
   "description": "Learn-by-doing skills for building production agentic AI (course weeks 2–18 and 27): the fundamentals (LLM APIs, tool use, agent loops, MCP, RAG, multi-agent systems, knowledge-graph memory, production GraphRAG with evaluation) plus the 12-pattern taxonomy, production & observability, agent evaluation/CI gating, the NVIDIA NeMo Agent Toolkit, long-running & distributed agents (Google ADK, auth.md, A2A), Week 18's Claude Agent SDK production loop, self-evolving agents with tripartite memory, sovereign AI at the edge (local/$0 inference), the Week 27 software factory (unattended Build/QA/Review lanes, merge gates, guard hooks, plugin evals), a drill library, the curriculum, vibe-coding & security, and skill-authoring.",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "plugins": [
     {
       "name": "agentic-coding-fitness",
@@ -39,6 +39,17 @@
       "author": { "name": "Agentic Coding Fitness" },
       "license": "MIT",
       "keywords": ["mods", "course", "gamification", "education"],
+      "category": "education"
+    },
+    {
+      "name": "alto-belt",
+      "displayName": "Alto Belt",
+      "source": "./plugins/alto-belt",
+      "description": "Week 26: coaches you from White to Black belt in Claude Code. A live score per repository on eight competencies (tests before commits, PR evidence, correction streaks, context fill, instructions, hooks, review setup), the next three changes, one quiet nudge when a habit slips, a live belt page in your browser (/belt web) and the self-guided belt programme as a skill. Counts stay on your machine. Needs Claude Code 2.1.287+.",
+      "version": "0.4.0",
+      "author": { "name": "AltoTech Global" },
+      "license": "MIT",
+      "keywords": ["mods", "claude-code", "coaching", "belt", "education"],
       "category": "education"
     }
   ]
